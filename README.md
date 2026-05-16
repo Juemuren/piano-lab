@@ -1,5 +1,7 @@
 # 钢琴模拟器
 
+[![Deploy](https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml) 
+
 ## 特性
 
 提供多种工具
