@@ -23,7 +23,7 @@ export class AudioEngine {
 
   init() {
     if (!this.audioContext) {
-      this.audioContext = new AudioContext();
+      this.audioContext = new AudioContext({ latencyHint: 'playback' });
     }
   }
 
@@ -179,7 +179,7 @@ export class AudioEngine {
       const gainNode = this.audioContext.createGain();
 
       oscillatorNode.type = this.oscillatorType;
-      oscillatorNode.frequency.setValueAtTime(freq, now);
+      oscillatorNode.frequency.setValueAtTime(freq, startTime);
 
       gainNode.gain.setValueAtTime(this.silenceGain, startTime);
       gainNode.gain.exponentialRampToValueAtTime(attackGain, attackEnd);
