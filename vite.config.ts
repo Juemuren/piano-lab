@@ -8,7 +8,7 @@ const host = process.env.TAURI_DEV_HOST;
 // https://tauri.app/start/frontend/vite/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/web-piano-simulator/',
+  base: process.env.TAURI_ENV_PLATFORM ? './' : '/web-piano-simulator/',
   server: {
     port: 5173,
     strictPort: true,
@@ -26,9 +26,22 @@ export default defineConfig({
   },
   envPrefix: ['VITE_', 'TAURI_ENV_*'],
   build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          minSize: 10000,
+          maxSize: 250000,
+          groups: [
+            {
+              name: 'vendor',
+              test: /node_modules/,
+            },
+          ],
+        },
+      },
+    },
     target:
       process.env.TAURI_ENV_PLATFORM == 'windows' ? 'chrome105' : 'safari13',
-    minify: !process.env.TAURI_ENV_DEBUG ? 'esbuild' : false,
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
   },
 });
