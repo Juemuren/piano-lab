@@ -1,13 +1,14 @@
 {
   "name": "web-piano-simulator",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "dev:tauri": "tauri dev",
     "build": "tsc -b && vite build",
     "build:tauri": "tauri build --no-bundle",
+    "tauri": "tauri",
     "lint": "eslint .",
     "format": "prettier . --write",
     "preview": "vite preview",
