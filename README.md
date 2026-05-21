@@ -1,3 +1,5 @@
+<div align="center">
+
 # 钢琴模拟器
 
 [中文](README.md) | [English](docs/README.en.md) | [日本語](docs/README.jp.md)
@@ -18,6 +20,8 @@
 [link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
 [link-website]: https://Juemuren.github.io/web-piano-simulator/
 [link-release]: https://github.com/Juemuren/web-piano-simulator/releases
+
+</div>
 
 ## 特性
 

@@ -54,6 +54,36 @@ jobs:
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
       - name: Install frontend dependencies
         run: npm install
+      - name: Load changelog
+        id: changelog
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+
+          awk -v version="$version" '
+            $0 ~ "^## \\[" version "\\]" {
+              in_section = 1
+              print
+              next
+            }
+            in_section && /^## \[/ {
+              exit
+            }
+            in_section {
+              print
+            }
+          ' CHANGELOG.md > release-notes.md
+
+          if [ ! -s release-notes.md ]; then
+            echo "No changelog section found for ${version}" >&2
+            exit 1
+          fi
+
+          {
+            echo 'body<<EOF'
+            cat release-notes.md
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
       - name: Build and publish Tauri release
         uses: tauri-apps/tauri-action@v0
         env:
@@ -61,7 +91,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Piano Simulator ${{ github.ref_name }}'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: ${{ steps.changelog.outputs.body }}
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}

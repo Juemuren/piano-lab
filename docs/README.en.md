@@ -1,3 +1,5 @@
+<div align="center">
+
 # Piano Simulator
 
 [中文](../README.md) | [English](README.en.md) | [日本語](README.jp.md)
@@ -18,6 +20,8 @@
 [link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
 [link-website]: https://Juemuren.github.io/web-piano-simulator/
 [link-release]: https://github.com/Juemuren/web-piano-simulator/releases
+
+</div>
 
 ## Features
 
