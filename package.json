@@ -11,8 +11,7 @@
     "lint": "eslint .",
     "format": "prettier . --write",
     "preview": "vite preview",
-    "postinstall": "patch-package",
-    "convert:abc": "node scripts/convert-abc-body.mjs"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "abcjs": "^6.6.2",
