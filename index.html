@@ -1,10 +1,42 @@
 <!doctype html>
-<html lang="zh-cn">
+<html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>钢琴模拟器</title>
+    <title>Piano Simulator</title>
+    <script>
+      (() => {
+        const storageKey = 'web-piano-simulator.language';
+        const titles = {
+          'zh-CN': '钢琴模拟器',
+          'en-US': 'Piano Simulator',
+        };
+        const normalizeLanguage = (language) => {
+          if (!language) return null;
+          const normalized = language.toLowerCase();
+          if (normalized.startsWith('zh')) return 'zh-CN';
+          if (normalized.startsWith('en')) return 'en-US';
+          return null;
+        };
+
+        let savedLanguage = null;
+        try {
+          savedLanguage = normalizeLanguage(localStorage.getItem(storageKey));
+        } catch {
+          savedLanguage = null;
+        }
+
+        const browserLanguage = (navigator.languages || [navigator.language])
+          .map(normalizeLanguage)
+          .find(Boolean);
+
+        const pageLanguage = savedLanguage || browserLanguage;
+        document.documentElement.lang = pageLanguage;
+        document.documentElement.dir = 'ltr';
+        if (titles[pageLanguage]) document.title = titles[pageLanguage];
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

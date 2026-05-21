@@ -1,12 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import commonEn from './locales/en/common.json';
-import pianoEn from './locales/en/piano.json';
+import commonEn from './locales/en-US/common.json';
+import pianoEn from './locales/en-US/piano.json';
 import commonZhCN from './locales/zh-CN/common.json';
 import pianoZhCN from './locales/zh-CN/piano.json';
 
-export const supportedLanguages = ['zh-CN', 'en'] as const;
+export const supportedLanguages = ['zh-CN', 'en-US'] as const;
 
 export type SupportedLanguage = (typeof supportedLanguages)[number];
 
@@ -15,14 +15,25 @@ const languageStorageKey = 'web-piano-simulator.language';
 function normalizeLanguage(language?: string | null): SupportedLanguage | null {
   if (!language) return null;
   if (language.toLowerCase().startsWith('zh')) return 'zh-CN';
-  if (language.toLowerCase().startsWith('en')) return 'en';
+  if (language.toLowerCase().startsWith('en')) return 'en-US';
   return null;
+}
+
+function syncDocumentLanguage(language: SupportedLanguage) {
+  document.documentElement.lang = language;
+  document.documentElement.dir = 'ltr';
+  document.title = i18n.t('piano:app.title', { lng: language });
 }
 
 const savedLanguage = normalizeLanguage(
   window.localStorage.getItem(languageStorageKey),
 );
-const browserLanguage = normalizeLanguage(window.navigator.language);
+const browserLanguage = (
+  window.navigator.languages || [window.navigator.language]
+)
+  .map(normalizeLanguage)
+  .find(Boolean);
+const initialLanguage = savedLanguage ?? browserLanguage ?? 'zh-CN';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -30,13 +41,13 @@ i18n.use(initReactI18next).init({
       common: commonZhCN,
       piano: pianoZhCN,
     },
-    en: {
+    'en-US': {
       common: commonEn,
       piano: pianoEn,
     },
   },
-  lng: savedLanguage ?? browserLanguage ?? 'zh-CN',
-  fallbackLng: 'en',
+  lng: initialLanguage,
+  fallbackLng: 'en-US',
   defaultNS: 'common',
   ns: ['common', 'piano'],
   interpolation: {
@@ -44,12 +55,13 @@ i18n.use(initReactI18next).init({
   },
 });
 
+syncDocumentLanguage(initialLanguage);
+
 i18n.on('languageChanged', (language) => {
   const normalizedLanguage = normalizeLanguage(language);
   if (normalizedLanguage) {
     window.localStorage.setItem(languageStorageKey, normalizedLanguage);
-    document.documentElement.lang = normalizedLanguage;
-    document.documentElement.dir = 'ltr';
+    syncDocumentLanguage(normalizedLanguage);
   }
 });
 
