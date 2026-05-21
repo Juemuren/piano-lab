@@ -1,10 +1,4 @@
 {
-  "language": {
-    "label": "语言",
-    "en-US": "English",
-    "ja-JP": "日本語",
-    "zh-CN": "中文"
-  },
   "actions": {
     "play": "开始播放",
     "stop": "停止播放"

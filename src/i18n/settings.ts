@@ -12,6 +12,12 @@ export const languageDocumentTitles: Record<SupportedLanguage, string> = {
   'zh-CN': '钢琴模拟器',
 };
 
+export const languageDisplayNames: Record<SupportedLanguage, string> = {
+  'en-US': 'English',
+  'ja-JP': '日本語',
+  'zh-CN': '中文',
+};
+
 const languageAliases: Array<[prefix: string, language: SupportedLanguage]> = [
   ['en', 'en-US'],
   ['ja', 'ja-JP'],

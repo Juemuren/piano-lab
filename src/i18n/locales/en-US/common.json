@@ -1,10 +1,4 @@
 {
-  "language": {
-    "label": "Language",
-    "en-US": "English",
-    "ja-JP": "日本語",
-    "zh-CN": "中文"
-  },
   "actions": {
     "play": "Play",
     "stop": "Stop"
