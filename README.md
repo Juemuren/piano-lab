@@ -1,5 +1,7 @@
 # 钢琴模拟器
 
+[中文](README.md) | [English](docs/README.en.md) | [日本語](docs/README.jp.md)
+
 [![action-deploy][badge-action-deploy]][link-action-deploy]
 [![action-release][badge-action-release]][link-action-release]
 
