@@ -5,10 +5,7 @@ import commonEn from './locales/en-US/common.json';
 import pianoEn from './locales/en-US/piano.json';
 import commonZhCN from './locales/zh-CN/common.json';
 import pianoZhCN from './locales/zh-CN/piano.json';
-import {
-  getInitialLanguage,
-  syncDocumentLanguage,
-} from './bootstrap';
+import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import {
   defaultLanguage,
   languageStorageKey,

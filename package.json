@@ -12,7 +12,15 @@
     "lint": "eslint .",
     "format": "prettier . --write",
     "preview": "vite preview",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.{md,css,html,json}": "prettier --write"
   },
   "dependencies": {
     "abcjs": "^6.6.2",
@@ -34,6 +42,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
     "patch-package": "^8.0.1",
     "prettier": "3.8.3",
     "typescript": "~6.0.2",
