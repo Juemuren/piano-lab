@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AudioEngine } from './services/audio/AudioEngine';
 import Piano from './components/Piano';
 import TimbreAdjuster from './components/TimbreAdjuster';
@@ -7,8 +8,10 @@ import ABCEditor from './components/ABCEditor';
 import HarmonicSynthesizer from './components/HarmonicSynthesizer';
 import CollapsibleSection from './components/CollapsibleSection';
 import Footer from './components/Footer';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 function App() {
+  const { t } = useTranslation('piano');
   const [audioEngine] = useState(() => new AudioEngine());
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
 
@@ -42,7 +45,10 @@ function App() {
           text-app-text dark:text-app-text-dark
         "
       >
-        <h1 className="text-3xl font-bold text-center">钢琴模拟器</h1>
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
+          <h1 className="text-3xl font-bold">{t('app.title')}</h1>
+          <LanguageSwitcher />
+        </div>
 
         <div
           className="
@@ -50,23 +56,23 @@ function App() {
           xl:flex-row xl:items-start xl:justify-center"
         >
           <div className="w-full max-w-4xl">
-            <CollapsibleSection title="谐波合成器">
+            <CollapsibleSection title={t('sections.harmonicSynthesizer')}>
               <HarmonicSynthesizer audioEngine={audioEngine} />
             </CollapsibleSection>
           </div>
           <div className="w-full max-w-4xl">
-            <CollapsibleSection title="音色调节器">
+            <CollapsibleSection title={t('sections.timbreAdjuster')}>
               <TimbreAdjuster audioEngine={audioEngine} />
             </CollapsibleSection>
           </div>
           <div className="w-full max-w-4xl">
-            <CollapsibleSection title="传递函数修改器">
+            <CollapsibleSection title={t('sections.transferFunctionModifier')}>
               <TransferFunctionModifier audioEngine={audioEngine} />
             </CollapsibleSection>
           </div>
         </div>
         <div className="mx-auto w-full max-w-4xl">
-          <CollapsibleSection title="乐谱编辑器">
+          <CollapsibleSection title={t('sections.scoreEditor')}>
             <ABCEditor
               audioEngine={audioEngine}
               onNoteStart={handleNoteStart}

@@ -1,0 +1,11 @@
+{
+  "language": {
+    "label": "Language",
+    "zh-CN": "中文",
+    "en": "English"
+  },
+  "actions": {
+    "play": "Play",
+    "stop": "Stop"
+  }
+}

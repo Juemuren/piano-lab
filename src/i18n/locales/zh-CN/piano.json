@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "钢琴模拟器"
+  },
+  "sections": {
+    "harmonicSynthesizer": "谐波合成器",
+    "timbreAdjuster": "音色调节器",
+    "transferFunctionModifier": "传递函数修改器",
+    "scoreEditor": "乐谱编辑器"
+  },
+  "oscillator": {
+    "sine": "正弦波",
+    "triangle": "三角波",
+    "sawtooth": "锯齿波",
+    "square": "方波"
+  },
+  "timbre": {
+    "ethereal": "空灵",
+    "metallic": "金属",
+    "pure": "纯净",
+    "bright": "明亮",
+    "normal": "常规",
+    "soft": "柔和",
+    "realistic": "真实",
+    "custom": "自定义"
+  },
+  "transferFunction": {
+    "delay": "纯延时",
+    "single_echo": "单回声",
+    "multi_echo": "多回声",
+    "all_pass": "全通",
+    "low_pass": "低通",
+    "high_pass": "高通",
+    "band_pass": "带通"
+  },
+  "controls": {
+    "volume": "音量系数",
+    "attackTime": "起音时间",
+    "decayTime": "衰音时间",
+    "releaseTime": "释音时间",
+    "sustainGain": "稳音增益",
+    "silenceGain": "静音增益",
+    "strikePoint": "击弦点",
+    "decayRate": "衰减率",
+    "powerExponent": "幂指数",
+    "baseFrequency": "基频",
+    "delayTime": "延迟时间",
+    "attenuation": "衰减系数",
+    "minFrequency": "最小频率",
+    "maxFrequency": "最大频率"
+  },
+  "charts": {
+    "magnitudeResponse": "幅频特性",
+    "phaseResponse": "相频特性"
+  },
+  "score": {
+    "custom": "自定义",
+    "placeholder": "输入乐谱或选择预设",
+    "presets": {
+      "小星星": "小星星",
+      "生日快乐": "生日快乐",
+      "春日影": "春日影",
+      "幻梦": "幻梦",
+      "约会大作战": "约会大作战"
+    }
+  },
+  "footer": {
+    "tips": {
+      "title": "使用技巧",
+      "body": "在乐谱编辑器中，单击乐谱中的音符可以选中并播放这个音符，而双击则会直接从选中处演奏整个乐谱"
+    },
+    "notation": {
+      "title": "乐谱编码",
+      "body": "乐谱使用 ABC Notation 编码格式，详细的标准可阅读官方教程"
+    },
+    "principle": {
+      "title": "运行原理",
+      "body": "声音基于 Web Audio API 纯物理合成，数学原理和代码实现可分别参考我的科普文章与源代码"
+    },
+    "links": {
+      "article": "数学原理科普文章",
+      "repository": "源代码仓库",
+      "abc": "乐谱格式教程"
+    }
+  }
+}

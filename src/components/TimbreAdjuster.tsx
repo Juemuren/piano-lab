@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Timbre, TimbreType } from '../types';
 import { getTimbrePreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -12,6 +13,7 @@ interface TimbreAdjusterProps {
 }
 
 const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({ audioEngine }) => {
+  const { t } = useTranslation('piano');
   const [lambda, setLambda] = useState(0.5);
   const [sigma, setSigma] = useState(0.8);
   const [p, setP] = useState(1.5);
@@ -74,20 +76,20 @@ const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({ audioEngine }) => {
             handlePresetChange(e.target.value as TimbreType);
           }}
         >
-          <option value="ethereal">空灵</option>
-          <option value="metallic">金属</option>
-          <option value="pure">纯净</option>
-          <option value="bright">明亮</option>
-          <option value="normal">常规</option>
-          <option value="soft">柔和</option>
-          <option value="realistic">真实</option>
-          <option value="custom">自定义</option>
+          <option value="ethereal">{t('timbre.ethereal')}</option>
+          <option value="metallic">{t('timbre.metallic')}</option>
+          <option value="pure">{t('timbre.pure')}</option>
+          <option value="bright">{t('timbre.bright')}</option>
+          <option value="normal">{t('timbre.normal')}</option>
+          <option value="soft">{t('timbre.soft')}</option>
+          <option value="realistic">{t('timbre.realistic')}</option>
+          <option value="custom">{t('timbre.custom')}</option>
         </ControlSelect>
       </div>
 
       {timbre.type === 'normal' && (
         <ControlRange
-          label="击弦点"
+          label={t('controls.strikePoint')}
           min="0"
           max="1"
           step="0.01"
@@ -99,7 +101,7 @@ const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({ audioEngine }) => {
 
       {(timbre.type === 'soft' || timbre.type === 'realistic') && (
         <ControlRange
-          label="衰减率"
+          label={t('controls.decayRate')}
           min="0.01"
           max="1"
           step="0.01"
@@ -111,7 +113,7 @@ const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({ audioEngine }) => {
 
       {timbre.type === 'realistic' && (
         <ControlRange
-          label="幂指数"
+          label={t('controls.powerExponent')}
           min="0.5"
           max="4"
           step="0.1"

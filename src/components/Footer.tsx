@@ -1,4 +1,5 @@
 import { type ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const articleUrl =
   'https://juemuren.github.io/MyBlogs/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/';
@@ -90,6 +91,8 @@ function FooterLink({ href, label }: FooterLinkProps) {
 }
 
 function Footer() {
+  const { t } = useTranslation('piano');
+
   return (
     <footer className="px-6 py-8 bg-app-muted/75 dark:bg-app-muted-dark/25">
       <div
@@ -100,22 +103,24 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
-          <FooterPanel title="使用技巧">
-            在乐谱编辑器中，单击乐谱中的音符可以选中并播放这个音符，而双击则会直接从选中处演奏整个乐谱
+          <FooterPanel title={t('footer.tips.title')}>
+            {t('footer.tips.body')}
           </FooterPanel>
-          <FooterPanel title="乐谱编码">
-            乐谱使用 ABC Notation 编码格式，详细的标准可阅读官方教程
+          <FooterPanel title={t('footer.notation.title')}>
+            {t('footer.notation.body')}
           </FooterPanel>
-          <FooterPanel title="运行原理">
-            声音基于 Web Audio API
-            纯物理合成，数学原理和代码实现可分别参考我的科普文章与源代码
+          <FooterPanel title={t('footer.principle.title')}>
+            {t('footer.principle.body')}
           </FooterPanel>
         </div>
 
         <div className="grid gap-3 sm:justify-items-end">
-          <FooterLink href={articleUrl} label="数学原理科普文章" />
-          <FooterLink href={repositoryUrl} label="源代码仓库" />
-          <FooterLink href={abcUrl} label="乐谱格式教程" />
+          <FooterLink href={articleUrl} label={t('footer.links.article')} />
+          <FooterLink
+            href={repositoryUrl}
+            label={t('footer.links.repository')}
+          />
+          <FooterLink href={abcUrl} label={t('footer.links.abc')} />
         </div>
       </div>
     </footer>

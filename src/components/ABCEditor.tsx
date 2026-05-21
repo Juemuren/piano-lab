@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   type AbcElem,
   type NoteTimingEvent,
@@ -33,6 +34,7 @@ export default function ABCNotationPlayer({
   onNoteEnd,
   onStop,
 }: ABCNotationPlayerProps) {
+  const { t } = useTranslation(['common', 'piano']);
   const [abcPlayer] = useState(
     () => new ABCPlayer(audioEngine, onNoteStart, onNoteEnd),
   );
@@ -171,10 +173,10 @@ export default function ABCNotationPlayer({
             if (isPlaying) handleStop();
           }}
         >
-          <option value={-1}>自定义</option>
+          <option value={-1}>{t('piano:score.custom')}</option>
           {ABCPresets.map((name, index) => (
             <option key={index} value={index}>
-              {name}
+              {t(`piano:score.presets.${name}`)}
             </option>
           ))}
         </ControlSelect>
@@ -188,7 +190,7 @@ export default function ABCNotationPlayer({
           setSelectedPresetIndex(-1);
           if (isPlaying) handleStop();
         }}
-        placeholder="输入乐谱或选择预设"
+        placeholder={t('piano:score.placeholder')}
         className="
           w-full h-48 p-3 mb-4 text-sm resize-none
           bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/60
@@ -206,7 +208,7 @@ export default function ABCNotationPlayer({
               ${isPlaying ? 'bg-app-danger hover:bg-app-danger-strong' : 'bg-app-success hover:bg-app-success-strong'}
             `}
           >
-            {isPlaying ? '停止播放' : '开始播放'}
+            {isPlaying ? t('common:actions.stop') : t('common:actions.play')}
           </button>
         )}
       </div>

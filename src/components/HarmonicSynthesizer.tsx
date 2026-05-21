@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
@@ -11,6 +12,7 @@ interface HarmonicSynthesizerProps {
 const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
   audioEngine,
 }) => {
+  const { t } = useTranslation('piano');
   const [oscillatorType, setOscillatorType] = useState(
     audioEngine.getOscillatorType(),
   );
@@ -59,16 +61,16 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
               setOscillatorType(e.target.value as OscillatorType)
             }
           >
-            <option value="sine">正弦波</option>
-            <option value="triangle">三角波</option>
-            <option value="sawtooth">锯齿波</option>
-            <option value="square">方波</option>
+            <option value="sine">{t('oscillator.sine')}</option>
+            <option value="triangle">{t('oscillator.triangle')}</option>
+            <option value="sawtooth">{t('oscillator.sawtooth')}</option>
+            <option value="square">{t('oscillator.square')}</option>
           </ControlSelect>
         </div>
       </div>
 
       <ControlRange
-        label="音量系数"
+        label={t('controls.volume')}
         min="0"
         max="1"
         step="0.01"
@@ -77,7 +79,7 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         onChange={setVolume}
       />
       <ControlRange
-        label="起音时间"
+        label={t('controls.attackTime')}
         min="0.001"
         max="0.1"
         step="0.001"
@@ -86,7 +88,7 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         onChange={setAttackTime}
       />
       <ControlRange
-        label="衰音时间"
+        label={t('controls.decayTime')}
         min="0.01"
         max="1"
         step="0.01"
@@ -95,7 +97,7 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         onChange={setDecayTime}
       />
       <ControlRange
-        label="释音时间"
+        label={t('controls.releaseTime')}
         min="0.01"
         max="1"
         step="0.01"
@@ -104,7 +106,7 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         onChange={setReleaseTime}
       />
       <ControlRange
-        label="稳音增益"
+        label={t('controls.sustainGain')}
         min="0.1"
         max="1"
         step="0.01"
@@ -113,7 +115,7 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         onChange={setSustainGain}
       />
       <ControlRange
-        label="静音增益"
+        label={t('controls.silenceGain')}
         min="0.000001"
         max="0.001"
         step="0.000001"

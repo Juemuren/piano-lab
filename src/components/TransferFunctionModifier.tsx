@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { TransferFunction, TransferFunctionType } from '../types';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -14,6 +15,7 @@ interface TransferFunctionModifierProps {
 const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
   audioEngine,
 }) => {
+  const { t } = useTranslation('piano');
   const [baseFreq, setBaseFreq] = useState<number>(440);
   const [transferFunction, setTransferFunction] = useState<TransferFunction>(
     () => getTransferFunctionPreset('delay', 0, 0.1, 20, 20000, 440),
@@ -75,19 +77,23 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
               handlePresetChange(e.target.value as TransferFunctionType)
             }
           >
-            <option value="delay">纯延时</option>
-            <option value="single_echo">单回声</option>
-            <option value="multi_echo">多回声</option>
-            <option value="all_pass">全通</option>
-            <option value="low_pass">低通</option>
-            <option value="high_pass">高通</option>
-            <option value="band_pass">带通</option>
+            <option value="delay">{t('transferFunction.delay')}</option>
+            <option value="single_echo">
+              {t('transferFunction.single_echo')}
+            </option>
+            <option value="multi_echo">
+              {t('transferFunction.multi_echo')}
+            </option>
+            <option value="all_pass">{t('transferFunction.all_pass')}</option>
+            <option value="low_pass">{t('transferFunction.low_pass')}</option>
+            <option value="high_pass">{t('transferFunction.high_pass')}</option>
+            <option value="band_pass">{t('transferFunction.band_pass')}</option>
           </ControlSelect>
         </div>
       </div>
 
       <ControlRange
-        label="基频"
+        label={t('controls.baseFrequency')}
         min="20"
         max="20000"
         step="1"
@@ -102,7 +108,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
         transferFunction.type === 'multi_echo' ||
         transferFunction.type === 'all_pass') && (
         <ControlRange
-          label="延迟时间"
+          label={t('controls.delayTime')}
           min="0"
           max="100"
           step="0.1"
@@ -116,7 +122,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
         transferFunction.type === 'multi_echo' ||
         transferFunction.type === 'all_pass') && (
         <ControlRange
-          label="衰减系数"
+          label={t('controls.attenuation')}
           min="0"
           max="0.5"
           step="0.01"
@@ -129,7 +135,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
       {(transferFunction.type === 'high_pass' ||
         transferFunction.type === 'band_pass') && (
         <ControlRange
-          label="最小频率"
+          label={t('controls.minFrequency')}
           min="20"
           max="20000"
           step="10"
@@ -142,7 +148,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
       {(transferFunction.type === 'low_pass' ||
         transferFunction.type === 'band_pass') && (
         <ControlRange
-          label="最大频率"
+          label={t('controls.maxFrequency')}
           min="20"
           max="20000"
           step="10"
@@ -152,7 +158,9 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
         />
       )}
 
-      <h3 className="mb-2 text-lg font-medium">幅频特性</h3>
+      <h3 className="mb-2 text-lg font-medium">
+        {t('charts.magnitudeResponse')}
+      </h3>
       <VerticalSliderGroup
         values={transferFunction.magnitudes}
         labels={harmonicLabels}
@@ -163,7 +171,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
         disabled
       />
 
-      <h3 className="mb-2 text-lg font-medium">相频特性</h3>
+      <h3 className="mb-2 text-lg font-medium">{t('charts.phaseResponse')}</h3>
       <VerticalSliderGroup
         values={transferFunction.phases}
         labels={harmonicLabels}

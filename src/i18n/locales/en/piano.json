@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Piano Simulator"
+  },
+  "sections": {
+    "harmonicSynthesizer": "Harmonic Synthesizer",
+    "timbreAdjuster": "Timbre Adjuster",
+    "transferFunctionModifier": "Transfer Function Modifier",
+    "scoreEditor": "Score Editor"
+  },
+  "oscillator": {
+    "sine": "Sine",
+    "triangle": "Triangle",
+    "sawtooth": "Sawtooth",
+    "square": "Square"
+  },
+  "timbre": {
+    "ethereal": "Ethereal",
+    "metallic": "Metallic",
+    "pure": "Pure",
+    "bright": "Bright",
+    "normal": "Normal",
+    "soft": "Soft",
+    "realistic": "Realistic",
+    "custom": "Custom"
+  },
+  "transferFunction": {
+    "delay": "Delay",
+    "single_echo": "Single Echo",
+    "multi_echo": "Multi Echo",
+    "all_pass": "All Pass",
+    "low_pass": "Low Pass",
+    "high_pass": "High Pass",
+    "band_pass": "Band Pass"
+  },
+  "controls": {
+    "volume": "Volume",
+    "attackTime": "Attack Time",
+    "decayTime": "Decay Time",
+    "releaseTime": "Release Time",
+    "sustainGain": "Sustain Gain",
+    "silenceGain": "Silence Gain",
+    "strikePoint": "Strike Point",
+    "decayRate": "Decay Rate",
+    "powerExponent": "Power Exponent",
+    "baseFrequency": "Base Frequency",
+    "delayTime": "Delay Time",
+    "attenuation": "Attenuation",
+    "minFrequency": "Minimum Frequency",
+    "maxFrequency": "Maximum Frequency"
+  },
+  "charts": {
+    "magnitudeResponse": "Magnitude Response",
+    "phaseResponse": "Phase Response"
+  },
+  "score": {
+    "custom": "Custom",
+    "placeholder": "Enter a score or choose a preset",
+    "presets": {
+      "小星星": "Twinkle, Twinkle, Little Star",
+      "生日快乐": "Happy Birthday",
+      "春日影": "Haruhikage",
+      "幻梦": "Phantom Dream",
+      "约会大作战": "Date A Live"
+    }
+  },
+  "footer": {
+    "tips": {
+      "title": "Tips",
+      "body": "In the score editor, click a note to select and play it. Double-click a note to play the whole score from that position."
+    },
+    "notation": {
+      "title": "Score Notation",
+      "body": "Scores use ABC Notation. Read the official tutorial for the full standard."
+    },
+    "principle": {
+      "title": "How It Works",
+      "body": "Sound is physically synthesized with the Web Audio API. See the article and source code for the math and implementation."
+    },
+    "links": {
+      "article": "Math Article",
+      "repository": "Source Repository",
+      "abc": "Score Format Tutorial"
+    }
+  }
+}
