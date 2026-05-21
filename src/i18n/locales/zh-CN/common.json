@@ -1,8 +1,8 @@
 {
   "language": {
     "label": "语言",
-    "zh-CN": "中文",
-    "en-US": "English"
+    "en-US": "English",
+    "zh-CN": "中文"
   },
   "actions": {
     "play": "开始播放",

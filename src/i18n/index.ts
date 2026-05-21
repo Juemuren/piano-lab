@@ -5,49 +5,35 @@ import commonEn from './locales/en-US/common.json';
 import pianoEn from './locales/en-US/piano.json';
 import commonZhCN from './locales/zh-CN/common.json';
 import pianoZhCN from './locales/zh-CN/piano.json';
+import {
+  getInitialLanguage,
+  syncDocumentLanguage,
+} from './bootstrap';
+import {
+  defaultLanguage,
+  languageStorageKey,
+  normalizeLanguage,
+  supportedLanguages,
+} from './settings';
 
-export const supportedLanguages = ['zh-CN', 'en-US'] as const;
+export { defaultLanguage, supportedLanguages };
+export type { SupportedLanguage } from './settings';
 
-export type SupportedLanguage = (typeof supportedLanguages)[number];
-
-const languageStorageKey = 'web-piano-simulator.language';
-
-function normalizeLanguage(language?: string | null): SupportedLanguage | null {
-  if (!language) return null;
-  if (language.toLowerCase().startsWith('zh')) return 'zh-CN';
-  if (language.toLowerCase().startsWith('en')) return 'en-US';
-  return null;
-}
-
-function syncDocumentLanguage(language: SupportedLanguage) {
-  document.documentElement.lang = language;
-  document.documentElement.dir = 'ltr';
-  document.title = i18n.t('piano:app.title', { lng: language });
-}
-
-const savedLanguage = normalizeLanguage(
-  window.localStorage.getItem(languageStorageKey),
-);
-const browserLanguage = (
-  window.navigator.languages || [window.navigator.language]
-)
-  .map(normalizeLanguage)
-  .find(Boolean);
-const initialLanguage = savedLanguage ?? browserLanguage ?? 'zh-CN';
+const initialLanguage = getInitialLanguage();
 
 i18n.use(initReactI18next).init({
   resources: {
-    'zh-CN': {
-      common: commonZhCN,
-      piano: pianoZhCN,
-    },
     'en-US': {
       common: commonEn,
       piano: pianoEn,
     },
+    'zh-CN': {
+      common: commonZhCN,
+      piano: pianoZhCN,
+    },
   },
   lng: initialLanguage,
-  fallbackLng: 'en-US',
+  fallbackLng: defaultLanguage,
   defaultNS: 'common',
   ns: ['common', 'piano'],
   interpolation: {
