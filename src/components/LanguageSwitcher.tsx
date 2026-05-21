@@ -7,10 +7,10 @@ function LanguageSwitcher() {
 
   return (
     <label
-      className="flex min-w-36 items-center gap-2 text-sm
+      className="flex w-40 items-center gap-2 text-sm
       text-app-muted dark:text-app-muted-dark"
     >
-      <span>{t('language.label')}</span>
+      <span className="shrink-0 whitespace-nowrap">{t('language.label')}</span>
       <ControlSelect
         value={i18n.resolvedLanguage ?? i18n.language}
         onChange={(event) => {

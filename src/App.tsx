@@ -39,16 +39,16 @@ function App() {
     <>
       <section
         className="
-          w-full mx-auto min-h-screen grow px-3
+          relative w-full mx-auto min-h-screen grow px-3 pt-16 pb-6
           flex flex-col justify-center gap-5
           bg-app-bg dark:bg-app-bg-dark
           text-app-text dark:text-app-text-dark
         "
       >
-        <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
-          <h1 className="text-3xl font-bold">{t('app.title')}</h1>
+        <div className="absolute right-3 top-4 sm:right-6">
           <LanguageSwitcher />
         </div>
+        <h1 className="text-center text-3xl font-bold">{t('app.title')}</h1>
 
         <div
           className="
