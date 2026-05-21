@@ -3,6 +3,8 @@ import { initReactI18next } from 'react-i18next';
 
 import commonEn from './locales/en-US/common.json';
 import pianoEn from './locales/en-US/piano.json';
+import commonJaJP from './locales/ja-JP/common.json';
+import pianoJaJP from './locales/ja-JP/piano.json';
 import commonZhCN from './locales/zh-CN/common.json';
 import pianoZhCN from './locales/zh-CN/piano.json';
 import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
@@ -23,6 +25,10 @@ i18n.use(initReactI18next).init({
     'en-US': {
       common: commonEn,
       piano: pianoEn,
+    },
+    'ja-JP': {
+      common: commonJaJP,
+      piano: pianoJaJP,
     },
     'zh-CN': {
       common: commonZhCN,
