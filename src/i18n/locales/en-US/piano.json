@@ -57,10 +57,10 @@
     "custom": "Custom",
     "placeholder": "Enter a score or choose a preset",
     "presets": {
-      "小星星": "Twinkle, Twinkle, Little Star",
+      "小星星": "Twinkle Twinkle Little Star",
       "生日快乐": "Happy Birthday",
       "春日影": "Haruhikage",
-      "幻梦": "Phantom Dream",
+      "幻梦": "One More Chance",
       "约会大作战": "Date A Live"
     }
   },
