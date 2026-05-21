@@ -1,6 +1,21 @@
 # 钢琴模拟器
 
-[![Deploy](https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml)
+[![action-deploy][badge-action-deploy]][link-action-deploy]
+[![action-release][badge-action-release]][link-action-release]
+
+[![website][badge-website]][link-website]
+[![release][badge-release]][link-release]
+[![license][badge-license]](LICENSE)
+
+[badge-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg
+[badge-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml/badge.svg
+[badge-website]: https://img.shields.io/badge/website-github.io-green
+[badge-release]: https://img.shields.io/github/release/Juemuren/web-piano-simulator
+[badge-license]: https://img.shields.io/github/license/Juemuren/web-piano-simulator
+[link-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml
+[link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
+[link-website]: https://Juemuren.github.io/web-piano-simulator/
+[link-release]: https://github.com/Juemuren/web-piano-simulator/releases
 
 ## 特性
 
