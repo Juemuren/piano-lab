@@ -75,7 +75,7 @@
 
 ## 原理
 
-> 詳しい説明は、記事 [音楽の数学原理：振動する弦から現代音楽理論まで](https://juemuren.github.io/MyBlogs/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/) を参照してください。
+> 詳しい説明は、記事 [音楽の数学原理：振動する弦から現代音楽理論まで](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/) を参照してください。
 
 ### 合成
 

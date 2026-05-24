@@ -2,7 +2,7 @@ import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const articleUrl =
-  'https://juemuren.github.io/MyBlogs/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/';
+  'https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/';
 const repositoryUrl = 'https://github.com/Juemuren/web-piano-simulator/';
 const abcUrl = 'https://abcnotation.com/learn';
 
