@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
-import ControlRange from './shared/ControRange';
+import ControlRange from './shared/ControlRange';
 
 interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;

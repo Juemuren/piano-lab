@@ -5,7 +5,7 @@ import { getTimbrePreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
-import ControlRange from './shared/ControRange';
+import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
 
 interface TimbreAdjusterProps {
