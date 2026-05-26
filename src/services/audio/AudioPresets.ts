@@ -5,8 +5,6 @@ import type {
   TimbreType,
 } from '../../types';
 
-const HARMONICS_NUM = 10;
-
 function delayToArg(delay: number, freq: number) {
   return -2 * Math.PI * delay * freq;
 }
@@ -30,7 +28,7 @@ export function getTimbrePreset(
   lambda: number = 0.5,
   sigma: number = 0.8,
   p: number = 1.5,
-  harmonics: number = HARMONICS_NUM,
+  harmonics: number,
 ): Timbre {
   const amplitudes: number[] = [];
 
@@ -72,7 +70,7 @@ export function getTransferFunctionPreset(
   minFreq: number,
   maxFreq: number,
   baseFreq: number,
-  harmonics: number = HARMONICS_NUM,
+  harmonics: number,
 ): TransferFunction {
   const magnitudes: number[] = [];
   const phases: number[] = [];

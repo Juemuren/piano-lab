@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TransferFunction, TransferFunctionType } from '../types';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
@@ -10,15 +10,42 @@ import VerticalSliderGroup from './shared/VerticalSliderGroup';
 
 interface TransferFunctionModifierProps {
   audioEngine: AudioEngine;
+  harmonicCount: number;
 }
 
 const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
   audioEngine,
+  harmonicCount,
 }) => {
   const { t } = useTranslation('piano');
   const [baseFreq, setBaseFreq] = useState<number>(440);
-  const [transferFunction, setTransferFunction] = useState<TransferFunction>(
-    () => getTransferFunctionPreset('delay', 0, 0.1, 20, 20000, 440),
+  const [transferFunctionType, setTransferFunctionType] =
+    useState<TransferFunctionType>('delay');
+  const [tau, setTau] = useState(0);
+  const [alpha, setAlpha] = useState(0.1);
+  const [minFreq, setMinFreq] = useState(20);
+  const [maxFreq, setMaxFreq] = useState(20000);
+
+  const transferFunction = useMemo<TransferFunction>(
+    () =>
+      getTransferFunctionPreset(
+        transferFunctionType,
+        tau,
+        alpha,
+        minFreq,
+        maxFreq,
+        baseFreq,
+        harmonicCount,
+      ),
+    [
+      alpha,
+      baseFreq,
+      harmonicCount,
+      maxFreq,
+      minFreq,
+      tau,
+      transferFunctionType,
+    ],
   );
 
   useEffect(() => {
@@ -26,16 +53,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
   }, [transferFunction, audioEngine]);
 
   const handlePresetChange = (preset: TransferFunctionType) => {
-    setTransferFunction((prev) =>
-      getTransferFunctionPreset(
-        preset,
-        prev.tau,
-        prev.alpha,
-        prev.minFreq,
-        prev.maxFreq,
-        baseFreq,
-      ),
-    );
+    setTransferFunctionType(preset);
   };
 
   const handleParamsChange = (updates: {
@@ -45,17 +63,11 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
     maxFreq?: number;
     baseFreq?: number;
   }) => {
-    setTransferFunction((prev) =>
-      getTransferFunctionPreset(
-        prev.type,
-        updates.tau ?? prev.tau,
-        updates.alpha ?? prev.alpha,
-        updates.minFreq ?? prev.minFreq,
-        updates.maxFreq ?? prev.maxFreq,
-        updates.baseFreq ?? baseFreq,
-      ),
-    );
-    if (updates.baseFreq) setBaseFreq(updates.baseFreq);
+    if (updates.tau !== undefined) setTau(updates.tau);
+    if (updates.alpha !== undefined) setAlpha(updates.alpha);
+    if (updates.minFreq !== undefined) setMinFreq(updates.minFreq);
+    if (updates.maxFreq !== undefined) setMaxFreq(updates.maxFreq);
+    if (updates.baseFreq !== undefined) setBaseFreq(updates.baseFreq);
   };
 
   const harmonicLabels = Array.from(

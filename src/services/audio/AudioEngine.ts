@@ -1,9 +1,17 @@
 import type { TransferFunction, Timbre } from '../../types';
 import { getTimbrePreset, getTransferFunctionPreset } from './AudioPresets';
+import { DEFAULT_HARMONIC_COUNT } from './constants';
 
 export class AudioEngine {
   private audioContext: AudioContext | null = null;
-  private timbre: Timbre = getTimbrePreset('ethereal', 0.5);
+  private harmonicCount: number = DEFAULT_HARMONIC_COUNT;
+  private timbre: Timbre = getTimbrePreset(
+    'ethereal',
+    0.5,
+    0.8,
+    1.5,
+    this.harmonicCount,
+  );
   private transferFunction: TransferFunction = getTransferFunctionPreset(
     'delay',
     0,
@@ -11,6 +19,7 @@ export class AudioEngine {
     20,
     20000,
     440,
+    this.harmonicCount,
   );
 
   private oscillatorType: OscillatorType = 'sine';
@@ -41,6 +50,14 @@ export class AudioEngine {
 
   getTransferFunction(): TransferFunction {
     return this.transferFunction;
+  }
+
+  getHarmonicCount(): number {
+    return this.harmonicCount;
+  }
+
+  setHarmonicCount(value: number) {
+    this.harmonicCount = value;
   }
 
   getOscillatorType(): OscillatorType {

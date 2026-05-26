@@ -4,13 +4,21 @@ import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
+import {
+  MAX_HARMONIC_COUNT,
+  MIN_HARMONIC_COUNT,
+} from '../services/audio/constants';
 
 interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;
+  harmonicCount: number;
+  onHarmonicCountChange: (value: number) => void;
 }
 
 const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
   audioEngine,
+  harmonicCount,
+  onHarmonicCountChange,
 }) => {
   const { t } = useTranslation('piano');
   const [oscillatorType, setOscillatorType] = useState(
@@ -50,6 +58,14 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
   useEffect(() => {
     audioEngine.setSilenceGain(silenceGain);
   }, [silenceGain, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setHarmonicCount(harmonicCount);
+  }, [harmonicCount, audioEngine]);
+
+  const handleHarmonicCountChange = (value: number) => {
+    onHarmonicCountChange(Math.round(value));
+  };
 
   return (
     <ControlPanel>
@@ -123,6 +139,19 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         displayValue={silenceGain.toExponential(2)}
         onChange={setSilenceGain}
       />
+      <ControlRange
+        label={t('controls.harmonicCount')}
+        min={MIN_HARMONIC_COUNT}
+        max={MAX_HARMONIC_COUNT}
+        step="1"
+        value={harmonicCount}
+        displayValue={harmonicCount.toString()}
+        accentClassName="accent-amber-500"
+        onChange={handleHarmonicCountChange}
+      />
+      <p className="-mt-2 mb-4 rounded-lg border border-amber-300/70 bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:border-amber-400/40 dark:bg-amber-950/30 dark:text-amber-100">
+        {t('controls.harmonicCountWarning')}
+      </p>
     </ControlPanel>
   );
 };

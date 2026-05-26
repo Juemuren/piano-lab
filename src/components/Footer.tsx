@@ -22,10 +22,10 @@ function FooterPanel({ title, children }: FooterPanelProps) {
   return (
     <section
       className="
-      rounded-lg
-      bg-app-bg/50 dark:bg-app-bg-dark/50
-      border border-app-border dark:border-app-border-dark
-    "
+        rounded-lg
+        bg-app-bg/50 dark:bg-app-bg-dark/50
+        border border-app-border dark:border-app-border-dark
+      "
     >
       <button
         type="button"

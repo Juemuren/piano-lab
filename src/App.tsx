@@ -13,6 +13,9 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 function App() {
   const { t } = useTranslation('piano');
   const [audioEngine] = useState(() => new AudioEngine());
+  const [harmonicCount, setHarmonicCount] = useState(() =>
+    audioEngine.getHarmonicCount(),
+  );
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
 
   const handleNoteStart = useCallback((pitch: number) => {
@@ -52,22 +55,33 @@ function App() {
 
         <div
           className="
-          flex flex-col items-center gap-4
-          xl:flex-row xl:items-start xl:justify-center"
+            flex flex-col items-center gap-4
+            xl:flex-row xl:items-start xl:justify-center
+          "
         >
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl xl:max-w-xl">
             <CollapsibleSection title={t('sections.harmonicSynthesizer')}>
-              <HarmonicSynthesizer audioEngine={audioEngine} />
+              <HarmonicSynthesizer
+                audioEngine={audioEngine}
+                harmonicCount={harmonicCount}
+                onHarmonicCountChange={setHarmonicCount}
+              />
             </CollapsibleSection>
           </div>
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl xl:max-w-xl">
             <CollapsibleSection title={t('sections.timbreAdjuster')}>
-              <TimbreAdjuster audioEngine={audioEngine} />
+              <TimbreAdjuster
+                audioEngine={audioEngine}
+                harmonicCount={harmonicCount}
+              />
             </CollapsibleSection>
           </div>
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl xl:max-w-xl">
             <CollapsibleSection title={t('sections.transferFunctionModifier')}>
-              <TransferFunctionModifier audioEngine={audioEngine} />
+              <TransferFunctionModifier
+                audioEngine={audioEngine}
+                harmonicCount={harmonicCount}
+              />
             </CollapsibleSection>
           </div>
         </div>
