@@ -23,7 +23,7 @@ function FooterPanel({ title, children }: FooterPanelProps) {
     <section
       className="
         rounded-lg
-        bg-app-bg/50 dark:bg-app-bg-dark/50
+        bg-app/80 dark:bg-app-dark/20
         border border-app-border dark:border-app-border-dark
       "
     >
@@ -65,7 +65,7 @@ function FooterLink({ href, label }: FooterLinkProps) {
       className="
         group w-full flex items-center justify-between px-4 py-3
         text-left text-app-muted dark:text-app-muted-dark
-        rounded-lg bg-app-bg/50 dark:bg-app-bg-dark/50
+        rounded-lg bg-app-surface-muted/20 dark:bg-app-surface-muted-dark/80
         border border-app-border dark:border-app-border-dark
         transition-colors
         hover:text-app-accent-strong dark:hover:text-app-accent-weak
@@ -94,7 +94,7 @@ function Footer() {
   const { t } = useTranslation('piano');
 
   return (
-    <footer className="px-6 py-8 bg-app-muted/75 dark:bg-app-muted-dark/25">
+    <footer className="px-6 py-8 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75">
       <div
         className="
           mx-auto w-full max-w-4xl text-left
