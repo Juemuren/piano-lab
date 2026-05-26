@@ -18,20 +18,22 @@ export const LANGUAGE_DISPLAY_NAMES: Record<SupportedLanguage, string> = {
   'zh-CN': '中文',
 };
 
-const LANGUAGE_ALIASES: Array<[prefix: string, language: SupportedLanguage]> = [
-  ['en', 'en-US'],
-  ['ja', 'ja-JP'],
-  ['zh', 'zh-CN'],
-];
+const LANGUAGE_ALIASES: Array<{ language: string; alias: SupportedLanguage }> =
+  [
+    { language: 'en', alias: 'en-US' },
+    { language: 'ja', alias: 'ja-JP' },
+    { language: 'zh', alias: 'zh-CN' },
+  ];
 
 export function normalizeLanguage(
   language?: string | null,
 ): SupportedLanguage | null {
   if (!language) return null;
 
-  const normalized = language.toLowerCase();
+  const loweredLanguage = language.toLowerCase();
   return (
-    LANGUAGE_ALIASES.find(([prefix]) => normalized.startsWith(prefix))?.[1] ??
-    null
+    LANGUAGE_ALIASES.find((languageAlias) =>
+      loweredLanguage.startsWith(languageAlias.language),
+    )?.alias ?? null
   );
 }
