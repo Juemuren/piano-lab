@@ -1,34 +1,53 @@
 import type { TransferFunction, Timbre } from '../../types';
 import { getTimbrePreset, getTransferFunctionPreset } from './AudioPresets';
-import { DEFAULT_HARMONIC_COUNT } from './constants';
+import {
+  DEFAULT_TIMBRE_TYPE,
+  DEFAULT_TIMBRE_DECAY_RATE,
+  DEFAULT_TIMBRE_POWER_EXPONENT,
+  DEFAULT_TIMBRE_STRIKE_POINT,
+  DEFAULT_TRANSFER_TYPE,
+  DEFAULT_TRANSFER_ATTENUATION,
+  DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_DELAY_MS,
+  DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
+  DEFAULT_SYNTH_OSCILLATOR_TYPE,
+  DEFAULT_SYNTH_HARMONIC_COUNT,
+  DEFAULT_SYNTH_VOLUME_RATIO,
+  DEFAULT_SYNTH_ATTACK_TIME_SECONDS,
+  DEFAULT_SYNTH_DECAY_TIME_SECONDS,
+  DEFAULT_SYNTH_RELEASE_TIME_SECONDS,
+  DEFAULT_SYNTH_SUSTAIN_GAIN,
+  DEFAULT_SYNTH_SILENCE_GAIN,
+} from '../../constants';
 
 export class AudioEngine {
   private audioContext: AudioContext | null = null;
-  private harmonicCount: number = DEFAULT_HARMONIC_COUNT;
+  private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private timbre: Timbre = getTimbrePreset(
-    'ethereal',
-    0.5,
-    0.8,
-    1.5,
+    DEFAULT_TIMBRE_TYPE,
+    DEFAULT_TIMBRE_STRIKE_POINT,
+    DEFAULT_TIMBRE_DECAY_RATE,
+    DEFAULT_TIMBRE_POWER_EXPONENT,
     this.harmonicCount,
   );
   private transferFunction: TransferFunction = getTransferFunctionPreset(
-    'delay',
-    0,
-    0,
-    20,
-    20000,
-    440,
+    DEFAULT_TRANSFER_TYPE,
+    DEFAULT_TRANSFER_DELAY_MS,
+    DEFAULT_TRANSFER_ATTENUATION,
+    DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
+    DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
+    DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
     this.harmonicCount,
   );
 
-  private oscillatorType: OscillatorType = 'sine';
-  private volumeRatio: number = 0.2;
-  private attackTime: number = 0.01;
-  private decayTime: number = 0.4;
-  private releaseTime: number = 0.3;
-  private sustainGain: number = 0.4;
-  private silenceGain: number = 0.00001;
+  private oscillatorType: OscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
+  private volumeRatio: number = DEFAULT_SYNTH_VOLUME_RATIO;
+  private attackTime: number = DEFAULT_SYNTH_ATTACK_TIME_SECONDS;
+  private decayTime: number = DEFAULT_SYNTH_DECAY_TIME_SECONDS;
+  private releaseTime: number = DEFAULT_SYNTH_RELEASE_TIME_SECONDS;
+  private sustainGain: number = DEFAULT_SYNTH_SUSTAIN_GAIN;
+  private silenceGain: number = DEFAULT_SYNTH_SILENCE_GAIN;
 
   init() {
     if (!this.audioContext) {

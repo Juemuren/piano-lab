@@ -1,24 +1,24 @@
-export const languageStorageKey = 'web-piano-simulator.language';
+export const LANGUAGE_STORAGE_KEY = 'web-piano-simulator.language';
 
-export const defaultLanguage = 'en-US';
+export const DEFAULT_LANGUAGE = 'en-US';
 
-export const supportedLanguages = ['en-US', 'ja-JP', 'zh-CN'] as const;
+export const SUPPORTED_LANGUAGES = ['en-US', 'ja-JP', 'zh-CN'] as const;
 
-export type SupportedLanguage = (typeof supportedLanguages)[number];
+export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
-export const languageDocumentTitles: Record<SupportedLanguage, string> = {
+export const LANGUAGE_DOCUMENT_TITLES: Record<SupportedLanguage, string> = {
   'en-US': 'Piano Simulator',
   'ja-JP': 'ピアノシミュレーター',
   'zh-CN': '钢琴模拟器',
 };
 
-export const languageDisplayNames: Record<SupportedLanguage, string> = {
+export const LANGUAGE_DISPLAY_NAMES: Record<SupportedLanguage, string> = {
   'en-US': 'English',
   'ja-JP': '日本語',
   'zh-CN': '中文',
 };
 
-const languageAliases: Array<[prefix: string, language: SupportedLanguage]> = [
+const LANGUAGE_ALIASES: Array<[prefix: string, language: SupportedLanguage]> = [
   ['en', 'en-US'],
   ['ja', 'ja-JP'],
   ['zh', 'zh-CN'],
@@ -31,7 +31,7 @@ export function normalizeLanguage(
 
   const normalized = language.toLowerCase();
   return (
-    languageAliases.find(([prefix]) => normalized.startsWith(prefix))?.[1] ??
+    LANGUAGE_ALIASES.find(([prefix]) => normalized.startsWith(prefix))?.[1] ??
     null
   );
 }

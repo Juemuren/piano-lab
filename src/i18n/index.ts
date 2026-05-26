@@ -9,14 +9,18 @@ import commonZhCN from './locales/zh-CN/common.json';
 import pianoZhCN from './locales/zh-CN/piano.json';
 import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import {
-  defaultLanguage,
-  languageDisplayNames,
-  languageStorageKey,
+  DEFAULT_LANGUAGE,
+  LANGUAGE_DISPLAY_NAMES,
+  LANGUAGE_STORAGE_KEY,
+  SUPPORTED_LANGUAGES,
   normalizeLanguage,
-  supportedLanguages,
 } from './settings';
 
-export { defaultLanguage, languageDisplayNames, supportedLanguages };
+export {
+  DEFAULT_LANGUAGE as defaultLanguage,
+  LANGUAGE_DISPLAY_NAMES as languageDisplayNames,
+  SUPPORTED_LANGUAGES as supportedLanguages,
+};
 export type { SupportedLanguage } from './settings';
 
 const initialLanguage = getInitialLanguage();
@@ -37,7 +41,7 @@ i18n.use(initReactI18next).init({
     },
   },
   lng: initialLanguage,
-  fallbackLng: defaultLanguage,
+  fallbackLng: DEFAULT_LANGUAGE,
   defaultNS: 'common',
   ns: ['common', 'piano'],
   interpolation: {
@@ -50,7 +54,7 @@ syncDocumentLanguage(initialLanguage);
 i18n.on('languageChanged', (language) => {
   const normalizedLanguage = normalizeLanguage(language);
   if (normalizedLanguage) {
-    window.localStorage.setItem(languageStorageKey, normalizedLanguage);
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedLanguage);
     syncDocumentLanguage(normalizedLanguage);
   }
 });

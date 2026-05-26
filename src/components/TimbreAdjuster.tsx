@@ -7,6 +7,12 @@ import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
+import {
+  DEFAULT_TIMBRE_DECAY_RATE,
+  DEFAULT_TIMBRE_POWER_EXPONENT,
+  DEFAULT_TIMBRE_STRIKE_POINT,
+  DEFAULT_TIMBRE_TYPE,
+} from '../constants';
 
 interface TimbreAdjusterProps {
   audioEngine: AudioEngine;
@@ -22,10 +28,10 @@ const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({
   harmonicCount,
 }) => {
   const { t } = useTranslation('piano');
-  const [lambda, setLambda] = useState(0.5);
-  const [sigma, setSigma] = useState(0.8);
-  const [p, setP] = useState(1.5);
-  const [timbreType, setTimbreType] = useState<TimbreType>('ethereal');
+  const [lambda, setLambda] = useState(DEFAULT_TIMBRE_STRIKE_POINT);
+  const [sigma, setSigma] = useState(DEFAULT_TIMBRE_DECAY_RATE);
+  const [p, setP] = useState(DEFAULT_TIMBRE_POWER_EXPONENT);
+  const [timbreType, setTimbreType] = useState<TimbreType>(DEFAULT_TIMBRE_TYPE);
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
     () =>
       getTimbrePreset(timbreType, lambda, sigma, p, harmonicCount).amplitudes,

@@ -25,9 +25,9 @@ function normalizeAmp(amplitudes: number[]) {
 
 export function getTimbrePreset(
   type: TimbreType,
-  lambda: number = 0.5,
-  sigma: number = 0.8,
-  p: number = 1.5,
+  lambda: number,
+  sigma: number,
+  p: number,
   harmonics: number,
 ): Timbre {
   const amplitudes: number[] = [];

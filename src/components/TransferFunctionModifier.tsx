@@ -13,6 +13,14 @@ import {
   MAX_PIANO_PITCH,
   MIN_PIANO_PITCH,
 } from '../utils/pitch';
+import {
+  DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_DELAY_MS,
+  DEFAULT_TRANSFER_TYPE,
+  DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_ATTENUATION,
+} from '../constants';
 
 interface TransferFunctionModifierProps {
   audioEngine: AudioEngine;
@@ -26,13 +34,15 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
   harmonicCount,
 }) => {
   const { t } = useTranslation('piano');
-  const [baseFreq, setBaseFreq] = useState<number>(440);
+  const [baseFreq, setBaseFreq] = useState<number>(
+    DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+  );
   const [transferFunctionType, setTransferFunctionType] =
-    useState<TransferFunctionType>('delay');
-  const [tau, setTau] = useState(0);
-  const [alpha, setAlpha] = useState(0.1);
-  const [minFreq, setMinFreq] = useState(20);
-  const [maxFreq, setMaxFreq] = useState(20000);
+    useState<TransferFunctionType>(DEFAULT_TRANSFER_TYPE);
+  const [tau, setTau] = useState(DEFAULT_TRANSFER_DELAY_MS);
+  const [alpha, setAlpha] = useState(DEFAULT_TRANSFER_ATTENUATION);
+  const [minFreq, setMinFreq] = useState(DEFAULT_TRANSFER_MIN_FREQUENCY_HZ);
+  const [maxFreq, setMaxFreq] = useState(DEFAULT_TRANSFER_MAX_FREQUENCY_HZ);
 
   const transferFunction = useMemo<TransferFunction>(
     () =>

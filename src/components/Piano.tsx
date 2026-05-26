@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import { getPitchName, getPitchOctave } from '../utils/pitch';
 
+const WHITE_KEY_HEIGHT_PX = 160;
+const BLACK_KEY_HEIGHT_PX = 100;
+const WHITE_KEY_WIDTH_PX = 30;
+const BLACK_KEY_WIDTH_PX = 24;
+const AVERAGE_KEY_WIDTH_PX = 20;
+const CENTER_NOTE = 66; // F#4
+const MAX_KEY_NUMS = 85; // C1 -> C8
+const MIN_KEY_NUMS = 13; // C4 -> C5
+const DEFAULT_DURATION_SECONDS = 1;
+const DEFAULT_VOLUME = 100;
+
 interface PianoProps {
   audioEngine: AudioEngine;
   playingNotes?: Set<number>;
@@ -26,7 +37,7 @@ const Piano: React.FC<PianoProps> = ({
   }, [audioEngine]);
 
   const playNote = (note: number) => {
-    audioEngine.playNote(note, 1, 100);
+    audioEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
   };
 
   const handleKeyDown = (
@@ -52,20 +63,11 @@ const Piano: React.FC<PianoProps> = ({
     });
   };
 
-  const whiteKeyWidth = 30;
-  const blackKeyWidth = 24;
-  const whiteKeyHeight = 160;
-  const blackKeyHeight = 100;
-  const avgKeyWidth = 20;
-  const maxNumKeys = 85; // C1 -> C8
-  const minNumKeys = 13; // C4 -> C5
-  const centerNote = 66; // F#4
-
   const numKeys = Math.min(
-    maxNumKeys,
-    Math.max(minNumKeys, Math.floor(windowWidth / avgKeyWidth)),
+    MAX_KEY_NUMS,
+    Math.max(MIN_KEY_NUMS, Math.floor(windowWidth / AVERAGE_KEY_WIDTH_PX)),
   );
-  const startNote = centerNote - Math.floor((numKeys - 1) / 2);
+  const startNote = CENTER_NOTE - Math.floor((numKeys - 1) / 2);
 
   const whiteKeys = [];
   const blackKeys = [];
@@ -89,7 +91,10 @@ const Piano: React.FC<PianoProps> = ({
 
   return (
     <div className="w-full py-4">
-      <div className="relative inline-block" style={{ height: whiteKeyHeight }}>
+      <div
+        className="relative inline-block"
+        style={{ height: WHITE_KEY_HEIGHT_PX }}
+      >
         <div className="flex">
           {whiteKeys.map((key) => {
             const isPressed =
@@ -110,8 +115,8 @@ const Piano: React.FC<PianoProps> = ({
                       : 'bg-piano-white text-piano-black'
                   }`}
                 style={{
-                  width: whiteKeyWidth,
-                  height: whiteKeyHeight,
+                  width: WHITE_KEY_WIDTH_PX,
+                  height: WHITE_KEY_HEIGHT_PX,
                   transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
                 }}
               >
@@ -146,10 +151,11 @@ const Piano: React.FC<PianoProps> = ({
                       : 'bg-piano-black text-piano-white'
                   }`}
                 style={{
-                  width: blackKeyWidth,
-                  height: blackKeyHeight,
+                  width: BLACK_KEY_WIDTH_PX,
+                  height: BLACK_KEY_HEIGHT_PX,
                   position: 'absolute',
-                  left: key.position * whiteKeyWidth - blackKeyWidth / 2,
+                  left:
+                    key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
                   transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
                   zIndex: 1,
                 }}

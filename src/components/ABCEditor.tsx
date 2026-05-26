@@ -13,14 +13,16 @@ import { ABCPlayer } from '../services/abc/ABCPlayer';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 
+const DOUBLE_CLICK_INTERVAL_MS = 500;
+const RENDER_TARGET_ID = 'abcjs-paper';
+const INPUT_ID = 'abcjs-input';
+
 interface ABCNotationPlayerProps {
   audioEngine: AudioEngine;
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
 }
-
-const DOUBLE_CLICK_INTERVAL_MS = 500;
 
 interface LastClickedNote {
   index: number;
@@ -142,7 +144,7 @@ export default function ABCNotationPlayer({
       return 'continue';
     };
 
-    visualObjRef.current = renderAbc('abcjs-paper', abcContent, {
+    visualObjRef.current = renderAbc(RENDER_TARGET_ID, abcContent, {
       responsive: 'resize',
       add_classes: true,
       clickListener,
@@ -183,7 +185,7 @@ export default function ABCNotationPlayer({
       </div>
 
       <textarea
-        id="abc-input"
+        id={INPUT_ID}
         value={abcContent}
         onChange={(e) => {
           setAbcContent(e.target.value);
@@ -214,7 +216,7 @@ export default function ABCNotationPlayer({
       </div>
 
       <div
-        id="abcjs-paper"
+        id={RENDER_TARGET_ID}
         className="
           w-full mt-4 rounded-3xl shadow-sm
           border border-app-border/40 dark:border-app-border-dark/80

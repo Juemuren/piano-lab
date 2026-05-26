@@ -1,14 +1,14 @@
 import {
-  defaultLanguage,
-  languageDocumentTitles,
-  languageStorageKey,
+  DEFAULT_LANGUAGE,
+  LANGUAGE_DOCUMENT_TITLES,
+  LANGUAGE_STORAGE_KEY,
   normalizeLanguage,
   type SupportedLanguage,
 } from './settings';
 
 function getStoredLanguage() {
   try {
-    return normalizeLanguage(window.localStorage.getItem(languageStorageKey));
+    return normalizeLanguage(window.localStorage.getItem(LANGUAGE_STORAGE_KEY));
   } catch {
     return null;
   }
@@ -21,13 +21,13 @@ function getBrowserLanguage() {
 }
 
 export function getInitialLanguage(): SupportedLanguage {
-  return getStoredLanguage() ?? getBrowserLanguage() ?? defaultLanguage;
+  return getStoredLanguage() ?? getBrowserLanguage() ?? DEFAULT_LANGUAGE;
 }
 
 export function syncDocumentLanguage(language: SupportedLanguage) {
   document.documentElement.lang = language;
   document.documentElement.dir = 'ltr';
-  document.title = languageDocumentTitles[language];
+  document.title = LANGUAGE_DOCUMENT_TITLES[language];
 }
 
 export function bootstrapDocumentLanguage() {

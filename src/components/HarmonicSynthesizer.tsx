@@ -4,10 +4,6 @@ import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
-import {
-  MAX_HARMONIC_COUNT,
-  MIN_HARMONIC_COUNT,
-} from '../services/audio/constants';
 
 interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;
@@ -141,8 +137,8 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
       />
       <ControlRange
         label={t('controls.harmonicCount')}
-        min={MIN_HARMONIC_COUNT}
-        max={MAX_HARMONIC_COUNT}
+        min="2"
+        max="20"
         step="1"
         value={harmonicCount}
         displayValue={harmonicCount.toString()}
