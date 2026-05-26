@@ -11,7 +11,7 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const handleToggle = () => setIsExpanded(!isExpanded);
 
   return (
-    <div className="w-full max-w-4xl">
+    <div className="w-full">
       <button
         type="button"
         onClick={handleToggle}

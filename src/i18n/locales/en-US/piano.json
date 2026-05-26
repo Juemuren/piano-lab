@@ -41,7 +41,7 @@
     "sustainGain": "Sustain Gain",
     "silenceGain": "Silence Gain",
     "harmonicCount": "Harmonic Count",
-    "harmonicCountWarning": "Do not set this value too high, or the app may lag and the interface may become messy.",
+    "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
     "strikePoint": "Strike Point",
     "decayRate": "Decay Rate",
     "powerExponent": "Power Exponent",

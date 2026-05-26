@@ -41,7 +41,7 @@
     "sustainGain": "サステインゲイン",
     "silenceGain": "無音ゲイン",
     "harmonicCount": "倍音数",
-    "harmonicCountWarning": "この値を高くしすぎないでください。プログラムが重くなったり、画面が乱れたりする可能性があります。",
+    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。",
     "strikePoint": "打弦位置",
     "decayRate": "減衰率",
     "powerExponent": "べき指数",

@@ -59,7 +59,7 @@ function App() {
             xl:flex-row xl:items-start xl:justify-center
           "
         >
-          <div className="w-full max-w-4xl xl:max-w-xl">
+          <div className="w-full max-w-4xl xl:max-w-md">
             <CollapsibleSection title={t('sections.harmonicSynthesizer')}>
               <HarmonicSynthesizer
                 audioEngine={audioEngine}
@@ -68,7 +68,7 @@ function App() {
               />
             </CollapsibleSection>
           </div>
-          <div className="w-full max-w-4xl xl:max-w-xl">
+          <div className="w-full max-w-4xl xl:max-w-md">
             <CollapsibleSection title={t('sections.timbreAdjuster')}>
               <TimbreAdjuster
                 audioEngine={audioEngine}
@@ -76,7 +76,7 @@ function App() {
               />
             </CollapsibleSection>
           </div>
-          <div className="w-full max-w-4xl xl:max-w-xl">
+          <div className="w-full max-w-4xl xl:max-w-md">
             <CollapsibleSection title={t('sections.transferFunctionModifier')}>
               <TransferFunctionModifier
                 audioEngine={audioEngine}
