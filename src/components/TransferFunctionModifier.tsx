@@ -7,11 +7,19 @@ import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
+import {
+  getPitchLabel,
+  getPitchOptions,
+  MAX_PIANO_PITCH,
+  MIN_PIANO_PITCH,
+} from '../utils/pitch';
 
 interface TransferFunctionModifierProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
 }
+
+const PITCH_OPTIONS = getPitchOptions();
 
 const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
   audioEngine,
@@ -70,6 +78,22 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
     if (updates.baseFreq !== undefined) setBaseFreq(updates.baseFreq);
   };
 
+  const minBaseFreq = audioEngine.getBaseFreq(MIN_PIANO_PITCH);
+  const maxBaseFreq = audioEngine.getBaseFreq(MAX_PIANO_PITCH);
+  const selectedPitch = PITCH_OPTIONS.find(
+    ({ pitch }) => audioEngine.getBaseFreq(pitch) === baseFreq,
+  )?.pitch;
+  let lowerPitch = MIN_PIANO_PITCH;
+  for (const { pitch } of PITCH_OPTIONS) {
+    if (audioEngine.getBaseFreq(pitch) <= baseFreq) {
+      lowerPitch = pitch;
+    }
+  }
+  const upperPitch = Math.min(lowerPitch + 1, MAX_PIANO_PITCH);
+  const pitchRangeLabel = selectedPitch
+    ? getPitchLabel(selectedPitch)
+    : `${getPitchLabel(lowerPitch)} ~ ${getPitchLabel(upperPitch)}`;
+
   const harmonicLabels = Array.from(
     { length: transferFunction.magnitudes.length },
     (_, index) => (
@@ -104,16 +128,46 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
         </div>
       </div>
 
-      <ControlRange
-        label={t('controls.baseFrequency')}
-        min="20"
-        max="20000"
-        step="1"
-        value={baseFreq}
-        displayValue={`${baseFreq} Hz`}
-        accentClassName="accent-sky-500"
-        onChange={(value) => handleParamsChange({ baseFreq: value })}
-      />
+      <div
+        className="
+          mb-4 p-4 rounded-2xl
+          border border-app-border dark:border-app-border-dark
+        "
+      >
+        <div className="mb-3 grid gap-3 sm:grid-cols-2">
+          <ControlRange
+            label={t('controls.baseFrequency')}
+            min={minBaseFreq}
+            max={maxBaseFreq}
+            step="1"
+            value={baseFreq}
+            displayValue={`${baseFreq.toFixed(2)} Hz`}
+            accentClassName="accent-sky-500"
+            onChange={(value) => handleParamsChange({ baseFreq: value })}
+          />
+          <ControlSelect
+            value={selectedPitch ?? 'custom'}
+            aria-label={t('controls.baseFrequencyPitch')}
+            onChange={(e) =>
+              handleParamsChange({
+                baseFreq: audioEngine.getBaseFreq(Number(e.target.value)),
+              })
+            }
+          >
+            {selectedPitch === undefined && (
+              <option value="custom">{pitchRangeLabel}</option>
+            )}
+            {PITCH_OPTIONS.map(({ pitch, label }) => (
+              <option key={pitch} value={pitch}>
+                {label}
+              </option>
+            ))}
+          </ControlSelect>
+        </div>
+        <p className="text-xs leading-5 text-app-text/50 dark:text-app-text-dark/50">
+          {t('controls.baseFrequencyPreviewHint')}
+        </p>
+      </div>
 
       {(transferFunction.type === 'delay' ||
         transferFunction.type === 'single_echo' ||

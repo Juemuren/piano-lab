@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AudioEngine } from '../services/audio/AudioEngine';
+import { getPitchName, getPitchOctave } from '../utils/pitch';
 
 interface PianoProps {
   audioEngine: AudioEngine;
@@ -66,26 +67,12 @@ const Piano: React.FC<PianoProps> = ({
   );
   const startNote = centerNote - Math.floor((numKeys - 1) / 2);
 
-  const noteNames = [
-    'C',
-    'C#',
-    'D',
-    'D#',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'G#',
-    'A',
-    'A#',
-    'B',
-  ];
   const whiteKeys = [];
   const blackKeys = [];
   for (let index = 0; index < numKeys; index++) {
     const note = startNote + index;
-    const name = noteNames[note % 12];
-    const octave = Math.floor(note / 12) - 1;
+    const name = getPitchName(note);
+    const octave = getPitchOctave(note);
     const keyInfo = {
       note,
       char: name[0],

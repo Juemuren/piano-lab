@@ -131,7 +131,7 @@ export class AudioEngine {
     }
   }
 
-  getBaseFreq(pitch: number, cents: number) {
+  getBaseFreq(pitch: number, cents: number = 0) {
     return 440 * Math.pow(2, (pitch + cents / 100 - 69) / 12);
   }
 
