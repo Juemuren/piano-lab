@@ -39,7 +39,8 @@ function VerticalSliderGroup({
               onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
               className={`
                 h-2 -rotate-90 appearance-none rounded-full
-                bg-app-accent accent-app-success
+                border border-app-border dark:border-app-border-dark
+                bg-app-accent-weak dark:bg-app-accent-strong accent-app-success
                 ${disabled ? 'cursor-not-allowed' : ''}
               `}
             />

@@ -152,7 +152,7 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
             step="1"
             value={baseFreq}
             displayValue={`${baseFreq.toFixed(2)} Hz`}
-            accentClassName="accent-sky-500"
+            accentClassName="accent-app-info dark:accent-app-info-dark"
             onChange={(value) => handleParamsChange({ baseFreq: value })}
           />
           <ControlSelect
