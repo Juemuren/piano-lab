@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TransferFunction, TransferFunctionType } from '../types';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
@@ -8,15 +8,15 @@ import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
 import {
-  getPitchLabel,
-  getPitchOptions,
   MAX_PIANO_PITCH,
   MIN_PIANO_PITCH,
+  getPitchLabel,
+  getPitchOptions,
 } from '../utils/pitch';
 import {
+  DEFAULT_TRANSFER_TYPE,
   DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
   DEFAULT_TRANSFER_DELAY_MS,
-  DEFAULT_TRANSFER_TYPE,
   DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
   DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
   DEFAULT_TRANSFER_ATTENUATION,
@@ -29,10 +29,10 @@ interface TransferFunctionModifierProps {
 
 const PITCH_OPTIONS = getPitchOptions();
 
-const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
+function TransferFunctionModifier({
   audioEngine,
   harmonicCount,
-}) => {
+}: TransferFunctionModifierProps) {
   const { t } = useTranslation('piano');
   const [baseFreq, setBaseFreq] = useState<number>(
     DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
@@ -260,6 +260,6 @@ const TransferFunctionModifier: React.FC<TransferFunctionModifierProps> = ({
       />
     </ControlPanel>
   );
-};
+}
 
 export default TransferFunctionModifier;

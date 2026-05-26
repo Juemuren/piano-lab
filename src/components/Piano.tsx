@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { type MouseEvent, type TouchEvent, useEffect, useState } from 'react';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import { getPitchName, getPitchOctave } from '../utils/pitch';
 
@@ -18,10 +18,7 @@ interface PianoProps {
   playingNotes?: Set<number>;
 }
 
-const Piano: React.FC<PianoProps> = ({
-  audioEngine,
-  playingNotes = new Set(),
-}) => {
+function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
@@ -40,10 +37,7 @@ const Piano: React.FC<PianoProps> = ({
     audioEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
   };
 
-  const handleKeyDown = (
-    e: React.MouseEvent | React.TouchEvent,
-    note: number,
-  ) => {
+  const handleKeyDown = (e: MouseEvent | TouchEvent, note: number) => {
     if (!('touches' in e)) {
       e.preventDefault();
     }
@@ -51,10 +45,7 @@ const Piano: React.FC<PianoProps> = ({
     playNote(note);
   };
 
-  const handleKeyUp = (
-    e: React.MouseEvent | React.TouchEvent,
-    note: number,
-  ) => {
+  const handleKeyUp = (e: MouseEvent | TouchEvent, note: number) => {
     e.preventDefault();
     setPressedKeys((prev) => {
       const newSet = new Set(prev);
@@ -166,6 +157,6 @@ const Piano: React.FC<PianoProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default Piano;

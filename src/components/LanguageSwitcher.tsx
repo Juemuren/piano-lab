@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { languageDisplayNames, supportedLanguages } from '../i18n';
+import { LANGUAGE_DISPLAY_NAMES, SUPPORTED_LANGUAGES } from '../i18n/settings';
 import ControlSelect from './shared/ControlSelect';
 
 function LanguageSwitcher() {
@@ -16,9 +16,9 @@ function LanguageSwitcher() {
           void i18n.changeLanguage(event.target.value);
         }}
       >
-        {supportedLanguages.map((language) => (
+        {SUPPORTED_LANGUAGES.map((language) => (
           <option key={language} value={language}>
-            {languageDisplayNames[language]}
+            {LANGUAGE_DISPLAY_NAMES[language]}
           </option>
         ))}
       </ControlSelect>

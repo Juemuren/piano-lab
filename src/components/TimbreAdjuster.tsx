@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Timbre, TimbreType } from '../types';
 import { getTimbrePreset } from '../services/audio/AudioPresets';
@@ -8,10 +8,10 @@ import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
 import {
+  DEFAULT_TIMBRE_TYPE,
   DEFAULT_TIMBRE_DECAY_RATE,
   DEFAULT_TIMBRE_POWER_EXPONENT,
   DEFAULT_TIMBRE_STRIKE_POINT,
-  DEFAULT_TIMBRE_TYPE,
 } from '../constants';
 
 interface TimbreAdjusterProps {
@@ -23,10 +23,7 @@ function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);
 }
 
-const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({
-  audioEngine,
-  harmonicCount,
-}) => {
+function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
   const { t } = useTranslation('piano');
   const [lambda, setLambda] = useState(DEFAULT_TIMBRE_STRIKE_POINT);
   const [sigma, setSigma] = useState(DEFAULT_TIMBRE_DECAY_RATE);
@@ -152,6 +149,6 @@ const TimbreAdjuster: React.FC<TimbreAdjusterProps> = ({
       />
     </ControlPanel>
   );
-};
+}
 
 export default TimbreAdjuster;

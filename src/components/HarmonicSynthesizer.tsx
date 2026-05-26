@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
@@ -11,11 +11,11 @@ interface HarmonicSynthesizerProps {
   onHarmonicCountChange: (value: number) => void;
 }
 
-const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
+function HarmonicSynthesizer({
   audioEngine,
   harmonicCount,
   onHarmonicCountChange,
-}) => {
+}: HarmonicSynthesizerProps) {
   const { t } = useTranslation('piano');
   const [oscillatorType, setOscillatorType] = useState(
     audioEngine.getOscillatorType(),
@@ -157,6 +157,6 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
       </p>
     </ControlPanel>
   );
-};
+}
 
 export default HarmonicSynthesizer;

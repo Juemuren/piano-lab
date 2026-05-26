@@ -10,18 +10,9 @@ import pianoZhCN from './locales/zh-CN/piano.json';
 import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import {
   DEFAULT_LANGUAGE,
-  LANGUAGE_DISPLAY_NAMES,
   LANGUAGE_STORAGE_KEY,
-  SUPPORTED_LANGUAGES,
   normalizeLanguage,
 } from './settings';
-
-export {
-  DEFAULT_LANGUAGE as defaultLanguage,
-  LANGUAGE_DISPLAY_NAMES as languageDisplayNames,
-  SUPPORTED_LANGUAGES as supportedLanguages,
-};
-export type { SupportedLanguage } from './settings';
 
 const initialLanguage = getInitialLanguage();
 

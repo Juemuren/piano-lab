@@ -7,7 +7,7 @@ import {
   renderAbc,
   TimingCallbacks,
 } from 'abcjs';
-import { ABCPresets, getAbcPreset } from '../services/abc/ABCPresets';
+import { ABC_PRESETS, getAbcPreset } from '../services/abc/ABCPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import { ABCPlayer } from '../services/abc/ABCPlayer';
 import ControlPanel from './shared/ControlPanel';
@@ -30,7 +30,7 @@ interface LastClickedNote {
   clickedAt: number;
 }
 
-export default function ABCNotationPlayer({
+function ABCEditor({
   audioEngine,
   onNoteStart,
   onNoteEnd,
@@ -176,7 +176,7 @@ export default function ABCNotationPlayer({
           }}
         >
           <option value={-1}>{t('piano:score.custom')}</option>
-          {ABCPresets.map((name, index) => (
+          {ABC_PRESETS.map((name, index) => (
             <option key={index} value={index}>
               {t(`piano:score.presets.${name}`)}
             </option>
@@ -226,3 +226,5 @@ export default function ABCNotationPlayer({
     </ControlPanel>
   );
 }
+
+export default ABCEditor;
