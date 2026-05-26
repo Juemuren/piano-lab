@@ -24,6 +24,11 @@
   --color-app-success-strong: #15803d;
   --color-app-danger: #dc2626;
   --color-app-danger-strong: #b91c1c;
+  --color-app-warning: #f59e0b;
+  --color-app-warning-surface: #fffbeb;
+  --color-app-warning-surface-dark: #451a03;
+  --color-app-warning-text: #78350f;
+  --color-app-warning-text-dark: #fef3c7;
   --color-piano-white: #ffffff;
   --color-piano-white-active: #bfdbfe;
   --color-piano-black: #000000;

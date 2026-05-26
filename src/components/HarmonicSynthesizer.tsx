@@ -146,10 +146,17 @@ const HarmonicSynthesizer: React.FC<HarmonicSynthesizerProps> = ({
         step="1"
         value={harmonicCount}
         displayValue={harmonicCount.toString()}
-        accentClassName="accent-amber-500"
+        accentClassName="accent-app-warning"
         onChange={handleHarmonicCountChange}
       />
-      <p className="-mt-2 mb-4 rounded-lg border border-amber-300/70 bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:border-amber-400/40 dark:bg-amber-950/30 dark:text-amber-100">
+      <p
+        className="
+          mb-4 px-3 py-2
+          rounded-lg bg-app-warning-surface dark:bg-app-warning-surface-dark
+          border border-app-warning/60 dark:border-app-warning/40 
+          text-xs text-app-warning-text dark:text-app-warning-text-dark
+        "
+      >
         {t('controls.harmonicCountWarning')}
       </p>
     </ControlPanel>
