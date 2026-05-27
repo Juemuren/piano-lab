@@ -269,32 +269,38 @@ function TransferFunctionModifier({
         />
       )}
 
-      <h3 className="my-3 text-lg font-medium">
-        {t('charts.magnitudeResponse')}
-      </h3>
-      <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].magnitude} />
-      <VerticalSliderGroup
-        values={transferFunction.magnitudes}
-        labels={harmonicLabels}
-        min="0"
-        max="2"
-        step="0.01"
-        getKey={(index) => `mag-${index}`}
-        disabled
-      />
+      <details open className="my-2">
+        <summary className="text-lg font-bold">
+          {t('charts.magnitudeResponse')}
+        </summary>
+        <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].magnitude} />
+        <VerticalSliderGroup
+          values={transferFunction.magnitudes}
+          labels={harmonicLabels}
+          min="0"
+          max="2"
+          step="0.01"
+          getKey={(index) => `mag-${index}`}
+          disabled
+        />
+      </details>
 
-      <h3 className="my-3 text-lg font-medium">{t('charts.phaseResponse')}</h3>
-      <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
-      <VerticalSliderGroup
-        values={transferFunction.phases}
-        labels={harmonicLabels}
-        min="-180"
-        max="180"
-        step="1"
-        getKey={(index) => `phase-${index}`}
-        formatValue={(value) => `${value.toFixed(0)}°`}
-        disabled
-      />
+      <details className="my-2">
+        <summary className="text-lg font-bold">
+          {t('charts.phaseResponse')}
+        </summary>
+        <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
+        <VerticalSliderGroup
+          values={transferFunction.phases}
+          labels={harmonicLabels}
+          min="-180"
+          max="180"
+          step="1"
+          getKey={(index) => `phase-${index}`}
+          formatValue={(value) => `${value.toFixed(0)}°`}
+          disabled
+        />
+      </details>
     </ControlPanel>
   );
 }
