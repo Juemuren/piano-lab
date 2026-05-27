@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { InlineMath } from 'react-katex';
 import type { Timbre, TimbreType } from '../types';
 import { getTimbrePreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -13,6 +14,17 @@ import {
   DEFAULT_TIMBRE_POWER_EXPONENT,
   DEFAULT_TIMBRE_STRIKE_POINT,
 } from '../constants';
+
+const TIMBRE_FORMULAS: Record<TimbreType, string> = {
+  metallic: 'A_n \\propto \\frac{1}{n}',
+  pure: 'A_n \\propto \\frac{1}{n^2}',
+  bright: 'A_n \\propto \\frac{1}{n}\\left|\\sin\\frac{n\\pi}{2}\\right|',
+  ethereal: 'A_n \\propto \\frac{1}{n^2}\\left|\\sin\\frac{n\\pi}{2}\\right|',
+  soft: 'A_n \\propto e^{-\\sigma n}',
+  normal: 'A_n \\propto \\frac{1}{n^2}\\left|\\sin(n\\pi\\lambda)\\right|',
+  realistic: 'A_n \\propto \\frac{1}{n^p}e^{-\\sigma n}',
+  custom: 'A_n = \\text{custom}',
+};
 
 interface TimbreAdjusterProps {
   audioEngine: AudioEngine;
@@ -77,7 +89,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
   const harmonicLabels = Array.from(
     { length: timbre.amplitudes.length },
     (_, index) => (
-      <span>
+      <span key={index}>
         f<sub>{index + 1}</sub>
       </span>
     ),
@@ -102,6 +114,17 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
           <option value="custom">{t('timbre.custom')}</option>
         </ControlSelect>
       </div>
+
+      {timbre.type !== 'custom' && (
+        <div
+          className="
+            mb-3 px-3 py-2 rounded-xl
+            border border-app-border dark:border-app-border-dark
+          "
+        >
+          <InlineMath math={TIMBRE_FORMULAS[timbre.type]} />
+        </div>
+      )}
 
       {timbre.type === 'normal' && (
         <ControlRange

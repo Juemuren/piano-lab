@@ -108,7 +108,7 @@ $$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
 | 明亮 | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | 空灵 | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
 | 柔和 | $A_n \propto e^{-\sigma n}$                      |
-| 常规 | $A_n \propto \frac1{n^2} \sin(n\pi \lambda)$     |
+| 常规 | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | 真实 | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 其中可调节的参数有

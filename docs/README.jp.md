@@ -108,7 +108,7 @@ $N=10$ とすれば、音は十分にリアルになります。
 | 明るい   | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | 幻想     | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
 | 柔らかい | $A_n \propto e^{-\sigma n}$                      |
-| 標準     | $A_n \propto \frac1{n^2} \sin(n\pi \lambda)$     |
+| 標準     | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | リアル   | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 調整可能なパラメーター:

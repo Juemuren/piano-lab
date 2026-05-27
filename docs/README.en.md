@@ -108,7 +108,7 @@ The preset timbres use the following relationships:
 | Bright    | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | Ethereal  | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
 | Soft      | $A_n \propto e^{-\sigma n}$                      |
-| Normal    | $A_n \propto \frac1{n^2} \sin(n\pi \lambda)$     |
+| Normal    | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | Realistic | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 Adjustable parameters:
