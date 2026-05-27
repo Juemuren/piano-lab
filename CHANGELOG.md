@@ -2,6 +2,35 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.4.0]
+
+### Added
+
+- Added KaTeX-powered formula rendering for timbre presets and transfer-function responses.
+- Added a harmonic count control that drives timbre and transfer-function previews.
+- Added pitch-based base-frequency selection for transfer-function previews.
+- Added localized labels and hints for the new harmonic count and base-frequency controls.
+
+### Changed
+
+- Made transfer-function magnitude and phase response previews collapsible.
+- Updated timbre and transfer-function controls to use shared default constants.
+- Improved responsive layout, footer styling, dark-mode colors, and ABC score editor styling.
+- Updated README formula documentation and fixed the article URL.
+
+### Fixed
+
+- Fixed UI overflow when using larger harmonic counts.
+- Fixed mathematical notation for the normal timbre preset and transfer-function phase formulas.
+- Fixed the blog article link in the app footer.
+
+### Maintenance
+
+- Added `react-katex`, `katex`, and related typings for math rendering.
+- Added a `patch-package` workaround for the KaTeX lexer issue triggered by Vite.
+- Refactored pitch naming and pitch option generation into shared utilities.
+- Standardized component declarations, exports, and i18n constant naming.
+
 ## [0.3.0]
 
 ### Added
