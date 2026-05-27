@@ -159,30 +159,28 @@ function ABCEditor({
 
   return (
     <ControlPanel>
-      <div className="flex flex-col mb-3 gap-3">
-        <ControlSelect
-          value={selectedPresetIndex}
-          onChange={async (e) => {
-            const index = parseInt(e.target.value);
-            setSelectedPresetIndex(index);
-            if (index >= 0) {
-              const content = await getAbcPreset(index);
-              setAbcContent(content);
-              if (isPlaying) handleStop();
-            } else {
-              setAbcContent('');
-            }
+      <ControlSelect
+        value={selectedPresetIndex}
+        onChange={async (e) => {
+          const index = parseInt(e.target.value);
+          setSelectedPresetIndex(index);
+          if (index >= 0) {
+            const content = await getAbcPreset(index);
+            setAbcContent(content);
             if (isPlaying) handleStop();
-          }}
-        >
-          <option value={-1}>{t('piano:score.custom')}</option>
-          {ABC_PRESETS.map((name, index) => (
-            <option key={index} value={index}>
-              {t(`piano:score.presets.${name}`)}
-            </option>
-          ))}
-        </ControlSelect>
-      </div>
+          } else {
+            setAbcContent('');
+          }
+          if (isPlaying) handleStop();
+        }}
+      >
+        <option value={-1}>{t('piano:score.custom')}</option>
+        {ABC_PRESETS.map((name, index) => (
+          <option key={index} value={index}>
+            {t(`piano:score.presets.${name}`)}
+          </option>
+        ))}
+      </ControlSelect>
 
       <textarea
         id={INPUT_ID}
@@ -194,7 +192,7 @@ function ABCEditor({
         }}
         placeholder={t('piano:score.placeholder')}
         className="
-          w-full h-48 p-3 mb-4 text-sm resize-none
+          w-full h-48 p-4 my-4 text-sm
           bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/25
           border border-app-border dark:border-app-border-dark
           focus:outline-none focus:ring-2 focus:ring-app-accent/50
@@ -206,8 +204,12 @@ function ABCEditor({
           <button
             onClick={isPlaying ? handleStop : handlePlay}
             className={`
-              w-full py-2 text-app-on-accent rounded-2xl transition-colors
-              ${isPlaying ? 'bg-app-danger hover:bg-app-danger-strong' : 'bg-app-success hover:bg-app-success-strong'}
+              w-full py-2 rounded-xl text-app-on-accent transition-colors
+              ${
+                isPlaying
+                  ? 'bg-app-danger hover:bg-app-danger-strong'
+                  : 'bg-app-success hover:bg-app-success-strong'
+              }
             `}
           >
             {isPlaying ? t('common:actions.stop') : t('common:actions.play')}
@@ -215,14 +217,7 @@ function ABCEditor({
         )}
       </div>
 
-      <div
-        id={RENDER_TARGET_ID}
-        className="
-          w-full mt-4 rounded-3xl shadow-sm
-          border border-app-border dark:border-app-border-dark
-          bg-app-surface/85 dark:bg-app-surface-dark/15
-        "
-      />
+      <div id={RENDER_TARGET_ID} className="w-full" />
     </ControlPanel>
   );
 }

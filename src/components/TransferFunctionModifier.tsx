@@ -161,36 +161,28 @@ function TransferFunctionModifier({
 
   return (
     <ControlPanel>
-      <div className="mb-2 flex flex-col gap-3">
-        <div className="space-y-2">
-          <ControlSelect
-            value={transferFunction.type}
-            onChange={(e) =>
-              handlePresetChange(e.target.value as TransferFunctionType)
-            }
-          >
-            <option value="delay">{t('transferFunction.delay')}</option>
-            <option value="single_echo">
-              {t('transferFunction.single_echo')}
-            </option>
-            <option value="multi_echo">
-              {t('transferFunction.multi_echo')}
-            </option>
-            <option value="all_pass">{t('transferFunction.all_pass')}</option>
-            <option value="low_pass">{t('transferFunction.low_pass')}</option>
-            <option value="high_pass">{t('transferFunction.high_pass')}</option>
-            <option value="band_pass">{t('transferFunction.band_pass')}</option>
-          </ControlSelect>
-        </div>
-      </div>
+      <ControlSelect
+        value={transferFunction.type}
+        onChange={(e) =>
+          handlePresetChange(e.target.value as TransferFunctionType)
+        }
+      >
+        <option value="delay">{t('transferFunction.delay')}</option>
+        <option value="single_echo">{t('transferFunction.single_echo')}</option>
+        <option value="multi_echo">{t('transferFunction.multi_echo')}</option>
+        <option value="all_pass">{t('transferFunction.all_pass')}</option>
+        <option value="low_pass">{t('transferFunction.low_pass')}</option>
+        <option value="high_pass">{t('transferFunction.high_pass')}</option>
+        <option value="band_pass">{t('transferFunction.band_pass')}</option>
+      </ControlSelect>
 
       <div
         className="
-          mb-4 p-4 rounded-2xl
+          m-4 p-4 rounded-2xl
           border border-app-border dark:border-app-border-dark
         "
       >
-        <div className="mb-3 grid gap-3 sm:grid-cols-[2fr_1fr]">
+        <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
           <ControlRange
             label={t('controls.baseFrequency')}
             symbol={<InlineMath math="f" />}
@@ -218,7 +210,7 @@ function TransferFunctionModifier({
             ))}
           </ControlSelect>
         </div>
-        <p className="text-xs leading-5 text-app-text/50 dark:text-app-text-dark/50">
+        <p className="mt-2 text-xs text-app-text/50 dark:text-app-text-dark/50">
           {t('controls.baseFrequencyPreviewHint')}
         </p>
       </div>
@@ -282,7 +274,7 @@ function TransferFunctionModifier({
         />
       )}
 
-      <h3 className="mb-2 text-lg font-medium">
+      <h3 className="my-3 text-lg font-medium">
         {t('charts.magnitudeResponse')}
       </h3>
       <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].magnitude} />
@@ -296,7 +288,7 @@ function TransferFunctionModifier({
         disabled
       />
 
-      <h3 className="mb-2 text-lg font-medium">{t('charts.phaseResponse')}</h3>
+      <h3 className="my-3 text-lg font-medium">{t('charts.phaseResponse')}</h3>
       <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
       <VerticalSliderGroup
         values={transferFunction.phases}

@@ -26,11 +26,11 @@ function ControlRange({
   return (
     <div
       className="
-        mb-4 pb-1 p-4 rounded-2xl
+        my-2 p-2 rounded-2xl
         border border-app-border dark:border-app-border-dark
       "
     >
-      <div className="mb-2 flex items-center justify-between text-sm">
+      <div className="m-2 flex items-center justify-between text-sm">
         <span>
           {label} {symbol}
         </span>

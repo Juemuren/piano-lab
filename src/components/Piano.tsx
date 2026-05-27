@@ -81,7 +81,7 @@ function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
   }
 
   return (
-    <div className="w-full py-4">
+    <div className="w-full pb-10">
       <div
         className="relative inline-block"
         style={{ height: WHITE_KEY_HEIGHT_PX }}

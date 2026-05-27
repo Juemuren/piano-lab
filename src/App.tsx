@@ -42,20 +42,20 @@ function App() {
     <>
       <section
         className="
-          relative w-full mx-auto min-h-screen grow px-3 pt-16 pb-6
+          relative w-full mx-auto min-h-screen grow pt-20 px-4
           flex flex-col justify-center gap-5
           bg-app-bg dark:bg-app-bg-dark
           text-app-text dark:text-app-text-dark
         "
       >
-        <div className="absolute right-3 top-4 sm:right-6">
+        <div className="absolute top-3 right-3 sm:right-6">
           <LanguageSwitcher />
         </div>
         <h1 className="text-center text-3xl font-bold">{t('app.title')}</h1>
 
         <div
           className="
-            flex flex-col items-center gap-4
+            flex flex-col items-center gap-5
             xl:flex-row xl:items-start xl:justify-center
           "
         >

@@ -65,21 +65,15 @@ function HarmonicSynthesizer({
 
   return (
     <ControlPanel>
-      <div className="mb-4 flex flex-col gap-3">
-        <div className="space-y-2">
-          <ControlSelect
-            value={oscillatorType}
-            onChange={(e) =>
-              setOscillatorType(e.target.value as OscillatorType)
-            }
-          >
-            <option value="sine">{t('oscillator.sine')}</option>
-            <option value="triangle">{t('oscillator.triangle')}</option>
-            <option value="sawtooth">{t('oscillator.sawtooth')}</option>
-            <option value="square">{t('oscillator.square')}</option>
-          </ControlSelect>
-        </div>
-      </div>
+      <ControlSelect
+        value={oscillatorType}
+        onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
+      >
+        <option value="sine">{t('oscillator.sine')}</option>
+        <option value="triangle">{t('oscillator.triangle')}</option>
+        <option value="sawtooth">{t('oscillator.sawtooth')}</option>
+        <option value="square">{t('oscillator.square')}</option>
+      </ControlSelect>
 
       <ControlRange
         label={t('controls.volume')}
@@ -147,7 +141,7 @@ function HarmonicSynthesizer({
       />
       <p
         className="
-          mb-4 px-3 py-2
+          m-2 p-2
           rounded-lg bg-app-warning-surface dark:bg-app-warning-surface-dark
           border border-app-warning/60 dark:border-app-warning/40
           text-xs text-app-warning-text dark:text-app-warning-text-dark

@@ -97,23 +97,21 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
 
   return (
     <ControlPanel>
-      <div className="flex flex-col mb-2 gap-3">
-        <ControlSelect
-          value={timbre.type}
-          onChange={(e) => {
-            handlePresetChange(e.target.value as TimbreType);
-          }}
-        >
-          <option value="metallic">{t('timbre.metallic')}</option>
-          <option value="pure">{t('timbre.pure')}</option>
-          <option value="bright">{t('timbre.bright')}</option>
-          <option value="ethereal">{t('timbre.ethereal')}</option>
-          <option value="normal">{t('timbre.normal')}</option>
-          <option value="soft">{t('timbre.soft')}</option>
-          <option value="realistic">{t('timbre.realistic')}</option>
-          <option value="custom">{t('timbre.custom')}</option>
-        </ControlSelect>
-      </div>
+      <ControlSelect
+        value={timbre.type}
+        onChange={(e) => {
+          handlePresetChange(e.target.value as TimbreType);
+        }}
+      >
+        <option value="metallic">{t('timbre.metallic')}</option>
+        <option value="pure">{t('timbre.pure')}</option>
+        <option value="bright">{t('timbre.bright')}</option>
+        <option value="ethereal">{t('timbre.ethereal')}</option>
+        <option value="normal">{t('timbre.normal')}</option>
+        <option value="soft">{t('timbre.soft')}</option>
+        <option value="realistic">{t('timbre.realistic')}</option>
+        <option value="custom">{t('timbre.custom')}</option>
+      </ControlSelect>
 
       {timbre.type !== 'custom' && (
         <BlockMath math={TIMBRE_FORMULAS[timbre.type]} />

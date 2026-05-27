@@ -20,34 +20,28 @@ function FooterPanel({ title, children }: FooterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section
-      className="
-        rounded-lg
-        bg-app/80 dark:bg-app-dark/20
-        border border-app-border dark:border-app-border-dark
-      "
-    >
+    <section className="rounded-lg bg-app-surface-muted dark:bg-app-surface-muted-dark">
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
         className="
-          w-full flex items-center justify-between px-4 py-3
-          rounded-lg text-left
+          w-full p-3 rounded-lg flex justify-between
           transition-colors hover:bg-app-accent-weak dark:hover:bg-app-accent-strong
+          hover:text-app-accent-strong dark:hover:text-app-accent-weak
         "
         aria-expanded={isExpanded}
       >
         <span className="text-sm font-semibold tracking-wide text-app-muted dark:text-app-muted-dark">
           {title}
         </span>
-        <span className="shrink-0 text-sm text-app-muted dark:text-app-muted-dark">
+        <span className="text-sm text-app-muted dark:text-app-muted-dark">
           {isExpanded ? '▼' : '▶'}
         </span>
       </button>
       <div
         className={`
           text-sm text-app-muted dark:text-app-muted-dark
-          ${isExpanded ? 'p-4 leading-8 text-base' : 'hidden'}
+          ${isExpanded ? 'px-4 leading-8' : 'hidden'}
         `}
       >
         {children}
@@ -63,24 +57,20 @@ function FooterLink({ href, label }: FooterLinkProps) {
       target="_blank"
       rel="noreferrer"
       className="
-        group w-full flex items-center justify-between px-4 py-3
-        text-left text-app-muted dark:text-app-muted-dark
-        rounded-lg bg-app-surface-muted/20 dark:bg-app-surface-muted-dark/80
-        border border-app-border dark:border-app-border-dark
-        transition-colors
+        group w-full p-3 flex justify-between text-app-muted dark:text-app-muted-dark
+        rounded-lg bg-app-surface-muted dark:bg-app-surface-muted-dark
+        transition-colors hover:bg-app-accent-weak dark:hover:bg-app-accent-strong
         hover:text-app-accent-strong dark:hover:text-app-accent-weak
-        hover:bg-app-accent-weak dark:hover:bg-app-accent-strong
-        hover:border-app-accent dark:hover:border-app-accent
       "
     >
       <span className="text-sm font-medium">{label}</span>
       <span
         className="
-          flex h-4 w-4 shrink-0 items-center justify-center
-          rounded-full border border-app-border dark:border-app-border-dark
+          flex h-4 w-4 justify-center rounded-full
+          border border-app-border dark:border-app-border-dark
           text-xs text-app-muted dark:text-app-muted-dark
-          transition-colors group-hover:text-app-accent dark:group-hover:text-app-accent-weak
-          group-hover:border-app-accent dark:group-hover:border-app-accent 
+          transition-colors group-hover:text-app-accent-strong dark:group-hover:text-app-accent-weak
+          group-hover:border-app-accent dark:group-hover:border-app-accent
         "
         aria-hidden="true"
       >
@@ -94,7 +84,7 @@ function Footer() {
   const { t } = useTranslation('piano');
 
   return (
-    <footer className="px-6 py-8 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75">
+    <footer className="p-8 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75">
       <div
         className="
           mx-auto w-full max-w-4xl text-left
@@ -114,7 +104,7 @@ function Footer() {
           </FooterPanel>
         </div>
 
-        <div className="grid gap-3 sm:justify-items-end">
+        <div className="grid gap-3">
           <FooterLink href={articleUrl} label={t('footer.links.article')} />
           <FooterLink
             href={repositoryUrl}

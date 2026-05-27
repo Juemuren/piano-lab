@@ -26,7 +26,7 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
           {title} {isExpanded ? '▼' : '▶'}
         </h2>
       </button>
-      <div className={isExpanded ? 'mt-4' : 'mt-4 hidden'}>{children}</div>
+      <div className={isExpanded ? 'my-4' : 'hidden'}>{children}</div>
     </div>
   );
 }
