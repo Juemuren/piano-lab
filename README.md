@@ -107,8 +107,8 @@ $$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
 | 纯净 | $A_n \propto \frac1{n^2}$                        |
 | 明亮 | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | 空灵 | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
+| 常规 | $A_n \propto \frac1{n^2} \|\sin(n\pi\lambda)\|$  |
 | 柔和 | $A_n \propto e^{-\sigma n}$                      |
-| 常规 | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | 真实 | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 其中可调节的参数有
@@ -123,15 +123,15 @@ $$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
 
 各传递函数的具体关系为
 
-| 效果   | 幅频特性                                                | 相频特性                                                                            |
-| ------ | ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| 纯延时 | $1$                                                     | $-2\pi \tau f$                                                                      |
-| 单回声 | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)})$               |
-| 多回声 | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$               |
-| 全通   | $1$                                                     | $-2\pi\tau f - 2\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$ |
-| 低通   | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                                 |
-| 高通   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                                 |
-| 带通   | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                                 |
+| 效果   | 幅频特性                                                | 相频特性                                                                          |
+| ------ | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 纯延时 | $1$                                                     | $-2\pi\tau f$                                                                     |
+| 单回声 | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)}$               |
+| 多回声 | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$               |
+| 全通   | $1$                                                     | $-2\pi\tau f - 2\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$ |
+| 低通   | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                               |
+| 高通   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                               |
+| 带通   | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                               |
 
 其中可调节的参数有
 

@@ -107,8 +107,8 @@ The preset timbres use the following relationships:
 | Pure      | $A_n \propto \frac1{n^2}$                        |
 | Bright    | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | Ethereal  | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
+| Normal    | $A_n \propto \frac1{n^2} \|\sin(n\pi\lambda)\|$  |
 | Soft      | $A_n \propto e^{-\sigma n}$                      |
-| Normal    | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | Realistic | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 Adjustable parameters:
@@ -123,15 +123,15 @@ During propagation from source to listener, sound may be distorted in the freque
 
 The transfer functions use the following relationships:
 
-| Effect      | Magnitude response                                      | Phase response                                                                      |
-| ----------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Delay       | $1$                                                     | $-2\pi \tau f$                                                                      |
-| Single echo | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)})$               |
-| Multi echo  | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$               |
-| All-pass    | $1$                                                     | $-2\pi\tau f - 2\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$ |
-| Low-pass    | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                                 |
-| High-pass   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                                 |
-| Band-pass   | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                                 |
+| Effect      | Magnitude response                                      | Phase response                                                                    |
+| ----------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Delay       | $1$                                                     | $-2\pi\tau f$                                                                     |
+| Single echo | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)}$               |
+| Multi echo  | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$               |
+| All-pass    | $1$                                                     | $-2\pi\tau f - 2\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$ |
+| Low-pass    | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                               |
+| High-pass   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                               |
+| Band-pass   | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                               |
 
 Adjustable parameters:
 

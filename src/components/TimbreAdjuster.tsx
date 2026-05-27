@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InlineMath } from 'react-katex';
+import { BlockMath } from 'react-katex';
 import type { Timbre, TimbreType } from '../types';
 import { getTimbrePreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -16,14 +16,14 @@ import {
 } from '../constants';
 
 const TIMBRE_FORMULAS: Record<TimbreType, string> = {
-  metallic: 'A_n \\propto \\frac{1}{n}',
-  pure: 'A_n \\propto \\frac{1}{n^2}',
-  bright: 'A_n \\propto \\frac{1}{n}\\left|\\sin\\frac{n\\pi}{2}\\right|',
-  ethereal: 'A_n \\propto \\frac{1}{n^2}\\left|\\sin\\frac{n\\pi}{2}\\right|',
-  soft: 'A_n \\propto e^{-\\sigma n}',
-  normal: 'A_n \\propto \\frac{1}{n^2}\\left|\\sin(n\\pi\\lambda)\\right|',
-  realistic: 'A_n \\propto \\frac{1}{n^p}e^{-\\sigma n}',
-  custom: 'A_n = \\text{custom}',
+  metallic: String.raw`A_n \propto \frac1n`,
+  pure: String.raw`A_n \propto \frac1{n^2}`,
+  bright: String.raw`A_n \propto \frac1n \left|\sin\frac{n\pi}2\right|`,
+  ethereal: String.raw`A_n \propto \frac{1}{n^2} \left|\sin\frac{n\pi}2\right|`,
+  normal: String.raw`A_n \propto \frac1{n^2} \left|\sin(n\pi\lambda)\right|`,
+  soft: String.raw`A_n \propto e^{-\sigma n}`,
+  realistic: String.raw`A_n \propto \frac1{n^p} e^{-\sigma n}`,
+  custom: String.raw`A_n = \text{custom}`,
 };
 
 interface TimbreAdjusterProps {
@@ -104,10 +104,10 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
             handlePresetChange(e.target.value as TimbreType);
           }}
         >
-          <option value="ethereal">{t('timbre.ethereal')}</option>
           <option value="metallic">{t('timbre.metallic')}</option>
           <option value="pure">{t('timbre.pure')}</option>
           <option value="bright">{t('timbre.bright')}</option>
+          <option value="ethereal">{t('timbre.ethereal')}</option>
           <option value="normal">{t('timbre.normal')}</option>
           <option value="soft">{t('timbre.soft')}</option>
           <option value="realistic">{t('timbre.realistic')}</option>
@@ -116,14 +116,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
       </div>
 
       {timbre.type !== 'custom' && (
-        <div
-          className="
-            mb-3 px-3 py-2 rounded-xl
-            border border-app-border dark:border-app-border-dark
-          "
-        >
-          <InlineMath math={TIMBRE_FORMULAS[timbre.type]} />
-        </div>
+        <BlockMath math={TIMBRE_FORMULAS[timbre.type]} />
       )}
 
       {timbre.type === 'normal' && (

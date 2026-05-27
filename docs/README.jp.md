@@ -107,8 +107,8 @@ $N=10$ とすれば、音は十分にリアルになります。
 | ピュア   | $A_n \propto \frac1{n^2}$                        |
 | 明るい   | $A_n \propto \frac1n \|\sin\frac{n\pi}2\|$       |
 | 幻想     | $A_n \propto \frac{1}{n^2} \|\sin\frac{n\pi}2\|$ |
+| 標準     | $A_n \propto \frac1{n^2} \|\sin(n\pi\lambda)\|$  |
 | 柔らかい | $A_n \propto e^{-\sigma n}$                      |
-| 標準     | $A_n \propto \frac1{n^2} \|\sin(n\pi \lambda)\|$ |
 | リアル   | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
 調整可能なパラメーター:
@@ -123,15 +123,15 @@ $N=10$ とすれば、音は十分にリアルになります。
 
 各伝達関数の関係は次のとおりです。
 
-| 効果       | 振幅特性                                                | 位相特性                                                                            |
-| ---------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| ディレイ   | $1$                                                     | $-2\pi \tau f$                                                                      |
-| 単一エコー | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)})$               |
-| 複数エコー | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$               |
-| オールパス | $1$                                                     | $-2\pi\tau f - 2\arctan(\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)})$ |
-| ローパス   | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                                 |
-| ハイパス   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                                 |
-| バンドパス | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                                 |
+| 効果       | 振幅特性                                                | 位相特性                                                                          |
+| ---------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| ディレイ   | $1$                                                     | $-2\pi\tau f$                                                                     |
+| 単一エコー | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)}$               |
+| 複数エコー | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$               |
+| オールパス | $1$                                                     | $-2\pi\tau f - 2\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$ |
+| ローパス   | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                               |
+| ハイパス   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                               |
+| バンドパス | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                               |
 
 調整可能なパラメーター:
 

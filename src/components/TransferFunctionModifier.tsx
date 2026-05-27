@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BlockMath } from 'react-katex';
 import type { TransferFunction, TransferFunctionType } from '../types';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -28,6 +29,40 @@ interface TransferFunctionModifierProps {
 }
 
 const PITCH_OPTIONS = getPitchOptions();
+
+const TRANSFER_FORMULAS: Record<
+  TransferFunctionType,
+  { magnitude: string; phase: string }
+> = {
+  delay: {
+    magnitude: String.raw`|H(f)| = 1`,
+    phase: String.raw`\angle H(f) = -2\pi\tau f`,
+  },
+  single_echo: {
+    magnitude: String.raw`|H(f)| = \sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}`,
+    phase: String.raw`\angle H(f) = -\arctan\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)}`,
+  },
+  multi_echo: {
+    magnitude: String.raw`|H(f)| = \frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}`,
+    phase: String.raw`\angle H(f) = -\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}`,
+  },
+  all_pass: {
+    magnitude: String.raw`|H(f)| = 1`,
+    phase: String.raw`\angle H(f) = -2\pi\tau f - 2\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}`,
+  },
+  low_pass: {
+    magnitude: String.raw`\mathbf{1}_{f \le f_{\max}}`,
+    phase: String.raw`\angle H(f) = 0`,
+  },
+  high_pass: {
+    magnitude: String.raw`\mathbf{1}_{f \ge f_{\min}}`,
+    phase: String.raw`\angle H(f) = 0`,
+  },
+  band_pass: {
+    magnitude: String.raw`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`,
+    phase: String.raw`\angle H(f) = 0`,
+  },
+};
 
 function TransferFunctionModifier({
   audioEngine,
@@ -107,7 +142,7 @@ function TransferFunctionModifier({
   const harmonicLabels = Array.from(
     { length: transferFunction.magnitudes.length },
     (_, index) => (
-      <span>
+      <span key={index}>
         f<sub>{index + 1}</sub>
       </span>
     ),
@@ -237,6 +272,7 @@ function TransferFunctionModifier({
       <h3 className="mb-2 text-lg font-medium">
         {t('charts.magnitudeResponse')}
       </h3>
+      <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].magnitude} />
       <VerticalSliderGroup
         values={transferFunction.magnitudes}
         labels={harmonicLabels}
@@ -248,6 +284,7 @@ function TransferFunctionModifier({
       />
 
       <h3 className="mb-2 text-lg font-medium">{t('charts.phaseResponse')}</h3>
+      <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
       <VerticalSliderGroup
         values={transferFunction.phases}
         labels={harmonicLabels}
