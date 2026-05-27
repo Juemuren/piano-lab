@@ -8,12 +8,7 @@ import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
-import {
-  MAX_PIANO_PITCH,
-  MIN_PIANO_PITCH,
-  getPitchLabel,
-  getPitchOptions,
-} from '../utils/pitch';
+import { getPitchOptions } from '../utils/pitch';
 import {
   DEFAULT_TRANSFER_TYPE,
   DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
@@ -123,21 +118,37 @@ function TransferFunctionModifier({
     if (updates.baseFreq !== undefined) setBaseFreq(updates.baseFreq);
   };
 
-  const minBaseFreq = audioEngine.getBaseFreq(MIN_PIANO_PITCH);
-  const maxBaseFreq = audioEngine.getBaseFreq(MAX_PIANO_PITCH);
   const selectedPitch = PITCH_OPTIONS.find(
-    ({ pitch }) => audioEngine.getBaseFreq(pitch) === baseFreq,
+    ({ pitch }) =>
+      Math.abs(audioEngine.getBaseFreq(pitch) - baseFreq) < Number.EPSILON,
   )?.pitch;
-  let lowerPitch = MIN_PIANO_PITCH;
-  for (const { pitch } of PITCH_OPTIONS) {
-    if (audioEngine.getBaseFreq(pitch) <= baseFreq) {
-      lowerPitch = pitch;
-    }
+
+  const firstHigherPitchIndex = PITCH_OPTIONS.findIndex(
+    ({ pitch }) => audioEngine.getBaseFreq(pitch) > baseFreq,
+  );
+  let pitchRangeLabel;
+  switch (firstHigherPitchIndex) {
+    case -1:
+      pitchRangeLabel = `> ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
+      break;
+    case 0:
+      pitchRangeLabel = `< ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
+      break;
+    default:
+      pitchRangeLabel = `${PITCH_OPTIONS.at(firstHigherPitchIndex - 1)?.label} ~ ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
+      break;
   }
-  const upperPitch = Math.min(lowerPitch + 1, MAX_PIANO_PITCH);
-  const pitchRangeLabel = selectedPitch
-    ? getPitchLabel(selectedPitch)
-    : `${getPitchLabel(lowerPitch)} ~ ${getPitchLabel(upperPitch)}`;
+
+  const customPitchOptionIndex =
+    firstHigherPitchIndex === -1 ? PITCH_OPTIONS.length : firstHigherPitchIndex;
+  const baseFrequencyPitchOptions =
+    selectedPitch === undefined
+      ? [
+          ...PITCH_OPTIONS.slice(0, customPitchOptionIndex),
+          { pitch: 'custom' as const, label: pitchRangeLabel },
+          ...PITCH_OPTIONS.slice(customPitchOptionIndex),
+        ]
+      : PITCH_OPTIONS;
 
   const harmonicLabels = Array.from(
     { length: transferFunction.magnitudes.length },
@@ -183,8 +194,8 @@ function TransferFunctionModifier({
           <ControlRange
             label={t('controls.baseFrequency')}
             symbol={<InlineMath math="f" />}
-            min={minBaseFreq}
-            max={maxBaseFreq}
+            min="20"
+            max="5000"
             step="1"
             value={baseFreq}
             displayValue={`${baseFreq.toFixed(2)} Hz`}
@@ -193,17 +204,14 @@ function TransferFunctionModifier({
           />
           <ControlSelect
             value={selectedPitch ?? 'custom'}
-            aria-label={t('controls.baseFrequencyPitch')}
-            onChange={(e) =>
+            onChange={(e) => {
+              if (e.target.value === 'custom') return;
               handleParamsChange({
                 baseFreq: audioEngine.getBaseFreq(Number(e.target.value)),
-              })
-            }
+              });
+            }}
           >
-            {selectedPitch === undefined && (
-              <option value="custom">{pitchRangeLabel}</option>
-            )}
-            {PITCH_OPTIONS.map(({ pitch, label }) => (
+            {baseFrequencyPitchOptions.map(({ pitch, label }) => (
               <option key={pitch} value={pitch}>
                 {label}
               </option>

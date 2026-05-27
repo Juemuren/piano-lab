@@ -46,7 +46,6 @@
     "decayRate": "減衰率",
     "powerExponent": "べき指数",
     "baseFrequency": "基音周波数",
-    "baseFrequencyPitch": "基音周波数の音高",
     "baseFrequencyPreviewHint": "この基音周波数の調整は伝達関数が倍音に与える影響のプレビュー専用で、実際の演奏音高は変わりません。",
     "delayTime": "遅延時間",
     "attenuation": "減衰係数",

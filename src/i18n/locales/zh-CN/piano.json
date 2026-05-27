@@ -46,7 +46,6 @@
     "decayRate": "衰减率",
     "powerExponent": "幂指数",
     "baseFrequency": "基频",
-    "baseFrequencyPitch": "基频音高",
     "baseFrequencyPreviewHint": "此基频调节仅用于预览传递函数对谐波的影响，不会改变实际演奏的音高。",
     "delayTime": "延迟时间",
     "attenuation": "衰减系数",
