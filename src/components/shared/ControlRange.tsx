@@ -24,12 +24,7 @@ function ControlRange({
   accentClassName = 'accent-app-tip dark:accent-app-tip-dark',
 }: ControlRangeProps) {
   return (
-    <div
-      className="
-        my-2 p-2 rounded-2xl
-        border border-app-border dark:border-app-border-dark
-      "
-    >
+    <div className="my-1 p-1">
       <div className="m-2 flex items-center justify-between text-sm">
         <span>
           {label} {symbol}

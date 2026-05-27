@@ -141,10 +141,7 @@ function HarmonicSynthesizer({
       />
       <p
         className="
-          m-2 p-2
-          rounded-lg bg-app-warning-surface dark:bg-app-warning-surface-dark
-          border border-app-warning/60 dark:border-app-warning/40
-          text-xs text-app-warning-text dark:text-app-warning-text-dark
+          text-xs text-app-warning/50 dark:text-app-warning-dark/50
         "
       >
         {t('controls.harmonicCountWarning')}

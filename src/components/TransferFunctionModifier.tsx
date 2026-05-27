@@ -176,12 +176,7 @@ function TransferFunctionModifier({
         <option value="band_pass">{t('transferFunction.band_pass')}</option>
       </ControlSelect>
 
-      <div
-        className="
-          m-4 p-4 rounded-2xl
-          border border-app-border dark:border-app-border-dark
-        "
-      >
+      <div className="my-4">
         <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
           <ControlRange
             label={t('controls.baseFrequency')}
@@ -210,7 +205,7 @@ function TransferFunctionModifier({
             ))}
           </ControlSelect>
         </div>
-        <p className="mt-2 text-xs text-app-text/50 dark:text-app-text-dark/50">
+        <p className="mt-2 text-xs text-app-info/50 dark:text-app-info-dark/50">
           {t('controls.baseFrequencyPreviewHint')}
         </p>
       </div>
