@@ -10,8 +10,8 @@ function ControlPanel({ children, className = '' }: ControlPanelProps) {
     <div
       className={`
         w-full p-5 rounded-3xl
-        border border-app-border/75 dark:border-app-border-dark/50
-        bg-app-surface/40 dark:bg-app-surface-dark/40
+        border border-app-border dark:border-app-border-dark
+        bg-app-surface/75 dark:bg-app-surface-dark/25
         shadow-xl shadow-app-muted/5
         ${className}
         `}

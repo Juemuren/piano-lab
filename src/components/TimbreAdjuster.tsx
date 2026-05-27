@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BlockMath } from 'react-katex';
+import { BlockMath, InlineMath } from 'react-katex';
 import type { Timbre, TimbreType } from '../types';
 import { getTimbrePreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -122,6 +122,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
       {timbre.type === 'normal' && (
         <ControlRange
           label={t('controls.strikePoint')}
+          symbol={<InlineMath math="\lambda" />}
           min="0"
           max="1"
           step="0.01"
@@ -134,6 +135,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
       {(timbre.type === 'soft' || timbre.type === 'realistic') && (
         <ControlRange
           label={t('controls.decayRate')}
+          symbol={<InlineMath math="\sigma" />}
           min="0.01"
           max="1"
           step="0.01"
@@ -146,6 +148,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
       {timbre.type === 'realistic' && (
         <ControlRange
           label={t('controls.powerExponent')}
+          symbol={<InlineMath math="p" />}
           min="0.5"
           max="4"
           step="0.1"

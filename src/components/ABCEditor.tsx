@@ -195,8 +195,8 @@ function ABCEditor({
         placeholder={t('piano:score.placeholder')}
         className="
           w-full h-48 p-3 mb-4 text-sm resize-none
-          bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/60
-          border border-app-border/80 dark:border-app-border-dark/70
+          bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/25
+          border border-app-border dark:border-app-border-dark
           focus:outline-none focus:ring-2 focus:ring-app-accent/50
         "
       />
@@ -219,8 +219,8 @@ function ABCEditor({
         id={RENDER_TARGET_ID}
         className="
           w-full mt-4 rounded-3xl shadow-sm
-          border border-app-border/40 dark:border-app-border-dark/80
-          bg-app-surface/90 dark:bg-app-surface-dark/60
+          border border-app-border dark:border-app-border-dark
+          bg-app-surface/85 dark:bg-app-surface-dark/15
         "
       />
     </ControlPanel>

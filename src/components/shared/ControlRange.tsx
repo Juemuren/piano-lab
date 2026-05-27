@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+
 type ControlRangeProps = {
   label: string;
   value: number;
@@ -5,6 +7,7 @@ type ControlRangeProps = {
   max: number | string;
   step: number | string;
   onChange: (value: number) => void;
+  symbol?: JSX.Element;
   displayValue?: string;
   accentClassName?: string;
 };
@@ -16,6 +19,7 @@ function ControlRange({
   max,
   step,
   onChange,
+  symbol,
   displayValue = value.toString(),
   accentClassName = 'accent-app-tip dark:accent-app-tip-dark',
 }: ControlRangeProps) {
@@ -23,11 +27,13 @@ function ControlRange({
     <div
       className="
         mb-4 pb-1 p-4 rounded-2xl
-        border border-app-border/50 dark:border-app-border-dark/50
+        border border-app-border dark:border-app-border-dark
       "
     >
       <div className="mb-2 flex items-center justify-between text-sm">
-        <span>{label}</span>
+        <span>
+          {label} {symbol}
+        </span>
         <span className="font-semibold">{displayValue}</span>
       </div>
       <input

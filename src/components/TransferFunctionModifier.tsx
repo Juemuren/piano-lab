@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BlockMath } from 'react-katex';
+import { BlockMath, InlineMath } from 'react-katex';
 import type { TransferFunction, TransferFunctionType } from '../types';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -179,9 +179,10 @@ function TransferFunctionModifier({
           border border-app-border dark:border-app-border-dark
         "
       >
-        <div className="mb-3 grid gap-3 sm:grid-cols-2">
+        <div className="mb-3 grid gap-3 sm:grid-cols-[2fr_1fr]">
           <ControlRange
             label={t('controls.baseFrequency')}
+            symbol={<InlineMath math="f" />}
             min={minBaseFreq}
             max={maxBaseFreq}
             step="1"
@@ -220,6 +221,7 @@ function TransferFunctionModifier({
         transferFunction.type === 'all_pass') && (
         <ControlRange
           label={t('controls.delayTime')}
+          symbol={<InlineMath math="\tau" />}
           min="0"
           max="100"
           step="0.1"
@@ -234,6 +236,7 @@ function TransferFunctionModifier({
         transferFunction.type === 'all_pass') && (
         <ControlRange
           label={t('controls.attenuation')}
+          symbol={<InlineMath math="\sigma" />}
           min="0"
           max="0.5"
           step="0.01"
@@ -247,6 +250,7 @@ function TransferFunctionModifier({
         transferFunction.type === 'band_pass') && (
         <ControlRange
           label={t('controls.minFrequency')}
+          symbol={<InlineMath math="f_{\min}" />}
           min="20"
           max="20000"
           step="10"
@@ -260,6 +264,7 @@ function TransferFunctionModifier({
         transferFunction.type === 'band_pass') && (
         <ControlRange
           label={t('controls.maxFrequency')}
+          symbol={<InlineMath math="f_{\max}" />}
           min="20"
           max="20000"
           step="10"
