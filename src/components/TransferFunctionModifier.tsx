@@ -244,7 +244,7 @@ function TransferFunctionModifier({
         transferFunction.type === 'all_pass') && (
         <ControlRange
           label={t('controls.attenuation')}
-          symbol={<InlineMath math="\sigma" />}
+          symbol={<InlineMath math="\alpha" />}
           min="0"
           max="0.5"
           step="0.01"
