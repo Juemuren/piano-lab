@@ -8,6 +8,7 @@ import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
+import { getHarmonicLabels } from '../utils/harmonic';
 import {
   DEFAULT_TIMBRE_TYPE,
   DEFAULT_TIMBRE_DECAY_RATE,
@@ -86,14 +87,7 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
     setTimbreType('custom');
   };
 
-  const harmonicLabels = Array.from(
-    { length: timbre.amplitudes.length },
-    (_, index) => (
-      <span key={index}>
-        f<sub>{index + 1}</sub>
-      </span>
-    ),
-  );
+  const harmonicLabels = getHarmonicLabels(timbre.amplitudes.length);
 
   return (
     <ControlPanel>
