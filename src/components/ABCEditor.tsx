@@ -12,10 +12,15 @@ import { AudioEngine } from '../services/audio/AudioEngine';
 import { ABCPlayer } from '../services/abc/ABCPlayer';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
+import FileExportButton from './shared/FileExportButton';
+import FileImportButton from './shared/FileImportButton';
+import useFileExport from '../hooks/useFileExport';
+import useFileImport from '../hooks/useFileImport';
 
 const DOUBLE_CLICK_INTERVAL_MS = 500;
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
+const FILE_INPUT_ID = 'abcjs-file-input';
 
 interface ABCNotationPlayerProps {
   audioEngine: AudioEngine;
@@ -96,6 +101,24 @@ function ABCEditor({
       setIsPlaying(true);
     }
   }, [onStop]);
+
+  const handleImport = useCallback(
+    (content: string) => {
+      setAbcContent(content);
+      setSelectedPresetIndex(-1);
+      if (isPlaying) handleStop();
+    },
+    [handleStop, isPlaying],
+  );
+
+  const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
+    onImport: handleImport,
+  });
+  const handleExport = useFileExport({
+    content: abcContent,
+    fileName: 'score.abc',
+    mimeType: 'text/vnd.abc;charset=utf-8',
+  });
 
   useEffect(() => {
     lastClickedNoteRef.current = null;
@@ -182,6 +205,22 @@ function ABCEditor({
         ))}
       </ControlSelect>
 
+      <div className="py-2 grid grid-cols-2 gap-2">
+        <FileImportButton
+          fileInputId={FILE_INPUT_ID}
+          fileInputRef={fileInputRef}
+          accept=".abc,text/vnd.abc,text/plain"
+          label={t('piano:score.importAbc')}
+          onClick={openFileDialog}
+          onChange={handleFileChange}
+        />
+        <FileExportButton
+          label={t('piano:score.exportAbc')}
+          disabled={!abcContent.trim()}
+          onClick={handleExport}
+        />
+      </div>
+
       <textarea
         id={INPUT_ID}
         value={abcContent}
@@ -192,7 +231,7 @@ function ABCEditor({
         }}
         placeholder={t('piano:score.placeholder')}
         className="
-          w-full h-48 p-4 my-4 text-sm
+          w-full h-48 p-4 my-2 text-sm
           bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/25
           border border-app-border dark:border-app-border-dark
           focus:outline-none focus:ring-2 focus:ring-app-accent/50

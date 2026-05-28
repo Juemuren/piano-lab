@@ -59,6 +59,8 @@
   },
   "score": {
     "custom": "カスタム",
+    "importAbc": "abc をインポート",
+    "exportAbc": "abc をエクスポート",
     "placeholder": "楽譜を入力するか、プリセットを選択",
     "presets": {
       "小星星": "きらきら星",
