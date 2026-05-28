@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioEngine } from './services/audio/AudioEngine';
 import Piano from './components/Piano';
-import TimbreAdjuster from './components/TimbreAdjuster';
+import TimbreAdjuster from './components/Timbre';
 import TransferFunctionModifier from './components/TransferFunction';
 import ABCEditor from './components/ABCEditor';
 import HarmonicSynthesizer from './components/HarmonicSynthesizer';

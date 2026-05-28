@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import type { TimbreType } from '../types';
-import { AudioEngine } from '../services/audio/AudioEngine';
-import ControlPanel from './shared/ControlPanel';
-import ControlSelect from './shared/ControlSelect';
-import HarmonicAmplitudeControls from './Timbre/HarmonicAmplitudeControls';
-import TimbreParameterControls from './Timbre/TimbreParameterControls';
-import useTimbreControl from '../hooks/useTimbreControl';
+import type { TimbreType } from '../../types';
+import { AudioEngine } from '../../services/audio/AudioEngine';
+import ControlPanel from '../shared/ControlPanel';
+import ControlSelect from '../shared/ControlSelect';
+import HarmonicAmplitudeControls from './HarmonicAmplitudeControls';
+import TimbreParameterControls from './TimbreParameterControls';
+import useTimbreControl from '../../hooks/useTimbreControl';
 
 interface TimbreAdjusterProps {
   audioEngine: AudioEngine;
