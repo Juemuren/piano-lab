@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Scatter from 'react-plotly.js/scatter';
 import { AudioEngine } from '../services/audio/AudioEngine';
@@ -46,6 +46,21 @@ function HarmonicSynthesizer({
   const [releaseTime, setReleaseTime] = useState(audioEngine.getReleaseTime());
   const [sustainGain, setSustainGain] = useState(audioEngine.getSustainGain());
   const [silenceGain, setSilenceGain] = useState(audioEngine.getSilenceGain());
+  const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
+  const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const element = envelopeChartContainerRef.current;
+    if (!element) return;
+
+    const updateEnvelopeChartWidth = () => {
+      setEnvelopeChartWidth(element.getBoundingClientRect().width);
+    };
+    updateEnvelopeChartWidth();
+    const resizeObserver = new ResizeObserver(updateEnvelopeChartWidth);
+    resizeObserver.observe(element);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   useEffect(() => {
     audioEngine.setOscillatorType(oscillatorType);
@@ -125,36 +140,43 @@ function HarmonicSynthesizer({
         <summary className="text-lg font-bold">
           {t('charts.envelopeCurve')}
         </summary>
-        <Scatter
-          data={[
-            {
-              x: envelopeCurve.time,
-              y: envelopeCurve.gain,
-              mode: 'lines',
-            },
-          ]}
-          layout={{
-            autosize: true,
-            margin: { t: 40, r: 40, b: 40, l: 40 },
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            xaxis: {
-              ticksuffix: 's',
-              fixedrange: true,
-              gridcolor: 'rgba(128,128,128,0.25)',
-            },
-            yaxis: {
-              fixedrange: true,
-              gridcolor: 'rgba(128,128,128,0.25)',
-            },
-          }}
-          config={{
-            autosizable: true,
-            displayModeBar: false,
-          }}
-          useResizeHandler
-          className="h-full w-full"
-        />
+        <div ref={envelopeChartContainerRef} className="w-full">
+          {envelopeChartWidth > 0 && (
+            <Scatter
+              data={[
+                {
+                  x: envelopeCurve.time,
+                  y: envelopeCurve.gain,
+                  mode: 'lines',
+                },
+              ]}
+              layout={{
+                autosize: true,
+                margin: { t: 40, r: 40, b: 40, l: 40 },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                xaxis: {
+                  ticksuffix: 's',
+                  fixedrange: true,
+                  gridcolor: 'rgba(128,128,128,0.25)',
+                },
+                yaxis: {
+                  fixedrange: true,
+                  gridcolor: 'rgba(128,128,128,0.25)',
+                },
+              }}
+              config={{
+                autosizable: true,
+                displayModeBar: false,
+              }}
+              style={{
+                width: `${envelopeChartWidth}px`,
+                height: `100%`,
+              }}
+              useResizeHandler
+            />
+          )}
+        </div>
       </details>
 
       <ControlRange
