@@ -61,6 +61,8 @@
     "custom": "自定义",
     "importAbc": "导入 abc",
     "exportAbc": "导出 abc",
+    "exportSvg": "导出 svg",
+    "exportPng": "导出 png",
     "placeholder": "输入乐谱或选择预设",
     "presets": {
       "小星星": "小星星",

@@ -61,6 +61,8 @@
     "custom": "Custom",
     "importAbc": "Import abc",
     "exportAbc": "Export abc",
+    "exportSvg": "Export svg",
+    "exportPng": "Export png",
     "placeholder": "Enter a score or choose a preset",
     "presets": {
       "小星星": "Twinkle Twinkle Little Star",

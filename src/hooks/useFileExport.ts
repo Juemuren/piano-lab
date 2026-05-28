@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { downloadBlob } from '../utils/file';
 
 interface UseFileExportOptions {
   content: BlobPart;
@@ -11,13 +12,8 @@ function useFileExport({ content, fileName, mimeType }: UseFileExportOptions) {
     const blob = new Blob([content], {
       type: mimeType,
     });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
 
-    link.href = url;
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(blob, fileName);
   }, [content, fileName, mimeType]);
 }
 
