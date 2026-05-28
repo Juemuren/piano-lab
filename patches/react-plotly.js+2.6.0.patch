@@ -1,0 +1,40 @@
+diff --git a/node_modules/react-plotly.js/factory.js b/node_modules/react-plotly.js/factory.js
+index 40f3edc..a469685 100644
+--- a/node_modules/react-plotly.js/factory.js
++++ b/node_modules/react-plotly.js/factory.js
+@@ -315,4 +315,9 @@ function plotComponentFactory(Plotly) {
+   };
+   return PlotlyComponent;
+ }
++module.exports = plotComponentFactory;
++module.exports.default = plotComponentFactory;
++Object.defineProperty(module.exports, "__esModule", {
++  value: true
++});
+ //# sourceMappingURL=factory.js.map
+diff --git a/node_modules/react-plotly.js/react-plotly.js b/node_modules/react-plotly.js/react-plotly.js
+index f599b9e..d83c1ac 100644
+--- a/node_modules/react-plotly.js/react-plotly.js
++++ b/node_modules/react-plotly.js/react-plotly.js
+@@ -7,11 +7,20 @@ exports["default"] = void 0;
+ 
+ var _factory = _interopRequireDefault(require("./factory"));
+ 
+-var _plotly = _interopRequireDefault(require("plotly.js/dist/plotly"));
++var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
++
++var _scatter = _interopRequireDefault(require("plotly.js/lib/scatter"));
+ 
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+ 
++_plotly["default"].register([_scatter["default"]]);
++
+ var PlotComponent = (0, _factory["default"])(_plotly["default"]);
+ var _default = PlotComponent;
+ exports["default"] = _default;
++module.exports = _default;
++module.exports.default = _default;
++Object.defineProperty(module.exports, "__esModule", {
++  value: true
++});
+ //# sourceMappingURL=react-plotly.js.map

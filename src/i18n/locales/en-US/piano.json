@@ -53,6 +53,7 @@
     "maxFrequency": "Maximum Frequency"
   },
   "charts": {
+    "envelopeCurve": "Envelope Curve",
     "magnitudeResponse": "Magnitude Response",
     "phaseResponse": "Phase Response"
   },

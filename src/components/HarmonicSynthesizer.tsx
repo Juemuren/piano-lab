@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Plot from 'react-plotly.js';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
@@ -9,6 +10,25 @@ interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
   onHarmonicCountChange: (value: number) => void;
+}
+
+const ENVELOPE_SUSTAIN_SECONDS = 1;
+const ENVELOPE_HARMONIC_TIMES = 1;
+const ENVELOPE_POINTS_PER_SEGMENT = 50;
+
+function sampleExponentialRamp(
+  startTime: number,
+  endTime: number,
+  startGain: number,
+  endGain: number,
+) {
+  return Array.from({ length: ENVELOPE_POINTS_PER_SEGMENT + 1 }, (_, index) => {
+    const progress = index / ENVELOPE_POINTS_PER_SEGMENT;
+    const time = startTime + (endTime - startTime) * progress;
+    const gain = startGain * Math.pow(endGain / startGain, progress);
+
+    return { time, gain };
+  });
 }
 
 function HarmonicSynthesizer({
@@ -63,6 +83,32 @@ function HarmonicSynthesizer({
     onHarmonicCountChange(Math.round(value));
   };
 
+  const envelopeCurve = useMemo(() => {
+    const attackEnd = attackTime;
+    const decayEnd = attackEnd + decayTime;
+    const sustainEnd = decayEnd + ENVELOPE_SUSTAIN_SECONDS;
+    const releaseEnd = sustainEnd + releaseTime;
+    const attackGain = volume;
+    const decayGain = Math.max(attackGain * sustainGain, silenceGain);
+    const holdGain = Math.max(
+      decayGain / Math.sqrt(1 + ENVELOPE_HARMONIC_TIMES),
+      silenceGain,
+    );
+
+    const points = [
+      ...sampleExponentialRamp(0, attackEnd, silenceGain, attackGain),
+      ...sampleExponentialRamp(attackEnd, decayEnd, attackGain, decayGain),
+      ...sampleExponentialRamp(decayEnd, sustainEnd, decayGain, holdGain),
+      ...sampleExponentialRamp(sustainEnd, releaseEnd, holdGain, silenceGain),
+    ];
+
+    return {
+      time: points.map(({ time }) => time),
+      gain: points.map(({ gain }) => gain),
+      maxTime: releaseEnd,
+    };
+  }, [volume, attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
+
   return (
     <ControlPanel>
       <ControlSelect
@@ -74,6 +120,43 @@ function HarmonicSynthesizer({
         <option value="sawtooth">{t('oscillator.sawtooth')}</option>
         <option value="square">{t('oscillator.square')}</option>
       </ControlSelect>
+
+      <details open className="mt-4">
+        <summary className="text-lg font-bold">
+          {t('charts.envelopeCurve')}
+        </summary>
+        <Plot
+          data={[
+            {
+              x: envelopeCurve.time,
+              y: envelopeCurve.gain,
+              type: 'scatter',
+              mode: 'lines',
+            },
+          ]}
+          layout={{
+            autosize: true,
+            margin: { t: 40, r: 40, b: 40, l: 40 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            xaxis: {
+              ticksuffix: 's',
+              fixedrange: true,
+              gridcolor: 'rgba(128,128,128,0.25)',
+            },
+            yaxis: {
+              fixedrange: true,
+              gridcolor: 'rgba(128,128,128,0.25)',
+            },
+          }}
+          config={{
+            autosizable: true,
+            displayModeBar: false,
+          }}
+          useResizeHandler
+          className="h-full w-full"
+        />
+      </details>
 
       <ControlRange
         label={t('controls.volume')}

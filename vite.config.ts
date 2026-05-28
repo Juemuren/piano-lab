@@ -9,6 +9,9 @@ const host = process.env.TAURI_DEV_HOST;
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: process.env.TAURI_ENV_PLATFORM ? './' : '/web-piano-simulator/',
+  define: {
+    global: 'globalThis',
+  },
   server: {
     port: 5173,
     strictPort: true,
@@ -29,12 +32,18 @@ export default defineConfig({
     rolldownOptions: {
       output: {
         codeSplitting: {
-          minSize: 10000,
-          maxSize: 250000,
+          minSize: 20000,
+          maxSize: 500000,
           groups: [
+            {
+              name: 'react-vendor',
+              test: /node_modules[\\/]react/,
+              priority: 20,
+            },
             {
               name: 'vendor',
               test: /node_modules/,
+              priority: 10,
             },
           ],
         },

@@ -53,6 +53,7 @@
     "maxFrequency": "最大频率"
   },
   "charts": {
+    "envelopeCurve": "声音包络曲线",
     "magnitudeResponse": "幅频特性",
     "phaseResponse": "相频特性"
   },

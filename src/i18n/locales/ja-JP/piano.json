@@ -53,6 +53,7 @@
     "maxFrequency": "最大周波数"
   },
   "charts": {
+    "envelopeCurve": "エンベロープ曲線",
     "magnitudeResponse": "振幅特性",
     "phaseResponse": "位相特性"
   },
