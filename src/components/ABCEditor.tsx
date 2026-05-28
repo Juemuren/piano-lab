@@ -16,13 +16,12 @@ import FileExportButton from './shared/FileExportButton';
 import FileImportButton from './shared/FileImportButton';
 import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
-import { downloadBlob, getSvgDimensions, svgToPngBlob } from '../utils/file';
+import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
 
 const DOUBLE_CLICK_INTERVAL_MS = 500;
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
 const FILE_INPUT_ID = 'abcjs-file-input';
-const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 interface ABCNotationPlayerProps {
   audioEngine: AudioEngine;
@@ -54,7 +53,8 @@ function ABCEditor({
   const visualObjRef = useRef<TuneObject>(null);
   const timingCallbacksRef = useRef<TimingCallbacks | null>(null);
   const lastClickedNoteRef = useRef<LastClickedNote | null>(null);
-  const renderTargetRef = useRef<HTMLDivElement>(null);
+  const { renderTargetRef, handleExportSvg, handleExportPng } =
+    useRenderedScoreExport();
 
   const removeHighlight = () => {
     document
@@ -122,48 +122,6 @@ function ABCEditor({
     fileName: 'score.abc',
     mimeType: 'text/vnd.abc;charset=utf-8',
   });
-
-  const getRenderedSvg = useCallback(() => {
-    const svgElement = renderTargetRef.current?.querySelector('svg');
-
-    if (!svgElement) return null;
-
-    const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
-    clonedSvg.setAttribute('xmlns', SVG_NAMESPACE);
-
-    const { width, height } = getSvgDimensions(svgElement);
-    clonedSvg.setAttribute('width', width.toString());
-    clonedSvg.setAttribute('height', height.toString());
-
-    return {
-      content: new XMLSerializer().serializeToString(clonedSvg),
-      width,
-      height,
-    };
-  }, []);
-
-  const handleExportSvg = useCallback(() => {
-    const renderedSvg = getRenderedSvg();
-    if (!renderedSvg) return;
-
-    const blob = new Blob([renderedSvg.content], {
-      type: 'image/svg+xml;charset=utf-8',
-    });
-
-    downloadBlob(blob, 'score.svg');
-  }, [getRenderedSvg]);
-
-  const handleExportPng = useCallback(async () => {
-    const renderedSvg = getRenderedSvg();
-    if (!renderedSvg) return;
-
-    const blob = await svgToPngBlob(
-      renderedSvg.content,
-      renderedSvg.width,
-      renderedSvg.height,
-    );
-    if (blob) downloadBlob(blob, 'score.png');
-  }, [getRenderedSvg]);
 
   useEffect(() => {
     lastClickedNoteRef.current = null;
