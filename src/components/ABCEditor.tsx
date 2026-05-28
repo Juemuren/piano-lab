@@ -1,12 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  type AbcElem,
-  type NoteTimingEvent,
-  type TuneObject,
-  renderAbc,
-  TimingCallbacks,
-} from 'abcjs';
 import { ABC_PRESETS, getAbcPreset } from '../services/abc/ABCPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import { ABCPlayer } from '../services/abc/ABCPlayer';
@@ -16,9 +9,9 @@ import FileExportButton from './shared/FileExportButton';
 import FileImportButton from './shared/FileImportButton';
 import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
+import useABCPlayback from '../hooks/useABCPlayback';
 import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
 
-const DOUBLE_CLICK_INTERVAL_MS = 500;
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
 const FILE_INPUT_ID = 'abcjs-file-input';
@@ -28,12 +21,6 @@ interface ABCNotationPlayerProps {
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
-}
-
-interface LastClickedNote {
-  index: number;
-  beats: number;
-  clickedAt: number;
 }
 
 function ABCEditor({
@@ -46,64 +33,16 @@ function ABCEditor({
   const [abcPlayer] = useState(
     () => new ABCPlayer(audioEngine, onNoteStart, onNoteEnd),
   );
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasNotes, setHasNotes] = useState(false);
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
   const [abcContent, setAbcContent] = useState('');
-  const visualObjRef = useRef<TuneObject>(null);
-  const timingCallbacksRef = useRef<TimingCallbacks | null>(null);
-  const lastClickedNoteRef = useRef<LastClickedNote | null>(null);
+  const { isPlaying, hasNotes, handlePlay, handleStop } = useABCPlayback({
+    abcContent,
+    abcPlayer,
+    onStop,
+    renderTargetId: RENDER_TARGET_ID,
+  });
   const { renderTargetRef, handleExportSvg, handleExportPng } =
     useRenderedScoreExport();
-
-  const removeHighlight = () => {
-    document
-      .querySelectorAll('.abcjs-highlight')
-      .forEach((el) => el.classList.remove('abcjs-highlight'));
-  };
-
-  const addHighlight = (elements: HTMLElement[]) => {
-    elements.forEach((element) => {
-      element.classList.add('abcjs-highlight');
-    });
-  };
-
-  const getSelectedBeat = (abcElem: AbcElem) => {
-    const currentSelectedNote = abcElem.currentTrackWholeNotes ?? 0;
-    const beatLength = visualObjRef.current?.getBeatLength() ?? 1;
-
-    if (Array.isArray(currentSelectedNote)) {
-      return currentSelectedNote[0] / beatLength;
-    }
-    return currentSelectedNote / beatLength;
-  };
-
-  const getSelectedIndex = () => {
-    const selectedElement = document.querySelector('.abcjs-note_selected');
-    return parseInt(selectedElement?.getAttribute('data-index') || '0');
-  };
-
-  const handleStop = useCallback(() => {
-    if (timingCallbacksRef.current) {
-      timingCallbacksRef.current.stop();
-    }
-    setIsPlaying(false);
-    onStop();
-    removeHighlight();
-  }, [timingCallbacksRef, onStop]);
-
-  const handlePlay = useCallback(() => {
-    onStop();
-    removeHighlight();
-    if (timingCallbacksRef.current) {
-      timingCallbacksRef.current.stop();
-      timingCallbacksRef.current.start(
-        lastClickedNoteRef.current?.beats,
-        'beats',
-      );
-      setIsPlaying(true);
-    }
-  }, [onStop]);
 
   const handleImport = useCallback(
     (content: string) => {
@@ -122,66 +61,6 @@ function ABCEditor({
     fileName: 'score.abc',
     mimeType: 'text/vnd.abc;charset=utf-8',
   });
-
-  useEffect(() => {
-    lastClickedNoteRef.current = null;
-  }, [abcContent]);
-
-  useEffect(() => {
-    const clickListener = (abcElem: AbcElem) => {
-      if (visualObjRef.current) {
-        const now = performance.now();
-        const clickedIndex = getSelectedIndex();
-        const prevClickedNote = lastClickedNoteRef.current;
-        lastClickedNoteRef.current = {
-          index: clickedIndex,
-          beats: getSelectedBeat(abcElem),
-          clickedAt: now,
-        };
-        if (
-          prevClickedNote?.index === clickedIndex &&
-          now - prevClickedNote.clickedAt <= DOUBLE_CLICK_INTERVAL_MS
-        ) {
-          handleStop();
-          handlePlay();
-          return;
-        }
-        if (abcElem.midiPitches && abcElem.midiPitches.length > 0) {
-          abcPlayer.play(
-            abcElem.midiPitches,
-            visualObjRef.current?.millisecondsPerMeasure() / 1000,
-          );
-        }
-      }
-    };
-
-    const eventCallback = (ev: NoteTimingEvent | null) => {
-      removeHighlight();
-      if (!ev) {
-        setIsPlaying(false);
-        return;
-      }
-      ev.elements?.forEach((noteGroup) => {
-        addHighlight(noteGroup);
-      });
-      if (ev.midiPitches) {
-        abcPlayer.play(ev.midiPitches, ev.millisecondsPerMeasure / 1000);
-      }
-      return 'continue';
-    };
-
-    visualObjRef.current = renderAbc(RENDER_TARGET_ID, abcContent, {
-      responsive: 'resize',
-      add_classes: true,
-      clickListener,
-    })[0];
-    visualObjRef.current.setUpAudio({});
-    setHasNotes(visualObjRef.current.lines.length > 0);
-
-    timingCallbacksRef.current = new TimingCallbacks(visualObjRef.current, {
-      eventCallback,
-    });
-  }, [abcContent, abcPlayer, handleStop, handlePlay]);
 
   return (
     <ControlPanel>
