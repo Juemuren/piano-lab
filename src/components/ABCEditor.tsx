@@ -16,7 +16,7 @@ import FileExportButton from './shared/FileExportButton';
 import FileImportButton from './shared/FileImportButton';
 import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
-import { getSvgDimensions, downloadBlob } from '../utils/file';
+import { downloadBlob, getSvgDimensions, svgToPngBlob } from '../utils/file';
 
 const DOUBLE_CLICK_INTERVAL_MS = 500;
 const RENDER_TARGET_ID = 'abcjs-paper';
@@ -153,38 +153,16 @@ function ABCEditor({
     downloadBlob(blob, 'score.svg');
   }, [getRenderedSvg]);
 
-  const handleExportPng = useCallback(() => {
+  const handleExportPng = useCallback(async () => {
     const renderedSvg = getRenderedSvg();
     if (!renderedSvg) return;
 
-    const svgBlob = new Blob([renderedSvg.content], {
-      type: 'image/svg+xml;charset=utf-8',
-    });
-    const svgUrl = URL.createObjectURL(svgBlob);
-    const image = new Image();
-
-    image.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = renderedSvg.width;
-      canvas.height = renderedSvg.height;
-
-      const context = canvas.getContext('2d');
-      if (!context) {
-        URL.revokeObjectURL(svgUrl);
-        return;
-      }
-
-      context.fillStyle = '#ffffff';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(image, 0, 0);
-      URL.revokeObjectURL(svgUrl);
-
-      canvas.toBlob((blob) => {
-        if (blob) downloadBlob(blob, 'score.png');
-      }, 'image/png');
-    };
-    image.onerror = () => URL.revokeObjectURL(svgUrl);
-    image.src = svgUrl;
+    const blob = await svgToPngBlob(
+      renderedSvg.content,
+      renderedSvg.width,
+      renderedSvg.height,
+    );
+    if (blob) downloadBlob(blob, 'score.png');
   }, [getRenderedSvg]);
 
   useEffect(() => {
