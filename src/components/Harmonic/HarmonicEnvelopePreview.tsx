@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { EnvelopeCurve } from '../hooks/useHarmonicSynthesizerControl';
+import type { EnvelopeCurve } from '../../hooks/useHarmonicSynthesizerControl';
 
 interface HarmonicEnvelopePreviewProps {
   title: string;

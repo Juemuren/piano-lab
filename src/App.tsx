@@ -5,7 +5,7 @@ import Piano from './components/Piano';
 import TimbreAdjuster from './components/Timbre';
 import TransferFunctionModifier from './components/TransferFunction';
 import ABCEditor from './components/ABCEditor';
-import HarmonicSynthesizer from './components/HarmonicSynthesizer';
+import HarmonicSynthesizer from './components/Harmonic';
 import CollapsibleSection from './components/CollapsibleSection';
 import Footer from './components/Footer';
 import LanguageSwitcher from './components/LanguageSwitcher';

@@ -1,5 +1,5 @@
-import ControlRange from './shared/ControlRange';
-import ControlSelect from './shared/ControlSelect';
+import ControlRange from '../shared/ControlRange';
+import ControlSelect from '../shared/ControlSelect';
 
 interface HarmonicSynthesizerParameterControlsProps {
   oscillatorType: OscillatorType;
@@ -57,7 +57,9 @@ function HarmonicSynthesizerParameterControls({
     <>
       <ControlSelect
         value={oscillatorType}
-        onChange={(e) => onOscillatorTypeChange(e.target.value as OscillatorType)}
+        onChange={(e) =>
+          onOscillatorTypeChange(e.target.value as OscillatorType)
+        }
       >
         <option value="sine">{labels.sine}</option>
         <option value="triangle">{labels.triangle}</option>
