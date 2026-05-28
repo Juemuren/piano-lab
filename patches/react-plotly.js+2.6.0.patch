@@ -13,22 +13,10 @@ index 40f3edc..a469685 100644
 +});
  //# sourceMappingURL=factory.js.map
 diff --git a/node_modules/react-plotly.js/react-plotly.js b/node_modules/react-plotly.js/react-plotly.js
-index f599b9e..d83c1ac 100644
+index f599b9e..36e0818 100644
 --- a/node_modules/react-plotly.js/react-plotly.js
 +++ b/node_modules/react-plotly.js/react-plotly.js
-@@ -7,11 +7,20 @@ exports["default"] = void 0;
- 
- var _factory = _interopRequireDefault(require("./factory"));
- 
--var _plotly = _interopRequireDefault(require("plotly.js/dist/plotly"));
-+var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
-+
-+var _scatter = _interopRequireDefault(require("plotly.js/lib/scatter"));
- 
- function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
- 
-+_plotly["default"].register([_scatter["default"]]);
-+
+@@ -14,4 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
  var PlotComponent = (0, _factory["default"])(_plotly["default"]);
  var _default = PlotComponent;
  exports["default"] = _default;
@@ -38,3 +26,34 @@ index f599b9e..d83c1ac 100644
 +  value: true
 +});
  //# sourceMappingURL=react-plotly.js.map
+diff --git a/node_modules/react-plotly.js/scatter.js b/node_modules/react-plotly.js/scatter.js
+new file mode 100644
+index 0000000..4152081
+--- /dev/null
++++ b/node_modules/react-plotly.js/scatter.js
+@@ -0,0 +1,25 @@
++"use strict";
++
++Object.defineProperty(exports, "__esModule", {
++  value: true
++});
++exports["default"] = void 0;
++
++var _factory = _interopRequireDefault(require("./factory"));
++
++var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
++
++var _scatter = _interopRequireDefault(require("plotly.js/lib/scatter"));
++
++function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
++
++_plotly["default"].register([_scatter["default"]]);
++
++var PlotComponent = (0, _factory["default"])(_plotly["default"]);
++var _default = PlotComponent;
++exports["default"] = _default;
++module.exports = _default;
++module.exports.default = _default;
++Object.defineProperty(module.exports, "__esModule", {
++  value: true
++});

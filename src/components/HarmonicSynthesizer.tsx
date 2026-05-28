@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Plot from 'react-plotly.js';
+import Scatter from 'react-plotly.js/scatter';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
@@ -125,12 +125,11 @@ function HarmonicSynthesizer({
         <summary className="text-lg font-bold">
           {t('charts.envelopeCurve')}
         </summary>
-        <Plot
+        <Scatter
           data={[
             {
               x: envelopeCurve.time,
               y: envelopeCurve.gain,
-              type: 'scatter',
               mode: 'lines',
             },
           ]}
