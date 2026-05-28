@@ -1,4 +1,4 @@
-import { type JSX } from 'react';
+import type { ReactNode } from 'react';
 
 type ControlRangeProps = {
   label: string;
@@ -7,7 +7,7 @@ type ControlRangeProps = {
   max: number | string;
   step: number | string;
   onChange: (value: number) => void;
-  symbol?: JSX.Element;
+  symbol?: ReactNode;
   displayValue?: string;
   accentClassName?: string;
 };
