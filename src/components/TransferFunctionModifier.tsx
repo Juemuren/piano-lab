@@ -1,29 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BlockMath, InlineMath } from 'react-katex';
-import type { TransferFunction, TransferFunctionType } from '../types';
-import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
+import type { TransferFunctionType } from '../types';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
-import { getPitchOptions } from '../utils/pitch';
-import {
-  DEFAULT_TRANSFER_TYPE,
-  DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_DELAY_MS,
-  DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_ATTENUATION,
-} from '../constants';
+
+import useBaseFrequencyOptions from '../hooks/useBaseFrequencyOptions';
+import useTransferFunctionControl from '../hooks/useTransferFunctionControl';
 
 interface TransferFunctionModifierProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
 }
-
-const PITCH_OPTIONS = getPitchOptions();
 
 const TRANSFER_FORMULAS: Record<
   TransferFunctionType,
@@ -64,91 +54,12 @@ function TransferFunctionModifier({
   harmonicCount,
 }: TransferFunctionModifierProps) {
   const { t } = useTranslation('piano');
-  const [baseFreq, setBaseFreq] = useState<number>(
-    DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+  const { baseFreq, transferFunction, handlePresetChange, handleParamsChange } =
+    useTransferFunctionControl(audioEngine, harmonicCount);
+  const { selectedPitch, baseFrequencyPitchOptions } = useBaseFrequencyOptions(
+    audioEngine,
+    baseFreq,
   );
-  const [transferFunctionType, setTransferFunctionType] =
-    useState<TransferFunctionType>(DEFAULT_TRANSFER_TYPE);
-  const [tau, setTau] = useState(DEFAULT_TRANSFER_DELAY_MS);
-  const [alpha, setAlpha] = useState(DEFAULT_TRANSFER_ATTENUATION);
-  const [minFreq, setMinFreq] = useState(DEFAULT_TRANSFER_MIN_FREQUENCY_HZ);
-  const [maxFreq, setMaxFreq] = useState(DEFAULT_TRANSFER_MAX_FREQUENCY_HZ);
-
-  const transferFunction = useMemo<TransferFunction>(
-    () =>
-      getTransferFunctionPreset(
-        transferFunctionType,
-        tau,
-        alpha,
-        minFreq,
-        maxFreq,
-        baseFreq,
-        harmonicCount,
-      ),
-    [
-      alpha,
-      baseFreq,
-      harmonicCount,
-      maxFreq,
-      minFreq,
-      tau,
-      transferFunctionType,
-    ],
-  );
-
-  useEffect(() => {
-    audioEngine.setTransferFunction(transferFunction);
-  }, [transferFunction, audioEngine]);
-
-  const handlePresetChange = (preset: TransferFunctionType) => {
-    setTransferFunctionType(preset);
-  };
-
-  const handleParamsChange = (updates: {
-    tau?: number;
-    alpha?: number;
-    minFreq?: number;
-    maxFreq?: number;
-    baseFreq?: number;
-  }) => {
-    if (updates.tau !== undefined) setTau(updates.tau);
-    if (updates.alpha !== undefined) setAlpha(updates.alpha);
-    if (updates.minFreq !== undefined) setMinFreq(updates.minFreq);
-    if (updates.maxFreq !== undefined) setMaxFreq(updates.maxFreq);
-    if (updates.baseFreq !== undefined) setBaseFreq(updates.baseFreq);
-  };
-
-  const selectedPitch = PITCH_OPTIONS.find(
-    ({ pitch }) =>
-      Math.abs(audioEngine.getBaseFreq(pitch) - baseFreq) < Number.EPSILON,
-  )?.pitch;
-
-  const firstHigherPitchIndex = PITCH_OPTIONS.findIndex(
-    ({ pitch }) => audioEngine.getBaseFreq(pitch) > baseFreq,
-  );
-  let pitchRangeLabel;
-  switch (firstHigherPitchIndex) {
-    case -1:
-      pitchRangeLabel = `> ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
-      break;
-    case 0:
-      pitchRangeLabel = `< ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
-      break;
-    default:
-      pitchRangeLabel = `${PITCH_OPTIONS.at(firstHigherPitchIndex - 1)?.label} ~ ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;
-      break;
-  }
-
-  const customPitchOptionIndex =
-    firstHigherPitchIndex === -1 ? PITCH_OPTIONS.length : firstHigherPitchIndex;
-  const baseFrequencyPitchOptions =
-    selectedPitch === undefined
-      ? [
-          ...PITCH_OPTIONS.slice(0, customPitchOptionIndex),
-          { pitch: 'custom' as const, label: pitchRangeLabel },
-          ...PITCH_OPTIONS.slice(customPitchOptionIndex),
-        ]
-      : PITCH_OPTIONS;
 
   const harmonicLabels = Array.from(
     { length: transferFunction.magnitudes.length },
