@@ -1,0 +1,143 @@
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import type { AudioEngine } from '../services/audio/AudioEngine';
+
+const ENVELOPE_SUSTAIN_SECONDS = 1;
+const ENVELOPE_HARMONIC_TIMES = 1;
+const ENVELOPE_POINTS_PER_SEGMENT = 50;
+
+export interface EnvelopeCurve {
+  time: number[];
+  gain: number[];
+  maxTime: number;
+}
+
+function sampleExponentialRamp(
+  startTime: number,
+  endTime: number,
+  startGain: number,
+  endGain: number,
+) {
+  return Array.from({ length: ENVELOPE_POINTS_PER_SEGMENT + 1 }, (_, index) => {
+    const progress = index / ENVELOPE_POINTS_PER_SEGMENT;
+    const time = startTime + (endTime - startTime) * progress;
+    const gain = startGain * Math.pow(endGain / startGain, progress);
+
+    return { time, gain };
+  });
+}
+
+function useHarmonicSynthesizerControl(
+  audioEngine: AudioEngine,
+  harmonicCount: number,
+  onHarmonicCountChange: (value: number) => void,
+) {
+  const [oscillatorType, setOscillatorType] = useState(
+    audioEngine.getOscillatorType(),
+  );
+  const [volume, setVolume] = useState(audioEngine.getVolume());
+  const [attackTime, setAttackTime] = useState(audioEngine.getAttackTime());
+  const [decayTime, setDecayTime] = useState(audioEngine.getDecayTime());
+  const [releaseTime, setReleaseTime] = useState(audioEngine.getReleaseTime());
+  const [sustainGain, setSustainGain] = useState(audioEngine.getSustainGain());
+  const [silenceGain, setSilenceGain] = useState(audioEngine.getSilenceGain());
+  const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
+  const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const element = envelopeChartContainerRef.current;
+    if (!element) return;
+
+    const updateEnvelopeChartWidth = () => {
+      setEnvelopeChartWidth(element.getBoundingClientRect().width);
+    };
+    updateEnvelopeChartWidth();
+    const resizeObserver = new ResizeObserver(updateEnvelopeChartWidth);
+    resizeObserver.observe(element);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    audioEngine.setOscillatorType(oscillatorType);
+  }, [oscillatorType, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setVolume(volume);
+  }, [volume, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setAttackTime(attackTime);
+  }, [attackTime, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setDecayTime(decayTime);
+  }, [decayTime, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setReleaseTime(releaseTime);
+  }, [releaseTime, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setSustainGain(sustainGain);
+  }, [sustainGain, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setSilenceGain(silenceGain);
+  }, [silenceGain, audioEngine]);
+
+  useEffect(() => {
+    audioEngine.setHarmonicCount(harmonicCount);
+  }, [harmonicCount, audioEngine]);
+
+  const handleHarmonicCountChange = (value: number) => {
+    onHarmonicCountChange(Math.round(value));
+  };
+
+  const envelopeCurve = useMemo<EnvelopeCurve>(() => {
+    const attackEnd = attackTime;
+    const decayEnd = attackEnd + decayTime;
+    const sustainEnd = decayEnd + ENVELOPE_SUSTAIN_SECONDS;
+    const releaseEnd = sustainEnd + releaseTime;
+    const attackGain = volume;
+    const decayGain = Math.max(attackGain * sustainGain, silenceGain);
+    const holdGain = Math.max(
+      decayGain / Math.sqrt(1 + ENVELOPE_HARMONIC_TIMES),
+      silenceGain,
+    );
+
+    const points = [
+      ...sampleExponentialRamp(0, attackEnd, silenceGain, attackGain),
+      ...sampleExponentialRamp(attackEnd, decayEnd, attackGain, decayGain),
+      ...sampleExponentialRamp(decayEnd, sustainEnd, decayGain, holdGain),
+      ...sampleExponentialRamp(sustainEnd, releaseEnd, holdGain, silenceGain),
+    ];
+
+    return {
+      time: points.map(({ time }) => time),
+      gain: points.map(({ gain }) => gain),
+      maxTime: releaseEnd,
+    };
+  }, [volume, attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
+
+  return {
+    oscillatorType,
+    setOscillatorType,
+    volume,
+    setVolume,
+    attackTime,
+    setAttackTime,
+    decayTime,
+    setDecayTime,
+    releaseTime,
+    setReleaseTime,
+    sustainGain,
+    setSustainGain,
+    silenceGain,
+    setSilenceGain,
+    envelopeChartContainerRef,
+    envelopeChartWidth,
+    envelopeCurve,
+    handleHarmonicCountChange,
+  };
+}
+
+export default useHarmonicSynthesizerControl;
