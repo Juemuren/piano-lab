@@ -1,17 +1,10 @@
-import { type MouseEvent, type TouchEvent, useEffect, useState } from 'react';
 import { AudioEngine } from '../services/audio/AudioEngine';
-import { getPitchName, getPitchOctave } from '../utils/pitch';
+import usePianoControl from '../hooks/usePianoControl';
 
 const WHITE_KEY_HEIGHT_PX = 160;
 const BLACK_KEY_HEIGHT_PX = 100;
 const WHITE_KEY_WIDTH_PX = 30;
 const BLACK_KEY_WIDTH_PX = 24;
-const AVERAGE_KEY_WIDTH_PX = 20;
-const CENTER_NOTE = 66; // F#4
-const MAX_KEY_NUMS = 85; // C1 -> C8
-const MIN_KEY_NUMS = 13; // C4 -> C5
-const DEFAULT_DURATION_SECONDS = 1;
-const DEFAULT_VOLUME = 100;
 
 interface PianoProps {
   audioEngine: AudioEngine;
@@ -19,66 +12,8 @@ interface PianoProps {
 }
 
 function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
-  const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-
-  useEffect(() => {
-    audioEngine.init();
-
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [audioEngine]);
-
-  const playNote = (note: number) => {
-    audioEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
-  };
-
-  const handleKeyDown = (e: MouseEvent | TouchEvent, note: number) => {
-    if (!('touches' in e)) {
-      e.preventDefault();
-    }
-    setPressedKeys((prev) => new Set(prev).add(note));
-    playNote(note);
-  };
-
-  const handleKeyUp = (e: MouseEvent | TouchEvent, note: number) => {
-    e.preventDefault();
-    setPressedKeys((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(note);
-      return newSet;
-    });
-  };
-
-  const numKeys = Math.min(
-    MAX_KEY_NUMS,
-    Math.max(MIN_KEY_NUMS, Math.floor(windowWidth / AVERAGE_KEY_WIDTH_PX)),
-  );
-  const startNote = CENTER_NOTE - Math.floor((numKeys - 1) / 2);
-
-  const whiteKeys = [];
-  const blackKeys = [];
-  for (let index = 0; index < numKeys; index++) {
-    const note = startNote + index;
-    const name = getPitchName(note);
-    const octave = getPitchOctave(note);
-    const keyInfo = {
-      note,
-      char: name[0],
-      number: octave,
-    };
-
-    if (name.includes('#')) {
-      const whiteKeyIndex = whiteKeys.length;
-      blackKeys.push({ ...keyInfo, position: whiteKeyIndex });
-    } else {
-      whiteKeys.push(keyInfo);
-    }
-  }
+  const { whiteKeys, blackKeys, isKeyPressed, handleKeyDown, handleKeyUp } =
+    usePianoControl(audioEngine, playingNotes);
 
   return (
     <div className="w-full pb-10">
@@ -88,8 +23,7 @@ function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
       >
         <div className="flex">
           {whiteKeys.map((key) => {
-            const isPressed =
-              pressedKeys.has(key.note) || playingNotes.has(key.note);
+            const isPressed = isKeyPressed(key.note);
             return (
               <button
                 key={key.note}
@@ -124,8 +58,7 @@ function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
 
         <div className="flex absolute top-0 left-0">
           {blackKeys.map((key) => {
-            const isPressed =
-              pressedKeys.has(key.note) || playingNotes.has(key.note);
+            const isPressed = isKeyPressed(key.note);
             return (
               <button
                 key={key.note}
