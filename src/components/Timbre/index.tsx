@@ -5,6 +5,7 @@ import ControlPanel from '../shared/ControlPanel';
 import ControlSelect from '../shared/ControlSelect';
 import HarmonicAmplitudeControls from './HarmonicAmplitudeControls';
 import TimbreParameterControls from './TimbreParameterControls';
+import TimbreFormulaDetails from './TimbreFormulaDetails';
 import useTimbreControl from '../../hooks/useTimbreControl';
 
 interface TimbreAdjusterProps {
@@ -42,6 +43,11 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
         <option value="custom">{t('timbre.custom')}</option>
       </ControlSelect>
 
+      <HarmonicAmplitudeControls
+        amplitudes={timbre.amplitudes}
+        onChange={handleAmplitudeChange}
+      />
+
       <TimbreParameterControls
         timbre={timbre}
         lambda={lambda}
@@ -55,9 +61,9 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
         onChange={handleParamsChange}
       />
 
-      <HarmonicAmplitudeControls
-        amplitudes={timbre.amplitudes}
-        onChange={handleAmplitudeChange}
+      <TimbreFormulaDetails
+        timbreType={timbre.type}
+        label={t('controls.relativeAmplitudeRelation')}
       />
     </ControlPanel>
   );

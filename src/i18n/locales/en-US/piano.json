@@ -42,6 +42,7 @@
     "silenceGain": "Silence Gain",
     "harmonicCount": "Harmonic Count",
     "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
+    "relativeAmplitudeRelation": "Relative Amplitude Relation",
     "strikePoint": "Strike Point",
     "decayRate": "Decay Rate",
     "powerExponent": "Power Exponent",

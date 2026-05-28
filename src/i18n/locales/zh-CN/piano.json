@@ -42,6 +42,7 @@
     "silenceGain": "静音增益",
     "harmonicCount": "谐波数量",
     "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。",
+    "relativeAmplitudeRelation": "相对振幅关系",
     "strikePoint": "击弦点",
     "decayRate": "衰减率",
     "powerExponent": "幂指数",

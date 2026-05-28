@@ -16,7 +16,7 @@ function HarmonicEnvelopePreview({
   width,
 }: HarmonicEnvelopePreviewProps) {
   return (
-    <details open className="mt-4">
+    <details open className="my-2">
       <summary className="text-lg font-bold">{title}</summary>
       <div ref={containerRef} className="w-full">
         {width > 0 && (

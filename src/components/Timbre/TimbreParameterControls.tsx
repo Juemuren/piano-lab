@@ -1,18 +1,7 @@
-import { BlockMath, InlineMath } from 'react-katex';
-import type { Timbre, TimbreType } from '../../types';
+import { InlineMath } from 'react-katex';
+import type { Timbre } from '../../types';
 import type { TimbreParamUpdates } from '../../hooks/useTimbreControl';
 import ControlRange from '../shared/ControlRange';
-
-const TIMBRE_FORMULAS: Record<TimbreType, string> = {
-  metallic: String.raw`A_n \propto \frac1n`,
-  pure: String.raw`A_n \propto \frac1{n^2}`,
-  bright: String.raw`A_n \propto \frac1n \left|\sin\frac{n\pi}2\right|`,
-  ethereal: String.raw`A_n \propto \frac{1}{n^2} \left|\sin\frac{n\pi}2\right|`,
-  normal: String.raw`A_n \propto \frac1{n^2} \left|\sin(n\pi\lambda)\right|`,
-  soft: String.raw`A_n \propto e^{-\sigma n}`,
-  realistic: String.raw`A_n \propto \frac1{n^p} e^{-\sigma n}`,
-  custom: String.raw`A_n = \text{custom}`,
-};
 
 interface TimbreParameterControlsProps {
   timbre: Timbre;
@@ -37,10 +26,6 @@ function TimbreParameterControls({
 }: TimbreParameterControlsProps) {
   return (
     <>
-      {timbre.type !== 'custom' && (
-        <BlockMath math={TIMBRE_FORMULAS[timbre.type]} />
-      )}
-
       {timbre.type === 'normal' && (
         <ControlRange
           label={labels.strikePoint}
