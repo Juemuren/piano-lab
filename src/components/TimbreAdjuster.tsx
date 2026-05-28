@@ -1,20 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BlockMath, InlineMath } from 'react-katex';
-import type { Timbre, TimbreType } from '../types';
-import { getTimbrePreset } from '../services/audio/AudioPresets';
+import type { TimbreType } from '../types';
 import { AudioEngine } from '../services/audio/AudioEngine';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import ControlRange from './shared/ControlRange';
 import VerticalSliderGroup from './shared/VerticalSliderGroup';
 import { getHarmonicLabels } from '../utils/harmonic';
-import {
-  DEFAULT_TIMBRE_TYPE,
-  DEFAULT_TIMBRE_DECAY_RATE,
-  DEFAULT_TIMBRE_POWER_EXPONENT,
-  DEFAULT_TIMBRE_STRIKE_POINT,
-} from '../constants';
+import useTimbreControl from '../hooks/useTimbreControl';
 
 const TIMBRE_FORMULAS: Record<TimbreType, string> = {
   metallic: String.raw`A_n \propto \frac1n`,
@@ -32,60 +25,17 @@ interface TimbreAdjusterProps {
   harmonicCount: number;
 }
 
-function resizeAmplitudes(amplitudes: number[], length: number) {
-  return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);
-}
-
 function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
   const { t } = useTranslation('piano');
-  const [lambda, setLambda] = useState(DEFAULT_TIMBRE_STRIKE_POINT);
-  const [sigma, setSigma] = useState(DEFAULT_TIMBRE_DECAY_RATE);
-  const [p, setP] = useState(DEFAULT_TIMBRE_POWER_EXPONENT);
-  const [timbreType, setTimbreType] = useState<TimbreType>(DEFAULT_TIMBRE_TYPE);
-  const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
-    () =>
-      getTimbrePreset(timbreType, lambda, sigma, p, harmonicCount).amplitudes,
-  );
-
-  const timbre = useMemo<Timbre>(() => {
-    if (timbreType === 'custom') {
-      return {
-        type: 'custom',
-        amplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
-      };
-    }
-    return getTimbrePreset(timbreType, lambda, sigma, p, harmonicCount);
-  }, [customAmplitudes, harmonicCount, lambda, p, sigma, timbreType]);
-
-  useEffect(() => {
-    audioEngine.setTimbre(timbre);
-  }, [timbre, audioEngine]);
-
-  const handlePresetChange = (preset: TimbreType) => {
-    setCustomAmplitudes(
-      getTimbrePreset(preset, lambda, sigma, p, harmonicCount).amplitudes,
-    );
-    setTimbreType(preset);
-  };
-
-  const handleParamsChange = (update: {
-    lambda?: number;
-    sigma?: number;
-    p?: number;
-  }) => {
-    if (update.lambda !== undefined) setLambda(update.lambda);
-    if (update.sigma !== undefined) setSigma(update.sigma);
-    if (update.p !== undefined) setP(update.p);
-  };
-
-  const handleAmplitudeChange = (index: number, value: number) => {
-    setCustomAmplitudes((prev) => {
-      const amplitudes = resizeAmplitudes(prev, harmonicCount);
-      amplitudes[index] = value;
-      return amplitudes;
-    });
-    setTimbreType('custom');
-  };
+  const {
+    lambda,
+    sigma,
+    p,
+    timbre,
+    handlePresetChange,
+    handleParamsChange,
+    handleAmplitudeChange,
+  } = useTimbreControl(audioEngine, harmonicCount);
 
   const harmonicLabels = getHarmonicLabels(timbre.amplitudes.length);
 
