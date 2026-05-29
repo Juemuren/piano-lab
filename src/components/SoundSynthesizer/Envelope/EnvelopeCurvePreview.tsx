@@ -1,20 +1,20 @@
 import type { RefObject } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { EnvelopeCurve } from '../../../hooks/useHarmonicSynthesizerControl';
+import type { EnvelopeCurve } from '../../../hooks/useEnvelopeControl';
 
-interface HarmonicEnvelopePreviewProps {
+interface EnvelopeCurvePreviewProps {
   title: string;
   envelopeCurve: EnvelopeCurve;
   containerRef: RefObject<HTMLDivElement | null>;
   width: number;
 }
 
-function HarmonicEnvelopePreview({
+function EnvelopeCurvePreview({
   title,
   envelopeCurve,
   containerRef,
   width,
-}: HarmonicEnvelopePreviewProps) {
+}: EnvelopeCurvePreviewProps) {
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold">{title}</summary>
@@ -59,4 +59,4 @@ function HarmonicEnvelopePreview({
   );
 }
 
-export default HarmonicEnvelopePreview;
+export default EnvelopeCurvePreview;

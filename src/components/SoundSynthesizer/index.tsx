@@ -4,9 +4,9 @@ import { AudioEngine } from '../../services/audio/AudioEngine';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
-import HarmonicSynthesizer from './Harmonic';
-import TimbreAdjuster from './Timbre';
-import TransferFunctionModifier from './TransferFunction';
+import Envelope from './Envelope';
+import Timbre from './Timbre';
+import TransferFunction from './TransferFunction';
 
 interface SoundSynthesizerProps {
   audioEngine: AudioEngine;
@@ -42,25 +42,26 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
 
       <CollapsibleSection
         title={t('sections.soundEnvelope')}
-        bgClassName=""
+        bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
-        <HarmonicSynthesizer audioEngine={audioEngine} />
+        <Envelope audioEngine={audioEngine} />
       </CollapsibleSection>
 
-      <CollapsibleSection title={t('sections.timbre')} bgClassName="" expanded>
-        <TimbreAdjuster
-          audioEngine={audioEngine}
-          harmonicCount={harmonicCount}
-        />
+      <CollapsibleSection
+        title={t('sections.timbre')}
+        bgClassName="bg-app-surface dark:bg-app-surface-dark"
+        expanded
+      >
+        <Timbre audioEngine={audioEngine} harmonicCount={harmonicCount} />
       </CollapsibleSection>
 
       <CollapsibleSection
         title={t('sections.transferFunction')}
-        bgClassName=""
+        bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
-        <TransferFunctionModifier
+        <TransferFunction
           audioEngine={audioEngine}
           harmonicCount={harmonicCount}
         />

@@ -1,7 +1,7 @@
 import ControlRange from '../../shared/ControlRange';
 import ControlSelect from '../../shared/ControlSelect';
 
-interface HarmonicSynthesizerParameterControlsProps {
+interface EnvelopeParameterControlsProps {
   oscillatorType: OscillatorType;
   volume: number;
   attackTime: number;
@@ -30,7 +30,7 @@ interface HarmonicSynthesizerParameterControlsProps {
   onSilenceGainChange: (value: number) => void;
 }
 
-function HarmonicSynthesizerParameterControls({
+function EnvelopeParameterControls({
   oscillatorType,
   volume,
   attackTime,
@@ -46,7 +46,7 @@ function HarmonicSynthesizerParameterControls({
   onReleaseTimeChange,
   onSustainGainChange,
   onSilenceGainChange,
-}: HarmonicSynthesizerParameterControlsProps) {
+}: EnvelopeParameterControlsProps) {
   return (
     <>
       <ControlSelect
@@ -119,4 +119,4 @@ function HarmonicSynthesizerParameterControls({
   );
 }
 
-export default HarmonicSynthesizerParameterControls;
+export default EnvelopeParameterControls;

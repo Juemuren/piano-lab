@@ -8,12 +8,12 @@ import TimbreParameterControls from './TimbreParameterControls';
 import TimbreFormulaDetails from './TimbreFormulaDetails';
 import useTimbreControl from '../../../hooks/useTimbreControl';
 
-interface TimbreAdjusterProps {
+interface TimbreProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
 }
 
-function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
+function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
   const { t } = useTranslation('piano');
   const {
     lambda,
@@ -69,4 +69,4 @@ function TimbreAdjuster({ audioEngine, harmonicCount }: TimbreAdjusterProps) {
   );
 }
 
-export default TimbreAdjuster;
+export default Timbre;

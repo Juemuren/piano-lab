@@ -26,7 +26,7 @@ function sampleExponentialRamp(
   });
 }
 
-function useHarmonicSynthesizerControl(audioEngine: AudioEngine) {
+function useEnvelopeControl(audioEngine: AudioEngine) {
   const [oscillatorType, setOscillatorType] = useState(
     audioEngine.getOscillatorType(),
   );
@@ -127,4 +127,4 @@ function useHarmonicSynthesizerControl(audioEngine: AudioEngine) {
   };
 }
 
-export default useHarmonicSynthesizerControl;
+export default useEnvelopeControl;

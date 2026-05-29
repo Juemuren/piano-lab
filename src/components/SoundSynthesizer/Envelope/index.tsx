@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
-import HarmonicEnvelopePreview from './HarmonicEnvelopePreview';
-import HarmonicSynthesizerParameterControls from './HarmonicSynthesizerParameterControls';
-import useHarmonicSynthesizerControl from '../../../hooks/useHarmonicSynthesizerControl';
+import EnvelopeCurvePreview from './EnvelopeCurvePreview';
+import EnvelopeParameterControls from './EnvelopeParameterControls';
+import useEnvelopeControl from '../../../hooks/useEnvelopeControl';
 
-interface HarmonicSynthesizerProps {
+interface EnvelopeProps {
   audioEngine: AudioEngine;
 }
 
-function HarmonicSynthesizer({ audioEngine }: HarmonicSynthesizerProps) {
+function Envelope({ audioEngine }: EnvelopeProps) {
   const { t } = useTranslation('piano');
   const {
     oscillatorType,
@@ -29,11 +29,11 @@ function HarmonicSynthesizer({ audioEngine }: HarmonicSynthesizerProps) {
     envelopeChartContainerRef,
     envelopeChartWidth,
     envelopeCurve,
-  } = useHarmonicSynthesizerControl(audioEngine);
+  } = useEnvelopeControl(audioEngine);
 
   return (
     <ControlPanel>
-      <HarmonicSynthesizerParameterControls
+      <EnvelopeParameterControls
         oscillatorType={oscillatorType}
         volume={volume}
         attackTime={attackTime}
@@ -62,7 +62,7 @@ function HarmonicSynthesizer({ audioEngine }: HarmonicSynthesizerProps) {
         onSilenceGainChange={setSilenceGain}
       />
 
-      <HarmonicEnvelopePreview
+      <EnvelopeCurvePreview
         title={t('charts.envelopeCurve')}
         envelopeCurve={envelopeCurve}
         containerRef={envelopeChartContainerRef}
@@ -72,4 +72,4 @@ function HarmonicSynthesizer({ audioEngine }: HarmonicSynthesizerProps) {
   );
 }
 
-export default HarmonicSynthesizer;
+export default Envelope;

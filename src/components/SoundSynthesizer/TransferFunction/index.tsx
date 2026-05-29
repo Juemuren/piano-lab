@@ -9,15 +9,15 @@ import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
 import useBaseFrequencyOptions from '../../../hooks/useBaseFrequencyOptions';
 import useTransferFunctionControl from '../../../hooks/useTransferFunctionControl';
 
-interface TransferFunctionModifierProps {
+interface TransferFunctionProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
 }
 
-function TransferFunctionModifier({
+function TransferFunction({
   audioEngine,
   harmonicCount,
-}: TransferFunctionModifierProps) {
+}: TransferFunctionProps) {
   const { t } = useTranslation('piano');
   const { baseFreq, transferFunction, handlePresetChange, handleParamsChange } =
     useTransferFunctionControl(audioEngine, harmonicCount);
@@ -75,4 +75,4 @@ function TransferFunctionModifier({
   );
 }
 
-export default TransferFunctionModifier;
+export default TransferFunction;
