@@ -89,11 +89,11 @@ export class AudioEngine {
     this.oscillatorType = type;
   }
 
-  getVolume(): number {
+  getVolumeRatio(): number {
     return this.volumeRatio;
   }
 
-  setVolume(value: number) {
+  setVolumeRatio(value: number) {
     this.volumeRatio = value;
   }
 
@@ -156,8 +156,8 @@ export class AudioEngine {
     return 440 * Math.pow(2, (pitch + cents / 100 - 69) / 12);
   }
 
-  getTargetGain(timbreAmp: number, transferMag: number, volume: number) {
-    return timbreAmp * transferMag * (volume / 127) * this.volumeRatio;
+  getTargetGain(spectrumAmp: number, transferMag: number, volume: number) {
+    return spectrumAmp * transferMag * (volume / 127) * this.volumeRatio;
   }
 
   getDelaySeconds(phaseDeg: number, freq: number) {
@@ -189,9 +189,9 @@ export class AudioEngine {
     for (let n = 1; n <= harmonics; n++) {
       const freq = baseFreq * n;
 
-      const timbreAmp = this.spectrum.amplitudes[n - 1] || 0;
+      const spectrumAmp = this.spectrum.amplitudes[n - 1] || 0;
       const transferMag = magnitudes[n - 1] || 0;
-      const targetGain = this.getTargetGain(timbreAmp, transferMag, volume);
+      const targetGain = this.getTargetGain(spectrumAmp, transferMag, volume);
       const silenceGain = Math.max(
         this.silenceGain * this.volumeRatio,
         MIN_GAIN_VALUE,

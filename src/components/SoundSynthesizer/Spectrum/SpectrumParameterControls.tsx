@@ -4,7 +4,7 @@ import type { SpectrumParamUpdates } from '../../../hooks/useSpectrumControl';
 import ControlRange from '../../shared/ControlRange';
 
 interface SpectrumParameterControlsProps {
-  timbre: Spectrum;
+  spectrum: Spectrum;
   lambda: number;
   sigma: number;
   p: number;
@@ -17,7 +17,7 @@ interface SpectrumParameterControlsProps {
 }
 
 function SpectrumParameterControls({
-  timbre,
+  spectrum,
   lambda,
   sigma,
   p,
@@ -26,7 +26,7 @@ function SpectrumParameterControls({
 }: SpectrumParameterControlsProps) {
   return (
     <>
-      {timbre.type === 'normal' && (
+      {spectrum.type === 'normal' && (
         <ControlRange
           label={labels.strikePoint}
           symbol={<InlineMath math="\lambda" />}
@@ -39,7 +39,7 @@ function SpectrumParameterControls({
         />
       )}
 
-      {(timbre.type === 'soft' || timbre.type === 'realistic') && (
+      {(spectrum.type === 'soft' || spectrum.type === 'realistic') && (
         <ControlRange
           label={labels.decayRate}
           symbol={<InlineMath math="\sigma" />}
@@ -52,7 +52,7 @@ function SpectrumParameterControls({
         />
       )}
 
-      {timbre.type === 'realistic' && (
+      {spectrum.type === 'realistic' && (
         <ControlRange
           label={labels.powerExponent}
           symbol={<InlineMath math="p" />}

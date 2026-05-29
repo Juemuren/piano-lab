@@ -4,11 +4,9 @@
   },
   "sections": {
     "soundSynthesizer": "声音合成器",
-    "soundEnvelope": "声音包络",
-    "timbre": "音色",
+    "envelope": "包络",
+    "spectrum": "频谱",
     "transferFunction": "传递函数",
-    "harmonicSynthesizer": "谐波合成器",
-    "timbreAdjuster": "音色调节器",
     "transferFunctionModifier": "传递函数修改器",
     "scoreEditor": "乐谱编辑器"
   },
@@ -18,7 +16,7 @@
     "sawtooth": "锯齿波",
     "square": "方波"
   },
-  "timbre": {
+  "spectrum": {
     "ethereal": "空灵",
     "metallic": "金属",
     "pure": "纯净",

@@ -4,11 +4,9 @@
   },
   "sections": {
     "soundSynthesizer": "サウンドシンセサイザー",
-    "soundEnvelope": "音のエンベロープ",
-    "timbre": "音色",
+    "envelope": "エンベロープ",
+    "spectrum": "スペクトル",
     "transferFunction": "伝達関数",
-    "harmonicSynthesizer": "倍音シンセサイザー",
-    "timbreAdjuster": "音色調整",
     "transferFunctionModifier": "伝達関数エディター",
     "scoreEditor": "楽譜エディター"
   },
@@ -18,7 +16,7 @@
     "sawtooth": "ノコギリ波",
     "square": "矩形波"
   },
-  "timbre": {
+  "spectrum": {
     "ethereal": "幻想",
     "metallic": "金属",
     "pure": "ピュア",

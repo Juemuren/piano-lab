@@ -23,7 +23,7 @@ function useSpectrumControl(audioEngine: AudioEngine, harmonicCount: number) {
   const [lambda, setLambda] = useState(DEFAULT_SPECTRUM_STRIKE_POINT);
   const [sigma, setSigma] = useState(DEFAULT_SPECTRUM_DECAY_RATE);
   const [p, setP] = useState(DEFAULT_SPECTRUM_POWER_EXPONENT);
-  const [timbreType, setSpectrumType] = useState<SpectrumType>(
+  const [spectrumType, setSpectrumType] = useState<SpectrumType>(
     DEFAULT_SPECTRUM_TYPE,
   );
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
@@ -37,19 +37,19 @@ function useSpectrumControl(audioEngine: AudioEngine, harmonicCount: number) {
       ).amplitudes,
   );
 
-  const timbre = useMemo<Spectrum>(() => {
-    if (timbreType === 'custom') {
+  const spectrum = useMemo<Spectrum>(() => {
+    if (spectrumType === 'custom') {
       return {
         type: 'custom',
         amplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
       };
     }
-    return getSpectrumPreset(timbreType, lambda, sigma, p, harmonicCount);
-  }, [customAmplitudes, harmonicCount, lambda, p, sigma, timbreType]);
+    return getSpectrumPreset(spectrumType, lambda, sigma, p, harmonicCount);
+  }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
 
   useEffect(() => {
-    audioEngine.setSpectrum(timbre);
-  }, [timbre, audioEngine]);
+    audioEngine.setSpectrum(spectrum);
+  }, [spectrum, audioEngine]);
 
   const handlePresetChange = (preset: SpectrumType) => {
     setCustomAmplitudes(
@@ -77,7 +77,7 @@ function useSpectrumControl(audioEngine: AudioEngine, harmonicCount: number) {
     lambda,
     sigma,
     p,
-    timbre,
+    spectrum,
     handlePresetChange,
     handleParamsChange,
     handleAmplitudeChange,

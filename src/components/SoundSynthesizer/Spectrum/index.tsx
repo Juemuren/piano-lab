@@ -19,7 +19,7 @@ function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
     lambda,
     sigma,
     p,
-    timbre,
+    spectrum,
     handlePresetChange,
     handleParamsChange,
     handleAmplitudeChange,
@@ -28,28 +28,28 @@ function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
   return (
     <ControlPanel>
       <ControlSelect
-        value={timbre.type}
+        value={spectrum.type}
         onChange={(e) => {
           handlePresetChange(e.target.value as SpectrumType);
         }}
       >
-        <option value="metallic">{t('timbre.metallic')}</option>
-        <option value="pure">{t('timbre.pure')}</option>
-        <option value="bright">{t('timbre.bright')}</option>
-        <option value="ethereal">{t('timbre.ethereal')}</option>
-        <option value="normal">{t('timbre.normal')}</option>
-        <option value="soft">{t('timbre.soft')}</option>
-        <option value="realistic">{t('timbre.realistic')}</option>
-        <option value="custom">{t('timbre.custom')}</option>
+        <option value="metallic">{t('spectrum.metallic')}</option>
+        <option value="pure">{t('spectrum.pure')}</option>
+        <option value="bright">{t('spectrum.bright')}</option>
+        <option value="ethereal">{t('spectrum.ethereal')}</option>
+        <option value="normal">{t('spectrum.normal')}</option>
+        <option value="soft">{t('spectrum.soft')}</option>
+        <option value="realistic">{t('spectrum.realistic')}</option>
+        <option value="custom">{t('spectrum.custom')}</option>
       </ControlSelect>
 
       <SpectrumValueControls
-        amplitudes={timbre.amplitudes}
+        amplitudes={spectrum.amplitudes}
         onChange={handleAmplitudeChange}
       />
 
       <SpectrumParameterControls
-        timbre={timbre}
+        spectrum={spectrum}
         lambda={lambda}
         sigma={sigma}
         p={p}
@@ -62,7 +62,7 @@ function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
       />
 
       <SpectrumFormulaPreview
-        timbreType={timbre.type}
+        spectrumType={spectrum.type}
         label={t('controls.relativeAmplitudeRelation')}
       />
     </ControlPanel>

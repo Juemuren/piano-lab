@@ -4,11 +4,9 @@
   },
   "sections": {
     "soundSynthesizer": "Sound Synthesizer",
-    "soundEnvelope": "Sound Envelope",
-    "timbre": "Timbre",
+    "envelope": "Envelope",
+    "spectrum": "Spectrum",
     "transferFunction": "Transfer Function",
-    "harmonicSynthesizer": "Harmonic Synthesizer",
-    "timbreAdjuster": "Timbre Adjuster",
     "transferFunctionModifier": "Transfer Function Modifier",
     "scoreEditor": "Score Editor"
   },
@@ -18,7 +16,7 @@
     "sawtooth": "Sawtooth",
     "square": "Square"
   },
-  "timbre": {
+  "spectrum": {
     "ethereal": "Ethereal",
     "metallic": "Metallic",
     "pure": "Pure",

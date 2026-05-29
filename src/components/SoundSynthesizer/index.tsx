@@ -18,7 +18,9 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   const [oscillatorType, setOscillatorType] = useState(() =>
     audioEngine.getOscillatorType(),
   );
-  const [volume, setVolume] = useState(() => audioEngine.getVolume());
+  const [volumeRatio, setVolumeRatio] = useState(() =>
+    audioEngine.getVolumeRatio(),
+  );
   const [harmonicCount, setHarmonicCount] = useState(() =>
     audioEngine.getHarmonicCount(),
   );
@@ -28,8 +30,8 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   }, [audioEngine, oscillatorType]);
 
   useEffect(() => {
-    audioEngine.setVolume(volume);
-  }, [audioEngine, volume]);
+    audioEngine.setVolumeRatio(volumeRatio);
+  }, [audioEngine, volumeRatio]);
 
   useEffect(() => {
     audioEngine.setHarmonicCount(harmonicCount);
@@ -52,9 +54,9 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
           min="0"
           max="1"
           step="0.01"
-          value={volume}
-          displayValue={volume.toFixed(2)}
-          onChange={setVolume}
+          value={volumeRatio}
+          displayValue={volumeRatio.toFixed(2)}
+          onChange={setVolumeRatio}
         />
         <ControlRange
           label={t('controls.harmonicCount')}
@@ -72,7 +74,7 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
       </div>
 
       <CollapsibleSection
-        title={t('sections.soundEnvelope')}
+        title={t('sections.envelope')}
         bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
@@ -80,7 +82,7 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={t('sections.timbre')}
+        title={t('sections.spectrum')}
         bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
