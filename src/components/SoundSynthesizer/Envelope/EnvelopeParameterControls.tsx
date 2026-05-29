@@ -1,8 +1,6 @@
 import ControlRange from '../../shared/ControlRange';
-import ControlSelect from '../../shared/ControlSelect';
 
 interface EnvelopeParameterControlsProps {
-  oscillatorType: OscillatorType;
   volume: number;
   attackTime: number;
   decayTime: number;
@@ -10,10 +8,6 @@ interface EnvelopeParameterControlsProps {
   sustainGain: number;
   silenceGain: number;
   labels: {
-    sine: string;
-    triangle: string;
-    sawtooth: string;
-    square: string;
     volume: string;
     attackTime: string;
     decayTime: string;
@@ -21,7 +15,6 @@ interface EnvelopeParameterControlsProps {
     sustainGain: string;
     silenceGain: string;
   };
-  onOscillatorTypeChange: (value: OscillatorType) => void;
   onVolumeChange: (value: number) => void;
   onAttackTimeChange: (value: number) => void;
   onDecayTimeChange: (value: number) => void;
@@ -31,7 +24,6 @@ interface EnvelopeParameterControlsProps {
 }
 
 function EnvelopeParameterControls({
-  oscillatorType,
   volume,
   attackTime,
   decayTime,
@@ -39,7 +31,6 @@ function EnvelopeParameterControls({
   sustainGain,
   silenceGain,
   labels,
-  onOscillatorTypeChange,
   onVolumeChange,
   onAttackTimeChange,
   onDecayTimeChange,
@@ -49,18 +40,6 @@ function EnvelopeParameterControls({
 }: EnvelopeParameterControlsProps) {
   return (
     <>
-      <ControlSelect
-        value={oscillatorType}
-        onChange={(e) =>
-          onOscillatorTypeChange(e.target.value as OscillatorType)
-        }
-      >
-        <option value="sine">{labels.sine}</option>
-        <option value="triangle">{labels.triangle}</option>
-        <option value="sawtooth">{labels.sawtooth}</option>
-        <option value="square">{labels.square}</option>
-      </ControlSelect>
-
       <ControlRange
         label={labels.volume}
         min="0"

@@ -12,8 +12,6 @@ interface EnvelopeProps {
 function Envelope({ audioEngine }: EnvelopeProps) {
   const { t } = useTranslation('piano');
   const {
-    oscillatorType,
-    setOscillatorType,
     volume,
     setVolume,
     attackTime,
@@ -34,7 +32,6 @@ function Envelope({ audioEngine }: EnvelopeProps) {
   return (
     <ControlPanel>
       <EnvelopeParameterControls
-        oscillatorType={oscillatorType}
         volume={volume}
         attackTime={attackTime}
         decayTime={decayTime}
@@ -42,10 +39,6 @@ function Envelope({ audioEngine }: EnvelopeProps) {
         sustainGain={sustainGain}
         silenceGain={silenceGain}
         labels={{
-          sine: t('oscillator.sine'),
-          triangle: t('oscillator.triangle'),
-          sawtooth: t('oscillator.sawtooth'),
-          square: t('oscillator.square'),
           volume: t('controls.volume'),
           attackTime: t('controls.attackTime'),
           decayTime: t('controls.decayTime'),
@@ -53,7 +46,6 @@ function Envelope({ audioEngine }: EnvelopeProps) {
           sustainGain: t('controls.sustainGain'),
           silenceGain: t('controls.silenceGain'),
         }}
-        onOscillatorTypeChange={setOscillatorType}
         onVolumeChange={setVolume}
         onAttackTimeChange={setAttackTime}
         onDecayTimeChange={setDecayTime}

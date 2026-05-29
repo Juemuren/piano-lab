@@ -4,6 +4,7 @@ import { AudioEngine } from '../../services/audio/AudioEngine';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
+import ControlSelect from '../shared/ControlSelect';
 import Envelope from './Envelope';
 import Spectrum from './Spectrum';
 import TransferFunction from './TransferFunction';
@@ -14,9 +15,16 @@ interface SoundSynthesizerProps {
 
 function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   const { t } = useTranslation('piano');
+  const [oscillatorType, setOscillatorType] = useState(() =>
+    audioEngine.getOscillatorType(),
+  );
   const [harmonicCount, setHarmonicCount] = useState(() =>
     audioEngine.getHarmonicCount(),
   );
+
+  useEffect(() => {
+    audioEngine.setOscillatorType(oscillatorType);
+  }, [audioEngine, oscillatorType]);
 
   useEffect(() => {
     audioEngine.setHarmonicCount(harmonicCount);
@@ -25,6 +33,15 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   return (
     <ControlPanel className="space-y-4">
       <div>
+        <ControlSelect
+          value={oscillatorType}
+          onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
+        >
+          <option value="sine">{t('oscillator.sine')}</option>
+          <option value="triangle">{t('oscillator.triangle')}</option>
+          <option value="sawtooth">{t('oscillator.sawtooth')}</option>
+          <option value="square">{t('oscillator.square')}</option>
+        </ControlSelect>
         <ControlRange
           label={t('controls.harmonicCount')}
           min="2"

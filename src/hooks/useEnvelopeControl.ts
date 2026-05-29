@@ -27,9 +27,6 @@ function sampleExponentialRamp(
 }
 
 function useEnvelopeControl(audioEngine: AudioEngine) {
-  const [oscillatorType, setOscillatorType] = useState(
-    audioEngine.getOscillatorType(),
-  );
   const [volume, setVolume] = useState(audioEngine.getVolume());
   const [attackTime, setAttackTime] = useState(audioEngine.getAttackTime());
   const [decayTime, setDecayTime] = useState(audioEngine.getDecayTime());
@@ -51,10 +48,6 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
     resizeObserver.observe(element);
     return () => resizeObserver.disconnect();
   }, []);
-
-  useEffect(() => {
-    audioEngine.setOscillatorType(oscillatorType);
-  }, [oscillatorType, audioEngine]);
 
   useEffect(() => {
     audioEngine.setVolume(volume);
@@ -107,8 +100,6 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
   }, [volume, attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
 
   return {
-    oscillatorType,
-    setOscillatorType,
     volume,
     setVolume,
     attackTime,
