@@ -43,7 +43,7 @@
     "silenceGain": "静音增益",
     "harmonicCount": "谐波数量",
     "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。",
-    "relativeAmplitudeRelation": "相对振幅关系",
+    "harmonicSpectrumFormula": "谐波频谱公式",
     "strikePoint": "击弦点",
     "decayRate": "衰减率",
     "powerExponent": "幂指数",
@@ -55,7 +55,7 @@
     "maxFrequency": "最大频率"
   },
   "charts": {
-    "envelopeCurve": "声音包络曲线",
+    "amplitudeEnvelopeCurve": "振幅包络曲线",
     "magnitudeResponse": "幅频特性",
     "phaseResponse": "相频特性"
   },

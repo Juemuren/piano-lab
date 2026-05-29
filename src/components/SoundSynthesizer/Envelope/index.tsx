@@ -50,7 +50,7 @@ function Envelope({ audioEngine }: EnvelopeProps) {
       />
 
       <EnvelopeCurvePreview
-        title={t('charts.envelopeCurve')}
+        title={t('charts.amplitudeEnvelopeCurve')}
         envelopeCurve={envelopeCurve}
         containerRef={envelopeChartContainerRef}
         width={envelopeChartWidth}

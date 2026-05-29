@@ -43,7 +43,7 @@
     "silenceGain": "無音ゲイン",
     "harmonicCount": "倍音数",
     "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。",
-    "relativeAmplitudeRelation": "相対振幅関係",
+    "harmonicSpectrumFormula": "倍音スペクトル式",
     "strikePoint": "打弦位置",
     "decayRate": "減衰率",
     "powerExponent": "べき指数",
@@ -55,7 +55,7 @@
     "maxFrequency": "最大周波数"
   },
   "charts": {
-    "envelopeCurve": "エンベロープ曲線",
+    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",
     "magnitudeResponse": "振幅特性",
     "phaseResponse": "位相特性"
   },

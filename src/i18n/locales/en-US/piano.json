@@ -43,7 +43,7 @@
     "silenceGain": "Silence Gain",
     "harmonicCount": "Harmonic Count",
     "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
-    "relativeAmplitudeRelation": "Relative Amplitude Relation",
+    "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
     "strikePoint": "Strike Point",
     "decayRate": "Decay Rate",
     "powerExponent": "Power Exponent",
@@ -55,7 +55,7 @@
     "maxFrequency": "Maximum Frequency"
   },
   "charts": {
-    "envelopeCurve": "Envelope Curve",
+    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",
     "magnitudeResponse": "Magnitude Response",
     "phaseResponse": "Phase Response"
   },

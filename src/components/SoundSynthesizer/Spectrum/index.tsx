@@ -63,7 +63,7 @@ function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
 
       <SpectrumFormulaPreview
         spectrumType={spectrum.type}
-        label={t('controls.relativeAmplitudeRelation')}
+        label={t('controls.harmonicSpectrumFormula')}
       />
     </ControlPanel>
   );
