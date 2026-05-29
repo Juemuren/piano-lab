@@ -1,13 +1,36 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin, type ViteDevServer } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { generateAbcPresets } from './scripts/generateAbcPresets.mjs';
 
 const host = process.env.TAURI_DEV_HOST;
+
+function abcPresets(): Plugin {
+  return {
+    name: 'abc-presets',
+    async buildStart() {
+      await generateAbcPresets();
+    },
+    configureServer(server: ViteDevServer) {
+      server.watcher.add('public/presets/*.abc');
+      server.watcher.on('add', async (file: string) => {
+        if (file.endsWith('.abc')) {
+          await generateAbcPresets();
+        }
+      });
+      server.watcher.on('unlink', async (file: string) => {
+        if (file.endsWith('.abc')) {
+          await generateAbcPresets();
+        }
+      });
+    },
+  };
+}
 
 // https://vite.dev/config/
 // https://tauri.app/start/frontend/vite/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [abcPresets(), react(), tailwindcss()],
   base: process.env.TAURI_ENV_PLATFORM ? './' : '/web-piano-simulator/',
   define: {
     global: 'globalThis',
