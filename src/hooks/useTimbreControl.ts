@@ -23,9 +23,7 @@ function useTimbreControl(audioEngine: AudioEngine, harmonicCount: number) {
   const [lambda, setLambda] = useState(DEFAULT_TIMBRE_STRIKE_POINT);
   const [sigma, setSigma] = useState(DEFAULT_TIMBRE_DECAY_RATE);
   const [p, setP] = useState(DEFAULT_TIMBRE_POWER_EXPONENT);
-  const [timbreType, setTimbreType] = useState<TimbreType>(
-    DEFAULT_TIMBRE_TYPE,
-  );
+  const [timbreType, setTimbreType] = useState<TimbreType>(DEFAULT_TIMBRE_TYPE);
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
     () =>
       getTimbrePreset(

@@ -91,14 +91,17 @@ function usePianoControl(audioEngine: AudioEngine, playingNotes: Set<number>) {
     [playNote],
   );
 
-  const handleKeyUp = useCallback((e: MouseEvent | TouchEvent, note: number) => {
-    e.preventDefault();
-    setPressedKeys((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(note);
-      return newSet;
-    });
-  }, []);
+  const handleKeyUp = useCallback(
+    (e: MouseEvent | TouchEvent, note: number) => {
+      e.preventDefault();
+      setPressedKeys((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(note);
+        return newSet;
+      });
+    },
+    [],
+  );
 
   const { whiteKeys, blackKeys } = useMemo(
     () => getPianoKeys(windowWidth),
