@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioEngine } from '../../services/audio/AudioEngine';
-import CollapsibleSection from '../CollapsibleSection';
+import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
-import HarmonicSynthesizer from '../Harmonic';
-import TimbreAdjuster from '../Timbre';
-import TransferFunctionModifier from '../TransferFunction';
+import HarmonicSynthesizer from './Harmonic';
+import TimbreAdjuster from './Timbre';
+import TransferFunctionModifier from './TransferFunction';
 
 interface SoundSynthesizerProps {
   audioEngine: AudioEngine;

@@ -1,5 +1,5 @@
 import { BlockMath } from 'react-katex';
-import type { TimbreType } from '../../types';
+import type { TimbreType } from '../../../types';
 
 const TIMBRE_FORMULAS: Record<TimbreType, string> = {
   metallic: String.raw`A_n \propto \frac1n`,

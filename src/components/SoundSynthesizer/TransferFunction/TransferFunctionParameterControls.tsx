@@ -1,7 +1,7 @@
 import { InlineMath } from 'react-katex';
-import type { TransferFunction } from '../../types';
-import type { TransferFunctionParamUpdates } from '../../hooks/useTransferFunctionControl';
-import ControlRange from '../shared/ControlRange';
+import type { TransferFunction } from '../../../types';
+import type { TransferFunctionParamUpdates } from '../../../hooks/useTransferFunctionControl';
+import ControlRange from '../../shared/ControlRange';
 
 interface TransferFunctionParameterControlsProps {
   transferFunction: TransferFunction;

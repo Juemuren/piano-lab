@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import type { TransferFunctionType } from '../../types';
-import { AudioEngine } from '../../services/audio/AudioEngine';
-import ControlPanel from '../shared/ControlPanel';
-import ControlSelect from '../shared/ControlSelect';
+import type { TransferFunctionType } from '../../../types';
+import { AudioEngine } from '../../../services/audio/AudioEngine';
+import ControlPanel from '../../shared/ControlPanel';
+import ControlSelect from '../../shared/ControlSelect';
 import BaseFrequencyControl from './BaseFrequencyControl';
 import TransferFunctionParameterControls from './TransferFunctionParameterControls';
 import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
-import useBaseFrequencyOptions from '../../hooks/useBaseFrequencyOptions';
-import useTransferFunctionControl from '../../hooks/useTransferFunctionControl';
+import useBaseFrequencyOptions from '../../../hooks/useBaseFrequencyOptions';
+import useTransferFunctionControl from '../../../hooks/useTransferFunctionControl';
 
 interface TransferFunctionModifierProps {
   audioEngine: AudioEngine;

@@ -1,7 +1,7 @@
 import { BlockMath } from 'react-katex';
-import type { TransferFunction, TransferFunctionType } from '../../types';
-import VerticalSliderGroup from '../shared/VerticalSliderGroup';
-import { getHarmonicLabels } from '../../utils/harmonic';
+import type { TransferFunction, TransferFunctionType } from '../../../types';
+import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
+import { getHarmonicLabels } from '../../../utils/harmonic';
 
 const TRANSFER_FORMULAS: Record<
   TransferFunctionType,

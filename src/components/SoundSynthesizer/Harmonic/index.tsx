@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { AudioEngine } from '../../services/audio/AudioEngine';
-import ControlPanel from '../shared/ControlPanel';
+import { AudioEngine } from '../../../services/audio/AudioEngine';
+import ControlPanel from '../../shared/ControlPanel';
 import HarmonicEnvelopePreview from './HarmonicEnvelopePreview';
 import HarmonicSynthesizerParameterControls from './HarmonicSynthesizerParameterControls';
-import useHarmonicSynthesizerControl from '../../hooks/useHarmonicSynthesizerControl';
+import useHarmonicSynthesizerControl from '../../../hooks/useHarmonicSynthesizerControl';
 
 interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;

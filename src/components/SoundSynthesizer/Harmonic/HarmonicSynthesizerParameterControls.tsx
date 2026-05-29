@@ -1,5 +1,5 @@
-import ControlRange from '../shared/ControlRange';
-import ControlSelect from '../shared/ControlSelect';
+import ControlRange from '../../shared/ControlRange';
+import ControlSelect from '../../shared/ControlSelect';
 
 interface HarmonicSynthesizerParameterControlsProps {
   oscillatorType: OscillatorType;

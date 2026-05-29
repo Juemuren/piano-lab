@@ -1,7 +1,7 @@
 import { InlineMath } from 'react-katex';
-import type { Timbre } from '../../types';
-import type { TimbreParamUpdates } from '../../hooks/useTimbreControl';
-import ControlRange from '../shared/ControlRange';
+import type { Timbre } from '../../../types';
+import type { TimbreParamUpdates } from '../../../hooks/useTimbreControl';
+import ControlRange from '../../shared/ControlRange';
 
 interface TimbreParameterControlsProps {
   timbre: Timbre;
