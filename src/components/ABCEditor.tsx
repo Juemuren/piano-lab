@@ -87,7 +87,7 @@ function ABCEditor({
         ))}
       </ControlSelect>
 
-      <div className="py-2 grid grid-cols-2 gap-2">
+      <div className="py-2 grid gap-2 grid-cols-2 sm:grid-cols-4">
         <FileImportButton
           fileInputId={FILE_INPUT_ID}
           fileInputRef={fileInputRef}
