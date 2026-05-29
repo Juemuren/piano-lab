@@ -7,7 +7,6 @@
     "envelope": "Envelope",
     "spectrum": "Spectrum",
     "transferFunction": "Transfer Function",
-    "transferFunctionModifier": "Transfer Function Modifier",
     "scoreEditor": "Score Editor"
   },
   "oscillator": {

@@ -7,7 +7,6 @@
     "envelope": "エンベロープ",
     "spectrum": "スペクトル",
     "transferFunction": "伝達関数",
-    "transferFunctionModifier": "伝達関数エディター",
     "scoreEditor": "楽譜エディター"
   },
   "oscillator": {

@@ -3,35 +3,39 @@ import type { TransferFunction, TransferFunctionType } from '../types';
 import type { AudioEngine } from '../services/audio/AudioEngine';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import {
-  DEFAULT_TF_TYPE,
-  DEFAULT_TF_BASE_FREQUENCY_HZ,
-  DEFAULT_TF_DELAY_MS,
-  DEFAULT_TF_MAX_FREQUENCY_HZ,
-  DEFAULT_TF_MIN_FREQUENCY_HZ,
-  DEFAULT_TF_ATTENUATION,
+  DEFAULT_TRANSFER_FUNCTION_TYPE,
+  DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
+  DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
 } from '../constants';
 
 export interface TransferFunctionParamUpdates {
   tau?: number;
   alpha?: number;
-  minFreq?: number;
-  maxFreq?: number;
-  baseFreq?: number;
+  minFrequency?: number;
+  maxFrequency?: number;
+  baseFrequency?: number;
 }
 
 function useTransferFunctionControl(
   audioEngine: AudioEngine,
   harmonicCount: number,
 ) {
-  const [baseFreq, setBaseFreq] = useState<number>(
-    DEFAULT_TF_BASE_FREQUENCY_HZ,
+  const [baseFrequency, setBaseFrequency] = useState<number>(
+    DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
   );
   const [transferFunctionType, setTransferFunctionType] =
-    useState<TransferFunctionType>(DEFAULT_TF_TYPE);
-  const [tau, setTau] = useState(DEFAULT_TF_DELAY_MS);
-  const [alpha, setAlpha] = useState(DEFAULT_TF_ATTENUATION);
-  const [minFreq, setMinFreq] = useState(DEFAULT_TF_MIN_FREQUENCY_HZ);
-  const [maxFreq, setMaxFreq] = useState(DEFAULT_TF_MAX_FREQUENCY_HZ);
+    useState<TransferFunctionType>(DEFAULT_TRANSFER_FUNCTION_TYPE);
+  const [tau, setTau] = useState(DEFAULT_TRANSFER_FUNCTION_DELAY_MS);
+  const [alpha, setAlpha] = useState(DEFAULT_TRANSFER_FUNCTION_ATTENUATION);
+  const [minFrequency, setMinFrequency] = useState(
+    DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+  );
+  const [maxFrequency, setMaxFrequency] = useState(
+    DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+  );
 
   const transferFunction = useMemo<TransferFunction>(
     () =>
@@ -39,17 +43,17 @@ function useTransferFunctionControl(
         transferFunctionType,
         tau,
         alpha,
-        minFreq,
-        maxFreq,
-        baseFreq,
+        minFrequency,
+        maxFrequency,
+        baseFrequency,
         harmonicCount,
       ),
     [
       alpha,
-      baseFreq,
+      baseFrequency,
       harmonicCount,
-      maxFreq,
-      minFreq,
+      maxFrequency,
+      minFrequency,
       tau,
       transferFunctionType,
     ],
@@ -66,13 +70,19 @@ function useTransferFunctionControl(
   const handleParamsChange = (updates: TransferFunctionParamUpdates) => {
     if (updates.tau !== undefined) setTau(updates.tau);
     if (updates.alpha !== undefined) setAlpha(updates.alpha);
-    if (updates.minFreq !== undefined) setMinFreq(updates.minFreq);
-    if (updates.maxFreq !== undefined) setMaxFreq(updates.maxFreq);
-    if (updates.baseFreq !== undefined) setBaseFreq(updates.baseFreq);
+    if (updates.minFrequency !== undefined) {
+      setMinFrequency(updates.minFrequency);
+    }
+    if (updates.maxFrequency !== undefined) {
+      setMaxFrequency(updates.maxFrequency);
+    }
+    if (updates.baseFrequency !== undefined) {
+      setBaseFrequency(updates.baseFrequency);
+    }
   };
 
   return {
-    baseFreq,
+    baseFrequency,
     transferFunction,
     handlePresetChange,
     handleParamsChange,

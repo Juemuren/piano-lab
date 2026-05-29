@@ -5,12 +5,12 @@ import {
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_TF_TYPE,
-  DEFAULT_TF_ATTENUATION,
-  DEFAULT_TF_BASE_FREQUENCY_HZ,
-  DEFAULT_TF_DELAY_MS,
-  DEFAULT_TF_MAX_FREQUENCY_HZ,
-  DEFAULT_TF_MIN_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_TYPE,
+  DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
+  DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
+  DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+  DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_ENVELOPE_VOLUME_RATIO,
@@ -34,12 +34,12 @@ export class AudioEngine {
     this.harmonicCount,
   );
   private transferFunction: TransferFunction = getTransferFunctionPreset(
-    DEFAULT_TF_TYPE,
-    DEFAULT_TF_DELAY_MS,
-    DEFAULT_TF_ATTENUATION,
-    DEFAULT_TF_MIN_FREQUENCY_HZ,
-    DEFAULT_TF_MAX_FREQUENCY_HZ,
-    DEFAULT_TF_BASE_FREQUENCY_HZ,
+    DEFAULT_TRANSFER_FUNCTION_TYPE,
+    DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
+    DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
+    DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+    DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+    DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
     this.harmonicCount,
   );
 
@@ -65,8 +65,8 @@ export class AudioEngine {
     return this.spectrum;
   }
 
-  setTransferFunction(tf: TransferFunction) {
-    this.transferFunction = tf;
+  setTransferFunction(transferFunction: TransferFunction) {
+    this.transferFunction = transferFunction;
   }
 
   getTransferFunction(): TransferFunction {
@@ -152,16 +152,22 @@ export class AudioEngine {
     }
   }
 
-  getBaseFreq(pitch: number, cents: number = 0) {
+  getBaseFrequency(pitch: number, cents: number = 0) {
     return 440 * Math.pow(2, (pitch + cents / 100 - 69) / 12);
   }
 
-  getTargetGain(spectrumAmp: number, transferMag: number, volume: number) {
-    return spectrumAmp * transferMag * (volume / 127) * this.volumeRatio;
+  getTargetGain(
+    spectrumAmplitude: number,
+    transferMagnitude: number,
+    volume: number,
+  ) {
+    return (
+      spectrumAmplitude * transferMagnitude * (volume / 127) * this.volumeRatio
+    );
   }
 
-  getDelaySeconds(phaseDeg: number, freq: number) {
-    return phaseDeg / (360 * freq);
+  getDelaySeconds(phaseDeg: number, frequency: number) {
+    return phaseDeg / (360 * frequency);
   }
 
   async playNote(
@@ -173,32 +179,36 @@ export class AudioEngine {
     await this.ensureAudioContextRunning();
     if (!this.audioContext) return;
 
-    const baseFreq = this.getBaseFreq(pitch, cents);
+    const baseFrequency = this.getBaseFrequency(pitch, cents);
     const harmonics = this.spectrum.amplitudes.length;
     const transferFunction = this.transferFunction;
     const { magnitudes, phases } = getTransferFunctionPreset(
       transferFunction.type,
       transferFunction.tau,
       transferFunction.alpha,
-      transferFunction.minFreq,
-      transferFunction.maxFreq,
-      baseFreq,
+      transferFunction.minFrequency,
+      transferFunction.maxFrequency,
+      baseFrequency,
       harmonics,
     );
 
     for (let n = 1; n <= harmonics; n++) {
-      const freq = baseFreq * n;
+      const frequency = baseFrequency * n;
 
-      const spectrumAmp = this.spectrum.amplitudes[n - 1] || 0;
-      const transferMag = magnitudes[n - 1] || 0;
-      const targetGain = this.getTargetGain(spectrumAmp, transferMag, volume);
+      const spectrumAmplitude = this.spectrum.amplitudes[n - 1] || 0;
+      const transferMagnitude = magnitudes[n - 1] || 0;
+      const targetGain = this.getTargetGain(
+        spectrumAmplitude,
+        transferMagnitude,
+        volume,
+      );
       const silenceGain = Math.max(
         this.silenceGain * this.volumeRatio,
         MIN_GAIN_VALUE,
       );
 
       const phaseDeg = phases[n - 1] || 0;
-      const delaySeconds = this.getDelaySeconds(phaseDeg, freq);
+      const delaySeconds = this.getDelaySeconds(phaseDeg, frequency);
 
       const now = this.audioContext.currentTime;
       const startTime = Math.max(0, now + delaySeconds);
@@ -215,7 +225,7 @@ export class AudioEngine {
       const gainNode = this.audioContext.createGain();
 
       oscillatorNode.type = this.oscillatorType;
-      oscillatorNode.frequency.setValueAtTime(freq, startTime);
+      oscillatorNode.frequency.setValueAtTime(frequency, startTime);
 
       gainNode.gain.setValueAtTime(silenceGain, startTime);
       gainNode.gain.exponentialRampToValueAtTime(attackGain, attackEnd);

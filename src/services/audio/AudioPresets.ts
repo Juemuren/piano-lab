@@ -5,8 +5,8 @@ import type {
   SpectrumType,
 } from '../../types';
 
-function delayToArg(delay: number, freq: number) {
-  return -2 * Math.PI * delay * freq;
+function delayToArg(delay: number, frequency: number) {
+  return -2 * Math.PI * delay * frequency;
 }
 
 function radToDeg(rad: number) {
@@ -17,10 +17,10 @@ function normalizeDeg(angle: number) {
   return (((angle % 360) + 540) % 360) - 180;
 }
 
-function normalizeAmp(amplitudes: number[]) {
-  const maxAmplitudes = Math.max(...amplitudes);
-  if (maxAmplitudes === 0) return amplitudes.map(() => 0);
-  return amplitudes.map((a) => a / maxAmplitudes);
+function normalizeAmplitudes(amplitudes: number[]) {
+  const maxAmplitude = Math.max(...amplitudes);
+  if (maxAmplitude === 0) return amplitudes.map(() => 0);
+  return amplitudes.map((amplitude) => amplitude / maxAmplitude);
 }
 
 export function getSpectrumPreset(
@@ -33,43 +33,43 @@ export function getSpectrumPreset(
   const amplitudes: number[] = [];
 
   for (let n = 1; n <= harmonics; n++) {
-    let amp = 0;
+    let amplitude = 0;
     switch (type) {
       case 'ethereal':
-        amp = (1 / (n * n)) * Math.abs(Math.sin((n * Math.PI) / 2));
+        amplitude = (1 / (n * n)) * Math.abs(Math.sin((n * Math.PI) / 2));
         break;
       case 'metallic':
-        amp = 1 / n;
+        amplitude = 1 / n;
         break;
       case 'pure':
-        amp = 1 / (n * n);
+        amplitude = 1 / (n * n);
         break;
       case 'bright':
-        amp = (1 / n) * Math.abs(Math.sin((n * Math.PI) / 2));
+        amplitude = (1 / n) * Math.abs(Math.sin((n * Math.PI) / 2));
         break;
       case 'normal':
-        amp = (1 / (n * n)) * Math.abs(Math.sin(n * Math.PI * lambda));
+        amplitude = (1 / (n * n)) * Math.abs(Math.sin(n * Math.PI * lambda));
         break;
       case 'soft':
-        amp = Math.exp(-sigma * n);
+        amplitude = Math.exp(-sigma * n);
         break;
       case 'realistic':
-        amp = (1 / Math.pow(n, p)) * Math.exp(-sigma * n);
+        amplitude = (1 / Math.pow(n, p)) * Math.exp(-sigma * n);
         break;
     }
-    amplitudes.push(amp);
+    amplitudes.push(amplitude);
   }
 
-  return { type, amplitudes: normalizeAmp(amplitudes) };
+  return { type, amplitudes: normalizeAmplitudes(amplitudes) };
 }
 
 export function getTransferFunctionPreset(
   type: TransferFunctionType,
   tau: number,
   alpha: number,
-  minFreq: number,
-  maxFreq: number,
-  baseFreq: number,
+  minFrequency: number,
+  maxFrequency: number,
+  baseFrequency: number,
   harmonics: number,
 ): TransferFunction {
   const magnitudes: number[] = [];
@@ -77,63 +77,64 @@ export function getTransferFunctionPreset(
   const delay = tau / 1000;
 
   for (let n = 1; n <= harmonics; n++) {
-    const freq = baseFreq * n;
-    let mag = 1;
+    const frequency = baseFrequency * n;
+    let magnitude = 1;
     let phaseDeg = 0;
 
     switch (type) {
       case 'delay': {
-        mag = 1;
-        const arg = delayToArg(delay, freq);
+        magnitude = 1;
+        const arg = delayToArg(delay, frequency);
         phaseDeg = normalizeDeg(radToDeg(arg));
         break;
       }
       case 'single_echo': {
-        const arg = delayToArg(delay, freq);
+        const arg = delayToArg(delay, frequency);
         const cosArg = Math.cos(arg);
         const sinArg = Math.sin(arg);
-        mag = Math.sqrt(1 + alpha * alpha + 2 * alpha * cosArg);
+        magnitude = Math.sqrt(1 + alpha * alpha + 2 * alpha * cosArg);
         const phaseRad = Math.atan2(alpha * sinArg, 1 + alpha * cosArg);
         phaseDeg = radToDeg(phaseRad);
         break;
       }
       case 'multi_echo': {
-        const arg = delayToArg(delay, freq);
+        const arg = delayToArg(delay, frequency);
         const cosArg = Math.cos(arg);
         const sinArg = Math.sin(arg);
-        mag = 1 / Math.sqrt(1 + alpha * alpha - 2 * alpha * cosArg);
+        magnitude = 1 / Math.sqrt(1 + alpha * alpha - 2 * alpha * cosArg);
         const phaseRad = Math.atan2(alpha * sinArg, 1 - alpha * cosArg);
         phaseDeg = radToDeg(phaseRad);
         break;
       }
       case 'all_pass': {
-        const arg = delayToArg(delay, freq);
+        const arg = delayToArg(delay, frequency);
         const cosArg = Math.cos(arg);
         const sinArg = Math.sin(arg);
-        mag = 1;
+        magnitude = 1;
         const phaseRad =
           arg + 2 * Math.atan2(alpha * sinArg, 1 - alpha * cosArg);
         phaseDeg = normalizeDeg(radToDeg(phaseRad));
         break;
       }
       case 'low_pass': {
-        mag = freq <= maxFreq ? 1 : 0;
+        magnitude = frequency <= maxFrequency ? 1 : 0;
         phaseDeg = 0;
         break;
       }
       case 'high_pass': {
-        mag = freq >= minFreq ? 1 : 0;
+        magnitude = frequency >= minFrequency ? 1 : 0;
         phaseDeg = 0;
         break;
       }
       case 'band_pass': {
-        mag = freq >= minFreq && freq <= maxFreq ? 1 : 0;
+        magnitude =
+          frequency >= minFrequency && frequency <= maxFrequency ? 1 : 0;
         phaseDeg = 0;
         break;
       }
     }
 
-    magnitudes.push(mag);
+    magnitudes.push(magnitude);
     phases.push(phaseDeg);
   }
 
@@ -141,8 +142,8 @@ export function getTransferFunctionPreset(
     type,
     tau,
     alpha,
-    minFreq,
-    maxFreq,
+    minFrequency,
+    maxFrequency,
     magnitudes,
     phases,
   };

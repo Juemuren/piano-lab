@@ -64,7 +64,7 @@ function TransferFunctionResponsePreview({
           min="0"
           max="2"
           step="0.01"
-          getKey={(index) => `mag-${index}`}
+          getKey={(index) => `magnitude-${index}`}
           disabled
         />
       </details>

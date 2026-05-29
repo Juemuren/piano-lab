@@ -19,11 +19,15 @@ function TransferFunction({
   harmonicCount,
 }: TransferFunctionProps) {
   const { t } = useTranslation('piano');
-  const { baseFreq, transferFunction, handlePresetChange, handleParamsChange } =
-    useTransferFunctionControl(audioEngine, harmonicCount);
+  const {
+    baseFrequency,
+    transferFunction,
+    handlePresetChange,
+    handleParamsChange,
+  } = useTransferFunctionControl(audioEngine, harmonicCount);
   const { selectedPitch, baseFrequencyPitchOptions } = useBaseFrequencyOptions(
     audioEngine,
-    baseFreq,
+    baseFrequency,
   );
 
   return (
@@ -46,11 +50,11 @@ function TransferFunction({
       <BaseFrequencyControl
         label={t('controls.baseFrequency')}
         hint={t('controls.baseFrequencyPreviewHint')}
-        value={baseFreq}
+        value={baseFrequency}
         selectedPitch={selectedPitch}
         pitchOptions={baseFrequencyPitchOptions}
-        getBaseFreq={(pitch) => audioEngine.getBaseFreq(pitch)}
-        onChange={(value) => handleParamsChange({ baseFreq: value })}
+        getBaseFrequency={(pitch) => audioEngine.getBaseFrequency(pitch)}
+        onChange={(value) => handleParamsChange({ baseFrequency: value })}
       />
 
       <TransferFunctionParameterControls

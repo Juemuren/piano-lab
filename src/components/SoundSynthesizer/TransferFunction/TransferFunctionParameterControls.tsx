@@ -60,9 +60,9 @@ function TransferFunctionParameterControls({
           min="20"
           max="20000"
           step="10"
-          value={transferFunction.minFreq}
-          displayValue={`${transferFunction.minFreq} Hz`}
-          onChange={(value) => onChange({ minFreq: value })}
+          value={transferFunction.minFrequency}
+          displayValue={`${transferFunction.minFrequency} Hz`}
+          onChange={(value) => onChange({ minFrequency: value })}
         />
       )}
 
@@ -74,9 +74,9 @@ function TransferFunctionParameterControls({
           min="20"
           max="20000"
           step="10"
-          value={transferFunction.maxFreq}
-          displayValue={`${transferFunction.maxFreq} Hz`}
-          onChange={(value) => onChange({ maxFreq: value })}
+          value={transferFunction.maxFrequency}
+          displayValue={`${transferFunction.maxFrequency} Hz`}
+          onChange={(value) => onChange({ maxFrequency: value })}
         />
       )}
     </>

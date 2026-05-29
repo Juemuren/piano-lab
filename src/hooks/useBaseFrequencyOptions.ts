@@ -4,15 +4,19 @@ import { getPitchOptions } from '../utils/pitch';
 
 const PITCH_OPTIONS = getPitchOptions();
 
-function useBaseFrequencyOptions(audioEngine: AudioEngine, baseFreq: number) {
+function useBaseFrequencyOptions(
+  audioEngine: AudioEngine,
+  baseFrequency: number,
+) {
   return useMemo(() => {
     const selectedPitch = PITCH_OPTIONS.find(
       ({ pitch }) =>
-        Math.abs(audioEngine.getBaseFreq(pitch) - baseFreq) < Number.EPSILON,
+        Math.abs(audioEngine.getBaseFrequency(pitch) - baseFrequency) <
+        Number.EPSILON,
     )?.pitch;
 
     const firstHigherPitchIndex = PITCH_OPTIONS.findIndex(
-      ({ pitch }) => audioEngine.getBaseFreq(pitch) > baseFreq,
+      ({ pitch }) => audioEngine.getBaseFrequency(pitch) > baseFrequency,
     );
 
     let pitchRangeLabel;
@@ -45,7 +49,7 @@ function useBaseFrequencyOptions(audioEngine: AudioEngine, baseFreq: number) {
       selectedPitch,
       baseFrequencyPitchOptions,
     };
-  }, [audioEngine, baseFreq]);
+  }, [audioEngine, baseFrequency]);
 }
 
 export default useBaseFrequencyOptions;

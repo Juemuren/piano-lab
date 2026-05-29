@@ -13,7 +13,7 @@ interface BaseFrequencyControlProps {
   value: number;
   selectedPitch?: number;
   pitchOptions: BaseFrequencyOption[];
-  getBaseFreq: (pitch: number) => number;
+  getBaseFrequency: (pitch: number) => number;
   onChange: (value: number) => void;
 }
 
@@ -23,7 +23,7 @@ function BaseFrequencyControl({
   value,
   selectedPitch,
   pitchOptions,
-  getBaseFreq,
+  getBaseFrequency,
   onChange,
 }: BaseFrequencyControlProps) {
   return (
@@ -44,7 +44,7 @@ function BaseFrequencyControl({
           value={selectedPitch ?? 'custom'}
           onChange={(e) => {
             if (e.target.value === 'custom') return;
-            onChange(getBaseFreq(Number(e.target.value)));
+            onChange(getBaseFrequency(Number(e.target.value)));
           }}
         >
           {pitchOptions.map(({ pitch, label }) => (

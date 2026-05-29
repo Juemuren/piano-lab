@@ -26,8 +26,8 @@ export interface TransferFunction {
   type: TransferFunctionType;
   tau: number;
   alpha: number;
-  minFreq: number;
-  maxFreq: number;
+  minFrequency: number;
+  maxFrequency: number;
   magnitudes: number[];
   phases: number[];
 }
