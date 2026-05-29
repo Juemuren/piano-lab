@@ -4,7 +4,7 @@ import { AudioEngine } from './services/audio/AudioEngine';
 import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
 import SoundSynthesizer from './components/SoundSynthesizer';
-import ABCEditor from './components/ABCEditor';
+import AbcEditor from './components/AbcEditor';
 import Footer from './components/Footer';
 import LanguageSwitcher from './components/LanguageSwitcher';
 
@@ -61,7 +61,7 @@ function App() {
           </div>
           <div className="mx-auto w-full">
             <CollapsibleSection title={t('sections.scoreEditor')}>
-              <ABCEditor
+              <AbcEditor
                 audioEngine={audioEngine}
                 onNoteStart={handleNoteStart}
                 onNoteEnd={handleNoteEnd}

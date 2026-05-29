@@ -1,7 +1,7 @@
 import { AudioEngine } from '../audio/AudioEngine';
 import { type MidiPitches } from 'abcjs';
 
-export class ABCPlayer {
+export class AbcPlayer {
   private audioEngine: AudioEngine;
   private onNoteStart?: (pitch: number) => void;
   private onNoteEnd?: (pitch: number) => void;

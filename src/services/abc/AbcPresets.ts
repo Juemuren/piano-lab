@@ -1,4 +1,4 @@
-import presetsNames from './ABCPresets.json';
+import presetsNames from './AbcPresets.json';
 
 export const ABC_PRESETS = presetsNames;
 

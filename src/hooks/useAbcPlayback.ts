@@ -6,7 +6,7 @@ import {
   renderAbc,
   TimingCallbacks,
 } from 'abcjs';
-import { ABCPlayer } from '../services/abc/ABCPlayer';
+import { AbcPlayer } from '../services/abc/AbcPlayer';
 
 const DOUBLE_CLICK_INTERVAL_MS = 500;
 
@@ -16,19 +16,19 @@ interface LastClickedNote {
   clickedAt: number;
 }
 
-interface UseABCPlaybackOptions {
+interface UseAbcPlaybackOptions {
   abcContent: string;
-  abcPlayer: ABCPlayer;
+  abcPlayer: AbcPlayer;
   onStop: () => void;
   renderTargetId: string;
 }
 
-function useABCPlayback({
+function useAbcPlayback({
   abcContent,
   abcPlayer,
   onStop,
   renderTargetId,
-}: UseABCPlaybackOptions) {
+}: UseAbcPlaybackOptions) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasNotes, setHasNotes] = useState(false);
   const visualObjRef = useRef<TuneObject>(null);
@@ -159,4 +159,4 @@ function useABCPlayback({
   };
 }
 
-export default useABCPlayback;
+export default useAbcPlayback;

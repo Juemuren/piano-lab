@@ -1,41 +1,41 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ABC_PRESETS, getAbcPreset } from '../services/abc/ABCPresets';
+import { ABC_PRESETS, getAbcPreset } from '../services/abc/AbcPresets';
 import { AudioEngine } from '../services/audio/AudioEngine';
-import { ABCPlayer } from '../services/abc/ABCPlayer';
+import { AbcPlayer } from '../services/abc/AbcPlayer';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import FileExportButton from './shared/FileExportButton';
 import FileImportButton from './shared/FileImportButton';
 import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
-import useABCPlayback from '../hooks/useABCPlayback';
+import useAbcPlayback from '../hooks/useAbcPlayback';
 import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
 const FILE_INPUT_ID = 'abcjs-file-input';
 
-interface ABCNotationPlayerProps {
+interface AbcEditorProps {
   audioEngine: AudioEngine;
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
 }
 
-function ABCEditor({
+function AbcEditor({
   audioEngine,
   onNoteStart,
   onNoteEnd,
   onStop,
-}: ABCNotationPlayerProps) {
+}: AbcEditorProps) {
   const { t } = useTranslation(['common', 'piano']);
   const [abcPlayer] = useState(
-    () => new ABCPlayer(audioEngine, onNoteStart, onNoteEnd),
+    () => new AbcPlayer(audioEngine, onNoteStart, onNoteEnd),
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
   const [abcContent, setAbcContent] = useState('');
-  const { isPlaying, hasNotes, handlePlay, handleStop } = useABCPlayback({
+  const { isPlaying, hasNotes, handlePlay, handleStop } = useAbcPlayback({
     abcContent,
     abcPlayer,
     onStop,
@@ -56,7 +56,7 @@ function ABCEditor({
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
     onImport: handleImport,
   });
-  const handleExport = useFileExport({
+  const handleExportAbc = useFileExport({
     content: abcContent,
     fileName: 'score.abc',
     mimeType: 'text/vnd.abc;charset=utf-8',
@@ -99,7 +99,7 @@ function ABCEditor({
         <FileExportButton
           label={t('piano:score.exportAbc')}
           disabled={!abcContent.trim()}
-          onClick={handleExport}
+          onClick={handleExportAbc}
         />
         <FileExportButton
           label={t('piano:score.exportSvg')}
@@ -153,4 +153,4 @@ function ABCEditor({
   );
 }
 
-export default ABCEditor;
+export default AbcEditor;
