@@ -21,6 +21,8 @@ import {
   DEFAULT_ENVELOPE_SILENCE_GAIN,
 } from '../../constants';
 
+const MIN_GAIN_VALUE = 1e-10;
+
 export class AudioEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
@@ -190,6 +192,10 @@ export class AudioEngine {
       const timbreAmp = this.spectrum.amplitudes[n - 1] || 0;
       const transferMag = magnitudes[n - 1] || 0;
       const targetGain = this.getTargetGain(timbreAmp, transferMag, volume);
+      const silenceGain = Math.max(
+        this.silenceGain * this.volumeRatio,
+        MIN_GAIN_VALUE,
+      );
 
       const phaseDeg = phases[n - 1] || 0;
       const delaySeconds = this.getDelaySeconds(phaseDeg, freq);
@@ -201,15 +207,9 @@ export class AudioEngine {
       const sustainEnd = decayEnd + duration;
       const stopTime = sustainEnd + this.releaseTime / Math.sqrt(n);
 
-      const attackGain = Math.max(targetGain, this.silenceGain);
-      const decayGain = Math.max(
-        attackGain * this.sustainGain,
-        this.silenceGain,
-      );
-      const sustainGain = Math.max(
-        decayGain / Math.sqrt(1 + n),
-        this.silenceGain,
-      );
+      const attackGain = Math.max(targetGain, silenceGain);
+      const decayGain = Math.max(attackGain * this.sustainGain, silenceGain);
+      const sustainGain = Math.max(decayGain / Math.sqrt(1 + n), silenceGain);
 
       const oscillatorNode = this.audioContext.createOscillator();
       const gainNode = this.audioContext.createGain();
@@ -217,11 +217,11 @@ export class AudioEngine {
       oscillatorNode.type = this.oscillatorType;
       oscillatorNode.frequency.setValueAtTime(freq, startTime);
 
-      gainNode.gain.setValueAtTime(this.silenceGain, startTime);
+      gainNode.gain.setValueAtTime(silenceGain, startTime);
       gainNode.gain.exponentialRampToValueAtTime(attackGain, attackEnd);
       gainNode.gain.exponentialRampToValueAtTime(decayGain, decayEnd);
       gainNode.gain.exponentialRampToValueAtTime(sustainGain, sustainEnd);
-      gainNode.gain.exponentialRampToValueAtTime(this.silenceGain, stopTime);
+      gainNode.gain.exponentialRampToValueAtTime(silenceGain, stopTime);
 
       oscillatorNode.connect(gainNode);
       gainNode.connect(this.audioContext.destination);

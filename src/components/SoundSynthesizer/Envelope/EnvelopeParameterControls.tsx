@@ -1,21 +1,18 @@
 import ControlRange from '../../shared/ControlRange';
 
 interface EnvelopeParameterControlsProps {
-  volume: number;
   attackTime: number;
   decayTime: number;
   releaseTime: number;
   sustainGain: number;
   silenceGain: number;
   labels: {
-    volume: string;
     attackTime: string;
     decayTime: string;
     releaseTime: string;
     sustainGain: string;
     silenceGain: string;
   };
-  onVolumeChange: (value: number) => void;
   onAttackTimeChange: (value: number) => void;
   onDecayTimeChange: (value: number) => void;
   onReleaseTimeChange: (value: number) => void;
@@ -24,14 +21,12 @@ interface EnvelopeParameterControlsProps {
 }
 
 function EnvelopeParameterControls({
-  volume,
   attackTime,
   decayTime,
   releaseTime,
   sustainGain,
   silenceGain,
   labels,
-  onVolumeChange,
   onAttackTimeChange,
   onDecayTimeChange,
   onReleaseTimeChange,
@@ -40,15 +35,6 @@ function EnvelopeParameterControls({
 }: EnvelopeParameterControlsProps) {
   return (
     <>
-      <ControlRange
-        label={labels.volume}
-        min="0"
-        max="1"
-        step="0.01"
-        value={volume}
-        displayValue={volume.toFixed(2)}
-        onChange={onVolumeChange}
-      />
       <ControlRange
         label={labels.attackTime}
         min="0.001"

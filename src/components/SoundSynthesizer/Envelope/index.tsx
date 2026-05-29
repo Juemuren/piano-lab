@@ -12,8 +12,6 @@ interface EnvelopeProps {
 function Envelope({ audioEngine }: EnvelopeProps) {
   const { t } = useTranslation('piano');
   const {
-    volume,
-    setVolume,
     attackTime,
     setAttackTime,
     decayTime,
@@ -32,21 +30,18 @@ function Envelope({ audioEngine }: EnvelopeProps) {
   return (
     <ControlPanel>
       <EnvelopeParameterControls
-        volume={volume}
         attackTime={attackTime}
         decayTime={decayTime}
         releaseTime={releaseTime}
         sustainGain={sustainGain}
         silenceGain={silenceGain}
         labels={{
-          volume: t('controls.volume'),
           attackTime: t('controls.attackTime'),
           decayTime: t('controls.decayTime'),
           releaseTime: t('controls.releaseTime'),
           sustainGain: t('controls.sustainGain'),
           silenceGain: t('controls.silenceGain'),
         }}
-        onVolumeChange={setVolume}
         onAttackTimeChange={setAttackTime}
         onDecayTimeChange={setDecayTime}
         onReleaseTimeChange={setReleaseTime}

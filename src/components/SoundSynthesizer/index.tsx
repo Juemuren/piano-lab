@@ -18,6 +18,7 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   const [oscillatorType, setOscillatorType] = useState(() =>
     audioEngine.getOscillatorType(),
   );
+  const [volume, setVolume] = useState(() => audioEngine.getVolume());
   const [harmonicCount, setHarmonicCount] = useState(() =>
     audioEngine.getHarmonicCount(),
   );
@@ -25,6 +26,10 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   useEffect(() => {
     audioEngine.setOscillatorType(oscillatorType);
   }, [audioEngine, oscillatorType]);
+
+  useEffect(() => {
+    audioEngine.setVolume(volume);
+  }, [audioEngine, volume]);
 
   useEffect(() => {
     audioEngine.setHarmonicCount(harmonicCount);
@@ -42,6 +47,15 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
           <option value="sawtooth">{t('oscillator.sawtooth')}</option>
           <option value="square">{t('oscillator.square')}</option>
         </ControlSelect>
+        <ControlRange
+          label={t('controls.volume')}
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          displayValue={volume.toFixed(2)}
+          onChange={setVolume}
+        />
         <ControlRange
           label={t('controls.harmonicCount')}
           min="2"

@@ -27,7 +27,6 @@ function sampleExponentialRamp(
 }
 
 function useEnvelopeControl(audioEngine: AudioEngine) {
-  const [volume, setVolume] = useState(audioEngine.getVolume());
   const [attackTime, setAttackTime] = useState(audioEngine.getAttackTime());
   const [decayTime, setDecayTime] = useState(audioEngine.getDecayTime());
   const [releaseTime, setReleaseTime] = useState(audioEngine.getReleaseTime());
@@ -48,10 +47,6 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
     resizeObserver.observe(element);
     return () => resizeObserver.disconnect();
   }, []);
-
-  useEffect(() => {
-    audioEngine.setVolume(volume);
-  }, [volume, audioEngine]);
 
   useEffect(() => {
     audioEngine.setAttackTime(attackTime);
@@ -78,7 +73,7 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
     const decayEnd = attackEnd + decayTime;
     const sustainEnd = decayEnd + ENVELOPE_SUSTAIN_SECONDS;
     const releaseEnd = sustainEnd + releaseTime;
-    const attackGain = volume;
+    const attackGain = 1;
     const decayGain = Math.max(attackGain * sustainGain, silenceGain);
     const holdGain = Math.max(
       decayGain / Math.sqrt(1 + ENVELOPE_HARMONIC_TIMES),
@@ -97,11 +92,9 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
       gain: points.map(({ gain }) => gain),
       maxTime: releaseEnd,
     };
-  }, [volume, attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
+  }, [attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
 
   return {
-    volume,
-    setVolume,
     attackTime,
     setAttackTime,
     decayTime,
