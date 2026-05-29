@@ -3,10 +3,19 @@ import { type ReactNode, useState } from 'react';
 type CollapsibleSectionProps = {
   title: string;
   children: ReactNode;
+  expanded?: boolean;
+  bgClassName?: string;
+  hoverBgClassName?: string;
 };
 
-function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+function CollapsibleSection({
+  title,
+  children,
+  expanded = false,
+  bgClassName = 'bg-app-surface-muted dark:bg-app-surface-muted-dark',
+  hoverBgClassName = 'hover:bg-app-surface dark:hover:bg-app-surface-dark',
+}: CollapsibleSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(expanded);
 
   const handleToggle = () => setIsExpanded(!isExpanded);
 
@@ -15,12 +24,10 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
       <button
         type="button"
         onClick={handleToggle}
-        className="
-          w-full text-center p-3 rounded-lg shadow-md
-          bg-app-surface-muted dark:bg-app-surface-muted-dark
-          hover:bg-app-border dark:hover:bg-app-border-dark
-          transition-colors
-        "
+        className={`
+          w-full p-3 text-center rounded-lg transition-colors
+          ${bgClassName} ${hoverBgClassName}
+        `}
       >
         <h2 className="text-xl font-semibold">
           {title} {isExpanded ? '▼' : '▶'}

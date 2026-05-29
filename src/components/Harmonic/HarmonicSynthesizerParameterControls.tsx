@@ -9,7 +9,6 @@ interface HarmonicSynthesizerParameterControlsProps {
   releaseTime: number;
   sustainGain: number;
   silenceGain: number;
-  harmonicCount: number;
   labels: {
     sine: string;
     triangle: string;
@@ -21,8 +20,6 @@ interface HarmonicSynthesizerParameterControlsProps {
     releaseTime: string;
     sustainGain: string;
     silenceGain: string;
-    harmonicCount: string;
-    harmonicCountWarning: string;
   };
   onOscillatorTypeChange: (value: OscillatorType) => void;
   onVolumeChange: (value: number) => void;
@@ -31,7 +28,6 @@ interface HarmonicSynthesizerParameterControlsProps {
   onReleaseTimeChange: (value: number) => void;
   onSustainGainChange: (value: number) => void;
   onSilenceGainChange: (value: number) => void;
-  onHarmonicCountChange: (value: number) => void;
 }
 
 function HarmonicSynthesizerParameterControls({
@@ -42,7 +38,6 @@ function HarmonicSynthesizerParameterControls({
   releaseTime,
   sustainGain,
   silenceGain,
-  harmonicCount,
   labels,
   onOscillatorTypeChange,
   onVolumeChange,
@@ -51,7 +46,6 @@ function HarmonicSynthesizerParameterControls({
   onReleaseTimeChange,
   onSustainGainChange,
   onSilenceGainChange,
-  onHarmonicCountChange,
 }: HarmonicSynthesizerParameterControlsProps) {
   return (
     <>
@@ -121,23 +115,6 @@ function HarmonicSynthesizerParameterControls({
         displayValue={silenceGain.toExponential(2)}
         onChange={onSilenceGainChange}
       />
-      <ControlRange
-        label={labels.harmonicCount}
-        min="2"
-        max="20"
-        step="1"
-        value={harmonicCount}
-        displayValue={harmonicCount.toString()}
-        accentClassName="accent-app-warning dark:accent-app-warning-dark"
-        onChange={onHarmonicCountChange}
-      />
-      <p
-        className="
-          text-xs text-app-warning/50 dark:text-app-warning-dark/50
-        "
-      >
-        {labels.harmonicCountWarning}
-      </p>
     </>
   );
 }

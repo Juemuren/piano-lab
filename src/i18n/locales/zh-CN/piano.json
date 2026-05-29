@@ -3,6 +3,10 @@
     "title": "钢琴模拟器"
   },
   "sections": {
+    "soundSynthesizer": "声音合成器",
+    "soundEnvelope": "声音包络",
+    "timbre": "音色",
+    "transferFunction": "传递函数",
     "harmonicSynthesizer": "谐波合成器",
     "timbreAdjuster": "音色调节器",
     "transferFunctionModifier": "传递函数修改器",

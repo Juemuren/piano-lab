@@ -3,6 +3,10 @@
     "title": "Piano Simulator"
   },
   "sections": {
+    "soundSynthesizer": "Sound Synthesizer",
+    "soundEnvelope": "Sound Envelope",
+    "timbre": "Timbre",
+    "transferFunction": "Transfer Function",
     "harmonicSynthesizer": "Harmonic Synthesizer",
     "timbreAdjuster": "Timbre Adjuster",
     "transferFunctionModifier": "Transfer Function Modifier",

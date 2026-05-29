@@ -2,10 +2,8 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioEngine } from './services/audio/AudioEngine';
 import Piano from './components/Piano';
-import TimbreAdjuster from './components/Timbre';
-import TransferFunctionModifier from './components/TransferFunction';
+import SoundSynthesizer from './components/SoundSynthesizer';
 import ABCEditor from './components/ABCEditor';
-import HarmonicSynthesizer from './components/Harmonic';
 import CollapsibleSection from './components/CollapsibleSection';
 import Footer from './components/Footer';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -13,9 +11,6 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 function App() {
   const { t } = useTranslation('piano');
   const [audioEngine] = useState(() => new AudioEngine());
-  const [harmonicCount, setHarmonicCount] = useState(() =>
-    audioEngine.getHarmonicCount(),
-  );
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
 
   const handleNoteStart = useCallback((pitch: number) => {
@@ -59,41 +54,21 @@ function App() {
             xl:flex-row xl:items-start xl:justify-center
           "
         >
-          <div className="w-full max-w-4xl xl:max-w-md">
-            <CollapsibleSection title={t('sections.harmonicSynthesizer')}>
-              <HarmonicSynthesizer
+          <div className="mx-auto w-full">
+            <CollapsibleSection title={t('sections.soundSynthesizer')}>
+              <SoundSynthesizer audioEngine={audioEngine} />
+            </CollapsibleSection>
+          </div>
+          <div className="mx-auto w-full">
+            <CollapsibleSection title={t('sections.scoreEditor')}>
+              <ABCEditor
                 audioEngine={audioEngine}
-                harmonicCount={harmonicCount}
-                onHarmonicCountChange={setHarmonicCount}
+                onNoteStart={handleNoteStart}
+                onNoteEnd={handleNoteEnd}
+                onStop={handleStopPlayingNotes}
               />
             </CollapsibleSection>
           </div>
-          <div className="w-full max-w-4xl xl:max-w-md">
-            <CollapsibleSection title={t('sections.timbreAdjuster')}>
-              <TimbreAdjuster
-                audioEngine={audioEngine}
-                harmonicCount={harmonicCount}
-              />
-            </CollapsibleSection>
-          </div>
-          <div className="w-full max-w-4xl xl:max-w-md">
-            <CollapsibleSection title={t('sections.transferFunctionModifier')}>
-              <TransferFunctionModifier
-                audioEngine={audioEngine}
-                harmonicCount={harmonicCount}
-              />
-            </CollapsibleSection>
-          </div>
-        </div>
-        <div className="mx-auto w-full max-w-4xl">
-          <CollapsibleSection title={t('sections.scoreEditor')}>
-            <ABCEditor
-              audioEngine={audioEngine}
-              onNoteStart={handleNoteStart}
-              onNoteEnd={handleNoteEnd}
-              onStop={handleStopPlayingNotes}
-            />
-          </CollapsibleSection>
         </div>
 
         <Piano audioEngine={audioEngine} playingNotes={playingNotes} />

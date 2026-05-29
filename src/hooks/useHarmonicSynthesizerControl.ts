@@ -26,11 +26,7 @@ function sampleExponentialRamp(
   });
 }
 
-function useHarmonicSynthesizerControl(
-  audioEngine: AudioEngine,
-  harmonicCount: number,
-  onHarmonicCountChange: (value: number) => void,
-) {
+function useHarmonicSynthesizerControl(audioEngine: AudioEngine) {
   const [oscillatorType, setOscillatorType] = useState(
     audioEngine.getOscillatorType(),
   );
@@ -84,14 +80,6 @@ function useHarmonicSynthesizerControl(
     audioEngine.setSilenceGain(silenceGain);
   }, [silenceGain, audioEngine]);
 
-  useEffect(() => {
-    audioEngine.setHarmonicCount(harmonicCount);
-  }, [harmonicCount, audioEngine]);
-
-  const handleHarmonicCountChange = (value: number) => {
-    onHarmonicCountChange(Math.round(value));
-  };
-
   const envelopeCurve = useMemo<EnvelopeCurve>(() => {
     const attackEnd = attackTime;
     const decayEnd = attackEnd + decayTime;
@@ -136,7 +124,6 @@ function useHarmonicSynthesizerControl(
     envelopeChartContainerRef,
     envelopeChartWidth,
     envelopeCurve,
-    handleHarmonicCountChange,
   };
 }
 

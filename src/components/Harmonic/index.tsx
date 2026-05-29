@@ -7,15 +7,9 @@ import useHarmonicSynthesizerControl from '../../hooks/useHarmonicSynthesizerCon
 
 interface HarmonicSynthesizerProps {
   audioEngine: AudioEngine;
-  harmonicCount: number;
-  onHarmonicCountChange: (value: number) => void;
 }
 
-function HarmonicSynthesizer({
-  audioEngine,
-  harmonicCount,
-  onHarmonicCountChange,
-}: HarmonicSynthesizerProps) {
+function HarmonicSynthesizer({ audioEngine }: HarmonicSynthesizerProps) {
   const { t } = useTranslation('piano');
   const {
     oscillatorType,
@@ -35,12 +29,7 @@ function HarmonicSynthesizer({
     envelopeChartContainerRef,
     envelopeChartWidth,
     envelopeCurve,
-    handleHarmonicCountChange,
-  } = useHarmonicSynthesizerControl(
-    audioEngine,
-    harmonicCount,
-    onHarmonicCountChange,
-  );
+  } = useHarmonicSynthesizerControl(audioEngine);
 
   return (
     <ControlPanel>
@@ -52,7 +41,6 @@ function HarmonicSynthesizer({
         releaseTime={releaseTime}
         sustainGain={sustainGain}
         silenceGain={silenceGain}
-        harmonicCount={harmonicCount}
         labels={{
           sine: t('oscillator.sine'),
           triangle: t('oscillator.triangle'),
@@ -64,8 +52,6 @@ function HarmonicSynthesizer({
           releaseTime: t('controls.releaseTime'),
           sustainGain: t('controls.sustainGain'),
           silenceGain: t('controls.silenceGain'),
-          harmonicCount: t('controls.harmonicCount'),
-          harmonicCountWarning: t('controls.harmonicCountWarning'),
         }}
         onOscillatorTypeChange={setOscillatorType}
         onVolumeChange={setVolume}
@@ -74,7 +60,6 @@ function HarmonicSynthesizer({
         onReleaseTimeChange={setReleaseTime}
         onSustainGainChange={setSustainGain}
         onSilenceGainChange={setSilenceGain}
-        onHarmonicCountChange={handleHarmonicCountChange}
       />
 
       <HarmonicEnvelopePreview
