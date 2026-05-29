@@ -3,12 +3,12 @@ import type { TransferFunction, TransferFunctionType } from '../types';
 import type { AudioEngine } from '../services/audio/AudioEngine';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import {
-  DEFAULT_TRANSFER_TYPE,
-  DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_DELAY_MS,
-  DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_ATTENUATION,
+  DEFAULT_TF_TYPE,
+  DEFAULT_TF_BASE_FREQUENCY_HZ,
+  DEFAULT_TF_DELAY_MS,
+  DEFAULT_TF_MAX_FREQUENCY_HZ,
+  DEFAULT_TF_MIN_FREQUENCY_HZ,
+  DEFAULT_TF_ATTENUATION,
 } from '../constants';
 
 export interface TransferFunctionParamUpdates {
@@ -24,14 +24,14 @@ function useTransferFunctionControl(
   harmonicCount: number,
 ) {
   const [baseFreq, setBaseFreq] = useState<number>(
-    DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+    DEFAULT_TF_BASE_FREQUENCY_HZ,
   );
   const [transferFunctionType, setTransferFunctionType] =
-    useState<TransferFunctionType>(DEFAULT_TRANSFER_TYPE);
-  const [tau, setTau] = useState(DEFAULT_TRANSFER_DELAY_MS);
-  const [alpha, setAlpha] = useState(DEFAULT_TRANSFER_ATTENUATION);
-  const [minFreq, setMinFreq] = useState(DEFAULT_TRANSFER_MIN_FREQUENCY_HZ);
-  const [maxFreq, setMaxFreq] = useState(DEFAULT_TRANSFER_MAX_FREQUENCY_HZ);
+    useState<TransferFunctionType>(DEFAULT_TF_TYPE);
+  const [tau, setTau] = useState(DEFAULT_TF_DELAY_MS);
+  const [alpha, setAlpha] = useState(DEFAULT_TF_ATTENUATION);
+  const [minFreq, setMinFreq] = useState(DEFAULT_TF_MIN_FREQUENCY_HZ);
+  const [maxFreq, setMaxFreq] = useState(DEFAULT_TF_MAX_FREQUENCY_HZ);
 
   const transferFunction = useMemo<TransferFunction>(
     () =>

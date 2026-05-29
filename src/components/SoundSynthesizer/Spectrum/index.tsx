@@ -1,19 +1,19 @@
 import { useTranslation } from 'react-i18next';
-import type { TimbreType } from '../../../types';
+import type { SpectrumType } from '../../../types';
 import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
-import HarmonicAmplitudeControls from './HarmonicAmplitudeControls';
-import TimbreParameterControls from './TimbreParameterControls';
-import TimbreFormulaDetails from './TimbreFormulaDetails';
-import useTimbreControl from '../../../hooks/useTimbreControl';
+import SpectrumValueControls from './SpectrumValueControls';
+import SpectrumParameterControls from './SpectrumParameterControls';
+import SpectrumFormulaPreview from './SpectrumFormulaPreview';
+import useSpectrumControl from '../../../hooks/useSpectrumControl';
 
-interface TimbreProps {
+interface SpectrumProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
 }
 
-function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
+function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
   const { t } = useTranslation('piano');
   const {
     lambda,
@@ -23,14 +23,14 @@ function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
     handlePresetChange,
     handleParamsChange,
     handleAmplitudeChange,
-  } = useTimbreControl(audioEngine, harmonicCount);
+  } = useSpectrumControl(audioEngine, harmonicCount);
 
   return (
     <ControlPanel>
       <ControlSelect
         value={timbre.type}
         onChange={(e) => {
-          handlePresetChange(e.target.value as TimbreType);
+          handlePresetChange(e.target.value as SpectrumType);
         }}
       >
         <option value="metallic">{t('timbre.metallic')}</option>
@@ -43,12 +43,12 @@ function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
         <option value="custom">{t('timbre.custom')}</option>
       </ControlSelect>
 
-      <HarmonicAmplitudeControls
+      <SpectrumValueControls
         amplitudes={timbre.amplitudes}
         onChange={handleAmplitudeChange}
       />
 
-      <TimbreParameterControls
+      <SpectrumParameterControls
         timbre={timbre}
         lambda={lambda}
         sigma={sigma}
@@ -61,7 +61,7 @@ function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
         onChange={handleParamsChange}
       />
 
-      <TimbreFormulaDetails
+      <SpectrumFormulaPreview
         timbreType={timbre.type}
         label={t('controls.relativeAmplitudeRelation')}
       />
@@ -69,4 +69,4 @@ function Timbre({ audioEngine, harmonicCount }: TimbreProps) {
   );
 }
 
-export default Timbre;
+export default Spectrum;

@@ -5,7 +5,7 @@ import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
 import Envelope from './Envelope';
-import Timbre from './Timbre';
+import Spectrum from './Spectrum';
 import TransferFunction from './TransferFunction';
 
 interface SoundSynthesizerProps {
@@ -53,7 +53,7 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
         bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
-        <Timbre audioEngine={audioEngine} harmonicCount={harmonicCount} />
+        <Spectrum audioEngine={audioEngine} harmonicCount={harmonicCount} />
       </CollapsibleSection>
 
       <CollapsibleSection

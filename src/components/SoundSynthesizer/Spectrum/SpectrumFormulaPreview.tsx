@@ -1,7 +1,7 @@
 import { BlockMath } from 'react-katex';
-import type { TimbreType } from '../../../types';
+import type { SpectrumType } from '../../../types';
 
-const TIMBRE_FORMULAS: Record<TimbreType, string> = {
+const TIMBRE_FORMULAS: Record<SpectrumType, string> = {
   metallic: String.raw`A_n \propto \frac1n`,
   pure: String.raw`A_n \propto \frac1{n^2}`,
   bright: String.raw`A_n \propto \frac1n \left|\sin\frac{n\pi}2\right|`,
@@ -12,15 +12,15 @@ const TIMBRE_FORMULAS: Record<TimbreType, string> = {
   custom: String.raw`A_n = \text{custom}`,
 };
 
-interface TimbreFormulaDetailsProps {
-  timbreType: TimbreType;
+interface SpectrumFormulaPreviewProps {
+  timbreType: SpectrumType;
   label: string;
 }
 
-function TimbreFormulaDetails({
+function SpectrumFormulaPreview({
   timbreType,
   label,
-}: TimbreFormulaDetailsProps) {
+}: SpectrumFormulaPreviewProps) {
   if (timbreType === 'custom') {
     return null;
   }
@@ -33,4 +33,4 @@ function TimbreFormulaDetails({
   );
 }
 
-export default TimbreFormulaDetails;
+export default SpectrumFormulaPreview;

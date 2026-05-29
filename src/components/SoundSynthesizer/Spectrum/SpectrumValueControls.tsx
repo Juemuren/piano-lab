@@ -1,15 +1,15 @@
 import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
 import { getHarmonicLabels } from '../../../utils/harmonic';
 
-interface HarmonicAmplitudeControlsProps {
+interface SpectrumValueControlsProps {
   amplitudes: number[];
   onChange: (index: number, value: number) => void;
 }
 
-function HarmonicAmplitudeControls({
+function SpectrumValueControls({
   amplitudes,
   onChange,
-}: HarmonicAmplitudeControlsProps) {
+}: SpectrumValueControlsProps) {
   const harmonicLabels = getHarmonicLabels(amplitudes.length);
 
   return (
@@ -24,4 +24,4 @@ function HarmonicAmplitudeControls({
   );
 }
 
-export default HarmonicAmplitudeControls;
+export default SpectrumValueControls;

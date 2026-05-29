@@ -1,8 +1,8 @@
 import type {
   TransferFunction,
   TransferFunctionType,
-  Timbre,
-  TimbreType,
+  Spectrum,
+  SpectrumType,
 } from '../../types';
 
 function delayToArg(delay: number, freq: number) {
@@ -23,13 +23,13 @@ function normalizeAmp(amplitudes: number[]) {
   return amplitudes.map((a) => a / maxAmplitudes);
 }
 
-export function getTimbrePreset(
-  type: TimbreType,
+export function getSpectrumPreset(
+  type: SpectrumType,
   lambda: number,
   sigma: number,
   p: number,
   harmonics: number,
-): Timbre {
+): Spectrum {
   const amplitudes: number[] = [];
 
   for (let n = 1; n <= harmonics; n++) {

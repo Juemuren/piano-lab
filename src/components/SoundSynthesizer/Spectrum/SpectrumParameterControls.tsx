@@ -1,10 +1,10 @@
 import { InlineMath } from 'react-katex';
-import type { Timbre } from '../../../types';
-import type { TimbreParamUpdates } from '../../../hooks/useTimbreControl';
+import type { Spectrum } from '../../../types';
+import type { SpectrumParamUpdates } from '../../../hooks/useSpectrumControl';
 import ControlRange from '../../shared/ControlRange';
 
-interface TimbreParameterControlsProps {
-  timbre: Timbre;
+interface SpectrumParameterControlsProps {
+  timbre: Spectrum;
   lambda: number;
   sigma: number;
   p: number;
@@ -13,17 +13,17 @@ interface TimbreParameterControlsProps {
     decayRate: string;
     powerExponent: string;
   };
-  onChange: (updates: TimbreParamUpdates) => void;
+  onChange: (updates: SpectrumParamUpdates) => void;
 }
 
-function TimbreParameterControls({
+function SpectrumParameterControls({
   timbre,
   lambda,
   sigma,
   p,
   labels,
   onChange,
-}: TimbreParameterControlsProps) {
+}: SpectrumParameterControlsProps) {
   return (
     <>
       {timbre.type === 'normal' && (
@@ -68,4 +68,4 @@ function TimbreParameterControls({
   );
 }
 
-export default TimbreParameterControls;
+export default SpectrumParameterControls;

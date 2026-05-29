@@ -1,4 +1,4 @@
-export type TimbreType =
+export type SpectrumType =
   | 'ethereal'
   | 'metallic'
   | 'pure'
@@ -8,8 +8,8 @@ export type TimbreType =
   | 'realistic'
   | 'custom';
 
-export interface Timbre {
-  type: TimbreType;
+export interface Spectrum {
+  type: SpectrumType;
   amplitudes: number[];
 }
 

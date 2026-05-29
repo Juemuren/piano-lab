@@ -1,53 +1,53 @@
-import type { TransferFunction, Timbre } from '../../types';
-import { getTimbrePreset, getTransferFunctionPreset } from './AudioPresets';
+import type { TransferFunction, Spectrum } from '../../types';
+import { getSpectrumPreset, getTransferFunctionPreset } from './AudioPresets';
 import {
-  DEFAULT_TIMBRE_TYPE,
-  DEFAULT_TIMBRE_DECAY_RATE,
-  DEFAULT_TIMBRE_POWER_EXPONENT,
-  DEFAULT_TIMBRE_STRIKE_POINT,
-  DEFAULT_TRANSFER_TYPE,
-  DEFAULT_TRANSFER_ATTENUATION,
-  DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_DELAY_MS,
-  DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
+  DEFAULT_SPECTRUM_TYPE,
+  DEFAULT_SPECTRUM_DECAY_RATE,
+  DEFAULT_SPECTRUM_POWER_EXPONENT,
+  DEFAULT_SPECTRUM_STRIKE_POINT,
+  DEFAULT_TF_TYPE,
+  DEFAULT_TF_ATTENUATION,
+  DEFAULT_TF_BASE_FREQUENCY_HZ,
+  DEFAULT_TF_DELAY_MS,
+  DEFAULT_TF_MAX_FREQUENCY_HZ,
+  DEFAULT_TF_MIN_FREQUENCY_HZ,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_HARMONIC_COUNT,
-  DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_SYNTH_ATTACK_TIME_SECONDS,
-  DEFAULT_SYNTH_DECAY_TIME_SECONDS,
-  DEFAULT_SYNTH_RELEASE_TIME_SECONDS,
-  DEFAULT_SYNTH_SUSTAIN_GAIN,
-  DEFAULT_SYNTH_SILENCE_GAIN,
+  DEFAULT_ENVELOPE_VOLUME_RATIO,
+  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
+  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
+  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
+  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+  DEFAULT_ENVELOPE_SILENCE_GAIN,
 } from '../../constants';
 
 export class AudioEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
-  private timbre: Timbre = getTimbrePreset(
-    DEFAULT_TIMBRE_TYPE,
-    DEFAULT_TIMBRE_STRIKE_POINT,
-    DEFAULT_TIMBRE_DECAY_RATE,
-    DEFAULT_TIMBRE_POWER_EXPONENT,
+  private spectrum: Spectrum = getSpectrumPreset(
+    DEFAULT_SPECTRUM_TYPE,
+    DEFAULT_SPECTRUM_STRIKE_POINT,
+    DEFAULT_SPECTRUM_DECAY_RATE,
+    DEFAULT_SPECTRUM_POWER_EXPONENT,
     this.harmonicCount,
   );
   private transferFunction: TransferFunction = getTransferFunctionPreset(
-    DEFAULT_TRANSFER_TYPE,
-    DEFAULT_TRANSFER_DELAY_MS,
-    DEFAULT_TRANSFER_ATTENUATION,
-    DEFAULT_TRANSFER_MIN_FREQUENCY_HZ,
-    DEFAULT_TRANSFER_MAX_FREQUENCY_HZ,
-    DEFAULT_TRANSFER_BASE_FREQUENCY_HZ,
+    DEFAULT_TF_TYPE,
+    DEFAULT_TF_DELAY_MS,
+    DEFAULT_TF_ATTENUATION,
+    DEFAULT_TF_MIN_FREQUENCY_HZ,
+    DEFAULT_TF_MAX_FREQUENCY_HZ,
+    DEFAULT_TF_BASE_FREQUENCY_HZ,
     this.harmonicCount,
   );
 
   private oscillatorType: OscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
-  private volumeRatio: number = DEFAULT_SYNTH_VOLUME_RATIO;
-  private attackTime: number = DEFAULT_SYNTH_ATTACK_TIME_SECONDS;
-  private decayTime: number = DEFAULT_SYNTH_DECAY_TIME_SECONDS;
-  private releaseTime: number = DEFAULT_SYNTH_RELEASE_TIME_SECONDS;
-  private sustainGain: number = DEFAULT_SYNTH_SUSTAIN_GAIN;
-  private silenceGain: number = DEFAULT_SYNTH_SILENCE_GAIN;
+  private volumeRatio: number = DEFAULT_ENVELOPE_VOLUME_RATIO;
+  private attackTime: number = DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS;
+  private decayTime: number = DEFAULT_ENVELOPE_DECAY_TIME_SECONDS;
+  private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
+  private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
+  private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
 
   init() {
     if (!this.audioContext) {
@@ -55,12 +55,12 @@ export class AudioEngine {
     }
   }
 
-  setTimbre(timbre: Timbre) {
-    this.timbre = timbre;
+  setSpectrum(spectrum: Spectrum) {
+    this.spectrum = spectrum;
   }
 
-  getTimbre(): Timbre {
-    return this.timbre;
+  getSpectrum(): Spectrum {
+    return this.spectrum;
   }
 
   setTransferFunction(tf: TransferFunction) {
@@ -172,7 +172,7 @@ export class AudioEngine {
     if (!this.audioContext) return;
 
     const baseFreq = this.getBaseFreq(pitch, cents);
-    const harmonics = this.timbre.amplitudes.length;
+    const harmonics = this.spectrum.amplitudes.length;
     const transferFunction = this.transferFunction;
     const { magnitudes, phases } = getTransferFunctionPreset(
       transferFunction.type,
@@ -187,7 +187,7 @@ export class AudioEngine {
     for (let n = 1; n <= harmonics; n++) {
       const freq = baseFreq * n;
 
-      const timbreAmp = this.timbre.amplitudes[n - 1] || 0;
+      const timbreAmp = this.spectrum.amplitudes[n - 1] || 0;
       const transferMag = magnitudes[n - 1] || 0;
       const targetGain = this.getTargetGain(timbreAmp, transferMag, volume);
 
