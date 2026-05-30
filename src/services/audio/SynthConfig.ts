@@ -25,6 +25,12 @@ import type {
   TransferFunctionConfig,
   TransferFunctionType,
 } from '../../types';
+import {
+  isRecord,
+  numberArrayOrDefault,
+  numberOrDefault,
+  unionOrDefault,
+} from '../../utils/runtime';
 import { getSpectrumPreset } from './AudioPresets';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
@@ -52,33 +58,6 @@ const TRANSFER_FUNCTION_TYPES: TransferFunctionType[] = [
   'high_pass',
   'band_pass',
 ];
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
-function numberOrDefault(value: unknown, fallback: number) {
-  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
-}
-
-function unionOrDefault<T extends string>(
-  value: unknown,
-  allowedValues: readonly T[],
-  fallback: T,
-) {
-  return typeof value === 'string' && allowedValues.includes(value as T)
-    ? (value as T)
-    : fallback;
-}
-
-function numberArrayOrDefault(value: unknown, fallback: number[]) {
-  if (!Array.isArray(value)) return fallback;
-  const numbers = value.filter(
-    (item): item is number => typeof item === 'number' && Number.isFinite(item),
-  );
-
-  return numbers.length > 0 ? numbers : fallback;
-}
 
 export function createDefaultSynthConfig(): SynthConfig {
   return {
