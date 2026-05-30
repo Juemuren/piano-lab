@@ -6,7 +6,7 @@ import {
   renderAbc,
   TimingCallbacks,
 } from 'abcjs';
-import { AbcPlayer } from '../services/abc/AbcPlayer';
+import { AbcPlayer } from '../../services/abc/AbcPlayer';
 
 const DOUBLE_CLICK_INTERVAL_MS = 500;
 

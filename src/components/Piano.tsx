@@ -1,4 +1,4 @@
-import usePianoControl from '../hooks/usePianoControl';
+import usePianoControl from '../hooks/piano/usePianoControl';
 
 const WHITE_KEY_HEIGHT_PX = 160;
 const BLACK_KEY_HEIGHT_PX = 100;

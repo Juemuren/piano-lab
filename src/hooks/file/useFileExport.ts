@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { downloadBlob } from '../utils/file';
+import { downloadBlob } from '../../utils/file';
 
 interface UseFileExportOptions {
   content: BlobPart;

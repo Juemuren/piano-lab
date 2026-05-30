@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Spectrum, SpectrumConfig, SpectrumType } from '../types';
-import { getSpectrumPreset } from '../services/synth/SynthPresets';
-import { useSynthEngine } from '../contexts/useSynthEngine';
+import type { Spectrum, SpectrumConfig, SpectrumType } from '../../types';
+import { getSpectrumPreset } from '../../services/synth/SynthPresets';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
-} from '../constants';
+} from '../../constants';
 
 export interface SpectrumParamUpdates {
   lambda?: number;

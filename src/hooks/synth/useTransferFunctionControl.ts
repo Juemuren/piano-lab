@@ -3,9 +3,9 @@ import type {
   TransferFunction,
   TransferFunctionConfig,
   TransferFunctionType,
-} from '../types';
-import { getTransferFunctionPreset } from '../services/synth/SynthPresets';
-import { useSynthEngine } from '../contexts/useSynthEngine';
+} from '../../types';
+import { getTransferFunctionPreset } from '../../services/synth/SynthPresets';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
   DEFAULT_TRANSFER_FUNCTION_TYPE,
   DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
@@ -13,7 +13,7 @@ import {
   DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
   DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
   DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-} from '../constants';
+} from '../../constants';
 
 export interface TransferFunctionParamUpdates {
   tau?: number;

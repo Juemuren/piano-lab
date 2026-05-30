@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { type MidiFile, synth } from 'abcjs';
-import { downloadBlob } from '../utils/file';
+import { downloadBlob } from '../../utils/file';
 
 function getMidiBinary(midiFile: MidiFile): Uint8Array | null {
   if (midiFile instanceof Uint8Array) return midiFile;

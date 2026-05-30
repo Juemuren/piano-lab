@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useSynthEngine } from '../contexts/useSynthEngine';
-import type { EnvelopeConfig } from '../types';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
+import type { EnvelopeConfig } from '../../types';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_HARMONIC_TIMES = 1;

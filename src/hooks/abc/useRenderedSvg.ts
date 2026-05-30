@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { getSvgDimensions } from '../utils/file';
+import { getSvgDimensions } from '../../utils/file';
 
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 

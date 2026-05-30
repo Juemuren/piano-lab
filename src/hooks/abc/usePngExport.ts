@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { downloadBlob, svgToPngBlob } from '../utils/file';
+import { downloadBlob, svgToPngBlob } from '../../utils/file';
 import type { GetRenderedSvg } from './useRenderedSvg';
 
 function usePngExport(getRenderedSvg: GetRenderedSvg) {

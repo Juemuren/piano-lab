@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { EnvelopeConfig } from '../../../types';
 import EnvelopeCurvePreview from './EnvelopeCurvePreview';
 import EnvelopeParameterControls from './EnvelopeParameterControls';
-import useEnvelopeControl from '../../../hooks/useEnvelopeControl';
+import useEnvelopeControl from '../../../hooks/synth/useEnvelopeControl';
 
 interface EnvelopeProps {
   initialConfig?: EnvelopeConfig | null;

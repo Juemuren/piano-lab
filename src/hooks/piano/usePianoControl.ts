@@ -6,8 +6,8 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useSynthEngine } from '../contexts/useSynthEngine';
-import { getPitchName, getPitchOctave } from '../utils/pitch';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { getPitchName, getPitchOctave } from '../../utils/pitch';
 
 const AVERAGE_KEY_WIDTH_PX = 20;
 const CENTER_NOTE = 66; // F#4

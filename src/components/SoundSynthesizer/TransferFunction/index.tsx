@@ -5,8 +5,8 @@ import ControlSelect from '../../shared/ControlSelect';
 import BaseFrequencyControl from './BaseFrequencyControl';
 import TransferFunctionParameterControls from './TransferFunctionParameterControls';
 import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
-import useBaseFrequencyOptions from '../../../hooks/useBaseFrequencyOptions';
-import useTransferFunctionControl from '../../../hooks/useTransferFunctionControl';
+import useBaseFrequencyOptions from '../../../hooks/synth/useBaseFrequencyOptions';
+import useTransferFunctionControl from '../../../hooks/synth/useTransferFunctionControl';
 import { useSynthEngine } from '../../../contexts/useSynthEngine';
 
 interface TransferFunctionProps {

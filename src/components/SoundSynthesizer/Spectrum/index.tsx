@@ -5,7 +5,7 @@ import ControlSelect from '../../shared/ControlSelect';
 import SpectrumValueControls from './SpectrumValueControls';
 import SpectrumParameterControls from './SpectrumParameterControls';
 import SpectrumFormulaPreview from './SpectrumFormulaPreview';
-import useSpectrumControl from '../../../hooks/useSpectrumControl';
+import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
 
 interface SpectrumProps {
   harmonicCount: number;

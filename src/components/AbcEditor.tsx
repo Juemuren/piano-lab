@@ -5,9 +5,9 @@ import { AbcPlayer } from '../services/abc/AbcPlayer';
 import AbcFileToolbar from './AbcFileToolbar';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
-import useFileImport from '../hooks/useFileImport';
-import useAbcPlayback from '../hooks/useAbcPlayback';
-import useAbcExports from '../hooks/useAbcExports';
+import useFileImport from '../hooks/file/useFileImport';
+import useAbcPlayback from '../hooks/abc/useAbcPlayback';
+import useAbcExports from '../hooks/abc/useAbcExports';
 import { useSynthEngine } from '../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
