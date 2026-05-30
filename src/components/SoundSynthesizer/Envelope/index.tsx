@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import type { EnvelopeConfig } from '../../../types';
-import ControlPanel from '../../shared/ControlPanel';
 import EnvelopeCurvePreview from './EnvelopeCurvePreview';
 import EnvelopeParameterControls from './EnvelopeParameterControls';
 import useEnvelopeControl from '../../../hooks/useEnvelopeControl';
@@ -29,7 +28,7 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
   } = useEnvelopeControl(initialConfig, onConfigChange);
 
   return (
-    <ControlPanel>
+    <>
       <EnvelopeParameterControls
         attackTime={attackTime}
         decayTime={decayTime}
@@ -56,7 +55,7 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
         containerRef={envelopeChartContainerRef}
         width={envelopeChartWidth}
       />
-    </ControlPanel>
+    </>
   );
 }
 

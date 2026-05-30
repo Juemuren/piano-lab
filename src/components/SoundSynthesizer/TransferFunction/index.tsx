@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { TransferFunctionType } from '../../../types';
 import type { TransferFunctionConfig } from '../../../types';
-import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
 import BaseFrequencyControl from './BaseFrequencyControl';
 import TransferFunctionParameterControls from './TransferFunctionParameterControls';
@@ -33,7 +32,7 @@ function TransferFunction({
     useBaseFrequencyOptions(baseFrequency);
 
   return (
-    <ControlPanel>
+    <>
       <ControlSelect
         value={transferFunction.type}
         onChange={(e) =>
@@ -77,7 +76,7 @@ function TransferFunction({
           phaseResponse: t('charts.phaseResponse'),
         }}
       />
-    </ControlPanel>
+    </>
   );
 }
 

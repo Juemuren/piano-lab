@@ -173,7 +173,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.envelope')}
-        bgClassName="bg-app-surface dark:bg-app-surface-dark"
+        bgClassName="bg-app-surface-muted/50 dark:bg-app-surface-muted-dark/50"
         expanded
       >
         <Envelope
@@ -185,7 +185,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.spectrum')}
-        bgClassName="bg-app-surface dark:bg-app-surface-dark"
+        bgClassName="bg-app-surface-muted/50 dark:bg-app-surface-muted-dark/50"
         expanded
       >
         <Spectrum
@@ -198,7 +198,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.transferFunction')}
-        bgClassName="bg-app-surface dark:bg-app-surface-dark"
+        bgClassName="bg-app-surface-muted/50 dark:bg-app-surface-muted-dark/50"
         expanded
       >
         <TransferFunction

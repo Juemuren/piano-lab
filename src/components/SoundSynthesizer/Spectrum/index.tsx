@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { SpectrumType } from '../../../types';
 import type { SpectrumConfig } from '../../../types';
-import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumValueControls from './SpectrumValueControls';
 import SpectrumParameterControls from './SpectrumParameterControls';
@@ -31,7 +30,7 @@ function Spectrum({
   } = useSpectrumControl(harmonicCount, initialConfig, onConfigChange);
 
   return (
-    <ControlPanel>
+    <>
       <ControlSelect
         value={spectrum.type}
         onChange={(e) => {
@@ -70,7 +69,7 @@ function Spectrum({
         spectrumType={spectrum.type}
         label={t('controls.harmonicSpectrumFormula')}
       />
-    </ControlPanel>
+    </>
   );
 }
 

@@ -69,7 +69,7 @@ function TransferFunctionResponsePreview({
         />
       </details>
 
-      <details className="my-2">
+      <details open className="my-2">
         <summary className="text-lg font-bold">{labels.phaseResponse}</summary>
         <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
         <VerticalSliderGroup
