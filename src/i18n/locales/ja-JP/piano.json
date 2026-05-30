@@ -66,11 +66,12 @@
   },
   "score": {
     "custom": "カスタム",
-    "importAbc": "abc をインポート",
-    "exportAbc": "abc をエクスポート",
-    "exportSvg": "svg をエクスポート",
-    "exportPng": "png をエクスポート",
-    "exportMidi": "midi をエクスポート",
+    "importAbc": "ABC をインポート",
+    "exportAbc": "ABC をエクスポート",
+    "exportSvg": "SVG をエクスポート",
+    "exportPng": "PNG をエクスポート",
+    "exportPdf": "PDF をエクスポート",
+    "exportMidi": "MIDI をエクスポート",
     "placeholder": "楽譜を入力するか、プリセットを選択",
     "presets": {
       "小星星": "きらきら星",
