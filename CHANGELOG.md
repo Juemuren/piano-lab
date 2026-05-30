@@ -2,6 +2,34 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.5.0]
+
+### Added
+
+- Added import and export support for ABC notation files.
+- Added export support for rendered scores as downloadable images.
+- Added additional built-in score presets.
+- Added import and export support for synthesizer configurations.
+- Added a plotted preview for the sound envelope curve.
+
+### Changed
+
+- Reworked the sound synthesizer UI around clearer envelope, harmonic spectrum, and transfer-function sections.
+- Moved oscillator type and volume controls into the shared sound synthesizer controls.
+- Updated envelope and harmonic spectrum descriptions for clearer terminology.
+- Standardized ABC-related naming as `Abc` across the codebase.
+
+### Fixed
+
+- Fixed the initial size adjustment for the sound envelope preview.
+
+### Maintenance
+
+- Added build-time generation for ABC preset metadata.
+- Added a version-setting script and reorganized release helper scripts.
+- Refactored score playback, rendered score export, file import/export, and synthesizer state handling into shared hooks and services.
+- Renamed the audio engine service directory to `synth` and provided synthesizer context management.
+
 ## [0.4.0]
 
 ### Added
