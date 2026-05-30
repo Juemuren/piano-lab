@@ -110,7 +110,7 @@ function useAbcPlayback({
         if (abcElem.midiPitches && abcElem.midiPitches.length > 0) {
           abcPlayer.play(
             abcElem.midiPitches,
-            visualObjRef.current?.millisecondsPerMeasure() / 1000,
+            visualObjRef.current?.millisecondsPerMeasure(),
           );
         }
       }
@@ -126,7 +126,7 @@ function useAbcPlayback({
         addHighlight(noteGroup);
       });
       if (ev.midiPitches) {
-        abcPlayer.play(ev.midiPitches, ev.millisecondsPerMeasure / 1000);
+        abcPlayer.play(ev.midiPitches, ev.millisecondsPerMeasure);
       }
       return 'continue';
     };
