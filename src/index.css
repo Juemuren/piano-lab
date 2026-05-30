@@ -64,11 +64,11 @@
 }
 
 @media print {
-  body.abcjs-printing #root {
+  body #root {
     display: none !important;
   }
 
-  body.abcjs-printing .abcjs-print-target {
+  body .abcjs-print-target {
     display: block !important;
   }
 }
