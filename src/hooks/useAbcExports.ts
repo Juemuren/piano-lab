@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
 import useFileExport from './useFileExport';
 import useMidiExport from './useMidiExport';
-import useRenderedScoreExport from './useRenderedScoreExport';
+import usePdfExport from './usePdfExport';
+import usePngExport from './usePngExport';
+import useRenderedSvg from './useRenderedSvg';
+import useSvgExport from './useSvgExport';
 
-function useAbcScoreExports(abcContent: string) {
-  const { renderTargetRef, handleExportSvg, handleExportPng, handlePrintPdf } =
-    useRenderedScoreExport();
+function useAbcExports(abcContent: string) {
+  const { renderTargetRef, getRenderedSvg } = useRenderedSvg();
   const handleExportAbc = useFileExport({
     content: abcContent,
     fileName: 'score.abc',
     mimeType: 'text/vnd.abc;charset=utf-8',
   });
+  const handleExportSvg = useSvgExport(getRenderedSvg);
+  const handleExportPng = usePngExport(getRenderedSvg);
+  const handleExportPdf = usePdfExport(abcContent);
   const handleExportMidi = useMidiExport(abcContent);
-
-  const handleExportPdf = useCallback(() => {
-    handlePrintPdf(abcContent);
-  }, [abcContent, handlePrintPdf]);
 
   return {
     renderTargetRef,
@@ -27,4 +27,4 @@ function useAbcScoreExports(abcContent: string) {
   };
 }
 
-export default useAbcScoreExports;
+export default useAbcExports;
