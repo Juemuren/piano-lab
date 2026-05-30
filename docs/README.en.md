@@ -25,25 +25,36 @@
 
 ## Features
 
-The simulator provides several tools:
+Piano Simulator provides interactive virtual keys, a sound synthesizer, and a score editor:
 
-- [Harmonic Synthesizer](#harmonic-synthesizer) for shaping sound synthesis
-- [Timbre Adjuster](#timbre-adjuster) for fully custom timbres
-- [Transfer Function Modifier](#transfer-function-modifier) for changing transfer functions
-- [Score Editor](#score-editor) for writing scores as text and playing them automatically
+- [Sound Synthesizer](#sound-synthesizer): adjust the oscillator, volume, harmonic count, envelope, spectrum, and transfer function in one place
+- [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, and play them automatically
+- [Virtual Keys](#virtual-keys): play with a mouse or touchscreen, with highlighted keys synchronized to score playback
 
-It also supports mobile layouts and dark mode.
+The app supports a multilingual interface, mobile layouts, dark mode, and can be installed as a [desktop app][link-release].
 
-### Harmonic Synthesizer
+### Sound Synthesizer
+
+> [!Tip]
+> Synthesizer configurations can be exported as JSON files for sharing and reuse.
+
+The sound synthesizer consists of three collapsible modules: envelope, spectrum, and transfer function.
 
 - Synthesizes sound physically without sampling
 - Uses twelve-tone equal temperament to generate pitches and supports free transposition
-- Uses 10 harmonics for a rich and realistic timbre
-- Uses an ADSR envelope with multiple adjustable parameters
+- Supports sine, triangle, sawtooth, and square waves
+- Supports adjusting the volume factor and harmonic count
 
-### Timbre Adjuster
+### Envelope
 
-The timbre adjuster allows fully custom timbres and also provides several presets:
+The envelope uses ADSR and is fully customizable.
+
+- Supports editing attack time, decay time, release time, sustain gain, and silence gain
+- Provides an amplitude envelope preview to show how parameter changes affect sound dynamics
+
+### Spectrum
+
+The spectrum module allows fully custom harmonic amplitudes. It also provides several presets and directly renders the corresponding mathematical formulas.
 
 - Metallic
 - Pure
@@ -52,10 +63,11 @@ The timbre adjuster allows fully custom timbres and also provides several preset
 - Soft
 - Normal
 - Realistic
+- Custom
 
-### Transfer Function Modifier
+### Transfer Function
 
-The transfer function modifier simulates the magnitude and phase responses of sound propagation. Because the transfer function is continuous over frequency and is not convenient to customize completely, it provides presets with adjustable parameters.
+The transfer function module simulates the magnitude and phase responses of sound propagation. Because the transfer function is continuous over frequency and is not convenient to customize completely, it provides presets with adjustable parameters and previews how different harmonics are affected.
 
 - Delay
 - Single echo
@@ -65,25 +77,70 @@ The transfer function modifier simulates the magnitude and phase responses of so
 - High-pass
 - Band-pass
 
+When previewing magnitude and phase responses, you can choose a specific fundamental frequency or pitch.
+
 ### Score Editor
 
 - Write scores as text with live rendering
 - Play scores automatically with visual feedback on both the score and keyboard
 - Click a note in the score to play it, or start playback from the selected note
 - Adjust tempo, meter, and key signature; chords, repeats, and multiple voices are supported
-- Includes several preset scores of different complexity
+- Supports importing and exporting `.abc` files
+- Supports exporting rendered scores as SVG or PNG images
+- Includes several preset scores of different complexity, from Twinkle Twinkle Little Star to Haruhikage
+
+### Virtual Keys
+
+- Shares the same timbre configuration as the sound synthesizer
+- During automatic score playback, the current note is reflected in the highlighted keyboard state
+
+## Usage
+
+### Online
+
+Visit <https://Juemuren.github.io/web-piano-simulator/> to use the web version.
+
+### Local Development
+
+```bash
+npm install
+npm run dev
+```
+
+### Build
+
+Build the web app:
+
+```bash
+npm run build
+```
+
+Build the desktop app:
+
+```bash
+npm run build:tauri
+```
+
+### Code Style
+
+The project uses ESLint and Prettier.
+
+```sh
+# eslint
+npm run lint
+# prettier
+npm run format
+```
 
 ## Principles
 
 > For a more detailed explanation, read my article [The Mathematical Principles of Music: From Vibrating Strings to Modern Music Theory](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/).
 
-### Synthesis
+### Harmonic Synthesis
 
 The sound produced by a vibrating string is ideally composed of a series of harmonics. The fundamental frequency is $f_1$, and the remaining harmonics are integer multiples of that frequency. For a sine wave, the sound pressure can be written as:
 
 $$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
-
-With $N=10$, the sound is already realistic enough.
 
 Based on this principle, the project synthesizes sound with the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API). To further improve the listening experience, it uses a series of exponential functions to model how amplitude changes over time:
 
@@ -117,7 +174,9 @@ Adjustable parameters:
 - $\lambda$: strike point
 - $p$: power exponent
 
-### Transfer Function
+The app uses KaTeX to render spectrum preset formulas.
+
+### Frequency-Domain Distortion
 
 During propagation from source to listener, sound may be distorted in the frequency domain. Harmonic components at different frequencies can be affected differently in amplitude and phase.
 
@@ -145,6 +204,7 @@ Adjustable parameters:
 - Scores are written in [ABC Notation](https://abcnotation.com/)
 - [abcjs](https://www.abcjs.net/) parses the text and renders the score
 - Animation and playback use callbacks generated after rendering the score
+- SVG is provided directly by abcjs, and PNG is generated by converting SVG with the Canvas API
 
 ## Tech Stack
 
@@ -155,3 +215,7 @@ Built with these open-source projects:
 - Vite
 - Tailwind CSS
 - abcjs
+- i18next
+- KaTeX
+- Plotly.js
+- Tauri
