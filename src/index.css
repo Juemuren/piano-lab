@@ -58,3 +58,17 @@
   fill: var(--color-score-highlight) !important;
   stroke: var(--color-score-highlight) !important;
 }
+
+.abcjs-print-target {
+  display: none;
+}
+
+@media print {
+  body.abcjs-printing #root {
+    display: none !important;
+  }
+
+  body.abcjs-printing .abcjs-print-target {
+    display: block !important;
+  }
+}

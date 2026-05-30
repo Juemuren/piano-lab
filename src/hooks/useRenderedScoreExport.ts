@@ -1,7 +1,10 @@
 import { useCallback, useRef } from 'react';
+import { renderAbc } from 'abcjs';
 import { downloadBlob, getSvgDimensions, svgToPngBlob } from '../utils/file';
 
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+const PRINTING_CLASS = 'abcjs-printing';
+const PRINT_TARGET_CLASS = 'abcjs-print-target';
 
 interface RenderedSvg {
   content: string;
@@ -54,10 +57,36 @@ function useRenderedScoreExport() {
     if (blob) downloadBlob(blob, 'score.png');
   }, [getRenderedSvg]);
 
+  const handlePrintPdf = useCallback((abcContent: string) => {
+    const printTarget = document.createElement('div');
+    printTarget.className = PRINT_TARGET_CLASS;
+    printTarget.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(printTarget);
+
+    renderAbc(printTarget, abcContent, {
+      responsive: 'resize',
+      oneSvgPerLine: true,
+    });
+
+    const cleanup = () => {
+      document.body.classList.remove(PRINTING_CLASS);
+      printTarget.remove();
+      window.removeEventListener('afterprint', cleanup);
+    };
+
+    window.addEventListener('afterprint', cleanup);
+    document.body.classList.add(PRINTING_CLASS);
+
+    requestAnimationFrame(() => {
+      window.print();
+    });
+  }, []);
+
   return {
     renderTargetRef,
     handleExportSvg,
     handleExportPng,
+    handlePrintPdf,
   };
 }
 

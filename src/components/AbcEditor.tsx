@@ -37,7 +37,7 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     onStop,
     renderTargetId: RENDER_TARGET_ID,
   });
-  const { renderTargetRef, handleExportSvg, handleExportPng } =
+  const { renderTargetRef, handleExportSvg, handleExportPng, handlePrintPdf } =
     useRenderedScoreExport();
 
   const handleImport = useCallback(
@@ -61,7 +61,7 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
 
   return (
     <ControlPanel>
-      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
+      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
         <FileImportButton
           fileInputId={FILE_INPUT_ID}
           fileInputRef={fileInputRef}
@@ -84,6 +84,11 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
           label={t('piano:score.exportPng')}
           disabled={!hasNotes}
           onClick={handleExportPng}
+        />
+        <FileExportButton
+          label={t('piano:score.exportPdf')}
+          disabled={!hasNotes}
+          onClick={() => handlePrintPdf(abcContent)}
         />
         <FileExportButton
           label={t('piano:score.exportMidi')}
