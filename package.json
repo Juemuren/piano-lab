@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "format": "prettier . --write",
     "preview": "vite preview",
+    "set:version": "node scripts/set-version.mjs",
     "postinstall": "patch-package",
     "prepare": "husky"
   },

@@ -2,19 +2,18 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import abcjs from 'abcjs';
-
 const { parseOnly } = abcjs;
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(__dirname, '..');
-
-const voices = [
+const VOICES_BOUNDARY = [
   { name: 'R1', minPitch: 6 },
   { name: 'R2', minPitch: 0 },
   { name: 'L1', minPitch: -3 },
   { name: 'L2', minPitch: Number.NEGATIVE_INFINITY },
 ];
-const barsPerLine = 4;
+const BARS_PER_LINE = 4;
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const repoRoot = resolve(__dirname, '..');
 
 const input = process.argv[2];
 if (!input || extname(input) !== '.abc') {
@@ -186,7 +185,7 @@ function splitDuration(duration) {
 }
 
 function getVoiceName(pitch) {
-  return voices.find((voice) => pitch >= voice.minPitch).name;
+  return VOICES_BOUNDARY.find((voice) => pitch >= voice.minPitch).name;
 }
 
 function isMusicLine(line) {
@@ -312,7 +311,7 @@ function convertElement(element, output) {
   if (element.el_type === 'bar') {
     const bar = { kind: 'bar', value: renderBar(element.type) };
 
-    for (const voice of voices) {
+    for (const voice of VOICES_BOUNDARY) {
       output.get(voice.name).push(bar);
     }
 
@@ -324,13 +323,15 @@ function convertElement(element, output) {
   }
 
   const duration = toFraction(element.duration);
-  const pitchesByVoice = new Map(voices.map((voice) => [voice.name, []]));
+  const pitchesByVoice = new Map(
+    VOICES_BOUNDARY.map((voice) => [voice.name, []]),
+  );
 
   for (const pitch of element.pitches ?? []) {
     pitchesByVoice.get(getVoiceName(pitch.pitch)).push(pitch);
   }
 
-  for (const voice of voices) {
+  for (const voice of VOICES_BOUNDARY) {
     const pitches = pitchesByVoice.get(voice.name);
     const event =
       pitches.length > 0 ? createNote(pitches, duration) : createRest(duration);
@@ -340,7 +341,7 @@ function convertElement(element, output) {
 }
 
 function collectEvents(lines) {
-  const output = new Map(voices.map((voice) => [voice.name, []]));
+  const output = new Map(VOICES_BOUNDARY.map((voice) => [voice.name, []]));
 
   for (const line of lines) {
     if (!isMusicLine(line)) {
@@ -402,7 +403,7 @@ function renderMeasure(measure) {
 function convertLines(lines) {
   const eventsByVoice = collectEvents(lines);
   const measuresByVoice = new Map(
-    voices.map((voice) => [
+    VOICES_BOUNDARY.map((voice) => [
       voice.name,
       splitMeasures(eventsByVoice.get(voice.name)),
     ]),
@@ -413,11 +414,11 @@ function convertLines(lines) {
   );
   const output = [];
 
-  for (let start = 0; start < measureCount; start += barsPerLine) {
-    for (const voice of voices) {
+  for (let start = 0; start < measureCount; start += BARS_PER_LINE) {
+    for (const voice of VOICES_BOUNDARY) {
       const measures = measuresByVoice
         .get(voice.name)
-        .slice(start, start + barsPerLine)
+        .slice(start, start + BARS_PER_LINE)
         .map(renderMeasure);
 
       if (measures.length > 0) {
