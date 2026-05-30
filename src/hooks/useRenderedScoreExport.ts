@@ -71,10 +71,10 @@ function useRenderedScoreExport() {
     const cleanup = () => {
       document.body.classList.remove(PRINTING_CLASS);
       printTarget.remove();
-      window.removeEventListener('afterprint', cleanup);
+      window.removeEventListener('focus', cleanup);
     };
 
-    window.addEventListener('afterprint', cleanup);
+    window.addEventListener('focus', cleanup);
     document.body.classList.add(PRINTING_CLASS);
 
     requestAnimationFrame(() => {

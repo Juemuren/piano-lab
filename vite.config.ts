@@ -3,8 +3,6 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { generateAbcPresets } from './scripts/generateAbcPresets.mjs';
 
-const host = process.env.TAURI_DEV_HOST;
-
 function abcPresets(): Plugin {
   return {
     name: 'abc-presets',
@@ -27,11 +25,16 @@ function abcPresets(): Plugin {
   };
 }
 
+const host = process.env.TAURI_DEV_HOST;
+
 // https://vite.dev/config/
 // https://tauri.app/start/frontend/vite/
 export default defineConfig({
   plugins: [abcPresets(), react(), tailwindcss()],
-  base: process.env.TAURI_ENV_PLATFORM ? './' : '/web-piano-simulator/',
+  base:
+    process.env.TAURI_ENV_PLATFORM || process.env.VITE_DEBUG
+      ? './'
+      : '/web-piano-simulator/',
   define: {
     global: 'globalThis',
   },
