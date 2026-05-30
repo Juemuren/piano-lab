@@ -2,15 +2,12 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ABC_PRESETS, getAbcPreset } from '../services/abc/AbcPresets';
 import { AbcPlayer } from '../services/abc/AbcPlayer';
+import AbcFileToolbar from './AbcFileToolbar';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
-import FileExportButton from './shared/FileExportButton';
-import FileImportButton from './shared/FileImportButton';
-import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
 import useAbcPlayback from '../hooks/useAbcPlayback';
-import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
-import useMidiExport from '../hooks/useMidiExport';
+import useAbcExports from '../hooks/useAbcExports';
 import { useSynthEngine } from '../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
@@ -37,8 +34,14 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     onStop,
     renderTargetId: RENDER_TARGET_ID,
   });
-  const { renderTargetRef, handleExportSvg, handleExportPng, handlePrintPdf } =
-    useRenderedScoreExport();
+  const {
+    renderTargetRef,
+    handleExportAbc,
+    handleExportSvg,
+    handleExportPng,
+    handleExportPdf,
+    handleExportMidi,
+  } = useAbcExports(abcContent);
 
   const handleImport = useCallback(
     (content: string) => {
@@ -52,50 +55,22 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
     onImport: handleImport,
   });
-  const handleExportAbc = useFileExport({
-    content: abcContent,
-    fileName: 'score.abc',
-    mimeType: 'text/vnd.abc;charset=utf-8',
-  });
-  const handleExportMidi = useMidiExport(abcContent);
 
   return (
     <ControlPanel>
-      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-        <FileImportButton
-          fileInputId={FILE_INPUT_ID}
-          fileInputRef={fileInputRef}
-          accept=".abc,text/vnd.abc,text/plain"
-          label={t('piano:score.importAbc')}
-          onClick={openFileDialog}
-          onChange={handleFileChange}
-        />
-        <FileExportButton
-          label={t('piano:score.exportAbc')}
-          disabled={!abcContent.trim()}
-          onClick={handleExportAbc}
-        />
-        <FileExportButton
-          label={t('piano:score.exportSvg')}
-          disabled={!hasNotes}
-          onClick={handleExportSvg}
-        />
-        <FileExportButton
-          label={t('piano:score.exportPng')}
-          disabled={!hasNotes}
-          onClick={handleExportPng}
-        />
-        <FileExportButton
-          label={t('piano:score.exportPdf')}
-          disabled={!hasNotes}
-          onClick={() => handlePrintPdf(abcContent)}
-        />
-        <FileExportButton
-          label={t('piano:score.exportMidi')}
-          disabled={!hasNotes}
-          onClick={handleExportMidi}
-        />
-      </div>
+      <AbcFileToolbar
+        fileInputId={FILE_INPUT_ID}
+        fileInputRef={fileInputRef}
+        canExportAbc={Boolean(abcContent.trim())}
+        canExportRenderedScore={hasNotes}
+        onImportClick={openFileDialog}
+        onImportChange={handleFileChange}
+        onExportAbc={handleExportAbc}
+        onExportSvg={handleExportSvg}
+        onExportPng={handleExportPng}
+        onExportPdf={handleExportPdf}
+        onExportMidi={handleExportMidi}
+      />
 
       <ControlSelect
         value={selectedPresetIndex}
