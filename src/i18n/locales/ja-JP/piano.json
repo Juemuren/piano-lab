@@ -70,6 +70,7 @@
     "exportAbc": "abc をエクスポート",
     "exportSvg": "svg をエクスポート",
     "exportPng": "png をエクスポート",
+    "exportMidi": "midi をエクスポート",
     "placeholder": "楽譜を入力するか、プリセットを選択",
     "presets": {
       "小星星": "きらきら星",

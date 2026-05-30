@@ -10,6 +10,7 @@ import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
 import useAbcPlayback from '../hooks/useAbcPlayback';
 import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
+import useMidiExport from '../hooks/useMidiExport';
 import { useSynthEngine } from '../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
@@ -56,10 +57,11 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     fileName: 'score.abc',
     mimeType: 'text/vnd.abc;charset=utf-8',
   });
+  const handleExportMidi = useMidiExport(abcContent);
 
   return (
     <ControlPanel>
-      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-4">
+      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
         <FileImportButton
           fileInputId={FILE_INPUT_ID}
           fileInputRef={fileInputRef}
@@ -82,6 +84,11 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
           label={t('piano:score.exportPng')}
           disabled={!hasNotes}
           onClick={handleExportPng}
+        />
+        <FileExportButton
+          label={t('piano:score.exportMidi')}
+          disabled={!hasNotes}
+          onClick={handleExportMidi}
         />
       </div>
 

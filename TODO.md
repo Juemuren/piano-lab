@@ -12,7 +12,7 @@
 
 - [ ] 增加播放进度控制条，去除双击音符这种奇怪的操作，单击音符变为改变进度，在播放时禁用单击功能。参考 https://examples.abcjs.net/synth-player
 - [ ] 可将乐谱打印为 PDF。参考 https://examples.abcjs.net/printable
-- [ ] 可导出 `.midi` 文件。参考 https://examples.abcjs.net/synth-player
+- [x] 可导出 `.midi` 文件。参考 https://examples.abcjs.net/editor-synth
 - [ ] 支持键盘操作
 
 待考虑的
