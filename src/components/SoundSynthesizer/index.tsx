@@ -1,13 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type {
+  EnvelopeConfig,
+  SpectrumConfig,
+  SynthConfig,
+  TransferFunctionConfig,
+} from '../../types';
 import { AudioEngine } from '../../services/audio/AudioEngine';
+import {
+  createDefaultSynthConfig,
+  normalizeSynthConfig,
+} from '../../services/audio/SynthConfig';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
+import FileExportButton from '../shared/FileExportButton';
+import FileImportButton from '../shared/FileImportButton';
+import useFileExport from '../../hooks/useFileExport';
+import useFileImport from '../../hooks/useFileImport';
 import Envelope from './Envelope';
 import Spectrum from './Spectrum';
 import TransferFunction from './TransferFunction';
+
+const SYNTH_CONFIG_FILE_INPUT_ID = 'synth-config-file-input';
 
 interface SoundSynthesizerProps {
   audioEngine: AudioEngine;
@@ -15,6 +31,7 @@ interface SoundSynthesizerProps {
 
 function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   const { t } = useTranslation('piano');
+  const defaultConfig = useMemo(() => createDefaultSynthConfig(), []);
   const [oscillatorType, setOscillatorType] = useState(() =>
     audioEngine.getOscillatorType(),
   );
@@ -24,6 +41,75 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   const [harmonicCount, setHarmonicCount] = useState(() =>
     audioEngine.getHarmonicCount(),
   );
+  const [envelopeConfig, setEnvelopeConfig] = useState<EnvelopeConfig>(
+    defaultConfig.envelope,
+  );
+  const [spectrumConfig, setSpectrumConfig] = useState<SpectrumConfig>(
+    defaultConfig.spectrum,
+  );
+  const [transferFunctionConfig, setTransferFunctionConfig] =
+    useState<TransferFunctionConfig>(defaultConfig.transferFunction);
+  const [importedConfig, setImportedConfig] = useState<SynthConfig | null>(
+    null,
+  );
+  const [importRevision, setImportRevision] = useState(0);
+
+  const synthConfig = useMemo<SynthConfig>(
+    () => ({
+      version: 1,
+      synth: {
+        oscillatorType,
+        volumeRatio,
+        harmonicCount,
+      },
+      envelope: envelopeConfig,
+      spectrum: spectrumConfig,
+      transferFunction: transferFunctionConfig,
+    }),
+    [
+      envelopeConfig,
+      harmonicCount,
+      oscillatorType,
+      spectrumConfig,
+      transferFunctionConfig,
+      volumeRatio,
+    ],
+  );
+
+  const synthConfigJson = useMemo(
+    () => JSON.stringify(synthConfig, null, 2),
+    [synthConfig],
+  );
+
+  const handleImportConfig = useCallback(
+    (content: string) => {
+      try {
+        const config = normalizeSynthConfig(JSON.parse(content));
+        if (!config) throw new Error('Invalid synth config');
+
+        setOscillatorType(config.synth.oscillatorType);
+        setVolumeRatio(config.synth.volumeRatio);
+        setHarmonicCount(config.synth.harmonicCount);
+        setEnvelopeConfig(config.envelope);
+        setSpectrumConfig(config.spectrum);
+        setTransferFunctionConfig(config.transferFunction);
+        setImportedConfig(config);
+        setImportRevision((revision) => revision + 1);
+      } catch {
+        window.alert(t('synthConfig.importError'));
+      }
+    },
+    [t],
+  );
+
+  const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
+    onImport: handleImportConfig,
+  });
+  const handleExportConfig = useFileExport({
+    content: synthConfigJson,
+    fileName: 'synth-config.json',
+    mimeType: 'application/json;charset=utf-8',
+  });
 
   useEffect(() => {
     audioEngine.setOscillatorType(oscillatorType);
@@ -40,6 +126,21 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   return (
     <ControlPanel className="space-y-4">
       <div>
+        <div className="pb-2 grid gap-2 grid-cols-2">
+          <FileImportButton
+            fileInputId={SYNTH_CONFIG_FILE_INPUT_ID}
+            fileInputRef={fileInputRef}
+            accept=".json,application/json"
+            label={t('synthConfig.importJson')}
+            onClick={openFileDialog}
+            onChange={handleFileChange}
+          />
+          <FileExportButton
+            label={t('synthConfig.exportJson')}
+            onClick={handleExportConfig}
+          />
+        </div>
+
         <ControlSelect
           value={oscillatorType}
           onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
@@ -78,7 +179,12 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
         bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
-        <Envelope audioEngine={audioEngine} />
+        <Envelope
+          key={`envelope-${importRevision}`}
+          audioEngine={audioEngine}
+          initialConfig={importedConfig?.envelope}
+          onConfigChange={setEnvelopeConfig}
+        />
       </CollapsibleSection>
 
       <CollapsibleSection
@@ -86,7 +192,13 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
         bgClassName="bg-app-surface dark:bg-app-surface-dark"
         expanded
       >
-        <Spectrum audioEngine={audioEngine} harmonicCount={harmonicCount} />
+        <Spectrum
+          key={`spectrum-${importRevision}`}
+          audioEngine={audioEngine}
+          harmonicCount={harmonicCount}
+          initialConfig={importedConfig?.spectrum}
+          onConfigChange={setSpectrumConfig}
+        />
       </CollapsibleSection>
 
       <CollapsibleSection
@@ -95,8 +207,11 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
         expanded
       >
         <TransferFunction
+          key={`transfer-function-${importRevision}`}
           audioEngine={audioEngine}
           harmonicCount={harmonicCount}
+          initialConfig={importedConfig?.transferFunction}
+          onConfigChange={setTransferFunctionConfig}
         />
       </CollapsibleSection>
     </ControlPanel>

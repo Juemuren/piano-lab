@@ -64,30 +64,7 @@ function AbcEditor({
 
   return (
     <ControlPanel>
-      <ControlSelect
-        value={selectedPresetIndex}
-        onChange={async (e) => {
-          const index = parseInt(e.target.value);
-          setSelectedPresetIndex(index);
-          if (index >= 0) {
-            const content = await getAbcPreset(index);
-            setAbcContent(content);
-            if (isPlaying) handleStop();
-          } else {
-            setAbcContent('');
-          }
-          if (isPlaying) handleStop();
-        }}
-      >
-        <option value={-1}>{t('piano:score.custom')}</option>
-        {ABC_PRESETS.map((name, index) => (
-          <option key={index} value={index}>
-            {t(`piano:score.presets.${name}`)}
-          </option>
-        ))}
-      </ControlSelect>
-
-      <div className="py-2 grid gap-2 grid-cols-2 sm:grid-cols-4">
+      <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-4">
         <FileImportButton
           fileInputId={FILE_INPUT_ID}
           fileInputRef={fileInputRef}
@@ -112,6 +89,29 @@ function AbcEditor({
           onClick={handleExportPng}
         />
       </div>
+
+      <ControlSelect
+        value={selectedPresetIndex}
+        onChange={async (e) => {
+          const index = parseInt(e.target.value);
+          setSelectedPresetIndex(index);
+          if (index >= 0) {
+            const content = await getAbcPreset(index);
+            setAbcContent(content);
+            if (isPlaying) handleStop();
+          } else {
+            setAbcContent('');
+          }
+          if (isPlaying) handleStop();
+        }}
+      >
+        <option value={-1}>{t('piano:score.custom')}</option>
+        {ABC_PRESETS.map((name, index) => (
+          <option key={index} value={index}>
+            {t(`piano:score.presets.${name}`)}
+          </option>
+        ))}
+      </ControlSelect>
 
       <textarea
         id={INPUT_ID}

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { TransferFunctionType } from '../../../types';
+import type { TransferFunctionConfig } from '../../../types';
 import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
@@ -12,11 +13,15 @@ import useTransferFunctionControl from '../../../hooks/useTransferFunctionContro
 interface TransferFunctionProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
+  initialConfig?: TransferFunctionConfig | null;
+  onConfigChange?: (config: TransferFunctionConfig) => void;
 }
 
 function TransferFunction({
   audioEngine,
   harmonicCount,
+  initialConfig,
+  onConfigChange,
 }: TransferFunctionProps) {
   const { t } = useTranslation('piano');
   const {
@@ -24,7 +29,12 @@ function TransferFunction({
     transferFunction,
     handlePresetChange,
     handleParamsChange,
-  } = useTransferFunctionControl(audioEngine, harmonicCount);
+  } = useTransferFunctionControl(
+    audioEngine,
+    harmonicCount,
+    initialConfig,
+    onConfigChange,
+  );
   const { selectedPitch, baseFrequencyPitchOptions } = useBaseFrequencyOptions(
     audioEngine,
     baseFrequency,

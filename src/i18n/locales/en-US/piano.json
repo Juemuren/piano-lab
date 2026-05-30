@@ -34,6 +34,11 @@
     "high_pass": "High Pass",
     "band_pass": "Band Pass"
   },
+  "synthConfig": {
+    "importJson": "Import Config",
+    "exportJson": "Export Config",
+    "importError": "Could not import the config. Check the JSON file format."
+  },
   "controls": {
     "volume": "Volume",
     "attackTime": "Attack Time",

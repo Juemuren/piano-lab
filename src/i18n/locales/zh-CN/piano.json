@@ -34,6 +34,11 @@
     "high_pass": "高通",
     "band_pass": "带通"
   },
+  "synthConfig": {
+    "importJson": "导入配置",
+    "exportJson": "导出配置",
+    "importError": "无法导入配置，请检查 JSON 文件格式。"
+  },
   "controls": {
     "volume": "音量系数",
     "attackTime": "起音时间",

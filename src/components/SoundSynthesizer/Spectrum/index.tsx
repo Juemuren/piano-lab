@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { SpectrumType } from '../../../types';
+import type { SpectrumConfig } from '../../../types';
 import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
@@ -11,9 +12,16 @@ import useSpectrumControl from '../../../hooks/useSpectrumControl';
 interface SpectrumProps {
   audioEngine: AudioEngine;
   harmonicCount: number;
+  initialConfig?: SpectrumConfig | null;
+  onConfigChange?: (config: SpectrumConfig) => void;
 }
 
-function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
+function Spectrum({
+  audioEngine,
+  harmonicCount,
+  initialConfig,
+  onConfigChange,
+}: SpectrumProps) {
   const { t } = useTranslation('piano');
   const {
     lambda,
@@ -23,7 +31,12 @@ function Spectrum({ audioEngine, harmonicCount }: SpectrumProps) {
     handlePresetChange,
     handleParamsChange,
     handleAmplitudeChange,
-  } = useSpectrumControl(audioEngine, harmonicCount);
+  } = useSpectrumControl(
+    audioEngine,
+    harmonicCount,
+    initialConfig,
+    onConfigChange,
+  );
 
   return (
     <ControlPanel>

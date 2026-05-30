@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { AudioEngine } from '../services/audio/AudioEngine';
+import type { EnvelopeConfig } from '../types';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_HARMONIC_TIMES = 1;
@@ -26,12 +27,26 @@ function sampleExponentialRamp(
   });
 }
 
-function useEnvelopeControl(audioEngine: AudioEngine) {
-  const [attackTime, setAttackTime] = useState(audioEngine.getAttackTime());
-  const [decayTime, setDecayTime] = useState(audioEngine.getDecayTime());
-  const [releaseTime, setReleaseTime] = useState(audioEngine.getReleaseTime());
-  const [sustainGain, setSustainGain] = useState(audioEngine.getSustainGain());
-  const [silenceGain, setSilenceGain] = useState(audioEngine.getSilenceGain());
+function useEnvelopeControl(
+  audioEngine: AudioEngine,
+  initialConfig?: EnvelopeConfig | null,
+  onConfigChange?: (config: EnvelopeConfig) => void,
+) {
+  const [attackTime, setAttackTime] = useState(
+    () => initialConfig?.attackTime ?? audioEngine.getAttackTime(),
+  );
+  const [decayTime, setDecayTime] = useState(
+    () => initialConfig?.decayTime ?? audioEngine.getDecayTime(),
+  );
+  const [releaseTime, setReleaseTime] = useState(
+    () => initialConfig?.releaseTime ?? audioEngine.getReleaseTime(),
+  );
+  const [sustainGain, setSustainGain] = useState(
+    () => initialConfig?.sustainGain ?? audioEngine.getSustainGain(),
+  );
+  const [silenceGain, setSilenceGain] = useState(
+    () => initialConfig?.silenceGain ?? audioEngine.getSilenceGain(),
+  );
   const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
   const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
 
@@ -67,6 +82,23 @@ function useEnvelopeControl(audioEngine: AudioEngine) {
   useEffect(() => {
     audioEngine.setSilenceGain(silenceGain);
   }, [silenceGain, audioEngine]);
+
+  useEffect(() => {
+    onConfigChange?.({
+      attackTime,
+      decayTime,
+      releaseTime,
+      sustainGain,
+      silenceGain,
+    });
+  }, [
+    attackTime,
+    decayTime,
+    onConfigChange,
+    releaseTime,
+    silenceGain,
+    sustainGain,
+  ]);
 
   const envelopeCurve = useMemo<EnvelopeCurve>(() => {
     const attackEnd = attackTime;

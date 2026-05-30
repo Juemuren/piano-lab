@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { TransferFunction, TransferFunctionType } from '../types';
+import type {
+  TransferFunction,
+  TransferFunctionConfig,
+  TransferFunctionType,
+} from '../types';
 import type { AudioEngine } from '../services/audio/AudioEngine';
 import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
 import {
@@ -22,19 +26,31 @@ export interface TransferFunctionParamUpdates {
 function useTransferFunctionControl(
   audioEngine: AudioEngine,
   harmonicCount: number,
+  initialConfig?: TransferFunctionConfig | null,
+  onConfigChange?: (config: TransferFunctionConfig) => void,
 ) {
   const [baseFrequency, setBaseFrequency] = useState<number>(
-    DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+    () =>
+      initialConfig?.baseFrequency ??
+      DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
   );
   const [transferFunctionType, setTransferFunctionType] =
-    useState<TransferFunctionType>(DEFAULT_TRANSFER_FUNCTION_TYPE);
-  const [tau, setTau] = useState(DEFAULT_TRANSFER_FUNCTION_DELAY_MS);
-  const [alpha, setAlpha] = useState(DEFAULT_TRANSFER_FUNCTION_ATTENUATION);
+    useState<TransferFunctionType>(
+      () => initialConfig?.type ?? DEFAULT_TRANSFER_FUNCTION_TYPE,
+    );
+  const [tau, setTau] = useState(
+    () => initialConfig?.tau ?? DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
+  );
+  const [alpha, setAlpha] = useState(
+    () => initialConfig?.alpha ?? DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
+  );
   const [minFrequency, setMinFrequency] = useState(
-    DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+    () =>
+      initialConfig?.minFrequency ?? DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
   );
   const [maxFrequency, setMaxFrequency] = useState(
-    DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+    () =>
+      initialConfig?.maxFrequency ?? DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
   );
 
   const transferFunction = useMemo<TransferFunction>(
@@ -62,6 +78,25 @@ function useTransferFunctionControl(
   useEffect(() => {
     audioEngine.setTransferFunction(transferFunction);
   }, [transferFunction, audioEngine]);
+
+  useEffect(() => {
+    onConfigChange?.({
+      type: transferFunctionType,
+      tau,
+      alpha,
+      minFrequency,
+      maxFrequency,
+      baseFrequency,
+    });
+  }, [
+    alpha,
+    baseFrequency,
+    maxFrequency,
+    minFrequency,
+    onConfigChange,
+    tau,
+    transferFunctionType,
+  ]);
 
   const handlePresetChange = (preset: TransferFunctionType) => {
     setTransferFunctionType(preset);

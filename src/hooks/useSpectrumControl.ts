@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Spectrum, SpectrumType } from '../types';
+import type { Spectrum, SpectrumConfig, SpectrumType } from '../types';
 import type { AudioEngine } from '../services/audio/AudioEngine';
 import { getSpectrumPreset } from '../services/audio/AudioPresets';
 import {
@@ -19,15 +19,27 @@ function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);
 }
 
-function useSpectrumControl(audioEngine: AudioEngine, harmonicCount: number) {
-  const [lambda, setLambda] = useState(DEFAULT_SPECTRUM_STRIKE_POINT);
-  const [sigma, setSigma] = useState(DEFAULT_SPECTRUM_DECAY_RATE);
-  const [p, setP] = useState(DEFAULT_SPECTRUM_POWER_EXPONENT);
+function useSpectrumControl(
+  audioEngine: AudioEngine,
+  harmonicCount: number,
+  initialConfig?: SpectrumConfig | null,
+  onConfigChange?: (config: SpectrumConfig) => void,
+) {
+  const [lambda, setLambda] = useState(
+    () => initialConfig?.lambda ?? DEFAULT_SPECTRUM_STRIKE_POINT,
+  );
+  const [sigma, setSigma] = useState(
+    () => initialConfig?.sigma ?? DEFAULT_SPECTRUM_DECAY_RATE,
+  );
+  const [p, setP] = useState(
+    () => initialConfig?.p ?? DEFAULT_SPECTRUM_POWER_EXPONENT,
+  );
   const [spectrumType, setSpectrumType] = useState<SpectrumType>(
-    DEFAULT_SPECTRUM_TYPE,
+    () => initialConfig?.type ?? DEFAULT_SPECTRUM_TYPE,
   );
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
     () =>
+      initialConfig?.customAmplitudes ??
       getSpectrumPreset(
         DEFAULT_SPECTRUM_TYPE,
         DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -50,6 +62,24 @@ function useSpectrumControl(audioEngine: AudioEngine, harmonicCount: number) {
   useEffect(() => {
     audioEngine.setSpectrum(spectrum);
   }, [spectrum, audioEngine]);
+
+  useEffect(() => {
+    onConfigChange?.({
+      type: spectrumType,
+      lambda,
+      sigma,
+      p,
+      customAmplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
+    });
+  }, [
+    customAmplitudes,
+    harmonicCount,
+    lambda,
+    onConfigChange,
+    p,
+    sigma,
+    spectrumType,
+  ]);
 
   const handlePresetChange = (preset: SpectrumType) => {
     setCustomAmplitudes(

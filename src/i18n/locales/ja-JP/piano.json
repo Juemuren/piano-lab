@@ -34,6 +34,11 @@
     "high_pass": "ハイパス",
     "band_pass": "バンドパス"
   },
+  "synthConfig": {
+    "importJson": "設定をインポート",
+    "exportJson": "設定をエクスポート",
+    "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
+  },
   "controls": {
     "volume": "音量係数",
     "attackTime": "アタック時間",
