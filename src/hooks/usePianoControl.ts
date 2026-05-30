@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import type { AudioEngine } from '../services/audio/AudioEngine';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 import { getPitchName, getPitchOctave } from '../utils/pitch';
 
 const AVERAGE_KEY_WIDTH_PX = 20;
@@ -58,12 +58,13 @@ function getPianoKeys(windowWidth: number) {
   return { whiteKeys, blackKeys };
 }
 
-function usePianoControl(audioEngine: AudioEngine, playingNotes: Set<number>) {
+function usePianoControl(playingNotes: Set<number>) {
+  const synthEngine = useSynthEngine();
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
-    audioEngine.init();
+    synthEngine.init();
 
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -71,13 +72,13 @@ function usePianoControl(audioEngine: AudioEngine, playingNotes: Set<number>) {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [audioEngine]);
+  }, [synthEngine]);
 
   const playNote = useCallback(
     (note: number) => {
-      audioEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
+      synthEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
     },
-    [audioEngine],
+    [synthEngine],
   );
 
   const handleKeyDown = useCallback(

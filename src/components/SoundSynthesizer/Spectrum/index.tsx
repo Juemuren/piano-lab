@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { SpectrumType } from '../../../types';
 import type { SpectrumConfig } from '../../../types';
-import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumValueControls from './SpectrumValueControls';
@@ -10,14 +9,12 @@ import SpectrumFormulaPreview from './SpectrumFormulaPreview';
 import useSpectrumControl from '../../../hooks/useSpectrumControl';
 
 interface SpectrumProps {
-  audioEngine: AudioEngine;
   harmonicCount: number;
   initialConfig?: SpectrumConfig | null;
   onConfigChange?: (config: SpectrumConfig) => void;
 }
 
 function Spectrum({
-  audioEngine,
   harmonicCount,
   initialConfig,
   onConfigChange,
@@ -31,12 +28,7 @@ function Spectrum({
     handlePresetChange,
     handleParamsChange,
     handleAmplitudeChange,
-  } = useSpectrumControl(
-    audioEngine,
-    harmonicCount,
-    initialConfig,
-    onConfigChange,
-  );
+  } = useSpectrumControl(harmonicCount, initialConfig, onConfigChange);
 
   return (
     <ControlPanel>

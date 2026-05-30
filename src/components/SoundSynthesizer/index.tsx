@@ -6,11 +6,11 @@ import type {
   SynthConfig,
   TransferFunctionConfig,
 } from '../../types';
-import { AudioEngine } from '../../services/audio/AudioEngine';
 import {
   createDefaultSynthConfig,
   normalizeSynthConfig,
-} from '../../services/audio/SynthConfig';
+} from '../../services/synth/SynthConfig';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
@@ -25,21 +25,18 @@ import TransferFunction from './TransferFunction';
 
 const SYNTH_CONFIG_FILE_INPUT_ID = 'synth-config-file-input';
 
-interface SoundSynthesizerProps {
-  audioEngine: AudioEngine;
-}
-
-function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
+function SoundSynthesizer() {
   const { t } = useTranslation('piano');
+  const synthEngine = useSynthEngine();
   const defaultConfig = useMemo(() => createDefaultSynthConfig(), []);
   const [oscillatorType, setOscillatorType] = useState(() =>
-    audioEngine.getOscillatorType(),
+    synthEngine.getOscillatorType(),
   );
   const [volumeRatio, setVolumeRatio] = useState(() =>
-    audioEngine.getVolumeRatio(),
+    synthEngine.getVolumeRatio(),
   );
   const [harmonicCount, setHarmonicCount] = useState(() =>
-    audioEngine.getHarmonicCount(),
+    synthEngine.getHarmonicCount(),
   );
   const [envelopeConfig, setEnvelopeConfig] = useState<EnvelopeConfig>(
     defaultConfig.envelope,
@@ -112,16 +109,16 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
   });
 
   useEffect(() => {
-    audioEngine.setOscillatorType(oscillatorType);
-  }, [audioEngine, oscillatorType]);
+    synthEngine.setOscillatorType(oscillatorType);
+  }, [synthEngine, oscillatorType]);
 
   useEffect(() => {
-    audioEngine.setVolumeRatio(volumeRatio);
-  }, [audioEngine, volumeRatio]);
+    synthEngine.setVolumeRatio(volumeRatio);
+  }, [synthEngine, volumeRatio]);
 
   useEffect(() => {
-    audioEngine.setHarmonicCount(harmonicCount);
-  }, [audioEngine, harmonicCount]);
+    synthEngine.setHarmonicCount(harmonicCount);
+  }, [synthEngine, harmonicCount]);
 
   return (
     <ControlPanel className="space-y-4">
@@ -181,7 +178,6 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
       >
         <Envelope
           key={`envelope-${importRevision}`}
-          audioEngine={audioEngine}
           initialConfig={importedConfig?.envelope}
           onConfigChange={setEnvelopeConfig}
         />
@@ -194,7 +190,6 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
       >
         <Spectrum
           key={`spectrum-${importRevision}`}
-          audioEngine={audioEngine}
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.spectrum}
           onConfigChange={setSpectrumConfig}
@@ -208,7 +203,6 @@ function SoundSynthesizer({ audioEngine }: SoundSynthesizerProps) {
       >
         <TransferFunction
           key={`transfer-function-${importRevision}`}
-          audioEngine={audioEngine}
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.transferFunction}
           onConfigChange={setTransferFunctionConfig}

@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { TransferFunctionType } from '../../../types';
 import type { TransferFunctionConfig } from '../../../types';
-import { AudioEngine } from '../../../services/audio/AudioEngine';
 import ControlPanel from '../../shared/ControlPanel';
 import ControlSelect from '../../shared/ControlSelect';
 import BaseFrequencyControl from './BaseFrequencyControl';
@@ -9,36 +8,29 @@ import TransferFunctionParameterControls from './TransferFunctionParameterContro
 import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
 import useBaseFrequencyOptions from '../../../hooks/useBaseFrequencyOptions';
 import useTransferFunctionControl from '../../../hooks/useTransferFunctionControl';
+import { useSynthEngine } from '../../../contexts/useSynthEngine';
 
 interface TransferFunctionProps {
-  audioEngine: AudioEngine;
   harmonicCount: number;
   initialConfig?: TransferFunctionConfig | null;
   onConfigChange?: (config: TransferFunctionConfig) => void;
 }
 
 function TransferFunction({
-  audioEngine,
   harmonicCount,
   initialConfig,
   onConfigChange,
 }: TransferFunctionProps) {
   const { t } = useTranslation('piano');
+  const synthEngine = useSynthEngine();
   const {
     baseFrequency,
     transferFunction,
     handlePresetChange,
     handleParamsChange,
-  } = useTransferFunctionControl(
-    audioEngine,
-    harmonicCount,
-    initialConfig,
-    onConfigChange,
-  );
-  const { selectedPitch, baseFrequencyPitchOptions } = useBaseFrequencyOptions(
-    audioEngine,
-    baseFrequency,
-  );
+  } = useTransferFunctionControl(harmonicCount, initialConfig, onConfigChange);
+  const { selectedPitch, baseFrequencyPitchOptions } =
+    useBaseFrequencyOptions(baseFrequency);
 
   return (
     <ControlPanel>
@@ -63,7 +55,7 @@ function TransferFunction({
         value={baseFrequency}
         selectedPitch={selectedPitch}
         pitchOptions={baseFrequencyPitchOptions}
-        getBaseFrequency={(pitch) => audioEngine.getBaseFrequency(pitch)}
+        getBaseFrequency={(pitch) => synthEngine.getBaseFrequency(pitch)}
         onChange={(value) => handleParamsChange({ baseFrequency: value })}
       />
 

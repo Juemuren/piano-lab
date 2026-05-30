@@ -1,4 +1,3 @@
-import { AudioEngine } from '../services/audio/AudioEngine';
 import usePianoControl from '../hooks/usePianoControl';
 
 const WHITE_KEY_HEIGHT_PX = 160;
@@ -7,13 +6,12 @@ const WHITE_KEY_WIDTH_PX = 30;
 const BLACK_KEY_WIDTH_PX = 24;
 
 interface PianoProps {
-  audioEngine: AudioEngine;
   playingNotes?: Set<number>;
 }
 
-function Piano({ audioEngine, playingNotes = new Set() }: PianoProps) {
+function Piano({ playingNotes = new Set() }: PianoProps) {
   const { whiteKeys, blackKeys, isKeyPressed, handleKeyDown, handleKeyUp } =
-    usePianoControl(audioEngine, playingNotes);
+    usePianoControl(playingNotes);
 
   return (
     <div className="w-full pb-10">

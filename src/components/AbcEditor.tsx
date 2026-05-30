@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ABC_PRESETS, getAbcPreset } from '../services/abc/AbcPresets';
-import { AudioEngine } from '../services/audio/AudioEngine';
 import { AbcPlayer } from '../services/abc/AbcPlayer';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
@@ -11,27 +10,23 @@ import useFileExport from '../hooks/useFileExport';
 import useFileImport from '../hooks/useFileImport';
 import useAbcPlayback from '../hooks/useAbcPlayback';
 import useRenderedScoreExport from '../hooks/useRenderedScoreExport';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
 const FILE_INPUT_ID = 'abcjs-file-input';
 
 interface AbcEditorProps {
-  audioEngine: AudioEngine;
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
 }
 
-function AbcEditor({
-  audioEngine,
-  onNoteStart,
-  onNoteEnd,
-  onStop,
-}: AbcEditorProps) {
+function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   const { t } = useTranslation(['common', 'piano']);
+  const synthEngine = useSynthEngine();
   const [abcPlayer] = useState(
-    () => new AbcPlayer(audioEngine, onNoteStart, onNoteEnd),
+    () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
   const [abcContent, setAbcContent] = useState('');

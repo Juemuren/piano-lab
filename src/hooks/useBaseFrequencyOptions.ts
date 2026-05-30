@@ -1,22 +1,21 @@
 import { useMemo } from 'react';
-import type { AudioEngine } from '../services/audio/AudioEngine';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 import { getPitchOptions } from '../utils/pitch';
 
 const PITCH_OPTIONS = getPitchOptions();
 
-function useBaseFrequencyOptions(
-  audioEngine: AudioEngine,
-  baseFrequency: number,
-) {
+function useBaseFrequencyOptions(baseFrequency: number) {
+  const synthEngine = useSynthEngine();
+
   return useMemo(() => {
     const selectedPitch = PITCH_OPTIONS.find(
       ({ pitch }) =>
-        Math.abs(audioEngine.getBaseFrequency(pitch) - baseFrequency) <
+        Math.abs(synthEngine.getBaseFrequency(pitch) - baseFrequency) <
         Number.EPSILON,
     )?.pitch;
 
     const firstHigherPitchIndex = PITCH_OPTIONS.findIndex(
-      ({ pitch }) => audioEngine.getBaseFrequency(pitch) > baseFrequency,
+      ({ pitch }) => synthEngine.getBaseFrequency(pitch) > baseFrequency,
     );
 
     let pitchRangeLabel;
@@ -49,7 +48,7 @@ function useBaseFrequencyOptions(
       selectedPitch,
       baseFrequencyPitchOptions,
     };
-  }, [audioEngine, baseFrequency]);
+  }, [synthEngine, baseFrequency]);
 }
 
 export default useBaseFrequencyOptions;

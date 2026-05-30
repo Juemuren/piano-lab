@@ -4,8 +4,8 @@ import type {
   TransferFunctionConfig,
   TransferFunctionType,
 } from '../types';
-import type { AudioEngine } from '../services/audio/AudioEngine';
-import { getTransferFunctionPreset } from '../services/audio/AudioPresets';
+import { getTransferFunctionPreset } from '../services/synth/SynthPresets';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 import {
   DEFAULT_TRANSFER_FUNCTION_TYPE,
   DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
@@ -24,11 +24,11 @@ export interface TransferFunctionParamUpdates {
 }
 
 function useTransferFunctionControl(
-  audioEngine: AudioEngine,
   harmonicCount: number,
   initialConfig?: TransferFunctionConfig | null,
   onConfigChange?: (config: TransferFunctionConfig) => void,
 ) {
+  const synthEngine = useSynthEngine();
   const [baseFrequency, setBaseFrequency] = useState<number>(
     () =>
       initialConfig?.baseFrequency ??
@@ -76,8 +76,8 @@ function useTransferFunctionControl(
   );
 
   useEffect(() => {
-    audioEngine.setTransferFunction(transferFunction);
-  }, [transferFunction, audioEngine]);
+    synthEngine.setTransferFunction(transferFunction);
+  }, [transferFunction, synthEngine]);
 
   useEffect(() => {
     onConfigChange?.({

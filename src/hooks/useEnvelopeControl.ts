@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type { AudioEngine } from '../services/audio/AudioEngine';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 import type { EnvelopeConfig } from '../types';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
@@ -28,24 +28,24 @@ function sampleExponentialRamp(
 }
 
 function useEnvelopeControl(
-  audioEngine: AudioEngine,
   initialConfig?: EnvelopeConfig | null,
   onConfigChange?: (config: EnvelopeConfig) => void,
 ) {
+  const synthEngine = useSynthEngine();
   const [attackTime, setAttackTime] = useState(
-    () => initialConfig?.attackTime ?? audioEngine.getAttackTime(),
+    () => initialConfig?.attackTime ?? synthEngine.getAttackTime(),
   );
   const [decayTime, setDecayTime] = useState(
-    () => initialConfig?.decayTime ?? audioEngine.getDecayTime(),
+    () => initialConfig?.decayTime ?? synthEngine.getDecayTime(),
   );
   const [releaseTime, setReleaseTime] = useState(
-    () => initialConfig?.releaseTime ?? audioEngine.getReleaseTime(),
+    () => initialConfig?.releaseTime ?? synthEngine.getReleaseTime(),
   );
   const [sustainGain, setSustainGain] = useState(
-    () => initialConfig?.sustainGain ?? audioEngine.getSustainGain(),
+    () => initialConfig?.sustainGain ?? synthEngine.getSustainGain(),
   );
   const [silenceGain, setSilenceGain] = useState(
-    () => initialConfig?.silenceGain ?? audioEngine.getSilenceGain(),
+    () => initialConfig?.silenceGain ?? synthEngine.getSilenceGain(),
   );
   const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
   const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
@@ -64,24 +64,24 @@ function useEnvelopeControl(
   }, []);
 
   useEffect(() => {
-    audioEngine.setAttackTime(attackTime);
-  }, [attackTime, audioEngine]);
+    synthEngine.setAttackTime(attackTime);
+  }, [attackTime, synthEngine]);
 
   useEffect(() => {
-    audioEngine.setDecayTime(decayTime);
-  }, [decayTime, audioEngine]);
+    synthEngine.setDecayTime(decayTime);
+  }, [decayTime, synthEngine]);
 
   useEffect(() => {
-    audioEngine.setReleaseTime(releaseTime);
-  }, [releaseTime, audioEngine]);
+    synthEngine.setReleaseTime(releaseTime);
+  }, [releaseTime, synthEngine]);
 
   useEffect(() => {
-    audioEngine.setSustainGain(sustainGain);
-  }, [sustainGain, audioEngine]);
+    synthEngine.setSustainGain(sustainGain);
+  }, [sustainGain, synthEngine]);
 
   useEffect(() => {
-    audioEngine.setSilenceGain(silenceGain);
-  }, [silenceGain, audioEngine]);
+    synthEngine.setSilenceGain(silenceGain);
+  }, [silenceGain, synthEngine]);
 
   useEffect(() => {
     onConfigChange?.({

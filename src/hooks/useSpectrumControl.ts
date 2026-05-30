@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Spectrum, SpectrumConfig, SpectrumType } from '../types';
-import type { AudioEngine } from '../services/audio/AudioEngine';
-import { getSpectrumPreset } from '../services/audio/AudioPresets';
+import { getSpectrumPreset } from '../services/synth/SynthPresets';
+import { useSynthEngine } from '../contexts/useSynthEngine';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -20,11 +20,11 @@ function resizeAmplitudes(amplitudes: number[], length: number) {
 }
 
 function useSpectrumControl(
-  audioEngine: AudioEngine,
   harmonicCount: number,
   initialConfig?: SpectrumConfig | null,
   onConfigChange?: (config: SpectrumConfig) => void,
 ) {
+  const synthEngine = useSynthEngine();
   const [lambda, setLambda] = useState(
     () => initialConfig?.lambda ?? DEFAULT_SPECTRUM_STRIKE_POINT,
   );
@@ -60,8 +60,8 @@ function useSpectrumControl(
   }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
 
   useEffect(() => {
-    audioEngine.setSpectrum(spectrum);
-  }, [spectrum, audioEngine]);
+    synthEngine.setSpectrum(spectrum);
+  }, [spectrum, synthEngine]);
 
   useEffect(() => {
     onConfigChange?.({

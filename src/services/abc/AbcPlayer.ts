@@ -1,17 +1,17 @@
-import { AudioEngine } from '../audio/AudioEngine';
+import { SynthEngine } from '../synth/SynthEngine';
 import { type MidiPitches } from 'abcjs';
 
 export class AbcPlayer {
-  private audioEngine: AudioEngine;
+  private synthEngine: SynthEngine;
   private onNoteStart?: (pitch: number) => void;
   private onNoteEnd?: (pitch: number) => void;
 
   constructor(
-    audioEngine: AudioEngine,
+    synthEngine: SynthEngine,
     onNoteStart?: (pitch: number) => void,
     onNoteEnd?: (pitch: number) => void,
   ) {
-    this.audioEngine = audioEngine;
+    this.synthEngine = synthEngine;
     this.onNoteStart = onNoteStart;
     this.onNoteEnd = onNoteEnd;
   }
@@ -21,7 +21,7 @@ export class AbcPlayer {
       const correctDuration = duration * secondsPerDuration;
 
       this.onNoteStart?.(pitch);
-      this.audioEngine.playNote(pitch, correctDuration, volume, cents);
+      this.synthEngine.playNote(pitch, correctDuration, volume, cents);
       setTimeout(() => {
         this.onNoteEnd?.(pitch);
       }, correctDuration * 1000);

@@ -1,16 +1,15 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AudioEngine } from './services/audio/AudioEngine';
 import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
 import SoundSynthesizer from './components/SoundSynthesizer';
 import AbcEditor from './components/AbcEditor';
 import Footer from './components/Footer';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import { SynthEngineProvider } from './contexts/SynthEngineContext';
 
 function App() {
   const { t } = useTranslation('piano');
-  const [audioEngine] = useState(() => new AudioEngine());
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
 
   const handleNoteStart = useCallback((pitch: number) => {
@@ -34,7 +33,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <SynthEngineProvider>
       <section
         className="
           relative w-full mx-auto min-h-screen grow pt-20 px-4
@@ -56,13 +55,12 @@ function App() {
         >
           <div className="mx-auto w-full">
             <CollapsibleSection title={t('sections.soundSynthesizer')}>
-              <SoundSynthesizer audioEngine={audioEngine} />
+              <SoundSynthesizer />
             </CollapsibleSection>
           </div>
           <div className="mx-auto w-full">
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor
-                audioEngine={audioEngine}
                 onNoteStart={handleNoteStart}
                 onNoteEnd={handleNoteEnd}
                 onStop={handleStopPlayingNotes}
@@ -71,10 +69,10 @@ function App() {
           </div>
         </div>
 
-        <Piano audioEngine={audioEngine} playingNotes={playingNotes} />
+        <Piano playingNotes={playingNotes} />
       </section>
       <Footer />
-    </>
+    </SynthEngineProvider>
   );
 }
 

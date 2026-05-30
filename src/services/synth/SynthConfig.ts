@@ -31,7 +31,7 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../utils/runtime';
-import { getSpectrumPreset } from './AudioPresets';
+import { getSpectrumPreset } from './SynthPresets';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
   'sine',

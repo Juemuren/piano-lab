@@ -1,5 +1,5 @@
 import type { TransferFunction, Spectrum } from '../../types';
-import { getSpectrumPreset, getTransferFunctionPreset } from './AudioPresets';
+import { getSpectrumPreset, getTransferFunctionPreset } from './SynthPresets';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -23,7 +23,7 @@ import {
 
 const MIN_GAIN_VALUE = 1e-10;
 
-export class AudioEngine {
+export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private spectrum: Spectrum = getSpectrumPreset(
