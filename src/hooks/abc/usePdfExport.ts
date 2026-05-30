@@ -20,9 +20,7 @@ function usePdfExport(abcContent: string) {
     };
     window.addEventListener('afterprint', cleanup);
 
-    requestAnimationFrame(() => {
-      window.print();
-    });
+    window.print();
   }, [abcContent]);
 }
 

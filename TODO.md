@@ -4,6 +4,10 @@
 
 ## Fix
 
+- Android Chrome 上 afterprint 不是在 print 后触发，而是在 print 时就触发。这导致 PDF 打印功能在移动端上存在问题。修复这个问题，有两种方案
+  - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src\hooks\abc\usePdfExport.ts) 代码语义不一致
+  - 直接打印 [AbcEditor.tsx](src\components\AbcEditor.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
+
 ## Style
 
 ## Feat
