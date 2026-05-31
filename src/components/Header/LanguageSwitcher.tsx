@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Languages } from 'lucide-react';
-import { LANGUAGE_DISPLAY_NAMES, SUPPORTED_LANGUAGES } from '../i18n/settings';
-import ControlSelect from './shared/ControlSelect';
+import {
+  LANGUAGE_DISPLAY_NAMES,
+  SUPPORTED_LANGUAGES,
+} from '../../i18n/settings';
+import ControlSelect from '../shared/ControlSelect';
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
