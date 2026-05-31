@@ -1,8 +1,8 @@
 import { type ChangeEventHandler, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Upload, Download, Image, BookImage, Music } from 'lucide-react';
-import FileExportButton from './shared/FileExportButton';
-import FileImportButton from './shared/FileImportButton';
+import FileExportButton from '../shared/FileExportButton';
+import FileImportButton from '../shared/FileImportButton';
 
 interface AbcFileToolbarProps {
   fileInputId: string;

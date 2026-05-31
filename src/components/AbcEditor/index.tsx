@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ABC_PRESETS, getAbcPreset } from '../services/abc/AbcPresets';
-import { AbcPlayer } from '../services/abc/AbcPlayer';
+import { ABC_PRESETS, getAbcPreset } from '../../services/abc/AbcPresets';
+import { AbcPlayer } from '../../services/abc/AbcPlayer';
 import AbcFileToolbar from './AbcFileToolbar';
 import AbcPlaybackControls from './AbcPlaybackControls';
-import ControlPanel from './shared/ControlPanel';
-import ControlSelect from './shared/ControlSelect';
-import useFileImport from '../hooks/file/useFileImport';
-import useAbcPlayback from '../hooks/abc/useAbcPlayback';
-import useAbcExports from '../hooks/abc/useAbcExports';
-import { useSynthEngine } from '../contexts/useSynthEngine';
+import ControlPanel from '../shared/ControlPanel';
+import ControlSelect from '../shared/ControlSelect';
+import useFileImport from '../../hooks/file/useFileImport';
+import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
+import useAbcExports from '../../hooks/abc/useAbcExports';
+import { useSynthEngine } from '../../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 const INPUT_ID = 'abcjs-input';
