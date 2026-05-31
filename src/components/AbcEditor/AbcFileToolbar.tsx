@@ -5,7 +5,6 @@ import FileExportButton from '../shared/FileExportButton';
 import FileImportButton from '../shared/FileImportButton';
 
 interface AbcFileToolbarProps {
-  fileInputId: string;
   fileInputRef: RefObject<HTMLInputElement | null>;
   canExportAbc: boolean;
   canExportRenderedScore: boolean;
@@ -19,7 +18,6 @@ interface AbcFileToolbarProps {
 }
 
 function AbcFileToolbar({
-  fileInputId,
   fileInputRef,
   canExportAbc,
   canExportRenderedScore,
@@ -36,7 +34,6 @@ function AbcFileToolbar({
   return (
     <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
       <FileImportButton
-        fileInputId={fileInputId}
         fileInputRef={fileInputRef}
         accept=".abc,text/vnd.abc,text/plain"
         label="ABC"

@@ -5,7 +5,6 @@ interface FileImportButtonProps {
   icon?: ReactNode;
   fileInputRef: RefObject<HTMLInputElement | null>;
   accept?: string;
-  fileInputId?: string;
   onClick: () => void;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
@@ -15,7 +14,6 @@ function FileImportButton({
   icon,
   fileInputRef,
   accept,
-  fileInputId,
   onClick,
   onChange,
 }: FileImportButtonProps) {
@@ -23,7 +21,6 @@ function FileImportButton({
     <>
       <input
         ref={fileInputRef}
-        id={fileInputId}
         type="file"
         accept={accept}
         className="hidden"

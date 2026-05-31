@@ -12,8 +12,6 @@ import useAbcExports from '../../hooks/abc/useAbcExports';
 import { useSynthEngine } from '../../contexts/useSynthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
-const INPUT_ID = 'abcjs-input';
-const FILE_INPUT_ID = 'abcjs-file-input';
 
 interface AbcEditorProps {
   onNoteStart: (pitch: number) => void;
@@ -70,7 +68,6 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   return (
     <ControlPanel>
       <AbcFileToolbar
-        fileInputId={FILE_INPUT_ID}
         fileInputRef={fileInputRef}
         canExportAbc={Boolean(abcContent.trim())}
         canExportRenderedScore={hasNotes}
@@ -107,7 +104,6 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
       </ControlSelect>
 
       <textarea
-        id={INPUT_ID}
         value={abcContent}
         onChange={(e) => {
           setAbcContent(e.target.value);

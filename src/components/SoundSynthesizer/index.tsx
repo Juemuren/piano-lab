@@ -24,8 +24,6 @@ import Envelope from './Envelope';
 import Spectrum from './Spectrum';
 import TransferFunction from './TransferFunction';
 
-const SYNTH_CONFIG_FILE_INPUT_ID = 'synth-config-file-input';
-
 function SoundSynthesizer() {
   const { t } = useTranslation('synth');
   const synthEngine = useSynthEngine();
@@ -126,7 +124,6 @@ function SoundSynthesizer() {
       <div>
         <div className="pb-2 grid gap-2 grid-cols-2">
           <FileImportButton
-            fileInputId={SYNTH_CONFIG_FILE_INPUT_ID}
             fileInputRef={fileInputRef}
             accept=".json,application/json"
             label="JSON"
