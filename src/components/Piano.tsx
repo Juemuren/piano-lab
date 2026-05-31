@@ -12,18 +12,23 @@ interface PianoProps {
 function Piano({ playingNotes = new Set() }: PianoProps) {
   const { whiteKeys, blackKeys, isKeyPressed, handleKeyDown, handleKeyUp } =
     usePianoControl(playingNotes);
+  const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
 
   return (
-    <div className="w-full pb-10">
+    <div
+      className="w-full overflow-x-auto overscroll-x-contain pb-10"
+      style={{ touchAction: 'pan-x' }}
+    >
       <div
-        className="relative inline-block"
-        style={{ height: WHITE_KEY_HEIGHT_PX }}
+        className="relative mx-auto"
+        style={{ width: keyboardWidth, height: WHITE_KEY_HEIGHT_PX }}
       >
         <div className="flex">
           {whiteKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
             return (
               <button
+                type="button"
                 key={key.note}
                 onMouseDown={(e) => handleKeyDown(e, key.note)}
                 onMouseUp={(e) => handleKeyUp(e, key.note)}
@@ -32,7 +37,7 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
                 onTouchEnd={(e) => handleKeyUp(e, key.note)}
                 onTouchCancel={(e) => handleKeyUp(e, key.note)}
                 className={`
-                  text-xs border border-app-accent transition-all duration-100 ${
+                  shrink-0 cursor-pointer text-xs border border-app-accent transition-all duration-100 ${
                     isPressed
                       ? 'bg-piano-white-active text-piano-black shadow-inner'
                       : 'bg-piano-white text-piano-black'
@@ -54,11 +59,12 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
           })}
         </div>
 
-        <div className="flex absolute top-0 left-0">
+        <div className="absolute top-0 left-0">
           {blackKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
             return (
               <button
+                type="button"
                 key={key.note}
                 onMouseDown={(e) => handleKeyDown(e, key.note)}
                 onMouseUp={(e) => handleKeyUp(e, key.note)}
@@ -67,7 +73,7 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
                 onTouchEnd={(e) => handleKeyUp(e, key.note)}
                 onTouchCancel={(e) => handleKeyUp(e, key.note)}
                 className={`
-                  text-xs border-none transition-all duration-100 ${
+                  cursor-pointer text-xs border-none transition-all duration-100 ${
                     isPressed
                       ? 'bg-piano-black-active text-piano-white shadow-inner'
                       : 'bg-piano-black text-piano-white'

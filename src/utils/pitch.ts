@@ -13,7 +13,7 @@ export const NOTE_NAMES = [
   'B',
 ] as const;
 
-export const MIN_PIANO_PITCH = 24; // C1
+export const MIN_PIANO_PITCH = 21; // A0
 export const MAX_PIANO_PITCH = 108; // C8
 
 export function getPitchName(pitch: number) {
