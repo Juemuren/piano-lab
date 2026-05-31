@@ -2,6 +2,8 @@
   "title": "ピアノシミュレーター",
   "sections": {
     "soundSynthesizer": "サウンドシンセサイザー",
-    "scoreEditor": "楽譜エディター"
+    "scoreEditor": "楽譜エディター",
+    "pianoKeyboard": "鍵盤",
+    "about": "について"
   }
 }

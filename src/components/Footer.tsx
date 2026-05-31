@@ -54,6 +54,7 @@ function FooterPanel({ title, children }: FooterPanelProps) {
 function FooterLink({ href, label }: FooterLinkProps) {
   return (
     <a
+      id="about"
       href={href}
       target="_blank"
       rel="noreferrer"

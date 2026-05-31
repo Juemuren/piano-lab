@@ -2,6 +2,8 @@
   "title": "Piano Simulator",
   "sections": {
     "soundSynthesizer": "Sound Synthesizer",
-    "scoreEditor": "Score Editor"
+    "scoreEditor": "Score Editor",
+    "pianoKeyboard": "Piano Keys",
+    "about": "About"
   }
 }

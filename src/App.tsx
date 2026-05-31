@@ -4,8 +4,8 @@ import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
 import SoundSynthesizer from './components/SoundSynthesizer';
 import AbcEditor from './components/AbcEditor';
+import Header from './components/Header';
 import Footer from './components/Footer';
-import LanguageSwitcher from './components/LanguageSwitcher';
 import { SynthEngineProvider } from './contexts/SynthEngineContext';
 
 function App() {
@@ -34,17 +34,16 @@ function App() {
 
   return (
     <SynthEngineProvider>
-      <section
+      <Header />
+
+      <main
         className="
-          relative w-full mx-auto min-h-screen grow pt-20 px-4
-          flex flex-col justify-center gap-5
+          w-full min-h-screen mx-auto p-5
+          flex flex-col grow justify-center gap-5
           bg-app-bg dark:bg-app-bg-dark
           text-app-text dark:text-app-text-dark
         "
       >
-        <div className="absolute top-3 right-3 sm:right-6">
-          <LanguageSwitcher />
-        </div>
         <h1 className="text-center text-3xl font-bold">{t('title')}</h1>
 
         <div
@@ -53,12 +52,15 @@ function App() {
             xl:flex-row xl:items-start xl:justify-center
           "
         >
-          <div className="mx-auto w-full">
+          <section
+            id="sound-synthesizer"
+            className="mx-auto w-full scroll-mt-36"
+          >
             <CollapsibleSection title={t('sections.soundSynthesizer')}>
               <SoundSynthesizer />
             </CollapsibleSection>
-          </div>
-          <div className="mx-auto w-full">
+          </section>
+          <section id="score-editor" className="mx-auto w-full scroll-mt-36">
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor
                 onNoteStart={handleNoteStart}
@@ -66,11 +68,14 @@ function App() {
                 onStop={handleStopPlayingNotes}
               />
             </CollapsibleSection>
-          </div>
+          </section>
         </div>
 
-        <Piano playingNotes={playingNotes} />
-      </section>
+        <section id="piano-keyboard" className="scroll-mt-36">
+          <Piano playingNotes={playingNotes} />
+        </section>
+      </main>
+
       <Footer />
     </SynthEngineProvider>
   );

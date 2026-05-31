@@ -26,7 +26,7 @@
 - [x] 可将乐谱打印为 PDF。参考 https://examples.abcjs.net/printable
 - [x] 可导出 `.midi` 文件。参考 https://examples.abcjs.net/editor-synth
 - [ ] 支持键盘操作
-- [ ] 页面顶部增加 `<header>`，可以导航到乐谱编辑器/声音合成器/琴键，并把语言切换按钮放入其中
+- [x] 页面顶部增加 `<header>`，可以导航到乐谱编辑器/声音合成器/琴键/关于，并把语言切换按钮放入其中
 
 待考虑的
 
