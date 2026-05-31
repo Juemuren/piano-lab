@@ -1,4 +1,5 @@
 import { type ReactNode, useState } from 'react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 type CollapsibleSectionProps = {
   title: string;
@@ -29,8 +30,13 @@ function CollapsibleSection({
           ${bgClassName} ${hoverBgClassName}
         `}
       >
-        <h2 className="text-xl font-semibold">
-          {title} {isExpanded ? '▼' : '▶'}
+        <h2 className="inline-flex items-center justify-center gap-2 text-xl font-semibold">
+          {title}
+          {isExpanded ? (
+            <ChevronDown size={24} aria-hidden="true" />
+          ) : (
+            <ChevronRight size={24} aria-hidden="true" />
+          )}
         </h2>
       </button>
       <div className={isExpanded ? 'my-4' : 'hidden'}>{children}</div>

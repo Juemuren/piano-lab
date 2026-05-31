@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
 
 const articleUrl =
   'https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/';
@@ -20,7 +21,12 @@ function FooterPanel({ title, children }: FooterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section className="rounded-lg bg-app-surface-muted dark:bg-app-surface-muted-dark">
+    <section
+      className="
+        text-sm text-app-muted dark:text-app-muted-dark
+        rounded-lg bg-app-surface-muted dark:bg-app-surface-muted-dark
+      "
+    >
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
@@ -31,19 +37,14 @@ function FooterPanel({ title, children }: FooterPanelProps) {
         "
         aria-expanded={isExpanded}
       >
-        <span className="text-sm font-semibold tracking-wide text-app-muted dark:text-app-muted-dark">
-          {title}
-        </span>
-        <span className="text-sm text-app-muted dark:text-app-muted-dark">
-          {isExpanded ? '▼' : '▶'}
-        </span>
+        <span className="font-semibold tracking-wide">{title}</span>
+        {isExpanded ? (
+          <ChevronDown size={18} aria-hidden="true" />
+        ) : (
+          <ChevronRight size={18} aria-hidden="true" />
+        )}
       </button>
-      <div
-        className={`
-          text-sm text-app-muted dark:text-app-muted-dark
-          ${isExpanded ? 'px-4 leading-8' : 'hidden'}
-        `}
-      >
+      <div className={`${isExpanded ? 'px-4 leading-8' : 'hidden'}`}>
         {children}
       </div>
     </section>
@@ -64,18 +65,7 @@ function FooterLink({ href, label }: FooterLinkProps) {
       "
     >
       <span className="text-sm font-medium">{label}</span>
-      <span
-        className="
-          flex h-4 w-4 justify-center rounded-full
-          border border-app-border dark:border-app-border-dark
-          text-xs text-app-muted dark:text-app-muted-dark
-          transition-colors group-hover:text-app-accent-strong dark:group-hover:text-app-accent-weak
-          group-hover:border-app-accent dark:group-hover:border-app-accent
-        "
-        aria-hidden="true"
-      >
-        ↗
-      </span>
+      <ExternalLink size={18} aria-hidden="true" />
     </a>
   );
 }

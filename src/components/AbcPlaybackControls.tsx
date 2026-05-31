@@ -1,3 +1,4 @@
+import { Pause, Play, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface AbcPlaybackControlsProps {
@@ -33,16 +34,13 @@ function AbcPlaybackControls({
   const canReplay = isPlaying || currentSeconds > 0 || isPlaybackEnded;
 
   return (
-    <div
-      className="flex w-full items-center gap-3 rounded-xl
-      "
-    >
+    <div className="flex w-full items-center gap-3 rounded-xl">
       <button
         type="button"
         disabled={isPlaybackEnded}
         onClick={isPlaying ? onPause : onPlay}
         className={`
-            px-4 py-2 rounded-lg text-app-on-accent transition-colors
+            p-2 rounded-lg text-app-on-accent transition-colors
             disabled:cursor-not-allowed disabled:opacity-50
             ${
               isPlaying
@@ -51,7 +49,11 @@ function AbcPlaybackControls({
             }
           `}
       >
-        {isPlaying ? t('actions.pause') : t('actions.play')}
+        {isPlaying ? (
+          <Pause size={18} aria-label={t('actions.pause')} />
+        ) : (
+          <Play size={18} aria-label={t('actions.play')} />
+        )}
       </button>
 
       <button
@@ -59,12 +61,12 @@ function AbcPlaybackControls({
         disabled={!canReplay}
         onClick={onReplay}
         className="
-            px-4 py-2 rounded-lg text-app-on-accent transition-colors
+            p-2 rounded-lg text-app-on-accent transition-colors
             disabled:cursor-not-allowed disabled:opacity-50
             bg-app-success hover:bg-app-success-strong disabled:hover:bg-app-success
           "
       >
-        {t('actions.replay')}
+        <RotateCcw size={18} aria-label={t('actions.replay')} />
       </button>
 
       <input

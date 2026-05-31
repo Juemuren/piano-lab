@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Download, Upload } from 'lucide-react';
 import type {
   EnvelopeConfig,
   SpectrumConfig,
@@ -128,12 +129,16 @@ function SoundSynthesizer() {
             fileInputId={SYNTH_CONFIG_FILE_INPUT_ID}
             fileInputRef={fileInputRef}
             accept=".json,application/json"
-            label={t('synthConfig.importJson')}
+            label="JSON"
+            icon={<Upload size={18} aria-label={t('synthConfig.importJson')} />}
             onClick={openFileDialog}
             onChange={handleFileChange}
           />
           <FileExportButton
-            label={t('synthConfig.exportJson')}
+            label="JSON"
+            icon={
+              <Download size={18} aria-label={t('synthConfig.exportJson')} />
+            }
             onClick={handleExportConfig}
           />
         </div>

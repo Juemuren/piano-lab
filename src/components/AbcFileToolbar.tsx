@@ -1,5 +1,6 @@
 import { type ChangeEventHandler, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Upload, Download, Image, BookImage, Music } from 'lucide-react';
 import FileExportButton from './shared/FileExportButton';
 import FileImportButton from './shared/FileImportButton';
 
@@ -38,32 +39,38 @@ function AbcFileToolbar({
         fileInputId={fileInputId}
         fileInputRef={fileInputRef}
         accept=".abc,text/vnd.abc,text/plain"
-        label={t('score.importAbc')}
+        label="ABC"
+        icon={<Upload size={18} aria-label={t('score.importAbc')} />}
         onClick={onImportClick}
         onChange={onImportChange}
       />
       <FileExportButton
-        label={t('score.exportAbc')}
+        label="ABC"
+        icon={<Download size={18} aria-label={t('score.exportAbc')} />}
         disabled={!canExportAbc}
         onClick={onExportAbc}
       />
       <FileExportButton
-        label={t('score.exportSvg')}
+        label="SVG"
+        icon={<Image size={18} aria-label={t('score.exportSvg')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportSvg}
       />
       <FileExportButton
-        label={t('score.exportPng')}
+        label="PNG"
+        icon={<Image size={18} aria-label={t('score.exportPng')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPng}
       />
       <FileExportButton
-        label={t('score.exportPdf')}
+        label="PDF"
+        icon={<BookImage size={18} aria-label={t('score.exportPdf')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPdf}
       />
       <FileExportButton
-        label={t('score.exportMidi')}
+        label="MIDI"
+        icon={<Music size={18} aria-label={t('score.exportMidi')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportMidi}
       />
