@@ -28,7 +28,7 @@ function useFileImport({
     (e) => {
       const file = e.target.files?.[0];
       if (file) {
-        void file.text().then((content) => onImport(content, file));
+        file.text().then((content) => onImport(content, file));
       }
       e.target.value = '';
     },

@@ -10,13 +10,13 @@
 - Android Chrome 上 afterprint 不是在 print 后触发，而是在 print 时就触发。这导致 PDF 打印功能在移动端上存在问题。修复这个问题，有两种方案
   - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src/hooks/abc/usePdfExport.ts) 代码语义不一致
   - 直接打印 [AbcEditor.tsx](src/components/AbcEditor.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
-- 文件导出时调用操作系统的文件接口，以便重命名文件和修改下载位置，并改善桌面应用的体验
 
 ## Style
 
 - [x] 琴键数量恒为 88（A0 -> C8），并支持横向滑动以适配窄屏
 - [x] 为声音合成器设置更合理的默认值
 - [x] 页面增加一些图标。使用 Lucide 库，后续可以持续优化
+- [x] 文件导出时调用操作系统的文件接口，以便重命名文件和修改下载位置。不支持该接口的浏览器回退为原先的行为
 
 ## Feat
 

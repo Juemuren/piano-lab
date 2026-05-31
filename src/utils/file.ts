@@ -1,11 +1,77 @@
-export const downloadBlob = (blob: Blob, fileName: string) => {
+interface SaveFilePickerOptions {
+  suggestedName?: string;
+  startIn?: 'downloads';
+  types?: {
+    description: string;
+    accept: Record<string, string[]>;
+  }[];
+}
+
+interface WindowWithSaveFilePicker extends Window {
+  showSaveFilePicker?: (
+    options?: SaveFilePickerOptions,
+  ) => Promise<FileSystemFileHandle>;
+}
+
+const getFileExtension = (fileName: string) => {
+  const extensionStart = fileName.lastIndexOf('.');
+
+  return extensionStart > 0 ? fileName.slice(extensionStart) : '';
+};
+
+const getSaveFilePickerOptions = (
+  blob: Blob,
+  fileName: string,
+): SaveFilePickerOptions => {
+  const extension = getFileExtension(fileName);
+
+  if (!blob.type || !extension)
+    return { suggestedName: fileName, startIn: 'downloads' };
+
+  return {
+    suggestedName: fileName,
+    startIn: 'downloads',
+    types: [
+      {
+        description: `${extension.slice(1).toUpperCase()} file`,
+        accept: {
+          [blob.type]: [extension],
+        },
+      },
+    ],
+  };
+};
+
+const downloadBlobWithLink = (blob: Blob, fileName: string) => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
 
   link.href = url;
   link.download = fileName;
   link.click();
-  URL.revokeObjectURL(url);
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+};
+
+export const downloadBlob = async (blob: Blob, fileName: string) => {
+  const saveFilePicker = (window as WindowWithSaveFilePicker)
+    .showSaveFilePicker;
+
+  if (window.isSecureContext && saveFilePicker) {
+    try {
+      const fileHandle = await saveFilePicker(
+        getSaveFilePickerOptions(blob, fileName),
+      );
+      const writable = await fileHandle.createWritable();
+
+      await writable.write(blob);
+      await writable.close();
+      return;
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+    }
+  }
+
+  downloadBlobWithLink(blob, fileName);
 };
 
 export const getSvgDimensions = (svgElement: SVGSVGElement) => {
@@ -26,7 +92,7 @@ export const svgToPngBlob = (
 ): Promise<Blob | null> =>
   new Promise((resolve) => {
     const svgBlob = new Blob([svgContent], {
-      type: 'image/svg+xml;charset=utf-8',
+      type: 'image/svg+xml',
     });
     const svgUrl = URL.createObjectURL(svgBlob);
     const image = new Image();

@@ -19,7 +19,7 @@ function LanguageSwitcher() {
       <ControlSelect
         value={i18n.resolvedLanguage ?? i18n.language}
         onChange={(event) => {
-          void i18n.changeLanguage(event.target.value);
+          i18n.changeLanguage(event.target.value);
         }}
       >
         {SUPPORTED_LANGUAGES.map((language) => (

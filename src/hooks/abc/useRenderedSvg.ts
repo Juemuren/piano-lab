@@ -19,9 +19,12 @@ function useRenderedSvg() {
 
     if (!svgElement) return null;
 
-    const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
-    clonedSvg.setAttribute('xmlns', SVG_NAMESPACE);
+    const clonedSvg = svgElement.cloneNode(true);
+    if (!(clonedSvg instanceof SVGSVGElement)) {
+      return null;
+    }
 
+    clonedSvg.setAttribute('xmlns', SVG_NAMESPACE);
     const { width, height } = getSvgDimensions(svgElement);
     clonedSvg.setAttribute('width', width.toString());
     clonedSvg.setAttribute('height', height.toString());

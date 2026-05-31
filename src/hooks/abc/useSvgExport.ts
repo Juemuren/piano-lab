@@ -8,7 +8,7 @@ function useSvgExport(getRenderedSvg: GetRenderedSvg) {
     if (!renderedSvg) return;
 
     const blob = new Blob([renderedSvg.content], {
-      type: 'image/svg+xml;charset=utf-8',
+      type: 'image/svg+xml',
     });
 
     downloadBlob(blob, 'score.svg');
