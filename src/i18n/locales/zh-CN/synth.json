@@ -1,13 +1,8 @@
 {
-  "app": {
-    "title": "钢琴模拟器"
-  },
   "sections": {
-    "soundSynthesizer": "声音合成器",
     "envelope": "包络",
     "spectrum": "频谱",
-    "transferFunction": "传递函数",
-    "scoreEditor": "乐谱编辑器"
+    "transferFunction": "传递函数"
   },
   "oscillator": {
     "sine": "正弦波",
@@ -34,7 +29,7 @@
     "high_pass": "高通",
     "band_pass": "带通"
   },
-  "synthConfig": {
+  "config": {
     "importJson": "导入配置",
     "exportJson": "导出配置",
     "importError": "无法导入配置，请检查 JSON 文件格式。"
@@ -63,44 +58,5 @@
     "amplitudeEnvelopeCurve": "振幅包络曲线",
     "magnitudeResponse": "幅频特性",
     "phaseResponse": "相频特性"
-  },
-  "score": {
-    "custom": "自定义",
-    "importAbc": "导入 ABC",
-    "exportAbc": "导出 ABC",
-    "exportSvg": "导出 SVG",
-    "exportPng": "导出 PNG",
-    "exportPdf": "导出 PDF",
-    "exportMidi": "导出 MIDI",
-    "placeholder": "输入乐谱或选择预设",
-    "presets": {
-      "小星星": "小星星",
-      "生日快乐": "生日快乐",
-      "欢乐颂": "欢乐颂",
-      "两只老虎": "两只老虎",
-      "茉莉花": "茉莉花",
-      "春日影": "春日影",
-      "幻梦": "幻梦",
-      "约会大作战": "约会大作战"
-    }
-  },
-  "footer": {
-    "tips": {
-      "title": "使用技巧",
-      "body": "在乐谱编辑器中，单击乐谱中的音符可以选中并播放这个音符，而双击则会直接从选中处演奏整个乐谱"
-    },
-    "notation": {
-      "title": "乐谱编码",
-      "body": "乐谱使用 ABC Notation 编码格式，详细的标准可阅读官方教程"
-    },
-    "principle": {
-      "title": "运行原理",
-      "body": "声音基于 Web Audio API 纯物理合成，数学原理和代码实现可分别参考我的科普文章与源代码"
-    },
-    "links": {
-      "article": "数学原理科普文章",
-      "repository": "源代码仓库",
-      "abc": "乐谱格式教程"
-    }
   }
 }

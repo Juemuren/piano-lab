@@ -10,7 +10,7 @@ interface EnvelopeProps {
 }
 
 function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('synth');
   const {
     attackTime,
     setAttackTime,

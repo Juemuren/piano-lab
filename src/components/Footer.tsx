@@ -71,7 +71,7 @@ function FooterLink({ href, label }: FooterLinkProps) {
 }
 
 function Footer() {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('footer');
 
   return (
     <footer className="p-8 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75">
@@ -83,24 +83,19 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
-          <FooterPanel title={t('footer.tips.title')}>
-            {t('footer.tips.body')}
+          <FooterPanel title={t('tips.title')}>{t('tips.body')}</FooterPanel>
+          <FooterPanel title={t('notation.title')}>
+            {t('notation.body')}
           </FooterPanel>
-          <FooterPanel title={t('footer.notation.title')}>
-            {t('footer.notation.body')}
-          </FooterPanel>
-          <FooterPanel title={t('footer.principle.title')}>
-            {t('footer.principle.body')}
+          <FooterPanel title={t('principle.title')}>
+            {t('principle.body')}
           </FooterPanel>
         </div>
 
         <div className="grid gap-3">
-          <FooterLink href={articleUrl} label={t('footer.links.article')} />
-          <FooterLink
-            href={repositoryUrl}
-            label={t('footer.links.repository')}
-          />
-          <FooterLink href={abcUrl} label={t('footer.links.abc')} />
+          <FooterLink href={articleUrl} label={t('links.article')} />
+          <FooterLink href={repositoryUrl} label={t('links.repository')} />
+          <FooterLink href={abcUrl} label={t('links.abc')} />
         </div>
       </div>
     </footer>

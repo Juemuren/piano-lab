@@ -1,0 +1,20 @@
+{
+  "custom": "Custom",
+  "importAbc": "Import ABC",
+  "exportAbc": "Export ABC",
+  "exportSvg": "Export SVG",
+  "exportPng": "Export PNG",
+  "exportPdf": "Export PDF",
+  "exportMidi": "Export MIDI",
+  "placeholder": "Enter a score, choose a preset, or import a file",
+  "presets": {
+    "小星星": "Twinkle Twinkle Little Star",
+    "生日快乐": "Happy Birthday",
+    "欢乐颂": "Ode to Joy",
+    "两只老虎": "Two Tigers",
+    "茉莉花": "Jasmine Flower",
+    "春日影": "Haruhikage",
+    "幻梦": "One More Chance",
+    "约会大作战": "Date A Live"
+  }
+}

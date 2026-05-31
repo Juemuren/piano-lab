@@ -18,7 +18,7 @@ function Spectrum({
   initialConfig,
   onConfigChange,
 }: SpectrumProps) {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('synth');
   const {
     lambda,
     sigma,

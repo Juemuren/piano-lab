@@ -31,7 +31,7 @@ function AbcFileToolbar({
   onExportPdf,
   onExportMidi,
 }: AbcFileToolbarProps) {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('score');
 
   return (
     <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
@@ -40,37 +40,37 @@ function AbcFileToolbar({
         fileInputRef={fileInputRef}
         accept=".abc,text/vnd.abc,text/plain"
         label="ABC"
-        icon={<Upload size={18} aria-label={t('score.importAbc')} />}
+        icon={<Upload size={18} aria-label={t('importAbc')} />}
         onClick={onImportClick}
         onChange={onImportChange}
       />
       <FileExportButton
         label="ABC"
-        icon={<Download size={18} aria-label={t('score.exportAbc')} />}
+        icon={<Download size={18} aria-label={t('exportAbc')} />}
         disabled={!canExportAbc}
         onClick={onExportAbc}
       />
       <FileExportButton
         label="SVG"
-        icon={<Image size={18} aria-label={t('score.exportSvg')} />}
+        icon={<Image size={18} aria-label={t('exportSvg')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportSvg}
       />
       <FileExportButton
         label="PNG"
-        icon={<Image size={18} aria-label={t('score.exportPng')} />}
+        icon={<Image size={18} aria-label={t('exportPng')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPng}
       />
       <FileExportButton
         label="PDF"
-        icon={<BookImage size={18} aria-label={t('score.exportPdf')} />}
+        icon={<BookImage size={18} aria-label={t('exportPdf')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPdf}
       />
       <FileExportButton
         label="MIDI"
-        icon={<Music size={18} aria-label={t('score.exportMidi')} />}
+        icon={<Music size={18} aria-label={t('exportMidi')} />}
         disabled={!canExportRenderedScore}
         onClick={onExportMidi}
       />

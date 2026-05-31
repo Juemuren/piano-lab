@@ -20,7 +20,7 @@ function TransferFunction({
   initialConfig,
   onConfigChange,
 }: TransferFunctionProps) {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('synth');
   const synthEngine = useSynthEngine();
   const {
     baseFrequency,

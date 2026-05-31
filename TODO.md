@@ -3,7 +3,7 @@
 ## Refactor
 
 - 对 [types.ts](src/types.ts) 进行重构，将 Spectrum 和 TransferFunction 定义为联合类型
-- 对 i18n 进行重构，规范命名空间
+- [x] 对 i18n 进行重构，规范命名空间
 
 ## Fix
 

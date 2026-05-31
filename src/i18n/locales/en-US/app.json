@@ -1,0 +1,7 @@
+{
+  "title": "Piano Simulator",
+  "sections": {
+    "soundSynthesizer": "Sound Synthesizer",
+    "scoreEditor": "Score Editor"
+  }
+}

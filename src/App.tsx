@@ -9,7 +9,7 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 import { SynthEngineProvider } from './contexts/SynthEngineContext';
 
 function App() {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('app');
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
 
   const handleNoteStart = useCallback((pitch: number) => {
@@ -45,7 +45,7 @@ function App() {
         <div className="absolute top-3 right-3 sm:right-6">
           <LanguageSwitcher />
         </div>
-        <h1 className="text-center text-3xl font-bold">{t('app.title')}</h1>
+        <h1 className="text-center text-3xl font-bold">{t('title')}</h1>
 
         <div
           className="

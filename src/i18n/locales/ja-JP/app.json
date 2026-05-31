@@ -1,0 +1,7 @@
+{
+  "title": "ピアノシミュレーター",
+  "sections": {
+    "soundSynthesizer": "サウンドシンセサイザー",
+    "scoreEditor": "楽譜エディター"
+  }
+}

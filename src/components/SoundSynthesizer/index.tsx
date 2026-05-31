@@ -27,7 +27,7 @@ import TransferFunction from './TransferFunction';
 const SYNTH_CONFIG_FILE_INPUT_ID = 'synth-config-file-input';
 
 function SoundSynthesizer() {
-  const { t } = useTranslation('piano');
+  const { t } = useTranslation('synth');
   const synthEngine = useSynthEngine();
   const defaultConfig = useMemo(() => createDefaultSynthConfig(), []);
   const [oscillatorType, setOscillatorType] = useState(() =>
@@ -94,7 +94,7 @@ function SoundSynthesizer() {
         setImportedConfig(config);
         setImportRevision((revision) => revision + 1);
       } catch {
-        window.alert(t('synthConfig.importError'));
+        window.alert(t('config.importError'));
       }
     },
     [t],
@@ -130,15 +130,13 @@ function SoundSynthesizer() {
             fileInputRef={fileInputRef}
             accept=".json,application/json"
             label="JSON"
-            icon={<Upload size={18} aria-label={t('synthConfig.importJson')} />}
+            icon={<Upload size={18} aria-label={t('config.importJson')} />}
             onClick={openFileDialog}
             onChange={handleFileChange}
           />
           <FileExportButton
             label="JSON"
-            icon={
-              <Download size={18} aria-label={t('synthConfig.exportJson')} />
-            }
+            icon={<Download size={18} aria-label={t('config.exportJson')} />}
             onClick={handleExportConfig}
           />
         </div>

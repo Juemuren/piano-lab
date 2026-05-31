@@ -1,13 +1,8 @@
 {
-  "app": {
-    "title": "ピアノシミュレーター"
-  },
   "sections": {
-    "soundSynthesizer": "サウンドシンセサイザー",
     "envelope": "エンベロープ",
     "spectrum": "スペクトル",
-    "transferFunction": "伝達関数",
-    "scoreEditor": "楽譜エディター"
+    "transferFunction": "伝達関数"
   },
   "oscillator": {
     "sine": "サイン波",
@@ -34,7 +29,7 @@
     "high_pass": "ハイパス",
     "band_pass": "バンドパス"
   },
-  "synthConfig": {
+  "config": {
     "importJson": "設定をインポート",
     "exportJson": "設定をエクスポート",
     "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
@@ -63,44 +58,5 @@
     "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",
     "magnitudeResponse": "振幅特性",
     "phaseResponse": "位相特性"
-  },
-  "score": {
-    "custom": "カスタム",
-    "importAbc": "ABC をインポート",
-    "exportAbc": "ABC をエクスポート",
-    "exportSvg": "SVG をエクスポート",
-    "exportPng": "PNG をエクスポート",
-    "exportPdf": "PDF をエクスポート",
-    "exportMidi": "MIDI をエクスポート",
-    "placeholder": "楽譜を入力するか、プリセットを選択",
-    "presets": {
-      "小星星": "きらきら星",
-      "生日快乐": "ハッピーバースデー",
-      "欢乐颂": "歓喜の歌",
-      "两只老虎": "二匹の虎",
-      "茉莉花": "ジャスミンの花",
-      "春日影": "春日影",
-      "幻梦": "One More Chance",
-      "约会大作战": "デート・ア・ライブ"
-    }
-  },
-  "footer": {
-    "tips": {
-      "title": "ヒント",
-      "body": "楽譜エディターでは、音符をクリックすると選択してその音を再生できます。音符をダブルクリックすると、その位置から楽譜全体を再生します。"
-    },
-    "notation": {
-      "title": "楽譜記法",
-      "body": "楽譜は ABC Notation 形式を使用しています。完全な規格については公式チュートリアルを参照してください。"
-    },
-    "principle": {
-      "title": "仕組み",
-      "body": "音は Web Audio API によって物理的に合成されています。数学的な原理と実装については、記事とソースコードを参照してください。"
-    },
-    "links": {
-      "article": "数学解説記事",
-      "repository": "ソースコード",
-      "abc": "楽譜形式チュートリアル"
-    }
   }
 }

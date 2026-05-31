@@ -1,0 +1,20 @@
+{
+  "custom": "自定义",
+  "importAbc": "导入 ABC",
+  "exportAbc": "导出 ABC",
+  "exportSvg": "导出 SVG",
+  "exportPng": "导出 PNG",
+  "exportPdf": "导出 PDF",
+  "exportMidi": "导出 MIDI",
+  "placeholder": "输入乐谱，选择预设或导入文件",
+  "presets": {
+    "小星星": "小星星",
+    "生日快乐": "生日快乐",
+    "欢乐颂": "欢乐颂",
+    "两只老虎": "两只老虎",
+    "茉莉花": "茉莉花",
+    "春日影": "春日影",
+    "幻梦": "幻梦",
+    "约会大作战": "约会大作战"
+  }
+}

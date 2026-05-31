@@ -22,7 +22,7 @@ interface AbcEditorProps {
 }
 
 function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
-  const { t } = useTranslation(['common', 'piano']);
+  const { t } = useTranslation('score');
   const synthEngine = useSynthEngine();
   const [abcPlayer] = useState(
     () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
@@ -98,10 +98,10 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
           if (isPlaying) handleReplay();
         }}
       >
-        <option value={-1}>{t('piano:score.custom')}</option>
+        <option value={-1}>{t('custom')}</option>
         {ABC_PRESETS.map((name, index) => (
           <option key={index} value={index}>
-            {t(`piano:score.presets.${name}`)}
+            {t(`presets.${name}`)}
           </option>
         ))}
       </ControlSelect>
@@ -114,7 +114,7 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
           setSelectedPresetIndex(-1);
           if (isPlaying) handleReplay();
         }}
-        placeholder={t('piano:score.placeholder')}
+        placeholder={t('placeholder')}
         className="
           w-full h-48 p-4 my-2 text-sm
           bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/25

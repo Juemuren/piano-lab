@@ -1,12 +1,21 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import appEn from './locales/en-US/app.json';
 import commonEn from './locales/en-US/common.json';
-import pianoEn from './locales/en-US/piano.json';
+import footerEn from './locales/en-US/footer.json';
+import scoreEn from './locales/en-US/score.json';
+import synthEn from './locales/en-US/synth.json';
+import appJaJP from './locales/ja-JP/app.json';
 import commonJaJP from './locales/ja-JP/common.json';
-import pianoJaJP from './locales/ja-JP/piano.json';
+import footerJaJP from './locales/ja-JP/footer.json';
+import scoreJaJP from './locales/ja-JP/score.json';
+import synthJaJP from './locales/ja-JP/synth.json';
+import appZhCN from './locales/zh-CN/app.json';
 import commonZhCN from './locales/zh-CN/common.json';
-import pianoZhCN from './locales/zh-CN/piano.json';
+import footerZhCN from './locales/zh-CN/footer.json';
+import scoreZhCN from './locales/zh-CN/score.json';
+import synthZhCN from './locales/zh-CN/synth.json';
 import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import {
   DEFAULT_LANGUAGE,
@@ -19,22 +28,31 @@ const initialLanguage = getInitialLanguage();
 i18n.use(initReactI18next).init({
   resources: {
     'en-US': {
+      app: appEn,
       common: commonEn,
-      piano: pianoEn,
+      footer: footerEn,
+      score: scoreEn,
+      synth: synthEn,
     },
     'ja-JP': {
+      app: appJaJP,
       common: commonJaJP,
-      piano: pianoJaJP,
+      footer: footerJaJP,
+      score: scoreJaJP,
+      synth: synthJaJP,
     },
     'zh-CN': {
+      app: appZhCN,
       common: commonZhCN,
-      piano: pianoZhCN,
+      footer: footerZhCN,
+      score: scoreZhCN,
+      synth: synthZhCN,
     },
   },
   lng: initialLanguage,
   fallbackLng: DEFAULT_LANGUAGE,
   defaultNS: 'common',
-  ns: ['common', 'piano'],
+  ns: ['app', 'common', 'footer', 'score', 'synth'],
   interpolation: {
     escapeValue: false,
   },

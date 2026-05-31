@@ -1,13 +1,8 @@
 {
-  "app": {
-    "title": "Piano Simulator"
-  },
   "sections": {
-    "soundSynthesizer": "Sound Synthesizer",
     "envelope": "Envelope",
     "spectrum": "Spectrum",
-    "transferFunction": "Transfer Function",
-    "scoreEditor": "Score Editor"
+    "transferFunction": "Transfer Function"
   },
   "oscillator": {
     "sine": "Sine",
@@ -34,7 +29,7 @@
     "high_pass": "High Pass",
     "band_pass": "Band Pass"
   },
-  "synthConfig": {
+  "config": {
     "importJson": "Import Config",
     "exportJson": "Export Config",
     "importError": "Could not import the config. Check the JSON file format."
@@ -63,44 +58,5 @@
     "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",
     "magnitudeResponse": "Magnitude Response",
     "phaseResponse": "Phase Response"
-  },
-  "score": {
-    "custom": "Custom",
-    "importAbc": "Import ABC",
-    "exportAbc": "Export ABC",
-    "exportSvg": "Export SVG",
-    "exportPng": "Export PNG",
-    "exportPdf": "Export PDF",
-    "exportMidi": "Export MIDI",
-    "placeholder": "Enter a score or choose a preset",
-    "presets": {
-      "小星星": "Twinkle Twinkle Little Star",
-      "生日快乐": "Happy Birthday",
-      "欢乐颂": "Ode to Joy",
-      "两只老虎": "Two Tigers",
-      "茉莉花": "Jasmine Flower",
-      "春日影": "Haruhikage",
-      "幻梦": "One More Chance",
-      "约会大作战": "Date A Live"
-    }
-  },
-  "footer": {
-    "tips": {
-      "title": "Tips",
-      "body": "In the score editor, click a note to select and play it. Double-click a note to play the whole score from that position."
-    },
-    "notation": {
-      "title": "Score Notation",
-      "body": "Scores use ABC Notation. Read the official tutorial for the full standard."
-    },
-    "principle": {
-      "title": "How It Works",
-      "body": "Sound is physically synthesized with the Web Audio API. See the article and source code for the math and implementation."
-    },
-    "links": {
-      "article": "Math Article",
-      "repository": "Source Repository",
-      "abc": "Score Format Tutorial"
-    }
   }
 }

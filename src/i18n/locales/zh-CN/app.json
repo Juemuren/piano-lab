@@ -1,0 +1,7 @@
+{
+  "title": "钢琴模拟器",
+  "sections": {
+    "soundSynthesizer": "声音合成器",
+    "scoreEditor": "乐谱编辑器"
+  }
+}

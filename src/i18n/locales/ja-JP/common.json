@@ -2,7 +2,6 @@
   "actions": {
     "play": "再生",
     "pause": "一時停止",
-    "replay": "リプレイ",
-    "stop": "停止"
+    "replay": "リプレイ"
   }
 }
