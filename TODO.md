@@ -2,13 +2,22 @@
 
 ## Refactor
 
+- 对 [types.ts](src/types.ts) 进行重构，将 Spectrum 和 TransferFunction 定义为联合类型
+- 对 i18n 进行重构，规范命名空间
+
 ## Fix
 
 - Android Chrome 上 afterprint 不是在 print 后触发，而是在 print 时就触发。这导致 PDF 打印功能在移动端上存在问题。修复这个问题，有两种方案
-  - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src\hooks\abc\usePdfExport.ts) 代码语义不一致
-  - 直接打印 [AbcEditor.tsx](src\components\AbcEditor.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
+  - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src/hooks/abc/usePdfExport.ts) 代码语义不一致
+  - 直接打印 [AbcEditor.tsx](src/components/AbcEditor.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
+- 文件导出时调用操作系统的文件接口，以便重命名文件和修改下载位置，并改善桌面应用的体验
 
 ## Style
+
+- [ ] 琴键数量恒为 88 键，并在窄屏上支持横向滑动
+- [ ] 保留琴键间的边框，但消除最外层的边框
+- [x] 为声音合成器设置更合理的默认值
+- [ ] 页面增加一些图标，比如用在开始播放/暂停播放/重新播放等地方，取代原先的文字
 
 ## Feat
 
@@ -18,6 +27,7 @@
 - [x] 可将乐谱打印为 PDF。参考 https://examples.abcjs.net/printable
 - [x] 可导出 `.midi` 文件。参考 https://examples.abcjs.net/editor-synth
 - [ ] 支持键盘操作
+- [ ] 页面顶部增加 `<header>`，可以导航到乐谱编辑器/声音合成器/琴键，并把语言切换按钮放入其中
 
 待考虑的
 

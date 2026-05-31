@@ -55,9 +55,9 @@ function EnvelopeParameterControls({
       />
       <ControlRange
         label={labels.releaseTime}
-        min="0.01"
-        max="1"
-        step="0.01"
+        min="0.1"
+        max="10"
+        step="0.1"
         value={releaseTime}
         displayValue={`${releaseTime.toFixed(2)} s`}
         onChange={onReleaseTimeChange}
