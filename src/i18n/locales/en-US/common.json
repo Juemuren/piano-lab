@@ -1,6 +1,8 @@
 {
   "actions": {
     "play": "Play",
+    "pause": "Pause",
+    "replay": "Replay",
     "stop": "Stop"
   }
 }

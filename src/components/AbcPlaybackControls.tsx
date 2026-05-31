@@ -2,10 +2,12 @@ import { useTranslation } from 'react-i18next';
 
 interface AbcPlaybackControlsProps {
   isPlaying: boolean;
+  isPlaybackEnded: boolean;
   currentSeconds: number;
   totalSeconds: number;
   onPlay: () => void;
-  onStop: () => void;
+  onPause: () => void;
+  onReplay: () => void;
   onProgressChange: (seconds: number) => void;
 }
 
@@ -19,13 +21,16 @@ const formatTime = (seconds: number) => {
 
 function AbcPlaybackControls({
   isPlaying,
+  isPlaybackEnded,
   currentSeconds,
   totalSeconds,
   onPlay,
-  onStop,
+  onPause,
+  onReplay,
   onProgressChange,
 }: AbcPlaybackControlsProps) {
   const { t } = useTranslation('common');
+  const canReplay = isPlaying || currentSeconds > 0 || isPlaybackEnded;
 
   return (
     <div
@@ -34,17 +39,32 @@ function AbcPlaybackControls({
     >
       <button
         type="button"
-        onClick={isPlaying ? onStop : onPlay}
+        disabled={isPlaybackEnded}
+        onClick={isPlaying ? onPause : onPlay}
         className={`
-          px-4 py-2 rounded-lg text-app-on-accent transition-colors
-          ${
-            isPlaying
-              ? 'bg-app-danger hover:bg-app-danger-strong'
-              : 'bg-app-success hover:bg-app-success-strong'
-          }
-        `}
+            px-4 py-2 rounded-lg text-app-on-accent transition-colors
+            disabled:cursor-not-allowed disabled:opacity-50
+            ${
+              isPlaying
+                ? 'bg-app-danger hover:bg-app-danger-strong disabled:hover:bg-app-danger'
+                : 'bg-app-success hover:bg-app-success-strong disabled:hover:bg-app-success'
+            }
+          `}
       >
-        {isPlaying ? t('actions.stop') : t('actions.play')}
+        {isPlaying ? t('actions.pause') : t('actions.play')}
+      </button>
+
+      <button
+        type="button"
+        disabled={!canReplay}
+        onClick={onReplay}
+        className="
+            px-4 py-2 rounded-lg text-app-on-accent transition-colors
+            disabled:cursor-not-allowed disabled:opacity-50
+            bg-app-success hover:bg-app-success-strong disabled:hover:bg-app-success
+          "
+      >
+        {t('actions.replay')}
       </button>
 
       <input

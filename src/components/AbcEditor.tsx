@@ -31,11 +31,13 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   const [abcContent, setAbcContent] = useState('');
   const {
     isPlaying,
+    isPlaybackEnded,
     hasNotes,
     currentSeconds,
     totalSeconds,
     handlePlay,
-    handleStop,
+    handlePause,
+    handleReplay,
     handleProgressChange,
   } = useAbcPlayback({
     abcContent,
@@ -56,9 +58,9 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     (content: string) => {
       setAbcContent(content);
       setSelectedPresetIndex(-1);
-      if (isPlaying) handleStop();
+      if (isPlaying) handleReplay();
     },
-    [handleStop, isPlaying],
+    [handleReplay, isPlaying],
   );
 
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
@@ -89,11 +91,11 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
           if (index >= 0) {
             const content = await getAbcPreset(index);
             setAbcContent(content);
-            if (isPlaying) handleStop();
+            if (isPlaying) handleReplay();
           } else {
             setAbcContent('');
           }
-          if (isPlaying) handleStop();
+          if (isPlaying) handleReplay();
         }}
       >
         <option value={-1}>{t('piano:score.custom')}</option>
@@ -110,7 +112,7 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
         onChange={(e) => {
           setAbcContent(e.target.value);
           setSelectedPresetIndex(-1);
-          if (isPlaying) handleStop();
+          if (isPlaying) handleReplay();
         }}
         placeholder={t('piano:score.placeholder')}
         className="
@@ -124,10 +126,12 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
       {hasNotes && (
         <AbcPlaybackControls
           isPlaying={isPlaying}
+          isPlaybackEnded={isPlaybackEnded}
           currentSeconds={currentSeconds}
           totalSeconds={totalSeconds}
           onPlay={handlePlay}
-          onStop={handleStop}
+          onPause={handlePause}
+          onReplay={handleReplay}
           onProgressChange={handleProgressChange}
         />
       )}

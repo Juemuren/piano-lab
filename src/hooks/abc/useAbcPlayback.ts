@@ -37,6 +37,7 @@ function useAbcPlayback({
   renderTargetId,
 }: UseAbcPlaybackOptions) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaybackEnded, setIsPlaybackEnded] = useState(false);
   const [hasNotes, setHasNotes] = useState(false);
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
@@ -83,6 +84,9 @@ function useAbcPlayback({
       isSeekingRef.current = true;
       timingCallbacksRef.current?.setProgress(seconds, 'seconds');
       updateCurrentSeconds(seconds);
+      setIsPlaybackEnded(
+        totalSecondsRef.current > 0 && seconds >= totalSecondsRef.current,
+      );
       window.setTimeout(() => {
         isSeekingRef.current = false;
       }, 0);
@@ -93,6 +97,7 @@ function useAbcPlayback({
   const resetProgress = useCallback(() => {
     timingCallbacksRef.current?.reset();
     updateCurrentSeconds(0);
+    setIsPlaybackEnded(false);
     removeHighlight();
   }, [updateCurrentSeconds]);
 
@@ -108,14 +113,15 @@ function useAbcPlayback({
     setIsPlaying(playing);
   }, []);
 
-  const handleStop = useCallback(() => {
+  const handlePause = useCallback(() => {
     if (timingCallbacksRef.current) {
-      timingCallbacksRef.current.stop();
+      timingCallbacksRef.current.pause();
+      updateCurrentSeconds(
+        timingCallbacksRef.current.currentMillisecond() / 1000,
+      );
     }
     setPlaying(false);
-    updateCurrentSeconds(0);
     onStop();
-    removeHighlight();
   }, [onStop, setPlaying, updateCurrentSeconds]);
 
   const handlePlay = useCallback(() => {
@@ -124,9 +130,20 @@ function useAbcPlayback({
     if (timingCallbacksRef.current) {
       timingCallbacksRef.current.stop();
       timingCallbacksRef.current.start(currentSecondsRef.current, 'seconds');
+      setIsPlaybackEnded(false);
       setPlaying(true);
     }
   }, [onStop, setPlaying]);
+
+  const handleReplay = useCallback(() => {
+    if (timingCallbacksRef.current) {
+      timingCallbacksRef.current.stop();
+    }
+    setPlaying(false);
+    updateCurrentSeconds(0);
+    setIsPlaybackEnded(false);
+    handlePlay();
+  }, [handlePlay, setPlaying, updateCurrentSeconds]);
 
   useEffect(() => {
     const clickListener = (abcElem: AbcElem) => {
@@ -152,6 +169,8 @@ function useAbcPlayback({
     const eventCallback = (ev: NoteTimingEvent | null) => {
       removeHighlight();
       if (!ev) {
+        updateCurrentSeconds(totalSecondsRef.current);
+        setIsPlaybackEnded(true);
         setPlaying(false);
         return;
       }
@@ -170,17 +189,18 @@ function useAbcPlayback({
       clickListener,
     })[0];
     visualObjRef.current.setUpAudio({});
-    const nextTotalSeconds = visualObjRef.current.getTotalTime() ?? 0;
-    setHasNotes(visualObjRef.current.lines.length > 0);
-    updateTotalSeconds(nextTotalSeconds);
-    updateCurrentSeconds(0, nextTotalSeconds);
-
     const timingCallbacks = new TimingCallbacks(visualObjRef.current, {
       beatCallback,
       beatSubdivisions: BEAT_SUBDIVISIONS,
       eventCallback,
     });
     timingCallbacksRef.current = timingCallbacks;
+
+    const nextTotalSeconds = visualObjRef.current.getTotalTime() ?? 0;
+    setHasNotes(visualObjRef.current.lines.length > 0);
+    setIsPlaybackEnded(false);
+    updateTotalSeconds(nextTotalSeconds);
+    updateCurrentSeconds(0, nextTotalSeconds);
 
     return () => {
       timingCallbacks.stop();
@@ -201,11 +221,13 @@ function useAbcPlayback({
 
   return {
     isPlaying,
+    isPlaybackEnded,
     hasNotes,
     currentSeconds,
     totalSeconds,
     handlePlay,
-    handleStop,
+    handlePause,
+    handleReplay,
     handleProgressChange,
     resetProgress,
   };
