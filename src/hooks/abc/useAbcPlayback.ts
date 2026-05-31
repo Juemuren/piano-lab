@@ -38,63 +38,67 @@ function useAbcPlayback({
 }: UseAbcPlaybackOptions) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasNotes, setHasNotes] = useState(false);
-  const [currentBeat, setCurrentBeat] = useState(0);
-  const [totalBeats, setTotalBeats] = useState(0);
+  const [currentSeconds, setCurrentSeconds] = useState(0);
+  const [totalSeconds, setTotalSeconds] = useState(0);
   const visualObjRef = useRef<TuneObject>(null);
   const timingCallbacksRef = useRef<TimingCallbacks | null>(null);
   const isPlayingRef = useRef(false);
-  const currentBeatRef = useRef(0);
-  const totalBeatsRef = useRef(0);
+  const currentSecondsRef = useRef(0);
+  const totalSecondsRef = useRef(0);
+  const isSeekingRef = useRef(false);
 
   useEffect(() => {
     isPlayingRef.current = isPlaying;
   }, [isPlaying]);
 
-  const getSelectedBeat = useCallback((abcElem: AbcElem) => {
-    const currentSelectedNote = abcElem.currentTrackWholeNotes ?? 0;
-    const beatLength = visualObjRef.current?.getBeatLength() ?? 1;
+  const getSelectedSeconds = useCallback((abcElem: AbcElem) => {
+    const currentMilliseconds = abcElem.currentTrackMilliseconds ?? 0;
 
-    if (Array.isArray(currentSelectedNote)) {
-      return currentSelectedNote[0] / beatLength;
+    if (Array.isArray(currentMilliseconds)) {
+      return currentMilliseconds[0] / 1000;
     }
-    return currentSelectedNote / beatLength;
+    return currentMilliseconds / 1000;
   }, []);
 
-  const updateCurrentBeat = useCallback(
-    (beat: number, total = totalBeatsRef.current) => {
-      const nextBeat = Math.max(0, Math.min(beat, total));
-      currentBeatRef.current = nextBeat;
-      setCurrentBeat(nextBeat);
+  const updateCurrentSeconds = useCallback(
+    (seconds: number, total = totalSecondsRef.current) => {
+      const nextSeconds = Math.max(0, Math.min(seconds, total));
+      currentSecondsRef.current = nextSeconds;
+      setCurrentSeconds(nextSeconds);
     },
     [],
   );
 
-  const updateTotalBeats = useCallback(
-    (beatCount: number) => {
-      totalBeatsRef.current = beatCount;
-      setTotalBeats(beatCount);
-      updateCurrentBeat(currentBeatRef.current, beatCount);
+  const updateTotalSeconds = useCallback(
+    (seconds: number) => {
+      totalSecondsRef.current = seconds;
+      setTotalSeconds(seconds);
+      updateCurrentSeconds(currentSecondsRef.current, seconds);
     },
-    [updateCurrentBeat],
+    [updateCurrentSeconds],
   );
 
   const setProgress = useCallback(
-    (beat: number) => {
-      timingCallbacksRef.current?.setProgress(beat, 'beats');
-      updateCurrentBeat(beat);
+    (seconds: number) => {
+      isSeekingRef.current = true;
+      timingCallbacksRef.current?.setProgress(seconds, 'seconds');
+      updateCurrentSeconds(seconds);
+      window.setTimeout(() => {
+        isSeekingRef.current = false;
+      }, 0);
     },
-    [updateCurrentBeat],
+    [updateCurrentSeconds],
   );
 
   const resetProgress = useCallback(() => {
     timingCallbacksRef.current?.reset();
-    updateCurrentBeat(0);
+    updateCurrentSeconds(0);
     removeHighlight();
-  }, [updateCurrentBeat]);
+  }, [updateCurrentSeconds]);
 
   const handleProgressChange = useCallback(
-    (beat: number) => {
-      setProgress(beat);
+    (seconds: number) => {
+      setProgress(seconds);
     },
     [setProgress],
   );
@@ -109,17 +113,17 @@ function useAbcPlayback({
       timingCallbacksRef.current.stop();
     }
     setPlaying(false);
-    updateCurrentBeat(0);
+    updateCurrentSeconds(0);
     onStop();
     removeHighlight();
-  }, [onStop, setPlaying, updateCurrentBeat]);
+  }, [onStop, setPlaying, updateCurrentSeconds]);
 
   const handlePlay = useCallback(() => {
     onStop();
     removeHighlight();
     if (timingCallbacksRef.current) {
       timingCallbacksRef.current.stop();
-      timingCallbacksRef.current.start(currentBeatRef.current, 'beats');
+      timingCallbacksRef.current.start(currentSecondsRef.current, 'seconds');
       setPlaying(true);
     }
   }, [onStop, setPlaying]);
@@ -130,12 +134,19 @@ function useAbcPlayback({
         return;
       }
 
-      setProgress(getSelectedBeat(abcElem));
+      setProgress(getSelectedSeconds(abcElem));
     };
 
-    const beatCallback: BeatCallback = (beatNumber, total) => {
-      updateTotalBeats(total);
-      updateCurrentBeat(beatNumber, total);
+    const beatCallback: BeatCallback = (
+      _beatNumber,
+      _totalBeats,
+      totalTime,
+    ) => {
+      updateTotalSeconds(totalTime / 1000);
+      updateCurrentSeconds(
+        (timingCallbacksRef.current?.currentMillisecond() ?? 0) / 1000,
+        totalTime / 1000,
+      );
     };
 
     const eventCallback = (ev: NoteTimingEvent | null) => {
@@ -147,7 +158,7 @@ function useAbcPlayback({
       ev.elements?.forEach((noteGroup) => {
         addHighlight(noteGroup);
       });
-      if (ev.midiPitches) {
+      if (ev.midiPitches && !isSeekingRef.current) {
         abcPlayer.play(ev.midiPitches, ev.millisecondsPerMeasure);
       }
       return 'continue';
@@ -159,10 +170,10 @@ function useAbcPlayback({
       clickListener,
     })[0];
     visualObjRef.current.setUpAudio({});
-    const nextTotalBeats = visualObjRef.current.getTotalBeats();
+    const nextTotalSeconds = visualObjRef.current.getTotalTime() ?? 0;
     setHasNotes(visualObjRef.current.lines.length > 0);
-    updateTotalBeats(nextTotalBeats);
-    updateCurrentBeat(0, nextTotalBeats);
+    updateTotalSeconds(nextTotalSeconds);
+    updateCurrentSeconds(0, nextTotalSeconds);
 
     const timingCallbacks = new TimingCallbacks(visualObjRef.current, {
       beatCallback,
@@ -180,10 +191,10 @@ function useAbcPlayback({
   }, [
     abcContent,
     abcPlayer,
-    getSelectedBeat,
+    getSelectedSeconds,
     setProgress,
-    updateCurrentBeat,
-    updateTotalBeats,
+    updateCurrentSeconds,
+    updateTotalSeconds,
     setPlaying,
     renderTargetId,
   ]);
@@ -191,8 +202,8 @@ function useAbcPlayback({
   return {
     isPlaying,
     hasNotes,
-    currentBeat,
-    totalBeats,
+    currentSeconds,
+    totalSeconds,
     handlePlay,
     handleStop,
     handleProgressChange,

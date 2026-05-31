@@ -2,24 +2,30 @@ import { useTranslation } from 'react-i18next';
 
 interface AbcPlaybackControlsProps {
   isPlaying: boolean;
-  currentBeat: number;
-  totalBeats: number;
+  currentSeconds: number;
+  totalSeconds: number;
   onPlay: () => void;
   onStop: () => void;
-  onProgressChange: (beat: number) => void;
+  onProgressChange: (seconds: number) => void;
 }
+
+const formatTime = (seconds: number) => {
+  const safeSeconds = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const remainingSeconds = safeSeconds % 60;
+
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
 
 function AbcPlaybackControls({
   isPlaying,
-  currentBeat,
-  totalBeats,
+  currentSeconds,
+  totalSeconds,
   onPlay,
   onStop,
   onProgressChange,
 }: AbcPlaybackControlsProps) {
   const { t } = useTranslation('common');
-  const progressPercent =
-    totalBeats > 0 ? Math.round((currentBeat / totalBeats) * 100) : 0;
 
   return (
     <div
@@ -44,15 +50,15 @@ function AbcPlaybackControls({
       <input
         type="range"
         min={0}
-        max={totalBeats}
-        step={0.125}
-        value={currentBeat}
+        max={totalSeconds}
+        step={0.1}
+        value={currentSeconds}
         onChange={(e) => onProgressChange(parseFloat(e.target.value))}
         className="flex-1 accent-app-tip dark:accent-app-tip-dark"
       />
 
-      <span className="w-12 text-right text-sm font-semibold tabular-nums">
-        {progressPercent}%
+      <span className="w-24 text-right text-sm font-semibold tabular-nums">
+        {formatTime(currentSeconds)} / {formatTime(totalSeconds)}
       </span>
     </div>
   );

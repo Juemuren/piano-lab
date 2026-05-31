@@ -32,8 +32,8 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   const {
     isPlaying,
     hasNotes,
-    currentBeat,
-    totalBeats,
+    currentSeconds,
+    totalSeconds,
     handlePlay,
     handleStop,
     handleProgressChange,
@@ -124,8 +124,8 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
       {hasNotes && (
         <AbcPlaybackControls
           isPlaying={isPlaying}
-          currentBeat={currentBeat}
-          totalBeats={totalBeats}
+          currentSeconds={currentSeconds}
+          totalSeconds={totalSeconds}
           onPlay={handlePlay}
           onStop={handleStop}
           onProgressChange={handleProgressChange}
