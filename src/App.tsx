@@ -54,13 +54,13 @@ function App() {
         >
           <section
             id="sound-synthesizer"
-            className="mx-auto w-full scroll-mt-36"
+            className="mx-auto w-full scroll-mt-16"
           >
             <CollapsibleSection title={t('sections.soundSynthesizer')}>
               <SoundSynthesizer />
             </CollapsibleSection>
           </section>
-          <section id="score-editor" className="mx-auto w-full scroll-mt-36">
+          <section id="score-editor" className="mx-auto w-full scroll-mt-16">
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor
                 onNoteStart={handleNoteStart}
@@ -71,7 +71,7 @@ function App() {
           </section>
         </div>
 
-        <section id="piano-keyboard" className="scroll-mt-36">
+        <section id="piano-keyboard" className="scroll-mt-16">
           <Piano playingNotes={playingNotes} />
         </section>
       </main>
