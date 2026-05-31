@@ -2,6 +2,30 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.6.0]
+
+### Added
+
+- Added MIDI export support for ABC scores.
+- Added PDF printing support for rendered scores.
+- Added playback progress controls, including pause and replay actions.
+- Added a top navigation header for the score editor, sound synthesizer, keyboard, and about sections.
+- Added Lucide icons across the interface.
+- Added native file-save dialogs for supported browsers, with the existing download behavior kept as a fallback.
+
+### Changed
+
+- Made the piano keyboard consistently display the full 88-key range from A0 to C8, with horizontal scrolling for narrow screens.
+- Updated the sound envelope defaults to use more practical starting values.
+- Standardized i18n namespaces and adjusted related interface text.
+- Unified exported filenames to use uppercase names.
+- Reworked the ABC editor, export hooks, header structure, and hook directory layout.
+
+### Fixed
+
+- Fixed occasional keyboard-highlight failures during score playback.
+- Fixed playback callback timing by using seconds instead of beats.
+
 ## [0.5.0]
 
 ### Added
