@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ABC_PRESETS, getAbcPreset } from '../services/abc/AbcPresets';
 import { AbcPlayer } from '../services/abc/AbcPlayer';
 import AbcFileToolbar from './AbcFileToolbar';
+import AbcPlaybackControls from './AbcPlaybackControls';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 import useFileImport from '../hooks/file/useFileImport';
@@ -28,7 +29,15 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
   const [abcContent, setAbcContent] = useState('');
-  const { isPlaying, hasNotes, handlePlay, handleStop } = useAbcPlayback({
+  const {
+    isPlaying,
+    hasNotes,
+    currentBeat,
+    totalBeats,
+    handlePlay,
+    handleStop,
+    handleProgressChange,
+  } = useAbcPlayback({
     abcContent,
     abcPlayer,
     onStop,
@@ -112,23 +121,16 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
         "
       />
 
-      <div className="flex justify-center">
-        {hasNotes && (
-          <button
-            onClick={isPlaying ? handleStop : handlePlay}
-            className={`
-              w-full py-2 rounded-xl text-app-on-accent transition-colors
-              ${
-                isPlaying
-                  ? 'bg-app-danger hover:bg-app-danger-strong'
-                  : 'bg-app-success hover:bg-app-success-strong'
-              }
-            `}
-          >
-            {isPlaying ? t('common:actions.stop') : t('common:actions.play')}
-          </button>
-        )}
-      </div>
+      {hasNotes && (
+        <AbcPlaybackControls
+          isPlaying={isPlaying}
+          currentBeat={currentBeat}
+          totalBeats={totalBeats}
+          onPlay={handlePlay}
+          onStop={handleStop}
+          onProgressChange={handleProgressChange}
+        />
+      )}
 
       <div id={RENDER_TARGET_ID} ref={renderTargetRef} className="w-full" />
     </ControlPanel>
