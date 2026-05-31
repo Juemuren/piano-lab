@@ -185,7 +185,7 @@ function useAbcPlayback({
 
     visualObjRef.current = renderAbc(renderTargetId, abcContent, {
       responsive: 'resize',
-      add_classes: true,
+      selectionColor: 'currentColor',
       clickListener,
     })[0];
     visualObjRef.current.setUpAudio({});
