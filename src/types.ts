@@ -8,14 +8,14 @@ export type SpectrumType =
   | 'realistic'
   | 'custom';
 
-export type SpectrumPresetType = Exclude<SpectrumType, 'custom'>;
+export type BuiltInSpectrumType = Exclude<SpectrumType, 'custom'>;
 
 export interface Spectrum {
   amplitudes: number[];
 }
 
-export interface SpectrumPresetParams {
-  type: SpectrumPresetType;
+export interface SpectrumDefinition {
+  type: BuiltInSpectrumType;
   lambda: number;
   sigma: number;
   p: number;
@@ -43,7 +43,7 @@ export interface TransferFunction {
   phases: number[];
 }
 
-export interface TransferFunctionPresetParams {
+export interface TransferFunctionDefinition {
   type: TransferFunctionType;
   tau: number;
   alpha: number;

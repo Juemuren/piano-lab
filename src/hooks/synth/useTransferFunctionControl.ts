@@ -4,7 +4,7 @@ import type {
   TransferFunctionConfig,
   TransferFunctionType,
 } from '../../types';
-import { getTransferFunctionPreset } from '../../services/synth/SynthPresets';
+import { createTransferFunction } from '../../services/synth/SynthDefinitions';
 import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
   DEFAULT_TRANSFER_FUNCTION_TYPE,
@@ -55,7 +55,7 @@ function useTransferFunctionControl(
 
   const transferFunction = useMemo<TransferFunction>(
     () =>
-      getTransferFunctionPreset(
+      createTransferFunction(
         {
           type: transferFunctionType,
           tau,
@@ -104,8 +104,8 @@ function useTransferFunctionControl(
     onConfigChange?.(transferFunctionConfig);
   }, [onConfigChange, transferFunctionConfig]);
 
-  const handlePresetChange = (preset: TransferFunctionType) => {
-    setTransferFunctionType(preset);
+  const handleTransferFunctionTypeChange = (type: TransferFunctionType) => {
+    setTransferFunctionType(type);
   };
 
   const handleParamsChange = (updates: TransferFunctionParamUpdates) => {
@@ -126,7 +126,7 @@ function useTransferFunctionControl(
     baseFrequency,
     transferFunctionConfig,
     transferFunction,
-    handlePresetChange,
+    handleTransferFunctionTypeChange,
     handleParamsChange,
   };
 }

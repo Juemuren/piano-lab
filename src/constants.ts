@@ -1,4 +1,4 @@
-import type { SpectrumPresetType, TransferFunctionType } from './types';
+import type { BuiltInSpectrumType, TransferFunctionType } from './types';
 
 export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;
@@ -10,7 +10,7 @@ export const DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS = 0.8;
 export const DEFAULT_ENVELOPE_SUSTAIN_GAIN = 0.5;
 export const DEFAULT_ENVELOPE_SILENCE_GAIN = 0.00001;
 
-export const DEFAULT_SPECTRUM_TYPE: SpectrumPresetType = 'ethereal';
+export const DEFAULT_SPECTRUM_TYPE: BuiltInSpectrumType = 'ethereal';
 export const DEFAULT_SPECTRUM_STRIKE_POINT = 0.5;
 export const DEFAULT_SPECTRUM_DECAY_RATE = 0.8;
 export const DEFAULT_SPECTRUM_POWER_EXPONENT = 1.5;

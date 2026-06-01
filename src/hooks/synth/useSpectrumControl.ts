@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Spectrum, SpectrumConfig, SpectrumType } from '../../types';
-import { getSpectrumPreset } from '../../services/synth/SynthPresets';
+import { createSpectrum } from '../../services/synth/SynthDefinitions';
 import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
   DEFAULT_SPECTRUM_TYPE,
@@ -40,7 +40,7 @@ function useSpectrumControl(
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
     () =>
       initialConfig?.customAmplitudes ??
-      getSpectrumPreset(
+      createSpectrum(
         {
           type: DEFAULT_SPECTRUM_TYPE,
           lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -57,7 +57,7 @@ function useSpectrumControl(
         amplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
       };
     }
-    return getSpectrumPreset(
+    return createSpectrum(
       { type: spectrumType, lambda, sigma, p },
       harmonicCount,
     );
@@ -85,14 +85,13 @@ function useSpectrumControl(
     spectrumType,
   ]);
 
-  const handlePresetChange = (preset: SpectrumType) => {
-    if (preset !== 'custom') {
+  const handleSpectrumTypeChange = (type: SpectrumType) => {
+    if (type !== 'custom') {
       setCustomAmplitudes(
-        getSpectrumPreset({ type: preset, lambda, sigma, p }, harmonicCount)
-          .amplitudes,
+        createSpectrum({ type, lambda, sigma, p }, harmonicCount).amplitudes,
       );
     }
-    setSpectrumType(preset);
+    setSpectrumType(type);
   };
 
   const handleParamsChange = (update: SpectrumParamUpdates) => {
@@ -116,7 +115,7 @@ function useSpectrumControl(
     p,
     spectrumType,
     spectrum,
-    handlePresetChange,
+    handleSpectrumTypeChange,
     handleParamsChange,
     handleAmplitudeChange,
   };

@@ -31,7 +31,7 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../utils/runtime';
-import { getSpectrumPreset } from './SynthPresets';
+import { createSpectrum } from './SynthDefinitions';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
   'sine',
@@ -79,7 +79,7 @@ export function createDefaultSynthConfig(): SynthConfig {
       lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
       sigma: DEFAULT_SPECTRUM_DECAY_RATE,
       p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-      customAmplitudes: getSpectrumPreset(
+      customAmplitudes: createSpectrum(
         {
           type: DEFAULT_SPECTRUM_TYPE,
           lambda: DEFAULT_SPECTRUM_STRIKE_POINT,

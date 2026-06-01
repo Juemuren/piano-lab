@@ -1,9 +1,9 @@
 import type {
   TransferFunction,
-  TransferFunctionPresetParams,
+  TransferFunctionDefinition,
   Spectrum,
 } from '../../types';
-import { getSpectrumPreset, getTransferFunctionPreset } from './SynthPresets';
+import { createSpectrum, createTransferFunction } from './SynthDefinitions';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -30,7 +30,7 @@ const MIN_GAIN_VALUE = 1e-10;
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
-  private spectrum: Spectrum = getSpectrumPreset(
+  private spectrum: Spectrum = createSpectrum(
     {
       type: DEFAULT_SPECTRUM_TYPE,
       lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -39,7 +39,7 @@ export class SynthEngine {
     },
     this.harmonicCount,
   );
-  private transferFunctionParams: TransferFunctionPresetParams = {
+  private transferFunctionDefinition: TransferFunctionDefinition = {
     type: DEFAULT_TRANSFER_FUNCTION_TYPE,
     tau: DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
     alpha: DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
@@ -47,8 +47,8 @@ export class SynthEngine {
     maxFrequency: DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
     baseFrequency: DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
   };
-  private transferFunction: TransferFunction = getTransferFunctionPreset(
-    this.transferFunctionParams,
+  private transferFunction: TransferFunction = createTransferFunction(
+    this.transferFunctionDefinition,
     this.harmonicCount,
   );
 
@@ -76,11 +76,11 @@ export class SynthEngine {
 
   setTransferFunction(
     transferFunction: TransferFunction,
-    params?: TransferFunctionPresetParams,
+    definition?: TransferFunctionDefinition,
   ) {
     this.transferFunction = transferFunction;
-    if (params) {
-      this.transferFunctionParams = params;
+    if (definition) {
+      this.transferFunctionDefinition = definition;
     }
   }
 
@@ -196,8 +196,8 @@ export class SynthEngine {
 
     const baseFrequency = this.getBaseFrequency(pitch, cents);
     const harmonics = this.spectrum.amplitudes.length;
-    const { magnitudes, phases } = getTransferFunctionPreset(
-      { ...this.transferFunctionParams, baseFrequency },
+    const { magnitudes, phases } = createTransferFunction(
+      { ...this.transferFunctionDefinition, baseFrequency },
       harmonics,
     );
 

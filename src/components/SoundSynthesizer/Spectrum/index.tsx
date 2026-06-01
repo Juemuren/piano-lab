@@ -25,7 +25,7 @@ function Spectrum({
     p,
     spectrumType,
     spectrum,
-    handlePresetChange,
+    handleSpectrumTypeChange,
     handleParamsChange,
     handleAmplitudeChange,
   } = useSpectrumControl(harmonicCount, initialConfig, onConfigChange);
@@ -35,7 +35,7 @@ function Spectrum({
       <ControlSelect
         value={spectrumType}
         onChange={(e) => {
-          handlePresetChange(e.target.value as SpectrumType);
+          handleSpectrumTypeChange(e.target.value as SpectrumType);
         }}
       >
         <option value="metallic">{t('spectrum.metallic')}</option>

@@ -26,7 +26,7 @@ function TransferFunction({
     baseFrequency,
     transferFunctionConfig,
     transferFunction,
-    handlePresetChange,
+    handleTransferFunctionTypeChange,
     handleParamsChange,
   } = useTransferFunctionControl(harmonicCount, initialConfig, onConfigChange);
   const { selectedPitch, baseFrequencyPitchOptions } =
@@ -37,7 +37,9 @@ function TransferFunction({
       <ControlSelect
         value={transferFunctionConfig.type}
         onChange={(e) =>
-          handlePresetChange(e.target.value as TransferFunctionType)
+          handleTransferFunctionTypeChange(
+            e.target.value as TransferFunctionType,
+          )
         }
       >
         <option value="delay">{t('transferFunction.delay')}</option>
