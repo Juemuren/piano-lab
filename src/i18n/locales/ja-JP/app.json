@@ -8,6 +8,7 @@
     "about": "について"
   },
   "settings": {
+    "keyboardControl": "キーボードで鍵盤を操作する",
     "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む"
   }
 }

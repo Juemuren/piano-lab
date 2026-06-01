@@ -8,6 +8,7 @@
     "about": "关于"
   },
   "settings": {
+    "keyboardControl": "允许使用键盘控制琴键",
     "pianoInput": "按下琴键时将音符写入乐谱"
   }
 }

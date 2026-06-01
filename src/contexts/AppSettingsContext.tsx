@@ -7,13 +7,17 @@ interface AppSettingsProviderProps {
 
 export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [isPianoInputEnabled, setIsPianoInputEnabled] = useState(false);
+  const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] =
+    useState(true);
 
   const value = useMemo(
     () => ({
       isPianoInputEnabled,
       setIsPianoInputEnabled,
+      isKeyboardControlEnabled,
+      setIsKeyboardControlEnabled,
     }),
-    [isPianoInputEnabled],
+    [isKeyboardControlEnabled, isPianoInputEnabled],
   );
 
   return (

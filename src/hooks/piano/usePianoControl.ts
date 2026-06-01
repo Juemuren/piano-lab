@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useAppSettings } from '../../contexts/useAppSettings';
 import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
   getPitchName,
@@ -111,6 +112,7 @@ function usePianoControl(
   onNoteInput?: (pitch: number) => void,
 ) {
   const synthEngine = useSynthEngine();
+  const { isKeyboardControlEnabled } = useAppSettings();
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
   const pressedKeysRef = useRef<Set<number>>(new Set());
@@ -157,6 +159,20 @@ function usePianoControl(
   );
 
   useEffect(() => {
+    if (!isKeyboardControlEnabled) {
+      const keyboardNotes = activeKeyboardNotesRef.current;
+      if (keyboardNotes.size > 0) {
+        const newSet = new Set(pressedKeysRef.current);
+        for (const note of keyboardNotes.values()) {
+          newSet.delete(note);
+        }
+        keyboardNotes.clear();
+        pressedKeysRef.current = newSet;
+        setPressedKeys(newSet);
+      }
+      return;
+    }
+
     function handleKeyboardKeyDown(e: KeyboardEvent) {
       if (isEditableTarget(e.target) || e.altKey || e.ctrlKey || e.metaKey) {
         return;
@@ -209,12 +225,17 @@ function usePianoControl(
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [onNoteInput, playNote]);
+  }, [isKeyboardControlEnabled, onNoteInput, playNote]);
 
   const { whiteKeys, blackKeys } = pianoKeys;
 
   const keyHints = useMemo(() => {
     const hints = new Map<number, string>();
+
+    if (!isKeyboardControlEnabled) {
+      return hints;
+    }
+
     const basePitch = getBasePitchByOctave(keyboardOctave);
 
     for (const { label, offset } of KEYBOARD_NOTE_MAP.values()) {
@@ -222,7 +243,7 @@ function usePianoControl(
     }
 
     return hints;
-  }, [keyboardOctave]);
+  }, [isKeyboardControlEnabled, keyboardOctave]);
 
   const isKeyPressed = useCallback(
     (note: number) => pressedKeys.has(note) || playingNotes.has(note),

@@ -8,6 +8,7 @@
     "about": "About"
   },
   "settings": {
+    "keyboardControl": "Allow keyboard control of piano keys",
     "pianoInput": "Write notes to the score when piano keys are pressed"
   }
 }
