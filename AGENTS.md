@@ -5,6 +5,7 @@
 ## React 指南
 
 - 组件只负责渲染，业务逻辑相关的代码请写入 hook 中
+- 对于 button/select 等基础元素，尽量复用[共享组件](src/components/shared/)
 
 ## TypeScript 指南
 
@@ -14,6 +15,10 @@
 
 - 不要添加 `aria-` 属性
 - `className` 尽量简洁，不要添加不必要的样式
+
+## i18n 指南
+
+- 除非指定进行 i18n，否则只实现 [zh-CN](src/i18n/locales/zh-CN/) 的原始文本
 
 ## 代码质量
 
