@@ -34,7 +34,7 @@ export default defineConfig({
   base:
     process.env.TAURI_ENV_PLATFORM || process.env.VITE_DEBUG
       ? './'
-      : '/web-piano-simulator/',
+      : '/piano-lab/',
   define: {
     global: 'globalThis',
   },

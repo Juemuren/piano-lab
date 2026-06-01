@@ -1,6 +1,6 @@
 <div align="center">
 
-# 钢琴模拟器
+# 弦律
 
 [中文](README.md) | [English](docs/README.en.md) | [日本語](docs/README.jp.md)
 
@@ -11,21 +11,21 @@
 [![release][badge-release]][link-release]
 [![license][badge-license]](LICENSE)
 
-[badge-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg
-[badge-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml/badge.svg
+[badge-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml/badge.svg
+[badge-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml/badge.svg
 [badge-website]: https://img.shields.io/badge/website-github.io-green
-[badge-release]: https://img.shields.io/github/release/Juemuren/web-piano-simulator
-[badge-license]: https://img.shields.io/github/license/Juemuren/web-piano-simulator
-[link-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml
-[link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
-[link-website]: https://Juemuren.github.io/web-piano-simulator/
-[link-release]: https://github.com/Juemuren/web-piano-simulator/releases
+[badge-release]: https://img.shields.io/github/release/Juemuren/piano-lab
+[badge-license]: https://img.shields.io/github/license/Juemuren/piano-lab
+[link-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml
+[link-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml
+[link-website]: https://Juemuren.github.io/piano-lab/
+[link-release]: https://github.com/Juemuren/piano-lab/releases
 
 </div>
 
 ## 特性
 
-钢琴模拟器提供可交互的虚拟琴键、声音合成器和乐谱编辑器：
+弦律（Piano Lab）提供可交互的虚拟琴键、声音合成器和乐谱编辑器：
 
 - [声音合成器](#声音合成器)：自定义声音包络、谐波频谱和传递函数
 - [乐谱编辑器](#乐谱编辑器)：用 ABC Notation 编写乐谱，可以实时渲染，自动演奏以及导出为 SVG/PNG/PDF/MIDI 文件
@@ -88,9 +88,9 @@
 
 ## 使用
 
-访问 <https://juemuren.github.io/web-piano-simulator/> 使用网页版
+访问 <https://juemuren.github.io/piano-lab/> 使用网页版
 
-在 <https://github.com/juemuren/web-piano-simulator/releases> 中下载桌面应用
+在 <https://github.com/juemuren/piano-lab/releases> 中下载桌面应用
 
 ### 本地开发
 

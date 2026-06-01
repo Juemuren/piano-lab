@@ -1,6 +1,6 @@
 <div align="center">
 
-# ピアノシミュレーター
+# Piano Lab
 
 [中文](../README.md) | [English](README.en.md) | [日本語](README.jp.md)
 
@@ -11,21 +11,21 @@
 [![release][badge-release]][link-release]
 [![license][badge-license]](../LICENSE)
 
-[badge-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg
-[badge-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml/badge.svg
+[badge-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml/badge.svg
+[badge-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml/badge.svg
 [badge-website]: https://img.shields.io/badge/website-github.io-green
-[badge-release]: https://img.shields.io/github/release/Juemuren/web-piano-simulator
-[badge-license]: https://img.shields.io/github/license/Juemuren/web-piano-simulator
-[link-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml
-[link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
-[link-website]: https://Juemuren.github.io/web-piano-simulator/
-[link-release]: https://github.com/Juemuren/web-piano-simulator/releases
+[badge-release]: https://img.shields.io/github/release/Juemuren/piano-lab
+[badge-license]: https://img.shields.io/github/license/Juemuren/piano-lab
+[link-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml
+[link-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml
+[link-website]: https://Juemuren.github.io/piano-lab/
+[link-release]: https://github.com/Juemuren/piano-lab/releases
 
 </div>
 
 ## 機能
 
-ピアノシミュレーターは、インタラクティブな仮想鍵盤、音声シンセサイザー、楽譜エディターを提供します。
+Piano Lab は、インタラクティブな仮想鍵盤、音声シンセサイザー、楽譜エディターを提供します。
 
 - [音声シンセサイザー](#音声シンセサイザー): 音のエンベロープ、倍音スペクトル、伝達関数をカスタマイズ
 - [楽譜エディター](#楽譜エディター): ABC Notation で楽譜を書き、リアルタイムレンダリング、自動演奏、SVG/PNG/PDF/MIDI ファイルへのエクスポートに対応
@@ -88,9 +88,9 @@
 
 ## 使い方
 
-<https://juemuren.github.io/web-piano-simulator/> にアクセスすると、Web 版を使用できます。
+<https://juemuren.github.io/piano-lab/> にアクセスすると、Web 版を使用できます。
 
-<https://github.com/juemuren/web-piano-simulator/releases> からデスクトップアプリをダウンロードできます。
+<https://github.com/juemuren/piano-lab/releases> からデスクトップアプリをダウンロードできます。
 
 ### ローカル開発
 

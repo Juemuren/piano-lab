@@ -1,6 +1,6 @@
 <div align="center">
 
-# Piano Simulator
+# Piano Lab
 
 [中文](../README.md) | [English](README.en.md) | [日本語](README.jp.md)
 
@@ -11,21 +11,21 @@
 [![release][badge-release]][link-release]
 [![license][badge-license]](../LICENSE)
 
-[badge-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml/badge.svg
-[badge-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml/badge.svg
+[badge-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml/badge.svg
+[badge-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml/badge.svg
 [badge-website]: https://img.shields.io/badge/website-github.io-green
-[badge-release]: https://img.shields.io/github/release/Juemuren/web-piano-simulator
-[badge-license]: https://img.shields.io/github/license/Juemuren/web-piano-simulator
-[link-action-deploy]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/deploy.yml
-[link-action-release]: https://github.com/Juemuren/web-piano-simulator/actions/workflows/release.yml
-[link-website]: https://Juemuren.github.io/web-piano-simulator/
-[link-release]: https://github.com/Juemuren/web-piano-simulator/releases
+[badge-release]: https://img.shields.io/github/release/Juemuren/piano-lab
+[badge-license]: https://img.shields.io/github/license/Juemuren/piano-lab
+[link-action-deploy]: https://github.com/Juemuren/piano-lab/actions/workflows/deploy.yml
+[link-action-release]: https://github.com/Juemuren/piano-lab/actions/workflows/release.yml
+[link-website]: https://Juemuren.github.io/piano-lab/
+[link-release]: https://github.com/Juemuren/piano-lab/releases
 
 </div>
 
 ## Features
 
-Piano Simulator provides interactive virtual keys, a sound synthesizer, and a score editor:
+Piano Lab provides interactive virtual keys, a sound synthesizer, and a score editor:
 
 - [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and transfer function
 - [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export them as SVG/PNG/PDF/MIDI files
@@ -88,9 +88,9 @@ The sound synthesizer consists of three modules: envelope, spectrum, and transfe
 
 ## Usage
 
-Visit <https://juemuren.github.io/web-piano-simulator/> to use the web version.
+Visit <https://juemuren.github.io/piano-lab/> to use the web version.
 
-Download the desktop app from <https://github.com/juemuren/web-piano-simulator/releases>.
+Download the desktop app from <https://github.com/juemuren/piano-lab/releases>.
 
 ### Local Development
 
