@@ -2,6 +2,31 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.7.0]
+
+### Added
+
+- Added computer-keyboard piano controls, including octave switching with `z` / `x` and temporary octave shifts with `ctrl` / `shift`.
+- Added global settings for enabling or disabling keyboard, mouse, and touch controls.
+- Added an option to append pressed piano keys back into the ABC score editor as notes.
+- Added Web MIDI input support, with device status messages and browser or permission failure hints.
+- Added single-device selection for MIDI input instead of always listening to every connected input.
+- Added keyboard mapping hints when keyboard controls are enabled.
+
+### Changed
+
+- Moved the score-editor hint from the page footnote to the playback control area.
+- Split piano control logic into focused hooks for keyboard, mouse/touch, and MIDI input.
+- Clarified preset, spectrum, and transfer-function type naming across the synthesizer code.
+
+### Fixed
+
+- Fixed disabled mouse and touch controls still reacting to input.
+- Fixed SVG and PNG score export.
+- Fixed mobile PDF export behavior.
+- Fixed browser warnings by adding IDs to all select and textarea elements.
+- Disabled the unmatched-note red highlight while the underlying score-position mismatch is still being investigated.
+
 ## [0.6.0]
 
 ### Added
