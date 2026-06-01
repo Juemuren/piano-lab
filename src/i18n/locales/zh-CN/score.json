@@ -1,11 +1,5 @@
 {
   "custom": "自定义",
-  "importAbc": "导入 ABC",
-  "exportAbc": "导出 ABC",
-  "exportSvg": "导出 SVG",
-  "exportPng": "导出 PNG",
-  "exportPdf": "导出 PDF",
-  "exportMidi": "导出 MIDI",
   "playbackTip": "单击乐谱中的音符可以直接修改进度",
   "placeholder": "输入乐谱，选择预设或导入文件",
   "presets": {

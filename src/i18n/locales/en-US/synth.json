@@ -30,8 +30,6 @@
     "band_pass": "Band Pass"
   },
   "config": {
-    "importJson": "Import Config",
-    "exportJson": "Export Config",
     "importError": "Could not import the config. Check the JSON file format."
   },
   "controls": {

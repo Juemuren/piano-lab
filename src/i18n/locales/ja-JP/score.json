@@ -1,11 +1,5 @@
 {
   "custom": "カスタム",
-  "importAbc": "ABC をインポート",
-  "exportAbc": "ABC をエクスポート",
-  "exportSvg": "SVG をエクスポート",
-  "exportPng": "PNG をエクスポート",
-  "exportPdf": "PDF をエクスポート",
-  "exportMidi": "MIDI をエクスポート",
   "playbackTip": "楽譜内の音符をクリックすると、再生位置を直接変更できます。",
   "placeholder": "楽譜を入力、プリセットを選択、またはファイルをインポート",
   "presets": {

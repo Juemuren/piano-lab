@@ -30,7 +30,7 @@ function AbcPlaybackControls({
   onReplay,
   onProgressChange,
 }: AbcPlaybackControlsProps) {
-  const { t } = useTranslation(['common', 'score']);
+  const { t } = useTranslation('score');
 
   return (
     <div className="w-full">
@@ -41,11 +41,7 @@ function AbcPlaybackControls({
           onClick={isPlaying ? onPause : onPlay}
           className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isPlaying ? (
-            <Pause size={18} aria-label={t('actions.pause')} />
-          ) : (
-            <Play size={18} aria-label={t('actions.play')} />
-          )}
+          {isPlaying ? <Pause size={18} /> : <Play size={18} />}
         </button>
 
         <button
@@ -54,7 +50,7 @@ function AbcPlaybackControls({
           onClick={onReplay}
           className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <RotateCcw size={18} aria-label={t('actions.replay')} />
+          <RotateCcw size={18} />
         </button>
 
         <input
@@ -73,7 +69,7 @@ function AbcPlaybackControls({
       </div>
 
       <p className="text-xs text-app-tip/50 dark:text-app-tip-dark/50">
-        {t('score:playbackTip')}
+        {t('playbackTip')}
       </p>
     </div>
   );

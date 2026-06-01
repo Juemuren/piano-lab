@@ -127,13 +127,13 @@ function SoundSynthesizer() {
             fileInputRef={fileInputRef}
             accept=".json,application/json"
             label="JSON"
-            icon={<Upload size={18} aria-label={t('config.importJson')} />}
+            icon={<Upload size={18} />}
             onClick={openFileDialog}
             onChange={handleFileChange}
           />
           <FileExportButton
             label="JSON"
-            icon={<Download size={18} aria-label={t('config.exportJson')} />}
+            icon={<Download size={18} />}
             onClick={handleExportConfig}
           />
         </div>

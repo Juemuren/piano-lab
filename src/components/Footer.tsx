@@ -35,14 +35,9 @@ function FooterPanel({ title, children }: FooterPanelProps) {
           transition-colors hover:bg-app-accent-weak dark:hover:bg-app-accent-strong
           hover:text-app-accent-strong dark:hover:text-app-accent-weak
         "
-        aria-expanded={isExpanded}
       >
         <span className="font-semibold tracking-wide">{title}</span>
-        {isExpanded ? (
-          <ChevronDown size={18} aria-hidden="true" />
-        ) : (
-          <ChevronRight size={18} aria-hidden="true" />
-        )}
+        {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
       </button>
       <div className={`${isExpanded ? 'px-4 leading-8' : 'hidden'}`}>
         {children}
@@ -66,7 +61,7 @@ function FooterLink({ href, label }: FooterLinkProps) {
       "
     >
       <span className="text-sm font-medium">{label}</span>
-      <ExternalLink size={18} aria-hidden="true" />
+      <ExternalLink size={18} />
     </a>
   );
 }

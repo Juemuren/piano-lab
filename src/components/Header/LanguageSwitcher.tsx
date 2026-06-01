@@ -20,7 +20,6 @@ function LanguageSwitcher() {
       <Languages
         size={18}
         className="shrink-0 text-app-muted dark:text-app-muted-dark"
-        aria-hidden="true"
       />
       <ControlSelect
         value={i18n.resolvedLanguage ?? i18n.language}

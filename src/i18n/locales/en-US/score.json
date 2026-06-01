@@ -1,11 +1,5 @@
 {
   "custom": "Custom",
-  "importAbc": "Import ABC",
-  "exportAbc": "Export ABC",
-  "exportSvg": "Export SVG",
-  "exportPng": "Export PNG",
-  "exportPdf": "Export PDF",
-  "exportMidi": "Export MIDI",
   "playbackTip": "Click a note in the score to change the playback position directly.",
   "placeholder": "Enter a score, choose a preset, or import a file",
   "presets": {

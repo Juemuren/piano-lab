@@ -30,8 +30,6 @@
     "band_pass": "バンドパス"
   },
   "config": {
-    "importJson": "設定をインポート",
-    "exportJson": "設定をエクスポート",
     "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
   },
   "controls": {

@@ -37,11 +37,7 @@ function CollapsibleSection({
           "
         >
           {title}
-          {isExpanded ? (
-            <ChevronDown size={24} aria-hidden="true" />
-          ) : (
-            <ChevronRight size={24} aria-hidden="true" />
-          )}
+          {isExpanded ? <ChevronDown size={24} /> : <ChevronRight size={24} />}
         </h2>
       </button>
       <div className={isExpanded ? 'my-4' : 'hidden'}>{children}</div>
