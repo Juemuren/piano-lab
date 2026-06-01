@@ -9,12 +9,22 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { useAppSettings } from './contexts/useAppSettings';
 import { appendPitchToAbc } from './services/abc/AbcInput';
+import type { MidiControlState } from './hooks/piano/useMidiControl';
+
+const initialMidiControlState: MidiControlState = {
+  activeNotes: new Set(),
+  devices: [],
+  status: 'idle',
+};
 
 function App() {
   const { t } = useTranslation('app');
   const { isPianoInputEnabled } = useAppSettings();
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
   const [abcContent, setAbcContent] = useState('');
+  const [midiControl, setMidiControl] = useState<MidiControlState>(
+    initialMidiControlState,
+  );
 
   const handleNoteStart = useCallback((pitch: number) => {
     setPlayingNotes((prev) => {
@@ -85,6 +95,7 @@ function App() {
           <Piano
             playingNotes={playingNotes}
             onNoteInput={isPianoInputEnabled ? handlePianoNoteInput : undefined}
+            onMidiControlChange={setMidiControl}
           />
         </section>
 
@@ -93,7 +104,7 @@ function App() {
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"
           >
-            <SettingsPanel />
+            <SettingsPanel midiControl={midiControl} />
           </CollapsibleSection>
         </section>
       </main>

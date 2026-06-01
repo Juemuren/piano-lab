@@ -1,8 +1,31 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const MIDI_COMMAND_NOTE_OFF = 0x80;
 const MIDI_COMMAND_NOTE_ON = 0x90;
+const EMPTY_ACTIVE_NOTES = new Set<number>();
+const EMPTY_MIDI_DEVICES: MidiInputDevice[] = [];
+
+export type MidiStatus =
+  | 'idle'
+  | 'unsupported'
+  | 'requesting'
+  | 'ready'
+  | 'error';
+
+export interface MidiInputDevice {
+  id: string;
+  name: string;
+  manufacturer: string;
+  state: MIDIPortDeviceState;
+  connection: MIDIPortConnectionState;
+}
+
+export interface MidiControlState {
+  activeNotes: Set<number>;
+  devices: MidiInputDevice[];
+  status: MidiStatus;
+}
 
 interface UseMidiControlOptions {
   enabled: boolean;
@@ -13,8 +36,20 @@ function isPianoRangeNote(note: number) {
   return note >= MIN_PIANO_PITCH && note <= MAX_PIANO_PITCH;
 }
 
+function getInputDevice(input: MIDIInput): MidiInputDevice {
+  return {
+    id: input.id,
+    name: input.name || input.id,
+    manufacturer: input.manufacturer || '',
+    state: input.state,
+    connection: input.connection,
+  };
+}
+
 function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
+  const [devices, setDevices] = useState<MidiInputDevice[]>([]);
+  const [status, setStatus] = useState<MidiStatus>('idle');
   const midiAccessRef = useRef<MIDIAccess | null>(null);
   const activeNotesRef = useRef<Set<number>>(new Set());
   const attachedInputsRef = useRef<Set<MIDIInput>>(new Set());
@@ -29,6 +64,12 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
       setActiveMidiNotes(new Set());
     }
   }, [setActiveMidiNotes]);
+
+  const resetMidiState = useCallback(() => {
+    setDevices([]);
+    setStatus('idle');
+    clearActiveNotes();
+  }, [clearActiveNotes]);
 
   const handleMidiMessage = useCallback(
     (event: MIDIMessageEvent) => {
@@ -81,13 +122,17 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
         input.onmidimessage = handleMidiMessage;
         attachedInputs.add(input);
       }
+      setDevices(Array.from(midiAccess.inputs.values(), getInputDevice));
+      setStatus('ready');
     }
 
     async function connectMidi() {
       if (!navigator.requestMIDIAccess) {
+        setStatus('unsupported');
         return;
       }
 
+      setStatus('requesting');
       const midiAccess = await navigator.requestMIDIAccess({
         sysex: false,
       });
@@ -105,11 +150,14 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
         midiAccessRef.current.onstatechange = null;
       }
       detachInputs();
-      clearActiveNotes();
+      activeNotesRef.current = new Set();
+      queueMicrotask(resetMidiState);
       return;
     }
 
     connectMidi().catch(() => {
+      setDevices([]);
+      setStatus('error');
       clearActiveNotes();
     });
 
@@ -120,9 +168,16 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
       }
       detachInputs();
     };
-  }, [clearActiveNotes, enabled, handleMidiMessage]);
+  }, [clearActiveNotes, enabled, handleMidiMessage, resetMidiState]);
 
-  return activeNotes;
+  return useMemo(
+    () => ({
+      activeNotes: enabled ? activeNotes : EMPTY_ACTIVE_NOTES,
+      devices: enabled ? devices : EMPTY_MIDI_DEVICES,
+      status: enabled ? status : 'idle',
+    }),
+    [activeNotes, devices, enabled, status],
+  );
 }
 
 export default useMidiControl;

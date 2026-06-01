@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import usePianoControl from '../hooks/piano/usePianoControl';
+import type { MidiControlState } from '../hooks/piano/useMidiControl';
 
 const WHITE_KEY_HEIGHT_PX = 160;
 const BLACK_KEY_HEIGHT_PX = 100;
@@ -8,19 +10,29 @@ const BLACK_KEY_WIDTH_PX = 24;
 interface PianoProps {
   playingNotes?: Set<number>;
   onNoteInput?: (pitch: number) => void;
+  onMidiControlChange?: (state: MidiControlState) => void;
 }
 
-function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
+function Piano({
+  playingNotes = new Set(),
+  onNoteInput,
+  onMidiControlChange,
+}: PianoProps) {
   const {
     whiteKeys,
     blackKeys,
     keyHints,
     isKeyPressed,
+    midiControl,
     isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
   } = usePianoControl(playingNotes, onNoteInput);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
+
+  useEffect(() => {
+    onMidiControlChange?.(midiControl);
+  }, [midiControl, onMidiControlChange]);
 
   return (
     <div

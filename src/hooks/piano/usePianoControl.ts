@@ -175,7 +175,7 @@ function usePianoControl(
     [onNoteInput, synthEngine],
   );
 
-  const activeMidiNotes = useMidiControl({
+  const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
     onNoteOn: playMidiPressedKey,
   });
@@ -359,9 +359,9 @@ function usePianoControl(
   const isKeyPressed = useCallback(
     (note: number) =>
       pressedKeys.has(note) ||
-      activeMidiNotes.has(note) ||
+      midiControl.activeNotes.has(note) ||
       playingNotes.has(note),
-    [activeMidiNotes, pressedKeys, playingNotes],
+    [midiControl.activeNotes, pressedKeys, playingNotes],
   );
 
   return {
@@ -369,6 +369,7 @@ function usePianoControl(
     blackKeys,
     keyHints,
     isKeyPressed,
+    midiControl,
     isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
