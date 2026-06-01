@@ -106,10 +106,14 @@ function isEditableTarget(target: EventTarget | null) {
   );
 }
 
-function usePianoControl(playingNotes: Set<number>) {
+function usePianoControl(
+  playingNotes: Set<number>,
+  onNoteInput?: (pitch: number) => void,
+) {
   const synthEngine = useSynthEngine();
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
+  const pressedKeysRef = useRef<Set<number>>(new Set());
   const keyboardOctaveRef = useRef(DEFAULT_KEYBOARD_OCTAVE);
   const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
 
@@ -129,20 +133,25 @@ function usePianoControl(playingNotes: Set<number>) {
       if (!('touches' in e)) {
         e.preventDefault();
       }
-      setPressedKeys((prev) => new Set(prev).add(note));
+      if (pressedKeysRef.current.has(note)) {
+        return;
+      }
+
+      pressedKeysRef.current = new Set(pressedKeysRef.current).add(note);
+      setPressedKeys(pressedKeysRef.current);
       playNote(note);
+      onNoteInput?.(note);
     },
-    [playNote],
+    [onNoteInput, playNote],
   );
 
   const handleKeyUp = useCallback(
     (e: MouseEvent | TouchEvent, note: number) => {
       e.preventDefault();
-      setPressedKeys((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(note);
-        return newSet;
-      });
+      const newSet = new Set(pressedKeysRef.current);
+      newSet.delete(note);
+      pressedKeysRef.current = newSet;
+      setPressedKeys(newSet);
     },
     [],
   );
@@ -172,8 +181,10 @@ function usePianoControl(playingNotes: Set<number>) {
       }
       e.preventDefault();
       activeKeyboardNotesRef.current.set(key, note);
-      setPressedKeys((prev) => new Set(prev).add(note));
+      pressedKeysRef.current = new Set(pressedKeysRef.current).add(note);
+      setPressedKeys(pressedKeysRef.current);
       playNote(note);
+      onNoteInput?.(note);
     }
 
     function handleKeyboardKeyUp(e: KeyboardEvent) {
@@ -185,11 +196,10 @@ function usePianoControl(playingNotes: Set<number>) {
 
       e.preventDefault();
       activeKeyboardNotesRef.current.delete(key);
-      setPressedKeys((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(note);
-        return newSet;
-      });
+      const newSet = new Set(pressedKeysRef.current);
+      newSet.delete(note);
+      pressedKeysRef.current = newSet;
+      setPressedKeys(newSet);
     }
 
     window.addEventListener('keydown', handleKeyboardKeyDown);
@@ -199,7 +209,7 @@ function usePianoControl(playingNotes: Set<number>) {
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [playNote]);
+  }, [onNoteInput, playNote]);
 
   const { whiteKeys, blackKeys } = pianoKeys;
 

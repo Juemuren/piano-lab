@@ -32,6 +32,19 @@ export function getPitchLabel(pitch: number) {
   return `${getPitchName(pitch)}${getPitchOctave(pitch)}`;
 }
 
+export function getAbcPitch(pitch: number) {
+  const name = getPitchName(pitch);
+  const octave = getPitchOctave(pitch);
+  const accidental = name.includes('#') ? '^' : '';
+  const pitchClass = name[0];
+
+  if (octave <= 4) {
+    return `${accidental}${pitchClass}${','.repeat(4 - octave)}`;
+  }
+
+  return `${accidental}${pitchClass.toLowerCase()}${"'".repeat(octave - 5)}`;
+}
+
 export function getPitchOptions(
   minPitch: number = MIN_PIANO_PITCH,
   maxPitch: number = MAX_PIANO_PITCH,

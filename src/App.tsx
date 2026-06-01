@@ -4,13 +4,17 @@ import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
 import SoundSynthesizer from './components/SoundSynthesizer';
 import AbcEditor from './components/AbcEditor';
+import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { SynthEngineProvider } from './contexts/SynthEngineContext';
+import { useAppSettings } from './contexts/useAppSettings';
+import { appendPitchToAbc } from './services/abc/AbcInput';
 
 function App() {
   const { t } = useTranslation('app');
+  const { isPianoInputEnabled } = useAppSettings();
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
+  const [abcContent, setAbcContent] = useState('');
 
   const handleNoteStart = useCallback((pitch: number) => {
     setPlayingNotes((prev) => {
@@ -32,8 +36,12 @@ function App() {
     setPlayingNotes(new Set());
   }, []);
 
+  const handlePianoNoteInput = useCallback((pitch: number) => {
+    setAbcContent((content) => appendPitchToAbc(content, pitch));
+  }, []);
+
   return (
-    <SynthEngineProvider>
+    <>
       <Header />
 
       <main
@@ -63,21 +71,35 @@ function App() {
           <section id="score-editor" className="mx-auto w-full scroll-mt-16">
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor
+                abcContent={abcContent}
                 onNoteStart={handleNoteStart}
                 onNoteEnd={handleNoteEnd}
                 onStop={handleStopPlayingNotes}
+                onAbcContentChange={setAbcContent}
               />
             </CollapsibleSection>
           </section>
         </div>
 
         <section id="piano-keyboard" className="scroll-mt-16">
-          <Piano playingNotes={playingNotes} />
+          <Piano
+            playingNotes={playingNotes}
+            onNoteInput={isPianoInputEnabled ? handlePianoNoteInput : undefined}
+          />
+        </section>
+
+        <section id="settings" className="scroll-mt-16">
+          <CollapsibleSection
+            title={t('sections.settings')}
+            bgClassName="bg-app-bg dark:bg-app-bg-dark"
+          >
+            <SettingsPanel />
+          </CollapsibleSection>
         </section>
       </main>
 
       <Footer />
-    </SynthEngineProvider>
+    </>
   );
 }
 

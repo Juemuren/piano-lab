@@ -14,18 +14,25 @@ import { useSynthEngine } from '../../contexts/useSynthEngine';
 const RENDER_TARGET_ID = 'abcjs-paper';
 
 interface AbcEditorProps {
+  abcContent: string;
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
+  onAbcContentChange: (content: string) => void;
 }
 
-function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
+function AbcEditor({
+  abcContent,
+  onNoteStart,
+  onNoteEnd,
+  onStop,
+  onAbcContentChange,
+}: AbcEditorProps) {
   const synthEngine = useSynthEngine();
   const [abcPlayer] = useState(
     () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
-  const [abcContent, setAbcContent] = useState('');
   const {
     isPlaying,
     isPlaybackEnded,
@@ -51,24 +58,33 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     handleExportMidi,
   } = useAbcExports(abcContent);
 
-  const handleImport = useCallback((content: string) => {
-    setAbcContent(content);
-    setSelectedPresetIndex(-1);
-  }, []);
+  const handleImport = useCallback(
+    (content: string) => {
+      onAbcContentChange(content);
+      setSelectedPresetIndex(-1);
+    },
+    [onAbcContentChange],
+  );
 
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
     onImport: handleImport,
   });
 
-  const handlePresetChange = useCallback(async (index: number) => {
-    setSelectedPresetIndex(index);
-    setAbcContent(index >= 0 ? await getAbcPreset(index) : '');
-  }, []);
+  const handlePresetChange = useCallback(
+    async (index: number) => {
+      setSelectedPresetIndex(index);
+      onAbcContentChange(index >= 0 ? await getAbcPreset(index) : '');
+    },
+    [onAbcContentChange],
+  );
 
-  const handleContentChange = useCallback((content: string) => {
-    setAbcContent(content);
-    setSelectedPresetIndex(-1);
-  }, []);
+  const handleContentChange = useCallback(
+    (content: string) => {
+      onAbcContentChange(content);
+      setSelectedPresetIndex(-1);
+    },
+    [onAbcContentChange],
+  );
 
   return (
     <ControlPanel>

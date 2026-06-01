@@ -4,6 +4,10 @@
     "soundSynthesizer": "Sound Synthesizer",
     "scoreEditor": "Score Editor",
     "pianoKeyboard": "Piano Keys",
+    "settings": "Settings",
     "about": "About"
+  },
+  "settings": {
+    "pianoInput": "Write notes to the score when piano keys are pressed"
   }
 }

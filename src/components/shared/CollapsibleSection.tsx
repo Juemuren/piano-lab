@@ -30,7 +30,12 @@ function CollapsibleSection({
           ${bgClassName} ${hoverBgClassName}
         `}
       >
-        <h2 className="inline-flex items-center justify-center gap-2 text-xl font-semibold">
+        <h2
+          className="
+            inline-flex items-center justify-center gap-2
+            text-xl font-semibold
+          "
+        >
           {title}
           {isExpanded ? (
             <ChevronDown size={24} aria-hidden="true" />

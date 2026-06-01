@@ -4,6 +4,10 @@
     "soundSynthesizer": "声音合成器",
     "scoreEditor": "乐谱编辑器",
     "pianoKeyboard": "琴键",
+    "settings": "设置",
     "about": "关于"
+  },
+  "settings": {
+    "pianoInput": "按下琴键时将音符写入乐谱"
   }
 }

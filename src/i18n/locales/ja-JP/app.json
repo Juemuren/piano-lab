@@ -4,6 +4,10 @@
     "soundSynthesizer": "サウンドシンセサイザー",
     "scoreEditor": "楽譜エディター",
     "pianoKeyboard": "鍵盤",
+    "settings": "設定",
     "about": "について"
+  },
+  "settings": {
+    "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む"
   }
 }

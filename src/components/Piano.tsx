@@ -7,9 +7,10 @@ const BLACK_KEY_WIDTH_PX = 24;
 
 interface PianoProps {
   playingNotes?: Set<number>;
+  onNoteInput?: (pitch: number) => void;
 }
 
-function Piano({ playingNotes = new Set() }: PianoProps) {
+function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
   const {
     whiteKeys,
     blackKeys,
@@ -17,12 +18,12 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
     isKeyPressed,
     handleKeyDown,
     handleKeyUp,
-  } = usePianoControl(playingNotes);
+  } = usePianoControl(playingNotes, onNoteInput);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
 
   return (
     <div
-      className="w-full overflow-x-auto overscroll-x-contain pb-10"
+      className="w-full overflow-x-auto overscroll-x-contain py-4"
       style={{ touchAction: 'pan-x' }}
     >
       <div
