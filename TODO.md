@@ -7,10 +7,11 @@
 
 ## Fix
 
-- [ ] Android Chrome 上 afterprint 不是在 print 后触发，而是在 print 时就触发。这导致 PDF 打印功能在移动端上存在问题。修复这个问题有两种方案，暂时决定使用第二种
+- [x] Android Chrome 上 afterprint 不是在 print 后触发，而是在 print 时就触发。这导致 PDF 打印功能在移动端上存在问题。修复这个问题有两种方案，暂时使用第二种进行了修复
   - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src/hooks/abc/usePdfExport.ts) 代码语义不一致
   - 直接打印 [AbcEditor.tsx](src/components/AbcEditor/index.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
-- [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了红色，但不匹配的问题未能修复。
+- [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了红色，但不匹配的问题未能修复
+- [ ] 修复 SVG/PNG 的导出
 
 ## Style
 

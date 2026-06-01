@@ -54,16 +54,29 @@
   stroke: var(--color-score-highlight) !important;
 }
 
-.abcjs-print-target {
-  display: none;
-}
-
 @media print {
-  #root {
+  @page {
+    margin: 4mm;
+  }
+
+  :root {
+    color-scheme: light;
+  }
+
+  #root *:not(:has(#abcjs-paper)):not(#abcjs-paper):not(#abcjs-paper *) {
     display: none !important;
   }
 
-  .abcjs-print-target {
+  #root *:has(#abcjs-paper),
+  #abcjs-paper {
     display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
   }
 }

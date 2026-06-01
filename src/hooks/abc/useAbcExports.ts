@@ -14,7 +14,7 @@ function useAbcExports(abcContent: string) {
   });
   const handleExportSvg = useSvgExport(getRenderedSvg);
   const handleExportPng = usePngExport(getRenderedSvg);
-  const handleExportPdf = usePdfExport(abcContent);
+  const handleExportPdf = usePdfExport();
   const handleExportMidi = useMidiExport(abcContent);
 
   return {
