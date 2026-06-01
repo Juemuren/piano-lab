@@ -11,7 +11,7 @@
   - 不使用 afterprint 事件，但这会导致 [usePdfExport.ts](src/hooks/abc/usePdfExport.ts) 代码语义不一致
   - 直接打印 [AbcEditor.tsx](src/components/AbcEditor/index.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了红色，但不匹配的问题未能修复
-- [ ] 修复 SVG/PNG 的导出
+- [x] 修复 SVG/PNG 的导出
 
 ## Style
 

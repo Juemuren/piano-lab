@@ -11,29 +11,96 @@ export interface RenderedSvg {
 
 export type GetRenderedSvg = () => RenderedSvg | null;
 
+const cloneSvg = (svgElement: SVGSVGElement) => {
+  const clonedSvg = svgElement.cloneNode(true);
+
+  if (!(clonedSvg instanceof SVGSVGElement)) {
+    return null;
+  }
+
+  clonedSvg.setAttribute('xmlns', SVG_NAMESPACE);
+  return clonedSvg;
+};
+
+const getSingleRenderedSvg = (
+  svgElement: SVGSVGElement,
+): RenderedSvg | null => {
+  const clonedSvg = cloneSvg(svgElement);
+
+  if (!clonedSvg) return null;
+
+  const { width, height } = getSvgDimensions(svgElement);
+  clonedSvg.setAttribute('width', width.toString());
+  clonedSvg.setAttribute('height', height.toString());
+
+  return {
+    content: new XMLSerializer().serializeToString(clonedSvg),
+    width,
+    height,
+  };
+};
+
+const getCombinedRenderedSvg = (
+  svgElements: SVGSVGElement[],
+): RenderedSvg | null => {
+  const renderedLines = svgElements
+    .map((svgElement) => ({
+      svgElement,
+      dimensions: getSvgDimensions(svgElement),
+    }))
+    .filter(({ dimensions }) => dimensions.width > 0 && dimensions.height > 0);
+
+  if (renderedLines.length === 0) return null;
+  if (renderedLines.length === 1) {
+    return getSingleRenderedSvg(renderedLines[0].svgElement);
+  }
+
+  const width = Math.max(
+    ...renderedLines.map(({ dimensions }) => dimensions.width),
+  );
+  const height = renderedLines.reduce(
+    (total, { dimensions }) => total + dimensions.height,
+    0,
+  );
+  const combinedSvg = document.createElementNS(SVG_NAMESPACE, 'svg');
+  let offsetY = 0;
+
+  combinedSvg.setAttribute('xmlns', SVG_NAMESPACE);
+  combinedSvg.setAttribute('width', width.toString());
+  combinedSvg.setAttribute('height', height.toString());
+  combinedSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+  renderedLines.forEach(({ svgElement, dimensions }) => {
+    const clonedSvg = cloneSvg(svgElement);
+
+    if (!clonedSvg) return;
+
+    clonedSvg.setAttribute('x', '0');
+    clonedSvg.setAttribute('y', offsetY.toString());
+    clonedSvg.setAttribute('width', dimensions.width.toString());
+    clonedSvg.setAttribute('height', dimensions.height.toString());
+    combinedSvg.appendChild(clonedSvg);
+    offsetY += dimensions.height;
+  });
+
+  return {
+    content: new XMLSerializer().serializeToString(combinedSvg),
+    width,
+    height,
+  };
+};
+
 function useRenderedSvg() {
   const renderTargetRef = useRef<HTMLDivElement>(null);
 
   const getRenderedSvg = useCallback((): RenderedSvg | null => {
-    const svgElement = renderTargetRef.current?.querySelector('svg');
+    const svgElements = Array.from(
+      renderTargetRef.current?.querySelectorAll('svg') ?? [],
+    ).filter((element): element is SVGSVGElement => {
+      return element instanceof SVGSVGElement;
+    });
 
-    if (!svgElement) return null;
-
-    const clonedSvg = svgElement.cloneNode(true);
-    if (!(clonedSvg instanceof SVGSVGElement)) {
-      return null;
-    }
-
-    clonedSvg.setAttribute('xmlns', SVG_NAMESPACE);
-    const { width, height } = getSvgDimensions(svgElement);
-    clonedSvg.setAttribute('width', width.toString());
-    clonedSvg.setAttribute('height', height.toString());
-
-    return {
-      content: new XMLSerializer().serializeToString(clonedSvg),
-      width,
-      height,
-    };
+    return getCombinedRenderedSvg(svgElements);
   }, []);
 
   return {
