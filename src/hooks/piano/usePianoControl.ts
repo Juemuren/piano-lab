@@ -25,6 +25,7 @@ const MAX_KEYBOARD_OCTAVE = 7;
 
 const KEYBOARD_OCTAVE_DOWN_KEY = 'z';
 const KEYBOARD_OCTAVE_UP_KEY = 'x';
+const TOUCH_MOUSE_EVENT_IGNORE_MS = 1000;
 const KEYBOARD_NOTE_MAP: ReadonlyMap<
   string,
   { label: string; offset: number }
@@ -124,6 +125,7 @@ function usePianoControl(
   const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
   const activeMouseNotesRef = useRef<Set<number>>(new Set());
   const activeTouchNotesRef = useRef<Set<number>>(new Set());
+  const lastTouchEventAtRef = useRef(0);
 
   const playNote = useCallback(
     (note: number) => {
@@ -165,9 +167,11 @@ function usePianoControl(
     (e: MouseEvent | TouchEvent, note: number) => {
       const isTouchEvent = 'touches' in e;
       if (isTouchEvent) {
+        lastTouchEventAtRef.current = Date.now();
         if (!isTouchControlEnabled) {
           return;
         }
+        e.preventDefault();
         const shouldPlay = !pressedKeysRef.current.has(note);
         activeTouchNotesRef.current = new Set(activeTouchNotesRef.current).add(
           note,
@@ -178,6 +182,12 @@ function usePianoControl(
         syncPressedKeys();
       } else {
         e.preventDefault();
+        if (
+          Date.now() - lastTouchEventAtRef.current <
+          TOUCH_MOUSE_EVENT_IGNORE_MS
+        ) {
+          return;
+        }
         if (!isMouseControlEnabled) {
           return;
         }
@@ -203,14 +213,22 @@ function usePianoControl(
     (e: MouseEvent | TouchEvent, note: number) => {
       const isTouchEvent = 'touches' in e;
       if (isTouchEvent) {
+        lastTouchEventAtRef.current = Date.now();
         if (!isTouchControlEnabled) {
           return;
         }
+        e.preventDefault();
         const newSet = new Set(activeTouchNotesRef.current);
         newSet.delete(note);
         activeTouchNotesRef.current = newSet;
       } else {
         e.preventDefault();
+        if (
+          Date.now() - lastTouchEventAtRef.current <
+          TOUCH_MOUSE_EVENT_IGNORE_MS
+        ) {
+          return;
+        }
         if (!isMouseControlEnabled) {
           return;
         }
@@ -331,6 +349,7 @@ function usePianoControl(
     blackKeys,
     keyHints,
     isKeyPressed,
+    isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
   };

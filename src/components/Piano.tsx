@@ -16,6 +16,7 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
     blackKeys,
     keyHints,
     isKeyPressed,
+    isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
   } = usePianoControl(playingNotes, onNoteInput);
@@ -34,6 +35,9 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
           {whiteKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
             const keyHint = keyHints.get(key.note);
+            const cursorClass = isMouseControlEnabled
+              ? 'cursor-pointer'
+              : 'cursor-default';
             return (
               <button
                 type="button"
@@ -45,7 +49,7 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
                 onTouchEnd={(e) => handleKeyUp(e, key.note)}
                 onTouchCancel={(e) => handleKeyUp(e, key.note)}
                 className={`
-                  shrink-0 cursor-pointer text-xs border border-app-accent transition-all duration-100 ${
+                  shrink-0 ${cursorClass} text-xs border border-app-accent transition-all duration-100 ${
                     isPressed
                       ? 'bg-piano-white-active text-piano-black shadow-inner'
                       : 'bg-piano-white text-piano-black'
@@ -72,6 +76,9 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
           {blackKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
             const keyHint = keyHints.get(key.note);
+            const cursorClass = isMouseControlEnabled
+              ? 'cursor-pointer'
+              : 'cursor-default';
             return (
               <button
                 type="button"
@@ -83,7 +90,7 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
                 onTouchEnd={(e) => handleKeyUp(e, key.note)}
                 onTouchCancel={(e) => handleKeyUp(e, key.note)}
                 className={`
-                  cursor-pointer text-xs border-none transition-all duration-100 ${
+                  ${cursorClass} text-xs border-none transition-all duration-100 ${
                     isPressed
                       ? 'bg-piano-black-active text-piano-white shadow-inner'
                       : 'bg-piano-black text-piano-white'
