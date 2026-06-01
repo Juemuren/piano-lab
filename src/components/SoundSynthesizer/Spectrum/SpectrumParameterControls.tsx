@@ -1,10 +1,10 @@
 import { InlineMath } from 'react-katex';
-import type { Spectrum } from '../../../types';
+import type { SpectrumType } from '../../../types';
 import type { SpectrumParamUpdates } from '../../../hooks/synth/useSpectrumControl';
 import ControlRange from '../../shared/ControlRange';
 
 interface SpectrumParameterControlsProps {
-  spectrum: Spectrum;
+  spectrumType: SpectrumType;
   lambda: number;
   sigma: number;
   p: number;
@@ -17,7 +17,7 @@ interface SpectrumParameterControlsProps {
 }
 
 function SpectrumParameterControls({
-  spectrum,
+  spectrumType,
   lambda,
   sigma,
   p,
@@ -26,7 +26,7 @@ function SpectrumParameterControls({
 }: SpectrumParameterControlsProps) {
   return (
     <>
-      {spectrum.type === 'normal' && (
+      {spectrumType === 'normal' && (
         <ControlRange
           label={labels.strikePoint}
           symbol={<InlineMath math="\lambda" />}
@@ -39,7 +39,7 @@ function SpectrumParameterControls({
         />
       )}
 
-      {(spectrum.type === 'soft' || spectrum.type === 'realistic') && (
+      {(spectrumType === 'soft' || spectrumType === 'realistic') && (
         <ControlRange
           label={labels.decayRate}
           symbol={<InlineMath math="\sigma" />}
@@ -52,7 +52,7 @@ function SpectrumParameterControls({
         />
       )}
 
-      {spectrum.type === 'realistic' && (
+      {spectrumType === 'realistic' && (
         <ControlRange
           label={labels.powerExponent}
           symbol={<InlineMath math="p" />}

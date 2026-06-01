@@ -24,6 +24,7 @@ function TransferFunction({
   const synthEngine = useSynthEngine();
   const {
     baseFrequency,
+    transferFunctionConfig,
     transferFunction,
     handlePresetChange,
     handleParamsChange,
@@ -34,7 +35,7 @@ function TransferFunction({
   return (
     <>
       <ControlSelect
-        value={transferFunction.type}
+        value={transferFunctionConfig.type}
         onChange={(e) =>
           handlePresetChange(e.target.value as TransferFunctionType)
         }
@@ -59,7 +60,7 @@ function TransferFunction({
       />
 
       <TransferFunctionParameterControls
-        transferFunction={transferFunction}
+        transferFunctionConfig={transferFunctionConfig}
         labels={{
           delayTime: t('controls.delayTime'),
           attenuation: t('controls.attenuation'),
@@ -70,6 +71,7 @@ function TransferFunction({
       />
 
       <TransferFunctionResponsePreview
+        transferFunctionType={transferFunctionConfig.type}
         transferFunction={transferFunction}
         labels={{
           magnitudeResponse: t('charts.magnitudeResponse'),

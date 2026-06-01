@@ -1,4 +1,8 @@
-import type { TransferFunction, Spectrum } from '../../types';
+import type {
+  TransferFunction,
+  TransferFunctionPresetParams,
+  Spectrum,
+} from '../../types';
 import { getSpectrumPreset, getTransferFunctionPreset } from './SynthPresets';
 import {
   DEFAULT_SPECTRUM_TYPE,
@@ -27,19 +31,24 @@ export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private spectrum: Spectrum = getSpectrumPreset(
-    DEFAULT_SPECTRUM_TYPE,
-    DEFAULT_SPECTRUM_STRIKE_POINT,
-    DEFAULT_SPECTRUM_DECAY_RATE,
-    DEFAULT_SPECTRUM_POWER_EXPONENT,
+    {
+      type: DEFAULT_SPECTRUM_TYPE,
+      lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
+      sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+      p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+    },
     this.harmonicCount,
   );
+  private transferFunctionParams: TransferFunctionPresetParams = {
+    type: DEFAULT_TRANSFER_FUNCTION_TYPE,
+    tau: DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
+    alpha: DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
+    minFrequency: DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+    maxFrequency: DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
+    baseFrequency: DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+  };
   private transferFunction: TransferFunction = getTransferFunctionPreset(
-    DEFAULT_TRANSFER_FUNCTION_TYPE,
-    DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
-    DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-    DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
-    DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
-    DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+    this.transferFunctionParams,
     this.harmonicCount,
   );
 
@@ -65,8 +74,14 @@ export class SynthEngine {
     return this.spectrum;
   }
 
-  setTransferFunction(transferFunction: TransferFunction) {
+  setTransferFunction(
+    transferFunction: TransferFunction,
+    params?: TransferFunctionPresetParams,
+  ) {
     this.transferFunction = transferFunction;
+    if (params) {
+      this.transferFunctionParams = params;
+    }
   }
 
   getTransferFunction(): TransferFunction {
@@ -181,14 +196,8 @@ export class SynthEngine {
 
     const baseFrequency = this.getBaseFrequency(pitch, cents);
     const harmonics = this.spectrum.amplitudes.length;
-    const transferFunction = this.transferFunction;
     const { magnitudes, phases } = getTransferFunctionPreset(
-      transferFunction.type,
-      transferFunction.tau,
-      transferFunction.alpha,
-      transferFunction.minFrequency,
-      transferFunction.maxFrequency,
-      baseFrequency,
+      { ...this.transferFunctionParams, baseFrequency },
       harmonics,
     );
 

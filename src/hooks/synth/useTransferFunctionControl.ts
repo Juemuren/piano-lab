@@ -56,12 +56,14 @@ function useTransferFunctionControl(
   const transferFunction = useMemo<TransferFunction>(
     () =>
       getTransferFunctionPreset(
-        transferFunctionType,
-        tau,
-        alpha,
-        minFrequency,
-        maxFrequency,
-        baseFrequency,
+        {
+          type: transferFunctionType,
+          tau,
+          alpha,
+          minFrequency,
+          maxFrequency,
+          baseFrequency,
+        },
         harmonicCount,
       ),
     [
@@ -75,28 +77,32 @@ function useTransferFunctionControl(
     ],
   );
 
-  useEffect(() => {
-    synthEngine.setTransferFunction(transferFunction);
-  }, [transferFunction, synthEngine]);
-
-  useEffect(() => {
-    onConfigChange?.({
+  const transferFunctionConfig = useMemo<TransferFunctionConfig>(
+    () => ({
       type: transferFunctionType,
       tau,
       alpha,
       minFrequency,
       maxFrequency,
       baseFrequency,
-    });
-  }, [
-    alpha,
-    baseFrequency,
-    maxFrequency,
-    minFrequency,
-    onConfigChange,
-    tau,
-    transferFunctionType,
-  ]);
+    }),
+    [
+      alpha,
+      baseFrequency,
+      maxFrequency,
+      minFrequency,
+      tau,
+      transferFunctionType,
+    ],
+  );
+
+  useEffect(() => {
+    synthEngine.setTransferFunction(transferFunction, transferFunctionConfig);
+  }, [synthEngine, transferFunction, transferFunctionConfig]);
+
+  useEffect(() => {
+    onConfigChange?.(transferFunctionConfig);
+  }, [onConfigChange, transferFunctionConfig]);
 
   const handlePresetChange = (preset: TransferFunctionType) => {
     setTransferFunctionType(preset);
@@ -118,6 +124,7 @@ function useTransferFunctionControl(
 
   return {
     baseFrequency,
+    transferFunctionConfig,
     transferFunction,
     handlePresetChange,
     handleParamsChange,

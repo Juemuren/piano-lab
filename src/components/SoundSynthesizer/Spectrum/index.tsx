@@ -23,6 +23,7 @@ function Spectrum({
     lambda,
     sigma,
     p,
+    spectrumType,
     spectrum,
     handlePresetChange,
     handleParamsChange,
@@ -32,7 +33,7 @@ function Spectrum({
   return (
     <>
       <ControlSelect
-        value={spectrum.type}
+        value={spectrumType}
         onChange={(e) => {
           handlePresetChange(e.target.value as SpectrumType);
         }}
@@ -53,7 +54,7 @@ function Spectrum({
       />
 
       <SpectrumParameterControls
-        spectrum={spectrum}
+        spectrumType={spectrumType}
         lambda={lambda}
         sigma={sigma}
         p={p}
@@ -66,7 +67,7 @@ function Spectrum({
       />
 
       <SpectrumFormulaPreview
-        spectrumType={spectrum.type}
+        spectrumType={spectrumType}
         label={t('controls.harmonicSpectrumFormula')}
       />
     </>

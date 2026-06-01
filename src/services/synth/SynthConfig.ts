@@ -80,10 +80,12 @@ export function createDefaultSynthConfig(): SynthConfig {
       sigma: DEFAULT_SPECTRUM_DECAY_RATE,
       p: DEFAULT_SPECTRUM_POWER_EXPONENT,
       customAmplitudes: getSpectrumPreset(
-        DEFAULT_SPECTRUM_TYPE,
-        DEFAULT_SPECTRUM_STRIKE_POINT,
-        DEFAULT_SPECTRUM_DECAY_RATE,
-        DEFAULT_SPECTRUM_POWER_EXPONENT,
+        {
+          type: DEFAULT_SPECTRUM_TYPE,
+          lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
+          sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+          p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+        },
         DEFAULT_SYNTH_HARMONIC_COUNT,
       ).amplitudes,
     },

@@ -41,10 +41,12 @@ function useSpectrumControl(
     () =>
       initialConfig?.customAmplitudes ??
       getSpectrumPreset(
-        DEFAULT_SPECTRUM_TYPE,
-        DEFAULT_SPECTRUM_STRIKE_POINT,
-        DEFAULT_SPECTRUM_DECAY_RATE,
-        DEFAULT_SPECTRUM_POWER_EXPONENT,
+        {
+          type: DEFAULT_SPECTRUM_TYPE,
+          lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
+          sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+          p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+        },
         harmonicCount,
       ).amplitudes,
   );
@@ -52,11 +54,13 @@ function useSpectrumControl(
   const spectrum = useMemo<Spectrum>(() => {
     if (spectrumType === 'custom') {
       return {
-        type: 'custom',
         amplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
       };
     }
-    return getSpectrumPreset(spectrumType, lambda, sigma, p, harmonicCount);
+    return getSpectrumPreset(
+      { type: spectrumType, lambda, sigma, p },
+      harmonicCount,
+    );
   }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
 
   useEffect(() => {
@@ -82,9 +86,12 @@ function useSpectrumControl(
   ]);
 
   const handlePresetChange = (preset: SpectrumType) => {
-    setCustomAmplitudes(
-      getSpectrumPreset(preset, lambda, sigma, p, harmonicCount).amplitudes,
-    );
+    if (preset !== 'custom') {
+      setCustomAmplitudes(
+        getSpectrumPreset({ type: preset, lambda, sigma, p }, harmonicCount)
+          .amplitudes,
+      );
+    }
     setSpectrumType(preset);
   };
 
@@ -107,6 +114,7 @@ function useSpectrumControl(
     lambda,
     sigma,
     p,
+    spectrumType,
     spectrum,
     handlePresetChange,
     handleParamsChange,

@@ -38,6 +38,7 @@ const TRANSFER_FORMULAS: Record<
 };
 
 interface TransferFunctionResponsePreviewProps {
+  transferFunctionType: TransferFunctionType;
   transferFunction: TransferFunction;
   labels: {
     magnitudeResponse: string;
@@ -46,6 +47,7 @@ interface TransferFunctionResponsePreviewProps {
 }
 
 function TransferFunctionResponsePreview({
+  transferFunctionType,
   transferFunction,
   labels,
 }: TransferFunctionResponsePreviewProps) {
@@ -57,7 +59,7 @@ function TransferFunctionResponsePreview({
         <summary className="text-lg font-bold">
           {labels.magnitudeResponse}
         </summary>
-        <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].magnitude} />
+        <BlockMath math={TRANSFER_FORMULAS[transferFunctionType].magnitude} />
         <VerticalSliderGroup
           values={transferFunction.magnitudes}
           labels={harmonicLabels}
@@ -71,7 +73,7 @@ function TransferFunctionResponsePreview({
 
       <details open className="my-2">
         <summary className="text-lg font-bold">{labels.phaseResponse}</summary>
-        <BlockMath math={TRANSFER_FORMULAS[transferFunction.type].phase} />
+        <BlockMath math={TRANSFER_FORMULAS[transferFunctionType].phase} />
         <VerticalSliderGroup
           values={transferFunction.phases}
           labels={harmonicLabels}

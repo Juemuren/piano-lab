@@ -1,8 +1,8 @@
 import type {
   TransferFunction,
-  TransferFunctionType,
+  TransferFunctionPresetParams,
   Spectrum,
-  SpectrumType,
+  SpectrumPresetParams,
 } from '../../types';
 
 function delayToArg(delay: number, frequency: number) {
@@ -24,10 +24,7 @@ function normalizeAmplitudes(amplitudes: number[]) {
 }
 
 export function getSpectrumPreset(
-  type: SpectrumType,
-  lambda: number,
-  sigma: number,
-  p: number,
+  { type, lambda, sigma, p }: SpectrumPresetParams,
   harmonics: number,
 ): Spectrum {
   const amplitudes: number[] = [];
@@ -60,16 +57,18 @@ export function getSpectrumPreset(
     amplitudes.push(amplitude);
   }
 
-  return { type, amplitudes: normalizeAmplitudes(amplitudes) };
+  return { amplitudes: normalizeAmplitudes(amplitudes) };
 }
 
 export function getTransferFunctionPreset(
-  type: TransferFunctionType,
-  tau: number,
-  alpha: number,
-  minFrequency: number,
-  maxFrequency: number,
-  baseFrequency: number,
+  {
+    type,
+    tau,
+    alpha,
+    minFrequency,
+    maxFrequency,
+    baseFrequency,
+  }: TransferFunctionPresetParams,
   harmonics: number,
 ): TransferFunction {
   const magnitudes: number[] = [];
@@ -138,13 +137,5 @@ export function getTransferFunctionPreset(
     phases.push(phaseDeg);
   }
 
-  return {
-    type,
-    tau,
-    alpha,
-    minFrequency,
-    maxFrequency,
-    magnitudes,
-    phases,
-  };
+  return { magnitudes, phases };
 }
