@@ -9,6 +9,12 @@ import ControlSelect from '../shared/ControlSelect';
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
+  const languageOptions = SUPPORTED_LANGUAGES.map((language) => (
+    <option key={language} value={language}>
+      {LANGUAGE_DISPLAY_NAMES[language]}
+    </option>
+  ));
+
   return (
     <label className="flex w-36 items-center gap-2 text-sm">
       <Languages
@@ -18,15 +24,11 @@ function LanguageSwitcher() {
       />
       <ControlSelect
         value={i18n.resolvedLanguage ?? i18n.language}
-        onChange={(event) => {
-          i18n.changeLanguage(event.target.value);
+        onChange={(e) => {
+          i18n.changeLanguage(e.target.value);
         }}
       >
-        {SUPPORTED_LANGUAGES.map((language) => (
-          <option key={language} value={language}>
-            {LANGUAGE_DISPLAY_NAMES[language]}
-          </option>
-        ))}
+        {languageOptions}
       </ControlSelect>
     </label>
   );

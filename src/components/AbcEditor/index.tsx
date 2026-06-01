@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ABC_PRESETS, getAbcPreset } from '../../services/abc/AbcPresets';
+import { getAbcPreset } from '../../services/abc/AbcPresets';
 import { AbcPlayer } from '../../services/abc/AbcPlayer';
 import AbcFileToolbar from './AbcFileToolbar';
 import AbcPlaybackControls from './AbcPlaybackControls';
+import AbcPresetSelect from './AbcPresetSelect';
+import AbcSourceInput from './AbcSourceInput';
 import ControlPanel from '../shared/ControlPanel';
-import ControlSelect from '../shared/ControlSelect';
 import useFileImport from '../../hooks/file/useFileImport';
 import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useAbcExports from '../../hooks/abc/useAbcExports';
@@ -20,7 +20,6 @@ interface AbcEditorProps {
 }
 
 function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
-  const { t } = useTranslation('score');
   const synthEngine = useSynthEngine();
   const [abcPlayer] = useState(
     () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
@@ -52,18 +51,24 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
     handleExportMidi,
   } = useAbcExports(abcContent);
 
-  const handleImport = useCallback(
-    (content: string) => {
-      setAbcContent(content);
-      setSelectedPresetIndex(-1);
-      if (isPlaying) handleReplay();
-    },
-    [handleReplay, isPlaying],
-  );
+  const handleImport = useCallback((content: string) => {
+    setAbcContent(content);
+    setSelectedPresetIndex(-1);
+  }, []);
 
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
     onImport: handleImport,
   });
+
+  const handlePresetChange = useCallback(async (index: number) => {
+    setSelectedPresetIndex(index);
+    setAbcContent(index >= 0 ? await getAbcPreset(index) : '');
+  }, []);
+
+  const handleContentChange = useCallback((content: string) => {
+    setAbcContent(content);
+    setSelectedPresetIndex(-1);
+  }, []);
 
   return (
     <ControlPanel>
@@ -80,44 +85,12 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
         onExportMidi={handleExportMidi}
       />
 
-      <ControlSelect
-        value={selectedPresetIndex}
-        onChange={async (e) => {
-          const index = parseInt(e.target.value);
-          setSelectedPresetIndex(index);
-          if (index >= 0) {
-            const content = await getAbcPreset(index);
-            setAbcContent(content);
-            if (isPlaying) handleReplay();
-          } else {
-            setAbcContent('');
-          }
-          if (isPlaying) handleReplay();
-        }}
-      >
-        <option value={-1}>{t('custom')}</option>
-        {ABC_PRESETS.map((name, index) => (
-          <option key={index} value={index}>
-            {t(`presets.${name}`)}
-          </option>
-        ))}
-      </ControlSelect>
-
-      <textarea
-        value={abcContent}
-        onChange={(e) => {
-          setAbcContent(e.target.value);
-          setSelectedPresetIndex(-1);
-          if (isPlaying) handleReplay();
-        }}
-        placeholder={t('placeholder')}
-        className="
-          w-full h-48 p-4 my-2 text-sm
-          bg-app-surface-muted/75 dark:bg-app-surface-muted-dark/25
-          border border-app-border dark:border-app-border-dark
-          focus:outline-none focus:ring-2 focus:ring-app-accent/50
-        "
+      <AbcPresetSelect
+        selectedPresetIndex={selectedPresetIndex}
+        onPresetChange={handlePresetChange}
       />
+
+      <AbcSourceInput value={abcContent} onChange={handleContentChange} />
 
       {hasNotes && (
         <AbcPlaybackControls

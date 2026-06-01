@@ -204,8 +204,13 @@ function useAbcPlayback({
 
     return () => {
       timingCallbacks.stop();
+      removeHighlight();
       if (timingCallbacksRef.current === timingCallbacks) {
         timingCallbacksRef.current = null;
+      }
+      if (isPlayingRef.current) {
+        setPlaying(false);
+        onStop();
       }
     };
   }, [
@@ -216,6 +221,7 @@ function useAbcPlayback({
     updateCurrentSeconds,
     updateTotalSeconds,
     setPlaying,
+    onStop,
     renderTargetId,
   ]);
 

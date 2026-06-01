@@ -3,6 +3,7 @@
 ## Refactor
 
 - [ ] 对 [types.ts](src/types.ts) 进行重构，将 Spectrum 和 TransferFunction 定义为联合类型
+- [x] 重构 [AbcEditor](src/components/AbcEditor/index.tsx) 将预设选择和文本框提取为子组件
 
 ## Fix
 

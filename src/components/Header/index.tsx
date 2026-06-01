@@ -66,7 +66,7 @@ function Header() {
         <details
           className="relative md:hidden"
           open={isMenuOpen}
-          onToggle={(event) => setIsMenuOpen(event.currentTarget.open)}
+          onToggle={(e) => setIsMenuOpen(e.currentTarget.open)}
         >
           <summary className="list-none cursor-pointer">
             <Menu size={24} />
