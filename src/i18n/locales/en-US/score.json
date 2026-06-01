@@ -6,6 +6,7 @@
   "exportPng": "Export PNG",
   "exportPdf": "Export PDF",
   "exportMidi": "Export MIDI",
+  "playbackTip": "Click a note in the score to change the playback position directly.",
   "placeholder": "Enter a score, choose a preset, or import a file",
   "presets": {
     "小星星": "Twinkle Twinkle Little Star",

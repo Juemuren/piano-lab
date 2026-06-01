@@ -1,8 +1,4 @@
 {
-  "tips": {
-    "title": "Tips",
-    "body": "In the score editor, click a note in the score to change the progress bar directly."
-  },
   "notation": {
     "title": "Score Notation",
     "body": "Scores use ABC Notation. Read the official tutorial for the full standard."

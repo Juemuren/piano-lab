@@ -84,7 +84,6 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
-          <FooterPanel title={t('tips.title')}>{t('tips.body')}</FooterPanel>
           <FooterPanel title={t('notation.title')}>
             {t('notation.body')}
           </FooterPanel>
