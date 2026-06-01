@@ -12,7 +12,7 @@
   - 直接打印 [AbcEditor.tsx](src/components/AbcEditor/index.tsx) 中已有的乐谱，但这要求 `renderAbc` 时添加 `oneSvgPerLine: true` 参数，于是还得修复 SVG 的导出
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了红色，但不匹配的问题未能修复
 - [x] 修复 SVG/PNG 的导出
-- [ ] 使用 AudioWorklet 处理音频降低延时
+- [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频降低延时
 - [x] 给所有的 select 和 textarea 元素添加 id 以消除浏览器警告
 
 ## Style
@@ -29,7 +29,8 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 键  | A   | W   | S   | E   | D   | F   | T   | G   | Y   | H   | U   | J   | K   |
 
-- [ ] 按下琴键可以修改乐谱，即把琴键的输入反向输出到文本框，从而自动生成乐谱。只获取音高，并使用默认音符长度
+- [ ] 键盘操作的功能可以开启或关闭，默认开启。
+- [ ] 按下琴键可以修改乐谱，即把琴键的输入反向输出到文本框，从而自动生成乐谱。只获取音高，并使用默认音符长度。此功能默认关闭，提供选项开启。
 
 有待考虑的
 

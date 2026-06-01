@@ -198,8 +198,8 @@ $$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
 
 - React
 - TypeScript
-- Vite
 - Tailwind CSS
+- Vite
 - abcjs
 - i18next
 - Lucide
