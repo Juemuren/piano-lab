@@ -112,12 +112,18 @@ function usePianoControl(
   onNoteInput?: (pitch: number) => void,
 ) {
   const synthEngine = useSynthEngine();
-  const { isKeyboardControlEnabled } = useAppSettings();
+  const {
+    isKeyboardControlEnabled,
+    isMouseControlEnabled,
+    isTouchControlEnabled,
+  } = useAppSettings();
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
   const pressedKeysRef = useRef<Set<number>>(new Set());
   const keyboardOctaveRef = useRef(DEFAULT_KEYBOARD_OCTAVE);
   const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
+  const activeMouseNotesRef = useRef<Set<number>>(new Set());
+  const activeTouchNotesRef = useRef<Set<number>>(new Set());
 
   const playNote = useCallback(
     (note: number) => {
@@ -130,45 +136,117 @@ function usePianoControl(
     keyboardOctaveRef.current = keyboardOctave;
   }, [keyboardOctave]);
 
-  const handleKeyDown = useCallback(
-    (e: MouseEvent | TouchEvent, note: number) => {
-      if (!('touches' in e)) {
-        e.preventDefault();
-      }
-      if (pressedKeysRef.current.has(note)) {
-        return;
-      }
+  const syncPressedKeys = useCallback(() => {
+    const newSet = new Set<number>();
 
-      pressedKeysRef.current = new Set(pressedKeysRef.current).add(note);
-      setPressedKeys(pressedKeysRef.current);
+    for (const note of activeKeyboardNotesRef.current.values()) {
+      newSet.add(note);
+    }
+    for (const note of activeMouseNotesRef.current) {
+      newSet.add(note);
+    }
+    for (const note of activeTouchNotesRef.current) {
+      newSet.add(note);
+    }
+
+    pressedKeysRef.current = newSet;
+    setPressedKeys(newSet);
+  }, []);
+
+  const playPressedKey = useCallback(
+    (note: number) => {
       playNote(note);
       onNoteInput?.(note);
     },
     [onNoteInput, playNote],
   );
 
+  const handleKeyDown = useCallback(
+    (e: MouseEvent | TouchEvent, note: number) => {
+      const isTouchEvent = 'touches' in e;
+      if (isTouchEvent) {
+        if (!isTouchControlEnabled) {
+          return;
+        }
+        const shouldPlay = !pressedKeysRef.current.has(note);
+        activeTouchNotesRef.current = new Set(activeTouchNotesRef.current).add(
+          note,
+        );
+        if (shouldPlay) {
+          playPressedKey(note);
+        }
+        syncPressedKeys();
+      } else {
+        e.preventDefault();
+        if (!isMouseControlEnabled) {
+          return;
+        }
+        const shouldPlay = !pressedKeysRef.current.has(note);
+        activeMouseNotesRef.current = new Set(activeMouseNotesRef.current).add(
+          note,
+        );
+        if (shouldPlay) {
+          playPressedKey(note);
+        }
+        syncPressedKeys();
+      }
+    },
+    [
+      isMouseControlEnabled,
+      isTouchControlEnabled,
+      playPressedKey,
+      syncPressedKeys,
+    ],
+  );
+
   const handleKeyUp = useCallback(
     (e: MouseEvent | TouchEvent, note: number) => {
-      e.preventDefault();
-      const newSet = new Set(pressedKeysRef.current);
-      newSet.delete(note);
-      pressedKeysRef.current = newSet;
-      setPressedKeys(newSet);
+      const isTouchEvent = 'touches' in e;
+      if (isTouchEvent) {
+        if (!isTouchControlEnabled) {
+          return;
+        }
+        const newSet = new Set(activeTouchNotesRef.current);
+        newSet.delete(note);
+        activeTouchNotesRef.current = newSet;
+      } else {
+        e.preventDefault();
+        if (!isMouseControlEnabled) {
+          return;
+        }
+        const newSet = new Set(activeMouseNotesRef.current);
+        newSet.delete(note);
+        activeMouseNotesRef.current = newSet;
+      }
+
+      syncPressedKeys();
     },
-    [],
+    [isMouseControlEnabled, isTouchControlEnabled, syncPressedKeys],
   );
+
+  useEffect(() => {
+    let shouldSync = false;
+
+    if (!isMouseControlEnabled && activeMouseNotesRef.current.size > 0) {
+      activeMouseNotesRef.current = new Set();
+      shouldSync = true;
+    }
+    if (!isTouchControlEnabled && activeTouchNotesRef.current.size > 0) {
+      activeTouchNotesRef.current = new Set();
+      shouldSync = true;
+    }
+
+    if (shouldSync) {
+      syncPressedKeys();
+    }
+  }, [isMouseControlEnabled, isTouchControlEnabled, syncPressedKeys]);
 
   useEffect(() => {
     if (!isKeyboardControlEnabled) {
       const keyboardNotes = activeKeyboardNotesRef.current;
       if (keyboardNotes.size > 0) {
-        const newSet = new Set(pressedKeysRef.current);
-        for (const note of keyboardNotes.values()) {
-          newSet.delete(note);
-        }
         keyboardNotes.clear();
-        pressedKeysRef.current = newSet;
-        setPressedKeys(newSet);
+        syncPressedKeys();
       }
       return;
     }
@@ -196,11 +274,12 @@ function usePianoControl(
         return;
       }
       e.preventDefault();
+      const shouldPlay = !pressedKeysRef.current.has(note);
       activeKeyboardNotesRef.current.set(key, note);
-      pressedKeysRef.current = new Set(pressedKeysRef.current).add(note);
-      setPressedKeys(pressedKeysRef.current);
-      playNote(note);
-      onNoteInput?.(note);
+      if (shouldPlay) {
+        playPressedKey(note);
+      }
+      syncPressedKeys();
     }
 
     function handleKeyboardKeyUp(e: KeyboardEvent) {
@@ -212,10 +291,7 @@ function usePianoControl(
 
       e.preventDefault();
       activeKeyboardNotesRef.current.delete(key);
-      const newSet = new Set(pressedKeysRef.current);
-      newSet.delete(note);
-      pressedKeysRef.current = newSet;
-      setPressedKeys(newSet);
+      syncPressedKeys();
     }
 
     window.addEventListener('keydown', handleKeyboardKeyDown);
@@ -225,7 +301,7 @@ function usePianoControl(
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [isKeyboardControlEnabled, onNoteInput, playNote]);
+  }, [isKeyboardControlEnabled, playPressedKey, syncPressedKeys]);
 
   const { whiteKeys, blackKeys } = pianoKeys;
 

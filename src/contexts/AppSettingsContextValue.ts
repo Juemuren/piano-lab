@@ -5,6 +5,10 @@ export interface AppSettingsContextValue {
   setIsPianoInputEnabled: (enabled: boolean) => void;
   isKeyboardControlEnabled: boolean;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
+  isMouseControlEnabled: boolean;
+  setIsMouseControlEnabled: (enabled: boolean) => void;
+  isTouchControlEnabled: boolean;
+  setIsTouchControlEnabled: (enabled: boolean) => void;
 }
 
 export const AppSettingsContext = createContext<AppSettingsContextValue | null>(

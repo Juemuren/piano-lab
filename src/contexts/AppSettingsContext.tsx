@@ -9,6 +9,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [isPianoInputEnabled, setIsPianoInputEnabled] = useState(false);
   const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] =
     useState(true);
+  const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(true);
+  const [isTouchControlEnabled, setIsTouchControlEnabled] = useState(true);
 
   const value = useMemo(
     () => ({
@@ -16,8 +18,17 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       setIsPianoInputEnabled,
       isKeyboardControlEnabled,
       setIsKeyboardControlEnabled,
+      isMouseControlEnabled,
+      setIsMouseControlEnabled,
+      isTouchControlEnabled,
+      setIsTouchControlEnabled,
     }),
-    [isKeyboardControlEnabled, isPianoInputEnabled],
+    [
+      isKeyboardControlEnabled,
+      isMouseControlEnabled,
+      isPianoInputEnabled,
+      isTouchControlEnabled,
+    ],
   );
 
   return (
