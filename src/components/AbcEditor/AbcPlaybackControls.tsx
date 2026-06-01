@@ -33,7 +33,7 @@ function AbcPlaybackControls({
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex w-full items-center gap-3 rounded-xl">
+    <div className="w-full rounded-xl py-2 flex items-center gap-2">
       <button
         type="button"
         disabled={isPlaybackEnded}
