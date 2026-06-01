@@ -13,6 +13,9 @@
     "touchControl": "タッチで鍵盤を操作する",
     "midiControl": "MIDI デバイスで鍵盤を操作する",
     "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む",
+    "keyboard": {
+      "hint": "現在のキー割り当ては鍵盤上に表示されています。x/z キーでオクターブを固定的に上げ下げし、shift/ctrl キーで一時的に上げ下げできます。"
+    },
     "midi": {
       "inputDevice": "MIDI 入力デバイス",
       "status": {

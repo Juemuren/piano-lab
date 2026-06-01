@@ -115,11 +115,17 @@ function SettingsPanel({
         </label>
       </div>
 
+      {isKeyboardControlEnabled && (
+        <p className="text-sm text-app-muted dark:text-app-muted-dark">
+          {t('settings.keyboard.hint')}
+        </p>
+      )}
+
       {isMidiControlEnabled && (
-        <div className="text-app-muted dark:text-app-muted-dark">
+        <div className="text-sm text-app-muted dark:text-app-muted-dark">
           {midiStatusMessageKey && <p>{t(midiStatusMessageKey)}</p>}
           {midiControl.devices.length > 0 && (
-            <label className="flex flex-col gap-1 text-sm text-center">
+            <label className="flex flex-col gap-1 text-center">
               <span>{t('settings.midi.inputDevice')}</span>
               <ControlSelect
                 value={selectedDeviceId}
