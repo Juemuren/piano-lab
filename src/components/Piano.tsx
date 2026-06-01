@@ -10,8 +10,14 @@ interface PianoProps {
 }
 
 function Piano({ playingNotes = new Set() }: PianoProps) {
-  const { whiteKeys, blackKeys, isKeyPressed, handleKeyDown, handleKeyUp } =
-    usePianoControl(playingNotes);
+  const {
+    whiteKeys,
+    blackKeys,
+    keyHints,
+    isKeyPressed,
+    handleKeyDown,
+    handleKeyUp,
+  } = usePianoControl(playingNotes);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
 
   return (
@@ -26,6 +32,7 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
         <div className="flex">
           {whiteKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
+            const keyHint = keyHints.get(key.note);
             return (
               <button
                 type="button"
@@ -48,7 +55,8 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
                   transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
                 }}
               >
-                <span className="flex flex-col items-center justify-end h-full pb-2">
+                <span className="h-full flex flex-col items-center justify-end py-2">
+                  <span className="text-piano-black">{keyHint}</span>
                   <span>
                     {key.char}
                     <sub>{key.number}</sub>
@@ -62,6 +70,7 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
         <div className="absolute top-0 left-0">
           {blackKeys.map((key) => {
             const isPressed = isKeyPressed(key.note);
+            const keyHint = keyHints.get(key.note);
             return (
               <button
                 type="button"
@@ -87,7 +96,13 @@ function Piano({ playingNotes = new Set() }: PianoProps) {
                   transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
                   zIndex: 1,
                 }}
-              ></button>
+              >
+                <span className="h-full flex flex-col items-center justify-end py-2">
+                  <span className="font-semibold text-piano-white">
+                    {keyHint}
+                  </span>
+                </span>
+              </button>
             );
           })}
         </div>

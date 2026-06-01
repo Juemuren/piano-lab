@@ -24,6 +24,10 @@ export function getPitchOctave(pitch: number) {
   return Math.floor(pitch / 12) - 1;
 }
 
+export function getBasePitchByOctave(octave: number) {
+  return (octave + 1) * 12;
+}
+
 export function getPitchLabel(pitch: number) {
   return `${getPitchName(pitch)}${getPitchOctave(pitch)}`;
 }
