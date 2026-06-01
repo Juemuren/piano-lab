@@ -64,7 +64,7 @@ function Header() {
     >
       <div className="flex items-center justify-between">
         <details
-          className="relative sm:hidden"
+          className="relative md:hidden"
           open={isMenuOpen}
           onToggle={(event) => setIsMenuOpen(event.currentTarget.open)}
         >
@@ -81,7 +81,7 @@ function Header() {
             {navLinks}
           </nav>
         </details>
-        <nav className="hidden items-center truncate text-md sm:flex">
+        <nav className="hidden items-center truncate text-md md:flex">
           {navLinks}
         </nav>
         <LanguageSwitcher />

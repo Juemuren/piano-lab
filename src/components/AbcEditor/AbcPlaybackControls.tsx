@@ -31,7 +31,6 @@ function AbcPlaybackControls({
   onProgressChange,
 }: AbcPlaybackControlsProps) {
   const { t } = useTranslation('common');
-  const canReplay = isPlaying || currentSeconds > 0 || isPlaybackEnded;
 
   return (
     <div className="flex w-full items-center gap-3 rounded-xl">
@@ -39,15 +38,7 @@ function AbcPlaybackControls({
         type="button"
         disabled={isPlaybackEnded}
         onClick={isPlaying ? onPause : onPlay}
-        className={`
-            p-2 rounded-lg text-app-on-accent transition-colors
-            disabled:cursor-not-allowed disabled:opacity-50
-            ${
-              isPlaying
-                ? 'bg-app-danger hover:bg-app-danger-strong disabled:hover:bg-app-danger'
-                : 'bg-app-success hover:bg-app-success-strong disabled:hover:bg-app-success'
-            }
-          `}
+        className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isPlaying ? (
           <Pause size={18} aria-label={t('actions.pause')} />
@@ -58,13 +49,9 @@ function AbcPlaybackControls({
 
       <button
         type="button"
-        disabled={!canReplay}
+        disabled={currentSeconds <= 0}
         onClick={onReplay}
-        className="
-            p-2 rounded-lg text-app-on-accent transition-colors
-            disabled:cursor-not-allowed disabled:opacity-50
-            bg-app-success hover:bg-app-success-strong disabled:hover:bg-app-success
-          "
+        className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         <RotateCcw size={18} aria-label={t('actions.replay')} />
       </button>
@@ -76,10 +63,10 @@ function AbcPlaybackControls({
         step={0.1}
         value={currentSeconds}
         onChange={(e) => onProgressChange(parseFloat(e.target.value))}
-        className="flex-1 accent-app-tip dark:accent-app-tip-dark"
+        className="flex-1 accent-app-tip dark:accent-app-tip-dark min-w-0"
       />
 
-      <span className="w-24 text-right text-sm font-semibold tabular-nums">
+      <span className="w-fit text-right tabular-nums text-xs sm:text-sm sm:font-semibold">
         {formatTime(currentSeconds)} / {formatTime(totalSeconds)}
       </span>
     </div>
