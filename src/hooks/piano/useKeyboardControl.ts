@@ -109,11 +109,15 @@ function useKeyboardControl({
         key,
         getKeyboardOctaveWithModifier(keyboardOctaveRef.current, e),
       );
-      if (note === null || activeNotesRef.current.has(key)) {
+      if (note === null) {
         return;
       }
 
       e.preventDefault();
+      if (activeNotesRef.current.has(key)) {
+        return;
+      }
+
       const shouldPlay = !pressedKeysRef.current.has(note);
       activeNotesRef.current.set(key, note);
       if (shouldPlay) {
