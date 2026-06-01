@@ -1,14 +1,19 @@
+import { useId } from 'react';
 import type { SelectHTMLAttributes } from 'react';
 
 type ControlSelectProps = SelectHTMLAttributes<HTMLSelectElement>;
 
 function ControlSelect({
   className = '',
+  id,
   children,
   ...props
 }: ControlSelectProps) {
+  const generatedId = useId();
+
   return (
     <select
+      id={id ?? generatedId}
       className={`
         w-full py-2 rounded-2xl text-center
         border border-app-border dark:border-app-border-dark

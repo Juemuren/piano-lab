@@ -10,6 +10,7 @@ function AbcSourceInput({ value, onChange }: AbcSourceInputProps) {
 
   return (
     <textarea
+      id="abc-source-input"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={t('placeholder')}
