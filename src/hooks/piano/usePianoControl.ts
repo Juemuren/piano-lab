@@ -16,6 +16,7 @@ import {
   MIN_PIANO_PITCH,
   MAX_PIANO_PITCH,
 } from '../../utils/pitch';
+import useMidiControl from './useMidiControl';
 
 const DEFAULT_DURATION_SECONDS = 1;
 const DEFAULT_VOLUME = 100;
@@ -117,6 +118,7 @@ function usePianoControl(
     isKeyboardControlEnabled,
     isMouseControlEnabled,
     isTouchControlEnabled,
+    isMidiControlEnabled,
   } = useAppSettings();
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
@@ -162,6 +164,21 @@ function usePianoControl(
     },
     [onNoteInput, playNote],
   );
+
+  const playMidiPressedKey = useCallback(
+    (note: number, velocity: number) => {
+      if (!pressedKeysRef.current.has(note)) {
+        synthEngine.playNote(note, DEFAULT_DURATION_SECONDS, velocity);
+        onNoteInput?.(note);
+      }
+    },
+    [onNoteInput, synthEngine],
+  );
+
+  const activeMidiNotes = useMidiControl({
+    enabled: isMidiControlEnabled,
+    onNoteOn: playMidiPressedKey,
+  });
 
   const handleKeyDown = useCallback(
     (e: MouseEvent | TouchEvent, note: number) => {
@@ -340,8 +357,11 @@ function usePianoControl(
   }, [isKeyboardControlEnabled, keyboardOctave]);
 
   const isKeyPressed = useCallback(
-    (note: number) => pressedKeys.has(note) || playingNotes.has(note),
-    [pressedKeys, playingNotes],
+    (note: number) =>
+      pressedKeys.has(note) ||
+      activeMidiNotes.has(note) ||
+      playingNotes.has(note),
+    [activeMidiNotes, pressedKeys, playingNotes],
   );
 
   return {

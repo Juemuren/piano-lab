@@ -9,6 +9,8 @@ export interface AppSettingsContextValue {
   setIsMouseControlEnabled: (enabled: boolean) => void;
   isTouchControlEnabled: boolean;
   setIsTouchControlEnabled: (enabled: boolean) => void;
+  isMidiControlEnabled: boolean;
+  setIsMidiControlEnabled: (enabled: boolean) => void;
 }
 
 export const AppSettingsContext = createContext<AppSettingsContextValue | null>(

@@ -11,6 +11,7 @@
     "keyboardControl": "キーボードで鍵盤を操作する",
     "mouseControl": "マウスで鍵盤を操作する",
     "touchControl": "タッチで鍵盤を操作する",
+    "midiControl": "MIDI デバイスで鍵盤を操作する",
     "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む"
   }
 }

@@ -13,6 +13,8 @@ function SettingsPanel() {
     setIsMouseControlEnabled,
     isTouchControlEnabled,
     setIsTouchControlEnabled,
+    isMidiControlEnabled,
+    setIsMidiControlEnabled,
   } = useAppSettings();
 
   return (
@@ -43,6 +45,15 @@ function SettingsPanel() {
           className="size-4 accent-app-accent"
         />
         <span>{t('settings.touchControl')}</span>
+      </label>
+      <label className="flex items-center gap-2 text-sm">
+        <input
+          type="checkbox"
+          checked={isMidiControlEnabled}
+          onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
+          className="size-4 accent-app-accent"
+        />
+        <span>{t('settings.midiControl')}</span>
       </label>
       <label className="flex items-center gap-2 text-sm">
         <input

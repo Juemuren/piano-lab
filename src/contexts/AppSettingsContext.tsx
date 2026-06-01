@@ -11,6 +11,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
     useState(true);
   const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(true);
   const [isTouchControlEnabled, setIsTouchControlEnabled] = useState(true);
+  const [isMidiControlEnabled, setIsMidiControlEnabled] = useState(false);
 
   const value = useMemo(
     () => ({
@@ -22,9 +23,12 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       setIsMouseControlEnabled,
       isTouchControlEnabled,
       setIsTouchControlEnabled,
+      isMidiControlEnabled,
+      setIsMidiControlEnabled,
     }),
     [
       isKeyboardControlEnabled,
+      isMidiControlEnabled,
       isMouseControlEnabled,
       isPianoInputEnabled,
       isTouchControlEnabled,

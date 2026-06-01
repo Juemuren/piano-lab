@@ -32,10 +32,13 @@
 - [x] 键盘操作的功能可以开启或关闭，默认开启
 - [x] 鼠标控制和触摸控制的功能也可以开启或关闭，默认开启
 - [x] 按下琴键可以修改乐谱，即把琴键的输入反向输出到文本框，从而自动生成乐谱。只获取音高，并使用默认音符长度。此功能默认关闭，提供选项开启
+- [x] 接入真实的 MIDI 设备。使用 [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
+- [ ] 显示已连接的 MIDI 输入设备名称和连接状态，并在 MIDI 权限失败 / 浏览器不支持时给出提示
+- [ ] 可以选择单个 MIDI 输入设备，而不是监听全部输入
+- [ ] 把 MIDI note off 接到真正的 release，而不是只能弹奏默认的音符长度
 
 有待考虑的
 
-- [ ] 接入真实的 MIDI 设备，可以使用 [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API) 或 [WebMIDI](https://github.com/cotejp/webmidi)
 - [ ] 增加效果器，用 Web Audio API 做真实的卷积，而不是只在频域上变换。可以关注一下 [Tone.js](https://github.com/Tonejs/Tone.js)
 - [ ] 音频波形可视化。可以关注一下 [Wavesurfer.js](https://github.com/katspaugh/wavesurfer.js) 和 [Meyda](https://github.com/meyda/meyda)
 - [ ] 可导入 `.midi` 文件，解析后接入自己的合成器来播放。同样关注 [Tone.js](https://github.com/Tonejs/Tone.js)

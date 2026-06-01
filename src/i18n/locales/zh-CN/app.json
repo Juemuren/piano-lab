@@ -11,6 +11,7 @@
     "keyboardControl": "允许使用键盘控制琴键",
     "mouseControl": "允许使用鼠标控制琴键",
     "touchControl": "允许使用触摸控制琴键",
+    "midiControl": "允许使用 MIDI 设备控制琴键",
     "pianoInput": "按下琴键时将音符写入乐谱"
   }
 }

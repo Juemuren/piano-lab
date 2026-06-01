@@ -11,6 +11,7 @@
     "keyboardControl": "Allow keyboard control of piano keys",
     "mouseControl": "Allow mouse control of piano keys",
     "touchControl": "Allow touch control of piano keys",
+    "midiControl": "Allow MIDI devices to control piano keys",
     "pianoInput": "Write notes to the score when piano keys are pressed"
   }
 }
