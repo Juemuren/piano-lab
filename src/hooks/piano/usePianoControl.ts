@@ -95,6 +95,12 @@ function getKeyboardNote(key: string, octave: number) {
   return getBasePitchByOctave(octave) + keyboardNote.offset;
 }
 
+function getKeyboardOctaveWithModifier(octave: number, e: KeyboardEvent) {
+  const modifierDelta = (e.shiftKey ? 1 : 0) + (e.ctrlKey ? -1 : 0);
+
+  return clampKeyboardOctave(octave + modifierDelta);
+}
+
 function clampKeyboardOctave(octave: number) {
   return Math.min(MAX_KEYBOARD_OCTAVE, Math.max(MIN_KEYBOARD_OCTAVE, octave));
 }
@@ -289,7 +295,7 @@ function usePianoControl(
     }
 
     function handleKeyboardKeyDown(e: KeyboardEvent) {
-      if (isEditableTarget(e.target) || e.altKey || e.ctrlKey || e.metaKey) {
+      if (isEditableTarget(e.target) || e.altKey || e.metaKey) {
         return;
       }
 
@@ -306,7 +312,10 @@ function usePianoControl(
         return;
       }
 
-      const note = getKeyboardNote(key, keyboardOctaveRef.current);
+      const note = getKeyboardNote(
+        key,
+        getKeyboardOctaveWithModifier(keyboardOctaveRef.current, e),
+      );
       if (note === null || activeKeyboardNotesRef.current.has(key)) {
         return;
       }
