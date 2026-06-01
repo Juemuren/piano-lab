@@ -10,7 +10,7 @@ function useAbcExports(abcContent: string) {
   const handleExportAbc = useFileExport({
     content: abcContent,
     fileName: 'score.abc',
-    mimeType: 'text/vnd.abc;charset=utf-8',
+    mimeType: 'text/vnd.abc',
   });
   const handleExportSvg = useSvgExport(getRenderedSvg);
   const handleExportPng = usePngExport(getRenderedSvg);

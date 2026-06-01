@@ -104,7 +104,7 @@ function SoundSynthesizer() {
   const handleExportConfig = useFileExport({
     content: synthConfigJson,
     fileName: 'synth-config.json',
-    mimeType: 'application/json;charset=utf-8',
+    mimeType: 'application/json',
   });
 
   useEffect(() => {
