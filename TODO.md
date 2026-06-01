@@ -4,6 +4,7 @@
 
 - [x] 对 [types.ts](src/types.ts) 进行重构，将 Spectrum 和 TransferFunction 的职责 Preset/Config/Value 区分清楚
 - [x] 重构 [AbcEditor](src/components/AbcEditor/index.tsx) 将预设选择和文本框提取为子组件
+- [x] 重构 [usePianoControl](src/hooks/piano/usePianoControl.ts) 拆分出分别用于键盘控制、鼠标/触摸控制、MIDI 控制的子 hook
 
 ## Fix
 
@@ -42,8 +43,12 @@
 
 有待考虑的
 
-- [ ] 把 MIDI note off 接到真正的 release，而不是只能弹奏默认的音符长度
-- [ ] 增加效果器，用 Web Audio API 做真实的卷积，而不是只在频域上变换。可以关注一下 [Tone.js](https://github.com/Tonejs/Tone.js)
-- [ ] 音频波形可视化。可以关注一下 [Wavesurfer.js](https://github.com/katspaugh/wavesurfer.js) 和 [Meyda](https://github.com/meyda/meyda)
-- [ ] 可导入 `.midi` 文件，解析后接入自己的合成器来播放。同样关注 [Tone.js](https://github.com/Tonejs/Tone.js)
-- [ ] 可录制乐谱演奏时的音频，可以使用 [MediaStream Recording API](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API)
+- 需要修改合成器接口的
+  - [ ] 琴键能够获取按键时长，而不是只演奏默认的音符长度
+  - [ ] 乐谱的反向输出功能可以根据按键时长自动规范到最匹配的音符长度
+  - [ ] 把 MIDI note off 接到真正的 release
+- 需要研究一下第三方库的
+  - [ ] 增加效果器，用 Web Audio API 做真实的卷积，而不是只在频域上变换。可以关注一下 [Tone.js](https://github.com/Tonejs/Tone.js)
+  - [ ] 音频波形可视化。可以关注一下 [Wavesurfer.js](https://github.com/katspaugh/wavesurfer.js) 和 [Meyda](https://github.com/meyda/meyda)
+  - [ ] 可导入 `.midi` 文件，解析后接入自己的合成器来播放。同样关注 [Tone.js](https://github.com/Tonejs/Tone.js)
+  - [ ] 可录制乐谱演奏时的音频，可以使用 [MediaStream Recording API](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API)
