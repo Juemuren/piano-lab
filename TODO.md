@@ -7,10 +7,11 @@
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [ ] 组合键存在问题，比如 ctrl+a 会触发全选
+- [ ] 清除项目中已存在的 `aria-` 样式
 
 ## Style
 
-- [ ] 取个更独特的应用名称和图标
+- [x] 改个更独特的应用名称
 - [ ] 在脚注中补充关于应用的说明
 
 ## Feat
