@@ -14,6 +14,7 @@ import type { MidiControlState } from './hooks/piano/useMidiControl';
 const initialMidiControlState: MidiControlState = {
   activeNotes: new Set(),
   devices: [],
+  activeInputId: '',
   status: 'idle',
 };
 
@@ -25,6 +26,7 @@ function App() {
   const [midiControl, setMidiControl] = useState<MidiControlState>(
     initialMidiControlState,
   );
+  const [selectedMidiInputId, setSelectedMidiInputId] = useState('');
 
   const handleNoteStart = useCallback((pitch: number) => {
     setPlayingNotes((prev) => {
@@ -94,6 +96,7 @@ function App() {
         <section id="piano-keyboard" className="scroll-mt-16">
           <Piano
             playingNotes={playingNotes}
+            selectedMidiInputId={selectedMidiInputId}
             onNoteInput={isPianoInputEnabled ? handlePianoNoteInput : undefined}
             onMidiControlChange={setMidiControl}
           />
@@ -104,7 +107,11 @@ function App() {
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"
           >
-            <SettingsPanel midiControl={midiControl} />
+            <SettingsPanel
+              midiControl={midiControl}
+              selectedMidiInputId={selectedMidiInputId}
+              onSelectedMidiInputIdChange={setSelectedMidiInputId}
+            />
           </CollapsibleSection>
         </section>
       </main>

@@ -112,6 +112,7 @@ function isEditableTarget(target: EventTarget | null) {
 function usePianoControl(
   playingNotes: Set<number>,
   onNoteInput?: (pitch: number) => void,
+  selectedMidiInputId?: string,
 ) {
   const synthEngine = useSynthEngine();
   const {
@@ -177,6 +178,7 @@ function usePianoControl(
 
   const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
+    selectedInputId: selectedMidiInputId,
     onNoteOn: playMidiPressedKey,
   });
 

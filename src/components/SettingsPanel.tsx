@@ -6,25 +6,28 @@ import type {
   MidiStatus,
 } from '../hooks/piano/useMidiControl';
 import ControlPanel from './shared/ControlPanel';
+import ControlSelect from './shared/ControlSelect';
 
 interface SettingsPanelProps {
   midiControl: MidiControlState;
+  selectedMidiInputId: string;
+  onSelectedMidiInputIdChange: (inputId: string) => void;
 }
 
 function getMidiStatusMessageKey(status: MidiStatus, deviceCount: number) {
   if (status === 'unsupported') {
-    return 'settings.midiStatus.unsupported';
+    return 'settings.midi.status.unsupported';
   }
   if (status === 'requesting') {
-    return 'settings.midiStatus.requesting';
+    return 'settings.midi.status.requesting';
   }
   if (status === 'error') {
-    return 'settings.midiStatus.error';
+    return 'settings.midi.status.error';
   }
   if (deviceCount === 0) {
-    return 'settings.midiStatus.noDevices';
+    return 'settings.midi.status.noDevices';
   }
-  return 'settings.midiStatus.ready';
+  return '';
 }
 
 function getMidiDeviceName(device: MidiInputDevice) {
@@ -34,7 +37,11 @@ function getMidiDeviceName(device: MidiInputDevice) {
   return `${device.manufacturer} ${device.name}`;
 }
 
-function SettingsPanel({ midiControl }: SettingsPanelProps) {
+function SettingsPanel({
+  midiControl,
+  selectedMidiInputId,
+  onSelectedMidiInputIdChange,
+}: SettingsPanelProps) {
   const { t } = useTranslation('app');
   const {
     isPianoInputEnabled,
@@ -52,6 +59,11 @@ function SettingsPanel({ midiControl }: SettingsPanelProps) {
     midiControl.status,
     midiControl.devices.length,
   );
+  const selectedDeviceId = midiControl.devices.some(
+    (device) => device.id === selectedMidiInputId,
+  )
+    ? selectedMidiInputId
+    : midiControl.activeInputId;
 
   return (
     <ControlPanel className="flex flex-col gap-4">
@@ -104,23 +116,22 @@ function SettingsPanel({ midiControl }: SettingsPanelProps) {
       </div>
 
       {isMidiControlEnabled && (
-        <div className="text-sm text-app-muted dark:text-app-muted-dark">
-          <p>{t(midiStatusMessageKey)}</p>
+        <div className="text-app-muted dark:text-app-muted-dark">
+          {midiStatusMessageKey && <p>{t(midiStatusMessageKey)}</p>}
           {midiControl.devices.length > 0 && (
-            <ul className="mt-2 space-y-1">
-              {midiControl.devices.map((device) => (
-                <li key={device.id}>
-                  <span className="font-medium text-app-text dark:text-app-text-dark">
+            <label className="flex flex-col gap-1 text-sm text-center">
+              <span>{t('settings.midi.inputDevice')}</span>
+              <ControlSelect
+                value={selectedDeviceId}
+                onChange={(e) => onSelectedMidiInputIdChange(e.target.value)}
+              >
+                {midiControl.devices.map((device) => (
+                  <option key={device.id} value={device.id}>
                     {getMidiDeviceName(device)}
-                  </span>
-                  <span> {t(`settings.midiDeviceState.${device.state}`)}</span>
-                  <span>
-                    {' '}
-                    {t(`settings.midiDeviceConnection.${device.connection}`)}
-                  </span>
-                </li>
-              ))}
-            </ul>
+                  </option>
+                ))}
+              </ControlSelect>
+            </label>
           )}
         </div>
       )}

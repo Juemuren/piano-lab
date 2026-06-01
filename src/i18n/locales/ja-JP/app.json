@@ -13,21 +13,14 @@
     "touchControl": "タッチで鍵盤を操作する",
     "midiControl": "MIDI デバイスで鍵盤を操作する",
     "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む",
-    "midiStatus": {
-      "unsupported": "このブラウザーは Web MIDI API に対応していません。",
-      "requesting": "MIDI デバイスの権限を要求しています...",
-      "ready": "接続済みの MIDI 入力デバイス:",
-      "noDevices": "利用可能な MIDI 入力デバイスが見つかりません。",
-      "error": "MIDI デバイスの権限要求に失敗しました。ブラウザーの権限設定を確認してください。"
-    },
-    "midiDeviceState": {
-      "connected": "接続済み",
-      "disconnected": "切断済み"
-    },
-    "midiDeviceConnection": {
-      "open": "オープン",
-      "closed": "クローズ",
-      "pending": "待機中"
+    "midi": {
+      "inputDevice": "MIDI 入力デバイス",
+      "status": {
+        "unsupported": "このブラウザーは Web MIDI API に対応していません。",
+        "requesting": "MIDI デバイスの権限を要求しています...",
+        "noDevices": "利用可能な MIDI 入力デバイスが見つかりません。",
+        "error": "MIDI デバイスの権限要求に失敗しました。ブラウザーの権限設定を確認してください。"
+      }
     }
   }
 }

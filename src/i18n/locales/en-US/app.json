@@ -13,21 +13,14 @@
     "touchControl": "Allow touch control of piano keys",
     "midiControl": "Allow MIDI devices to control piano keys",
     "pianoInput": "Write notes to the score when piano keys are pressed",
-    "midiStatus": {
-      "unsupported": "This browser does not support the Web MIDI API.",
-      "requesting": "Requesting MIDI device permission...",
-      "ready": "Connected MIDI input devices:",
-      "noDevices": "No MIDI input devices were found.",
-      "error": "MIDI device permission failed. Check your browser permissions."
-    },
-    "midiDeviceState": {
-      "connected": "connected",
-      "disconnected": "disconnected"
-    },
-    "midiDeviceConnection": {
-      "open": "open",
-      "closed": "closed",
-      "pending": "pending"
+    "midi": {
+      "inputDevice": "MIDI input device",
+      "status": {
+        "unsupported": "This browser does not support the Web MIDI API.",
+        "requesting": "Requesting MIDI device permission...",
+        "noDevices": "No MIDI input devices were found.",
+        "error": "MIDI device permission failed. Check your browser permissions."
+      }
     }
   }
 }

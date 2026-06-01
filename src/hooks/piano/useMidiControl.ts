@@ -24,11 +24,13 @@ export interface MidiInputDevice {
 export interface MidiControlState {
   activeNotes: Set<number>;
   devices: MidiInputDevice[];
+  activeInputId: string;
   status: MidiStatus;
 }
 
 interface UseMidiControlOptions {
   enabled: boolean;
+  selectedInputId?: string;
   onNoteOn: (note: number, velocity: number) => void;
 }
 
@@ -46,9 +48,14 @@ function getInputDevice(input: MIDIInput): MidiInputDevice {
   };
 }
 
-function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
+function useMidiControl({
+  enabled,
+  selectedInputId,
+  onNoteOn,
+}: UseMidiControlOptions) {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
   const [devices, setDevices] = useState<MidiInputDevice[]>([]);
+  const [activeInputId, setActiveInputId] = useState('');
   const [status, setStatus] = useState<MidiStatus>('idle');
   const midiAccessRef = useRef<MIDIAccess | null>(null);
   const activeNotesRef = useRef<Set<number>>(new Set());
@@ -67,6 +74,7 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
 
   const resetMidiState = useCallback(() => {
     setDevices([]);
+    setActiveInputId('');
     setStatus('idle');
     clearActiveNotes();
   }, [clearActiveNotes]);
@@ -118,17 +126,34 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
 
     function attachInputs(midiAccess: MIDIAccess) {
       detachInputs();
-      for (const input of midiAccess.inputs.values()) {
-        input.onmidimessage = handleMidiMessage;
-        attachedInputs.add(input);
+      const inputs = Array.from(midiAccess.inputs.values());
+      const selectedInput =
+        inputs.find((input) => input.id === selectedInputId) || inputs[0];
+
+      if (selectedInput) {
+        selectedInput.onmidimessage = handleMidiMessage;
+        attachedInputs.add(selectedInput);
       }
-      setDevices(Array.from(midiAccess.inputs.values(), getInputDevice));
+
+      setDevices(inputs.map(getInputDevice));
+      setActiveInputId(selectedInput?.id || '');
+      clearActiveNotes();
       setStatus('ready');
     }
 
     async function connectMidi() {
       if (!navigator.requestMIDIAccess) {
         setStatus('unsupported');
+        return;
+      }
+
+      if (midiAccessRef.current) {
+        attachInputs(midiAccessRef.current);
+        midiAccessRef.current.onstatechange = () => {
+          if (midiAccessRef.current) {
+            attachInputs(midiAccessRef.current);
+          }
+        };
         return;
       }
 
@@ -168,15 +193,22 @@ function useMidiControl({ enabled, onNoteOn }: UseMidiControlOptions) {
       }
       detachInputs();
     };
-  }, [clearActiveNotes, enabled, handleMidiMessage, resetMidiState]);
+  }, [
+    clearActiveNotes,
+    enabled,
+    handleMidiMessage,
+    resetMidiState,
+    selectedInputId,
+  ]);
 
   return useMemo(
     () => ({
       activeNotes: enabled ? activeNotes : EMPTY_ACTIVE_NOTES,
       devices: enabled ? devices : EMPTY_MIDI_DEVICES,
+      activeInputId: enabled ? activeInputId : '',
       status: enabled ? status : 'idle',
     }),
-    [activeNotes, devices, enabled, status],
+    [activeInputId, activeNotes, devices, enabled, status],
   );
 }
 
