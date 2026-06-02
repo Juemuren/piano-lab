@@ -6,7 +6,7 @@ import type {
   TransferFunctionType,
 } from '../../types';
 import { createTransferFunction } from '../../services/synth/SynthDefinitions';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import {
   DEFAULT_TRANSFER_FUNCTION_TYPE,
   DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,

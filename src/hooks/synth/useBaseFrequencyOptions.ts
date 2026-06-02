@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import { getPitchOptions } from '../../utils/pitch';
 
 const PITCH_OPTIONS = getPitchOptions();

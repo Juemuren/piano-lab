@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;

@@ -6,7 +6,7 @@ import type {
   SpectrumType,
 } from '../../types';
 import { createSpectrum } from '../../services/synth/SynthDefinitions';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,

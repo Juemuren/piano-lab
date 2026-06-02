@@ -7,7 +7,7 @@ import AbcEditor from './components/AbcEditor';
 import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { useAppSettings } from './contexts/useAppSettings';
+import { useAppSettings } from './contexts/appSettings';
 import { appendPitchToAbc } from './services/abc/AbcInput';
 
 function App() {

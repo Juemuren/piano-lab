@@ -11,7 +11,7 @@ import {
   createDefaultSynthConfig,
   normalizeSynthConfig,
 } from '../../services/synth/SynthConfig';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useMidiControlContext } from '../contexts/useMidiControlContext';
-import { useAppSettings } from '../contexts/useAppSettings';
+import { useAppSettings } from '../contexts/appSettings';
+import { useMidiControlContext } from '../contexts/midiControl';
 import type { MidiInputDevice, MidiStatus } from '../types';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';

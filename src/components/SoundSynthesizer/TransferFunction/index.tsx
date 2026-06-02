@@ -7,7 +7,7 @@ import TransferFunctionParameterControls from './TransferFunctionParameterContro
 import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
 import useBaseFrequencyOptions from '../../../hooks/synth/useBaseFrequencyOptions';
 import useTransferFunctionControl from '../../../hooks/synth/useTransferFunctionControl';
-import { useSynthEngine } from '../../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../../contexts/synthEngine';
 
 interface TransferFunctionProps {
   harmonicCount: number;

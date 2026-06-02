@@ -5,7 +5,7 @@
 - [x] 重构 [SynthEngine](src/services//synth/SynthEngine.ts)，导出 startNote/stopNote 接口
 - [ ] 将 [SynthEngine](src/services//synth/SynthEngine.ts) 的通用函数提取到 [utils](src/utils/) 中
 - [x] [types](src/types.ts) 中的类型拆分成多个文件，放入 `src/types` 中
-- [ ] [context](src/contexts/) 下的文件拆分到不同的目录中
+- [x] [context](src/contexts/) 下的文件拆分到不同的目录中
 
 ## Fix
 

@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import { useAppSettings } from '../../contexts/useAppSettings';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useAppSettings } from '../../contexts/appSettings';
+import { useSynthEngine } from '../../contexts/synthEngine';
 import {
   getPitchName,
   getPitchOctave,

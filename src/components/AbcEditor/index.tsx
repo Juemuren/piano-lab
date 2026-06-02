@@ -9,7 +9,7 @@ import ControlPanel from '../shared/ControlPanel';
 import useFileImport from '../../hooks/file/useFileImport';
 import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useAbcExports from '../../hooks/abc/useAbcExports';
-import { useSynthEngine } from '../../contexts/useSynthEngine';
+import { useSynthEngine } from '../../contexts/synthEngine';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 

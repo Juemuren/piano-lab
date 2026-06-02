@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react';
-import { SynthEngine } from '../services/synth/SynthEngine';
+import { SynthEngine } from '../../services/synth/SynthEngine';
 import { SynthEngineContext } from './SynthEngineContextValue';
 
 interface SynthEngineProviderProps {
