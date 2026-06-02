@@ -3,6 +3,7 @@
 ## Refactor
 
 - [x] 重构 [SynthEngine](src/services//synth/SynthEngine.ts)，导出 startNote/stopNote 接口
+- [x] 添加 createVoiceStartPlans/createVoiceStopPlans 函数，继续分离纯计算和业务逻辑
 - [x] 将 [SynthEngine](src/services//synth/SynthEngine.ts) 中的纯函数提取出来
 - [x] [types](src/types.ts) 中的类型拆分成多个文件，放入 `src/types` 中
 - [x] [context](src/contexts/) 下的文件拆分到不同的目录中

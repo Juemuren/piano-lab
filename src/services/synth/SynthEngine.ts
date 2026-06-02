@@ -5,7 +5,10 @@ import type {
   StartNoteResult,
 } from '../../types';
 import { createSpectrum, createTransferFunction } from './SynthDefinitions';
-import { createSynthVoicePlans } from './SynthCalculations';
+import {
+  createVoiceStartPlans,
+  createVoiceStopPlans,
+} from './SynthCalculations';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -192,7 +195,7 @@ export class SynthEngine {
     return this.noteGenerationIds.get(pitch) === generationId;
   }
 
-  private createNoteVoices(
+  private startNoteVoices(
     pitch: number,
     volume: number,
     cents: number,
@@ -201,11 +204,12 @@ export class SynthEngine {
       return [];
     }
 
-    const plans = createSynthVoicePlans({
+    const plans = createVoiceStartPlans({
       pitch,
       volume,
       cents,
       now: this.audioContext.currentTime,
+      harmonics: this.spectrum.amplitudes.length,
       spectrum: this.spectrum,
       transferFunctionDefinition: this.transferFunctionDefinition,
       volumeRatio: this.volumeRatio,
@@ -254,6 +258,28 @@ export class SynthEngine {
     return voices;
   }
 
+  private stopNoteVoices(voices: ActiveSynthVoice[]) {
+    if (!this.audioContext) {
+      return [];
+    }
+
+    const plans = createVoiceStopPlans({
+      now: this.audioContext.currentTime,
+      harmonics: voices.length,
+      releaseTime: this.releaseTime,
+    });
+
+    for (const [index, voice] of voices.entries()) {
+      const plan = plans[index];
+
+      voice.gainNode.gain.exponentialRampToValueAtTime(
+        voice.silenceGain,
+        plan.stopTime,
+      );
+      voice.oscillatorNode.stop(plan.stopTime);
+    }
+  }
+
   async playNote(
     pitch: number,
     duration: number,
@@ -263,7 +289,7 @@ export class SynthEngine {
     await this.ensureAudioContextRunning();
     if (!this.audioContext) return { started: false };
 
-    const voices = this.createNoteVoices(pitch, volume, cents);
+    const voices = this.startNoteVoices(pitch, volume, cents);
 
     for (const voice of voices) {
       const sustainEnd = voice.decayEnd + duration;
@@ -300,7 +326,7 @@ export class SynthEngine {
       return { started: false };
     }
 
-    const voices = this.createNoteVoices(pitch, volume, cents);
+    const voices = this.startNoteVoices(pitch, volume, cents);
 
     if (!this.isCurrentNoteGeneration(pitch, generationId)) {
       for (const voice of voices) {
@@ -319,30 +345,11 @@ export class SynthEngine {
 
   stopNote(pitch: number) {
     this.nextNoteGenerationId(pitch);
-    if (!this.audioContext) return;
 
     const voices = this.activeNotes.get(pitch);
     if (!voices) return;
 
     this.activeNotes.delete(pitch);
-    const now = this.audioContext.currentTime;
-
-    for (const voice of voices) {
-      const releaseStart = Math.max(now, voice.startTime);
-      const stopTime =
-        releaseStart + this.releaseTime / Math.sqrt(voice.harmonic);
-      const currentGain = Math.max(
-        voice.gainNode.gain.value,
-        voice.silenceGain,
-      );
-
-      voice.gainNode.gain.cancelScheduledValues(releaseStart);
-      voice.gainNode.gain.setValueAtTime(currentGain, releaseStart);
-      voice.gainNode.gain.exponentialRampToValueAtTime(
-        voice.silenceGain,
-        stopTime,
-      );
-      voice.oscillatorNode.stop(stopTime);
-    }
+    this.stopNoteVoices(voices);
   }
 }

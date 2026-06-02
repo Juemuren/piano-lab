@@ -5,7 +5,7 @@ import type {
 } from '../../types';
 import { createTransferFunction } from './SynthDefinitions';
 
-export interface SynthVoicePlan {
+interface VoiceStartPlan {
   harmonic: number;
   frequency: number;
   startTime: number;
@@ -17,11 +17,16 @@ export interface SynthVoicePlan {
   silenceGain: number;
 }
 
-export interface CreateSynthVoicePlansOptions {
+interface VoiceStopPlan {
+  stopTime: number;
+}
+
+interface CreateVoiceStartPlansOptions {
   pitch: number;
   volume: number;
   cents: number;
   now: number;
+  harmonics: number;
   spectrum: Spectrum;
   transferFunctionDefinition: TransferFunctionDefinition;
   volumeRatio: number;
@@ -30,6 +35,12 @@ export interface CreateSynthVoicePlansOptions {
   sustainGain: number;
   silenceGain: number;
   minGainValue: number;
+}
+
+interface CreateVoiceStopPlansOptions {
+  now: number;
+  harmonics: number;
+  releaseTime: number;
 }
 
 export function getBaseFrequency(pitch: number, cents: number = 0) {
@@ -49,11 +60,12 @@ export function getDelaySeconds(phaseDeg: number, frequency: number) {
   return phaseDeg / (360 * frequency);
 }
 
-export function createSynthVoicePlans({
+export function createVoiceStartPlans({
   pitch,
   volume,
   cents,
   now,
+  harmonics,
   spectrum,
   transferFunctionDefinition,
   volumeRatio,
@@ -62,14 +74,13 @@ export function createSynthVoicePlans({
   sustainGain: envelopeSustainGain,
   silenceGain: envelopeSilenceGain,
   minGainValue,
-}: CreateSynthVoicePlansOptions): SynthVoicePlan[] {
+}: CreateVoiceStartPlansOptions): VoiceStartPlan[] {
   const baseFrequency = getBaseFrequency(pitch, cents);
-  const harmonics = spectrum.amplitudes.length;
   const { magnitudes, phases }: TransferFunction = createTransferFunction(
     { ...transferFunctionDefinition, baseFrequency },
     harmonics,
   );
-  const plans: SynthVoicePlan[] = [];
+  const plans: VoiceStartPlan[] = [];
 
   for (let n = 1; n <= harmonics; n++) {
     const frequency = baseFrequency * n;
@@ -104,6 +115,21 @@ export function createSynthVoicePlans({
       sustainGain,
       silenceGain,
     });
+  }
+
+  return plans;
+}
+
+export function createVoiceStopPlans({
+  now,
+  harmonics,
+  releaseTime,
+}: CreateVoiceStopPlansOptions): VoiceStopPlan[] {
+  const plans: VoiceStopPlan[] = [];
+
+  for (let n = 1; n < harmonics; n++) {
+    const stopTime = now + releaseTime / Math.sqrt(n);
+    plans.push({ stopTime });
   }
 
   return plans;
