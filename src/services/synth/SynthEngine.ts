@@ -353,12 +353,23 @@ export class SynthEngine {
     if (!voices) return;
 
     this.activeNotes.delete(pitch);
+
     const now = this.audioContext.currentTime;
     this.stopNoteVoices(
-      voices.map((voice) => ({
-        ...voice,
-        releaseStart: now,
-      })),
+      voices.map((voice) => {
+        const releaseStart = Math.max(now, voice.startTime);
+        const currentGain = Math.max(
+          voice.gainNode.gain.value,
+          voice.silenceGain,
+        );
+        voice.gainNode.gain.cancelScheduledValues(now);
+        voice.gainNode.gain.setValueAtTime(currentGain, releaseStart);
+
+        return {
+          ...voice,
+          releaseStart,
+        };
+      }),
     );
   }
 }
