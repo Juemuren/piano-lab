@@ -8,7 +8,7 @@
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [x] 组合键存在问题，比如 ctrl+a 会触发全选
 - [x] 清除项目中已存在的 `aria-` 样式
-- [ ] 第一次点击琴键时音符时长不正确，似乎 AudioContext 未能正确初始化
+- [x] 第一次点击琴键时音符时长不正确， AudioContext 初始化存在问题
 
 ## Style
 

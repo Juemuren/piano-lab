@@ -103,13 +103,22 @@ function usePianoControl(
   }, []);
 
   const startPressedKey = useCallback(
-    (note: number, volume: number = DEFAULT_VOLUME) => {
+    async (note: number, volume: number = DEFAULT_VOLUME) => {
+      const didStart = await synthEngine.startNote(note, volume);
+      if (!didStart) {
+        return;
+      }
+
+      if (!isNoteActive(note)) {
+        synthEngine.stopNote(note);
+        return;
+      }
+
       if (!noteStartedAtRef.current.has(note)) {
         noteStartedAtRef.current.set(note, performance.now());
       }
-      synthEngine.startNote(note, volume);
     },
-    [synthEngine],
+    [isNoteActive, synthEngine],
   );
 
   const stopPressedKey = useCallback(
@@ -118,13 +127,13 @@ function usePianoControl(
         return;
       }
 
+      synthEngine.stopNote(note);
       const startedAt = noteStartedAtRef.current.get(note);
       if (startedAt === undefined) {
         return;
       }
 
       noteStartedAtRef.current.delete(note);
-      synthEngine.stopNote(note);
       onNoteInput?.(note, (performance.now() - startedAt) / 1000);
     },
     [isNoteActive, onNoteInput, synthEngine],

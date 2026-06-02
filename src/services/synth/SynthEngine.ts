@@ -299,14 +299,18 @@ export class SynthEngine {
     }
   }
 
-  async startNote(pitch: number, volume: number = 100, cents: number = 0) {
+  async startNote(
+    pitch: number,
+    volume: number = 100,
+    cents: number = 0,
+  ): Promise<boolean> {
     this.stopNote(pitch);
     const version = (this.noteVersions.get(pitch) || 0) + 1;
     this.noteVersions.set(pitch, version);
 
     await this.ensureAudioContextRunning();
-    if (!this.audioContext) return;
-    if (this.noteVersions.get(pitch) !== version) return;
+    if (!this.audioContext) return false;
+    if (this.noteVersions.get(pitch) !== version) return false;
 
     const voices = this.createNoteVoices(pitch, volume, cents);
 
@@ -316,10 +320,11 @@ export class SynthEngine {
           Math.max(this.audioContext.currentTime, voice.startTime),
         );
       }
-      return;
+      return false;
     }
 
     this.activeNotes.set(pitch, voices);
+    return voices.length > 0;
   }
 
   stopNote(pitch: number) {
