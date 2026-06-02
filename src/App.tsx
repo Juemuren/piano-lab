@@ -8,19 +8,13 @@ import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { useAppSettings } from './contexts/useAppSettings';
-import { createInitialMidiControlState } from './hooks/piano/useMidiControl';
 import { appendPitchToAbc } from './services/abc/AbcInput';
-import type { MidiControlState } from './types';
 
 function App() {
   const { t } = useTranslation('app');
   const { isPianoInputEnabled } = useAppSettings();
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
   const [abcContent, setAbcContent] = useState('');
-  const [midiControl, setMidiControl] = useState<MidiControlState>(
-    createInitialMidiControlState,
-  );
-  const [selectedMidiInputId, setSelectedMidiInputId] = useState('');
 
   const handleNoteStart = useCallback((pitch: number) => {
     setPlayingNotes((prev) => {
@@ -90,9 +84,7 @@ function App() {
         <section id="piano-keyboard" className="scroll-mt-16">
           <Piano
             playingNotes={playingNotes}
-            selectedMidiInputId={selectedMidiInputId}
             onNoteInput={isPianoInputEnabled ? handlePianoNoteInput : undefined}
-            onMidiControlChange={setMidiControl}
           />
         </section>
 
@@ -101,11 +93,7 @@ function App() {
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"
           >
-            <SettingsPanel
-              midiControl={midiControl}
-              selectedMidiInputId={selectedMidiInputId}
-              onSelectedMidiInputIdChange={setSelectedMidiInputId}
-            />
+            <SettingsPanel />
           </CollapsibleSection>
         </section>
       </main>

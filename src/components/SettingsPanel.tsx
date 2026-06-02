@@ -1,14 +1,9 @@
 import { useTranslation } from 'react-i18next';
+import { useMidiControlContext } from '../contexts/useMidiControlContext';
 import { useAppSettings } from '../contexts/useAppSettings';
-import type { MidiControlState, MidiInputDevice, MidiStatus } from '../types';
+import type { MidiInputDevice, MidiStatus } from '../types';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
-
-interface SettingsPanelProps {
-  midiControl: MidiControlState;
-  selectedMidiInputId: string;
-  onSelectedMidiInputIdChange: (inputId: string) => void;
-}
 
 function getMidiStatusMessageKey(status: MidiStatus, deviceCount: number) {
   if (status === 'unsupported') {
@@ -33,12 +28,10 @@ function getMidiDeviceName(device: MidiInputDevice) {
   return `${device.manufacturer} ${device.name}`;
 }
 
-function SettingsPanel({
-  midiControl,
-  selectedMidiInputId,
-  onSelectedMidiInputIdChange,
-}: SettingsPanelProps) {
+function SettingsPanel() {
   const { t } = useTranslation('app');
+  const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
+    useMidiControlContext();
   const {
     isPianoInputEnabled,
     setIsPianoInputEnabled,
@@ -125,7 +118,7 @@ function SettingsPanel({
               <span>{t('settings.midi.inputDevice')}</span>
               <ControlSelect
                 value={selectedDeviceId}
-                onChange={(e) => onSelectedMidiInputIdChange(e.target.value)}
+                onChange={(e) => setSelectedMidiInputId(e.target.value)}
               >
                 {midiControl.devices.map((device) => (
                   <option key={device.id} value={device.id}>
