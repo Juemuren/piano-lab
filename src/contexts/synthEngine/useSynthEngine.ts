@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SynthEngineContext } from './SynthEngineContextValue';
+import { SynthEngineContext } from './SynthEngineContext';
 
 export function useSynthEngine() {
   const synthEngine = useContext(SynthEngineContext);

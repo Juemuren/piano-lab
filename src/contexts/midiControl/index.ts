@@ -1,2 +1,2 @@
-export { MidiControlProvider } from './MidiControlContext';
+export { MidiControlProvider } from './MidiControlProvider';
 export { useMidiControlContext } from './useMidiControlContext';

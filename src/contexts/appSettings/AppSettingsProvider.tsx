@@ -1,5 +1,5 @@
 import { type ReactNode, useMemo, useState } from 'react';
-import { AppSettingsContext } from './AppSettingsContextValue';
+import { AppSettingsContext } from './AppSettingsContext';
 
 interface AppSettingsProviderProps {
   children: ReactNode;

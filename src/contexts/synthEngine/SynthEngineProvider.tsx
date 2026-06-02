@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import { SynthEngine } from '../../services/synth/SynthEngine';
-import { SynthEngineContext } from './SynthEngineContextValue';
+import { SynthEngineContext } from './SynthEngineContext';
 
 interface SynthEngineProviderProps {
   children: ReactNode;

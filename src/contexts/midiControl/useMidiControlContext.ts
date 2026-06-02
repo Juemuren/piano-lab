@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MidiControlContext } from './MidiControlContextValue';
+import { MidiControlContext } from './MidiControlContext';
 
 export function useMidiControlContext() {
   const midiControl = useContext(MidiControlContext);

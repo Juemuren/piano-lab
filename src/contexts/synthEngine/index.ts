@@ -1,2 +1,2 @@
-export { SynthEngineProvider } from './SynthEngineContext';
+export { SynthEngineProvider } from './SynthEngineProvider';
 export { useSynthEngine } from './useSynthEngine';
