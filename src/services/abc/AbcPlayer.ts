@@ -19,14 +19,24 @@ export class AbcPlayer {
   }
 
   play(midiPitches: MidiPitches, millisecondsPerDuration: number) {
-    midiPitches.forEach(({ pitch, duration, volume, cents }) => {
-      const correctDuration = duration * millisecondsPerDuration;
+    Promise.all(
+      midiPitches.map(async ({ pitch, duration, volume, cents }) => {
+        const correctDuration = duration * millisecondsPerDuration;
+        const playResult = await this.synthEngine.playNote(
+          pitch,
+          correctDuration / 1000,
+          volume,
+          cents,
+        );
+        if (!playResult.started) {
+          return;
+        }
 
-      this.onNoteStart?.(pitch);
-      this.synthEngine.playNote(pitch, correctDuration / 1000, volume, cents);
-      setTimeout(() => {
-        this.onNoteEnd?.(pitch);
-      }, correctDuration - HIGHLIGHT_INTERVAL_MS);
-    });
+        this.onNoteStart?.(pitch);
+        setTimeout(() => {
+          this.onNoteEnd?.(pitch);
+        }, correctDuration - HIGHLIGHT_INTERVAL_MS);
+      }),
+    ).catch(() => undefined);
   }
 }

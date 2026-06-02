@@ -10,9 +10,8 @@
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [x] 组合键存在问题，比如 ctrl+a 会触发全选
 - [x] 清除项目中已存在的 `aria-` 样式
-- [x] 第一次点击琴键时音符时长不正确， AudioContext 初始化存在问题
-- [ ] 禁用键盘控制后仍然监听键盘输入
-- [ ] 阻止键盘事件的方式过于粗暴，导致所有 `ctrl`/`shift` 相关的组合键都失效了
+- [x] 第一次点击琴键时音符时长不正确，startNote 的调用处存在问题，未能正确处理异步
+- [x] playNote 处同样也有问题
 
 ## Style
 

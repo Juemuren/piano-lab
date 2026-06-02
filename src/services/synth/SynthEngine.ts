@@ -293,11 +293,13 @@ export class SynthEngine {
     duration: number,
     volume: number = 100,
     cents: number = 0,
-  ) {
+  ): Promise<StartNoteResult> {
     await this.ensureAudioContextRunning();
-    if (!this.audioContext) return;
+    if (!this.audioContext) return { started: false };
 
-    for (const voice of this.createNoteVoices(pitch, volume, cents)) {
+    const voices = this.createNoteVoices(pitch, volume, cents);
+
+    for (const voice of voices) {
       const sustainEnd = voice.decayEnd + duration;
       const stopTime =
         sustainEnd + this.releaseTime / Math.sqrt(voice.harmonic);
@@ -312,6 +314,10 @@ export class SynthEngine {
       );
       voice.oscillatorNode.stop(stopTime);
     }
+
+    return voices.length > 0
+      ? { started: true, startedAt: performance.now() }
+      : { started: false };
   }
 
   async startNote(
