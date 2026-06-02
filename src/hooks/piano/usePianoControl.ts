@@ -11,7 +11,6 @@ import useKeyboardControl from './useKeyboardControl';
 import useMidiControl from './useMidiControl';
 import usePointerControl from './usePointerControl';
 
-const DEFAULT_DURATION_SECONDS = 1;
 const DEFAULT_VOLUME = 100;
 
 interface PianoKey {
@@ -56,7 +55,7 @@ const pianoKeys = getPianoKeys();
 
 function usePianoControl(
   playingNotes: Set<number>,
-  onNoteInput?: (pitch: number) => void,
+  onNoteInput?: (pitch: number, duration: number) => void,
   selectedMidiInputId?: string,
 ) {
   const synthEngine = useSynthEngine();
@@ -71,13 +70,7 @@ function usePianoControl(
   const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
   const activeMouseNotesRef = useRef<Set<number>>(new Set());
   const activeTouchNotesRef = useRef<Set<number>>(new Set());
-
-  const playNote = useCallback(
-    (note: number) => {
-      synthEngine.playNote(note, DEFAULT_DURATION_SECONDS, DEFAULT_VOLUME);
-    },
-    [synthEngine],
-  );
+  const noteStartedAtRef = useRef<Map<number, number>>(new Map());
 
   const syncPressedKeys = useCallback(() => {
     const newSet = new Set<number>();
@@ -96,36 +89,70 @@ function usePianoControl(
     setPressedKeys(newSet);
   }, []);
 
-  const playPressedKey = useCallback(
-    (note: number) => {
-      playNote(note);
-      onNoteInput?.(note);
+  const isNoteActive = useCallback((note: number) => {
+    for (const activeNote of activeKeyboardNotesRef.current.values()) {
+      if (activeNote === note) {
+        return true;
+      }
+    }
+
+    return (
+      activeMouseNotesRef.current.has(note) ||
+      activeTouchNotesRef.current.has(note)
+    );
+  }, []);
+
+  const startPressedKey = useCallback(
+    (note: number, volume: number = DEFAULT_VOLUME) => {
+      if (!noteStartedAtRef.current.has(note)) {
+        noteStartedAtRef.current.set(note, performance.now());
+      }
+      synthEngine.startNote(note, volume);
     },
-    [onNoteInput, playNote],
+    [synthEngine],
+  );
+
+  const stopPressedKey = useCallback(
+    (note: number) => {
+      if (isNoteActive(note)) {
+        return;
+      }
+
+      const startedAt = noteStartedAtRef.current.get(note);
+      if (startedAt === undefined) {
+        return;
+      }
+
+      noteStartedAtRef.current.delete(note);
+      synthEngine.stopNote(note);
+      onNoteInput?.(note, (performance.now() - startedAt) / 1000);
+    },
+    [isNoteActive, onNoteInput, synthEngine],
   );
 
   const { keyHints } = useKeyboardControl({
     enabled: isKeyboardControlEnabled,
     activeNotesRef: activeKeyboardNotesRef,
     pressedKeysRef,
-    onNotePress: playPressedKey,
+    onNotePress: startPressedKey,
+    onNoteRelease: stopPressedKey,
     onActiveNotesChange: syncPressedKeys,
   });
 
-  const playMidiPressedKey = useCallback(
+  const startMidiPressedKey = useCallback(
     (note: number, velocity: number) => {
       if (!pressedKeysRef.current.has(note)) {
-        synthEngine.playNote(note, DEFAULT_DURATION_SECONDS, velocity);
-        onNoteInput?.(note);
+        startPressedKey(note, velocity);
       }
     },
-    [onNoteInput, synthEngine],
+    [startPressedKey],
   );
 
   const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
     selectedInputId: selectedMidiInputId,
-    onNoteOn: playMidiPressedKey,
+    onNoteOn: startMidiPressedKey,
+    onNoteOff: stopPressedKey,
   });
 
   const { handleKeyDown, handleKeyUp } = usePointerControl({
@@ -134,7 +161,8 @@ function usePianoControl(
     activeMouseNotesRef,
     activeTouchNotesRef,
     pressedKeysRef,
-    onNotePress: playPressedKey,
+    onNotePress: startPressedKey,
+    onNoteRelease: stopPressedKey,
     onActiveNotesChange: syncPressedKeys,
   });
 

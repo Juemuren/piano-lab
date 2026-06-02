@@ -10,7 +10,7 @@ const BLACK_KEY_WIDTH_PX = 24;
 interface PianoProps {
   playingNotes?: Set<number>;
   selectedMidiInputId?: string;
-  onNoteInput?: (pitch: number) => void;
+  onNoteInput?: (pitch: number, duration: number) => void;
   onMidiControlChange?: (state: MidiControlState) => void;
 }
 

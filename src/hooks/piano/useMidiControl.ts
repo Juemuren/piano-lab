@@ -32,6 +32,7 @@ interface UseMidiControlOptions {
   enabled: boolean;
   selectedInputId?: string;
   onNoteOn: (note: number, velocity: number) => void;
+  onNoteOff: (note: number) => void;
 }
 
 function isPianoRangeNote(note: number) {
@@ -52,6 +53,7 @@ function useMidiControl({
   enabled,
   selectedInputId,
   onNoteOn,
+  onNoteOff,
 }: UseMidiControlOptions) {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
   const [devices, setDevices] = useState<MidiInputDevice[]>([]);
@@ -68,9 +70,12 @@ function useMidiControl({
 
   const clearActiveNotes = useCallback(() => {
     if (activeNotesRef.current.size > 0) {
+      for (const note of activeNotesRef.current) {
+        onNoteOff(note);
+      }
       setActiveMidiNotes(new Set());
     }
-  }, [setActiveMidiNotes]);
+  }, [onNoteOff, setActiveMidiNotes]);
 
   const resetMidiState = useCallback(() => {
     setDevices([]);
@@ -108,9 +113,10 @@ function useMidiControl({
         const nextNotes = new Set(activeNotesRef.current);
         nextNotes.delete(note);
         setActiveMidiNotes(nextNotes);
+        onNoteOff(note);
       }
     },
-    [onNoteOn, setActiveMidiNotes],
+    [onNoteOff, onNoteOn, setActiveMidiNotes],
   );
 
   useEffect(() => {

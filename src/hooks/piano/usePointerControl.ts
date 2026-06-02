@@ -16,6 +16,7 @@ interface UsePointerControlOptions {
   activeTouchNotesRef: RefObject<Set<number>>;
   pressedKeysRef: RefObject<Set<number>>;
   onNotePress: (note: number) => void;
+  onNoteRelease: (note: number) => void;
   onActiveNotesChange: () => void;
 }
 
@@ -26,6 +27,7 @@ function usePointerControl({
   activeTouchNotesRef,
   pressedKeysRef,
   onNotePress,
+  onNoteRelease,
   onActiveNotesChange,
 }: UsePointerControlOptions) {
   const lastTouchEventAtRef = useRef(0);
@@ -91,6 +93,7 @@ function usePointerControl({
         const newSet = new Set(activeTouchNotesRef.current);
         newSet.delete(note);
         activeTouchNotesRef.current = newSet;
+        onNoteRelease(note);
       } else {
         e.preventDefault();
         if (
@@ -105,6 +108,7 @@ function usePointerControl({
         const newSet = new Set(activeMouseNotesRef.current);
         newSet.delete(note);
         activeMouseNotesRef.current = newSet;
+        onNoteRelease(note);
       }
 
       onActiveNotesChange();
@@ -115,6 +119,7 @@ function usePointerControl({
       isMouseControlEnabled,
       isTouchControlEnabled,
       onActiveNotesChange,
+      onNoteRelease,
     ],
   );
 
@@ -122,11 +127,19 @@ function usePointerControl({
     let shouldSync = false;
 
     if (!isMouseControlEnabled && activeMouseNotesRef.current.size > 0) {
+      const releasedNotes = Array.from(activeMouseNotesRef.current);
       activeMouseNotesRef.current = new Set();
+      for (const note of releasedNotes) {
+        onNoteRelease(note);
+      }
       shouldSync = true;
     }
     if (!isTouchControlEnabled && activeTouchNotesRef.current.size > 0) {
+      const releasedNotes = Array.from(activeTouchNotesRef.current);
       activeTouchNotesRef.current = new Set();
+      for (const note of releasedNotes) {
+        onNoteRelease(note);
+      }
       shouldSync = true;
     }
 
@@ -139,6 +152,7 @@ function usePointerControl({
     isMouseControlEnabled,
     isTouchControlEnabled,
     onActiveNotesChange,
+    onNoteRelease,
   ]);
 
   return {

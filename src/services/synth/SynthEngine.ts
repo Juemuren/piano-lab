@@ -27,6 +27,16 @@ import {
 
 const MIN_GAIN_VALUE = 1e-10;
 
+interface ActiveSynthVoice {
+  oscillatorNode: OscillatorNode;
+  gainNode: GainNode;
+  harmonic: number;
+  startTime: number;
+  decayEnd: number;
+  sustainGain: number;
+  silenceGain: number;
+}
+
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
@@ -59,6 +69,8 @@ export class SynthEngine {
   private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
   private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
   private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
+  private activeNotes: Map<number, ActiveSynthVoice[]> = new Map();
+  private noteVersions: Map<number, number> = new Map();
 
   init() {
     if (!this.audioContext) {
@@ -185,14 +197,14 @@ export class SynthEngine {
     return phaseDeg / (360 * frequency);
   }
 
-  async playNote(
+  private createNoteVoices(
     pitch: number,
-    duration: number,
-    volume: number = 100,
-    cents: number = 0,
-  ) {
-    await this.ensureAudioContextRunning();
-    if (!this.audioContext) return;
+    volume: number,
+    cents: number,
+  ): ActiveSynthVoice[] {
+    if (!this.audioContext) {
+      return [];
+    }
 
     const baseFrequency = this.getBaseFrequency(pitch, cents);
     const harmonics = this.spectrum.amplitudes.length;
@@ -200,6 +212,8 @@ export class SynthEngine {
       { ...this.transferFunctionDefinition, baseFrequency },
       harmonics,
     );
+    const voices: ActiveSynthVoice[] = [];
+    const now = this.audioContext.currentTime;
 
     for (let n = 1; n <= harmonics; n++) {
       const frequency = baseFrequency * n;
@@ -218,13 +232,9 @@ export class SynthEngine {
 
       const phaseDeg = phases[n - 1] || 0;
       const delaySeconds = this.getDelaySeconds(phaseDeg, frequency);
-
-      const now = this.audioContext.currentTime;
       const startTime = Math.max(0, now + delaySeconds);
       const attackEnd = startTime + this.attackTime;
       const decayEnd = attackEnd + this.decayTime / Math.sqrt(n);
-      const sustainEnd = decayEnd + duration;
-      const stopTime = sustainEnd + this.releaseTime / Math.sqrt(n);
 
       const attackGain = Math.max(targetGain, silenceGain);
       const decayGain = Math.max(attackGain * this.sustainGain, silenceGain);
@@ -239,8 +249,6 @@ export class SynthEngine {
       gainNode.gain.setValueAtTime(silenceGain, startTime);
       gainNode.gain.exponentialRampToValueAtTime(attackGain, attackEnd);
       gainNode.gain.exponentialRampToValueAtTime(decayGain, decayEnd);
-      gainNode.gain.exponentialRampToValueAtTime(sustainGain, sustainEnd);
-      gainNode.gain.exponentialRampToValueAtTime(silenceGain, stopTime);
 
       oscillatorNode.connect(gainNode);
       gainNode.connect(this.audioContext.destination);
@@ -251,7 +259,95 @@ export class SynthEngine {
       };
 
       oscillatorNode.start(startTime);
-      oscillatorNode.stop(stopTime);
+      voices.push({
+        oscillatorNode,
+        gainNode,
+        harmonic: n,
+        startTime,
+        decayEnd,
+        sustainGain,
+        silenceGain,
+      });
+    }
+
+    return voices;
+  }
+
+  async playNote(
+    pitch: number,
+    duration: number,
+    volume: number = 100,
+    cents: number = 0,
+  ) {
+    await this.ensureAudioContextRunning();
+    if (!this.audioContext) return;
+
+    for (const voice of this.createNoteVoices(pitch, volume, cents)) {
+      const sustainEnd = voice.decayEnd + duration;
+      const stopTime =
+        sustainEnd + this.releaseTime / Math.sqrt(voice.harmonic);
+
+      voice.gainNode.gain.exponentialRampToValueAtTime(
+        voice.sustainGain,
+        sustainEnd,
+      );
+      voice.gainNode.gain.exponentialRampToValueAtTime(
+        voice.silenceGain,
+        stopTime,
+      );
+      voice.oscillatorNode.stop(stopTime);
+    }
+  }
+
+  async startNote(pitch: number, volume: number = 100, cents: number = 0) {
+    this.stopNote(pitch);
+    const version = (this.noteVersions.get(pitch) || 0) + 1;
+    this.noteVersions.set(pitch, version);
+
+    await this.ensureAudioContextRunning();
+    if (!this.audioContext) return;
+    if (this.noteVersions.get(pitch) !== version) return;
+
+    const voices = this.createNoteVoices(pitch, volume, cents);
+
+    if (this.noteVersions.get(pitch) !== version) {
+      for (const voice of voices) {
+        voice.oscillatorNode.stop(
+          Math.max(this.audioContext.currentTime, voice.startTime),
+        );
+      }
+      return;
+    }
+
+    this.activeNotes.set(pitch, voices);
+  }
+
+  stopNote(pitch: number) {
+    this.noteVersions.set(pitch, (this.noteVersions.get(pitch) || 0) + 1);
+    if (!this.audioContext) return;
+
+    const voices = this.activeNotes.get(pitch);
+    if (!voices) return;
+
+    this.activeNotes.delete(pitch);
+    const now = this.audioContext.currentTime;
+
+    for (const voice of voices) {
+      const releaseStart = Math.max(now, voice.startTime);
+      const stopTime =
+        releaseStart + this.releaseTime / Math.sqrt(voice.harmonic);
+      const currentGain = Math.max(
+        voice.gainNode.gain.value,
+        voice.silenceGain,
+      );
+
+      voice.gainNode.gain.cancelScheduledValues(releaseStart);
+      voice.gainNode.gain.setValueAtTime(currentGain, releaseStart);
+      voice.gainNode.gain.exponentialRampToValueAtTime(
+        voice.silenceGain,
+        stopTime,
+      );
+      voice.oscillatorNode.stop(stopTime);
     }
   }
 }

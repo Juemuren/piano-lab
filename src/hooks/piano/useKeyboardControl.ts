@@ -31,6 +31,7 @@ interface UseKeyboardPianoControlOptions {
   activeNotesRef: RefObject<Map<string, number>>;
   pressedKeysRef: RefObject<Set<number>>;
   onNotePress: (note: number) => void;
+  onNoteRelease: (note: number) => void;
   onActiveNotesChange: () => void;
 }
 
@@ -68,6 +69,7 @@ function useKeyboardControl({
   activeNotesRef,
   pressedKeysRef,
   onNotePress,
+  onNoteRelease,
   onActiveNotesChange,
 }: UseKeyboardPianoControlOptions) {
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
@@ -81,7 +83,11 @@ function useKeyboardControl({
     if (!enabled) {
       const keyboardNotes = activeNotesRef.current;
       if (keyboardNotes.size > 0) {
+        const releasedNotes = Array.from(keyboardNotes.values());
         keyboardNotes.clear();
+        for (const note of releasedNotes) {
+          onNoteRelease(note);
+        }
         onActiveNotesChange();
       }
       return;
@@ -135,6 +141,7 @@ function useKeyboardControl({
 
       e.preventDefault();
       activeNotesRef.current.delete(key);
+      onNoteRelease(note);
       onActiveNotesChange();
     }
 
@@ -150,6 +157,7 @@ function useKeyboardControl({
     enabled,
     onActiveNotesChange,
     onNotePress,
+    onNoteRelease,
     pressedKeysRef,
   ]);
 
