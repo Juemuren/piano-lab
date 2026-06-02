@@ -70,6 +70,7 @@ function usePianoControl(
   const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
   const activeMouseNotesRef = useRef<Set<number>>(new Set());
   const activeTouchNotesRef = useRef<Set<number>>(new Set());
+  const activeMidiNotesRef = useRef<Set<number>>(new Set());
   const noteStartedAtRef = useRef<Map<number, number>>(new Map());
 
   const syncPressedKeys = useCallback(() => {
@@ -98,7 +99,8 @@ function usePianoControl(
 
     return (
       activeMouseNotesRef.current.has(note) ||
-      activeTouchNotesRef.current.has(note)
+      activeTouchNotesRef.current.has(note) ||
+      activeMidiNotesRef.current.has(note)
     );
   }, []);
 
@@ -157,11 +159,16 @@ function usePianoControl(
     [startPressedKey],
   );
 
+  const syncActiveMidiNotes = useCallback((notes: Set<number>) => {
+    activeMidiNotesRef.current = notes;
+  }, []);
+
   const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
     selectedInputId: selectedMidiInputId,
     onNoteOn: startMidiPressedKey,
     onNoteOff: stopPressedKey,
+    onActiveNotesChange: syncActiveMidiNotes,
   });
 
   const { handleKeyDown, handleKeyUp } = usePointerControl({

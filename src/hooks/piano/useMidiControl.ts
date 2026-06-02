@@ -33,6 +33,7 @@ interface UseMidiControlOptions {
   selectedInputId?: string;
   onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   onNoteOff: (note: number) => void;
+  onActiveNotesChange?: (notes: Set<number>) => void;
 }
 
 function isPianoRangeNote(note: number) {
@@ -54,6 +55,7 @@ function useMidiControl({
   selectedInputId,
   onNoteOn,
   onNoteOff,
+  onActiveNotesChange,
 }: UseMidiControlOptions) {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
   const [devices, setDevices] = useState<MidiInputDevice[]>([]);
@@ -63,17 +65,22 @@ function useMidiControl({
   const activeNotesRef = useRef<Set<number>>(new Set());
   const attachedInputsRef = useRef<Set<MIDIInput>>(new Set());
 
-  const setActiveMidiNotes = useCallback((notes: Set<number>) => {
-    activeNotesRef.current = notes;
-    setActiveNotes(notes);
-  }, []);
+  const setActiveMidiNotes = useCallback(
+    (notes: Set<number>) => {
+      activeNotesRef.current = notes;
+      setActiveNotes(notes);
+      onActiveNotesChange?.(notes);
+    },
+    [onActiveNotesChange],
+  );
 
   const clearActiveNotes = useCallback(() => {
     if (activeNotesRef.current.size > 0) {
-      for (const note of activeNotesRef.current) {
+      const releasedNotes = Array.from(activeNotesRef.current);
+      setActiveMidiNotes(new Set());
+      for (const note of releasedNotes) {
         onNoteOff(note);
       }
-      setActiveMidiNotes(new Set());
     }
   }, [onNoteOff, setActiveMidiNotes]);
 
@@ -181,7 +188,7 @@ function useMidiControl({
         midiAccessRef.current.onstatechange = null;
       }
       detachInputs();
-      activeNotesRef.current = new Set();
+      clearActiveNotes();
       queueMicrotask(resetMidiState);
       return;
     }
@@ -203,6 +210,7 @@ function useMidiControl({
     clearActiveNotes,
     enabled,
     handleMidiMessage,
+    onActiveNotesChange,
     resetMidiState,
     selectedInputId,
   ]);
