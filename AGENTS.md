@@ -9,12 +9,12 @@
 
 ## TypeScript 指南
 
-- 除了 `type`/`interface` 外尽量不使用别的类型定义方式
+- 除 `type`/`interface` 外尽量不使用别的类型定义方式
 
 ## Tailwind CSS 指南
 
 - 不要添加 `aria-` 属性
-- `className` 尽量简洁，不要添加不必要的样式
+- `className` 尽量简洁，减少不必要的样式
 
 ## i18n 指南
 
@@ -27,7 +27,7 @@
 修改了 [src](src) 中的代码后，请运行以下命令以保证质量
 
 ```sh
-npm run lint
 npm run format
+npm run lint
 npm run build
 ```

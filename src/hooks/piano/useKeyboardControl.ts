@@ -29,10 +29,8 @@ const KEYBOARD_NOTE_MAP: ReadonlyMap<
 interface UseKeyboardPianoControlOptions {
   enabled: boolean;
   activeNotesRef: RefObject<Map<string, number>>;
-  pressedKeysRef: RefObject<Set<number>>;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
-  onActiveNotesChange: () => void;
 }
 
 function getKeyboardNote(key: string, octave: number) {
@@ -67,10 +65,8 @@ function isEditableTarget(target: EventTarget | null) {
 function useKeyboardControl({
   enabled,
   activeNotesRef,
-  pressedKeysRef,
   onNotePress,
   onNoteRelease,
-  onActiveNotesChange,
 }: UseKeyboardPianoControlOptions) {
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
   const keyboardOctaveRef = useRef(DEFAULT_KEYBOARD_OCTAVE);
@@ -88,7 +84,6 @@ function useKeyboardControl({
         for (const note of releasedNotes) {
           onNoteRelease(note);
         }
-        onActiveNotesChange();
       }
       return;
     }
@@ -124,12 +119,8 @@ function useKeyboardControl({
         return;
       }
 
-      const shouldPlay = !pressedKeysRef.current.has(note);
       activeNotesRef.current.set(key, note);
-      if (shouldPlay) {
-        onNotePress(note);
-      }
-      onActiveNotesChange();
+      onNotePress(note);
     }
 
     function handleKeyboardKeyUp(e: KeyboardEvent) {
@@ -142,7 +133,6 @@ function useKeyboardControl({
       e.preventDefault();
       activeNotesRef.current.delete(key);
       onNoteRelease(note);
-      onActiveNotesChange();
     }
 
     window.addEventListener('keydown', handleKeyboardKeyDown);
@@ -152,14 +142,7 @@ function useKeyboardControl({
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [
-    activeNotesRef,
-    enabled,
-    onActiveNotesChange,
-    onNotePress,
-    onNoteRelease,
-    pressedKeysRef,
-  ]);
+  }, [activeNotesRef, enabled, onNotePress, onNoteRelease]);
 
   const keyHints = useMemo(() => {
     const hints = new Map<number, string>();

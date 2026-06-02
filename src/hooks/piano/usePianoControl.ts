@@ -53,6 +53,58 @@ function getPianoKeys() {
 
 const pianoKeys = getPianoKeys();
 
+function useActivePianoNotes() {
+  const [activeInputNotes, setActiveInputNotes] = useState<Set<number>>(
+    new Set(),
+  );
+  const activeNoteCountsRef = useRef<Map<number, number>>(new Map());
+  const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
+  const activeMouseNotesRef = useRef<Set<number>>(new Set());
+  const activeTouchNotesRef = useRef<Set<number>>(new Set());
+
+  const activateInputNote = useCallback((note: number) => {
+    const currentCount = activeNoteCountsRef.current.get(note) || 0;
+    activeNoteCountsRef.current.set(note, currentCount + 1);
+
+    if (currentCount === 0) {
+      setActiveInputNotes((current) => new Set(current).add(note));
+      return true;
+    }
+
+    return false;
+  }, []);
+
+  const releaseInputNote = useCallback((note: number) => {
+    const currentCount = activeNoteCountsRef.current.get(note) || 0;
+    if (currentCount > 1) {
+      activeNoteCountsRef.current.set(note, currentCount - 1);
+      return true;
+    }
+
+    activeNoteCountsRef.current.delete(note);
+    setActiveInputNotes((current) => {
+      const nextNotes = new Set(current);
+      nextNotes.delete(note);
+      return nextNotes;
+    });
+    return false;
+  }, []);
+
+  const isInputNoteActive = useCallback((note: number) => {
+    return activeNoteCountsRef.current.has(note);
+  }, []);
+
+  return {
+    activeInputNotes,
+    activeKeyboardNotesRef,
+    activeMouseNotesRef,
+    activeTouchNotesRef,
+    activateInputNote,
+    releaseInputNote,
+    isInputNoteActive,
+  };
+}
+
 function usePianoControl(
   playingNotes: Set<number>,
   onNoteInput?: (pitch: number, duration: number) => void,
@@ -65,53 +117,30 @@ function usePianoControl(
     isTouchControlEnabled,
     isMidiControlEnabled,
   } = useAppSettings();
-  const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
-  const pressedKeysRef = useRef<Set<number>>(new Set());
-  const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
-  const activeMouseNotesRef = useRef<Set<number>>(new Set());
-  const activeTouchNotesRef = useRef<Set<number>>(new Set());
-  const activeMidiNotesRef = useRef<Set<number>>(new Set());
+  const {
+    activeInputNotes,
+    activeKeyboardNotesRef,
+    activeMouseNotesRef,
+    activeTouchNotesRef,
+    activateInputNote,
+    releaseInputNote,
+    isInputNoteActive,
+  } = useActivePianoNotes();
   const noteStartedAtRef = useRef<Map<number, number>>(new Map());
 
-  const syncPressedKeys = useCallback(() => {
-    const newSet = new Set<number>();
-
-    for (const note of activeKeyboardNotesRef.current.values()) {
-      newSet.add(note);
-    }
-    for (const note of activeMouseNotesRef.current) {
-      newSet.add(note);
-    }
-    for (const note of activeTouchNotesRef.current) {
-      newSet.add(note);
-    }
-
-    pressedKeysRef.current = newSet;
-    setPressedKeys(newSet);
-  }, []);
-
-  const isNoteActive = useCallback((note: number) => {
-    for (const activeNote of activeKeyboardNotesRef.current.values()) {
-      if (activeNote === note) {
-        return true;
-      }
-    }
-
-    return (
-      activeMouseNotesRef.current.has(note) ||
-      activeTouchNotesRef.current.has(note) ||
-      activeMidiNotesRef.current.has(note)
-    );
-  }, []);
-
-  const startPressedKey = useCallback(
+  const startInputNote = useCallback(
     async (note: number, volume: number = DEFAULT_VOLUME) => {
+      const shouldStart = activateInputNote(note);
+      if (!shouldStart) {
+        return;
+      }
+
       const startResult = await synthEngine.startNote(note, volume);
       if (!startResult.started) {
         return;
       }
 
-      if (!isNoteActive(note)) {
+      if (!isInputNoteActive(note)) {
         synthEngine.stopNote(note);
         return;
       }
@@ -120,12 +149,13 @@ function usePianoControl(
         noteStartedAtRef.current.set(note, startResult.startedAt);
       }
     },
-    [isNoteActive, synthEngine],
+    [activateInputNote, isInputNoteActive, synthEngine],
   );
 
-  const stopPressedKey = useCallback(
+  const stopInputNote = useCallback(
     (note: number) => {
-      if (isNoteActive(note)) {
+      const isStillActive = releaseInputNote(note);
+      if (isStillActive) {
         return;
       }
 
@@ -138,37 +168,28 @@ function usePianoControl(
       noteStartedAtRef.current.delete(note);
       onNoteInput?.(note, (performance.now() - startedAt) / 1000);
     },
-    [isNoteActive, onNoteInput, synthEngine],
+    [onNoteInput, releaseInputNote, synthEngine],
   );
 
   const { keyHints } = useKeyboardControl({
     enabled: isKeyboardControlEnabled,
     activeNotesRef: activeKeyboardNotesRef,
-    pressedKeysRef,
-    onNotePress: startPressedKey,
-    onNoteRelease: stopPressedKey,
-    onActiveNotesChange: syncPressedKeys,
+    onNotePress: startInputNote,
+    onNoteRelease: stopInputNote,
   });
 
   const startMidiPressedKey = useCallback(
     (note: number, velocity: number) => {
-      if (!pressedKeysRef.current.has(note)) {
-        startPressedKey(note, velocity);
-      }
+      startInputNote(note, velocity);
     },
-    [startPressedKey],
+    [startInputNote],
   );
-
-  const syncActiveMidiNotes = useCallback((notes: Set<number>) => {
-    activeMidiNotesRef.current = notes;
-  }, []);
 
   const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
     selectedInputId: selectedMidiInputId,
     onNoteOn: startMidiPressedKey,
-    onNoteOff: stopPressedKey,
-    onActiveNotesChange: syncActiveMidiNotes,
+    onNoteOff: stopInputNote,
   });
 
   const { handleKeyDown, handleKeyUp } = usePointerControl({
@@ -176,20 +197,15 @@ function usePianoControl(
     isTouchControlEnabled,
     activeMouseNotesRef,
     activeTouchNotesRef,
-    pressedKeysRef,
-    onNotePress: startPressedKey,
-    onNoteRelease: stopPressedKey,
-    onActiveNotesChange: syncPressedKeys,
+    onNotePress: startInputNote,
+    onNoteRelease: stopInputNote,
   });
 
   const { whiteKeys, blackKeys } = pianoKeys;
 
   const isKeyPressed = useCallback(
-    (note: number) =>
-      pressedKeys.has(note) ||
-      midiControl.activeNotes.has(note) ||
-      playingNotes.has(note),
-    [midiControl.activeNotes, pressedKeys, playingNotes],
+    (note: number) => activeInputNotes.has(note) || playingNotes.has(note),
+    [activeInputNotes, playingNotes],
   );
 
   return {

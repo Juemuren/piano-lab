@@ -33,7 +33,6 @@ interface UseMidiControlOptions {
   selectedInputId?: string;
   onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   onNoteOff: (note: number) => void;
-  onActiveNotesChange?: (notes: Set<number>) => void;
 }
 
 function isPianoRangeNote(note: number) {
@@ -55,7 +54,6 @@ function useMidiControl({
   selectedInputId,
   onNoteOn,
   onNoteOff,
-  onActiveNotesChange,
 }: UseMidiControlOptions) {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
   const [devices, setDevices] = useState<MidiInputDevice[]>([]);
@@ -65,14 +63,10 @@ function useMidiControl({
   const activeNotesRef = useRef<Set<number>>(new Set());
   const attachedInputsRef = useRef<Set<MIDIInput>>(new Set());
 
-  const setActiveMidiNotes = useCallback(
-    (notes: Set<number>) => {
-      activeNotesRef.current = notes;
-      setActiveNotes(notes);
-      onActiveNotesChange?.(notes);
-    },
-    [onActiveNotesChange],
-  );
+  const setActiveMidiNotes = useCallback((notes: Set<number>) => {
+    activeNotesRef.current = notes;
+    setActiveNotes(notes);
+  }, []);
 
   const clearActiveNotes = useCallback(() => {
     if (activeNotesRef.current.size > 0) {
@@ -117,6 +111,10 @@ function useMidiControl({
         command === MIDI_COMMAND_NOTE_OFF ||
         (command === MIDI_COMMAND_NOTE_ON && velocity === 0)
       ) {
+        if (!activeNotesRef.current.has(note)) {
+          return;
+        }
+
         const nextNotes = new Set(activeNotesRef.current);
         nextNotes.delete(note);
         setActiveMidiNotes(nextNotes);
@@ -210,7 +208,6 @@ function useMidiControl({
     clearActiveNotes,
     enabled,
     handleMidiMessage,
-    onActiveNotesChange,
     resetMidiState,
     selectedInputId,
   ]);

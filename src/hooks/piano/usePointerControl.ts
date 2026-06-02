@@ -16,10 +16,8 @@ interface UsePointerControlOptions {
   isTouchControlEnabled: boolean;
   activeMouseNotesRef: RefObject<Set<number>>;
   activeTouchNotesRef: RefObject<Set<number>>;
-  pressedKeysRef: RefObject<Set<number>>;
   onNotePress: NotePressHandler;
   onNoteRelease: (note: number) => void;
-  onActiveNotesChange: () => void;
 }
 
 function usePointerControl({
@@ -27,10 +25,8 @@ function usePointerControl({
   isTouchControlEnabled,
   activeMouseNotesRef,
   activeTouchNotesRef,
-  pressedKeysRef,
   onNotePress,
   onNoteRelease,
-  onActiveNotesChange,
 }: UsePointerControlOptions) {
   const lastTouchEventAtRef = useRef(0);
 
@@ -43,14 +39,13 @@ function usePointerControl({
           return;
         }
         e.preventDefault();
-        const shouldPlay = !pressedKeysRef.current.has(note);
+        if (activeTouchNotesRef.current.has(note)) {
+          return;
+        }
         activeTouchNotesRef.current = new Set(activeTouchNotesRef.current).add(
           note,
         );
-        if (shouldPlay) {
-          onNotePress(note);
-        }
-        onActiveNotesChange();
+        onNotePress(note);
       } else {
         e.preventDefault();
         if (
@@ -62,14 +57,13 @@ function usePointerControl({
         if (!isMouseControlEnabled) {
           return;
         }
-        const shouldPlay = !pressedKeysRef.current.has(note);
+        if (activeMouseNotesRef.current.has(note)) {
+          return;
+        }
         activeMouseNotesRef.current = new Set(activeMouseNotesRef.current).add(
           note,
         );
-        if (shouldPlay) {
-          onNotePress(note);
-        }
-        onActiveNotesChange();
+        onNotePress(note);
       }
     },
     [
@@ -77,9 +71,7 @@ function usePointerControl({
       activeTouchNotesRef,
       isMouseControlEnabled,
       isTouchControlEnabled,
-      onActiveNotesChange,
       onNotePress,
-      pressedKeysRef,
     ],
   );
 
@@ -92,6 +84,9 @@ function usePointerControl({
           return;
         }
         e.preventDefault();
+        if (!activeTouchNotesRef.current.has(note)) {
+          return;
+        }
         const newSet = new Set(activeTouchNotesRef.current);
         newSet.delete(note);
         activeTouchNotesRef.current = newSet;
@@ -107,34 +102,31 @@ function usePointerControl({
         if (!isMouseControlEnabled) {
           return;
         }
+        if (!activeMouseNotesRef.current.has(note)) {
+          return;
+        }
         const newSet = new Set(activeMouseNotesRef.current);
         newSet.delete(note);
         activeMouseNotesRef.current = newSet;
         onNoteRelease(note);
       }
-
-      onActiveNotesChange();
     },
     [
       activeMouseNotesRef,
       activeTouchNotesRef,
       isMouseControlEnabled,
       isTouchControlEnabled,
-      onActiveNotesChange,
       onNoteRelease,
     ],
   );
 
   useEffect(() => {
-    let shouldSync = false;
-
     if (!isMouseControlEnabled && activeMouseNotesRef.current.size > 0) {
       const releasedNotes = Array.from(activeMouseNotesRef.current);
       activeMouseNotesRef.current = new Set();
       for (const note of releasedNotes) {
         onNoteRelease(note);
       }
-      shouldSync = true;
     }
     if (!isTouchControlEnabled && activeTouchNotesRef.current.size > 0) {
       const releasedNotes = Array.from(activeTouchNotesRef.current);
@@ -142,18 +134,12 @@ function usePointerControl({
       for (const note of releasedNotes) {
         onNoteRelease(note);
       }
-      shouldSync = true;
-    }
-
-    if (shouldSync) {
-      onActiveNotesChange();
     }
   }, [
     activeMouseNotesRef,
     activeTouchNotesRef,
     isMouseControlEnabled,
     isTouchControlEnabled,
-    onActiveNotesChange,
     onNoteRelease,
   ]);
 
