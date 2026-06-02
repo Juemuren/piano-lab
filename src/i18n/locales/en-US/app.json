@@ -12,7 +12,12 @@
     "mouseControl": "Allow mouse control of piano keys",
     "touchControl": "Allow touch control of piano keys",
     "midiControl": "Allow MIDI devices to control piano keys",
-    "pianoInput": "Write notes to the score when piano keys are pressed",
+    "pianoInputEnable": "Write notes to the score when piano keys are released",
+    "pianoInput": {
+      "defaultNoteLength": "Default note length",
+      "tempo": "Tempo",
+      "quarterNoteSeconds": "1/4 note duration: {{seconds}} seconds"
+    },
     "keyboard": {
       "hint": "The current key mapping is shown on the piano keys. Press x/z to permanently shift up/down an octave, and press shift/ctrl to temporarily shift up/down an octave."
     },

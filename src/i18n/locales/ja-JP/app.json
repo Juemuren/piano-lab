@@ -12,7 +12,12 @@
     "mouseControl": "マウスで鍵盤を操作する",
     "touchControl": "タッチで鍵盤を操作する",
     "midiControl": "MIDI デバイスで鍵盤を操作する",
-    "pianoInput": "鍵盤を押したときに音符を楽譜へ書き込む",
+    "pianoInputEnable": "鍵盤を離したときに音符を楽譜へ書き込む",
+    "pianoInput": {
+      "defaultNoteLength": "デフォルトの音符の長さ",
+      "tempo": "テンポ",
+      "quarterNoteSeconds": "1/4 音符の長さ：{{seconds}} 秒"
+    },
     "keyboard": {
       "hint": "現在のキー割り当ては鍵盤上に表示されています。x/z キーでオクターブを固定的に上げ下げし、shift/ctrl キーで一時的に上げ下げできます。"
     },
