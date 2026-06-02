@@ -30,7 +30,7 @@ interface UseKeyboardPianoControlOptions {
   enabled: boolean;
   activeNotesRef: RefObject<Map<string, number>>;
   pressedKeysRef: RefObject<Set<number>>;
-  onNotePress: (note: number) => void;
+  onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
   onActiveNotesChange: () => void;
 }

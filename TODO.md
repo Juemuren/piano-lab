@@ -2,6 +2,8 @@
 
 ## Refactor
 
+- [x] 重构 [SynthEngine](src/services//synth/SynthEngine.ts)，导出 startNote/stopNote 接口
+
 ## Fix
 
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
@@ -9,6 +11,8 @@
 - [x] 组合键存在问题，比如 ctrl+a 会触发全选
 - [x] 清除项目中已存在的 `aria-` 样式
 - [x] 第一次点击琴键时音符时长不正确， AudioContext 初始化存在问题
+- [ ] 禁用键盘控制后仍然监听键盘输入
+- [ ] 阻止键盘事件的方式过于粗暴，导致所有 `ctrl`/`shift` 相关的组合键都失效了
 
 ## Style
 

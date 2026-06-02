@@ -37,6 +37,10 @@ interface ActiveSynthVoice {
   silenceGain: number;
 }
 
+export type StartNoteResult =
+  | { started: true; startedAt: number }
+  | { started: false };
+
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
@@ -70,10 +74,10 @@ export class SynthEngine {
   private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
   private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
   private activeNotes: Map<number, ActiveSynthVoice[]> = new Map();
-  private noteVersions: Map<number, number> = new Map();
+  private noteGenerationIds: Map<number, number> = new Map();
 
   init() {
-    if (!this.audioContext) {
+    if (!this.audioContext || this.audioContext.state === 'closed') {
       this.audioContext = new AudioContext({ latencyHint: 'playback' });
     }
   }
@@ -165,7 +169,7 @@ export class SynthEngine {
   }
 
   private async ensureAudioContextRunning(): Promise<void> {
-    if (!this.audioContext) {
+    if (!this.audioContext || this.audioContext.state === 'closed') {
       this.init();
     }
     if (!this.audioContext) {
@@ -177,6 +181,17 @@ export class SynthEngine {
     if (this.audioContext.state === 'closed') {
       this.init();
     }
+  }
+
+  private nextNoteGenerationId(pitch: number) {
+    const generationId = (this.noteGenerationIds.get(pitch) || 0) + 1;
+    this.noteGenerationIds.set(pitch, generationId);
+
+    return generationId;
+  }
+
+  private isCurrentNoteGeneration(pitch: number, generationId: number) {
+    return this.noteGenerationIds.get(pitch) === generationId;
   }
 
   getBaseFrequency(pitch: number, cents: number = 0) {
@@ -303,32 +318,35 @@ export class SynthEngine {
     pitch: number,
     volume: number = 100,
     cents: number = 0,
-  ): Promise<boolean> {
+  ): Promise<StartNoteResult> {
     this.stopNote(pitch);
-    const version = (this.noteVersions.get(pitch) || 0) + 1;
-    this.noteVersions.set(pitch, version);
+    const generationId = this.nextNoteGenerationId(pitch);
 
     await this.ensureAudioContextRunning();
-    if (!this.audioContext) return false;
-    if (this.noteVersions.get(pitch) !== version) return false;
+    if (!this.audioContext) return { started: false };
+    if (!this.isCurrentNoteGeneration(pitch, generationId)) {
+      return { started: false };
+    }
 
     const voices = this.createNoteVoices(pitch, volume, cents);
 
-    if (this.noteVersions.get(pitch) !== version) {
+    if (!this.isCurrentNoteGeneration(pitch, generationId)) {
       for (const voice of voices) {
         voice.oscillatorNode.stop(
           Math.max(this.audioContext.currentTime, voice.startTime),
         );
       }
-      return false;
+      return { started: false };
     }
 
     this.activeNotes.set(pitch, voices);
-    return voices.length > 0;
+    return voices.length > 0
+      ? { started: true, startedAt: performance.now() }
+      : { started: false };
   }
 
   stopNote(pitch: number) {
-    this.noteVersions.set(pitch, (this.noteVersions.get(pitch) || 0) + 1);
+    this.nextNoteGenerationId(pitch);
     if (!this.audioContext) return;
 
     const voices = this.activeNotes.get(pitch);

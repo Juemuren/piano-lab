@@ -104,8 +104,8 @@ function usePianoControl(
 
   const startPressedKey = useCallback(
     async (note: number, volume: number = DEFAULT_VOLUME) => {
-      const didStart = await synthEngine.startNote(note, volume);
-      if (!didStart) {
+      const startResult = await synthEngine.startNote(note, volume);
+      if (!startResult.started) {
         return;
       }
 
@@ -115,7 +115,7 @@ function usePianoControl(
       }
 
       if (!noteStartedAtRef.current.has(note)) {
-        noteStartedAtRef.current.set(note, performance.now());
+        noteStartedAtRef.current.set(note, startResult.startedAt);
       }
     },
     [isNoteActive, synthEngine],

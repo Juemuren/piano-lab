@@ -9,13 +9,15 @@ import {
 
 const TOUCH_MOUSE_EVENT_IGNORE_MS = 1000;
 
+type NotePressHandler = (note: number) => void | Promise<void>;
+
 interface UsePointerControlOptions {
   isMouseControlEnabled: boolean;
   isTouchControlEnabled: boolean;
   activeMouseNotesRef: RefObject<Set<number>>;
   activeTouchNotesRef: RefObject<Set<number>>;
   pressedKeysRef: RefObject<Set<number>>;
-  onNotePress: (note: number) => void;
+  onNotePress: NotePressHandler;
   onNoteRelease: (note: number) => void;
   onActiveNotesChange: () => void;
 }

@@ -31,7 +31,7 @@ export interface MidiControlState {
 interface UseMidiControlOptions {
   enabled: boolean;
   selectedInputId?: string;
-  onNoteOn: (note: number, velocity: number) => void;
+  onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   onNoteOff: (note: number) => void;
 }
 
