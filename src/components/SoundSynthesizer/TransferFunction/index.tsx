@@ -7,7 +7,7 @@ import TransferFunctionParameterControls from './TransferFunctionParameterContro
 import TransferFunctionResponsePreview from './TransferFunctionResponsePreview';
 import useBaseFrequencyOptions from '../../../hooks/synth/useBaseFrequencyOptions';
 import useTransferFunctionControl from '../../../hooks/synth/useTransferFunctionControl';
-import { useSynthEngine } from '../../../contexts/synthEngine';
+import { getBaseFrequency } from '../../../services/synth/SynthCalculations';
 
 interface TransferFunctionProps {
   harmonicCount: number;
@@ -21,7 +21,6 @@ function TransferFunction({
   onConfigChange,
 }: TransferFunctionProps) {
   const { t } = useTranslation('synth');
-  const synthEngine = useSynthEngine();
   const {
     baseFrequency,
     transferFunctionConfig,
@@ -57,7 +56,7 @@ function TransferFunction({
         value={baseFrequency}
         selectedPitch={selectedPitch}
         pitchOptions={baseFrequencyPitchOptions}
-        getBaseFrequency={(pitch) => synthEngine.getBaseFrequency(pitch)}
+        getBaseFrequency={getBaseFrequency}
         onChange={(value) => handleParamsChange({ baseFrequency: value })}
       />
 

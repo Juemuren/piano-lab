@@ -1,5 +1,9 @@
 import { SynthEngine } from '../synth/SynthEngine';
 import { type MidiPitches } from 'abcjs';
+import {
+  getHighlightDurationMs,
+  getPlaybackDurationSeconds,
+} from './AbcPlaybackCalculations';
 
 const HIGHLIGHT_INTERVAL_MS = 50;
 
@@ -21,10 +25,9 @@ export class AbcPlayer {
   play(midiPitches: MidiPitches, millisecondsPerDuration: number) {
     Promise.all(
       midiPitches.map(async ({ pitch, duration, volume, cents }) => {
-        const correctDuration = duration * millisecondsPerDuration;
         const playResult = await this.synthEngine.playNote(
           pitch,
-          correctDuration / 1000,
+          getPlaybackDurationSeconds(duration, millisecondsPerDuration),
           volume,
           cents,
         );
@@ -33,9 +36,16 @@ export class AbcPlayer {
         }
 
         this.onNoteStart?.(pitch);
-        setTimeout(() => {
-          this.onNoteEnd?.(pitch);
-        }, correctDuration - HIGHLIGHT_INTERVAL_MS);
+        setTimeout(
+          () => {
+            this.onNoteEnd?.(pitch);
+          },
+          getHighlightDurationMs(
+            duration,
+            millisecondsPerDuration,
+            HIGHLIGHT_INTERVAL_MS,
+          ),
+        );
       }),
     ).catch(() => undefined);
   }

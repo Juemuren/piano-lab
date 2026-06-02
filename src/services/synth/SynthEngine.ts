@@ -5,6 +5,7 @@ import type {
   StartNoteResult,
 } from '../../types';
 import { createSpectrum, createTransferFunction } from './SynthDefinitions';
+import { createSynthVoicePlans } from './SynthCalculations';
 import {
   DEFAULT_SPECTRUM_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -191,24 +192,6 @@ export class SynthEngine {
     return this.noteGenerationIds.get(pitch) === generationId;
   }
 
-  getBaseFrequency(pitch: number, cents: number = 0) {
-    return 440 * Math.pow(2, (pitch + cents / 100 - 69) / 12);
-  }
-
-  getTargetGain(
-    spectrumAmplitude: number,
-    transferMagnitude: number,
-    volume: number,
-  ) {
-    return (
-      spectrumAmplitude * transferMagnitude * (volume / 127) * this.volumeRatio
-    );
-  }
-
-  getDelaySeconds(phaseDeg: number, frequency: number) {
-    return phaseDeg / (360 * frequency);
-  }
-
   private createNoteVoices(
     pitch: number,
     volume: number,
@@ -218,49 +201,35 @@ export class SynthEngine {
       return [];
     }
 
-    const baseFrequency = this.getBaseFrequency(pitch, cents);
-    const harmonics = this.spectrum.amplitudes.length;
-    const { magnitudes, phases } = createTransferFunction(
-      { ...this.transferFunctionDefinition, baseFrequency },
-      harmonics,
-    );
+    const plans = createSynthVoicePlans({
+      pitch,
+      volume,
+      cents,
+      now: this.audioContext.currentTime,
+      spectrum: this.spectrum,
+      transferFunctionDefinition: this.transferFunctionDefinition,
+      volumeRatio: this.volumeRatio,
+      attackTime: this.attackTime,
+      decayTime: this.decayTime,
+      sustainGain: this.sustainGain,
+      silenceGain: this.silenceGain,
+      minGainValue: MIN_GAIN_VALUE,
+    });
     const voices: ActiveSynthVoice[] = [];
-    const now = this.audioContext.currentTime;
 
-    for (let n = 1; n <= harmonics; n++) {
-      const frequency = baseFrequency * n;
-
-      const spectrumAmplitude = this.spectrum.amplitudes[n - 1] || 0;
-      const transferMagnitude = magnitudes[n - 1] || 0;
-      const targetGain = this.getTargetGain(
-        spectrumAmplitude,
-        transferMagnitude,
-        volume,
-      );
-      const silenceGain = Math.max(
-        this.silenceGain * this.volumeRatio,
-        MIN_GAIN_VALUE,
-      );
-
-      const phaseDeg = phases[n - 1] || 0;
-      const delaySeconds = this.getDelaySeconds(phaseDeg, frequency);
-      const startTime = Math.max(0, now + delaySeconds);
-      const attackEnd = startTime + this.attackTime;
-      const decayEnd = attackEnd + this.decayTime / Math.sqrt(n);
-
-      const attackGain = Math.max(targetGain, silenceGain);
-      const decayGain = Math.max(attackGain * this.sustainGain, silenceGain);
-      const sustainGain = Math.max(decayGain / Math.sqrt(1 + n), silenceGain);
-
+    for (const plan of plans) {
       const oscillatorNode = this.audioContext.createOscillator();
       const gainNode = this.audioContext.createGain();
 
       oscillatorNode.type = this.oscillatorType;
-      oscillatorNode.frequency.setValueAtTime(frequency, startTime);
+      oscillatorNode.frequency.setValueAtTime(plan.frequency, plan.startTime);
 
-      gainNode.gain.setValueAtTime(silenceGain, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(attackGain, attackEnd);
-      gainNode.gain.exponentialRampToValueAtTime(decayGain, decayEnd);
+      gainNode.gain.setValueAtTime(plan.silenceGain, plan.startTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        plan.attackGain,
+        plan.attackEnd,
+      );
+      gainNode.gain.exponentialRampToValueAtTime(plan.decayGain, plan.decayEnd);
 
       oscillatorNode.connect(gainNode);
       gainNode.connect(this.audioContext.destination);
@@ -270,15 +239,15 @@ export class SynthEngine {
         gainNode.disconnect();
       };
 
-      oscillatorNode.start(startTime);
+      oscillatorNode.start(plan.startTime);
       voices.push({
         oscillatorNode,
         gainNode,
-        harmonic: n,
-        startTime,
-        decayEnd,
-        sustainGain,
-        silenceGain,
+        harmonic: plan.harmonic,
+        startTime: plan.startTime,
+        decayEnd: plan.decayEnd,
+        sustainGain: plan.sustainGain,
+        silenceGain: plan.silenceGain,
       });
     }
 
