@@ -1,7 +1,19 @@
 import { getAbcPitch } from '../../utils/pitch';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 
-const NOTE_LENGTHS = [1 / 32, 1 / 16, 1 / 8, 1 / 4, 1 / 2, 1] as const;
+const MAX_DENOMINATOR = 32;
+const NOTE_LENGTHS = [
+  1 / 32,
+  1 / 16,
+  3 / 32,
+  1 / 8,
+  3 / 16,
+  1 / 4,
+  3 / 8,
+  1 / 2,
+  3 / 4,
+  1,
+] as const;
 
 function isHeaderLine(line: string) {
   return /^[A-Z]:/.test(line.trim());
@@ -66,23 +78,34 @@ export function getQuarterNoteSeconds(tempo: number) {
 }
 
 function parseNoteLength(noteLength: string) {
-  const [numerator, denominator] = noteLength.split('/');
+  const [numerator, denominator = '1'] = noteLength.split('/');
   return Number(numerator) / Number(denominator);
+}
+
+function getFraction(value: number) {
+  for (let denominator = 1; denominator <= MAX_DENOMINATOR; denominator *= 2) {
+    const numerator = Math.round(value * denominator);
+    if (Math.abs(value - numerator / denominator) < Number.EPSILON) {
+      return { numerator, denominator };
+    }
+  }
+
+  return { numerator: Math.round(value), denominator: 1 };
 }
 
 function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
   const ratio = noteLength / parseNoteLength(defaultNoteLength);
+  const { numerator, denominator } = getFraction(ratio);
 
-  if (ratio === 1) {
+  if (numerator === denominator) {
     return '';
   }
 
-  if (ratio >= 1) {
-    return Math.round(ratio).toString();
+  if (denominator === 1) {
+    return numerator.toString();
   }
 
-  const denominator = Math.round(1 / ratio);
-  return `/${denominator}`;
+  return numerator === 1 ? `/${denominator}` : `${numerator}/${denominator}`;
 }
 
 export function appendPitchToAbc(
