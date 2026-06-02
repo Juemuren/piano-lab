@@ -8,11 +8,13 @@ import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { useAppSettings } from './contexts/appSettings';
-import { appendPitchToAbc } from './services/abc/AbcInput';
+import { appendPitchToAbc, updateAbcHeader } from './services/abc/AbcInput';
+import type { PianoInputSettings } from './contexts/appSettings/AppSettingsContext';
 
 function App() {
   const { t } = useTranslation('app');
-  const { isPianoInputEnabled } = useAppSettings();
+  const { isPianoInputEnabled, pianoInputSettings, setPianoInputSettings } =
+    useAppSettings();
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
   const [abcContent, setAbcContent] = useState('');
 
@@ -36,9 +38,25 @@ function App() {
     setPlayingNotes(new Set());
   }, []);
 
-  const handlePianoNoteInput = useCallback((pitch: number) => {
-    setAbcContent((content) => appendPitchToAbc(content, pitch));
-  }, []);
+  const handlePianoInputSettingsChange = useCallback(
+    (settings: Partial<PianoInputSettings>) => {
+      setPianoInputSettings({
+        ...pianoInputSettings,
+        ...settings,
+      });
+      setAbcContent((content) => updateAbcHeader(content, settings));
+    },
+    [pianoInputSettings, setPianoInputSettings],
+  );
+
+  const handlePianoNoteInput = useCallback(
+    (pitch: number, duration: number) => {
+      setAbcContent((content) =>
+        appendPitchToAbc(content, pitch, duration, pianoInputSettings),
+      );
+    },
+    [pianoInputSettings],
+  );
 
   return (
     <>
@@ -93,7 +111,9 @@ function App() {
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"
           >
-            <SettingsPanel />
+            <SettingsPanel
+              onPianoInputSettingsChange={handlePianoInputSettingsChange}
+            />
           </CollapsibleSection>
         </section>
       </main>

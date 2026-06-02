@@ -4,6 +4,15 @@ import { useMidiControlContext } from '../contexts/midiControl';
 import type { MidiInputDevice, MidiStatus } from '../types';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
+import ControlRange from './shared/ControlRange';
+import { getQuarterNoteSeconds } from '../services/abc/AbcInput';
+import type { PianoInputSettings } from '../contexts/appSettings/AppSettingsContext';
+
+const DEFAULT_NOTE_LENGTH_OPTIONS = ['1/4', '1/8', '1/16'];
+
+interface SettingsPanelProps {
+  onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
+}
 
 function getMidiStatusMessageKey(status: MidiStatus, deviceCount: number) {
   if (status === 'unsupported') {
@@ -28,13 +37,14 @@ function getMidiDeviceName(device: MidiInputDevice) {
   return `${device.manufacturer} ${device.name}`;
 }
 
-function SettingsPanel() {
+function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
   const { t } = useTranslation('app');
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
     useMidiControlContext();
   const {
     isPianoInputEnabled,
     setIsPianoInputEnabled,
+    pianoInputSettings,
     isKeyboardControlEnabled,
     setIsKeyboardControlEnabled,
     isMouseControlEnabled,
@@ -53,6 +63,15 @@ function SettingsPanel() {
   )
     ? selectedMidiInputId
     : midiControl.activeInputId;
+  const quarterNoteSeconds = getQuarterNoteSeconds(
+    pianoInputSettings.tempo,
+  ).toFixed(2);
+
+  const updatePianoInputSettings = (
+    settings: Partial<typeof pianoInputSettings>,
+  ) => {
+    onPianoInputSettingsChange(settings);
+  };
 
   return (
     <ControlPanel className="flex flex-col gap-4">
@@ -100,7 +119,7 @@ function SettingsPanel() {
             onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
             className="size-4 accent-app-accent"
           />
-          <span>{t('settings.pianoInput')}</span>
+          <span>{t('settings.pianoInputEnable')}</span>
         </label>
       </div>
 
@@ -108,6 +127,42 @@ function SettingsPanel() {
         <p className="text-sm text-app-muted dark:text-app-muted-dark">
           {t('settings.keyboard.hint')}
         </p>
+      )}
+
+      {isPianoInputEnabled && (
+        <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+          <label className="flex flex-col gap-1 text-center">
+            <span>{t('settings.pianoInput.defaultNoteLength')}</span>
+            <ControlSelect
+              value={pianoInputSettings.defaultNoteLength}
+              onChange={(e) =>
+                updatePianoInputSettings({
+                  defaultNoteLength: e.target.value,
+                })
+              }
+            >
+              {DEFAULT_NOTE_LENGTH_OPTIONS.map((noteLength) => (
+                <option key={noteLength} value={noteLength}>
+                  {noteLength}
+                </option>
+              ))}
+            </ControlSelect>
+          </label>
+          <ControlRange
+            label={t('settings.pianoInput.tempo')}
+            min={40}
+            max={240}
+            step={1}
+            value={pianoInputSettings.tempo}
+            displayValue={`${pianoInputSettings.tempo}`}
+            onChange={(tempo) => updatePianoInputSettings({ tempo })}
+          />
+          <p className="sm:col-span-2 text-center text-app-muted dark:text-app-muted-dark">
+            {t('settings.pianoInput.quarterNoteSeconds', {
+              seconds: quarterNoteSeconds,
+            })}
+          </p>
+        </div>
       )}
 
       {isMidiControlEnabled && (

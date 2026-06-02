@@ -1,5 +1,9 @@
 import { type ReactNode, useMemo, useState } from 'react';
-import { AppSettingsContext } from './AppSettingsContext';
+import {
+  AppSettingsContext,
+  DEFAULT_PIANO_INPUT_SETTINGS,
+} from './AppSettingsContext';
+import type { PianoInputSettings } from './AppSettingsContext';
 
 interface AppSettingsProviderProps {
   children: ReactNode;
@@ -7,6 +11,8 @@ interface AppSettingsProviderProps {
 
 export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [isPianoInputEnabled, setIsPianoInputEnabled] = useState(false);
+  const [pianoInputSettings, setPianoInputSettings] =
+    useState<PianoInputSettings>(DEFAULT_PIANO_INPUT_SETTINGS);
   const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] =
     useState(true);
   const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(true);
@@ -17,6 +23,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
     () => ({
       isPianoInputEnabled,
       setIsPianoInputEnabled,
+      pianoInputSettings,
+      setPianoInputSettings,
       isKeyboardControlEnabled,
       setIsKeyboardControlEnabled,
       isMouseControlEnabled,
@@ -31,6 +39,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       isMidiControlEnabled,
       isMouseControlEnabled,
       isPianoInputEnabled,
+      pianoInputSettings,
       isTouchControlEnabled,
     ],
   );

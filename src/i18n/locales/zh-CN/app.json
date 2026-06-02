@@ -12,7 +12,12 @@
     "mouseControl": "允许使用鼠标控制琴键",
     "touchControl": "允许使用触摸控制琴键",
     "midiControl": "允许使用 MIDI 设备控制琴键",
-    "pianoInput": "按下琴键时将音符写入乐谱",
+    "pianoInputEnable": "松开琴键时将音符写入乐谱",
+    "pianoInput": {
+      "defaultNoteLength": "默认音符长度",
+      "tempo": "速度",
+      "quarterNoteSeconds": "1/4 音符时长：{{seconds}} 秒"
+    },
     "keyboard": {
       "hint": "当前的键位映射已显示在琴键上。按 x/z 可以永久升/降八度，按 shift/ctrl 可以临时升/降八度。"
     },

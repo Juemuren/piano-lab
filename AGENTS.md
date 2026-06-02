@@ -31,3 +31,5 @@ npm run format
 npm run lint
 npm run build
 ```
+
+不要运行 `npm run dev` 或类似的命令
