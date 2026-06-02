@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type {
   TransferFunction,
   TransferFunctionConfig,
+  TransferFunctionParamUpdates,
   TransferFunctionType,
 } from '../../types';
 import { createTransferFunction } from '../../services/synth/SynthDefinitions';
@@ -14,14 +15,6 @@ import {
   DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
   DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
 } from '../../constants';
-
-export interface TransferFunctionParamUpdates {
-  tau?: number;
-  alpha?: number;
-  minFrequency?: number;
-  maxFrequency?: number;
-  baseFrequency?: number;
-}
 
 function useTransferFunctionControl(
   harmonicCount: number,

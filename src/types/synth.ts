@@ -29,6 +29,12 @@ export interface SpectrumConfig {
   customAmplitudes: number[];
 }
 
+export interface SpectrumParamUpdates {
+  lambda?: number;
+  sigma?: number;
+  p?: number;
+}
+
 export type TransferFunctionType =
   | 'delay'
   | 'single_echo'
@@ -61,12 +67,26 @@ export interface TransferFunctionConfig {
   baseFrequency: number;
 }
 
+export interface TransferFunctionParamUpdates {
+  tau?: number;
+  alpha?: number;
+  minFrequency?: number;
+  maxFrequency?: number;
+  baseFrequency?: number;
+}
+
 export interface EnvelopeConfig {
   attackTime: number;
   decayTime: number;
   releaseTime: number;
   sustainGain: number;
   silenceGain: number;
+}
+
+export interface EnvelopeCurve {
+  time: number[];
+  gain: number[];
+  maxTime: number;
 }
 
 export interface SynthBasicConfig {
@@ -82,3 +102,7 @@ export interface SynthConfig {
   spectrum: SpectrumConfig;
   transferFunction: TransferFunctionConfig;
 }
+
+export type StartNoteResult =
+  | { started: true; startedAt: number }
+  | { started: false };

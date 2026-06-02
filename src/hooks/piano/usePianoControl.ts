@@ -19,9 +19,9 @@ interface PianoKey {
   number: number;
 }
 
-export type WhitePianoKey = PianoKey;
+type WhitePianoKey = PianoKey;
 
-export interface BlackPianoKey extends PianoKey {
+interface BlackPianoKey extends PianoKey {
   position: number;
 }
 

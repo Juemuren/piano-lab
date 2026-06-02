@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Spectrum, SpectrumConfig, SpectrumType } from '../../types';
+import type {
+  Spectrum,
+  SpectrumConfig,
+  SpectrumParamUpdates,
+  SpectrumType,
+} from '../../types';
 import { createSpectrum } from '../../services/synth/SynthDefinitions';
 import { useSynthEngine } from '../../contexts/useSynthEngine';
 import {
@@ -8,12 +13,6 @@ import {
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
 } from '../../constants';
-
-export interface SpectrumParamUpdates {
-  lambda?: number;
-  sigma?: number;
-  p?: number;
-}
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);

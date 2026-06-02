@@ -1,10 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useAppSettings } from '../contexts/useAppSettings';
-import type {
-  MidiControlState,
-  MidiInputDevice,
-  MidiStatus,
-} from '../hooks/piano/useMidiControl';
+import type { MidiControlState, MidiInputDevice, MidiStatus } from '../types';
 import ControlPanel from './shared/ControlPanel';
 import ControlSelect from './shared/ControlSelect';
 

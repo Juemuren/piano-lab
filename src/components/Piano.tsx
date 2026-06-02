@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import usePianoControl from '../hooks/piano/usePianoControl';
-import type { MidiControlState } from '../hooks/piano/useMidiControl';
+import type { MidiControlState } from '../types';
 
 const WHITE_KEY_HEIGHT_PX = 160;
 const BLACK_KEY_HEIGHT_PX = 100;

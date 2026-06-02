@@ -1,4 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type {
+  MidiControlState,
+  MidiInputDevice,
+  MidiStatus,
+} from '../../types';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const MIDI_COMMAND_NOTE_OFF = 0x80;
@@ -6,33 +11,20 @@ const MIDI_COMMAND_NOTE_ON = 0x90;
 const EMPTY_ACTIVE_NOTES = new Set<number>();
 const EMPTY_MIDI_DEVICES: MidiInputDevice[] = [];
 
-export type MidiStatus =
-  | 'idle'
-  | 'unsupported'
-  | 'requesting'
-  | 'ready'
-  | 'error';
-
-export interface MidiInputDevice {
-  id: string;
-  name: string;
-  manufacturer: string;
-  state: MIDIPortDeviceState;
-  connection: MIDIPortConnectionState;
-}
-
-export interface MidiControlState {
-  activeNotes: Set<number>;
-  devices: MidiInputDevice[];
-  activeInputId: string;
-  status: MidiStatus;
-}
-
 interface UseMidiControlOptions {
   enabled: boolean;
   selectedInputId?: string;
   onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   onNoteOff: (note: number) => void;
+}
+
+export function createInitialMidiControlState(): MidiControlState {
+  return {
+    activeNotes: new Set(),
+    devices: [],
+    activeInputId: '',
+    status: 'idle',
+  };
 }
 
 function isPianoRangeNote(note: number) {

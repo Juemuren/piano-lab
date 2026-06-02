@@ -8,15 +8,9 @@ import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { useAppSettings } from './contexts/useAppSettings';
+import { createInitialMidiControlState } from './hooks/piano/useMidiControl';
 import { appendPitchToAbc } from './services/abc/AbcInput';
-import type { MidiControlState } from './hooks/piano/useMidiControl';
-
-const initialMidiControlState: MidiControlState = {
-  activeNotes: new Set(),
-  devices: [],
-  activeInputId: '',
-  status: 'idle',
-};
+import type { MidiControlState } from './types';
 
 function App() {
   const { t } = useTranslation('app');
@@ -24,7 +18,7 @@ function App() {
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
   const [abcContent, setAbcContent] = useState('');
   const [midiControl, setMidiControl] = useState<MidiControlState>(
-    initialMidiControlState,
+    createInitialMidiControlState,
   );
   const [selectedMidiInputId, setSelectedMidiInputId] = useState('');
 

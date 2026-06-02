@@ -1,6 +1,5 @@
 import { InlineMath } from 'react-katex';
-import type { SpectrumType } from '../../../types';
-import type { SpectrumParamUpdates } from '../../../hooks/synth/useSpectrumControl';
+import type { SpectrumParamUpdates, SpectrumType } from '../../../types';
 import ControlRange from '../../shared/ControlRange';
 
 interface SpectrumParameterControlsProps {

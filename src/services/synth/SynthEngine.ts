@@ -2,6 +2,7 @@ import type {
   TransferFunction,
   TransferFunctionDefinition,
   Spectrum,
+  StartNoteResult,
 } from '../../types';
 import { createSpectrum, createTransferFunction } from './SynthDefinitions';
 import {
@@ -36,10 +37,6 @@ interface ActiveSynthVoice {
   sustainGain: number;
   silenceGain: number;
 }
-
-export type StartNoteResult =
-  | { started: true; startedAt: number }
-  | { started: false };
 
 export class SynthEngine {
   private audioContext: AudioContext | null = null;

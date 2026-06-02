@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { EnvelopeCurve } from '../../../hooks/synth/useEnvelopeControl';
+import type { EnvelopeCurve } from '../../../types';
 
 interface EnvelopeCurvePreviewProps {
   title: string;
