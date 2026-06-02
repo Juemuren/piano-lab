@@ -42,6 +42,14 @@ interface ActiveSynthVoice {
   silenceGain: number;
 }
 
+interface ReleasingSynthVoice {
+  oscillatorNode: OscillatorNode;
+  gainNode: GainNode;
+  harmonic: number;
+  releaseStart: number;
+  silenceGain: number;
+}
+
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
@@ -258,18 +266,13 @@ export class SynthEngine {
     return voices;
   }
 
-  private stopNoteVoices(voices: ActiveSynthVoice[]) {
-    if (!this.audioContext) {
-      return [];
-    }
-
+  private stopNoteVoices(voices: ReleasingSynthVoice[]) {
     const plans = createVoiceStopPlans({
-      now: this.audioContext.currentTime,
-      harmonics: voices.length,
+      voices,
       releaseTime: this.releaseTime,
     });
 
-    for (const [index, voice] of voices.entries()) {
+    voices.forEach((voice, index) => {
       const plan = plans[index];
 
       voice.gainNode.gain.exponentialRampToValueAtTime(
@@ -277,7 +280,7 @@ export class SynthEngine {
         plan.stopTime,
       );
       voice.oscillatorNode.stop(plan.stopTime);
-    }
+    });
   }
 
   async playNote(
@@ -289,25 +292,24 @@ export class SynthEngine {
     await this.ensureAudioContextRunning();
     if (!this.audioContext) return { started: false };
 
-    const voices = this.startNoteVoices(pitch, volume, cents);
+    const activeVoices = this.startNoteVoices(pitch, volume, cents);
+    const releasingVoices: ReleasingSynthVoice[] = [];
 
-    for (const voice of voices) {
+    for (const voice of activeVoices) {
       const sustainEnd = voice.decayEnd + duration;
-      const stopTime =
-        sustainEnd + this.releaseTime / Math.sqrt(voice.harmonic);
 
       voice.gainNode.gain.exponentialRampToValueAtTime(
         voice.sustainGain,
         sustainEnd,
       );
-      voice.gainNode.gain.exponentialRampToValueAtTime(
-        voice.silenceGain,
-        stopTime,
-      );
-      voice.oscillatorNode.stop(stopTime);
+      releasingVoices.push({
+        ...voice,
+        releaseStart: sustainEnd,
+      });
     }
+    this.stopNoteVoices(releasingVoices);
 
-    return voices.length > 0
+    return activeVoices.length > 0
       ? { started: true, startedAt: performance.now() }
       : { started: false };
   }
@@ -345,11 +347,18 @@ export class SynthEngine {
 
   stopNote(pitch: number) {
     this.nextNoteGenerationId(pitch);
+    if (!this.audioContext) return;
 
     const voices = this.activeNotes.get(pitch);
     if (!voices) return;
 
     this.activeNotes.delete(pitch);
-    this.stopNoteVoices(voices);
+    const now = this.audioContext.currentTime;
+    this.stopNoteVoices(
+      voices.map((voice) => ({
+        ...voice,
+        releaseStart: now,
+      })),
+    );
   }
 }

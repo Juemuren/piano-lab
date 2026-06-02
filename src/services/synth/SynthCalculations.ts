@@ -38,8 +38,10 @@ interface CreateVoiceStartPlansOptions {
 }
 
 interface CreateVoiceStopPlansOptions {
-  now: number;
-  harmonics: number;
+  voices: {
+    harmonic: number;
+    releaseStart: number;
+  }[];
   releaseTime: number;
 }
 
@@ -121,16 +123,15 @@ export function createVoiceStartPlans({
 }
 
 export function createVoiceStopPlans({
-  now,
-  harmonics,
+  voices,
   releaseTime,
 }: CreateVoiceStopPlansOptions): VoiceStopPlan[] {
-  const plans: VoiceStopPlan[] = [];
+  return voices.map((voice) => {
+    const stopTime =
+      voice.releaseStart + releaseTime / Math.sqrt(voice.harmonic);
 
-  for (let n = 1; n < harmonics; n++) {
-    const stopTime = now + releaseTime / Math.sqrt(n);
-    plans.push({ stopTime });
-  }
-
-  return plans;
+    return {
+      stopTime,
+    };
+  });
 }
