@@ -22,6 +22,10 @@ export class AbcPlayer {
     this.onNoteEnd = onNoteEnd;
   }
 
+  init() {
+    this.synthEngine.init();
+  }
+
   play(midiPitches: MidiPitches, millisecondsPerDuration: number) {
     Promise.all(
       midiPitches.map(async ({ pitch, duration, volume, cents }) => {

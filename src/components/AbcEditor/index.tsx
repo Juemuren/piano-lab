@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getAbcPreset } from '../../services/abc/AbcPresets';
 import { AbcPlayer } from '../../services/abc/AbcPlayer';
 import AbcFileToolbar from './AbcFileToolbar';
@@ -33,6 +33,11 @@ function AbcEditor({
     () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
+
+  useEffect(() => {
+    abcPlayer.init();
+  }, [abcPlayer]);
+
   const {
     isPlaying,
     isPlaybackEnded,
