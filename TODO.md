@@ -9,8 +9,9 @@
 - [x] [context](src/contexts/) 下的文件拆分到不同的目录中
 - [x] [ControlSelect](src/components/shared/ControlSelect.tsx) 增加一个可选元素 label，ControlField 组件删了
 - [x] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
-- [ ] 减少 [App](src/App.tsx) 中的状态数量，尽量都使用 Context
-  - abcContext 修改为 Context
+- [x] 减少 [App](src/App.tsx) 中的状态数量，尽量都使用 Context
+  - abcContent 修改为 Context
+  - playingNotes 修改为 Context
 
 ## Fix
 

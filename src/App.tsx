@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
@@ -10,27 +9,6 @@ import Footer from './components/Footer';
 
 function App() {
   const { t } = useTranslation('app');
-  const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
-
-  const handleNoteStart = useCallback((pitch: number) => {
-    setPlayingNotes((prev) => {
-      const next = new Set(prev);
-      next.add(pitch);
-      return next;
-    });
-  }, []);
-
-  const handleNoteEnd = useCallback((pitch: number) => {
-    setPlayingNotes((prev) => {
-      const next = new Set(prev);
-      next.delete(pitch);
-      return next;
-    });
-  }, []);
-
-  const handleStopPlayingNotes = useCallback(() => {
-    setPlayingNotes(new Set());
-  }, []);
 
   return (
     <>
@@ -62,17 +40,13 @@ function App() {
           </section>
           <section id="score-editor" className="mx-auto w-full scroll-mt-16">
             <CollapsibleSection title={t('sections.scoreEditor')}>
-              <AbcEditor
-                onNoteStart={handleNoteStart}
-                onNoteEnd={handleNoteEnd}
-                onStop={handleStopPlayingNotes}
-              />
+              <AbcEditor />
             </CollapsibleSection>
           </section>
         </div>
 
         <section id="piano-keyboard" className="scroll-mt-16">
-          <Piano playingNotes={playingNotes} />
+          <Piano />
         </section>
 
         <section id="settings" className="scroll-mt-16">

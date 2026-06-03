@@ -11,20 +11,17 @@ import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useAbcExports from '../../hooks/abc/useAbcExports';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import { useAbcContent } from '../../contexts/abcContent';
+import { usePlayingNotes } from '../../contexts/playingNotes';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 
-interface AbcEditorProps {
-  onNoteStart: (pitch: number) => void;
-  onNoteEnd: (pitch: number) => void;
-  onStop: () => void;
-}
-
-function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
+function AbcEditor() {
   const synthEngine = useSynthEngine();
   const { abcContent, setAbcContent } = useAbcContent();
+  const { startPlayingNote, endPlayingNote, stopPlayingNotes } =
+    usePlayingNotes();
   const [abcPlayer] = useState(
-    () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
+    () => new AbcPlayer(synthEngine, startPlayingNote, endPlayingNote),
   );
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(-1);
 
@@ -45,7 +42,7 @@ function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   } = useAbcPlayback({
     abcContent,
     abcPlayer,
-    onStop,
+    onStop: stopPlayingNotes,
     renderTargetId: RENDER_TARGET_ID,
   });
   const {

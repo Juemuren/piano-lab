@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useMidiControlContext } from '../contexts/midiControl';
+import { usePlayingNotes } from '../contexts/playingNotes';
 import usePianoControl from '../hooks/piano/usePianoControl';
 
 const WHITE_KEY_HEIGHT_PX = 160;
@@ -7,12 +8,9 @@ const BLACK_KEY_HEIGHT_PX = 100;
 const WHITE_KEY_WIDTH_PX = 30;
 const BLACK_KEY_WIDTH_PX = 24;
 
-interface PianoProps {
-  playingNotes?: Set<number>;
-}
-
-function Piano({ playingNotes = new Set() }: PianoProps) {
+function Piano() {
   const { selectedMidiInputId, setMidiControl } = useMidiControlContext();
+  const { playingNotes } = usePlayingNotes();
   const {
     whiteKeys,
     blackKeys,
