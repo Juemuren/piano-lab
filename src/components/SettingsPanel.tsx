@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { useAppSettings } from '../contexts/appSettings';
 import { useMidiControlContext } from '../contexts/midiControl';
 import type { MidiInputDevice, MidiStatus } from '../types';
-import ControlPanel from './shared/ControlPanel';
-import ControlSelect from './shared/ControlSelect';
-import ControlRange from './shared/ControlRange';
 import { getQuarterNoteSeconds } from '../services/abc/AbcInput';
 import type { PianoInputSettings } from '../contexts/appSettings/AppSettingsContext';
+import ControlCheckbox from './shared/ControlCheckbox';
+import ControlField from './shared/ControlField';
+import ControlPanel from './shared/ControlPanel';
+import ControlRange from './shared/ControlRange';
+import ControlSelect from './shared/ControlSelect';
 
 const DEFAULT_NOTE_LENGTH_OPTIONS = ['1/4', '1/8', '1/16'];
 
@@ -76,51 +78,31 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
   return (
     <ControlPanel className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isKeyboardControlEnabled}
-            onChange={(e) => setIsKeyboardControlEnabled(e.target.checked)}
-            className="size-4 accent-app-accent"
-          />
-          <span>{t('settings.keyboardControl')}</span>
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isMouseControlEnabled}
-            onChange={(e) => setIsMouseControlEnabled(e.target.checked)}
-            className="size-4 accent-app-accent"
-          />
-          <span>{t('settings.mouseControl')}</span>
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isTouchControlEnabled}
-            onChange={(e) => setIsTouchControlEnabled(e.target.checked)}
-            className="size-4 accent-app-accent"
-          />
-          <span>{t('settings.touchControl')}</span>
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isMidiControlEnabled}
-            onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
-            className="size-4 accent-app-accent"
-          />
-          <span>{t('settings.midiControl')}</span>
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isPianoInputEnabled}
-            onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
-            className="size-4 accent-app-accent"
-          />
-          <span>{t('settings.pianoInputEnable')}</span>
-        </label>
+        <ControlCheckbox
+          label={t('settings.keyboardControl')}
+          checked={isKeyboardControlEnabled}
+          onChange={(e) => setIsKeyboardControlEnabled(e.target.checked)}
+        />
+        <ControlCheckbox
+          label={t('settings.mouseControl')}
+          checked={isMouseControlEnabled}
+          onChange={(e) => setIsMouseControlEnabled(e.target.checked)}
+        />
+        <ControlCheckbox
+          label={t('settings.touchControl')}
+          checked={isTouchControlEnabled}
+          onChange={(e) => setIsTouchControlEnabled(e.target.checked)}
+        />
+        <ControlCheckbox
+          label={t('settings.midiControl')}
+          checked={isMidiControlEnabled}
+          onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
+        />
+        <ControlCheckbox
+          label={t('settings.pianoInputEnable')}
+          checked={isPianoInputEnabled}
+          onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
+        />
       </div>
 
       {isKeyboardControlEnabled && (
@@ -131,8 +113,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
 
       {isPianoInputEnabled && (
         <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-          <label className="flex flex-col gap-1 text-center">
-            <span>{t('settings.pianoInput.defaultNoteLength')}</span>
+          <ControlField label={t('settings.pianoInput.defaultNoteLength')}>
             <ControlSelect
               value={pianoInputSettings.defaultNoteLength}
               onChange={(e) =>
@@ -147,7 +128,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
                 </option>
               ))}
             </ControlSelect>
-          </label>
+          </ControlField>
           <ControlRange
             label={t('settings.pianoInput.tempo')}
             min={40}
@@ -169,8 +150,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
         <div className="text-sm text-app-muted dark:text-app-muted-dark">
           {midiStatusMessageKey && <p>{t(midiStatusMessageKey)}</p>}
           {midiControl.devices.length > 0 && (
-            <label className="flex flex-col gap-1 text-center">
-              <span>{t('settings.midi.inputDevice')}</span>
+            <ControlField label={t('settings.midi.inputDevice')}>
               <ControlSelect
                 value={selectedDeviceId}
                 onChange={(e) => setSelectedMidiInputId(e.target.value)}
@@ -181,7 +161,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
                   </option>
                 ))}
               </ControlSelect>
-            </label>
+            </ControlField>
           )}
         </div>
       )}

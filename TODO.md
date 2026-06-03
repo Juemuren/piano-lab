@@ -22,10 +22,10 @@
 - [x] 改个更独特的应用名称
 - [ ] 在脚注中补充关于应用的说明
 - [ ] 设置面板样式修改，采用设置/子设置的方式
-  - [ ] 增加修改键位映射的功能
-  - [ ] 增加可关闭键位提示的设置
 
 ## Feat
+
+- [ ] 增加修改键位映射的功能
 
 - 需要 Web API 的
   - [ ] 允许录制乐谱演奏时的音频。可以参考 [MediaStream Recording API](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API)
