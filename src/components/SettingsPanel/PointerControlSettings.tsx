@@ -1,0 +1,35 @@
+import { useTranslation } from 'react-i18next';
+import ControlCheckbox from '../shared/ControlCheckbox';
+
+type PointerControlSettingsProps = {
+  isMouseControlEnabled: boolean;
+  setIsMouseControlEnabled: (enabled: boolean) => void;
+  isTouchControlEnabled: boolean;
+  setIsTouchControlEnabled: (enabled: boolean) => void;
+};
+
+function PointerControlSettings({
+  isMouseControlEnabled,
+  setIsMouseControlEnabled,
+  isTouchControlEnabled,
+  setIsTouchControlEnabled,
+}: PointerControlSettingsProps) {
+  const { t } = useTranslation('app');
+
+  return (
+    <div className="flex flex-col gap-3">
+      <ControlCheckbox
+        label={t('settings.mouseControl')}
+        checked={isMouseControlEnabled}
+        onChange={(e) => setIsMouseControlEnabled(e.target.checked)}
+      />
+      <ControlCheckbox
+        label={t('settings.touchControl')}
+        checked={isTouchControlEnabled}
+        onChange={(e) => setIsTouchControlEnabled(e.target.checked)}
+      />
+    </div>
+  );
+}
+
+export default PointerControlSettings;
