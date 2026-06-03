@@ -9,6 +9,7 @@
 - [x] [context](src/contexts/) 下的文件拆分到不同的目录中
 - [x] [ControlSelect](src/components/shared/ControlSelect.tsx) 增加一个可选元素 label，ControlField 组件删了
 - [x] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
+- [ ] 减少 [App](src/App.tsx) 中的状态数量，尽量都使用 Context
 
 ## Fix
 
@@ -28,6 +29,9 @@
 ## Feat
 
 - [ ] 增加修改键位映射的功能
+- 乐谱自动生成功能增强
+  - [ ] 处理调号和节拍
+  - [ ] 可以同步 textarea 中的修改。可能把 abcContext 作为 Context 更好一点
 
 - 需要 Web API 的
   - [ ] 允许录制乐谱演奏时的音频。可以参考 [MediaStream Recording API](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API)

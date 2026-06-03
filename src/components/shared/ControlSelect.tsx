@@ -21,7 +21,7 @@ function ControlSelect({
       <select
         id={selectId}
         className={`
-          w-full py-2 rounded-2xl text-center flex-1
+          w-full p-2 rounded-2xl text-left flex-1
           bg-app-surface dark:bg-app-surface-dark
           focus:border-app-accent focus:ring-2 focus:ring-app-accent/50
           ${className}

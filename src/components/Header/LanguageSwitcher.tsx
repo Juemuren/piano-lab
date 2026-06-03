@@ -16,7 +16,7 @@ function LanguageSwitcher() {
   ));
 
   return (
-    <label className="flex w-36 items-center gap-2 text-sm">
+    <label className="flex items-center gap-2 text-sm">
       <Languages
         size={18}
         className="shrink-0 text-app-muted dark:text-app-muted-dark"
