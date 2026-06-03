@@ -10,6 +10,7 @@
 - [x] [ControlSelect](src/components/shared/ControlSelect.tsx) 增加一个可选元素 label，ControlField 组件删了
 - [x] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
 - [ ] 减少 [App](src/App.tsx) 中的状态数量，尽量都使用 Context
+  - abcContext 修改为 Context
 
 ## Fix
 
@@ -19,6 +20,7 @@
 - [x] 清除项目中已存在的 `aria-` 样式
 - [x] 第一次点击琴键时音符时长不正确，startNote 的调用处存在问题，未能正确处理异步
 - [x] playNote 处同样也有问题
+- [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 https://chromestatus.com/feature/5138066234671104。这个问题好像无法修复，只要调用就会有警告
 
 ## Style
 

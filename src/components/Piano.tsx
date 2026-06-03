@@ -9,10 +9,9 @@ const BLACK_KEY_WIDTH_PX = 24;
 
 interface PianoProps {
   playingNotes?: Set<number>;
-  onNoteInput?: (pitch: number, duration: number) => void;
 }
 
-function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
+function Piano({ playingNotes = new Set() }: PianoProps) {
   const { selectedMidiInputId, setMidiControl } = useMidiControlContext();
   const {
     whiteKeys,
@@ -23,7 +22,7 @@ function Piano({ playingNotes = new Set(), onNoteInput }: PianoProps) {
     isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
-  } = usePianoControl(playingNotes, onNoteInput, selectedMidiInputId);
+  } = usePianoControl(playingNotes, selectedMidiInputId);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
 
   useEffect(() => {

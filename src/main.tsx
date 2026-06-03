@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AppSettingsProvider } from './contexts/appSettings';
+import { AbcContentProvider } from './contexts/abcContent';
 import { MidiControlProvider } from './contexts/midiControl';
 import { SynthEngineProvider } from './contexts/synthEngine';
 import App from './App.tsx';
@@ -11,11 +12,13 @@ import './index.css';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppSettingsProvider>
-      <SynthEngineProvider>
-        <MidiControlProvider>
-          <App />
-        </MidiControlProvider>
-      </SynthEngineProvider>
+      <AbcContentProvider>
+        <SynthEngineProvider>
+          <MidiControlProvider>
+            <App />
+          </MidiControlProvider>
+        </SynthEngineProvider>
+      </AbcContentProvider>
     </AppSettingsProvider>
   </StrictMode>,
 );

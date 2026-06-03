@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
+import { useAbcContent } from '../../contexts/abcContent';
 import { useAppSettings } from '../../contexts/appSettings';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import { appendPitchToAbc } from '../../services/abc/AbcInput';
 import {
   getPitchName,
   getPitchOctave,
@@ -107,11 +109,13 @@ function useActivePianoNotes() {
 
 function usePianoControl(
   playingNotes: Set<number>,
-  onNoteInput?: (pitch: number, duration: number) => void,
   selectedMidiInputId?: string,
 ) {
   const synthEngine = useSynthEngine();
+  const { setAbcContent } = useAbcContent();
   const {
+    isPianoInputEnabled,
+    pianoInputSettings,
     isKeyboardControlEnabled,
     isMouseControlEnabled,
     isTouchControlEnabled,
@@ -166,9 +170,24 @@ function usePianoControl(
       }
 
       noteStartedAtRef.current.delete(note);
-      onNoteInput?.(note, (performance.now() - startedAt) / 1000);
+      if (isPianoInputEnabled) {
+        setAbcContent((content) =>
+          appendPitchToAbc(
+            content,
+            note,
+            (performance.now() - startedAt) / 1000,
+            pianoInputSettings,
+          ),
+        );
+      }
     },
-    [onNoteInput, releaseInputNote, synthEngine],
+    [
+      isPianoInputEnabled,
+      pianoInputSettings,
+      releaseInputNote,
+      setAbcContent,
+      synthEngine,
+    ],
   );
 
   const { keyHints } = useKeyboardControl({

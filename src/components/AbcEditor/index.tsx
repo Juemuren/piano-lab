@@ -10,25 +10,19 @@ import useFileImport from '../../hooks/file/useFileImport';
 import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useAbcExports from '../../hooks/abc/useAbcExports';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import { useAbcContent } from '../../contexts/abcContent';
 
 const RENDER_TARGET_ID = 'abcjs-paper';
 
 interface AbcEditorProps {
-  abcContent: string;
   onNoteStart: (pitch: number) => void;
   onNoteEnd: (pitch: number) => void;
   onStop: () => void;
-  onAbcContentChange: (content: string) => void;
 }
 
-function AbcEditor({
-  abcContent,
-  onNoteStart,
-  onNoteEnd,
-  onStop,
-  onAbcContentChange,
-}: AbcEditorProps) {
+function AbcEditor({ onNoteStart, onNoteEnd, onStop }: AbcEditorProps) {
   const synthEngine = useSynthEngine();
+  const { abcContent, setAbcContent } = useAbcContent();
   const [abcPlayer] = useState(
     () => new AbcPlayer(synthEngine, onNoteStart, onNoteEnd),
   );
@@ -65,10 +59,10 @@ function AbcEditor({
 
   const handleImport = useCallback(
     (content: string) => {
-      onAbcContentChange(content);
+      setAbcContent(content);
       setSelectedPresetIndex(-1);
     },
-    [onAbcContentChange],
+    [setAbcContent],
   );
 
   const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
@@ -78,17 +72,17 @@ function AbcEditor({
   const handlePresetChange = useCallback(
     async (index: number) => {
       setSelectedPresetIndex(index);
-      onAbcContentChange(index >= 0 ? await getAbcPreset(index) : '');
+      setAbcContent(index >= 0 ? await getAbcPreset(index) : '');
     },
-    [onAbcContentChange],
+    [setAbcContent],
   );
 
   const handleContentChange = useCallback(
     (content: string) => {
-      onAbcContentChange(content);
+      setAbcContent(content);
       setSelectedPresetIndex(-1);
     },
-    [onAbcContentChange],
+    [setAbcContent],
   );
 
   return (

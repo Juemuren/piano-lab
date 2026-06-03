@@ -7,16 +7,10 @@ import AbcEditor from './components/AbcEditor';
 import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { useAppSettings } from './contexts/appSettings';
-import { appendPitchToAbc, updateAbcHeader } from './services/abc/AbcInput';
-import type { PianoInputSettings } from './contexts/appSettings/AppSettingsContext';
 
 function App() {
   const { t } = useTranslation('app');
-  const { isPianoInputEnabled, pianoInputSettings, setPianoInputSettings } =
-    useAppSettings();
   const [playingNotes, setPlayingNotes] = useState<Set<number>>(new Set());
-  const [abcContent, setAbcContent] = useState('');
 
   const handleNoteStart = useCallback((pitch: number) => {
     setPlayingNotes((prev) => {
@@ -37,26 +31,6 @@ function App() {
   const handleStopPlayingNotes = useCallback(() => {
     setPlayingNotes(new Set());
   }, []);
-
-  const handlePianoInputSettingsChange = useCallback(
-    (settings: Partial<PianoInputSettings>) => {
-      setPianoInputSettings({
-        ...pianoInputSettings,
-        ...settings,
-      });
-      setAbcContent((content) => updateAbcHeader(content, settings));
-    },
-    [pianoInputSettings, setPianoInputSettings],
-  );
-
-  const handlePianoNoteInput = useCallback(
-    (pitch: number, duration: number) => {
-      setAbcContent((content) =>
-        appendPitchToAbc(content, pitch, duration, pianoInputSettings),
-      );
-    },
-    [pianoInputSettings],
-  );
 
   return (
     <>
@@ -89,21 +63,16 @@ function App() {
           <section id="score-editor" className="mx-auto w-full scroll-mt-16">
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor
-                abcContent={abcContent}
                 onNoteStart={handleNoteStart}
                 onNoteEnd={handleNoteEnd}
                 onStop={handleStopPlayingNotes}
-                onAbcContentChange={setAbcContent}
               />
             </CollapsibleSection>
           </section>
         </div>
 
         <section id="piano-keyboard" className="scroll-mt-16">
-          <Piano
-            playingNotes={playingNotes}
-            onNoteInput={isPianoInputEnabled ? handlePianoNoteInput : undefined}
-          />
+          <Piano playingNotes={playingNotes} />
         </section>
 
         <section id="settings" className="scroll-mt-16">
@@ -111,9 +80,7 @@ function App() {
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"
           >
-            <SettingsPanel
-              onPianoInputSettingsChange={handlePianoInputSettingsChange}
-            />
+            <SettingsPanel />
           </CollapsibleSection>
         </section>
       </main>

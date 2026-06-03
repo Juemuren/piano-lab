@@ -1,19 +1,16 @@
 import { useAppSettings } from '../../contexts/appSettings';
 import { useMidiControlContext } from '../../contexts/midiControl';
-import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
+import usePianoInputSettings from '../../hooks/settings/usePianoInputSettings';
 import KeyboardControlSettings from './KeyboardControlSettings';
 import MidiControlSettings from './MidiControlSettings';
 import PianoInputSettingsControl from './PianoInputSettingsControl';
 import PointerControlSettings from './PointerControlSettings';
 import ControlPanel from '../shared/ControlPanel';
 
-interface SettingsPanelProps {
-  onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
-}
-
-function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
+function SettingsPanel() {
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
     useMidiControlContext();
+  const handlePianoInputSettingsChange = usePianoInputSettings();
   const {
     isPianoInputEnabled,
     setIsPianoInputEnabled,
@@ -51,7 +48,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
         isPianoInputEnabled={isPianoInputEnabled}
         setIsPianoInputEnabled={setIsPianoInputEnabled}
         pianoInputSettings={pianoInputSettings}
-        onPianoInputSettingsChange={onPianoInputSettingsChange}
+        onPianoInputSettingsChange={handlePianoInputSettingsChange}
       />
     </ControlPanel>
   );
