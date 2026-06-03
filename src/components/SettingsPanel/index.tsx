@@ -1,11 +1,11 @@
-import { useAppSettings } from '../contexts/appSettings';
-import { useMidiControlContext } from '../contexts/midiControl';
-import type { PianoInputSettings } from '../contexts/appSettings/AppSettingsContext';
-import KeyboardControlSettings from './SettingsPanel/KeyboardControlSettings';
-import MidiControlSettings from './SettingsPanel/MidiControlSettings';
-import PianoInputSettingsControl from './SettingsPanel/PianoInputSettingsControl';
-import PointerControlSettings from './SettingsPanel/PointerControlSettings';
-import ControlPanel from './shared/ControlPanel';
+import { useAppSettings } from '../../contexts/appSettings';
+import { useMidiControlContext } from '../../contexts/midiControl';
+import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
+import KeyboardControlSettings from './KeyboardControlSettings';
+import MidiControlSettings from './MidiControlSettings';
+import PianoInputSettingsControl from './PianoInputSettingsControl';
+import PointerControlSettings from './PointerControlSettings';
+import ControlPanel from '../shared/ControlPanel';
 
 interface SettingsPanelProps {
   onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
