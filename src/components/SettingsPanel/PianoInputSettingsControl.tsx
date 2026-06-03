@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 import { getQuarterNoteSeconds } from '../../services/abc/AbcInput';
 import ControlCheckbox from '../shared/ControlCheckbox';
-import ControlField from '../shared/ControlField';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
 
@@ -26,6 +25,12 @@ function PianoInputSettingsControl({
     pianoInputSettings.tempo,
   ).toFixed(2);
 
+  const defaultLengthOptions = DEFAULT_NOTE_LENGTH_OPTIONS.map((noteLength) => (
+    <option key={noteLength} value={noteLength}>
+      {noteLength}
+    </option>
+  ));
+
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
@@ -34,23 +39,18 @@ function PianoInputSettingsControl({
         onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
       />
       {isPianoInputEnabled && (
-        <>
-          <ControlField label={t('settings.pianoInput.defaultNoteLength')}>
-            <ControlSelect
-              value={pianoInputSettings.defaultNoteLength}
-              onChange={(e) =>
-                onPianoInputSettingsChange({
-                  defaultNoteLength: e.target.value,
-                })
-              }
-            >
-              {DEFAULT_NOTE_LENGTH_OPTIONS.map((noteLength) => (
-                <option key={noteLength} value={noteLength}>
-                  {noteLength}
-                </option>
-              ))}
-            </ControlSelect>
-          </ControlField>
+        <div className="text-sm text-app-muted dark:text-app-muted-dark">
+          <ControlSelect
+            label={t('settings.pianoInput.defaultNoteLength')}
+            value={pianoInputSettings.defaultNoteLength}
+            onChange={(e) =>
+              onPianoInputSettingsChange({
+                defaultNoteLength: e.target.value,
+              })
+            }
+          >
+            {defaultLengthOptions}
+          </ControlSelect>
           <ControlRange
             label={t('settings.pianoInput.tempo')}
             min={40}
@@ -65,7 +65,7 @@ function PianoInputSettingsControl({
               seconds: quarterNoteSeconds,
             })}
           </p>
-        </>
+        </div>
       )}
     </div>
   );

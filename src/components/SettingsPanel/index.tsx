@@ -29,7 +29,7 @@ function SettingsPanel({ onPianoInputSettingsChange }: SettingsPanelProps) {
   } = useAppSettings();
 
   return (
-    <ControlPanel className="gap-3 grid grid-cols-1 lg:grid-cols-2">
+    <ControlPanel className="text-left gap-3 grid grid-cols-1 lg:grid-cols-2">
       <KeyboardControlSettings
         isKeyboardControlEnabled={isKeyboardControlEnabled}
         setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}

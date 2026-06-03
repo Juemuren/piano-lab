@@ -5,7 +5,6 @@ import type {
   MidiStatus,
 } from '../../types';
 import ControlCheckbox from '../shared/ControlCheckbox';
-import ControlField from '../shared/ControlField';
 import ControlSelect from '../shared/ControlSelect';
 
 type MidiControlSettingsProps = {
@@ -68,18 +67,17 @@ function MidiControlSettings({
         <div className="text-sm text-app-muted dark:text-app-muted-dark">
           {midiStatusMessageKey && <p>{t(midiStatusMessageKey)}</p>}
           {midiControl.devices.length > 0 && (
-            <ControlField label={t('settings.midi.inputDevice')}>
-              <ControlSelect
-                value={selectedDeviceId}
-                onChange={(e) => setSelectedMidiInputId(e.target.value)}
-              >
-                {midiControl.devices.map((device) => (
-                  <option key={device.id} value={device.id}>
-                    {getMidiDeviceName(device)}
-                  </option>
-                ))}
-              </ControlSelect>
-            </ControlField>
+            <ControlSelect
+              label={t('settings.midi.inputDevice')}
+              value={selectedDeviceId}
+              onChange={(e) => setSelectedMidiInputId(e.target.value)}
+            >
+              {midiControl.devices.map((device) => (
+                <option key={device.id} value={device.id}>
+                  {getMidiDeviceName(device)}
+                </option>
+              ))}
+            </ControlSelect>
           )}
         </div>
       )}
