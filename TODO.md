@@ -7,6 +7,8 @@
 - [x] 将 [SynthEngine](src/services//synth/SynthEngine.ts) 中的纯函数提取出来
 - [x] [types](src/types.ts) 中的类型拆分成多个文件，放入 `src/types` 中
 - [x] [context](src/contexts/) 下的文件拆分到不同的目录中
+- [ ] [ControlSelect](src/components/shared/ControlSelect.tsx) 增加一个可选元素 label
+- [ ] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
 
 ## Fix
 
