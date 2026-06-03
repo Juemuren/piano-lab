@@ -51,7 +51,8 @@ function TransferFunction({
       </ControlSelect>
 
       <BaseFrequencyControl
-        label={t('controls.baseFrequency')}
+        labelRange={t('controls.baseFrequency')}
+        labelSelect={t('controls.pitch')}
         hint={t('controls.baseFrequencyPreviewHint')}
         value={baseFrequency}
         selectedPitch={selectedPitch}

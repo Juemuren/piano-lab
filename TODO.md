@@ -8,7 +8,7 @@
 - [x] [types](src/types.ts) 中的类型拆分成多个文件，放入 `src/types` 中
 - [x] [context](src/contexts/) 下的文件拆分到不同的目录中
 - [x] [ControlSelect](src/components/shared/ControlSelect.tsx) 增加一个可选元素 label，ControlField 组件删了
-- [ ] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
+- [x] [ControlRange](src/components/shared/ControlRange.tsx) 增加一个可选元素 p
 
 ## Fix
 
@@ -23,7 +23,7 @@
 
 - [x] 改个更独特的应用名称
 - [ ] 在脚注中补充关于应用的说明
-- [ ] 设置面板样式修改，采用设置/子设置的方式
+- [x] 设置面板样式修改，采用设置/子设置的方式
 
 ## Feat
 

@@ -59,12 +59,10 @@ function PianoInputSettingsControl({
             value={pianoInputSettings.tempo}
             displayValue={`${pianoInputSettings.tempo}`}
             onChange={(tempo) => onPianoInputSettingsChange({ tempo })}
-          />
-          <p className="text-xs text-app-tip/50 dark:text-app-tip-dark/50">
-            {t('settings.pianoInput.quarterNoteSeconds', {
+            p={t('settings.pianoInput.quarterNoteSeconds', {
               seconds: quarterNoteSeconds,
             })}
-          </p>
+          />
         </div>
       )}
     </div>

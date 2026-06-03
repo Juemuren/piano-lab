@@ -45,6 +45,7 @@
     "strikePoint": "Strike Point",
     "decayRate": "Decay Rate",
     "powerExponent": "Power Exponent",
+    "pitch": "Pitch",
     "baseFrequency": "Base Frequency",
     "baseFrequencyPreviewHint": "This base frequency only previews how the transfer function affects harmonics. It does not change the actual played pitch.",
     "delayTime": "Delay Time",

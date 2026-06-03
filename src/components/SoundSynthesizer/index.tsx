@@ -165,10 +165,9 @@ function SoundSynthesizer() {
           displayValue={harmonicCount.toString()}
           accentClassName="accent-app-warning dark:accent-app-warning-dark"
           onChange={(value) => setHarmonicCount(Math.round(value))}
+          p={t('controls.harmonicCountWarning')}
+          pClassName="text-app-warning/50 dark:text-app-warning-dark/50"
         />
-        <p className="text-xs text-app-warning/50 dark:text-app-warning-dark/50">
-          {t('controls.harmonicCountWarning')}
-        </p>
       </div>
 
       <CollapsibleSection

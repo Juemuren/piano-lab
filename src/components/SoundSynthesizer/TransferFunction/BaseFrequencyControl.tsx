@@ -8,7 +8,8 @@ interface BaseFrequencyOption {
 }
 
 interface BaseFrequencyControlProps {
-  label: string;
+  labelRange: string;
+  labelSelect: string;
   hint: string;
   value: number;
   selectedPitch?: number;
@@ -18,7 +19,8 @@ interface BaseFrequencyControlProps {
 }
 
 function BaseFrequencyControl({
-  label,
+  labelRange,
+  labelSelect,
   hint,
   value,
   selectedPitch,
@@ -30,7 +32,8 @@ function BaseFrequencyControl({
     <div className="my-4">
       <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
         <ControlRange
-          label={label}
+          label={labelRange}
+          p={hint}
           symbol={<InlineMath math="f" />}
           min="20"
           max="5000"
@@ -38,9 +41,11 @@ function BaseFrequencyControl({
           value={value}
           displayValue={`${value.toFixed(2)} Hz`}
           accentClassName="accent-app-info dark:accent-app-info-dark"
+          pClassName="text-app-info/50 dark:text-app-info-dark/50"
           onChange={onChange}
         />
         <ControlSelect
+          label={labelSelect}
           value={selectedPitch ?? 'custom'}
           onChange={(e) => {
             if (e.target.value === 'custom') return;
@@ -54,9 +59,6 @@ function BaseFrequencyControl({
           ))}
         </ControlSelect>
       </div>
-      <p className="mt-2 text-xs text-app-info/50 dark:text-app-info-dark/50">
-        {hint}
-      </p>
     </div>
   );
 }

@@ -45,6 +45,7 @@
     "strikePoint": "打弦位置",
     "decayRate": "減衰率",
     "powerExponent": "べき指数",
+    "pitch": "ピッチ",
     "baseFrequency": "基音周波数",
     "baseFrequencyPreviewHint": "この基音周波数の調整は伝達関数が倍音に与える影響のプレビュー専用で、実際の演奏音高は変わりません。",
     "delayTime": "遅延時間",
