@@ -292,24 +292,24 @@ export class SynthEngine {
     await this.ensureAudioContextRunning();
     if (!this.audioContext) return { started: false };
 
-    const activeVoices = this.startNoteVoices(pitch, volume, cents);
-    const releasingVoices: ReleasingSynthVoice[] = [];
+    const voices = this.startNoteVoices(pitch, volume, cents);
 
-    for (const voice of activeVoices) {
-      const sustainEnd = voice.decayEnd + duration;
+    this.stopNoteVoices(
+      voices.map((voice) => {
+        const sustainEnd = voice.decayEnd + duration;
 
-      voice.gainNode.gain.exponentialRampToValueAtTime(
-        voice.sustainGain,
-        sustainEnd,
-      );
-      releasingVoices.push({
-        ...voice,
-        releaseStart: sustainEnd,
-      });
-    }
-    this.stopNoteVoices(releasingVoices);
+        voice.gainNode.gain.exponentialRampToValueAtTime(
+          voice.sustainGain,
+          sustainEnd,
+        );
+        return {
+          ...voice,
+          releaseStart: sustainEnd,
+        };
+      }),
+    );
 
-    return activeVoices.length > 0
+    return voices.length > 0
       ? { started: true, startedAt: performance.now() }
       : { started: false };
   }
