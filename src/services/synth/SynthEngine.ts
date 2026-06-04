@@ -1,54 +1,12 @@
 import type {
-  Effect,
+  EnvelopeConfig,
   EffectDefinition,
   Spectrum,
+  SynthBasicConfig,
   StartNoteResult,
 } from '../../types';
-import { createEffect, createSpectrum } from './SynthDefinitions';
-import {
-  createVoiceStartPlans,
-  createVoiceStopPlans,
-} from './SynthCalculations';
-import {
-  DEFAULT_SPECTRUM_TYPE,
-  DEFAULT_SPECTRUM_DECAY_RATE,
-  DEFAULT_SPECTRUM_POWER_EXPONENT,
-  DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_EFFECT_TYPE,
-  DEFAULT_EFFECT_ATTENUATION,
-  DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
-  DEFAULT_EFFECT_DELAY_MS,
-  DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
-  DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
-  DEFAULT_SYNTH_OSCILLATOR_TYPE,
-  DEFAULT_SYNTH_HARMONIC_COUNT,
-  DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
-  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
-  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  DEFAULT_ENVELOPE_SILENCE_GAIN,
-} from '../../constants';
-
-const MIN_GAIN_VALUE = 1e-10;
-
-interface ActiveSynthVoice {
-  oscillatorNode: OscillatorNode;
-  gainNode: GainNode;
-  harmonic: number;
-  startTime: number;
-  decayEnd: number;
-  sustainGain: number;
-  silenceGain: number;
-}
-
-interface ReleasingSynthVoice {
-  oscillatorNode: OscillatorNode;
-  gainNode: GainNode;
-  harmonic: number;
-  releaseStart: number;
-  silenceGain: number;
-}
+import { BaseVoice, type ActiveVoice, type ReleasingVoice } from './BaseVoice';
+import { EffectChain } from './EffectChain';
 
 interface SynthRecordingTarget {
   stream: MediaStream;
@@ -58,37 +16,9 @@ interface SynthRecordingTarget {
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private outputGainNode: GainNode | null = null;
-  private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
-  private spectrum: Spectrum = createSpectrum(
-    {
-      type: DEFAULT_SPECTRUM_TYPE,
-      lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-      sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-      p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-    },
-    this.harmonicCount,
-  );
-  private effectDefinition: EffectDefinition = {
-    type: DEFAULT_EFFECT_TYPE,
-    tau: DEFAULT_EFFECT_DELAY_MS,
-    alpha: DEFAULT_EFFECT_ATTENUATION,
-    minFrequency: DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
-    maxFrequency: DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
-    baseFrequency: DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
-  };
-  private effect: Effect = createEffect(
-    this.effectDefinition,
-    this.harmonicCount,
-  );
-
-  private oscillatorType: OscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
-  private volumeRatio: number = DEFAULT_SYNTH_VOLUME_RATIO;
-  private attackTime: number = DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS;
-  private decayTime: number = DEFAULT_ENVELOPE_DECAY_TIME_SECONDS;
-  private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
-  private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
-  private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
-  private activeNotes: Map<number, ActiveSynthVoice[]> = new Map();
+  private baseVoice = new BaseVoice();
+  private effectChain = new EffectChain();
+  private activeNotes: Map<number, ActiveVoice[]> = new Map();
   private noteGenerationIds: Map<number, number> = new Map();
 
   init() {
@@ -99,87 +29,20 @@ export class SynthEngine {
     }
   }
 
-  setSpectrum(spectrum: Spectrum) {
-    this.spectrum = spectrum;
+  configureSynth(config: SynthBasicConfig) {
+    this.baseVoice.configureSynth(config);
   }
 
-  getSpectrum(): Spectrum {
-    return this.spectrum;
+  configureEnvelope(config: EnvelopeConfig) {
+    this.baseVoice.configureEnvelope(config);
   }
 
-  setEffect(effect: Effect, definition?: EffectDefinition) {
-    this.effect = effect;
-    if (definition) {
-      this.effectDefinition = definition;
-    }
+  configureSpectrum(spectrum: Spectrum) {
+    this.baseVoice.configureSpectrum(spectrum);
   }
 
-  getEffect(): Effect {
-    return this.effect;
-  }
-
-  getHarmonicCount(): number {
-    return this.harmonicCount;
-  }
-
-  setHarmonicCount(value: number) {
-    this.harmonicCount = value;
-  }
-
-  getOscillatorType(): OscillatorType {
-    return this.oscillatorType;
-  }
-
-  setOscillatorType(type: OscillatorType) {
-    this.oscillatorType = type;
-  }
-
-  getVolumeRatio(): number {
-    return this.volumeRatio;
-  }
-
-  setVolumeRatio(value: number) {
-    this.volumeRatio = value;
-  }
-
-  getAttackTime(): number {
-    return this.attackTime;
-  }
-
-  setAttackTime(value: number) {
-    this.attackTime = value;
-  }
-
-  getDecayTime(): number {
-    return this.decayTime;
-  }
-
-  setDecayTime(value: number) {
-    this.decayTime = value;
-  }
-
-  getReleaseTime(): number {
-    return this.releaseTime;
-  }
-
-  setReleaseTime(value: number) {
-    this.releaseTime = value;
-  }
-
-  getSustainGain(): number {
-    return this.sustainGain;
-  }
-
-  setSustainGain(value: number) {
-    this.sustainGain = value;
-  }
-
-  getSilenceGain(): number {
-    return this.silenceGain;
-  }
-
-  setSilenceGain(value: number) {
-    this.silenceGain = value;
+  configureEffect(definition: EffectDefinition) {
+    this.effectChain.configure(definition);
   }
 
   private async ensureAudioContextRunning(): Promise<void> {
@@ -204,9 +67,7 @@ export class SynthEngine {
     }
 
     const destinationNode = this.audioContext.createMediaStreamDestination();
-
     this.outputGainNode.connect(destinationNode);
-
     return {
       stream: destinationNode.stream,
       disconnect: () => {
@@ -230,84 +91,32 @@ export class SynthEngine {
     pitch: number,
     volume: number,
     cents: number,
-  ): ActiveSynthVoice[] {
+  ): ActiveVoice[] {
     if (!this.audioContext) {
       return [];
     }
 
-    const plans = createVoiceStartPlans({
+    if (!this.outputGainNode) {
+      return [];
+    }
+
+    return this.baseVoice.startVoices({
+      audioContext: this.audioContext,
+      outputNode: this.outputGainNode,
       pitch,
       volume,
       cents,
-      now: this.audioContext.currentTime,
-      harmonics: this.harmonicCount,
-      spectrum: this.spectrum,
-      effectDefinition: this.effectDefinition,
-      volumeRatio: this.volumeRatio,
-      attackTime: this.attackTime,
-      decayTime: this.decayTime,
-      sustainGain: this.sustainGain,
-      silenceGain: this.silenceGain,
-      minGainValue: MIN_GAIN_VALUE,
+      shapeHarmonics: (plans) =>
+        this.effectChain.shapeHarmonics(plans, {
+          pitch,
+          cents,
+          harmonics: plans.length,
+        }),
     });
-    const voices: ActiveSynthVoice[] = [];
-
-    for (const plan of plans) {
-      const oscillatorNode = this.audioContext.createOscillator();
-      const gainNode = this.audioContext.createGain();
-
-      oscillatorNode.type = this.oscillatorType;
-      oscillatorNode.frequency.setValueAtTime(plan.frequency, plan.startTime);
-
-      gainNode.gain.setValueAtTime(plan.silenceGain, plan.startTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        plan.attackGain,
-        plan.attackEnd,
-      );
-      gainNode.gain.exponentialRampToValueAtTime(plan.decayGain, plan.decayEnd);
-
-      oscillatorNode.connect(gainNode);
-      if (!this.outputGainNode) {
-        continue;
-      }
-
-      gainNode.connect(this.outputGainNode);
-
-      oscillatorNode.onended = () => {
-        oscillatorNode.disconnect();
-        gainNode.disconnect();
-      };
-
-      oscillatorNode.start(plan.startTime);
-      voices.push({
-        oscillatorNode,
-        gainNode,
-        harmonic: plan.harmonic,
-        startTime: plan.startTime,
-        decayEnd: plan.decayEnd,
-        sustainGain: plan.sustainGain,
-        silenceGain: plan.silenceGain,
-      });
-    }
-
-    return voices;
   }
 
-  private stopNoteVoices(voices: ReleasingSynthVoice[]) {
-    const plans = createVoiceStopPlans({
-      voices,
-      releaseTime: this.releaseTime,
-    });
-
-    voices.forEach((voice, index) => {
-      const plan = plans[index];
-
-      voice.gainNode.gain.exponentialRampToValueAtTime(
-        voice.silenceGain,
-        plan.stopTime,
-      );
-      voice.oscillatorNode.stop(plan.stopTime);
-    });
+  private stopNoteVoices(voices: ReleasingVoice[]) {
+    this.baseVoice.stopVoices(voices);
   }
 
   async playNote(

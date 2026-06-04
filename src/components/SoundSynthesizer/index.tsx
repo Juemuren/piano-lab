@@ -28,14 +28,14 @@ function SoundSynthesizer() {
   const { t } = useTranslation('synth');
   const synthEngine = useSynthEngine();
   const defaultConfig = useMemo(() => createDefaultSynthConfig(), []);
-  const [oscillatorType, setOscillatorType] = useState(() =>
-    synthEngine.getOscillatorType(),
+  const [oscillatorType, setOscillatorType] = useState(
+    () => defaultConfig.synth.oscillatorType,
   );
-  const [volumeRatio, setVolumeRatio] = useState(() =>
-    synthEngine.getVolumeRatio(),
+  const [volumeRatio, setVolumeRatio] = useState(
+    () => defaultConfig.synth.volumeRatio,
   );
-  const [harmonicCount, setHarmonicCount] = useState(() =>
-    synthEngine.getHarmonicCount(),
+  const [harmonicCount, setHarmonicCount] = useState(
+    () => defaultConfig.synth.harmonicCount,
   );
   const [envelopeConfig, setEnvelopeConfig] = useState<EnvelopeConfig>(
     defaultConfig.envelope,
@@ -109,16 +109,12 @@ function SoundSynthesizer() {
   });
 
   useEffect(() => {
-    synthEngine.setOscillatorType(oscillatorType);
-  }, [synthEngine, oscillatorType]);
-
-  useEffect(() => {
-    synthEngine.setVolumeRatio(volumeRatio);
-  }, [synthEngine, volumeRatio]);
-
-  useEffect(() => {
-    synthEngine.setHarmonicCount(harmonicCount);
-  }, [synthEngine, harmonicCount]);
+    synthEngine.configureSynth({
+      oscillatorType,
+      volumeRatio,
+      harmonicCount,
+    });
+  }, [harmonicCount, oscillatorType, synthEngine, volumeRatio]);
 
   return (
     <ControlPanel className="space-y-4">

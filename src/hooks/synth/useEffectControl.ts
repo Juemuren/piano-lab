@@ -78,8 +78,8 @@ function useEffectControl(
   );
 
   useEffect(() => {
-    synthEngine.setEffect(effect, effectConfig);
-  }, [synthEngine, effect, effectConfig]);
+    synthEngine.configureEffect(effectConfig);
+  }, [synthEngine, effectConfig]);
 
   useEffect(() => {
     onConfigChange?.(effectConfig);

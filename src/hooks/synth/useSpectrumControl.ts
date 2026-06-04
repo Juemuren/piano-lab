@@ -63,7 +63,7 @@ function useSpectrumControl(
   }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
 
   useEffect(() => {
-    synthEngine.setSpectrum(spectrum);
+    synthEngine.configureSpectrum(spectrum);
   }, [spectrum, synthEngine]);
 
   useEffect(() => {

@@ -1,7 +1,6 @@
-import type { Effect, EffectDefinition, Spectrum } from '../../types';
-import { createEffect } from './SynthDefinitions';
+import type { Spectrum } from '../../types';
 
-interface VoiceStartPlan {
+export interface VoiceStartPlan {
   harmonic: number;
   frequency: number;
   startTime: number;
@@ -11,9 +10,11 @@ interface VoiceStartPlan {
   decayGain: number;
   sustainGain: number;
   silenceGain: number;
+  sourceGain: number;
+  envelopeSustainGain: number;
 }
 
-interface VoiceStopPlan {
+export interface VoiceStopPlan {
   stopTime: number;
 }
 
@@ -24,7 +25,6 @@ interface CreateVoiceStartPlansOptions {
   now: number;
   harmonics: number;
   spectrum: Spectrum;
-  effectDefinition: EffectDefinition;
   volumeRatio: number;
   attackTime: number;
   decayTime: number;
@@ -47,11 +47,10 @@ export function getBaseFrequency(pitch: number, cents: number = 0) {
 
 export function getTargetGain(
   spectrumAmplitude: number,
-  effectMagnitude: number,
   volume: number,
   volumeRatio: number,
 ) {
-  return spectrumAmplitude * effectMagnitude * (volume / 127) * volumeRatio;
+  return spectrumAmplitude * (volume / 127) * volumeRatio;
 }
 
 export function getDelaySeconds(phaseDeg: number, frequency: number) {
@@ -65,7 +64,6 @@ export function createVoiceStartPlans({
   now,
   harmonics,
   spectrum,
-  effectDefinition,
   volumeRatio,
   attackTime,
   decayTime,
@@ -74,28 +72,17 @@ export function createVoiceStartPlans({
   minGainValue,
 }: CreateVoiceStartPlansOptions): VoiceStartPlan[] {
   const baseFrequency = getBaseFrequency(pitch, cents);
-  const { magnitudes, phases }: Effect = createEffect(
-    { ...effectDefinition, baseFrequency },
-    harmonics,
-  );
   const plans: VoiceStartPlan[] = [];
 
   for (let n = 1; n <= harmonics; n++) {
     const frequency = baseFrequency * n;
     const spectrumAmplitude = spectrum.amplitudes[n - 1] || 0;
-    const effectMagnitude = magnitudes[n - 1] || 0;
-    const targetGain = getTargetGain(
-      spectrumAmplitude,
-      effectMagnitude,
-      volume,
-      volumeRatio,
-    );
+    const targetGain = getTargetGain(spectrumAmplitude, volume, volumeRatio);
     const silenceGain = Math.max(
       envelopeSilenceGain * volumeRatio,
       minGainValue,
     );
-    const phaseDeg = phases[n - 1] || 0;
-    const startTime = Math.max(0, now + getDelaySeconds(phaseDeg, frequency));
+    const startTime = Math.max(0, now);
     const attackEnd = startTime + attackTime;
     const decayEnd = attackEnd + decayTime / Math.sqrt(n);
     const attackGain = Math.max(targetGain, silenceGain);
@@ -112,6 +99,8 @@ export function createVoiceStartPlans({
       decayGain,
       sustainGain,
       silenceGain,
+      sourceGain: targetGain,
+      envelopeSustainGain,
     });
   }
 

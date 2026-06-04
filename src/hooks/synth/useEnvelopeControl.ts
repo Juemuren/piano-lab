@@ -1,6 +1,13 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
+import {
+  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
+  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
+  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
+  DEFAULT_ENVELOPE_SILENCE_GAIN,
+  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+} from '../../constants';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_HARMONIC_TIMES = 1;
@@ -27,19 +34,19 @@ function useEnvelopeControl(
 ) {
   const synthEngine = useSynthEngine();
   const [attackTime, setAttackTime] = useState(
-    () => initialConfig?.attackTime ?? synthEngine.getAttackTime(),
+    () => initialConfig?.attackTime ?? DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   );
   const [decayTime, setDecayTime] = useState(
-    () => initialConfig?.decayTime ?? synthEngine.getDecayTime(),
+    () => initialConfig?.decayTime ?? DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
   );
   const [releaseTime, setReleaseTime] = useState(
-    () => initialConfig?.releaseTime ?? synthEngine.getReleaseTime(),
+    () => initialConfig?.releaseTime ?? DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   );
   const [sustainGain, setSustainGain] = useState(
-    () => initialConfig?.sustainGain ?? synthEngine.getSustainGain(),
+    () => initialConfig?.sustainGain ?? DEFAULT_ENVELOPE_SUSTAIN_GAIN,
   );
   const [silenceGain, setSilenceGain] = useState(
-    () => initialConfig?.silenceGain ?? synthEngine.getSilenceGain(),
+    () => initialConfig?.silenceGain ?? DEFAULT_ENVELOPE_SILENCE_GAIN,
   );
   const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
   const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
@@ -57,42 +64,24 @@ function useEnvelopeControl(
     return () => resizeObserver.disconnect();
   }, []);
 
-  useEffect(() => {
-    synthEngine.setAttackTime(attackTime);
-  }, [attackTime, synthEngine]);
-
-  useEffect(() => {
-    synthEngine.setDecayTime(decayTime);
-  }, [decayTime, synthEngine]);
-
-  useEffect(() => {
-    synthEngine.setReleaseTime(releaseTime);
-  }, [releaseTime, synthEngine]);
-
-  useEffect(() => {
-    synthEngine.setSustainGain(sustainGain);
-  }, [sustainGain, synthEngine]);
-
-  useEffect(() => {
-    synthEngine.setSilenceGain(silenceGain);
-  }, [silenceGain, synthEngine]);
-
-  useEffect(() => {
-    onConfigChange?.({
+  const envelopeConfig = useMemo<EnvelopeConfig>(
+    () => ({
       attackTime,
       decayTime,
       releaseTime,
       sustainGain,
       silenceGain,
-    });
-  }, [
-    attackTime,
-    decayTime,
-    onConfigChange,
-    releaseTime,
-    silenceGain,
-    sustainGain,
-  ]);
+    }),
+    [attackTime, decayTime, releaseTime, silenceGain, sustainGain],
+  );
+
+  useEffect(() => {
+    synthEngine.configureEnvelope(envelopeConfig);
+  }, [envelopeConfig, synthEngine]);
+
+  useEffect(() => {
+    onConfigChange?.(envelopeConfig);
+  }, [envelopeConfig, onConfigChange]);
 
   const envelopeCurve = useMemo<EnvelopeCurve>(() => {
     const attackEnd = attackTime;
