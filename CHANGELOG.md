@@ -2,6 +2,27 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.8.0]
+
+### Added
+
+- Added synthesizer audio recording with browser-supported WebM, Ogg, or MP4 export.
+- Added held-note playback for piano input, so notes start on press and release naturally when the key is released.
+- Added duration-aware ABC note input from piano performances, including dotted-note matching from press length, tempo, and default note length.
+
+### Changed
+
+- Reworked settings panel layout and shared control components for clearer grouped settings.
+- Centralized ABC content, playing-note state, MIDI state, and piano input handling through contexts and focused hooks.
+- Refactored the synthesizer engine around reusable start and stop note planning.
+
+### Fixed
+
+- Fixed native file-save dialog usage for ABC, JSON, and recorded audio exports.
+- Fixed MIDI held-note press and release handling.
+- Fixed incorrect first-note duration during piano input and score playback.
+- Fixed release clicks at the end of notes.
+
 ## [0.7.0]
 
 ### Added

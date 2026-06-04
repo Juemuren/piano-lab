@@ -27,7 +27,7 @@
 
 Piano Lab provides interactive virtual keys, a sound synthesizer, and a score editor:
 
-- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and transfer function
+- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and transfer function, record audio, and export in formats such as WebM and MP4
 - [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export them as SVG/PNG/PDF/MIDI files
 - [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8 and supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices
 
@@ -35,15 +35,14 @@ The app supports multiple languages, mobile layouts, dark mode, and can be insta
 
 ### Sound Synthesizer
 
-> [!Tip]
-> Synthesizer configurations can be exported as JSON files for sharing and reuse.
-
 The sound synthesizer consists of three modules: envelope, spectrum, and transfer function.
 
 - Synthesizes sound physically without sampling
 - Uses twelve-tone equal temperament to generate pitches and supports free transposition
 - Supports sine, triangle, sawtooth, and square waves
 - Supports adjusting the volume factor and harmonic count
+- All configurations can be exported as JSON files for sharing and reuse
+- Can record synthesizer output and export it as WebM/Ogg/MP4 audio depending on browser support
 
 ### Envelope
 
@@ -67,7 +66,7 @@ The sound synthesizer consists of three modules: envelope, spectrum, and transfe
 - Play scores automatically with visual feedback on both the score and keyboard
 - Supports play, pause, replay, and progress adjustment by moving the control bar or clicking notes
 - Adjust tempo, meter, and key signature; chords, repeats, and multiple voices are supported
-- Pressing piano keys can directly edit the score, making it easier to record melodies
+- Pressing piano keys can directly edit the score and match note lengths from how long keys are held, making it easier to record melodies
 - Supports importing and exporting ABC files
 - Supports exporting MIDI files
 - Can export rendered scores as SVG/PNG or print them as PDF
@@ -77,6 +76,7 @@ The sound synthesizer consists of three modules: envelope, spectrum, and transfe
 
 - Uses the custom sound synthesizer and synchronizes with automatic score playback
 - Covers 88 keys from A0 to C8, with horizontal scrolling on narrow screens
+- Keys start sounding when pressed and release when lifted, allowing notes of arbitrary duration
 - Supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices, and each input method can be enabled or disabled separately
 - The computer keyboard uses the following key mapping, with `Z` / `X` for octave switching and `Ctrl` / `Shift` combinations for temporary octave changes
 
