@@ -243,7 +243,7 @@ export class SynthEngine {
       volume,
       cents,
       now: this.audioContext.currentTime,
-      harmonics: this.spectrum.amplitudes.length,
+      harmonics: this.harmonicCount,
       spectrum: this.spectrum,
       transferFunctionDefinition: this.transferFunctionDefinition,
       volumeRatio: this.volumeRatio,
