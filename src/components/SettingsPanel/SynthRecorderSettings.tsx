@@ -29,12 +29,12 @@ function SynthRecorderSettings() {
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.recording.title')}
+        label={t('settings.recordingEnable')}
         checked={isExpanded}
         onChange={(e) => setIsExpanded(e.target.checked)}
       />
       {isExpanded && (
-        <div className="flex flex-col gap-3 text-sm text-app-muted dark:text-app-muted-dark">
+        <div className="flex flex-col gap-1 text-sm text-app-muted dark:text-app-muted-dark">
           {!isUnsupported && (
             <ControlSelect
               label={t('settings.recording.format')}
@@ -49,7 +49,7 @@ function SynthRecorderSettings() {
               ))}
             </ControlSelect>
           )}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-3">
             <ControlButton
               label={t('settings.recording.start')}
               icon={<Circle size={18} />}

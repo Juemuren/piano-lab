@@ -64,7 +64,7 @@ function MidiControlSettings({
         onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
       />
       {isMidiControlEnabled && (
-        <div className="text-sm text-app-muted dark:text-app-muted-dark">
+        <div className="flex flex-col gap-1 text-sm text-app-muted dark:text-app-muted-dark">
           {midiStatusMessageKey && <p>{t(midiStatusMessageKey)}</p>}
           {midiControl.devices.length > 0 && (
             <ControlSelect

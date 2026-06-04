@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: '#score-editor', labelKey: 'sections.scoreEditor' },
   { href: '#piano-keyboard', labelKey: 'sections.pianoKeyboard' },
   { href: '#about', labelKey: 'sections.about' },
+  { href: '#settings', labelKey: 'sections.settings' },
 ] as const;
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;

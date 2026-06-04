@@ -8,24 +8,24 @@
     "about": "关于"
   },
   "settings": {
-    "keyboardControl": "允许使用键盘控制琴键",
-    "mouseControl": "允许使用鼠标控制琴键",
-    "touchControl": "允许使用触摸控制琴键",
-    "midiControl": "允许使用 MIDI 设备控制琴键",
-    "pianoInputEnable": "松开琴键时将音符写入乐谱",
+    "keyboardControl": "使用键盘控制琴键",
+    "mouseControl": "使用鼠标控制琴键",
+    "touchControl": "使用触摸控制琴键",
+    "midiControl": "使用 MIDI 设备控制琴键",
+    "pianoInputEnable": "将演奏的音符写入乐谱",
+    "recordingEnable": "录制合成器音频",
     "pianoInput": {
       "defaultNoteLength": "默认音符长度",
       "tempo": "速度",
       "quarterNoteSeconds": "1/4 音符时长：{{seconds}} 秒"
     },
     "recording": {
-      "title": "录制合成器音频",
       "format": "导出格式",
       "start": "开始",
       "stop": "停止",
       "download": "下载",
       "status": {
-        "recording": "正在录制合成器产生的音频。",
+        "recording": "正在录制合成器产生的音频...",
         "unsupported": "当前浏览器不支持音频录制。",
         "error": "录制失败，请检查浏览器音频功能。"
       }

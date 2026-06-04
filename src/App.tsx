@@ -49,7 +49,7 @@ function App() {
           <Piano />
         </section>
 
-        <section id="settings" className="scroll-mt-16">
+        <section id="settings" className="mx-auto max-w-4xl scroll-mt-16">
           <CollapsibleSection
             title={t('sections.settings')}
             bgClassName="bg-app-bg dark:bg-app-bg-dark"

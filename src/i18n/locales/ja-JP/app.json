@@ -13,10 +13,22 @@
     "touchControl": "タッチで鍵盤を操作する",
     "midiControl": "MIDI デバイスで鍵盤を操作する",
     "pianoInputEnable": "鍵盤を離したときに音符を楽譜へ書き込む",
+    "recordingEnable": "シンセサイザー音声を録音する",
     "pianoInput": {
       "defaultNoteLength": "デフォルトの音符の長さ",
       "tempo": "テンポ",
       "quarterNoteSeconds": "1/4 音符の長さ：{{seconds}} 秒"
+    },
+    "recording": {
+      "format": "エクスポート形式",
+      "start": "開始",
+      "stop": "停止",
+      "download": "ダウンロード",
+      "status": {
+        "recording": "シンセサイザーが生成した音声を録音しています...",
+        "unsupported": "このブラウザーは音声録音に対応していません。",
+        "error": "録音に失敗しました。ブラウザーの音声機能を確認してください。"
+      }
     },
     "keyboard": {
       "hint": "現在のキー割り当ては鍵盤上に表示されています。x/z キーでオクターブを固定的に上げ下げし、shift/ctrl キーで一時的に上げ下げできます。"
