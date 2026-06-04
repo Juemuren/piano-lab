@@ -2,7 +2,7 @@
   "sections": {
     "envelope": "包络",
     "spectrum": "频谱",
-    "transferFunction": "传递函数"
+    "effect": "效果"
   },
   "oscillator": {
     "sine": "正弦波",
@@ -20,7 +20,7 @@
     "realistic": "真实",
     "custom": "自定义"
   },
-  "transferFunction": {
+  "effect": {
     "delay": "纯延时",
     "single_echo": "单回声",
     "multi_echo": "多回声",
@@ -47,7 +47,7 @@
     "powerExponent": "幂指数",
     "pitch": "音高",
     "baseFrequency": "基频",
-    "baseFrequencyPreviewHint": "此基频调节仅用于预览传递函数对谐波的影响，不会改变实际演奏的音高。",
+    "baseFrequencyPreviewHint": "此基频调节仅用于预览效果对谐波的影响，不会改变实际演奏的音高。",
     "delayTime": "延迟时间",
     "attenuation": "衰减系数",
     "minFrequency": "最小频率",

@@ -2,7 +2,7 @@
   "sections": {
     "envelope": "Envelope",
     "spectrum": "Spectrum",
-    "transferFunction": "Transfer Function"
+    "effect": "Effect"
   },
   "oscillator": {
     "sine": "Sine",
@@ -20,7 +20,7 @@
     "realistic": "Realistic",
     "custom": "Custom"
   },
-  "transferFunction": {
+  "effect": {
     "delay": "Delay",
     "single_echo": "Single Echo",
     "multi_echo": "Multi Echo",
@@ -47,7 +47,7 @@
     "powerExponent": "Power Exponent",
     "pitch": "Pitch",
     "baseFrequency": "Base Frequency",
-    "baseFrequencyPreviewHint": "This base frequency only previews how the transfer function affects harmonics. It does not change the actual played pitch.",
+    "baseFrequencyPreviewHint": "This base frequency only previews how the effect affects harmonics. It does not change the actual played pitch.",
     "delayTime": "Delay Time",
     "attenuation": "Attenuation",
     "minFrequency": "Minimum Frequency",

@@ -35,7 +35,7 @@ export interface SpectrumParamUpdates {
   p?: number;
 }
 
-export type TransferFunctionType =
+export type EffectType =
   | 'delay'
   | 'single_echo'
   | 'multi_echo'
@@ -44,13 +44,13 @@ export type TransferFunctionType =
   | 'all_pass'
   | 'band_pass';
 
-export interface TransferFunction {
+export interface Effect {
   magnitudes: number[];
   phases: number[];
 }
 
-export interface TransferFunctionDefinition {
-  type: TransferFunctionType;
+export interface EffectDefinition {
+  type: EffectType;
   tau: number;
   alpha: number;
   minFrequency: number;
@@ -58,8 +58,8 @@ export interface TransferFunctionDefinition {
   baseFrequency: number;
 }
 
-export interface TransferFunctionConfig {
-  type: TransferFunctionType;
+export interface EffectConfig {
+  type: EffectType;
   tau: number;
   alpha: number;
   minFrequency: number;
@@ -67,7 +67,7 @@ export interface TransferFunctionConfig {
   baseFrequency: number;
 }
 
-export interface TransferFunctionParamUpdates {
+export interface EffectParamUpdates {
   tau?: number;
   alpha?: number;
   minFrequency?: number;
@@ -100,7 +100,7 @@ export interface SynthConfig {
   synth: SynthBasicConfig;
   envelope: EnvelopeConfig;
   spectrum: SpectrumConfig;
-  transferFunction: TransferFunctionConfig;
+  effect: EffectConfig;
 }
 
 export type StartNoteResult =

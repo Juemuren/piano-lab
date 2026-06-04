@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Download, Upload } from 'lucide-react';
 import type {
   EnvelopeConfig,
+  EffectConfig,
   SpectrumConfig,
   SynthConfig,
-  TransferFunctionConfig,
 } from '../../types';
 import {
   createDefaultSynthConfig,
@@ -21,8 +21,8 @@ import FileImportButton from '../shared/FileImportButton';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
 import Envelope from './Envelope';
+import Effect from './Effect';
 import Spectrum from './Spectrum';
-import TransferFunction from './TransferFunction';
 
 function SoundSynthesizer() {
   const { t } = useTranslation('synth');
@@ -43,8 +43,9 @@ function SoundSynthesizer() {
   const [spectrumConfig, setSpectrumConfig] = useState<SpectrumConfig>(
     defaultConfig.spectrum,
   );
-  const [transferFunctionConfig, setTransferFunctionConfig] =
-    useState<TransferFunctionConfig>(defaultConfig.transferFunction);
+  const [effectConfig, setEffectConfig] = useState<EffectConfig>(
+    defaultConfig.effect,
+  );
   const [importedConfig, setImportedConfig] = useState<SynthConfig | null>(
     null,
   );
@@ -60,14 +61,14 @@ function SoundSynthesizer() {
       },
       envelope: envelopeConfig,
       spectrum: spectrumConfig,
-      transferFunction: transferFunctionConfig,
+      effect: effectConfig,
     }),
     [
+      effectConfig,
       envelopeConfig,
       harmonicCount,
       oscillatorType,
       spectrumConfig,
-      transferFunctionConfig,
       volumeRatio,
     ],
   );
@@ -88,7 +89,7 @@ function SoundSynthesizer() {
         setHarmonicCount(config.synth.harmonicCount);
         setEnvelopeConfig(config.envelope);
         setSpectrumConfig(config.spectrum);
-        setTransferFunctionConfig(config.transferFunction);
+        setEffectConfig(config.effect);
         setImportedConfig(config);
         setImportRevision((revision) => revision + 1);
       } catch {
@@ -196,15 +197,15 @@ function SoundSynthesizer() {
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={t('sections.transferFunction')}
+        title={t('sections.effect')}
         bgClassName="bg-app-surface-muted/50 dark:bg-app-surface-muted-dark/50"
         expanded
       >
-        <TransferFunction
-          key={`transfer-function-${importRevision}`}
+        <Effect
+          key={`effect-${importRevision}`}
           harmonicCount={harmonicCount}
-          initialConfig={importedConfig?.transferFunction}
-          onConfigChange={setTransferFunctionConfig}
+          initialConfig={importedConfig?.effect}
+          onConfigChange={setEffectConfig}
         />
       </CollapsibleSection>
     </ControlPanel>

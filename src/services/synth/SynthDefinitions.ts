@@ -1,6 +1,6 @@
 import type {
-  TransferFunction,
-  TransferFunctionDefinition,
+  Effect,
+  EffectDefinition,
   Spectrum,
   SpectrumDefinition,
 } from '../../types';
@@ -60,7 +60,7 @@ export function createSpectrum(
   return { amplitudes: normalizeAmplitudes(amplitudes) };
 }
 
-export function createTransferFunction(
+export function createEffect(
   {
     type,
     tau,
@@ -68,9 +68,9 @@ export function createTransferFunction(
     minFrequency,
     maxFrequency,
     baseFrequency,
-  }: TransferFunctionDefinition,
+  }: EffectDefinition,
   harmonics: number,
-): TransferFunction {
+): Effect {
   const magnitudes: number[] = [];
   const phases: number[] = [];
   const delay = tau / 1000;

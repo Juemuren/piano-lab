@@ -11,19 +11,19 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-  DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
-  DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_FUNCTION_TYPE,
+  DEFAULT_EFFECT_ATTENUATION,
+  DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
+  DEFAULT_EFFECT_DELAY_MS,
+  DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
+  DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
+  DEFAULT_EFFECT_TYPE,
 } from '../../constants';
 import type {
+  EffectConfig,
+  EffectType,
   SpectrumConfig,
   SpectrumType,
   SynthConfig,
-  TransferFunctionConfig,
-  TransferFunctionType,
 } from '../../types';
 import {
   isRecord,
@@ -49,7 +49,7 @@ const SPECTRUM_TYPES: SpectrumType[] = [
   'realistic',
   'custom',
 ];
-const TRANSFER_FUNCTION_TYPES: TransferFunctionType[] = [
+const EFFECT_TYPES: EffectType[] = [
   'delay',
   'single_echo',
   'multi_echo',
@@ -89,13 +89,13 @@ export function createDefaultSynthConfig(): SynthConfig {
         DEFAULT_SYNTH_HARMONIC_COUNT,
       ).amplitudes,
     },
-    transferFunction: {
-      type: DEFAULT_TRANSFER_FUNCTION_TYPE,
-      tau: DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
-      alpha: DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-      minFrequency: DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
-      maxFrequency: DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
-      baseFrequency: DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+    effect: {
+      type: DEFAULT_EFFECT_TYPE,
+      tau: DEFAULT_EFFECT_DELAY_MS,
+      alpha: DEFAULT_EFFECT_ATTENUATION,
+      minFrequency: DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
+      maxFrequency: DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
+      baseFrequency: DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
     },
   };
 }
@@ -118,14 +118,14 @@ function normalizeSpectrumConfig(
   };
 }
 
-function normalizeTransferFunctionConfig(
+function normalizeEffectConfig(
   value: unknown,
-  fallback: TransferFunctionConfig,
-): TransferFunctionConfig {
+  fallback: EffectConfig,
+): EffectConfig {
   const record = isRecord(value) ? value : {};
 
   return {
-    type: unionOrDefault(record.type, TRANSFER_FUNCTION_TYPES, fallback.type),
+    type: unionOrDefault(record.type, EFFECT_TYPES, fallback.type),
     tau: numberOrDefault(record.tau, fallback.tau),
     alpha: numberOrDefault(record.alpha, fallback.alpha),
     minFrequency: numberOrDefault(record.minFrequency, fallback.minFrequency),
@@ -183,9 +183,6 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
       ),
     },
     spectrum: normalizeSpectrumConfig(value.spectrum, fallback.spectrum),
-    transferFunction: normalizeTransferFunctionConfig(
-      value.transferFunction,
-      fallback.transferFunction,
-    ),
+    effect: normalizeEffectConfig(value.effect, fallback.effect),
   };
 }

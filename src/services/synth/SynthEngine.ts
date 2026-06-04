@@ -1,10 +1,10 @@
 import type {
-  TransferFunction,
-  TransferFunctionDefinition,
+  Effect,
+  EffectDefinition,
   Spectrum,
   StartNoteResult,
 } from '../../types';
-import { createSpectrum, createTransferFunction } from './SynthDefinitions';
+import { createEffect, createSpectrum } from './SynthDefinitions';
 import {
   createVoiceStartPlans,
   createVoiceStopPlans,
@@ -14,12 +14,12 @@ import {
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_TRANSFER_FUNCTION_TYPE,
-  DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-  DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
-  DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
-  DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
+  DEFAULT_EFFECT_TYPE,
+  DEFAULT_EFFECT_ATTENUATION,
+  DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
+  DEFAULT_EFFECT_DELAY_MS,
+  DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
+  DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_VOLUME_RATIO,
@@ -68,16 +68,16 @@ export class SynthEngine {
     },
     this.harmonicCount,
   );
-  private transferFunctionDefinition: TransferFunctionDefinition = {
-    type: DEFAULT_TRANSFER_FUNCTION_TYPE,
-    tau: DEFAULT_TRANSFER_FUNCTION_DELAY_MS,
-    alpha: DEFAULT_TRANSFER_FUNCTION_ATTENUATION,
-    minFrequency: DEFAULT_TRANSFER_FUNCTION_MIN_FREQUENCY_HZ,
-    maxFrequency: DEFAULT_TRANSFER_FUNCTION_MAX_FREQUENCY_HZ,
-    baseFrequency: DEFAULT_TRANSFER_FUNCTION_BASE_FREQUENCY_HZ,
+  private effectDefinition: EffectDefinition = {
+    type: DEFAULT_EFFECT_TYPE,
+    tau: DEFAULT_EFFECT_DELAY_MS,
+    alpha: DEFAULT_EFFECT_ATTENUATION,
+    minFrequency: DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
+    maxFrequency: DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
+    baseFrequency: DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
   };
-  private transferFunction: TransferFunction = createTransferFunction(
-    this.transferFunctionDefinition,
+  private effect: Effect = createEffect(
+    this.effectDefinition,
     this.harmonicCount,
   );
 
@@ -107,18 +107,15 @@ export class SynthEngine {
     return this.spectrum;
   }
 
-  setTransferFunction(
-    transferFunction: TransferFunction,
-    definition?: TransferFunctionDefinition,
-  ) {
-    this.transferFunction = transferFunction;
+  setEffect(effect: Effect, definition?: EffectDefinition) {
+    this.effect = effect;
     if (definition) {
-      this.transferFunctionDefinition = definition;
+      this.effectDefinition = definition;
     }
   }
 
-  getTransferFunction(): TransferFunction {
-    return this.transferFunction;
+  getEffect(): Effect {
+    return this.effect;
   }
 
   getHarmonicCount(): number {
@@ -245,7 +242,7 @@ export class SynthEngine {
       now: this.audioContext.currentTime,
       harmonics: this.harmonicCount,
       spectrum: this.spectrum,
-      transferFunctionDefinition: this.transferFunctionDefinition,
+      effectDefinition: this.effectDefinition,
       volumeRatio: this.volumeRatio,
       attackTime: this.attackTime,
       decayTime: this.decayTime,

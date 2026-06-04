@@ -1,10 +1,10 @@
 import { BlockMath } from 'react-katex';
-import type { TransferFunction, TransferFunctionType } from '../../../types';
+import type { Effect, EffectType } from '../../../types';
 import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
 import { getHarmonicLabels } from '../../../utils/harmonic';
 
-const TRANSFER_FORMULAS: Record<
-  TransferFunctionType,
+const EFFECT_FORMULAS: Record<
+  EffectType,
   { magnitude: string; phase: string }
 > = {
   delay: {
@@ -37,21 +37,21 @@ const TRANSFER_FORMULAS: Record<
   },
 };
 
-interface TransferFunctionResponsePreviewProps {
-  transferFunctionType: TransferFunctionType;
-  transferFunction: TransferFunction;
+interface EffectResponsePreviewProps {
+  effectType: EffectType;
+  effect: Effect;
   labels: {
     magnitudeResponse: string;
     phaseResponse: string;
   };
 }
 
-function TransferFunctionResponsePreview({
-  transferFunctionType,
-  transferFunction,
+function EffectResponsePreview({
+  effectType,
+  effect,
   labels,
-}: TransferFunctionResponsePreviewProps) {
-  const harmonicLabels = getHarmonicLabels(transferFunction.magnitudes.length);
+}: EffectResponsePreviewProps) {
+  const harmonicLabels = getHarmonicLabels(effect.magnitudes.length);
 
   return (
     <>
@@ -59,9 +59,9 @@ function TransferFunctionResponsePreview({
         <summary className="text-lg font-bold">
           {labels.magnitudeResponse}
         </summary>
-        <BlockMath math={TRANSFER_FORMULAS[transferFunctionType].magnitude} />
+        <BlockMath math={EFFECT_FORMULAS[effectType].magnitude} />
         <VerticalSliderGroup
-          values={transferFunction.magnitudes}
+          values={effect.magnitudes}
           labels={harmonicLabels}
           min="0"
           max="2"
@@ -73,9 +73,9 @@ function TransferFunctionResponsePreview({
 
       <details open className="my-2">
         <summary className="text-lg font-bold">{labels.phaseResponse}</summary>
-        <BlockMath math={TRANSFER_FORMULAS[transferFunctionType].phase} />
+        <BlockMath math={EFFECT_FORMULAS[effectType].phase} />
         <VerticalSliderGroup
-          values={transferFunction.phases}
+          values={effect.phases}
           labels={harmonicLabels}
           min="-180"
           max="180"
@@ -89,4 +89,4 @@ function TransferFunctionResponsePreview({
   );
 }
 
-export default TransferFunctionResponsePreview;
+export default EffectResponsePreview;

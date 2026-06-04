@@ -1,9 +1,5 @@
-import type {
-  Spectrum,
-  TransferFunction,
-  TransferFunctionDefinition,
-} from '../../types';
-import { createTransferFunction } from './SynthDefinitions';
+import type { Effect, EffectDefinition, Spectrum } from '../../types';
+import { createEffect } from './SynthDefinitions';
 
 interface VoiceStartPlan {
   harmonic: number;
@@ -28,7 +24,7 @@ interface CreateVoiceStartPlansOptions {
   now: number;
   harmonics: number;
   spectrum: Spectrum;
-  transferFunctionDefinition: TransferFunctionDefinition;
+  effectDefinition: EffectDefinition;
   volumeRatio: number;
   attackTime: number;
   decayTime: number;
@@ -51,11 +47,11 @@ export function getBaseFrequency(pitch: number, cents: number = 0) {
 
 export function getTargetGain(
   spectrumAmplitude: number,
-  transferMagnitude: number,
+  effectMagnitude: number,
   volume: number,
   volumeRatio: number,
 ) {
-  return spectrumAmplitude * transferMagnitude * (volume / 127) * volumeRatio;
+  return spectrumAmplitude * effectMagnitude * (volume / 127) * volumeRatio;
 }
 
 export function getDelaySeconds(phaseDeg: number, frequency: number) {
@@ -69,7 +65,7 @@ export function createVoiceStartPlans({
   now,
   harmonics,
   spectrum,
-  transferFunctionDefinition,
+  effectDefinition,
   volumeRatio,
   attackTime,
   decayTime,
@@ -78,8 +74,8 @@ export function createVoiceStartPlans({
   minGainValue,
 }: CreateVoiceStartPlansOptions): VoiceStartPlan[] {
   const baseFrequency = getBaseFrequency(pitch, cents);
-  const { magnitudes, phases }: TransferFunction = createTransferFunction(
-    { ...transferFunctionDefinition, baseFrequency },
+  const { magnitudes, phases }: Effect = createEffect(
+    { ...effectDefinition, baseFrequency },
     harmonics,
   );
   const plans: VoiceStartPlan[] = [];
@@ -87,10 +83,10 @@ export function createVoiceStartPlans({
   for (let n = 1; n <= harmonics; n++) {
     const frequency = baseFrequency * n;
     const spectrumAmplitude = spectrum.amplitudes[n - 1] || 0;
-    const transferMagnitude = magnitudes[n - 1] || 0;
+    const effectMagnitude = magnitudes[n - 1] || 0;
     const targetGain = getTargetGain(
       spectrumAmplitude,
-      transferMagnitude,
+      effectMagnitude,
       volume,
       volumeRatio,
     );

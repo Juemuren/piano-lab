@@ -2,7 +2,7 @@
   "sections": {
     "envelope": "エンベロープ",
     "spectrum": "スペクトル",
-    "transferFunction": "伝達関数"
+    "effect": "エフェクト"
   },
   "oscillator": {
     "sine": "サイン波",
@@ -20,7 +20,7 @@
     "realistic": "リアル",
     "custom": "カスタム"
   },
-  "transferFunction": {
+  "effect": {
     "delay": "ディレイ",
     "single_echo": "単一エコー",
     "multi_echo": "複数エコー",
@@ -47,7 +47,7 @@
     "powerExponent": "べき指数",
     "pitch": "ピッチ",
     "baseFrequency": "基音周波数",
-    "baseFrequencyPreviewHint": "この基音周波数の調整は伝達関数が倍音に与える影響のプレビュー専用で、実際の演奏音高は変わりません。",
+    "baseFrequencyPreviewHint": "この基音周波数の調整はエフェクトが倍音に与える影響のプレビュー専用で、実際の演奏音高は変わりません。",
     "delayTime": "遅延時間",
     "attenuation": "減衰係数",
     "minFrequency": "最小周波数",
