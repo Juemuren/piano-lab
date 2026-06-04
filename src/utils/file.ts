@@ -19,13 +19,16 @@ const getFileExtension = (fileName: string) => {
   return extensionStart > 0 ? fileName.slice(extensionStart) : '';
 };
 
+const getFileMimeType = (blob: Blob) => blob.type.split(';')[0];
+
 const getSaveFilePickerOptions = (
   blob: Blob,
   fileName: string,
 ): SaveFilePickerOptions => {
   const extension = getFileExtension(fileName);
+  const mimeType = getFileMimeType(blob);
 
-  if (!blob.type || !extension)
+  if (!mimeType || !extension)
     return { suggestedName: fileName, startIn: 'downloads' };
 
   return {
@@ -35,7 +38,7 @@ const getSaveFilePickerOptions = (
       {
         description: `${extension.slice(1).toUpperCase()} file`,
         accept: {
-          [blob.type]: [extension],
+          [mimeType]: [extension],
         },
       },
     ],
