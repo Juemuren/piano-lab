@@ -6,7 +6,6 @@ M:6/8
 Q:1/4=97
 K:B
 %%score { (R1 R2) | (L1 L2) }
-%%barnumbers 2
 V:R1 clef=treble stem=up
 V:R2 clef=treble stem=down merge
 V:L1 clef=bass stem=up
