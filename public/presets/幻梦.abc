@@ -1,8 +1,8 @@
 T:幻梦
 L:1/8
 M:4/4
-K:Gm
 Q:1/4=120
+K:Gm
 %%score { R | L }
 V:R clef=treble
 V:L clef=bass
