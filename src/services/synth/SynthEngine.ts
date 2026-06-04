@@ -50,8 +50,14 @@ interface ReleasingSynthVoice {
   silenceGain: number;
 }
 
+interface SynthRecordingTarget {
+  stream: MediaStream;
+  disconnect: () => void;
+}
+
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
+  private outputGainNode: GainNode | null = null;
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private spectrum: Spectrum = createSpectrum(
     {
@@ -88,6 +94,8 @@ export class SynthEngine {
   init() {
     if (!this.audioContext || this.audioContext.state === 'closed') {
       this.audioContext = new AudioContext({ latencyHint: 'playback' });
+      this.outputGainNode = this.audioContext.createGain();
+      this.outputGainNode.connect(this.audioContext.destination);
     }
   }
 
@@ -192,6 +200,24 @@ export class SynthEngine {
     }
   }
 
+  async createRecordingTarget(): Promise<SynthRecordingTarget | null> {
+    await this.ensureAudioContextRunning();
+    if (!this.audioContext || !this.outputGainNode) {
+      return null;
+    }
+
+    const destinationNode = this.audioContext.createMediaStreamDestination();
+
+    this.outputGainNode.connect(destinationNode);
+
+    return {
+      stream: destinationNode.stream,
+      disconnect: () => {
+        this.outputGainNode?.disconnect(destinationNode);
+      },
+    };
+  }
+
   private nextNoteGenerationId(pitch: number) {
     const generationId = (this.noteGenerationIds.get(pitch) || 0) + 1;
     this.noteGenerationIds.set(pitch, generationId);
@@ -244,7 +270,11 @@ export class SynthEngine {
       gainNode.gain.exponentialRampToValueAtTime(plan.decayGain, plan.decayEnd);
 
       oscillatorNode.connect(gainNode);
-      gainNode.connect(this.audioContext.destination);
+      if (!this.outputGainNode) {
+        continue;
+      }
+
+      gainNode.connect(this.outputGainNode);
 
       oscillatorNode.onended = () => {
         oscillatorNode.disconnect();

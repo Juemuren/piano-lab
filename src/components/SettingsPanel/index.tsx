@@ -5,6 +5,7 @@ import KeyboardControlSettings from './KeyboardControlSettings';
 import MidiControlSettings from './MidiControlSettings';
 import PianoInputSettingsControl from './PianoInputSettingsControl';
 import PointerControlSettings from './PointerControlSettings';
+import SynthRecorderSettings from './SynthRecorderSettings';
 import ControlPanel from '../shared/ControlPanel';
 
 function SettingsPanel() {
@@ -50,6 +51,7 @@ function SettingsPanel() {
         pianoInputSettings={pianoInputSettings}
         onPianoInputSettingsChange={handlePianoInputSettingsChange}
       />
+      <SynthRecorderSettings />
     </ControlPanel>
   );
 }
