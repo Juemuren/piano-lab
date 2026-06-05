@@ -7,7 +7,7 @@ import {
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-} from '../../constants';
+} from '../../constants/synth';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_HARMONIC_TIMES = 1;

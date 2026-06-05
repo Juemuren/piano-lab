@@ -8,7 +8,7 @@ import {
   DEFAULT_FILTER_EFFECT_FREQUENCY,
   DEFAULT_FILTER_EFFECT_Q,
   DEFAULT_FILTER_EFFECT_TYPE,
-} from '../../constants';
+} from '../../constants/synth';
 import type {
   EffectConfig,
   EqualizerEffectConfig,

@@ -12,7 +12,7 @@ import {
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
-} from '../../constants';
+} from '../../constants/synth';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);

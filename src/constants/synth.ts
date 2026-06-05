@@ -1,4 +1,4 @@
-import type { BuiltInSpectrumType } from './types';
+import type { BuiltInSpectrumType } from '../types';
 
 export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;

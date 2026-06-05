@@ -18,7 +18,7 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
-} from '../../constants';
+} from '../../constants/synth';
 import type {
   EffectConfig,
   EqualizerEffectConfig,
