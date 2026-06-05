@@ -5,7 +5,6 @@
 - [ ] [共享组件](src/components/shared/) 下存在 3 种 button，最好进行统一
 - [x] [SynthEngine](src/services/synth/SynthEngine.ts) 中分离出 BaseVoice/EffectChain 为后续添加效果器作铺垫
 - [ ] [SynthEngine](src/services/synth/SynthEngine.ts) 中可以把所有 for 循环改为 foreach，更加函数式
-- [ ] [constants](src/constants.ts) 目前都是合成器配置，可以考虑移动到 [src/services/synth/](src/services/synth/) 目录下
 
 ## Fix
 

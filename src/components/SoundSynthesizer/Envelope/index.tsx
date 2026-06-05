@@ -22,8 +22,6 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
     setSustainGain,
     silenceGain,
     setSilenceGain,
-    envelopeChartContainerRef,
-    envelopeChartWidth,
     envelopeCurve,
   } = useEnvelopeControl(initialConfig, onConfigChange);
 
@@ -52,8 +50,6 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
       <EnvelopeCurvePreview
         title={t('charts.amplitudeEnvelopeCurve')}
         envelopeCurve={envelopeCurve}
-        containerRef={envelopeChartContainerRef}
-        width={envelopeChartWidth}
       />
     </>
   );

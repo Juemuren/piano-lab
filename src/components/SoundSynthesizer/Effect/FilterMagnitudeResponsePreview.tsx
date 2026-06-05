@@ -1,6 +1,7 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
 import type { FilterEffectConfig } from '../../../types';
+import useElementWidth from '../../../hooks/useElementWidth';
 
 interface FilterMagnitudeResponsePreviewProps {
   title: string;
@@ -68,30 +69,16 @@ function FilterMagnitudeResponsePreview({
   title,
   filters,
 }: FilterMagnitudeResponsePreviewProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
+  const { elementRef, width } = useElementWidth<HTMLDivElement>();
   const response = useMemo(
     () => getFilterMagnitudeResponse(filters),
     [filters],
   );
 
-  useLayoutEffect(() => {
-    const element = containerRef.current;
-    if (!element) return;
-
-    const updateWidth = () => {
-      setWidth(element.getBoundingClientRect().width);
-    };
-    updateWidth();
-    const resizeObserver = new ResizeObserver(updateWidth);
-    resizeObserver.observe(element);
-    return () => resizeObserver.disconnect();
-  }, []);
-
   return (
     <details open className="my-3">
       <summary className="text-sm">{title}</summary>
-      <div ref={containerRef} className="w-full">
+      <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter
             data={[

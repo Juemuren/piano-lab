@@ -1,24 +1,22 @@
-import type { RefObject } from 'react';
 import Scatter from 'react-plotly.js/scatter';
 import type { EnvelopeCurve } from '../../../types';
+import useElementWidth from '../../../hooks/useElementWidth';
 
 interface EnvelopeCurvePreviewProps {
   title: string;
   envelopeCurve: EnvelopeCurve;
-  containerRef: RefObject<HTMLDivElement | null>;
-  width: number;
 }
 
 function EnvelopeCurvePreview({
   title,
   envelopeCurve,
-  containerRef,
-  width,
 }: EnvelopeCurvePreviewProps) {
+  const { elementRef, width } = useElementWidth<HTMLDivElement>();
+
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold">{title}</summary>
-      <div ref={containerRef} className="w-full">
+      <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter
             data={[

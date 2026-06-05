@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
 import {
@@ -48,21 +48,6 @@ function useEnvelopeControl(
   const [silenceGain, setSilenceGain] = useState(
     () => initialConfig?.silenceGain ?? DEFAULT_ENVELOPE_SILENCE_GAIN,
   );
-  const envelopeChartContainerRef = useRef<HTMLDivElement>(null);
-  const [envelopeChartWidth, setEnvelopeChartWidth] = useState(0);
-
-  useLayoutEffect(() => {
-    const element = envelopeChartContainerRef.current;
-    if (!element) return;
-
-    const updateEnvelopeChartWidth = () => {
-      setEnvelopeChartWidth(element.getBoundingClientRect().width);
-    };
-    updateEnvelopeChartWidth();
-    const resizeObserver = new ResizeObserver(updateEnvelopeChartWidth);
-    resizeObserver.observe(element);
-    return () => resizeObserver.disconnect();
-  }, []);
 
   const envelopeConfig = useMemo<EnvelopeConfig>(
     () => ({
@@ -120,8 +105,6 @@ function useEnvelopeControl(
     setSustainGain,
     silenceGain,
     setSilenceGain,
-    envelopeChartContainerRef,
-    envelopeChartWidth,
     envelopeCurve,
   };
 }
