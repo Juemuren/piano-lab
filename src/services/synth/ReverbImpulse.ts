@@ -8,16 +8,13 @@ import type {
 type ReverbPresetDefinition = Pick<
   ReverbEffectConfig,
   'earlyReflections' | 'lateTail'
-> & {
-  preset: BuiltInReverbEffectPreset;
-};
+>;
 
 export const REVERB_PRESET_DEFINITIONS: Record<
   BuiltInReverbEffectPreset,
   ReverbPresetDefinition
 > = {
   bathroom: {
-    preset: 'bathroom',
     earlyReflections: [
       { delay: 0.004, gain: 0.75 },
       { delay: 0.008, gain: 0.58 },
@@ -31,7 +28,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
     },
   },
   garage: {
-    preset: 'garage',
     earlyReflections: [
       { delay: 0.009, gain: 0.55 },
       { delay: 0.018, gain: 0.46 },
@@ -46,7 +42,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
     },
   },
   hall: {
-    preset: 'hall',
     earlyReflections: [
       { delay: 0.018, gain: 0.36 },
       { delay: 0.033, gain: 0.32 },
@@ -62,7 +57,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
     },
   },
   cathedral: {
-    preset: 'cathedral',
     earlyReflections: [
       { delay: 0.028, gain: 0.28 },
       { delay: 0.049, gain: 0.25 },
