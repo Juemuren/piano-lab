@@ -56,7 +56,7 @@ function EffectMagnitudeResponsePreview({
 
   return (
     <details open className="my-2">
-      <summary className="text-lg font-bold my-2">{title}</summary>
+      <summary className="font-bold my-2">{title}</summary>
       <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter

@@ -41,9 +41,7 @@ function EqualizerEffect({
 
   return (
     <details open className="my-2">
-      <summary className="text-lg font-bold my-2">
-        {t('effect.equalizer.name')}
-      </summary>
+      <summary className="font-bold my-2">{t('effect.equalizer.name')}</summary>
 
       <div className="space-y-3">
         {equalizers.map((equalizer, index) => (

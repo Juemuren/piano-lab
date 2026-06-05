@@ -25,6 +25,9 @@
       "pitch": "音高",
       "baseFrequency": "基频"
     },
+    "filterEqualizer": {
+      "name": "滤波与均衡"
+    },
     "filter": {
       "name": "滤波器",
       "lowpass": {
@@ -113,7 +116,7 @@
   "charts": {
     "amplitudeEnvelopeCurve": "振幅包络曲线",
     "magnitudeResponseCurve": "幅频特性曲线",
-    "magnitudeResponseSample": "幅频特性曲线采样",
+    "magnitudeResponseSample": "幅频特性采样",
     "phaseResponseCurve": "相频特性曲线"
   }
 }

@@ -37,9 +37,7 @@ function FilterEffect({
 
   return (
     <details open className="my-2">
-      <summary className="text-lg font-bold my-2">
-        {t('effect.filter.name')}
-      </summary>
+      <summary className="font-bold my-2">{t('effect.filter.name')}</summary>
 
       <div className="space-y-3">
         {filters.map((filter, index) => (

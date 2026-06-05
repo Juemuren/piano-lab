@@ -64,7 +64,7 @@ function EffectHarmonicResponsePreview({
 
   return (
     <details open className="my-2">
-      <summary className="text-lg font-bold my-2">{title}</summary>
+      <summary className="font-bold my-2">{title}</summary>
       <BaseFrequencyControl
         labelRange={t('effect.preview.baseFrequency')}
         labelSelect={t('effect.preview.pitch')}
