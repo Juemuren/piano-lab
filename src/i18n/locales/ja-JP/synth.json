@@ -1,7 +1,8 @@
 {
   "sections": {
     "envelope": "エンベロープ",
-    "spectrum": "スペクトル"
+    "spectrum": "スペクトル",
+    "effect": "エフェクト"
   },
   "oscillator": {
     "sine": "サイン波",
@@ -18,6 +19,54 @@
     "soft": "柔らかい",
     "realistic": "リアル",
     "custom": "カスタム"
+  },
+  "effect": {
+    "preview": {
+      "pitch": "音高",
+      "baseFrequency": "基準周波数"
+    },
+    "filter": {
+      "name": "フィルター",
+      "lowpass": {
+        "name": "ローパス",
+        "frequency": "カットオフ周波数",
+        "q": "Q"
+      },
+      "highpass": {
+        "name": "ハイパス",
+        "frequency": "カットオフ周波数",
+        "q": "Q"
+      },
+      "bandpass": {
+        "name": "バンドパス",
+        "frequency": "中心周波数",
+        "q": "帯域幅係数"
+      },
+      "notch": {
+        "name": "ノッチ",
+        "frequency": "中心周波数",
+        "q": "帯域幅係数"
+      }
+    },
+    "equalizer": {
+      "name": "イコライザー",
+      "lowshelf": {
+        "name": "ローシェルフ",
+        "frequency": "カットオフ周波数",
+        "gain": "ゲイン"
+      },
+      "highshelf": {
+        "name": "ハイシェルフ",
+        "frequency": "カットオフ周波数",
+        "gain": "ゲイン"
+      },
+      "peaking": {
+        "name": "ピーキング",
+        "frequency": "中心周波数",
+        "q": "帯域幅係数",
+        "gain": "ゲイン"
+      }
+    }
   },
   "config": {
     "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
@@ -37,6 +86,9 @@
     "powerExponent": "べき指数"
   },
   "charts": {
-    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線"
+    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",
+    "magnitudeResponseCurve": "振幅周波数応答曲線",
+    "magnitudeResponseSample": "振幅周波数応答サンプル",
+    "phaseResponseCurve": "位相周波数応答曲線"
   }
 }
