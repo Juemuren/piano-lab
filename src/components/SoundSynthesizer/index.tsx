@@ -53,7 +53,6 @@ function SoundSynthesizer() {
 
   const synthConfig = useMemo<SynthConfig>(
     () => ({
-      version: 1,
       synth: {
         oscillatorType,
         volumeRatio,

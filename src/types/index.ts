@@ -8,6 +8,8 @@ export type {
   EnvelopeCurve,
   FilterEffectConfig,
   FilterEffectType,
+  ReverbEffectConfig,
+  ReverbEffectPreset,
   Spectrum,
   SpectrumConfig,
   SpectrumDefinition,

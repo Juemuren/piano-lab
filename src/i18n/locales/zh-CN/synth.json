@@ -66,6 +66,16 @@
         "q": "带宽因子",
         "gain": "增益比例"
       }
+    },
+    "reverb": {
+      "name": "混响",
+      "presets": {
+        "bathroom": "浴室",
+        "garage": "车库",
+        "hall": "大厅",
+        "cathedral": "教堂"
+      },
+      "mix": "混合比例"
     }
   },
   "config": {

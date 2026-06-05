@@ -5,6 +5,7 @@ import EffectHarmonicResponsePreview from './EffectHarmonicResponsePreview';
 import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
 import EqualizerEffect from './EqualizerEffect';
 import FilterEffect from './FilterEffect';
+import ReverbEffect from './ReverbEffect';
 
 interface EffectProps {
   harmonicCount: number;
@@ -28,6 +29,11 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    reverb,
+    addReverb,
+    removeReverb,
+    updateReverbPreset,
+    updateReverbMix,
   } = useEffectControl(initialConfig, onConfigChange);
 
   return (
@@ -59,6 +65,13 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         harmonicCount={harmonicCount}
         filters={filters}
         equalizers={equalizers}
+      />
+      <ReverbEffect
+        reverb={reverb}
+        onAdd={addReverb}
+        onRemove={removeReverb}
+        onPresetChange={updateReverbPreset}
+        onMixChange={updateReverbMix}
       />
     </>
   );

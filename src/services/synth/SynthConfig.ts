@@ -11,6 +11,8 @@ import {
   DEFAULT_FILTER_EFFECT_FREQUENCY,
   DEFAULT_FILTER_EFFECT_Q,
   DEFAULT_FILTER_EFFECT_TYPE,
+  DEFAULT_REVERB_EFFECT_MIX,
+  DEFAULT_REVERB_EFFECT_PRESET,
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -25,6 +27,8 @@ import type {
   EqualizerEffectType,
   FilterEffectConfig,
   FilterEffectType,
+  ReverbEffectConfig,
+  ReverbEffectPreset,
   SpectrumConfig,
   SpectrumType,
   SynthConfig,
@@ -64,10 +68,15 @@ const EQUALIZER_EFFECT_TYPES: EqualizerEffectType[] = [
   'highshelf',
   'peaking',
 ];
+const REVERB_EFFECT_PRESETS: ReverbEffectPreset[] = [
+  'bathroom',
+  'garage',
+  'hall',
+  'cathedral',
+];
 
 export function createDefaultSynthConfig(): SynthConfig {
   return {
-    version: 1,
     synth: {
       oscillatorType: DEFAULT_SYNTH_OSCILLATOR_TYPE,
       volumeRatio: DEFAULT_SYNTH_VOLUME_RATIO,
@@ -98,6 +107,7 @@ export function createDefaultSynthConfig(): SynthConfig {
     effect: {
       filters: [],
       equalizers: [],
+      reverb: null,
     },
   };
 }
@@ -159,6 +169,21 @@ function normalizeEqualizerEffectConfig(
   };
 }
 
+function normalizeReverbEffectConfig(
+  value: unknown,
+): ReverbEffectConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    preset: unionOrDefault(
+      value.preset,
+      REVERB_EFFECT_PRESETS,
+      DEFAULT_REVERB_EFFECT_PRESET,
+    ),
+    mix: numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+  };
+}
+
 function normalizeEffectConfig(
   value: unknown,
   fallback: EffectConfig,
@@ -185,6 +210,13 @@ function normalizeEffectConfig(
     };
   }
 
+  if (value.reverb !== undefined) {
+    fallback = {
+      ...fallback,
+      reverb: normalizeReverbEffectConfig(value.reverb),
+    };
+  }
+
   if (value.filter !== undefined) {
     const legacyFilter = normalizeFilterEffectConfig(value.filter);
     fallback = {
@@ -206,7 +238,6 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
   const envelope = isRecord(value.envelope) ? value.envelope : {};
 
   return {
-    version: 1,
     synth: {
       oscillatorType: unionOrDefault(
         synth.oscillatorType,

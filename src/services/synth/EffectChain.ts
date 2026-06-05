@@ -2,7 +2,10 @@ import type {
   EffectConfig,
   EqualizerEffectConfig,
   FilterEffectConfig,
+  ReverbEffectConfig,
+  ReverbEffectPreset,
 } from '../../types';
+import { createReverbImpulseResponse } from './ReverbImpulse';
 
 export class EffectChain {
   private audioContext: AudioContext | null = null;
@@ -11,7 +14,15 @@ export class EffectChain {
   private outputNode: GainNode | null = null;
   private filterNodes: BiquadFilterNode[] = [];
   private equalizerNodes: BiquadFilterNode[] = [];
-  private effectConfig: EffectConfig = { filters: [], equalizers: [] };
+  private convolverNode: ConvolverNode | null = null;
+  private reverbDryGainNode: GainNode | null = null;
+  private reverbWetGainNode: GainNode | null = null;
+  private reverbImpulsePreset: ReverbEffectPreset | null = null;
+  private effectConfig: EffectConfig = {
+    filters: [],
+    equalizers: [],
+    reverb: null,
+  };
 
   configure(config: EffectConfig) {
     this.effectConfig = config;
@@ -62,6 +73,44 @@ export class EffectChain {
     return this.equalizerNodes[index];
   }
 
+  private disconnectReverbNodes() {
+    this.convolverNode?.disconnect();
+    this.reverbDryGainNode?.disconnect();
+    this.reverbWetGainNode?.disconnect();
+  }
+
+  private applyReverbConfig(reverbConfig: ReverbEffectConfig) {
+    if (!this.audioContext) return null;
+
+    if (!this.convolverNode) {
+      this.convolverNode = this.audioContext.createConvolver();
+    }
+    if (!this.reverbDryGainNode) {
+      this.reverbDryGainNode = this.audioContext.createGain();
+    }
+    if (!this.reverbWetGainNode) {
+      this.reverbWetGainNode = this.audioContext.createGain();
+    }
+
+    if (this.reverbImpulsePreset !== reverbConfig.preset) {
+      this.convolverNode.buffer = createReverbImpulseResponse(
+        this.audioContext,
+        reverbConfig.preset,
+      );
+      this.reverbImpulsePreset = reverbConfig.preset;
+    }
+
+    const mix = Math.min(Math.max(reverbConfig.mix, 0), 1);
+    this.reverbDryGainNode.gain.value = 1 - mix;
+    this.reverbWetGainNode.gain.value = mix;
+
+    return {
+      convolverNode: this.convolverNode,
+      dryGainNode: this.reverbDryGainNode,
+      wetGainNode: this.reverbWetGainNode,
+    };
+  }
+
   private rebuild() {
     if (!this.inputNode || !this.outputNode) return;
 
@@ -72,10 +121,12 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.disconnectReverbNodes();
 
     if (
       this.effectConfig.filters.length === 0 &&
-      this.effectConfig.equalizers.length === 0
+      this.effectConfig.equalizers.length === 0 &&
+      !this.effectConfig.reverb
     ) {
       this.filterNodes = [];
       this.equalizerNodes = [];
@@ -111,6 +162,19 @@ export class EffectChain {
       0,
       this.effectConfig.equalizers.length,
     );
+
+    if (this.effectConfig.reverb) {
+      const reverbNodes = this.applyReverbConfig(this.effectConfig.reverb);
+      if (reverbNodes) {
+        previousNode.connect(reverbNodes.dryGainNode);
+        previousNode.connect(reverbNodes.convolverNode);
+        reverbNodes.convolverNode.connect(reverbNodes.wetGainNode);
+        reverbNodes.dryGainNode.connect(this.outputNode);
+        reverbNodes.wetGainNode.connect(this.outputNode);
+        return;
+      }
+    }
+
     previousNode.connect(this.outputNode);
   }
 
@@ -144,12 +208,17 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.disconnectReverbNodes();
     this.outputNode?.disconnect();
     this.audioContext = null;
     this.destinationNode = null;
     this.inputNode = null;
     this.filterNodes = [];
     this.equalizerNodes = [];
+    this.convolverNode = null;
+    this.reverbDryGainNode = null;
+    this.reverbWetGainNode = null;
+    this.reverbImpulsePreset = null;
     this.outputNode = null;
   }
 }

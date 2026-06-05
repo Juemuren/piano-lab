@@ -72,13 +72,20 @@ export interface EqualizerEffectConfig {
   gain: number;
 }
 
+export type ReverbEffectPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
+
+export interface ReverbEffectConfig {
+  preset: ReverbEffectPreset;
+  mix: number;
+}
+
 export interface EffectConfig {
   filters: FilterEffectConfig[];
   equalizers: EqualizerEffectConfig[];
+  reverb: ReverbEffectConfig | null;
 }
 
 export interface SynthConfig {
-  version: 1;
   synth: SynthBasicConfig;
   envelope: EnvelopeConfig;
   spectrum: SpectrumConfig;

@@ -8,6 +8,8 @@ import {
   DEFAULT_FILTER_EFFECT_FREQUENCY,
   DEFAULT_FILTER_EFFECT_Q,
   DEFAULT_FILTER_EFFECT_TYPE,
+  DEFAULT_REVERB_EFFECT_MIX,
+  DEFAULT_REVERB_EFFECT_PRESET,
 } from '../../constants/synth';
 import type {
   EffectConfig,
@@ -15,6 +17,8 @@ import type {
   EqualizerEffectType,
   FilterEffectConfig,
   FilterEffectType,
+  ReverbEffectConfig,
+  ReverbEffectPreset,
 } from '../../types';
 
 function createDefaultFilterConfig(
@@ -38,6 +42,15 @@ function createDefaultEqualizerConfig(
   };
 }
 
+function createDefaultReverbConfig(
+  preset: ReverbEffectPreset = DEFAULT_REVERB_EFFECT_PRESET,
+): ReverbEffectConfig {
+  return {
+    preset,
+    mix: DEFAULT_REVERB_EFFECT_MIX,
+  };
+}
+
 function useEffectControl(
   initialConfig?: EffectConfig | null,
   onConfigChange?: (config: EffectConfig) => void,
@@ -49,13 +62,17 @@ function useEffectControl(
   const [equalizers, setEqualizers] = useState<EqualizerEffectConfig[]>(
     () => initialConfig?.equalizers ?? [],
   );
+  const [reverb, setReverb] = useState<ReverbEffectConfig | null>(
+    () => initialConfig?.reverb ?? null,
+  );
 
   const effectConfig = useMemo<EffectConfig>(
     () => ({
       filters,
       equalizers,
+      reverb,
     }),
-    [equalizers, filters],
+    [equalizers, filters, reverb],
   );
 
   useEffect(() => {
@@ -157,9 +174,28 @@ function useEffectControl(
     );
   }, []);
 
+  const addReverb = useCallback((preset: ReverbEffectPreset) => {
+    setReverb(createDefaultReverbConfig(preset));
+  }, []);
+
+  const removeReverb = useCallback(() => {
+    setReverb(null);
+  }, []);
+
+  const updateReverbPreset = useCallback((preset: ReverbEffectPreset) => {
+    setReverb((current) =>
+      current ? { ...current, preset } : createDefaultReverbConfig(preset),
+    );
+  }, []);
+
+  const updateReverbMix = useCallback((mix: number) => {
+    setReverb((current) => (current ? { ...current, mix } : current));
+  }, []);
+
   return {
     filters,
     equalizers,
+    reverb,
     addFilter,
     removeFilter,
     updateFilterType,
@@ -171,6 +207,10 @@ function useEffectControl(
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    addReverb,
+    removeReverb,
+    updateReverbPreset,
+    updateReverbMix,
   };
 }
 
