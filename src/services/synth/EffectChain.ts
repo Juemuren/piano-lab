@@ -1,4 +1,8 @@
-import type { EffectConfig, FilterEffectConfig } from '../../types';
+import type {
+  EffectConfig,
+  EqualizerEffectConfig,
+  FilterEffectConfig,
+} from '../../types';
 
 export class EffectChain {
   private audioContext: AudioContext | null = null;
@@ -6,7 +10,8 @@ export class EffectChain {
   private inputNode: GainNode | null = null;
   private outputNode: GainNode | null = null;
   private filterNodes: BiquadFilterNode[] = [];
-  private effectConfig: EffectConfig = { filters: [] };
+  private equalizerNodes: BiquadFilterNode[] = [];
+  private effectConfig: EffectConfig = { filters: [], equalizers: [] };
 
   configure(config: EffectConfig) {
     this.effectConfig = config;
@@ -33,6 +38,30 @@ export class EffectChain {
     return this.filterNodes[index];
   }
 
+  private applyEqualizerConfig(
+    equalizerNode: BiquadFilterNode,
+    equalizerConfig: EqualizerEffectConfig,
+  ) {
+    equalizerNode.type = equalizerConfig.type;
+    equalizerNode.frequency.value = equalizerConfig.frequency;
+    equalizerNode.Q.value = equalizerConfig.q;
+    equalizerNode.gain.value = equalizerConfig.gain;
+  }
+
+  private getEqualizerNode(
+    index: number,
+    equalizerConfig: EqualizerEffectConfig,
+  ) {
+    if (!this.audioContext) return null;
+
+    if (!this.equalizerNodes[index]) {
+      this.equalizerNodes[index] = this.audioContext.createBiquadFilter();
+    }
+
+    this.applyEqualizerConfig(this.equalizerNodes[index], equalizerConfig);
+    return this.equalizerNodes[index];
+  }
+
   private rebuild() {
     if (!this.inputNode || !this.outputNode) return;
 
@@ -40,9 +69,16 @@ export class EffectChain {
     for (const filterNode of this.filterNodes) {
       filterNode.disconnect();
     }
+    for (const equalizerNode of this.equalizerNodes) {
+      equalizerNode.disconnect();
+    }
 
-    if (this.effectConfig.filters.length === 0) {
+    if (
+      this.effectConfig.filters.length === 0 &&
+      this.effectConfig.equalizers.length === 0
+    ) {
       this.filterNodes = [];
+      this.equalizerNodes = [];
       this.inputNode.connect(this.outputNode);
       return;
     }
@@ -59,6 +95,21 @@ export class EffectChain {
     this.filterNodes = this.filterNodes.slice(
       0,
       this.effectConfig.filters.length,
+    );
+    for (const [
+      index,
+      equalizerConfig,
+    ] of this.effectConfig.equalizers.entries()) {
+      const equalizerNode = this.getEqualizerNode(index, equalizerConfig);
+      if (!equalizerNode) continue;
+
+      previousNode.connect(equalizerNode);
+      previousNode = equalizerNode;
+    }
+
+    this.equalizerNodes = this.equalizerNodes.slice(
+      0,
+      this.effectConfig.equalizers.length,
     );
     previousNode.connect(this.outputNode);
   }
@@ -90,11 +141,15 @@ export class EffectChain {
     for (const filterNode of this.filterNodes) {
       filterNode.disconnect();
     }
+    for (const equalizerNode of this.equalizerNodes) {
+      equalizerNode.disconnect();
+    }
     this.outputNode?.disconnect();
     this.audioContext = null;
     this.destinationNode = null;
     this.inputNode = null;
     this.filterNodes = [];
+    this.equalizerNodes = [];
     this.outputNode = null;
   }
 }

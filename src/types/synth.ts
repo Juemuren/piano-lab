@@ -63,8 +63,18 @@ export interface FilterEffectConfig {
   q: number;
 }
 
+export type EqualizerEffectType = 'lowshelf' | 'highshelf' | 'peaking';
+
+export interface EqualizerEffectConfig {
+  type: EqualizerEffectType;
+  frequency: number;
+  q: number;
+  gain: number;
+}
+
 export interface EffectConfig {
   filters: FilterEffectConfig[];
+  equalizers: EqualizerEffectConfig[];
 }
 
 export interface SynthConfig {

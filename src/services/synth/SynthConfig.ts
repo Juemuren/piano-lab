@@ -4,6 +4,10 @@ import {
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+  DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
+  DEFAULT_EQUALIZER_EFFECT_GAIN,
+  DEFAULT_EQUALIZER_EFFECT_Q,
+  DEFAULT_EQUALIZER_EFFECT_TYPE,
   DEFAULT_FILTER_EFFECT_FREQUENCY,
   DEFAULT_FILTER_EFFECT_Q,
   DEFAULT_FILTER_EFFECT_TYPE,
@@ -17,6 +21,8 @@ import {
 } from '../../constants';
 import type {
   EffectConfig,
+  EqualizerEffectConfig,
+  EqualizerEffectType,
   FilterEffectConfig,
   FilterEffectType,
   SpectrumConfig,
@@ -53,6 +59,11 @@ const FILTER_EFFECT_TYPES: FilterEffectType[] = [
   'bandpass',
   'notch',
 ];
+const EQUALIZER_EFFECT_TYPES: EqualizerEffectType[] = [
+  'lowshelf',
+  'highshelf',
+  'peaking',
+];
 
 export function createDefaultSynthConfig(): SynthConfig {
   return {
@@ -86,6 +97,7 @@ export function createDefaultSynthConfig(): SynthConfig {
     },
     effect: {
       filters: [],
+      equalizers: [],
     },
   };
 }
@@ -127,6 +139,26 @@ function normalizeFilterEffectConfig(
   };
 }
 
+function normalizeEqualizerEffectConfig(
+  value: unknown,
+): EqualizerEffectConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    type: unionOrDefault(
+      value.type,
+      EQUALIZER_EFFECT_TYPES,
+      DEFAULT_EQUALIZER_EFFECT_TYPE,
+    ),
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
+    ),
+    q: numberOrDefault(value.q, DEFAULT_EQUALIZER_EFFECT_Q),
+    gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_EFFECT_GAIN),
+  };
+}
+
 function normalizeEffectConfig(
   value: unknown,
   fallback: EffectConfig,
@@ -134,16 +166,35 @@ function normalizeEffectConfig(
   if (!isRecord(value)) return fallback;
 
   if (Array.isArray(value.filters)) {
-    return {
+    fallback = {
+      ...fallback,
       filters: value.filters
         .map(normalizeFilterEffectConfig)
         .filter((filter): filter is FilterEffectConfig => Boolean(filter)),
     };
   }
 
-  const legacyFilter = normalizeFilterEffectConfig(value.filter);
+  if (Array.isArray(value.equalizers)) {
+    fallback = {
+      ...fallback,
+      equalizers: value.equalizers
+        .map(normalizeEqualizerEffectConfig)
+        .filter((equalizer): equalizer is EqualizerEffectConfig =>
+          Boolean(equalizer),
+        ),
+    };
+  }
+
+  if (value.filter !== undefined) {
+    const legacyFilter = normalizeFilterEffectConfig(value.filter);
+    fallback = {
+      ...fallback,
+      filters: legacyFilter ? [legacyFilter] : [],
+    };
+  }
+
   return {
-    filters: legacyFilter ? [legacyFilter] : [],
+    ...fallback,
   };
 }
 

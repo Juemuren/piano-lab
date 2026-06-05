@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Minus, Plus } from 'lucide-react';
+import { DEFAULT_FILTER_EFFECT_TYPE } from '../../../constants';
 import type { FilterEffectConfig, FilterEffectType } from '../../../types';
 import ControlButton from '../../shared/ControlButton';
 import ControlRange from '../../shared/ControlRange';
@@ -25,7 +26,7 @@ function FilterEffect({
 }: FilterEffectProps) {
   const { t } = useTranslation('synth');
   const [selectedFilterType, setSelectedFilterType] =
-    useState<FilterEffectType>('lowpass');
+    useState<FilterEffectType>(DEFAULT_FILTER_EFFECT_TYPE);
 
   const filterTypeLabels: Record<FilterEffectType, string> = {
     lowpass: t('effect.filter.lowpass.name'),
