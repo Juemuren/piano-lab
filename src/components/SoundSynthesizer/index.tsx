@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Download, Upload } from 'lucide-react';
-import type {
-  EnvelopeConfig,
-  EffectConfig,
-  SpectrumConfig,
-  SynthConfig,
-} from '../../types';
+import type { EnvelopeConfig, SpectrumConfig, SynthConfig } from '../../types';
 import {
   createDefaultSynthConfig,
   normalizeSynthConfig,
@@ -43,9 +38,6 @@ function SoundSynthesizer() {
   const [spectrumConfig, setSpectrumConfig] = useState<SpectrumConfig>(
     defaultConfig.spectrum,
   );
-  const [effectConfig, setEffectConfig] = useState<EffectConfig>(
-    defaultConfig.effect,
-  );
   const [importedConfig, setImportedConfig] = useState<SynthConfig | null>(
     null,
   );
@@ -61,10 +53,8 @@ function SoundSynthesizer() {
       },
       envelope: envelopeConfig,
       spectrum: spectrumConfig,
-      effect: effectConfig,
     }),
     [
-      effectConfig,
       envelopeConfig,
       harmonicCount,
       oscillatorType,
@@ -89,7 +79,6 @@ function SoundSynthesizer() {
         setHarmonicCount(config.synth.harmonicCount);
         setEnvelopeConfig(config.envelope);
         setSpectrumConfig(config.spectrum);
-        setEffectConfig(config.effect);
         setImportedConfig(config);
         setImportRevision((revision) => revision + 1);
       } catch {
@@ -197,12 +186,7 @@ function SoundSynthesizer() {
         bgClassName="bg-app-surface-muted/50 dark:bg-app-surface-muted-dark/50"
         expanded
       >
-        <Effect
-          key={`effect-${importRevision}`}
-          harmonicCount={harmonicCount}
-          initialConfig={importedConfig?.effect}
-          onConfigChange={setEffectConfig}
-        />
+        <Effect key={`effect-${importRevision}`} />
       </CollapsibleSection>
     </ControlPanel>
   );

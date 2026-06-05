@@ -1,6 +1,5 @@
 import type {
   EnvelopeConfig,
-  EffectDefinition,
   Spectrum,
   SynthBasicConfig,
   StartNoteResult,
@@ -39,10 +38,6 @@ export class SynthEngine {
 
   configureSpectrum(spectrum: Spectrum) {
     this.baseVoice.configureSpectrum(spectrum);
-  }
-
-  configureEffect(definition: EffectDefinition) {
-    this.effectChain.configure(definition);
   }
 
   private async ensureAudioContextRunning(): Promise<void> {
@@ -99,19 +94,17 @@ export class SynthEngine {
     if (!this.outputGainNode) {
       return [];
     }
+    const effectInputNode = this.effectChain.connect(
+      this.audioContext,
+      this.outputGainNode,
+    );
 
     return this.baseVoice.startVoices({
       audioContext: this.audioContext,
-      outputNode: this.outputGainNode,
+      outputNode: effectInputNode,
       pitch,
       volume,
       cents,
-      shapeHarmonics: (plans) =>
-        this.effectChain.shapeHarmonics(plans, {
-          pitch,
-          cents,
-          harmonics: plans.length,
-        }),
     });
   }
 

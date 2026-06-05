@@ -10,8 +10,6 @@ export interface VoiceStartPlan {
   decayGain: number;
   sustainGain: number;
   silenceGain: number;
-  sourceGain: number;
-  envelopeSustainGain: number;
 }
 
 export interface VoiceStopPlan {
@@ -99,8 +97,6 @@ export function createVoiceStartPlans({
       decayGain,
       sustainGain,
       silenceGain,
-      sourceGain: targetGain,
-      envelopeSustainGain,
     });
   }
 

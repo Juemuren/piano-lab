@@ -21,13 +21,53 @@
     "custom": "自定义"
   },
   "effect": {
-    "delay": "纯延时",
-    "single_echo": "单回声",
-    "multi_echo": "多回声",
-    "all_pass": "全通",
-    "low_pass": "低通",
-    "high_pass": "高通",
-    "band_pass": "带通"
+    "preview": {
+      "pitch": "音高",
+      "baseFrequency": "基频",
+      "baseFrequencyPreviewHint": "此基频调节仅用于预览效果对谐波的影响，不会改变实际演奏的音高。"
+    },
+    "filter": {
+      "name": "滤波器",
+      "lowpass": {
+        "name": "低通",
+        "frequency": "截止频率",
+        "q": "共振度"
+      },
+      "highpass": {
+        "name": "高通",
+        "frequency": "截止频率",
+        "q": "共振度"
+      },
+      "bandpass": {
+        "name": "带通",
+        "frequency": "中心频率",
+        "q": "带宽"
+      },
+      "notch": {
+        "name": "带阻",
+        "frequency": "中心频率",
+        "q": "带宽"
+      }
+    },
+    "equalizer": {
+      "name": "均衡器",
+      "lowshelf": {
+        "name": "低架",
+        "frequency": "截止频率",
+        "gain": "增益"
+      },
+      "highshelf": {
+        "name": "高架",
+        "frequency": "截止频率",
+        "gain": "增益"
+      },
+      "peaking": {
+        "name": "峰值",
+        "frequency": "中心频率",
+        "q": "带宽",
+        "gain": "增益"
+      }
+    }
   },
   "config": {
     "importError": "无法导入配置，请检查 JSON 文件格式。"
@@ -44,14 +84,7 @@
     "harmonicSpectrumFormula": "谐波频谱公式",
     "strikePoint": "击弦点",
     "decayRate": "衰减率",
-    "powerExponent": "幂指数",
-    "pitch": "音高",
-    "baseFrequency": "基频",
-    "baseFrequencyPreviewHint": "此基频调节仅用于预览效果对谐波的影响，不会改变实际演奏的音高。",
-    "delayTime": "延迟时间",
-    "attenuation": "衰减系数",
-    "minFrequency": "最小频率",
-    "maxFrequency": "最大频率"
+    "powerExponent": "幂指数"
   },
   "charts": {
     "amplitudeEnvelopeCurve": "振幅包络曲线",

@@ -11,20 +11,8 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_EFFECT_ATTENUATION,
-  DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
-  DEFAULT_EFFECT_DELAY_MS,
-  DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
-  DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
-  DEFAULT_EFFECT_TYPE,
 } from '../../constants';
-import type {
-  EffectConfig,
-  EffectType,
-  SpectrumConfig,
-  SpectrumType,
-  SynthConfig,
-} from '../../types';
+import type { SpectrumConfig, SpectrumType, SynthConfig } from '../../types';
 import {
   isRecord,
   numberArrayOrDefault,
@@ -48,15 +36,6 @@ const SPECTRUM_TYPES: SpectrumType[] = [
   'soft',
   'realistic',
   'custom',
-];
-const EFFECT_TYPES: EffectType[] = [
-  'delay',
-  'single_echo',
-  'multi_echo',
-  'all_pass',
-  'low_pass',
-  'high_pass',
-  'band_pass',
 ];
 
 export function createDefaultSynthConfig(): SynthConfig {
@@ -89,14 +68,6 @@ export function createDefaultSynthConfig(): SynthConfig {
         DEFAULT_SYNTH_HARMONIC_COUNT,
       ).amplitudes,
     },
-    effect: {
-      type: DEFAULT_EFFECT_TYPE,
-      tau: DEFAULT_EFFECT_DELAY_MS,
-      alpha: DEFAULT_EFFECT_ATTENUATION,
-      minFrequency: DEFAULT_EFFECT_MIN_FREQUENCY_HZ,
-      maxFrequency: DEFAULT_EFFECT_MAX_FREQUENCY_HZ,
-      baseFrequency: DEFAULT_EFFECT_BASE_FREQUENCY_HZ,
-    },
   };
 }
 
@@ -114,25 +85,6 @@ function normalizeSpectrumConfig(
     customAmplitudes: numberArrayOrDefault(
       record.customAmplitudes,
       fallback.customAmplitudes,
-    ),
-  };
-}
-
-function normalizeEffectConfig(
-  value: unknown,
-  fallback: EffectConfig,
-): EffectConfig {
-  const record = isRecord(value) ? value : {};
-
-  return {
-    type: unionOrDefault(record.type, EFFECT_TYPES, fallback.type),
-    tau: numberOrDefault(record.tau, fallback.tau),
-    alpha: numberOrDefault(record.alpha, fallback.alpha),
-    minFrequency: numberOrDefault(record.minFrequency, fallback.minFrequency),
-    maxFrequency: numberOrDefault(record.maxFrequency, fallback.maxFrequency),
-    baseFrequency: numberOrDefault(
-      record.baseFrequency,
-      fallback.baseFrequency,
     ),
   };
 }
@@ -183,6 +135,5 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
       ),
     },
     spectrum: normalizeSpectrumConfig(value.spectrum, fallback.spectrum),
-    effect: normalizeEffectConfig(value.effect, fallback.effect),
   };
 }

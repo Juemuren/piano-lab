@@ -1,4 +1,4 @@
-import type { BuiltInSpectrumType, EffectType } from './types';
+import type { BuiltInSpectrumType } from './types';
 
 export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;
@@ -14,10 +14,3 @@ export const DEFAULT_SPECTRUM_TYPE: BuiltInSpectrumType = 'ethereal';
 export const DEFAULT_SPECTRUM_STRIKE_POINT = 0.5;
 export const DEFAULT_SPECTRUM_DECAY_RATE = 0.8;
 export const DEFAULT_SPECTRUM_POWER_EXPONENT = 1.5;
-
-export const DEFAULT_EFFECT_TYPE: EffectType = 'delay';
-export const DEFAULT_EFFECT_DELAY_MS = 0;
-export const DEFAULT_EFFECT_ATTENUATION = 0.1;
-export const DEFAULT_EFFECT_MIN_FREQUENCY_HZ = 20;
-export const DEFAULT_EFFECT_MAX_FREQUENCY_HZ = 20000;
-export const DEFAULT_EFFECT_BASE_FREQUENCY_HZ = 440;

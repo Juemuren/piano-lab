@@ -35,46 +35,6 @@ export interface SpectrumParamUpdates {
   p?: number;
 }
 
-export type EffectType =
-  | 'delay'
-  | 'single_echo'
-  | 'multi_echo'
-  | 'low_pass'
-  | 'high_pass'
-  | 'all_pass'
-  | 'band_pass';
-
-export interface Effect {
-  magnitudes: number[];
-  phases: number[];
-}
-
-export interface EffectDefinition {
-  type: EffectType;
-  tau: number;
-  alpha: number;
-  minFrequency: number;
-  maxFrequency: number;
-  baseFrequency: number;
-}
-
-export interface EffectConfig {
-  type: EffectType;
-  tau: number;
-  alpha: number;
-  minFrequency: number;
-  maxFrequency: number;
-  baseFrequency: number;
-}
-
-export interface EffectParamUpdates {
-  tau?: number;
-  alpha?: number;
-  minFrequency?: number;
-  maxFrequency?: number;
-  baseFrequency?: number;
-}
-
 export interface EnvelopeConfig {
   attackTime: number;
   decayTime: number;
@@ -100,7 +60,6 @@ export interface SynthConfig {
   synth: SynthBasicConfig;
   envelope: EnvelopeConfig;
   spectrum: SpectrumConfig;
-  effect: EffectConfig;
 }
 
 export type StartNoteResult =

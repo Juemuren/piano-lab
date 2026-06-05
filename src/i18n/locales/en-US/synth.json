@@ -1,8 +1,7 @@
 {
   "sections": {
     "envelope": "Envelope",
-    "spectrum": "Spectrum",
-    "effect": "Effect"
+    "spectrum": "Spectrum"
   },
   "oscillator": {
     "sine": "Sine",
@@ -20,15 +19,6 @@
     "realistic": "Realistic",
     "custom": "Custom"
   },
-  "effect": {
-    "delay": "Delay",
-    "single_echo": "Single Echo",
-    "multi_echo": "Multi Echo",
-    "all_pass": "All Pass",
-    "low_pass": "Low Pass",
-    "high_pass": "High Pass",
-    "band_pass": "Band Pass"
-  },
   "config": {
     "importError": "Could not import the config. Check the JSON file format."
   },
@@ -44,18 +34,9 @@
     "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
     "strikePoint": "Strike Point",
     "decayRate": "Decay Rate",
-    "powerExponent": "Power Exponent",
-    "pitch": "Pitch",
-    "baseFrequency": "Base Frequency",
-    "baseFrequencyPreviewHint": "This base frequency only previews how the effect affects harmonics. It does not change the actual played pitch.",
-    "delayTime": "Delay Time",
-    "attenuation": "Attenuation",
-    "minFrequency": "Minimum Frequency",
-    "maxFrequency": "Maximum Frequency"
+    "powerExponent": "Power Exponent"
   },
   "charts": {
-    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",
-    "magnitudeResponse": "Magnitude Response",
-    "phaseResponse": "Phase Response"
+    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve"
   }
 }

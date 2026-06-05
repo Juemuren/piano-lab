@@ -15,7 +15,6 @@ import {
 } from '../../constants';
 import {
   createVoiceStopPlans,
-  type VoiceStartPlan,
   createVoiceStartPlans,
 } from './SynthCalculations';
 import { createSpectrum } from './SynthDefinitions';
@@ -46,7 +45,6 @@ interface StartNoteOptions {
   pitch: number;
   volume: number;
   cents: number;
-  shapeHarmonics?: (plans: VoiceStartPlan[]) => VoiceStartPlan[];
 }
 
 export class BaseVoice {
@@ -102,9 +100,8 @@ export class BaseVoice {
     pitch,
     volume,
     cents,
-    shapeHarmonics,
   }: StartNoteOptions): ActiveVoice[] {
-    const basePlans = createVoiceStartPlans({
+    const plans = createVoiceStartPlans({
       pitch,
       volume,
       cents,
@@ -118,7 +115,6 @@ export class BaseVoice {
       silenceGain: this.silenceGain,
       minGainValue: MIN_GAIN_VALUE,
     });
-    const plans = shapeHarmonics ? shapeHarmonics(basePlans) : basePlans;
     const voices: ActiveVoice[] = [];
 
     for (const plan of plans) {
