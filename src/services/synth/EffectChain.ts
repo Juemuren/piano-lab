@@ -3,7 +3,6 @@ import type {
   EqualizerEffectConfig,
   FilterEffectConfig,
   ReverbEffectConfig,
-  ReverbEffectPreset,
 } from '../../types';
 import { createReverbImpulseResponse } from './ReverbImpulse';
 
@@ -17,7 +16,6 @@ export class EffectChain {
   private convolverNode: ConvolverNode | null = null;
   private reverbDryGainNode: GainNode | null = null;
   private reverbWetGainNode: GainNode | null = null;
-  private reverbImpulsePreset: ReverbEffectPreset | null = null;
   private effectConfig: EffectConfig = {
     filters: [],
     equalizers: [],
@@ -92,13 +90,10 @@ export class EffectChain {
       this.reverbWetGainNode = this.audioContext.createGain();
     }
 
-    if (this.reverbImpulsePreset !== reverbConfig.preset) {
-      this.convolverNode.buffer = createReverbImpulseResponse(
-        this.audioContext,
-        reverbConfig.preset,
-      );
-      this.reverbImpulsePreset = reverbConfig.preset;
-    }
+    this.convolverNode.buffer = createReverbImpulseResponse(
+      this.audioContext,
+      reverbConfig,
+    );
 
     const mix = Math.min(Math.max(reverbConfig.mix, 0), 1);
     this.reverbDryGainNode.gain.value = 1 - mix;
@@ -218,7 +213,6 @@ export class EffectChain {
     this.convolverNode = null;
     this.reverbDryGainNode = null;
     this.reverbWetGainNode = null;
-    this.reverbImpulsePreset = null;
     this.outputNode = null;
   }
 }

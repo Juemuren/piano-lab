@@ -69,11 +69,26 @@
     },
     "reverb": {
       "name": "混响",
+      "preset": "预设",
       "presets": {
         "bathroom": "浴室",
         "garage": "车库",
         "hall": "大厅",
-        "cathedral": "教堂"
+        "cathedral": "教堂",
+        "custom": "自定义"
+      },
+      "formula": "公式",
+      "earlyReflection": {
+        "name": "早期反射",
+        "item": "反射 {{index}}",
+        "delay": "延迟",
+        "gain": "增益"
+      },
+      "lateTail": {
+        "name": "晚期尾音",
+        "duration": "时长",
+        "amplitude": "振幅",
+        "alpha": "衰减系数"
       },
       "mix": "混合比例"
     }

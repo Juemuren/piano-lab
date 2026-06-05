@@ -72,11 +72,30 @@ export interface EqualizerEffectConfig {
   gain: number;
 }
 
-export type ReverbEffectPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
+export type BuiltInReverbEffectPreset =
+  | 'bathroom'
+  | 'garage'
+  | 'hall'
+  | 'cathedral';
+
+export type ReverbEffectPreset = BuiltInReverbEffectPreset | 'custom';
+
+export interface ReverbEarlyReflectionConfig {
+  delay: number;
+  gain: number;
+}
+
+export interface ReverbLateTailConfig {
+  duration: number;
+  amplitude: number;
+  alpha: number;
+}
 
 export interface ReverbEffectConfig {
   preset: ReverbEffectPreset;
   mix: number;
+  earlyReflections: ReverbEarlyReflectionConfig[];
+  lateTail: ReverbLateTailConfig;
 }
 
 export interface EffectConfig {

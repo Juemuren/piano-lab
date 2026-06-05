@@ -30,10 +30,15 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerQ,
     updateEqualizerGain,
     reverb,
-    addReverb,
-    removeReverb,
     updateReverbPreset,
     updateReverbMix,
+    addReverbEarlyReflection,
+    removeReverbEarlyReflection,
+    updateReverbEarlyReflectionDelay,
+    updateReverbEarlyReflectionGain,
+    updateReverbLateTailDuration,
+    updateReverbLateTailAmplitude,
+    updateReverbLateTailAlpha,
   } = useEffectControl(initialConfig, onConfigChange);
 
   return (
@@ -68,10 +73,15 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
       />
       <ReverbEffect
         reverb={reverb}
-        onAdd={addReverb}
-        onRemove={removeReverb}
         onPresetChange={updateReverbPreset}
         onMixChange={updateReverbMix}
+        onEarlyReflectionAdd={addReverbEarlyReflection}
+        onEarlyReflectionRemove={removeReverbEarlyReflection}
+        onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
+        onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
+        onLateTailDurationChange={updateReverbLateTailDuration}
+        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
+        onLateTailAlphaChange={updateReverbLateTailAlpha}
       />
     </>
   );

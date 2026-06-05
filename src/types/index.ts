@@ -1,6 +1,7 @@
 export type { MidiControlState, MidiInputDevice, MidiStatus } from './piano';
 export type {
   BuiltInSpectrumType,
+  BuiltInReverbEffectPreset,
   EffectConfig,
   EqualizerEffectConfig,
   EqualizerEffectType,
@@ -9,7 +10,9 @@ export type {
   FilterEffectConfig,
   FilterEffectType,
   ReverbEffectConfig,
+  ReverbEarlyReflectionConfig,
   ReverbEffectPreset,
+  ReverbLateTailConfig,
   Spectrum,
   SpectrumConfig,
   SpectrumDefinition,

@@ -13,6 +13,11 @@ import {
   DEFAULT_FILTER_EFFECT_TYPE,
   DEFAULT_REVERB_EFFECT_MIX,
   DEFAULT_REVERB_EFFECT_PRESET,
+  DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
+  DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
+  DEFAULT_REVERB_LATE_TAIL_ALPHA,
+  DEFAULT_REVERB_LATE_TAIL_AMPLITUDE,
+  DEFAULT_REVERB_LATE_TAIL_DURATION,
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -27,8 +32,10 @@ import type {
   EqualizerEffectType,
   FilterEffectConfig,
   FilterEffectType,
+  ReverbEarlyReflectionConfig,
   ReverbEffectConfig,
   ReverbEffectPreset,
+  ReverbLateTailConfig,
   SpectrumConfig,
   SpectrumType,
   SynthConfig,
@@ -39,6 +46,7 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../utils/runtime';
+import { createReverbEffectConfig } from './ReverbImpulse';
 import { createSpectrum } from './SynthDefinitions';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
@@ -73,6 +81,7 @@ const REVERB_EFFECT_PRESETS: ReverbEffectPreset[] = [
   'garage',
   'hall',
   'cathedral',
+  'custom',
 ];
 
 export function createDefaultSynthConfig(): SynthConfig {
@@ -107,7 +116,7 @@ export function createDefaultSynthConfig(): SynthConfig {
     effect: {
       filters: [],
       equalizers: [],
-      reverb: null,
+      reverb: createReverbEffectConfig(DEFAULT_REVERB_EFFECT_PRESET),
     },
   };
 }
@@ -173,14 +182,65 @@ function normalizeReverbEffectConfig(
   value: unknown,
 ): ReverbEffectConfig | null {
   if (!isRecord(value)) return null;
+  const preset = value.preset === 'room' ? 'garage' : value.preset;
+  const normalizedPreset = unionOrDefault(
+    preset,
+    REVERB_EFFECT_PRESETS,
+    DEFAULT_REVERB_EFFECT_PRESET,
+  );
+  const fallback =
+    normalizedPreset === 'custom'
+      ? {
+          ...createReverbEffectConfig(DEFAULT_REVERB_EFFECT_PRESET),
+          preset: 'custom' as const,
+        }
+      : createReverbEffectConfig(normalizedPreset);
+  const lateTail = normalizeReverbLateTailConfig(
+    value.lateTail,
+    fallback.lateTail,
+  );
 
   return {
-    preset: unionOrDefault(
-      value.preset,
-      REVERB_EFFECT_PRESETS,
-      DEFAULT_REVERB_EFFECT_PRESET,
-    ),
+    preset: normalizedPreset,
     mix: numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+    earlyReflections: Array.isArray(value.earlyReflections)
+      ? value.earlyReflections
+          .map(normalizeReverbEarlyReflectionConfig)
+          .filter((reflection): reflection is ReverbEarlyReflectionConfig =>
+            Boolean(reflection),
+          )
+      : fallback.earlyReflections,
+    lateTail,
+  };
+}
+
+function normalizeReverbEarlyReflectionConfig(
+  value: unknown,
+): ReverbEarlyReflectionConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    delay: numberOrDefault(value.delay, DEFAULT_REVERB_EARLY_REFLECTION_DELAY),
+    gain: numberOrDefault(value.gain, DEFAULT_REVERB_EARLY_REFLECTION_GAIN),
+  };
+}
+
+function normalizeReverbLateTailConfig(
+  value: unknown,
+  fallback: ReverbLateTailConfig,
+): ReverbLateTailConfig {
+  if (!isRecord(value)) return fallback;
+
+  return {
+    duration: numberOrDefault(
+      value.duration,
+      DEFAULT_REVERB_LATE_TAIL_DURATION,
+    ),
+    amplitude: numberOrDefault(
+      value.amplitude,
+      DEFAULT_REVERB_LATE_TAIL_AMPLITUDE,
+    ),
+    alpha: numberOrDefault(value.alpha, DEFAULT_REVERB_LATE_TAIL_ALPHA),
   };
 }
 
