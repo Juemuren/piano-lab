@@ -71,7 +71,7 @@ function EqualizerEffect({
             <ControlRange
               label={t(`effect.equalizer.${equalizer.type}.frequency`)}
               min="20"
-              max="10000"
+              max="20000"
               step="1"
               value={equalizer.frequency}
               displayValue={`${equalizer.frequency.toFixed(0)} Hz`}

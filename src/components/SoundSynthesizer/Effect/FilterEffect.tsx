@@ -6,7 +6,6 @@ import type { FilterEffectConfig, FilterEffectType } from '../../../types';
 import ControlButton from '../../shared/ControlButton';
 import ControlRange from '../../shared/ControlRange';
 import ControlSelect from '../../shared/ControlSelect';
-import FilterMagnitudeResponsePreview from './FilterMagnitudeResponsePreview';
 
 interface FilterEffectProps {
   filters: FilterEffectConfig[];
@@ -67,7 +66,7 @@ function FilterEffect({
             <ControlRange
               label={t(`effect.filter.${filter.type}.frequency`)}
               min="20"
-              max="10000"
+              max="20000"
               step="1"
               value={filter.frequency}
               displayValue={`${filter.frequency.toFixed(0)} Hz`}
@@ -104,10 +103,6 @@ function FilterEffect({
           </ControlSelect>
         </div>
       </div>
-      <FilterMagnitudeResponsePreview
-        title={t('charts.magnitudeResponse')}
-        filters={filters}
-      />
     </details>
   );
 }

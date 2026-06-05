@@ -1,5 +1,7 @@
 import type { EffectConfig } from '../../../types';
+import { useTranslation } from 'react-i18next';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
+import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
 import EqualizerEffect from './EqualizerEffect';
 import FilterEffect from './FilterEffect';
 
@@ -9,6 +11,7 @@ interface EffectProps {
 }
 
 function Effect({ initialConfig, onConfigChange }: EffectProps) {
+  const { t } = useTranslation('synth');
   const {
     filters,
     addFilter,
@@ -43,6 +46,11 @@ function Effect({ initialConfig, onConfigChange }: EffectProps) {
         onFrequencyChange={updateEqualizerFrequency}
         onQChange={updateEqualizerQ}
         onGainChange={updateEqualizerGain}
+      />
+      <EffectMagnitudeResponsePreview
+        title={t('charts.magnitudeResponse')}
+        filters={filters}
+        equalizers={equalizers}
       />
     </>
   );
