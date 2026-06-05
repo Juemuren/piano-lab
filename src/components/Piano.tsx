@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useMidiControlContext } from '../contexts/midiControl';
 import { usePlayingNotes } from '../contexts/playingNotes';
 import usePianoControl from '../hooks/piano/usePianoControl';
+import PianoKey from './PianoKey';
 
 const WHITE_KEY_HEIGHT_PX = 160;
 const BLACK_KEY_HEIGHT_PX = 100;
@@ -37,87 +38,61 @@ function Piano() {
         style={{ width: keyboardWidth, height: WHITE_KEY_HEIGHT_PX }}
       >
         <div className="flex">
-          {whiteKeys.map((key) => {
-            const isPressed = isKeyPressed(key.note);
-            const keyHint = keyHints.get(key.note);
-            const cursorClass = isMouseControlEnabled
-              ? 'cursor-pointer'
-              : 'cursor-default';
-            return (
-              <button
-                type="button"
-                key={key.note}
-                onMouseDown={(e) => handleKeyDown(e, key.note)}
-                onMouseUp={(e) => handleKeyUp(e, key.note)}
-                onMouseLeave={(e) => handleKeyUp(e, key.note)}
-                onTouchStart={(e) => handleKeyDown(e, key.note)}
-                onTouchEnd={(e) => handleKeyUp(e, key.note)}
-                onTouchCancel={(e) => handleKeyUp(e, key.note)}
-                className={`
-                  shrink-0 ${cursorClass} text-xs border border-app-accent transition-all duration-100 ${
-                    isPressed
-                      ? 'bg-piano-white-active text-piano-black shadow-inner'
-                      : 'bg-piano-white text-piano-black'
-                  }`}
-                style={{
-                  width: WHITE_KEY_WIDTH_PX,
-                  height: WHITE_KEY_HEIGHT_PX,
-                  transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
-                }}
-              >
-                <span className="h-full flex flex-col items-center justify-end py-2">
-                  <span className="text-piano-black">{keyHint}</span>
-                  <span>
-                    {key.char}
-                    <sub>{key.number}</sub>
-                  </span>
+          {whiteKeys.map((key) => (
+            <PianoKey
+              key={key.note}
+              note={key.note}
+              isPressed={isKeyPressed(key.note)}
+              isMouseControlEnabled={isMouseControlEnabled}
+              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
+              className="shrink-0 border border-app-accent"
+              normalClassName="bg-piano-white text-piano-black"
+              pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
+              width={WHITE_KEY_WIDTH_PX}
+              height={WHITE_KEY_HEIGHT_PX}
+            >
+              <span className="h-full flex flex-col items-center justify-end py-2">
+                <span className="text-piano-black">
+                  {keyHints.get(key.note)}
                 </span>
-              </button>
-            );
-          })}
+                <span>
+                  {key.char}
+                  <sub>{key.number}</sub>
+                </span>
+              </span>
+            </PianoKey>
+          ))}
         </div>
 
         <div className="absolute top-0 left-0">
-          {blackKeys.map((key) => {
-            const isPressed = isKeyPressed(key.note);
-            const keyHint = keyHints.get(key.note);
-            const cursorClass = isMouseControlEnabled
-              ? 'cursor-pointer'
-              : 'cursor-default';
-            return (
-              <button
-                type="button"
-                key={key.note}
-                onMouseDown={(e) => handleKeyDown(e, key.note)}
-                onMouseUp={(e) => handleKeyUp(e, key.note)}
-                onMouseLeave={(e) => handleKeyUp(e, key.note)}
-                onTouchStart={(e) => handleKeyDown(e, key.note)}
-                onTouchEnd={(e) => handleKeyUp(e, key.note)}
-                onTouchCancel={(e) => handleKeyUp(e, key.note)}
-                className={`
-                  ${cursorClass} text-xs border-none transition-all duration-100 ${
-                    isPressed
-                      ? 'bg-piano-black-active text-piano-white shadow-inner'
-                      : 'bg-piano-black text-piano-white'
-                  }`}
-                style={{
-                  width: BLACK_KEY_WIDTH_PX,
-                  height: BLACK_KEY_HEIGHT_PX,
-                  position: 'absolute',
-                  left:
-                    key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
-                  transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
-                  zIndex: 1,
-                }}
-              >
-                <span className="h-full flex flex-col items-center justify-end py-2">
-                  <span className="font-semibold text-piano-white">
-                    {keyHint}
-                  </span>
+          {blackKeys.map((key) => (
+            <PianoKey
+              key={key.note}
+              note={key.note}
+              isPressed={isKeyPressed(key.note)}
+              isMouseControlEnabled={isMouseControlEnabled}
+              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
+              className="border-none"
+              normalClassName="bg-piano-black text-piano-white"
+              pressedClassName="bg-piano-black-active text-piano-white shadow-inner"
+              width={BLACK_KEY_WIDTH_PX}
+              height={BLACK_KEY_HEIGHT_PX}
+              style={{
+                position: 'absolute',
+                left:
+                  key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
+                zIndex: 1,
+              }}
+            >
+              <span className="h-full flex flex-col items-center justify-end py-2">
+                <span className="font-semibold text-piano-white">
+                  {keyHints.get(key.note)}
                 </span>
-              </button>
-            );
-          })}
+              </span>
+            </PianoKey>
+          ))}
         </div>
       </div>
     </div>
