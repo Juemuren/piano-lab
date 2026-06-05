@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useMidiControlContext } from '../contexts/midiControl';
-import { usePlayingNotes } from '../contexts/playingNotes';
-import usePianoControl from '../hooks/piano/usePianoControl';
+import { useMidiControlContext } from '../../contexts/midiControl';
+import { usePlayingNotes } from '../../contexts/playingNotes';
+import usePianoControl from '../../hooks/piano/usePianoControl';
 import PianoKey from './PianoKey';
 
 const WHITE_KEY_HEIGHT_PX = 160;
