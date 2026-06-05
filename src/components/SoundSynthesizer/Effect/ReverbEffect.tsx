@@ -17,6 +17,7 @@ interface ReverbEffectProps {
   onEarlyReflectionRemove: (index: number) => void;
   onEarlyReflectionDelayChange: (index: number, value: number) => void;
   onEarlyReflectionGainChange: (index: number, value: number) => void;
+  onLateTailDelayChange: (value: number) => void;
   onLateTailDurationChange: (value: number) => void;
   onLateTailAmplitudeChange: (value: number) => void;
   onLateTailAlphaChange: (value: number) => void;
@@ -37,6 +38,7 @@ function ReverbEffect({
   onEarlyReflectionRemove,
   onEarlyReflectionDelayChange,
   onEarlyReflectionGainChange,
+  onLateTailDelayChange,
   onLateTailDurationChange,
   onLateTailAmplitudeChange,
   onLateTailAlphaChange,
@@ -57,6 +59,18 @@ function ReverbEffect({
       </summary>
 
       <div className="space-y-3">
+        <BlockMath math={String.raw`y(t)=(1-m)x(t)+m(x*h)(t)`} />
+        <ControlRange
+          label={t('effect.reverb.mix')}
+          symbol={<InlineMath math="m" />}
+          min="0"
+          max="1"
+          step="0.01"
+          value={reverb.mix}
+          displayValue={`${(reverb.mix * 100).toFixed(0)}%`}
+          onChange={onMixChange}
+        />
+
         <ControlSelect
           value={reverb.preset}
           onChange={(e) =>
@@ -74,23 +88,12 @@ function ReverbEffect({
             </option>
           ))}
         </ControlSelect>
-        <BlockMath math={String.raw`y(t)=(1-m)x(t)+m(x*h)(t)`} />
-        <ControlRange
-          label={t('effect.reverb.mix')}
-          symbol={<InlineMath math="m" />}
-          min="0"
-          max="1"
-          step="0.01"
-          value={reverb.mix}
-          displayValue={`${(reverb.mix * 100).toFixed(0)}%`}
-          onChange={onMixChange}
-        />
 
         <details open className="my-2">
           <summary className="font-bold my-2">
             {t('effect.reverb.earlyReflection.name')}
           </summary>
-          <BlockMath math={String.raw`h_e[n]=\sum_i a_i\delta[n-d_i f_s]`} />
+          <BlockMath math={String.raw`h_e[n]=\sum_i a_i\delta[n-d_if_s]`} />
           <div className="space-y-3">
             {reverb.earlyReflections.map((reflection, index) => (
               <div key={index} className="space-y-2">
@@ -100,7 +103,7 @@ function ReverbEffect({
                     icon={<Minus size={18} />}
                     onClick={() => onEarlyReflectionRemove(index)}
                   />
-                  <div className="text-sm font-semibold">
+                  <div className="text-left text-sm font-semibold">
                     {t('effect.reverb.earlyReflection.item', {
                       index: index + 1,
                     })}
@@ -132,11 +135,18 @@ function ReverbEffect({
                 />
               </div>
             ))}
-            <ControlButton
-              title={t('effect.reverb.earlyReflection.name')}
-              icon={<Plus size={18} />}
-              onClick={onEarlyReflectionAdd}
-            />
+            <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
+              <ControlButton
+                title={t('effect.reverb.earlyReflection.name')}
+                icon={<Plus size={18} />}
+                onClick={onEarlyReflectionAdd}
+              />
+              <div className="text-left text-sm font-semibold">
+                {t('effect.reverb.earlyReflection.item', {
+                  index: reverb.earlyReflections.length + 1,
+                })}
+              </div>
+            </div>
           </div>
         </details>
 
@@ -145,7 +155,17 @@ function ReverbEffect({
             {t('effect.reverb.lateTail.name')}
           </summary>
           <BlockMath
-            math={String.raw`h_l[n]=Ae^{-\alpha n} \quad 0 \le n < T f_s`}
+            math={String.raw`h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s`}
+          />
+          <ControlRange
+            label={t('effect.reverb.lateTail.delay')}
+            symbol={<InlineMath math="D" />}
+            min="0"
+            max="1"
+            step="0.001"
+            value={reverb.lateTail.delay}
+            displayValue={`${(reverb.lateTail.delay * 1000).toFixed(0)} ms`}
+            onChange={onLateTailDelayChange}
           />
           <ControlRange
             label={t('effect.reverb.lateTail.duration')}

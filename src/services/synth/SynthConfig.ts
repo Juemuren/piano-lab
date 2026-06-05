@@ -17,6 +17,7 @@ import {
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
   DEFAULT_REVERB_LATE_TAIL_ALPHA,
   DEFAULT_REVERB_LATE_TAIL_AMPLITUDE,
+  DEFAULT_REVERB_LATE_TAIL_DELAY,
   DEFAULT_REVERB_LATE_TAIL_DURATION,
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
@@ -116,7 +117,10 @@ export function createDefaultSynthConfig(): SynthConfig {
     effect: {
       filters: [],
       equalizers: [],
-      reverb: createReverbEffectConfig(DEFAULT_REVERB_EFFECT_PRESET),
+      reverb: createReverbEffectConfig(
+        DEFAULT_REVERB_EFFECT_PRESET,
+        DEFAULT_REVERB_EFFECT_MIX,
+      ),
     },
   };
 }
@@ -191,10 +195,16 @@ function normalizeReverbEffectConfig(
   const fallback =
     normalizedPreset === 'custom'
       ? {
-          ...createReverbEffectConfig(DEFAULT_REVERB_EFFECT_PRESET),
+          ...createReverbEffectConfig(
+            DEFAULT_REVERB_EFFECT_PRESET,
+            numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+          ),
           preset: 'custom' as const,
         }
-      : createReverbEffectConfig(normalizedPreset);
+      : createReverbEffectConfig(
+          normalizedPreset,
+          numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+        );
   const lateTail = normalizeReverbLateTailConfig(
     value.lateTail,
     fallback.lateTail,
@@ -232,6 +242,7 @@ function normalizeReverbLateTailConfig(
   if (!isRecord(value)) return fallback;
 
   return {
+    delay: numberOrDefault(value.delay, DEFAULT_REVERB_LATE_TAIL_DELAY),
     duration: numberOrDefault(
       value.duration,
       DEFAULT_REVERB_LATE_TAIL_DURATION,

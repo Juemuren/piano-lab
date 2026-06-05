@@ -86,6 +86,7 @@ export interface ReverbEarlyReflectionConfig {
 }
 
 export interface ReverbLateTailConfig {
+  delay: number;
   duration: number;
   amplitude: number;
   alpha: number;

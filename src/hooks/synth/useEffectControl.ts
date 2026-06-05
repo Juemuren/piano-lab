@@ -9,6 +9,7 @@ import {
   DEFAULT_FILTER_EFFECT_Q,
   DEFAULT_FILTER_EFFECT_TYPE,
   DEFAULT_REVERB_EFFECT_PRESET,
+  DEFAULT_REVERB_EFFECT_MIX,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
 } from '../../constants/synth';
@@ -46,8 +47,9 @@ function createDefaultEqualizerConfig(
 
 function createDefaultReverbConfig(
   preset: BuiltInReverbEffectPreset = DEFAULT_REVERB_EFFECT_PRESET,
+  mix = DEFAULT_REVERB_EFFECT_MIX,
 ): ReverbEffectConfig {
-  return createReverbEffectConfig(preset);
+  return createReverbEffectConfig(preset, mix);
 }
 
 function useEffectControl(
@@ -175,13 +177,13 @@ function useEffectControl(
 
   const updateReverbPreset = useCallback(
     (preset: BuiltInReverbEffectPreset) => {
-      setReverb(createDefaultReverbConfig(preset));
+      setReverb((current) => createDefaultReverbConfig(preset, current.mix));
     },
     [],
   );
 
   const updateReverbMix = useCallback((mix: number) => {
-    setReverb((current) => ({ ...current, preset: 'custom', mix }));
+    setReverb((current) => ({ ...current, mix }));
   }, []);
 
   const addReverbEarlyReflection = useCallback(() => {
@@ -244,6 +246,14 @@ function useEffectControl(
     }));
   }, []);
 
+  const updateReverbLateTailDelay = useCallback((delay: number) => {
+    setReverb((current) => ({
+      ...current,
+      preset: 'custom',
+      lateTail: { ...current.lateTail, delay },
+    }));
+  }, []);
+
   const updateReverbLateTailAmplitude = useCallback((amplitude: number) => {
     setReverb((current) => ({
       ...current,
@@ -281,6 +291,7 @@ function useEffectControl(
     removeReverbEarlyReflection,
     updateReverbEarlyReflectionDelay,
     updateReverbEarlyReflectionGain,
+    updateReverbLateTailDelay,
     updateReverbLateTailDuration,
     updateReverbLateTailAmplitude,
     updateReverbLateTailAlpha,

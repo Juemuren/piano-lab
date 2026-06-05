@@ -7,7 +7,7 @@ import type {
 
 type ReverbPresetDefinition = Pick<
   ReverbEffectConfig,
-  'earlyReflections' | 'lateTail' | 'mix'
+  'earlyReflections' | 'lateTail'
 > & {
   preset: BuiltInReverbEffectPreset;
 };
@@ -18,13 +18,13 @@ export const REVERB_PRESET_DEFINITIONS: Record<
 > = {
   bathroom: {
     preset: 'bathroom',
-    mix: 0.22,
     earlyReflections: [
       { delay: 0.004, gain: 0.75 },
       { delay: 0.008, gain: 0.58 },
       { delay: 0.013, gain: 0.4 },
     ],
     lateTail: {
+      delay: 0.018,
       duration: 0.45,
       amplitude: 0.32,
       alpha: 0.00035,
@@ -32,7 +32,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   garage: {
     preset: 'garage',
-    mix: 0.26,
     earlyReflections: [
       { delay: 0.009, gain: 0.55 },
       { delay: 0.018, gain: 0.46 },
@@ -40,6 +39,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       { delay: 0.041, gain: 0.24 },
     ],
     lateTail: {
+      delay: 0.035,
       duration: 0.9,
       amplitude: 0.42,
       alpha: 0.00017,
@@ -47,7 +47,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   hall: {
     preset: 'hall',
-    mix: 0.34,
     earlyReflections: [
       { delay: 0.018, gain: 0.36 },
       { delay: 0.033, gain: 0.32 },
@@ -56,6 +55,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       { delay: 0.108, gain: 0.14 },
     ],
     lateTail: {
+      delay: 0.07,
       duration: 2.8,
       amplitude: 0.52,
       alpha: 0.000056,
@@ -63,7 +63,6 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   cathedral: {
     preset: 'cathedral',
-    mix: 0.42,
     earlyReflections: [
       { delay: 0.028, gain: 0.28 },
       { delay: 0.049, gain: 0.25 },
@@ -73,6 +72,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       { delay: 0.235, gain: 0.1 },
     ],
     lateTail: {
+      delay: 0.12,
       duration: 4.8,
       amplitude: 0.62,
       alpha: 0.000033,
@@ -89,17 +89,18 @@ function getImpulseDuration(
     0,
   );
 
-  return Math.max(maxReflectionDelay, lateTail.duration);
+  return Math.max(maxReflectionDelay, lateTail.delay + lateTail.duration);
 }
 
 export function createReverbEffectConfig(
   preset: BuiltInReverbEffectPreset,
+  mix: number,
 ): ReverbEffectConfig {
   const definition = REVERB_PRESET_DEFINITIONS[preset];
 
   return {
     preset,
-    mix: definition.mix,
+    mix,
     earlyReflections: definition.earlyReflections.map((reflection) => ({
       ...reflection,
     })),
@@ -117,8 +118,9 @@ export function createReverbImpulseResponse(
   const sampleRate = audioContext.sampleRate;
   const duration = getImpulseDuration(earlyReflections, lateTail);
   const length = Math.max(1, Math.round(duration * sampleRate));
+  const tailStartIndex = Math.round(lateTail.delay * sampleRate);
   const tailLength = Math.min(
-    length,
+    length - tailStartIndex,
     Math.round(lateTail.duration * sampleRate),
   );
   const buffer = audioContext.createBuffer(1, length, sampleRate);
@@ -131,9 +133,9 @@ export function createReverbImpulseResponse(
     channelData[index] += reflection.gain;
   }
 
-  for (let index = 0; index < tailLength; index += 1) {
-    channelData[index] +=
-      lateTail.amplitude * Math.exp(-lateTail.alpha * index);
+  for (let offset = 0; offset < tailLength; offset += 1) {
+    channelData[tailStartIndex + offset] +=
+      lateTail.amplitude * Math.exp(-lateTail.alpha * offset);
   }
 
   return buffer;
