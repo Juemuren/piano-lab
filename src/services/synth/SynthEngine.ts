@@ -1,4 +1,5 @@
 import type {
+  EffectConfig,
   EnvelopeConfig,
   Spectrum,
   SynthBasicConfig,
@@ -38,6 +39,10 @@ export class SynthEngine {
 
   configureSpectrum(spectrum: Spectrum) {
     this.baseVoice.configureSpectrum(spectrum);
+  }
+
+  configureEffect(config: EffectConfig) {
+    this.effectChain.configure(config);
   }
 
   private async ensureAudioContextRunning(): Promise<void> {

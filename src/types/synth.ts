@@ -55,11 +55,24 @@ export interface SynthBasicConfig {
   harmonicCount: number;
 }
 
+export type FilterEffectType = 'lowpass' | 'highpass' | 'bandpass' | 'notch';
+
+export interface FilterEffectConfig {
+  type: FilterEffectType;
+  frequency: number;
+  q: number;
+}
+
+export interface EffectConfig {
+  filters: FilterEffectConfig[];
+}
+
 export interface SynthConfig {
   version: 1;
   synth: SynthBasicConfig;
   envelope: EnvelopeConfig;
   spectrum: SpectrumConfig;
+  effect: EffectConfig;
 }
 
 export type StartNoteResult =

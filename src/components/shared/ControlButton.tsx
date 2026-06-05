@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 
 type ControlButtonProps = {
-  label: string;
+  label?: string;
   icon?: ReactNode;
   disabled?: boolean;
+  title?: string;
   onClick: () => void;
 };
 
@@ -26,7 +27,7 @@ function ControlButton({
       "
     >
       {icon}
-      {label}
+      {label && <span>{label}</span>}
     </button>
   );
 }

@@ -4,6 +4,9 @@ import {
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+  DEFAULT_FILTER_EFFECT_FREQUENCY,
+  DEFAULT_FILTER_EFFECT_Q,
+  DEFAULT_FILTER_EFFECT_TYPE,
   DEFAULT_SPECTRUM_DECAY_RATE,
   DEFAULT_SPECTRUM_POWER_EXPONENT,
   DEFAULT_SPECTRUM_STRIKE_POINT,
@@ -12,7 +15,14 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants';
-import type { SpectrumConfig, SpectrumType, SynthConfig } from '../../types';
+import type {
+  EffectConfig,
+  FilterEffectConfig,
+  FilterEffectType,
+  SpectrumConfig,
+  SpectrumType,
+  SynthConfig,
+} from '../../types';
 import {
   isRecord,
   numberArrayOrDefault,
@@ -36,6 +46,12 @@ const SPECTRUM_TYPES: SpectrumType[] = [
   'soft',
   'realistic',
   'custom',
+];
+const FILTER_EFFECT_TYPES: FilterEffectType[] = [
+  'lowpass',
+  'highpass',
+  'bandpass',
+  'notch',
 ];
 
 export function createDefaultSynthConfig(): SynthConfig {
@@ -68,6 +84,9 @@ export function createDefaultSynthConfig(): SynthConfig {
         DEFAULT_SYNTH_HARMONIC_COUNT,
       ).amplitudes,
     },
+    effect: {
+      filters: [],
+    },
   };
 }
 
@@ -86,6 +105,45 @@ function normalizeSpectrumConfig(
       record.customAmplitudes,
       fallback.customAmplitudes,
     ),
+  };
+}
+
+function normalizeFilterEffectConfig(
+  value: unknown,
+): FilterEffectConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    type: unionOrDefault(
+      value.type,
+      FILTER_EFFECT_TYPES,
+      DEFAULT_FILTER_EFFECT_TYPE,
+    ),
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_FILTER_EFFECT_FREQUENCY,
+    ),
+    q: numberOrDefault(value.q, DEFAULT_FILTER_EFFECT_Q),
+  };
+}
+
+function normalizeEffectConfig(
+  value: unknown,
+  fallback: EffectConfig,
+): EffectConfig {
+  if (!isRecord(value)) return fallback;
+
+  if (Array.isArray(value.filters)) {
+    return {
+      filters: value.filters
+        .map(normalizeFilterEffectConfig)
+        .filter((filter): filter is FilterEffectConfig => Boolean(filter)),
+    };
+  }
+
+  const legacyFilter = normalizeFilterEffectConfig(value.filter);
+  return {
+    filters: legacyFilter ? [legacyFilter] : [],
   };
 }
 
@@ -135,5 +193,6 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
       ),
     },
     spectrum: normalizeSpectrumConfig(value.spectrum, fallback.spectrum),
+    effect: normalizeEffectConfig(value.effect, fallback.effect),
   };
 }

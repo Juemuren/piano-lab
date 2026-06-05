@@ -14,3 +14,7 @@ export const DEFAULT_SPECTRUM_TYPE: BuiltInSpectrumType = 'ethereal';
 export const DEFAULT_SPECTRUM_STRIKE_POINT = 0.5;
 export const DEFAULT_SPECTRUM_DECAY_RATE = 0.8;
 export const DEFAULT_SPECTRUM_POWER_EXPONENT = 1.5;
+
+export const DEFAULT_FILTER_EFFECT_TYPE = 'lowpass';
+export const DEFAULT_FILTER_EFFECT_FREQUENCY = 1000;
+export const DEFAULT_FILTER_EFFECT_Q = 1;

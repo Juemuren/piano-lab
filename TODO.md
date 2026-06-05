@@ -22,11 +22,11 @@
 
 增加新模块
 
-[TransferFunction](src/components/SoundSynthesizer/TransferFunction/index.tsx) 模块改为效果器。首先进行如下的分类（大类下可能还有小类），然后每类都有一个是否启用该效果的复选框，并提供可调节的参数。效果器的类型包括
+[TransferFunction](src/components/SoundSynthesizer/TransferFunction/index.tsx) 模块改为效果器。首先进行如下的分类，然后每类都有一个添加/删除效果器的按钮，并提供可调节的参数。效果器的类型包括
 
 - 滤波和均衡。参考 [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)。效果器应该是在干声生成后再滤波，所以最好放弃在连接振荡器前修改增益的想法
-  - [ ] 滤波。低通/高通（截止频率/共振度），带通/带组（中心频率/带宽）
-  - [ ] 均衡。低架/高架（截止频率/增益），峰值（中心频率/带宽/增益）
+  - [ ] 滤波。低通/高通（截止频率/谐振系数），带通/带组（中心频率/带宽因子）
+  - [ ] 均衡。低架/高架（截止频率/增益比例），峰值（中心频率/带宽因子/增益比例）
   - [ ] 用 Plotly 绘制最终的幅频曲线
 - 空间
   - [ ] 回声。可以选择衰减率/反射次数/延迟时间。主要逻辑其实也已经实现，但目前是把这些效果转为了脉冲响应然后在合成器中使用。改为使用 [DelayNode](https://mdn.org.cn/en-US/docs/Web/API/DelayNode/DelayNode) 做真正的回声

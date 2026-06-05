@@ -31,22 +31,22 @@
       "lowpass": {
         "name": "低通",
         "frequency": "截止频率",
-        "q": "共振度"
+        "q": "谐振系数"
       },
       "highpass": {
         "name": "高通",
         "frequency": "截止频率",
-        "q": "共振度"
+        "q": "谐振系数"
       },
       "bandpass": {
         "name": "带通",
         "frequency": "中心频率",
-        "q": "带宽"
+        "q": "带宽因子"
       },
       "notch": {
         "name": "带阻",
         "frequency": "中心频率",
-        "q": "带宽"
+        "q": "带宽因子"
       }
     },
     "equalizer": {
@@ -54,18 +54,18 @@
       "lowshelf": {
         "name": "低架",
         "frequency": "截止频率",
-        "gain": "增益"
+        "gain": "增益比例"
       },
       "highshelf": {
         "name": "高架",
         "frequency": "截止频率",
-        "gain": "增益"
+        "gain": "增益比例"
       },
       "peaking": {
         "name": "峰值",
         "frequency": "中心频率",
-        "q": "带宽",
-        "gain": "增益"
+        "q": "带宽因子",
+        "gain": "增益比例"
       }
     }
   },
