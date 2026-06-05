@@ -15,6 +15,7 @@
 
 ## Style
 
+- [ ] 对项目中的数个 [ControlSelect](src/components/shared/ControlSelect.tsx) 补充 label
 - [ ] 在脚注中补充关于应用的说明
 
 ## Feat
