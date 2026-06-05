@@ -11,7 +11,7 @@
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 https://chromestatus.com/feature/5138066234671104。这个问题好像无法修复，只要调用就会有警告
 - [x] [ControlCheckbox](src/components/shared/ControlCheckbox.tsx) 中的复选框在某些情况下会变小，应将其大小设为不可变
-- [ ] [SettingsPanel](/src/components/SettingsPanel/index.tsx) 的宽度会自动变化，改为宽度不变
+- [x] [SettingsPanel](/src/components/SettingsPanel/index.tsx) 的宽度会自动变化，改为宽度不变
 
 ## Style
 
