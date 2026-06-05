@@ -6,6 +6,7 @@ import type { FilterEffectConfig, FilterEffectType } from '../../../types';
 import ControlButton from '../../shared/ControlButton';
 import ControlRange from '../../shared/ControlRange';
 import ControlSelect from '../../shared/ControlSelect';
+import FilterMagnitudeResponsePreview from './FilterMagnitudeResponsePreview';
 
 interface FilterEffectProps {
   filters: FilterEffectConfig[];
@@ -103,6 +104,10 @@ function FilterEffect({
           </ControlSelect>
         </div>
       </div>
+      <FilterMagnitudeResponsePreview
+        title={t('charts.magnitudeResponse')}
+        filters={filters}
+      />
     </details>
   );
 }

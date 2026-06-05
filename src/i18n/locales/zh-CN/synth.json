@@ -88,7 +88,7 @@
   },
   "charts": {
     "amplitudeEnvelopeCurve": "振幅包络曲线",
-    "magnitudeResponse": "幅频特性",
-    "phaseResponse": "相频特性"
+    "magnitudeResponse": "幅频特性曲线",
+    "phaseResponse": "相频特性曲线"
   }
 }
