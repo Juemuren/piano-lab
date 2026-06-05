@@ -4,14 +4,13 @@
 
 - [ ] [共享组件](src/components/shared/) 下存在 3 种 button，最好进行统一
 - [x] [SynthEngine](src/services/synth/SynthEngine.ts) 中分离出 BaseVoice/EffectChain 为后续添加效果器作铺垫
-- [ ] [SynthEngine](src/services/synth/SynthEngine.ts) 中可以把所有 for 循环改为 foreach，更加函数式
 
 ## Fix
 
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 https://chromestatus.com/feature/5138066234671104。这个问题好像无法修复，只要调用就会有警告
-- [ ] [ControlCheckbox](src/components/shared/ControlCheckbox.tsx) 中的复选框在某些情况下会变小，应将其大小设为不可变
+- [x] [ControlCheckbox](src/components/shared/ControlCheckbox.tsx) 中的复选框在某些情况下会变小，应将其大小设为不可变
 - [ ] [SettingsPanel](/src/components/SettingsPanel/index.tsx) 的宽度会自动变化，改为宽度不变
 
 ## Style

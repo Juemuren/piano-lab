@@ -13,7 +13,7 @@ function ControlCheckbox({
     <label className="flex items-center gap-2 text-sm">
       <input
         type="checkbox"
-        className={`size-4 accent-app-accent ${className}`}
+        className={`size-4 flex-none accent-app-accent ${className}`}
         {...props}
       />
       <span>{label}</span>
