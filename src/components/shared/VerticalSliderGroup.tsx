@@ -7,7 +7,7 @@ type VerticalSliderGroupProps = {
   max: number | string;
   step: number | string;
   getKey?: (index: number) => string | number;
-  formatValue?: (value: number) => string;
+  formatValue?: (value: number, index: number) => string;
   onChange?: (index: number, value: number) => void;
   disabled?: boolean;
 };
@@ -27,7 +27,7 @@ function VerticalSliderGroup({
     <div className="flex items-end gap-2 overflow-x-auto py-3">
       {values.map((value, index) => (
         <div key={getKey(index)} className="flex flex-1 flex-col items-center">
-          <div className="text-xs">{formatValue(value)}</div>
+          <div className="text-xs">{formatValue(value, index)}</div>
           <div className="relative flex h-36 w-8 items-center justify-center">
             <input
               type="range"

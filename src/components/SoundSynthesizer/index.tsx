@@ -199,6 +199,7 @@ function SoundSynthesizer() {
       >
         <Effect
           key={`effect-${importRevision}`}
+          harmonicCount={harmonicCount}
           initialConfig={importedConfig?.effect}
           onConfigChange={setEffectConfig}
         />

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
 import type { EqualizerEffectConfig, FilterEffectConfig } from '../../../types';
+import { getBiquadEffectMagnitudes } from '../../../services/synth/EffectResponse';
 import useElementWidth from '../../../hooks/useElementWidth';
 
 interface EffectMagnitudeResponsePreviewProps {
@@ -8,8 +9,6 @@ interface EffectMagnitudeResponsePreviewProps {
   filters: FilterEffectConfig[];
   equalizers: EqualizerEffectConfig[];
 }
-
-type BiquadEffectConfig = FilterEffectConfig | EqualizerEffectConfig;
 
 const FREQUENCY_POINT_COUNT = 256;
 const MIN_FREQUENCY = 20;
@@ -25,50 +24,15 @@ function createFrequencyPoints() {
   });
 }
 
-function applyBiquadConfig(
-  filterNode: BiquadFilterNode,
-  effectConfig: BiquadEffectConfig,
-) {
-  filterNode.type = effectConfig.type;
-  filterNode.frequency.value = effectConfig.frequency;
-  filterNode.Q.value = effectConfig.q;
-
-  if ('gain' in effectConfig) {
-    filterNode.gain.value = effectConfig.gain;
-  }
-}
-
 function getEffectMagnitudeResponse(
   filters: FilterEffectConfig[],
   equalizers: EqualizerEffectConfig[],
 ) {
   const frequencies = createFrequencyPoints();
-  const totalMagnitudes = new Float32Array(frequencies.length);
-  totalMagnitudes.fill(1);
-  const effects = [...filters, ...equalizers];
-
-  if (effects.length === 0 || typeof OfflineAudioContext === 'undefined') {
-    return {
-      frequencies,
-      decibels: Array.from(totalMagnitudes, () => 0),
-    };
-  }
-
-  const audioContext = new OfflineAudioContext(1, 1, 44100);
-  const frequencyValues = Float32Array.from(frequencies);
-
-  for (const effect of effects) {
-    const filterNode = audioContext.createBiquadFilter();
-    const magnitudes = new Float32Array(frequencies.length);
-    const phases = new Float32Array(frequencies.length);
-
-    applyBiquadConfig(filterNode, effect);
-    filterNode.getFrequencyResponse(frequencyValues, magnitudes, phases);
-
-    for (const [index, magnitude] of magnitudes.entries()) {
-      totalMagnitudes[index] *= magnitude;
-    }
-  }
+  const totalMagnitudes = getBiquadEffectMagnitudes(frequencies, [
+    ...filters,
+    ...equalizers,
+  ]);
 
   return {
     frequencies,
@@ -92,7 +56,7 @@ function EffectMagnitudeResponsePreview({
 
   return (
     <details open className="my-2">
-      <summary className="text-lg font-bold">{title}</summary>
+      <summary className="text-lg font-bold my-2">{title}</summary>
       <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter

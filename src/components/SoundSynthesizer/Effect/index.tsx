@@ -1,16 +1,18 @@
 import type { EffectConfig } from '../../../types';
 import { useTranslation } from 'react-i18next';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
+import EffectHarmonicResponsePreview from './EffectHarmonicResponsePreview';
 import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
 import EqualizerEffect from './EqualizerEffect';
 import FilterEffect from './FilterEffect';
 
 interface EffectProps {
+  harmonicCount: number;
   initialConfig?: EffectConfig | null;
   onConfigChange?: (config: EffectConfig) => void;
 }
 
-function Effect({ initialConfig, onConfigChange }: EffectProps) {
+function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   const { t } = useTranslation('synth');
   const {
     filters,
@@ -48,7 +50,13 @@ function Effect({ initialConfig, onConfigChange }: EffectProps) {
         onGainChange={updateEqualizerGain}
       />
       <EffectMagnitudeResponsePreview
-        title={t('charts.magnitudeResponse')}
+        title={t('charts.magnitudeResponseCurve')}
+        filters={filters}
+        equalizers={equalizers}
+      />
+      <EffectHarmonicResponsePreview
+        title={t('charts.magnitudeResponseSample')}
+        harmonicCount={harmonicCount}
         filters={filters}
         equalizers={equalizers}
       />

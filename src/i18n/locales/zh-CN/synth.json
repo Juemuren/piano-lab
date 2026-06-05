@@ -23,8 +23,7 @@
   "effect": {
     "preview": {
       "pitch": "音高",
-      "baseFrequency": "基频",
-      "baseFrequencyPreviewHint": "此基频调节仅用于预览效果对谐波的影响，不会改变实际演奏的音高。"
+      "baseFrequency": "基频"
     },
     "filter": {
       "name": "滤波器",
@@ -88,7 +87,8 @@
   },
   "charts": {
     "amplitudeEnvelopeCurve": "振幅包络曲线",
-    "magnitudeResponse": "幅频特性曲线",
-    "phaseResponse": "相频特性曲线"
+    "magnitudeResponseCurve": "幅频特性曲线",
+    "magnitudeResponseSample": "幅频特性曲线采样",
+    "phaseResponseCurve": "相频特性曲线"
   }
 }

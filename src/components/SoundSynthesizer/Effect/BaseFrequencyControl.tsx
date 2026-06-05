@@ -10,7 +10,6 @@ interface BaseFrequencyOption {
 interface BaseFrequencyControlProps {
   labelRange: string;
   labelSelect: string;
-  hint: string;
   value: number;
   selectedPitch?: number;
   pitchOptions: BaseFrequencyOption[];
@@ -21,7 +20,6 @@ interface BaseFrequencyControlProps {
 function BaseFrequencyControl({
   labelRange,
   labelSelect,
-  hint,
   value,
   selectedPitch,
   pitchOptions,
@@ -33,7 +31,6 @@ function BaseFrequencyControl({
       <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
         <ControlRange
           label={labelRange}
-          p={hint}
           symbol={<InlineMath math="f" />}
           min="20"
           max="5000"
