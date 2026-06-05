@@ -6,6 +6,7 @@ import AbcEditor from './components/AbcEditor';
 import SettingsPanel from './components/SettingsPanel';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { SECTION_IDS } from './constants/sections';
 
 function App() {
   const { t } = useTranslation('app');
@@ -31,26 +32,29 @@ function App() {
           "
         >
           <section
-            id="sound-synthesizer"
+            id={SECTION_IDS.soundSynthesizer}
             className="mx-auto w-full scroll-mt-16"
           >
             <CollapsibleSection title={t('sections.soundSynthesizer')}>
               <SoundSynthesizer />
             </CollapsibleSection>
           </section>
-          <section id="score-editor" className="mx-auto w-full scroll-mt-16">
+          <section
+            id={SECTION_IDS.scoreEditor}
+            className="mx-auto w-full scroll-mt-16"
+          >
             <CollapsibleSection title={t('sections.scoreEditor')}>
               <AbcEditor />
             </CollapsibleSection>
           </section>
         </div>
 
-        <section id="piano-keyboard" className="scroll-mt-16">
+        <section id={SECTION_IDS.pianoKeyboard} className="scroll-mt-16">
           <Piano />
         </section>
 
         <section
-          id="settings"
+          id={SECTION_IDS.settings}
           className="mx-auto w-full sm:w-lg lg:w-2xl xl:w-4xl scroll-mt-16"
         >
           <CollapsibleSection

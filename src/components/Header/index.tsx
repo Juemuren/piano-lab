@@ -2,14 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
+import { NAV_ITEMS } from '../../constants/sections';
 
-const NAV_ITEMS = [
-  { href: '#sound-synthesizer', labelKey: 'sections.soundSynthesizer' },
-  { href: '#score-editor', labelKey: 'sections.scoreEditor' },
-  { href: '#piano-keyboard', labelKey: 'sections.pianoKeyboard' },
-  { href: '#about', labelKey: 'sections.about' },
-  { href: '#settings', labelKey: 'sections.settings' },
-] as const;
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;
 
@@ -18,10 +12,10 @@ function Header() {
   const lastScrollY = useRef(0);
   const [isHidden, setIsHidden] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navLinks = NAV_ITEMS.map(({ href, labelKey }) => (
+  const navLinks = NAV_ITEMS.map(({ id, labelKey }) => (
     <a
-      key={href}
-      href={href}
+      key={id}
+      href={`#${id}`}
       className="px-2 py-1 hover:underline"
       onClick={() => setIsMenuOpen(false)}
     >

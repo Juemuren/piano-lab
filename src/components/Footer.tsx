@@ -1,6 +1,7 @@
 import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
+import { SECTION_IDS } from '../constants/sections';
 
 const articleUrl =
   'https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/';
@@ -49,7 +50,6 @@ function FooterPanel({ title, children }: FooterPanelProps) {
 function FooterLink({ href, label }: FooterLinkProps) {
   return (
     <a
-      id="about"
       href={href}
       target="_blank"
       rel="noreferrer"
@@ -70,7 +70,10 @@ function Footer() {
   const { t } = useTranslation('footer');
 
   return (
-    <footer className="p-8 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75">
+    <footer
+      id={SECTION_IDS.about}
+      className="p-8 scroll-mt-16 bg-app-surface-muted/25 dark:bg-app-surface-muted-dark/75"
+    >
       <div
         className="
           mx-auto w-full max-w-4xl text-left
