@@ -86,6 +86,39 @@ function getImpulseDuration(
   return Math.max(maxReflectionDelay, lateTail.delay + lateTail.duration);
 }
 
+export function getReverbImpulseResponseSamples(
+  config: ReverbEffectConfig,
+  sampleRate: number,
+) {
+  const { earlyReflections, lateTail } = config;
+  const duration = getImpulseDuration(earlyReflections, lateTail);
+  const length = Math.max(1, Math.round(duration * sampleRate));
+  const tailStartIndex = Math.round(lateTail.delay * sampleRate);
+  const tailLength = Math.min(
+    length - tailStartIndex,
+    Math.round(lateTail.duration * sampleRate),
+  );
+  const time = Array.from({ length }, (_, index) => index / sampleRate);
+  const amplitude = new Array<number>(length).fill(0);
+
+  for (const reflection of earlyReflections) {
+    const index = Math.round(reflection.delay * sampleRate);
+    if (index >= length) continue;
+
+    amplitude[index] += reflection.gain;
+  }
+
+  for (let offset = 0; offset < tailLength; offset += 1) {
+    amplitude[tailStartIndex + offset] +=
+      lateTail.amplitude * Math.exp(-lateTail.alpha * offset);
+  }
+
+  return {
+    time,
+    amplitude,
+  };
+}
+
 export function createReverbEffectConfig(
   preset: BuiltInReverbEffectPreset,
   mix: number,
@@ -108,29 +141,16 @@ export function createReverbImpulseResponse(
   audioContext: BaseAudioContext,
   config: ReverbEffectConfig,
 ) {
-  const { earlyReflections, lateTail } = config;
   const sampleRate = audioContext.sampleRate;
-  const duration = getImpulseDuration(earlyReflections, lateTail);
-  const length = Math.max(1, Math.round(duration * sampleRate));
-  const tailStartIndex = Math.round(lateTail.delay * sampleRate);
-  const tailLength = Math.min(
-    length - tailStartIndex,
-    Math.round(lateTail.duration * sampleRate),
+  const samples = getReverbImpulseResponseSamples(config, sampleRate);
+  const buffer = audioContext.createBuffer(
+    1,
+    samples.amplitude.length,
+    sampleRate,
   );
-  const buffer = audioContext.createBuffer(1, length, sampleRate);
   const channelData = buffer.getChannelData(0);
 
-  for (const reflection of earlyReflections) {
-    const index = Math.round(reflection.delay * sampleRate);
-    if (index >= length) continue;
-
-    channelData[index] += reflection.gain;
-  }
-
-  for (let offset = 0; offset < tailLength; offset += 1) {
-    channelData[tailStartIndex + offset] +=
-      lateTail.amplitude * Math.exp(-lateTail.alpha * offset);
-  }
+  channelData.set(samples.amplitude);
 
   return buffer;
 }

@@ -8,6 +8,7 @@ import type {
 import ControlButton from '../../shared/ControlButton';
 import ControlRange from '../../shared/ControlRange';
 import ControlSelect from '../../shared/ControlSelect';
+import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
 interface ReverbEffectProps {
   reverb: ReverbEffectConfig;
@@ -198,6 +199,11 @@ function ReverbEffect({
             onChange={onLateTailAlphaChange}
           />
         </details>
+
+        <ReverbImpulseResponsePreview
+          title={t('effect.reverb.impulseResponse')}
+          reverb={reverb}
+        />
       </div>
     </details>
   );

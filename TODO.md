@@ -30,11 +30,12 @@
   - [x] 均衡。低架/高架（截止频率/增益比例），峰值（中心频率/带宽因子/增益比例）
   - [x] 用 Plotly 绘制最终的幅频曲线
 - 混响
-  - [ ] 早期反射。可以选择反射次数/增益/延时。两种方案，目前使用第二种
+  - [x] 早期反射。可以选择反射次数/增益/延时。两种方案，目前使用第二种
     1. 使用 [DelayNode](https://mdn.org.cn/en-US/docs/Web/API/DelayNode/DelayNode)
     2. 转为脉冲响应然后使用 [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)
-  - [ ] 晚期尾音。使用 ConvolverNode，脉冲响应为指数衰减，预设包括 浴室/车库/大厅/教堂，只是修改一些参数，但这些参数可以完全手动修改。用 KaTeX/Plotly 绘制脉冲响应的公式和图像
-  - [ ] 立体声。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
+  - [x] 晚期尾音。使用 ConvolverNode，脉冲响应为指数衰减，预设包括 浴室/车库/大厅/教堂
+  - [x] 用 KaTeX/Plotly 绘制脉冲响应的公式和图像
+- [ ] 立体声。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
 - [ ] 压缩。参考 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)。压缩是减小音频信号的最大音量与最小音量之间的差距，属于动态调节，无法绘制幅频曲线
 - [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括过载/法兹/饱和，优先实现饱和效果
 - [ ] 调制。包括镶边/移相/合唱/颤音（Tremolo，音量调制）/震音（Vibrato，音高调制）。不是核心效果，可以后续再实现。全通滤波器（相变中心/陡峭程度）可以用于移相

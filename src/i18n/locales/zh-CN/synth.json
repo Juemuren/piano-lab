@@ -89,6 +89,7 @@
         "amplitude": "振幅系数",
         "alpha": "衰减系数"
       },
+      "impulseResponse": "总脉冲响应",
       "mix": "混合比例"
     }
   },
