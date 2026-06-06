@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-import Scatter from 'react-plotly.js/scatter';
 import type { ReverbConfig } from '../../../../types';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/Reverb';
-import useElementWidth from '../../../../hooks/useElementWidth';
 import BlockMath from '../../../shared/BlockMath';
+import Scatter from '../../../shared/Scatter';
 
 interface ReverbImpulseResponsePreviewProps {
   title: string;
@@ -48,7 +47,6 @@ function ReverbImpulseResponsePreview({
   title,
   reverb,
 }: ReverbImpulseResponsePreviewProps) {
-  const { elementRef, width } = useElementWidth<HTMLDivElement>();
   const response = useMemo(() => {
     const samples = getReverbImpulseResponseSamples(
       reverb,
@@ -62,43 +60,18 @@ function ReverbImpulseResponsePreview({
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
       <BlockMath math={String.raw`h[n]=\delta[n]+h_e[n]+h_l[n]`} />
-      <div ref={elementRef} className="w-full">
-        {width > 0 && (
-          <Scatter
-            data={[
-              {
-                x: response.time,
-                y: response.amplitude,
-                mode: 'lines',
-              },
-            ]}
-            layout={{
-              autosize: true,
-              margin: { t: 40, r: 40, b: 40, l: 40 },
-              paper_bgcolor: 'rgba(0,0,0,0)',
-              plot_bgcolor: 'rgba(0,0,0,0)',
-              xaxis: {
-                ticksuffix: 's',
-                fixedrange: true,
-                gridcolor: 'rgba(128,128,128,0.25)',
-              },
-              yaxis: {
-                fixedrange: true,
-                gridcolor: 'rgba(128,128,128,0.25)',
-              },
-            }}
-            config={{
-              autosizable: true,
-              displayModeBar: false,
-            }}
-            style={{
-              width: `${width}px`,
-              height: `100%`,
-            }}
-            useResizeHandler
-          />
-        )}
-      </div>
+      <Scatter
+        data={[
+          {
+            x: response.time,
+            y: response.amplitude,
+            mode: 'lines',
+          },
+        ]}
+        xaxis={{
+          ticksuffix: 's',
+        }}
+      />
     </details>
   );
 }
