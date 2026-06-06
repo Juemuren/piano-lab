@@ -2,6 +2,35 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.9.0]
+
+### Added
+
+- Added filter effects with lowpass, highpass, bandpass, and notch types, each providing adjustable cutoff/center frequency, Q, and bandwidth parameters.
+- Added equalizer effects with lowshelf, highshelf, and peaking types, each providing adjustable frequency, gain, and bandwidth parameters.
+- Added reverb with separated early reflections (configurable reflection count, gain, and delay) and a late tail (exponential-decay impulse response with bathroom, garage, hall, and cathedral presets, plus adjustable delay time), using `ConvolverNode` for convolution.
+- Added Plotly.js-powered magnitude response plots for the filter and equalizer combination.
+- Added KaTeX and Plotly.js rendering for reverb impulse response formulas and waveforms.
+
+### Changed
+
+- Replaced the old transfer function module with a new effects system composed of filters, equalizers, and reverb.
+- Refactored the synthesizer engine, separating `BaseVoice` and `EffectChain` from `SynthEngine`.
+- Unified shared button components across the project and extracted a reusable `useElementWidth` hook.
+- Extracted `PianoKey` from the `Piano` component and split the `Footer` into focused sub-components.
+- Restructured i18n keys and effect component directories for clarity.
+- Moved `constants` definitions into a dedicated directory and promoted `NAV_ITEMS` into shared constants.
+
+### Fixed
+
+- Fixed unreliable `harmonicCount` propagation in `SynthEngine`.
+- Fixed incorrect navigation item order in the page header.
+
+### Style
+
+- Fixed `ControlCheckbox` size to prevent it from shrinking in some layouts.
+- Fixed `SettingsPanel` width so it no longer changes automatically.
+
 ## [0.8.0]
 
 ### Added

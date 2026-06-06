@@ -51,17 +51,17 @@
     "filter": {
       "name": "Filter",
       "lowpass": {
-        "name": "Lowpass",
+        "name": "Low Pass",
         "frequency": "Cutoff Frequency",
         "q": "Q"
       },
       "highpass": {
-        "name": "Highpass",
+        "name": "High Pass",
         "frequency": "Cutoff Frequency",
         "q": "Q"
       },
       "bandpass": {
-        "name": "Bandpass",
+        "name": "Band Pass",
         "frequency": "Center Frequency",
         "q": "Bandwidth Factor"
       },
@@ -103,13 +103,13 @@
         "name": "Early Reflection",
         "item": "Reflection {{index}}",
         "delay": "Delay",
-        "gain": "Gain"
+        "amplitude": "Amplitude"
       },
       "lateTail": {
         "name": "Late Tail",
         "delay": "Delay Time",
         "duration": "Duration",
-        "amplitude": "Amplitude",
+        "amplitude": "Initial Amplitude",
         "alpha": "Decay Coefficient"
       },
       "impulseResponse": "Impulse Response",

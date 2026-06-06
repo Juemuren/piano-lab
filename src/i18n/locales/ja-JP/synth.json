@@ -103,13 +103,13 @@
         "name": "初期反射",
         "item": "反射 {{index}}",
         "delay": "遅延",
-        "gain": "ゲイン"
+        "amplitude": "ゲイン"
       },
       "lateTail": {
         "name": "後期残響",
         "delay": "遅延時間",
         "duration": "持続時間",
-        "amplitude": "振幅係数",
+        "amplitude": "初期振幅",
         "alpha": "減衰係数"
       },
       "impulseResponse": "総インパルス応答",

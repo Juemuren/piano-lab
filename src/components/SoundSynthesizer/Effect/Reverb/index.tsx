@@ -120,7 +120,7 @@ function Reverb({
                   }
                 />
                 <ControlRange
-                  label={t('effect.reverb.earlyReflection.gain')}
+                  label={t('effect.reverb.earlyReflection.amplitude')}
                   symbol={<InlineMath math="a_i" />}
                   min="0"
                   max="1"

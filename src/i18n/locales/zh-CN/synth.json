@@ -103,13 +103,13 @@
         "name": "早期反射",
         "item": "反射 {{index}}",
         "delay": "延时",
-        "gain": "增益"
+        "amplitude": "振幅"
       },
       "lateTail": {
         "name": "晚期尾音",
         "delay": "延迟时间",
         "duration": "持续时间",
-        "amplitude": "振幅系数",
+        "amplitude": "初始振幅",
         "alpha": "衰减系数"
       },
       "impulseResponse": "总脉冲响应",
