@@ -10,7 +10,6 @@ import {
 } from '../../constants/synth';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
-const ENVELOPE_HARMONIC_TIMES = 1;
 const ENVELOPE_POINTS_PER_SEGMENT = 50;
 
 function sampleExponentialRamp(
@@ -74,17 +73,13 @@ function useEnvelopeControl(
     const sustainEnd = decayEnd + ENVELOPE_SUSTAIN_SECONDS;
     const releaseEnd = sustainEnd + releaseTime;
     const attackGain = 1;
-    const decayGain = Math.max(attackGain * sustainGain, silenceGain);
-    const holdGain = Math.max(
-      decayGain / Math.sqrt(1 + ENVELOPE_HARMONIC_TIMES),
-      silenceGain,
-    );
+    const decayGain = attackGain * sustainGain;
 
     const points = [
       ...sampleExponentialRamp(0, attackEnd, silenceGain, attackGain),
       ...sampleExponentialRamp(attackEnd, decayEnd, attackGain, decayGain),
-      ...sampleExponentialRamp(decayEnd, sustainEnd, decayGain, holdGain),
-      ...sampleExponentialRamp(sustainEnd, releaseEnd, holdGain, silenceGain),
+      ...sampleExponentialRamp(decayEnd, sustainEnd, decayGain, decayGain),
+      ...sampleExponentialRamp(sustainEnd, releaseEnd, decayGain, silenceGain),
     ];
 
     return {

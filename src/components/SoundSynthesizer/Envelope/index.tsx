@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { EnvelopeConfig } from '../../../types';
+import EnvelopeFormulaPreview from './EnvelopeFormulaPreview';
 import EnvelopeCurvePreview from './EnvelopeCurvePreview';
 import EnvelopeParameterControls from './EnvelopeParameterControls';
 import useEnvelopeControl from '../../../hooks/synth/useEnvelopeControl';
@@ -46,7 +47,7 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
         onSustainGainChange={setSustainGain}
         onSilenceGainChange={setSilenceGain}
       />
-
+      <EnvelopeFormulaPreview title={t('envelope.amplitudeEnvelopeFormula')} />
       <EnvelopeCurvePreview
         title={t('charts.amplitudeEnvelopeCurve')}
         envelopeCurve={envelopeCurve}

@@ -1,3 +1,4 @@
+import { InlineMath } from 'react-katex';
 import ControlRange from '../../shared/ControlRange';
 
 interface EnvelopeParameterControlsProps {
@@ -37,6 +38,7 @@ function EnvelopeParameterControls({
     <>
       <ControlRange
         label={labels.attackTime}
+        symbol={<InlineMath math="\tau_a" />}
         min="0.001"
         max="0.1"
         step="0.001"
@@ -46,6 +48,7 @@ function EnvelopeParameterControls({
       />
       <ControlRange
         label={labels.decayTime}
+        symbol={<InlineMath math="\tau_d" />}
         min="0.01"
         max="1"
         step="0.01"
@@ -55,6 +58,7 @@ function EnvelopeParameterControls({
       />
       <ControlRange
         label={labels.releaseTime}
+        symbol={<InlineMath math="\tau_r" />}
         min="0.1"
         max="10"
         step="0.1"
@@ -64,6 +68,7 @@ function EnvelopeParameterControls({
       />
       <ControlRange
         label={labels.sustainGain}
+        symbol={<InlineMath math="S" />}
         min="0.1"
         max="1"
         step="0.01"
@@ -73,6 +78,7 @@ function EnvelopeParameterControls({
       />
       <ControlRange
         label={labels.silenceGain}
+        symbol={<InlineMath math="\varepsilon" />}
         min="0.000001"
         max="0.001"
         step="0.000001"

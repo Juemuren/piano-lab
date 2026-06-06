@@ -20,7 +20,8 @@
     "decayTime": "衰音时间",
     "releaseTime": "释音时间",
     "sustainGain": "稳音增益",
-    "silenceGain": "静音增益"
+    "silenceGain": "静音增益",
+    "amplitudeEnvelopeFormula": "振幅包络公式"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "谐波频谱公式",

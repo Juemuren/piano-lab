@@ -23,17 +23,8 @@
 - [ ] [ControlSelect](src/components/shared/ControlSelect.tsx) 中的标签在宽屏上改为横向
 - [ ] 在脚注中补充关于应用的说明
 - [ ] 混响添加一个启用开关
-- [x] 频谱中添加公式 $p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$
+- [x] 频谱中添加公式
 - [x] 包络中添加公式
-
-$$
-\begin{cases}
-y(t) = \varepsilon (\frac{A}{\varepsilon})^{\frac{t}{\tau_a}} & 0\le t < \tau_a \\
-y(t) = A (\frac{S}{A})^{\frac{t-\tau_a}{\tau_d}} & \tau_a\le t < \tau_a + \tau_d \\
-y(t) = S & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
-y(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}} & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
-\end{cases}
-$$
 
 ## Feat
 
