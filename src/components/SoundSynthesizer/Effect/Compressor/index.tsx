@@ -38,8 +38,8 @@ function Compressor({
           icon={<Activity size={18} />}
           label={t(
             compressor
-              ? 'effect.compressor.enabled'
-              : 'effect.compressor.disabled',
+              ? 'effect.compressor.disabled'
+              : 'effect.compressor.enabled',
           )}
           onClick={() => onEnabledChange(!compressor)}
         />
