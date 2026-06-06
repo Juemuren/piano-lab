@@ -30,6 +30,10 @@ export class EffectChain {
     this.rebuild();
   }
 
+  getCompressorReduction() {
+    return this.compressorNode?.reduction ?? 0;
+  }
+
   private applyFilterConfig(
     filterNode: BiquadFilterNode,
     filterConfig: FilterConfig,

@@ -98,7 +98,8 @@
       "knee": "拐点",
       "ratio": "压缩比",
       "attack": "启动时间",
-      "release": "恢复时间"
+      "release": "恢复时间",
+      "reduction": "实时信号增益"
     },
     "reverb": {
       "name": "混响",

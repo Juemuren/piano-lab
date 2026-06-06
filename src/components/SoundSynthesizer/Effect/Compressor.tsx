@@ -3,6 +3,7 @@ import { Activity } from 'lucide-react';
 import type { CompressorConfig } from '../../../types';
 import ControlButton from '../../shared/ControlButton';
 import ControlRange from '../../shared/ControlRange';
+import CompressorReductionPreview from './CompressorReductionPreview';
 
 interface CompressorProps {
   compressor: CompressorConfig | null;
@@ -89,6 +90,10 @@ function Compressor({
               value={compressor.release}
               displayValue={`${(compressor.release * 1000).toFixed(0)} ms`}
               onChange={onReleaseChange}
+            />
+            <CompressorReductionPreview
+              title={t('effect.compressor.reduction')}
+              enabled={Boolean(compressor)}
             />
           </div>
         )}

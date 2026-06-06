@@ -49,6 +49,10 @@ export class SynthEngine {
     this.effectChain.configure(config);
   }
 
+  getCompressorReduction() {
+    return this.effectChain.getCompressorReduction();
+  }
+
   private async ensureAudioContextRunning(): Promise<void> {
     if (!this.audioContext || this.audioContext.state === 'closed') {
       this.init();

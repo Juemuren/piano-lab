@@ -30,7 +30,7 @@
 
 - 压缩。参考 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)。
   - [x] 实现压缩效果
-  - [ ] 绘制实时的 reduction
+  - [x] 绘制实时的 reduction
 - [ ] 声像。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
 - [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括饱和/失真/过载/法兹，公式如下
 
