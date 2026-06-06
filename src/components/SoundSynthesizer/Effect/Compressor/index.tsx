@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Activity } from 'lucide-react';
-import type { CompressorConfig } from '../../../types';
-import ControlButton from '../../shared/ControlButton';
-import ControlRange from '../../shared/ControlRange';
+import type { CompressorConfig } from '../../../../types';
+import ControlButton from '../../../shared/ControlButton';
+import ControlRange from '../../../shared/ControlRange';
 import CompressorReductionPreview from './CompressorReductionPreview';
 
 interface CompressorProps {

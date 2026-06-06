@@ -1,6 +1,6 @@
 import Scatter from 'react-plotly.js/scatter';
-import useElementWidth from '../../../hooks/useElementWidth';
-import useCompressorReductionHistory from '../../../hooks/synth/useCompressorReductionHistory';
+import useElementWidth from '../../../../hooks/useElementWidth';
+import useCompressorReductionHistory from '../../../../hooks/synth/useCompressorReductionHistory';
 
 interface CompressorReductionPreviewProps {
   title: string;
