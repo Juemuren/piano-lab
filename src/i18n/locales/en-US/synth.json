@@ -4,26 +4,49 @@
     "spectrum": "Spectrum",
     "effect": "Effect"
   },
+  "controls": {
+    "volume": "Volume",
+    "harmonicCount": "Harmonic Count",
+    "harmonicCountWarning": "Do not set this value too high, or the app may lag."
+  },
   "oscillator": {
     "sine": "Sine",
     "triangle": "Triangle",
     "sawtooth": "Sawtooth",
     "square": "Square"
   },
+  "envelope": {
+    "attackTime": "Attack Time",
+    "decayTime": "Decay Time",
+    "releaseTime": "Release Time",
+    "sustainGain": "Sustain Gain",
+    "silenceGain": "Silence Gain"
+  },
   "spectrum": {
-    "ethereal": "Ethereal",
-    "metallic": "Metallic",
-    "pure": "Pure",
-    "bright": "Bright",
-    "normal": "Normal",
-    "soft": "Soft",
-    "realistic": "Realistic",
-    "custom": "Custom"
+    "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
+    "presers": {
+      "ethereal": "Ethereal",
+      "metallic": "Metallic",
+      "pure": "Pure",
+      "bright": "Bright",
+      "normal": "Normal",
+      "soft": "Soft",
+      "realistic": "Realistic",
+      "custom": "Custom"
+    },
+    "parameters": {
+      "strikePoint": "Strike Point",
+      "decayRate": "Decay Rate",
+      "powerExponent": "Power Exponent"
+    }
   },
   "effect": {
     "preview": {
       "pitch": "Pitch",
       "baseFrequency": "Base Frequency"
+    },
+    "filterEqualizer": {
+      "name": "Filter & Equalizer"
     },
     "filter": {
       "name": "Filter",
@@ -66,24 +89,35 @@
         "q": "Bandwidth Factor",
         "gain": "Gain"
       }
+    },
+    "reverb": {
+      "name": "Reverb",
+      "presets": {
+        "bathroom": "Bathroom",
+        "garage": "Garage",
+        "hall": "Hall",
+        "cathedral": "Cathedral",
+        "custom": "Custom"
+      },
+      "earlyReflection": {
+        "name": "Early Reflection",
+        "item": "Reflection {{index}}",
+        "delay": "Delay",
+        "gain": "Gain"
+      },
+      "lateTail": {
+        "name": "Late Tail",
+        "delay": "Delay Time",
+        "duration": "Duration",
+        "amplitude": "Amplitude",
+        "alpha": "Decay Coefficient"
+      },
+      "impulseResponse": "Impulse Response",
+      "mix": "Mix Ratio"
     }
   },
   "config": {
     "importError": "Could not import the config. Check the JSON file format."
-  },
-  "controls": {
-    "volume": "Volume",
-    "attackTime": "Attack Time",
-    "decayTime": "Decay Time",
-    "releaseTime": "Release Time",
-    "sustainGain": "Sustain Gain",
-    "silenceGain": "Silence Gain",
-    "harmonicCount": "Harmonic Count",
-    "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
-    "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
-    "strikePoint": "Strike Point",
-    "decayRate": "Decay Rate",
-    "powerExponent": "Power Exponent"
   },
   "charts": {
     "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",

@@ -38,14 +38,14 @@ function Spectrum({
           handleSpectrumTypeChange(e.target.value as SpectrumType);
         }}
       >
-        <option value="metallic">{t('spectrum.metallic')}</option>
-        <option value="pure">{t('spectrum.pure')}</option>
-        <option value="bright">{t('spectrum.bright')}</option>
-        <option value="ethereal">{t('spectrum.ethereal')}</option>
-        <option value="normal">{t('spectrum.normal')}</option>
-        <option value="soft">{t('spectrum.soft')}</option>
-        <option value="realistic">{t('spectrum.realistic')}</option>
-        <option value="custom">{t('spectrum.custom')}</option>
+        <option value="metallic">{t('spectrum.presers.metallic')}</option>
+        <option value="pure">{t('spectrum.presers.pure')}</option>
+        <option value="bright">{t('spectrum.presers.bright')}</option>
+        <option value="ethereal">{t('spectrum.presers.ethereal')}</option>
+        <option value="normal">{t('spectrum.presers.normal')}</option>
+        <option value="soft">{t('spectrum.presers.soft')}</option>
+        <option value="realistic">{t('spectrum.presers.realistic')}</option>
+        <option value="custom">{t('spectrum.presers.custom')}</option>
       </ControlSelect>
 
       <SpectrumValueControls
@@ -59,16 +59,16 @@ function Spectrum({
         sigma={sigma}
         p={p}
         labels={{
-          strikePoint: t('controls.strikePoint'),
-          decayRate: t('controls.decayRate'),
-          powerExponent: t('controls.powerExponent'),
+          strikePoint: t('spectrum.parameters.strikePoint'),
+          decayRate: t('spectrum.parameters.decayRate'),
+          powerExponent: t('spectrum.parameters.powerExponent'),
         }}
         onChange={handleParamsChange}
       />
 
       <SpectrumFormulaPreview
         spectrumType={spectrumType}
-        label={t('controls.harmonicSpectrumFormula')}
+        label={t('spectrum.harmonicSpectrumFormula')}
       />
     </>
   );

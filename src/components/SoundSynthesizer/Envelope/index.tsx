@@ -34,11 +34,11 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
         sustainGain={sustainGain}
         silenceGain={silenceGain}
         labels={{
-          attackTime: t('controls.attackTime'),
-          decayTime: t('controls.decayTime'),
-          releaseTime: t('controls.releaseTime'),
-          sustainGain: t('controls.sustainGain'),
-          silenceGain: t('controls.silenceGain'),
+          attackTime: t('envelope.attackTime'),
+          decayTime: t('envelope.decayTime'),
+          releaseTime: t('envelope.releaseTime'),
+          sustainGain: t('envelope.sustainGain'),
+          silenceGain: t('envelope.silenceGain'),
         }}
         onAttackTimeChange={setAttackTime}
         onDecayTimeChange={setDecayTime}

@@ -4,26 +4,49 @@
     "spectrum": "スペクトル",
     "effect": "エフェクト"
   },
+  "controls": {
+    "volume": "音量係数",
+    "harmonicCount": "倍音数",
+    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。"
+  },
   "oscillator": {
     "sine": "サイン波",
     "triangle": "三角波",
     "sawtooth": "ノコギリ波",
     "square": "矩形波"
   },
+  "envelope": {
+    "attackTime": "アタック時間",
+    "decayTime": "ディケイ時間",
+    "releaseTime": "リリース時間",
+    "sustainGain": "サステインゲイン",
+    "silenceGain": "無音ゲイン"
+  },
   "spectrum": {
-    "ethereal": "幻想",
-    "metallic": "金属",
-    "pure": "ピュア",
-    "bright": "明るい",
-    "normal": "標準",
-    "soft": "柔らかい",
-    "realistic": "リアル",
-    "custom": "カスタム"
+    "harmonicSpectrumFormula": "倍音スペクトル式",
+    "presers": {
+      "ethereal": "幻想",
+      "metallic": "金属",
+      "pure": "ピュア",
+      "bright": "明るい",
+      "normal": "標準",
+      "soft": "柔らかい",
+      "realistic": "リアル",
+      "custom": "カスタム"
+    },
+    "parameters": {
+      "strikePoint": "打弦位置",
+      "decayRate": "減衰率",
+      "powerExponent": "べき指数"
+    }
   },
   "effect": {
     "preview": {
       "pitch": "音高",
       "baseFrequency": "基準周波数"
+    },
+    "filterEqualizer": {
+      "name": "フィルターとイコライザー"
     },
     "filter": {
       "name": "フィルター",
@@ -66,24 +89,35 @@
         "q": "帯域幅係数",
         "gain": "ゲイン"
       }
+    },
+    "reverb": {
+      "name": "リバーブ",
+      "presets": {
+        "bathroom": "浴室",
+        "garage": "ガレージ",
+        "hall": "ホール",
+        "cathedral": "大聖堂",
+        "custom": "カスタム"
+      },
+      "earlyReflection": {
+        "name": "初期反射",
+        "item": "反射 {{index}}",
+        "delay": "遅延",
+        "gain": "ゲイン"
+      },
+      "lateTail": {
+        "name": "後期残響",
+        "delay": "遅延時間",
+        "duration": "持続時間",
+        "amplitude": "振幅係数",
+        "alpha": "減衰係数"
+      },
+      "impulseResponse": "総インパルス応答",
+      "mix": "ミックス比"
     }
   },
   "config": {
     "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
-  },
-  "controls": {
-    "volume": "音量係数",
-    "attackTime": "アタック時間",
-    "decayTime": "ディケイ時間",
-    "releaseTime": "リリース時間",
-    "sustainGain": "サステインゲイン",
-    "silenceGain": "無音ゲイン",
-    "harmonicCount": "倍音数",
-    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。",
-    "harmonicSpectrumFormula": "倍音スペクトル式",
-    "strikePoint": "打弦位置",
-    "decayRate": "減衰率",
-    "powerExponent": "べき指数"
   },
   "charts": {
     "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",

@@ -4,21 +4,41 @@
     "spectrum": "频谱",
     "effect": "效果"
   },
+  "controls": {
+    "volume": "音量系数",
+    "harmonicCount": "谐波数量",
+    "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。"
+  },
   "oscillator": {
     "sine": "正弦波",
     "triangle": "三角波",
     "sawtooth": "锯齿波",
     "square": "方波"
   },
+  "envelope": {
+    "attackTime": "起音时间",
+    "decayTime": "衰音时间",
+    "releaseTime": "释音时间",
+    "sustainGain": "稳音增益",
+    "silenceGain": "静音增益"
+  },
   "spectrum": {
-    "ethereal": "空灵",
-    "metallic": "金属",
-    "pure": "纯净",
-    "bright": "明亮",
-    "normal": "常规",
-    "soft": "柔和",
-    "realistic": "真实",
-    "custom": "自定义"
+    "harmonicSpectrumFormula": "谐波频谱公式",
+    "presers": {
+      "ethereal": "空灵",
+      "metallic": "金属",
+      "pure": "纯净",
+      "bright": "明亮",
+      "normal": "常规",
+      "soft": "柔和",
+      "realistic": "真实",
+      "custom": "自定义"
+    },
+    "parameters": {
+      "strikePoint": "击弦点",
+      "decayRate": "衰减率",
+      "powerExponent": "幂指数"
+    }
   },
   "effect": {
     "preview": {
@@ -98,20 +118,6 @@
   },
   "config": {
     "importError": "无法导入配置，请检查 JSON 文件格式。"
-  },
-  "controls": {
-    "volume": "音量系数",
-    "attackTime": "起音时间",
-    "decayTime": "衰音时间",
-    "releaseTime": "释音时间",
-    "sustainGain": "稳音增益",
-    "silenceGain": "静音增益",
-    "harmonicCount": "谐波数量",
-    "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。",
-    "harmonicSpectrumFormula": "谐波频谱公式",
-    "strikePoint": "击弦点",
-    "decayRate": "衰减率",
-    "powerExponent": "幂指数"
   },
   "charts": {
     "amplitudeEnvelopeCurve": "振幅包络曲线",
