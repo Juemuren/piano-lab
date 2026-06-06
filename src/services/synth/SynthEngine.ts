@@ -5,7 +5,11 @@ import type {
   SynthBasicConfig,
   StartNoteResult,
 } from '../../types';
-import { BaseVoice, type ActiveVoice, type ReleasingVoice } from './BaseVoice';
+import {
+  BasicVoice,
+  type ActiveVoice,
+  type ReleasingVoice,
+} from './BasicVoice';
 import { EffectChain } from './EffectChain';
 
 interface SynthRecordingTarget {
@@ -16,7 +20,7 @@ interface SynthRecordingTarget {
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private outputGainNode: GainNode | null = null;
-  private baseVoice = new BaseVoice();
+  private basicVoice = new BasicVoice();
   private effectChain = new EffectChain();
   private activeNotes: Map<number, ActiveVoice[]> = new Map();
   private noteGenerationIds: Map<number, number> = new Map();
@@ -30,15 +34,15 @@ export class SynthEngine {
   }
 
   configureSynth(config: SynthBasicConfig) {
-    this.baseVoice.configureSynth(config);
+    this.basicVoice.configureSynth(config);
   }
 
   configureEnvelope(config: EnvelopeConfig) {
-    this.baseVoice.configureEnvelope(config);
+    this.basicVoice.configureEnvelope(config);
   }
 
   configureSpectrum(spectrum: Spectrum) {
-    this.baseVoice.configureSpectrum(spectrum);
+    this.basicVoice.configureSpectrum(spectrum);
   }
 
   configureEffect(config: EffectConfig) {
@@ -104,7 +108,7 @@ export class SynthEngine {
       this.outputGainNode,
     );
 
-    return this.baseVoice.startVoices({
+    return this.basicVoice.startVoices({
       audioContext: this.audioContext,
       outputNode: effectInputNode,
       pitch,
@@ -114,7 +118,7 @@ export class SynthEngine {
   }
 
   private stopNoteVoices(voices: ReleasingVoice[]) {
-    this.baseVoice.stopVoices(voices);
+    this.basicVoice.stopVoices(voices);
   }
 
   async playNote(

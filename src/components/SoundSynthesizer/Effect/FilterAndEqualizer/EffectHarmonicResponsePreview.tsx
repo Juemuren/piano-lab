@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { EqualizerConfig, FilterConfig } from '../../../../types';
-import { getBaseFrequency } from '../../../../services/synth/SynthCalculations';
+import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
 import {
   getBiquadMagnitudes,
-  RESPONSE_NYQUIST_FREQUENCY,
-} from '../../../../services/synth/EffectResponse';
+  FILTER_RESPONSE_NYQUIST_FREQUENCY,
+} from '../../../../services/synth/Filter';
 import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
 import { getHarmonicLabels } from '../../../../utils/harmonic';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
@@ -49,7 +49,8 @@ function EffectHarmonicResponsePreview({
     () =>
       harmonicFrequencies.map(
         (frequency) =>
-          Number.isFinite(frequency) && frequency <= RESPONSE_NYQUIST_FREQUENCY,
+          Number.isFinite(frequency) &&
+          frequency <= FILTER_RESPONSE_NYQUIST_FREQUENCY,
       ),
     [harmonicFrequencies],
   );

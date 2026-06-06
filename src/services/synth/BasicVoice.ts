@@ -13,11 +13,8 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
-import {
-  createVoiceStopPlans,
-  createVoiceStartPlans,
-} from './SynthCalculations';
-import { createSpectrum } from './SynthDefinitions';
+import { createVoiceStopPlans, createVoiceStartPlans } from './VoicePlanner';
+import { createSpectrum } from './Spectrum';
 
 const MIN_GAIN_VALUE = 1e-10;
 
@@ -47,7 +44,7 @@ interface StartNoteOptions {
   cents: number;
 }
 
-export class BaseVoice {
+export class BasicVoice {
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private spectrum: Spectrum = createSpectrum(
     {

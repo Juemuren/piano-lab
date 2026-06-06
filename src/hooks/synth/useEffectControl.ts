@@ -13,7 +13,7 @@ import {
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
 } from '../../constants/synth';
-import { createReverbConfig } from '../../services/synth/ReverbImpulse';
+import { createReverbConfig } from '../../services/synth/Reverb';
 import type {
   BuiltInReverbPreset,
   EffectConfig,

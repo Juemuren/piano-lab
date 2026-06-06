@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { getBaseFrequency } from '../../services/synth/SynthCalculations';
+import { getBaseFrequency } from '../../services/synth/VoicePlanner';
 import { getPitchOptions } from '../../utils/pitch';
 
 const PITCH_OPTIONS = getPitchOptions();

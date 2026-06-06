@@ -47,8 +47,8 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../utils/runtime';
-import { createReverbConfig } from './ReverbImpulse';
-import { createSpectrum } from './SynthDefinitions';
+import { createReverbConfig } from './Reverb';
+import { createSpectrum } from './Spectrum';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
   'sine',

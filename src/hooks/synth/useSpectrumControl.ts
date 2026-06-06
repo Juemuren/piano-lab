@@ -5,7 +5,7 @@ import type {
   SpectrumParamUpdates,
   SpectrumType,
 } from '../../types';
-import { createSpectrum } from '../../services/synth/SynthDefinitions';
+import { createSpectrum } from '../../services/synth/Spectrum';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import {
   DEFAULT_SPECTRUM_TYPE,

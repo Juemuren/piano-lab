@@ -7,7 +7,7 @@
 
 ## Refactor
 
-- [ ] [synth](src/services/synth) 目录下的文件命名存在误导性，需要修改
+- [x] [synth](src/services/synth) 目录下的文件命名存在误导性，需要修改
 
 ## Fix
 
