@@ -16,7 +16,7 @@ import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
-import FileExportButton from '../shared/FileExportButton';
+import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
@@ -127,7 +127,7 @@ function SoundSynthesizer() {
             onClick={openFileDialog}
             onChange={handleFileChange}
           />
-          <FileExportButton
+          <ControlButton
             label="JSON"
             icon={<Download size={18} />}
             onClick={handleExportConfig}

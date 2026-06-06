@@ -1,4 +1,5 @@
 import { type ChangeEventHandler, type ReactNode, type RefObject } from 'react';
+import ControlButton from './ControlButton';
 
 interface FileImportButtonProps {
   label: string;
@@ -26,18 +27,7 @@ function FileImportButton({
         className="hidden"
         onChange={onChange}
       />
-      <button
-        type="button"
-        onClick={onClick}
-        className="
-        inline-flex items-center justify-center gap-2 p-2 rounded-xl transition-colors
-        bg-app-surface dark:bg-app-surface-dark
-        hover:bg-app-surface-muted dark:hover:bg-app-surface-muted-dark
-      "
-      >
-        {icon}
-        {label}
-      </button>
+      <ControlButton label={label} icon={icon} onClick={onClick} />
     </>
   );
 }

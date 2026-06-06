@@ -12,12 +12,14 @@ function ControlButton({
   label,
   icon,
   disabled = false,
+  title,
   onClick,
 }: ControlButtonProps) {
   return (
     <button
       type="button"
       disabled={disabled}
+      title={title}
       onClick={onClick}
       className="
         inline-flex items-center justify-center gap-2 p-2 rounded-xl transition-colors

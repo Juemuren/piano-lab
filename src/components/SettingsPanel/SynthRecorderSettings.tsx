@@ -6,7 +6,6 @@ import useSynthRecorder from '../../hooks/synth/useSynthRecorder';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlSelect from '../shared/ControlSelect';
-import FileExportButton from '../shared/FileExportButton';
 
 function SynthRecorderSettings() {
   const { t } = useTranslation('app');
@@ -62,7 +61,7 @@ function SynthRecorderSettings() {
               disabled={!isRecording}
               onClick={stopRecording}
             />
-            <FileExportButton
+            <ControlButton
               label={t('settings.recording.download')}
               icon={<Download size={18} />}
               disabled={!recordingBlob || isRecording}

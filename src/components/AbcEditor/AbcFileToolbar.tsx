@@ -1,6 +1,6 @@
 import { type ChangeEventHandler, type RefObject } from 'react';
 import { Upload, Download, Image, BookImage, Music } from 'lucide-react';
-import FileExportButton from '../shared/FileExportButton';
+import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
 
 interface AbcFileToolbarProps {
@@ -38,31 +38,31 @@ function AbcFileToolbar({
         onClick={onImportClick}
         onChange={onImportChange}
       />
-      <FileExportButton
+      <ControlButton
         label="ABC"
         icon={<Download size={18} />}
         disabled={!canExportAbc}
         onClick={onExportAbc}
       />
-      <FileExportButton
+      <ControlButton
         label="SVG"
         icon={<Image size={18} />}
         disabled={!canExportRenderedScore}
         onClick={onExportSvg}
       />
-      <FileExportButton
+      <ControlButton
         label="PNG"
         icon={<Image size={18} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPng}
       />
-      <FileExportButton
+      <ControlButton
         label="PDF"
         icon={<BookImage size={18} />}
         disabled={!canExportRenderedScore}
         onClick={onExportPdf}
       />
-      <FileExportButton
+      <ControlButton
         label="MIDI"
         icon={<Music size={18} />}
         disabled={!canExportRenderedScore}

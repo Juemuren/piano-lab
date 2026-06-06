@@ -2,7 +2,7 @@
 
 ## Refactor
 
-- [ ] [共享组件](src/components/shared/) 下存在 3 种 button，最好进行统一
+- [x] [共享组件](src/components/shared/) 下存在 3 种 button，最好进行统一
 - [x] [SynthEngine](src/services/synth/SynthEngine.ts) 中分离出 BaseVoice/EffectChain 为后续添加效果器作铺垫
 - [x] i18n key 名称重构
 - [ ] [Effect](src/components/SoundSynthesizer/Effect) 下的组件可能会非常多，需要继续增加目录
