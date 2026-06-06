@@ -1,5 +1,10 @@
 # Todo
 
+## Chore
+
+- [ ] 尝试一下 [Biome](https://biomejs.dev/) 或类似的 Rust 工具
+- [ ] 买个国内的域名，优化访问
+
 ## Refactor
 
 - [ ] [synth](src/services/synth) 目录下的文件命名存在误导性，需要修改
@@ -21,25 +26,39 @@
 
 增加新的效果
 
-- [ ] 立体声。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
 - [ ] 压缩。参考 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)。压缩是减小音频信号的最大音量与最小音量之间的差距，属于动态调节，无法绘制幅频曲线
-- [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括过载/法兹/饱和，优先实现饱和效果
+- [ ] 声像。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
+- [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括饱和/失真/过载/法兹，公式如下
+
+| 效果 | 公式                                 | 参数(强度)    |
+| ---- | ------------------------------------ | ------------- |
+| 饱和 | $y = \frac{x}{1+c\|x\|}$             | $c=0\sim1$    |
+| 过载 | $y = \frac{\arctan(kx)}{\arctan(k)}$ | $k=1\sim20$   |
+| 失真 | $y = \tanh(gx)$                      | $g=2\sim10$   |
+| 法兹 | $y = \frac{2}{\pi}\arctan(sx)$       | $s=10\sim100$ |
+
 - [ ] 调制。包括镶边/移相/合唱/颤音（Tremolo，音量调制）/震音（Vibrato，音高调制）。不是核心效果，可以后续再实现。全通滤波器（相变中心/陡峭程度）可以用于移相
+
+已有效果修改
+
+- [ ] 晚期尾音考虑用高斯噪声进行改进。可以用 Box-Muller 变换生成标准正态分布随机数
+- [ ] 早期反射考虑一下是否使用 [DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)
 
 增加可视化子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
 
 - 使用 Web Audio API 的 [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) 分别显示频域和时域的波形
 
-修改已有模块
+增强乐谱自动生成功能
+
+- [ ] 处理调号和节拍
+- [ ] 可以同步 textarea 中的修改
+- [ ] 考虑一下是否把 “将演奏的音符写入乐谱” 这一设置移动到乐谱编辑器中
+
+其余模块
 
 - [ ] 增加修改键位映射的功能
 - [ ] 修改合成器根据频率减少振幅和衰减时间的行为。不要使用谐波次数，而是用真正的频率
-- 效果修改
-  - [ ] 考虑用高斯噪声改进尾音包络。可以用 Box-Muller 变换生成标准正态分布随机数
-  - [ ] 早期反射考虑一下是否使用 [DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)
-- 乐谱自动生成功能增强
-  - [ ] 处理调号和节拍
-  - [ ] 可以同步 textarea 中的修改
+- [ ] 按压琴键不会触发稳音期间的振幅衰减，考虑一下是否需要这个特性
 
 需要考虑是否使用第三方库的
 
