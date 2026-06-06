@@ -1,33 +1,33 @@
 import { useTranslation } from 'react-i18next';
 import type {
-  EqualizerEffectConfig,
-  EqualizerEffectType,
-  FilterEffectConfig,
-  FilterEffectType,
+  EqualizerConfig,
+  EqualizerType,
+  FilterConfig,
+  FilterType,
 } from '../../../../types';
 import EffectHarmonicResponsePreview from './EffectHarmonicResponsePreview';
 import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
 
-interface FilterEqualizerEffectProps {
+interface FilterAndEqualizerProps {
   harmonicCount: number;
-  filters: FilterEffectConfig[];
-  onFilterAdd: (type: FilterEffectType) => void;
+  filters: FilterConfig[];
+  onFilterAdd: (type: FilterType) => void;
   onFilterRemove: (index: number) => void;
-  onFilterTypeChange: (index: number, type: FilterEffectType) => void;
+  onFilterTypeChange: (index: number, type: FilterType) => void;
   onFilterFrequencyChange: (index: number, value: number) => void;
   onFilterQChange: (index: number, value: number) => void;
-  equalizers: EqualizerEffectConfig[];
-  onEqualizerAdd: (type: EqualizerEffectType) => void;
+  equalizers: EqualizerConfig[];
+  onEqualizerAdd: (type: EqualizerType) => void;
   onEqualizerRemove: (index: number) => void;
-  onEqualizerTypeChange: (index: number, type: EqualizerEffectType) => void;
+  onEqualizerTypeChange: (index: number, type: EqualizerType) => void;
   onEqualizerFrequencyChange: (index: number, value: number) => void;
   onEqualizerQChange: (index: number, value: number) => void;
   onEqualizerGainChange: (index: number, value: number) => void;
 }
 
-function FilterEqualizerEffect({
+function FilterAndEqualizer({
   harmonicCount,
   filters,
   onFilterAdd,
@@ -42,7 +42,7 @@ function FilterEqualizerEffect({
   onEqualizerFrequencyChange,
   onEqualizerQChange,
   onEqualizerGainChange,
-}: FilterEqualizerEffectProps) {
+}: FilterAndEqualizerProps) {
   const { t } = useTranslation('synth');
 
   return (
@@ -82,4 +82,4 @@ function FilterEqualizerEffect({
   );
 }
 
-export default FilterEqualizerEffect;
+export default FilterAndEqualizer;

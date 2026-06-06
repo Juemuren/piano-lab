@@ -1,13 +1,13 @@
-import type { EqualizerEffectConfig, FilterEffectConfig } from '../../types';
+import type { EqualizerConfig, FilterConfig } from '../../types';
 
-export type BiquadEffectConfig = FilterEffectConfig | EqualizerEffectConfig;
+export type BiquadConfig = FilterConfig | EqualizerConfig;
 
 const RESPONSE_SAMPLE_RATE = 44100;
 export const RESPONSE_NYQUIST_FREQUENCY = RESPONSE_SAMPLE_RATE / 2;
 
-export function applyBiquadEffectConfig(
+export function applyBiquadConfig(
   filterNode: BiquadFilterNode,
-  effectConfig: BiquadEffectConfig,
+  effectConfig: BiquadConfig,
 ) {
   filterNode.type = effectConfig.type;
   filterNode.frequency.value = effectConfig.frequency;
@@ -18,9 +18,9 @@ export function applyBiquadEffectConfig(
   }
 }
 
-export function getBiquadEffectMagnitudes(
+export function getBiquadMagnitudes(
   frequencies: number[],
-  effects: BiquadEffectConfig[],
+  effects: BiquadConfig[],
 ) {
   const totalMagnitudes = frequencies.map((frequency) =>
     Number.isFinite(frequency) && frequency <= RESPONSE_NYQUIST_FREQUENCY
@@ -45,7 +45,7 @@ export function getBiquadEffectMagnitudes(
     const magnitudes = new Float32Array(frequencies.length);
     const phases = new Float32Array(frequencies.length);
 
-    applyBiquadEffectConfig(filterNode, effect);
+    applyBiquadConfig(filterNode, effect);
     filterNode.getFrequencyResponse(frequencyValues, magnitudes, phases);
 
     for (const [index, magnitude] of magnitudes.entries()) {

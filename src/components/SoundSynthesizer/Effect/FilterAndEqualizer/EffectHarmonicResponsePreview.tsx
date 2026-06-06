@@ -1,12 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type {
-  EqualizerEffectConfig,
-  FilterEffectConfig,
-} from '../../../../types';
+import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import { getBaseFrequency } from '../../../../services/synth/SynthCalculations';
 import {
-  getBiquadEffectMagnitudes,
+  getBiquadMagnitudes,
   RESPONSE_NYQUIST_FREQUENCY,
 } from '../../../../services/synth/EffectResponse';
 import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
@@ -17,8 +14,8 @@ import BaseFrequencyControl from './BaseFrequencyControl';
 interface EffectHarmonicResponsePreviewProps {
   title: string;
   harmonicCount: number;
-  filters: FilterEffectConfig[];
-  equalizers: EqualizerEffectConfig[];
+  filters: FilterConfig[];
+  equalizers: EqualizerConfig[];
 }
 
 const DEFAULT_EFFECT_PREVIEW_PITCH = 69;
@@ -45,11 +42,7 @@ function EffectHarmonicResponsePreview({
     [baseFrequency, harmonicCount],
   );
   const harmonicMagnitudes = useMemo(
-    () =>
-      getBiquadEffectMagnitudes(harmonicFrequencies, [
-        ...filters,
-        ...equalizers,
-      ]),
+    () => getBiquadMagnitudes(harmonicFrequencies, [...filters, ...equalizers]),
     [equalizers, filters, harmonicFrequencies],
   );
   const isHarmonicFrequencySupported = useMemo(

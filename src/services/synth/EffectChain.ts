@@ -1,8 +1,8 @@
 import type {
   EffectConfig,
-  EqualizerEffectConfig,
-  FilterEffectConfig,
-  ReverbEffectConfig,
+  EqualizerConfig,
+  FilterConfig,
+  ReverbConfig,
 } from '../../types';
 import { createReverbImpulseResponse } from './ReverbImpulse';
 
@@ -29,14 +29,14 @@ export class EffectChain {
 
   private applyFilterConfig(
     filterNode: BiquadFilterNode,
-    filterConfig: FilterEffectConfig,
+    filterConfig: FilterConfig,
   ) {
     filterNode.type = filterConfig.type;
     filterNode.frequency.value = filterConfig.frequency;
     filterNode.Q.value = filterConfig.q;
   }
 
-  private getFilterNode(index: number, filterConfig: FilterEffectConfig) {
+  private getFilterNode(index: number, filterConfig: FilterConfig) {
     if (!this.audioContext) return null;
 
     if (!this.filterNodes[index]) {
@@ -49,7 +49,7 @@ export class EffectChain {
 
   private applyEqualizerConfig(
     equalizerNode: BiquadFilterNode,
-    equalizerConfig: EqualizerEffectConfig,
+    equalizerConfig: EqualizerConfig,
   ) {
     equalizerNode.type = equalizerConfig.type;
     equalizerNode.frequency.value = equalizerConfig.frequency;
@@ -57,10 +57,7 @@ export class EffectChain {
     equalizerNode.gain.value = equalizerConfig.gain;
   }
 
-  private getEqualizerNode(
-    index: number,
-    equalizerConfig: EqualizerEffectConfig,
-  ) {
+  private getEqualizerNode(index: number, equalizerConfig: EqualizerConfig) {
     if (!this.audioContext) return null;
 
     if (!this.equalizerNodes[index]) {
@@ -77,7 +74,7 @@ export class EffectChain {
     this.reverbWetGainNode?.disconnect();
   }
 
-  private applyReverbConfig(reverbConfig: ReverbEffectConfig) {
+  private applyReverbConfig(reverbConfig: ReverbConfig) {
     if (!this.audioContext) return null;
 
     if (!this.convolverNode) {

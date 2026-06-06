@@ -1,26 +1,23 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Minus, Plus } from 'lucide-react';
-import { DEFAULT_EQUALIZER_EFFECT_TYPE } from '../../../../constants/synth';
-import type {
-  EqualizerEffectConfig,
-  EqualizerEffectType,
-} from '../../../../types';
+import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
+import type { EqualizerConfig, EqualizerType } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 
-interface EqualizerEffectProps {
-  equalizers: EqualizerEffectConfig[];
-  onAdd: (type: EqualizerEffectType) => void;
+interface EqualizerProps {
+  equalizers: EqualizerConfig[];
+  onAdd: (type: EqualizerType) => void;
   onRemove: (index: number) => void;
-  onTypeChange: (index: number, type: EqualizerEffectType) => void;
+  onTypeChange: (index: number, type: EqualizerType) => void;
   onFrequencyChange: (index: number, value: number) => void;
   onQChange: (index: number, value: number) => void;
   onGainChange: (index: number, value: number) => void;
 }
 
-function EqualizerEffect({
+function Equalizer({
   equalizers,
   onAdd,
   onRemove,
@@ -28,12 +25,12 @@ function EqualizerEffect({
   onFrequencyChange,
   onQChange,
   onGainChange,
-}: EqualizerEffectProps) {
+}: EqualizerProps) {
   const { t } = useTranslation('synth');
   const [selectedEqualizerType, setSelectedEqualizerType] =
-    useState<EqualizerEffectType>(DEFAULT_EQUALIZER_EFFECT_TYPE);
+    useState<EqualizerType>(DEFAULT_EQUALIZER_TYPE);
 
-  const equalizerTypeLabels: Record<EqualizerEffectType, string> = {
+  const equalizerTypeLabels: Record<EqualizerType, string> = {
     lowshelf: t('effect.equalizer.lowshelf.name'),
     highshelf: t('effect.equalizer.highshelf.name'),
     peaking: t('effect.equalizer.peaking.name'),
@@ -55,7 +52,7 @@ function EqualizerEffect({
               <ControlSelect
                 value={equalizer.type}
                 onChange={(e) =>
-                  onTypeChange(index, e.target.value as EqualizerEffectType)
+                  onTypeChange(index, e.target.value as EqualizerType)
                 }
               >
                 <option value="lowshelf">{equalizerTypeLabels.lowshelf}</option>
@@ -107,7 +104,7 @@ function EqualizerEffect({
           <ControlSelect
             value={selectedEqualizerType}
             onChange={(e) =>
-              setSelectedEqualizerType(e.target.value as EqualizerEffectType)
+              setSelectedEqualizerType(e.target.value as EqualizerType)
             }
           >
             <option value="lowshelf">{equalizerTypeLabels.lowshelf}</option>
@@ -120,4 +117,4 @@ function EqualizerEffect({
   );
 }
 
-export default EqualizerEffect;
+export default Equalizer;

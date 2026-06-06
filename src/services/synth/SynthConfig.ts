@@ -4,15 +4,15 @@ import {
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
-  DEFAULT_EQUALIZER_EFFECT_GAIN,
-  DEFAULT_EQUALIZER_EFFECT_Q,
-  DEFAULT_EQUALIZER_EFFECT_TYPE,
-  DEFAULT_FILTER_EFFECT_FREQUENCY,
-  DEFAULT_FILTER_EFFECT_Q,
-  DEFAULT_FILTER_EFFECT_TYPE,
-  DEFAULT_REVERB_EFFECT_MIX,
-  DEFAULT_REVERB_EFFECT_PRESET,
+  DEFAULT_EQUALIZER_FREQUENCY,
+  DEFAULT_EQUALIZER_GAIN,
+  DEFAULT_EQUALIZER_Q,
+  DEFAULT_EQUALIZER_TYPE,
+  DEFAULT_FILTER_FREQUENCY,
+  DEFAULT_FILTER_Q,
+  DEFAULT_FILTER_TYPE,
+  DEFAULT_REVERB_MIX,
+  DEFAULT_REVERB_PRESET,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
   DEFAULT_REVERB_LATE_TAIL_ALPHA,
@@ -29,14 +29,14 @@ import {
 } from '../../constants/synth';
 import type {
   EffectConfig,
-  EqualizerEffectConfig,
-  EqualizerEffectType,
-  FilterEffectConfig,
-  FilterEffectType,
+  EqualizerConfig,
+  EqualizerType,
+  FilterConfig,
+  FilterType,
+  ReverbConfig,
   ReverbEarlyReflectionConfig,
-  ReverbEffectConfig,
-  ReverbEffectPreset,
   ReverbLateTailConfig,
+  ReverbPreset,
   SpectrumConfig,
   SpectrumType,
   SynthConfig,
@@ -47,7 +47,7 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../utils/runtime';
-import { createReverbEffectConfig } from './ReverbImpulse';
+import { createReverbConfig } from './ReverbImpulse';
 import { createSpectrum } from './SynthDefinitions';
 
 const OSCILLATOR_TYPES: OscillatorType[] = [
@@ -66,18 +66,9 @@ const SPECTRUM_TYPES: SpectrumType[] = [
   'realistic',
   'custom',
 ];
-const FILTER_EFFECT_TYPES: FilterEffectType[] = [
-  'lowpass',
-  'highpass',
-  'bandpass',
-  'notch',
-];
-const EQUALIZER_EFFECT_TYPES: EqualizerEffectType[] = [
-  'lowshelf',
-  'highshelf',
-  'peaking',
-];
-const REVERB_EFFECT_PRESETS: ReverbEffectPreset[] = [
+const FILTER_TYPES: FilterType[] = ['lowpass', 'highpass', 'bandpass', 'notch'];
+const EQUALIZER_TYPES: EqualizerType[] = ['lowshelf', 'highshelf', 'peaking'];
+const REVERB_PRESETS: ReverbPreset[] = [
   'bathroom',
   'garage',
   'hall',
@@ -117,10 +108,7 @@ export function createDefaultSynthConfig(): SynthConfig {
     effect: {
       filters: [],
       equalizers: [],
-      reverb: createReverbEffectConfig(
-        DEFAULT_REVERB_EFFECT_PRESET,
-        DEFAULT_REVERB_EFFECT_MIX,
-      ),
+      reverb: createReverbConfig(DEFAULT_REVERB_PRESET, DEFAULT_REVERB_MIX),
     },
   };
 }
@@ -143,67 +131,47 @@ function normalizeSpectrumConfig(
   };
 }
 
-function normalizeFilterEffectConfig(
-  value: unknown,
-): FilterEffectConfig | null {
+function normalizeFilterConfig(value: unknown): FilterConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    type: unionOrDefault(
-      value.type,
-      FILTER_EFFECT_TYPES,
-      DEFAULT_FILTER_EFFECT_TYPE,
-    ),
-    frequency: numberOrDefault(
-      value.frequency,
-      DEFAULT_FILTER_EFFECT_FREQUENCY,
-    ),
-    q: numberOrDefault(value.q, DEFAULT_FILTER_EFFECT_Q),
+    type: unionOrDefault(value.type, FILTER_TYPES, DEFAULT_FILTER_TYPE),
+    frequency: numberOrDefault(value.frequency, DEFAULT_FILTER_FREQUENCY),
+    q: numberOrDefault(value.q, DEFAULT_FILTER_Q),
   };
 }
 
-function normalizeEqualizerEffectConfig(
-  value: unknown,
-): EqualizerEffectConfig | null {
+function normalizeEqualizerConfig(value: unknown): EqualizerConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    type: unionOrDefault(
-      value.type,
-      EQUALIZER_EFFECT_TYPES,
-      DEFAULT_EQUALIZER_EFFECT_TYPE,
-    ),
-    frequency: numberOrDefault(
-      value.frequency,
-      DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
-    ),
-    q: numberOrDefault(value.q, DEFAULT_EQUALIZER_EFFECT_Q),
-    gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_EFFECT_GAIN),
+    type: unionOrDefault(value.type, EQUALIZER_TYPES, DEFAULT_EQUALIZER_TYPE),
+    frequency: numberOrDefault(value.frequency, DEFAULT_EQUALIZER_FREQUENCY),
+    q: numberOrDefault(value.q, DEFAULT_EQUALIZER_Q),
+    gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_GAIN),
   };
 }
 
-function normalizeReverbEffectConfig(
-  value: unknown,
-): ReverbEffectConfig | null {
+function normalizeReverbConfig(value: unknown): ReverbConfig | null {
   if (!isRecord(value)) return null;
   const preset = value.preset === 'room' ? 'garage' : value.preset;
   const normalizedPreset = unionOrDefault(
     preset,
-    REVERB_EFFECT_PRESETS,
-    DEFAULT_REVERB_EFFECT_PRESET,
+    REVERB_PRESETS,
+    DEFAULT_REVERB_PRESET,
   );
   const fallback =
     normalizedPreset === 'custom'
       ? {
-          ...createReverbEffectConfig(
-            DEFAULT_REVERB_EFFECT_PRESET,
-            numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+          ...createReverbConfig(
+            DEFAULT_REVERB_PRESET,
+            numberOrDefault(value.mix, DEFAULT_REVERB_MIX),
           ),
           preset: 'custom' as const,
         }
-      : createReverbEffectConfig(
+      : createReverbConfig(
           normalizedPreset,
-          numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+          numberOrDefault(value.mix, DEFAULT_REVERB_MIX),
         );
   const lateTail = normalizeReverbLateTailConfig(
     value.lateTail,
@@ -212,7 +180,7 @@ function normalizeReverbEffectConfig(
 
   return {
     preset: normalizedPreset,
-    mix: numberOrDefault(value.mix, DEFAULT_REVERB_EFFECT_MIX),
+    mix: numberOrDefault(value.mix, DEFAULT_REVERB_MIX),
     earlyReflections: Array.isArray(value.earlyReflections)
       ? value.earlyReflections
           .map(normalizeReverbEarlyReflectionConfig)
@@ -265,8 +233,8 @@ function normalizeEffectConfig(
     fallback = {
       ...fallback,
       filters: value.filters
-        .map(normalizeFilterEffectConfig)
-        .filter((filter): filter is FilterEffectConfig => Boolean(filter)),
+        .map(normalizeFilterConfig)
+        .filter((filter): filter is FilterConfig => Boolean(filter)),
     };
   }
 
@@ -274,8 +242,8 @@ function normalizeEffectConfig(
     fallback = {
       ...fallback,
       equalizers: value.equalizers
-        .map(normalizeEqualizerEffectConfig)
-        .filter((equalizer): equalizer is EqualizerEffectConfig =>
+        .map(normalizeEqualizerConfig)
+        .filter((equalizer): equalizer is EqualizerConfig =>
           Boolean(equalizer),
         ),
     };
@@ -284,12 +252,12 @@ function normalizeEffectConfig(
   if (value.reverb !== undefined) {
     fallback = {
       ...fallback,
-      reverb: normalizeReverbEffectConfig(value.reverb),
+      reverb: normalizeReverbConfig(value.reverb),
     };
   }
 
   if (value.filter !== undefined) {
-    const legacyFilter = normalizeFilterEffectConfig(value.filter);
+    const legacyFilter = normalizeFilterConfig(value.filter);
     fallback = {
       ...fallback,
       filters: legacyFilter ? [legacyFilter] : [],

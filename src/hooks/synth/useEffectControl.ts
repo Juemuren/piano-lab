@@ -1,55 +1,55 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import {
-  DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
-  DEFAULT_EQUALIZER_EFFECT_GAIN,
-  DEFAULT_EQUALIZER_EFFECT_Q,
-  DEFAULT_EQUALIZER_EFFECT_TYPE,
-  DEFAULT_FILTER_EFFECT_FREQUENCY,
-  DEFAULT_FILTER_EFFECT_Q,
-  DEFAULT_FILTER_EFFECT_TYPE,
-  DEFAULT_REVERB_EFFECT_PRESET,
-  DEFAULT_REVERB_EFFECT_MIX,
+  DEFAULT_EQUALIZER_FREQUENCY,
+  DEFAULT_EQUALIZER_GAIN,
+  DEFAULT_EQUALIZER_Q,
+  DEFAULT_EQUALIZER_TYPE,
+  DEFAULT_FILTER_FREQUENCY,
+  DEFAULT_FILTER_Q,
+  DEFAULT_FILTER_TYPE,
+  DEFAULT_REVERB_PRESET,
+  DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
 } from '../../constants/synth';
-import { createReverbEffectConfig } from '../../services/synth/ReverbImpulse';
+import { createReverbConfig } from '../../services/synth/ReverbImpulse';
 import type {
-  BuiltInReverbEffectPreset,
+  BuiltInReverbPreset,
   EffectConfig,
-  EqualizerEffectConfig,
-  EqualizerEffectType,
-  FilterEffectConfig,
-  FilterEffectType,
-  ReverbEffectConfig,
+  EqualizerConfig,
+  EqualizerType,
+  FilterConfig,
+  FilterType,
+  ReverbConfig,
 } from '../../types';
 
 function createDefaultFilterConfig(
-  type: FilterEffectType = DEFAULT_FILTER_EFFECT_TYPE,
-): FilterEffectConfig {
+  type: FilterType = DEFAULT_FILTER_TYPE,
+): FilterConfig {
   return {
     type,
-    frequency: DEFAULT_FILTER_EFFECT_FREQUENCY,
-    q: DEFAULT_FILTER_EFFECT_Q,
+    frequency: DEFAULT_FILTER_FREQUENCY,
+    q: DEFAULT_FILTER_Q,
   };
 }
 
 function createDefaultEqualizerConfig(
-  type: EqualizerEffectType = DEFAULT_EQUALIZER_EFFECT_TYPE,
-): EqualizerEffectConfig {
+  type: EqualizerType = DEFAULT_EQUALIZER_TYPE,
+): EqualizerConfig {
   return {
     type,
-    frequency: DEFAULT_EQUALIZER_EFFECT_FREQUENCY,
-    q: DEFAULT_EQUALIZER_EFFECT_Q,
-    gain: DEFAULT_EQUALIZER_EFFECT_GAIN,
+    frequency: DEFAULT_EQUALIZER_FREQUENCY,
+    q: DEFAULT_EQUALIZER_Q,
+    gain: DEFAULT_EQUALIZER_GAIN,
   };
 }
 
 function createDefaultReverbConfig(
-  preset: BuiltInReverbEffectPreset = DEFAULT_REVERB_EFFECT_PRESET,
-  mix = DEFAULT_REVERB_EFFECT_MIX,
-): ReverbEffectConfig {
-  return createReverbEffectConfig(preset, mix);
+  preset: BuiltInReverbPreset = DEFAULT_REVERB_PRESET,
+  mix = DEFAULT_REVERB_MIX,
+): ReverbConfig {
+  return createReverbConfig(preset, mix);
 }
 
 function useEffectControl(
@@ -57,13 +57,13 @@ function useEffectControl(
   onConfigChange?: (config: EffectConfig) => void,
 ) {
   const synthEngine = useSynthEngine();
-  const [filters, setFilters] = useState<FilterEffectConfig[]>(
+  const [filters, setFilters] = useState<FilterConfig[]>(
     () => initialConfig?.filters ?? [],
   );
-  const [equalizers, setEqualizers] = useState<EqualizerEffectConfig[]>(
+  const [equalizers, setEqualizers] = useState<EqualizerConfig[]>(
     () => initialConfig?.equalizers ?? [],
   );
-  const [reverb, setReverb] = useState<ReverbEffectConfig>(
+  const [reverb, setReverb] = useState<ReverbConfig>(
     () => initialConfig?.reverb ?? createDefaultReverbConfig(),
   );
 
@@ -84,7 +84,7 @@ function useEffectControl(
     onConfigChange?.(effectConfig);
   }, [effectConfig, onConfigChange]);
 
-  const addFilter = useCallback((type: FilterEffectType) => {
+  const addFilter = useCallback((type: FilterType) => {
     setFilters((current) => [...current, createDefaultFilterConfig(type)]);
   }, []);
 
@@ -94,16 +94,13 @@ function useEffectControl(
     );
   }, []);
 
-  const updateFilterType = useCallback(
-    (index: number, type: FilterEffectType) => {
-      setFilters((current) =>
-        current.map((filter, itemIndex) =>
-          itemIndex === index ? { ...filter, type } : filter,
-        ),
-      );
-    },
-    [],
-  );
+  const updateFilterType = useCallback((index: number, type: FilterType) => {
+    setFilters((current) =>
+      current.map((filter, itemIndex) =>
+        itemIndex === index ? { ...filter, type } : filter,
+      ),
+    );
+  }, []);
 
   const updateFilterFrequency = useCallback(
     (index: number, frequency: number) => {
@@ -124,7 +121,7 @@ function useEffectControl(
     );
   }, []);
 
-  const addEqualizer = useCallback((type: EqualizerEffectType) => {
+  const addEqualizer = useCallback((type: EqualizerType) => {
     setEqualizers((current) => [
       ...current,
       createDefaultEqualizerConfig(type),
@@ -138,7 +135,7 @@ function useEffectControl(
   }, []);
 
   const updateEqualizerType = useCallback(
-    (index: number, type: EqualizerEffectType) => {
+    (index: number, type: EqualizerType) => {
       setEqualizers((current) =>
         current.map((equalizer, itemIndex) =>
           itemIndex === index ? { ...equalizer, type } : equalizer,
@@ -175,12 +172,9 @@ function useEffectControl(
     );
   }, []);
 
-  const updateReverbPreset = useCallback(
-    (preset: BuiltInReverbEffectPreset) => {
-      setReverb((current) => createDefaultReverbConfig(preset, current.mix));
-    },
-    [],
-  );
+  const updateReverbPreset = useCallback((preset: BuiltInReverbPreset) => {
+    setReverb((current) => createDefaultReverbConfig(preset, current.mix));
+  }, []);
 
   const updateReverbMix = useCallback((mix: number) => {
     setReverb((current) => ({ ...current, mix }));

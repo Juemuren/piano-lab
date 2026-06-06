@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { ReverbEffectConfig } from '../../../../types';
+import type { ReverbConfig } from '../../../../types';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/ReverbImpulse';
 import useElementWidth from '../../../../hooks/useElementWidth';
 
 interface ReverbImpulseResponsePreviewProps {
   title: string;
-  reverb: ReverbEffectConfig;
+  reverb: ReverbConfig;
 }
 
 const PREVIEW_AUDIO_SAMPLE_RATE = 44100;

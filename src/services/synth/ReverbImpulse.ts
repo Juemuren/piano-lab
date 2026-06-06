@@ -1,17 +1,17 @@
 import type {
-  BuiltInReverbEffectPreset,
-  ReverbEffectConfig,
+  BuiltInReverbPreset,
+  ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
 } from '../../types';
 
 type ReverbPresetDefinition = Pick<
-  ReverbEffectConfig,
+  ReverbConfig,
   'earlyReflections' | 'lateTail'
 >;
 
 export const REVERB_PRESET_DEFINITIONS: Record<
-  BuiltInReverbEffectPreset,
+  BuiltInReverbPreset,
   ReverbPresetDefinition
 > = {
   bathroom: {
@@ -87,7 +87,7 @@ function getImpulseDuration(
 }
 
 export function getReverbImpulseResponseSamples(
-  config: ReverbEffectConfig,
+  config: ReverbConfig,
   sampleRate: number,
 ) {
   const { earlyReflections, lateTail } = config;
@@ -119,10 +119,10 @@ export function getReverbImpulseResponseSamples(
   };
 }
 
-export function createReverbEffectConfig(
-  preset: BuiltInReverbEffectPreset,
+export function createReverbConfig(
+  preset: BuiltInReverbPreset,
   mix: number,
-): ReverbEffectConfig {
+): ReverbConfig {
   const definition = REVERB_PRESET_DEFINITIONS[preset];
 
   return {
@@ -139,7 +139,7 @@ export function createReverbEffectConfig(
 
 export function createReverbImpulseResponse(
   audioContext: BaseAudioContext,
-  config: ReverbEffectConfig,
+  config: ReverbConfig,
 ) {
   const sampleRate = audioContext.sampleRate;
   const samples = getReverbImpulseResponseSamples(config, sampleRate);

@@ -1,18 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { BlockMath, InlineMath } from 'react-katex';
 import { Minus, Plus } from 'lucide-react';
-import type {
-  BuiltInReverbEffectPreset,
-  ReverbEffectConfig,
-} from '../../../../types';
+import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
-interface ReverbEffectProps {
-  reverb: ReverbEffectConfig;
-  onPresetChange: (preset: BuiltInReverbEffectPreset) => void;
+interface ReverbProps {
+  reverb: ReverbConfig;
+  onPresetChange: (preset: BuiltInReverbPreset) => void;
   onMixChange: (value: number) => void;
   onEarlyReflectionAdd: () => void;
   onEarlyReflectionRemove: (index: number) => void;
@@ -24,14 +21,14 @@ interface ReverbEffectProps {
   onLateTailAlphaChange: (value: number) => void;
 }
 
-const presetOptions: BuiltInReverbEffectPreset[] = [
+const presetOptions: BuiltInReverbPreset[] = [
   'bathroom',
   'garage',
   'hall',
   'cathedral',
 ];
 
-function ReverbEffect({
+function Reverb({
   reverb,
   onPresetChange,
   onMixChange,
@@ -43,10 +40,10 @@ function ReverbEffect({
   onLateTailDurationChange,
   onLateTailAmplitudeChange,
   onLateTailAlphaChange,
-}: ReverbEffectProps) {
+}: ReverbProps) {
   const { t } = useTranslation('synth');
 
-  const presetLabels: Record<BuiltInReverbEffectPreset, string> = {
+  const presetLabels: Record<BuiltInReverbPreset, string> = {
     bathroom: t('effect.reverb.presets.bathroom'),
     garage: t('effect.reverb.presets.garage'),
     hall: t('effect.reverb.presets.hall'),
@@ -75,7 +72,7 @@ function ReverbEffect({
         <ControlSelect
           value={reverb.preset}
           onChange={(e) =>
-            onPresetChange(e.target.value as BuiltInReverbEffectPreset)
+            onPresetChange(e.target.value as BuiltInReverbPreset)
           }
         >
           {reverb.preset === 'custom' && (
@@ -209,4 +206,4 @@ function ReverbEffect({
   );
 }
 
-export default ReverbEffect;
+export default Reverb;

@@ -55,30 +55,26 @@ export interface SynthBasicConfig {
   harmonicCount: number;
 }
 
-export type FilterEffectType = 'lowpass' | 'highpass' | 'bandpass' | 'notch';
+export type FilterType = 'lowpass' | 'highpass' | 'bandpass' | 'notch';
 
-export interface FilterEffectConfig {
-  type: FilterEffectType;
+export interface FilterConfig {
+  type: FilterType;
   frequency: number;
   q: number;
 }
 
-export type EqualizerEffectType = 'lowshelf' | 'highshelf' | 'peaking';
+export type EqualizerType = 'lowshelf' | 'highshelf' | 'peaking';
 
-export interface EqualizerEffectConfig {
-  type: EqualizerEffectType;
+export interface EqualizerConfig {
+  type: EqualizerType;
   frequency: number;
   q: number;
   gain: number;
 }
 
-export type BuiltInReverbEffectPreset =
-  | 'bathroom'
-  | 'garage'
-  | 'hall'
-  | 'cathedral';
+export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
 
-export type ReverbEffectPreset = BuiltInReverbEffectPreset | 'custom';
+export type ReverbPreset = BuiltInReverbPreset | 'custom';
 
 export interface ReverbEarlyReflectionConfig {
   delay: number;
@@ -92,17 +88,17 @@ export interface ReverbLateTailConfig {
   alpha: number;
 }
 
-export interface ReverbEffectConfig {
-  preset: ReverbEffectPreset;
+export interface ReverbConfig {
+  preset: ReverbPreset;
   mix: number;
   earlyReflections: ReverbEarlyReflectionConfig[];
   lateTail: ReverbLateTailConfig;
 }
 
 export interface EffectConfig {
-  filters: FilterEffectConfig[];
-  equalizers: EqualizerEffectConfig[];
-  reverb: ReverbEffectConfig | null;
+  filters: FilterConfig[];
+  equalizers: EqualizerConfig[];
+  reverb: ReverbConfig | null;
 }
 
 export interface SynthConfig {

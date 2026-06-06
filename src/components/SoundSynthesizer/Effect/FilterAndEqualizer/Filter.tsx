@@ -1,34 +1,34 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Minus, Plus } from 'lucide-react';
-import { DEFAULT_FILTER_EFFECT_TYPE } from '../../../../constants/synth';
-import type { FilterEffectConfig, FilterEffectType } from '../../../../types';
+import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
+import type { FilterConfig, FilterType } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 
-interface FilterEffectProps {
-  filters: FilterEffectConfig[];
-  onAdd: (type: FilterEffectType) => void;
+interface FilterProps {
+  filters: FilterConfig[];
+  onAdd: (type: FilterType) => void;
   onRemove: (index: number) => void;
-  onTypeChange: (index: number, type: FilterEffectType) => void;
+  onTypeChange: (index: number, type: FilterType) => void;
   onFrequencyChange: (index: number, value: number) => void;
   onQChange: (index: number, value: number) => void;
 }
 
-function FilterEffect({
+function Filter({
   filters,
   onAdd,
   onRemove,
   onTypeChange,
   onFrequencyChange,
   onQChange,
-}: FilterEffectProps) {
+}: FilterProps) {
   const { t } = useTranslation('synth');
   const [selectedFilterType, setSelectedFilterType] =
-    useState<FilterEffectType>(DEFAULT_FILTER_EFFECT_TYPE);
+    useState<FilterType>(DEFAULT_FILTER_TYPE);
 
-  const filterTypeLabels: Record<FilterEffectType, string> = {
+  const filterTypeLabels: Record<FilterType, string> = {
     lowpass: t('effect.filter.lowpass.name'),
     highpass: t('effect.filter.highpass.name'),
     bandpass: t('effect.filter.bandpass.name'),
@@ -51,7 +51,7 @@ function FilterEffect({
               <ControlSelect
                 value={filter.type}
                 onChange={(e) =>
-                  onTypeChange(index, e.target.value as FilterEffectType)
+                  onTypeChange(index, e.target.value as FilterType)
                 }
               >
                 <option value="lowpass">{filterTypeLabels.lowpass}</option>
@@ -91,7 +91,7 @@ function FilterEffect({
           <ControlSelect
             value={selectedFilterType}
             onChange={(e) =>
-              setSelectedFilterType(e.target.value as FilterEffectType)
+              setSelectedFilterType(e.target.value as FilterType)
             }
           >
             <option value="lowpass">{filterTypeLabels.lowpass}</option>
@@ -105,4 +105,4 @@ function FilterEffect({
   );
 }
 
-export default FilterEffect;
+export default Filter;

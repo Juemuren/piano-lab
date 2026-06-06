@@ -1,16 +1,13 @@
 import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type {
-  EqualizerEffectConfig,
-  FilterEffectConfig,
-} from '../../../../types';
-import { getBiquadEffectMagnitudes } from '../../../../services/synth/EffectResponse';
+import type { EqualizerConfig, FilterConfig } from '../../../../types';
+import { getBiquadMagnitudes } from '../../../../services/synth/EffectResponse';
 import useElementWidth from '../../../../hooks/useElementWidth';
 
 interface EffectMagnitudeResponsePreviewProps {
   title: string;
-  filters: FilterEffectConfig[];
-  equalizers: EqualizerEffectConfig[];
+  filters: FilterConfig[];
+  equalizers: EqualizerConfig[];
 }
 
 const FREQUENCY_POINT_COUNT = 256;
@@ -28,11 +25,11 @@ function createFrequencyPoints() {
 }
 
 function getEffectMagnitudeResponse(
-  filters: FilterEffectConfig[],
-  equalizers: EqualizerEffectConfig[],
+  filters: FilterConfig[],
+  equalizers: EqualizerConfig[],
 ) {
   const frequencies = createFrequencyPoints();
-  const totalMagnitudes = getBiquadEffectMagnitudes(frequencies, [
+  const totalMagnitudes = getBiquadMagnitudes(frequencies, [
     ...filters,
     ...equalizers,
   ]);
