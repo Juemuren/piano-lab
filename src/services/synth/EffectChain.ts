@@ -87,6 +87,7 @@ export class EffectChain {
       this.reverbWetGainNode = this.audioContext.createGain();
     }
 
+    this.convolverNode.normalize = false;
     this.convolverNode.buffer = createReverbImpulseResponse(
       this.audioContext,
       reverbConfig,
