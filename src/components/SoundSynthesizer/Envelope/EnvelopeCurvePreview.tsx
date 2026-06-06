@@ -1,3 +1,4 @@
+import { BlockMath } from 'react-katex';
 import Scatter from 'react-plotly.js/scatter';
 import type { EnvelopeCurve } from '../../../types';
 import useElementWidth from '../../../hooks/useElementWidth';
@@ -16,6 +17,18 @@ function EnvelopeCurvePreview({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold">{title}</summary>
+      <div className="overflow-x-auto">
+        <BlockMath
+          math={String.raw`
+            \begin{cases}
+            y(t) = \varepsilon (\frac{A}{\varepsilon})^{\frac{t}{\tau_a}} & 0\le t < \tau_a \\
+            y(t) = A (\frac{S}{A})^{\frac{t-\tau_a}{\tau_d}} & \tau_a\le t < \tau_a + \tau_d \\
+            y(t) = S & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
+            y(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}} & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
+            \end{cases}
+          `}
+        />
+      </div>
       <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter

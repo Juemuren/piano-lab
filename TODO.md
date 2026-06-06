@@ -23,19 +23,16 @@
 - [ ] [ControlSelect](src/components/shared/ControlSelect.tsx) 中的标签在宽屏上改为横向
 - [ ] 在脚注中补充关于应用的说明
 - [ ] 混响添加一个启用开关
-- [ ] 频谱中添加公式 $p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$
-- [ ] 包络中添加公式
+- [x] 频谱中添加公式 $p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$
+- [x] 包络中添加公式
 
 $$
-y(t) = \varepsilon (\frac{A}{\varepsilon})^{\frac{t}{\tau_a}}
-$$
-
-$$
-y(t) = A (\frac{S}{A})^{\frac{t-\tau_a}{\tau_d}}
-$$
-
-$$
-y(t) = S (\frac{\varepsilon}{S})^{\frac{t-T-\tau_d-\tau_a}{\tau_r}}
+\begin{cases}
+y(t) = \varepsilon (\frac{A}{\varepsilon})^{\frac{t}{\tau_a}} & 0\le t < \tau_a \\
+y(t) = A (\frac{S}{A})^{\frac{t-\tau_a}{\tau_d}} & \tau_a\le t < \tau_a + \tau_d \\
+y(t) = S & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
+y(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}} & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
+\end{cases}
 $$
 
 ## Feat
@@ -76,7 +73,7 @@ $$
 
 - [ ] 增加修改键位映射的功能
 - [ ] 修改合成器根据频率减少振幅和衰减时间的行为。不要使用谐波次数，而是用真正的频率
-- [ ] 按压琴键不会触发稳音期间的振幅衰减，考虑一下是否需要这个特性
+- [ ] [SynthEngine](src/services/synth/SynthEngine.ts) 中 `stopNote` 不会触发稳音期间的振幅衰减。该特性不好用公式表示，考虑一下是否把这个特性在 `playNote` 中也删了
 
 需要考虑是否使用第三方库的
 

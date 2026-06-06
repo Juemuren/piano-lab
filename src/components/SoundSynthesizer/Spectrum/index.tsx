@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { BlockMath } from 'react-katex';
 import type { SpectrumType } from '../../../types';
 import type { SpectrumConfig } from '../../../types';
 import ControlSelect from '../../shared/ControlSelect';
@@ -32,6 +33,7 @@ function Spectrum({
 
   return (
     <>
+      <BlockMath math={String.raw`p(t) = \sum_{n=1}^{N}A_n\sin(2\pi f_n t)`} />
       <ControlSelect
         value={spectrumType}
         onChange={(e) => {
