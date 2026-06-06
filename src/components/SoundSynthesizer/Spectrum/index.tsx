@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { BlockMath } from 'react-katex';
 import type { SpectrumType } from '../../../types';
 import type { SpectrumConfig } from '../../../types';
+import BlockMath from '../../shared/BlockMath';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumValueControls from './SpectrumValueControls';
 import SpectrumParameterControls from './SpectrumParameterControls';

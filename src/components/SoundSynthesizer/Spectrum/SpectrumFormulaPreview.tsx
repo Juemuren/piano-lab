@@ -1,5 +1,5 @@
-import { BlockMath } from 'react-katex';
 import type { SpectrumType } from '../../../types';
+import BlockMath from '../../shared/BlockMath';
 
 const SPECTRUM_FORMULAS: Record<SpectrumType, string> = {
   metallic: String.raw`A_n \propto \frac1n`,

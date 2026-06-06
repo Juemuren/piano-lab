@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { BlockMath, InlineMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 import type { ReverbLateTailConfig } from '../../../../types';
+import BlockMath from '../../../shared/BlockMath';
 import ControlRange from '../../../shared/ControlRange';
 
 interface LateTailProps {
@@ -25,7 +26,9 @@ function LateTail({
       <summary className="font-bold my-2">
         {t('effect.reverb.lateTail.name')}
       </summary>
-      <BlockMath math={String.raw`h_l[n]=Ae^{-\alpha(n-Df_s)}`} />
+      <BlockMath
+        math={String.raw`h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s`}
+      />
       <ControlRange
         label={t('effect.reverb.lateTail.delay')}
         symbol={<InlineMath math="D" />}

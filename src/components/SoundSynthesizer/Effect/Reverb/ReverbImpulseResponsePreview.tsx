@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { BlockMath } from 'react-katex';
 import Scatter from 'react-plotly.js/scatter';
 import type { ReverbConfig } from '../../../../types';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/Reverb';
 import useElementWidth from '../../../../hooks/useElementWidth';
+import BlockMath from '../../../shared/BlockMath';
 
 interface ReverbImpulseResponsePreviewProps {
   title: string;

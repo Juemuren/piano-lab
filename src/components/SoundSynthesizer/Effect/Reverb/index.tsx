@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { BlockMath, InlineMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
+import BlockMath from '../../../shared/BlockMath';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 import EarlyReflections from './EarlyReflections';

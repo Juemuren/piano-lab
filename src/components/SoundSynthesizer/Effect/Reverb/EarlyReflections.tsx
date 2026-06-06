@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { BlockMath, InlineMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 import { Minus, Plus } from 'lucide-react';
 import type { ReverbEarlyReflectionConfig } from '../../../../types';
+import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 
