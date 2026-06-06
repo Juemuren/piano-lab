@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import {
+  DEFAULT_COMPRESSOR_ATTACK,
+  DEFAULT_COMPRESSOR_KNEE,
+  DEFAULT_COMPRESSOR_RATIO,
+  DEFAULT_COMPRESSOR_RELEASE,
+  DEFAULT_COMPRESSOR_THRESHOLD,
   DEFAULT_EQUALIZER_FREQUENCY,
   DEFAULT_EQUALIZER_GAIN,
   DEFAULT_EQUALIZER_Q,
@@ -16,6 +21,7 @@ import {
 import { createReverbConfig } from '../../services/synth/Reverb';
 import type {
   BuiltInReverbPreset,
+  CompressorConfig,
   EffectConfig,
   EqualizerConfig,
   EqualizerType,
@@ -52,6 +58,16 @@ function createDefaultReverbConfig(
   return createReverbConfig(preset, mix);
 }
 
+function createDefaultCompressorConfig(): CompressorConfig {
+  return {
+    threshold: DEFAULT_COMPRESSOR_THRESHOLD,
+    knee: DEFAULT_COMPRESSOR_KNEE,
+    ratio: DEFAULT_COMPRESSOR_RATIO,
+    attack: DEFAULT_COMPRESSOR_ATTACK,
+    release: DEFAULT_COMPRESSOR_RELEASE,
+  };
+}
+
 function useEffectControl(
   initialConfig?: EffectConfig | null,
   onConfigChange?: (config: EffectConfig) => void,
@@ -63,6 +79,9 @@ function useEffectControl(
   const [equalizers, setEqualizers] = useState<EqualizerConfig[]>(
     () => initialConfig?.equalizers ?? [],
   );
+  const [compressor, setCompressor] = useState<CompressorConfig | null>(
+    () => initialConfig?.compressor ?? null,
+  );
   const [reverb, setReverb] = useState<ReverbConfig>(
     () => initialConfig?.reverb ?? createDefaultReverbConfig(),
   );
@@ -71,9 +90,10 @@ function useEffectControl(
     () => ({
       filters,
       equalizers,
+      compressor,
       reverb,
     }),
-    [equalizers, filters, reverb],
+    [compressor, equalizers, filters, reverb],
   );
 
   useEffect(() => {
@@ -169,6 +189,42 @@ function useEffectControl(
       current.map((equalizer, itemIndex) =>
         itemIndex === index ? { ...equalizer, gain } : equalizer,
       ),
+    );
+  }, []);
+
+  const updateCompressorEnabled = useCallback((enabled: boolean) => {
+    setCompressor((current) =>
+      enabled ? (current ?? createDefaultCompressorConfig()) : null,
+    );
+  }, []);
+
+  const updateCompressorThreshold = useCallback((threshold: number) => {
+    setCompressor((current) =>
+      current ? { ...current, threshold } : createDefaultCompressorConfig(),
+    );
+  }, []);
+
+  const updateCompressorKnee = useCallback((knee: number) => {
+    setCompressor((current) =>
+      current ? { ...current, knee } : createDefaultCompressorConfig(),
+    );
+  }, []);
+
+  const updateCompressorRatio = useCallback((ratio: number) => {
+    setCompressor((current) =>
+      current ? { ...current, ratio } : createDefaultCompressorConfig(),
+    );
+  }, []);
+
+  const updateCompressorAttack = useCallback((attack: number) => {
+    setCompressor((current) =>
+      current ? { ...current, attack } : createDefaultCompressorConfig(),
+    );
+  }, []);
+
+  const updateCompressorRelease = useCallback((release: number) => {
+    setCompressor((current) =>
+      current ? { ...current, release } : createDefaultCompressorConfig(),
     );
   }, []);
 
@@ -279,6 +335,13 @@ function useEffectControl(
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    compressor,
+    updateCompressorEnabled,
+    updateCompressorThreshold,
+    updateCompressorKnee,
+    updateCompressorRatio,
+    updateCompressorAttack,
+    updateCompressorRelease,
     updateReverbPreset,
     updateReverbMix,
     addReverbEarlyReflection,

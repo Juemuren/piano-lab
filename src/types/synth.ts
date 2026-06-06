@@ -72,6 +72,14 @@ export interface EqualizerConfig {
   gain: number;
 }
 
+export interface CompressorConfig {
+  threshold: number;
+  knee: number;
+  ratio: number;
+  attack: number;
+  release: number;
+}
+
 export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
 
 export type ReverbPreset = BuiltInReverbPreset | 'custom';
@@ -98,6 +106,7 @@ export interface ReverbConfig {
 export interface EffectConfig {
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
+  compressor: CompressorConfig | null;
   reverb: ReverbConfig | null;
 }
 

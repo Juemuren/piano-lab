@@ -1,5 +1,6 @@
 import type { EffectConfig } from '../../../types';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
+import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
 import Reverb from './Reverb';
 
@@ -24,6 +25,13 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    compressor,
+    updateCompressorEnabled,
+    updateCompressorThreshold,
+    updateCompressorKnee,
+    updateCompressorRatio,
+    updateCompressorAttack,
+    updateCompressorRelease,
     reverb,
     updateReverbPreset,
     updateReverbMix,
@@ -54,6 +62,15 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEqualizerFrequencyChange={updateEqualizerFrequency}
         onEqualizerQChange={updateEqualizerQ}
         onEqualizerGainChange={updateEqualizerGain}
+      />
+      <Compressor
+        compressor={compressor}
+        onEnabledChange={updateCompressorEnabled}
+        onThresholdChange={updateCompressorThreshold}
+        onKneeChange={updateCompressorKnee}
+        onRatioChange={updateCompressorRatio}
+        onAttackChange={updateCompressorAttack}
+        onReleaseChange={updateCompressorRelease}
       />
       <Reverb
         reverb={reverb}

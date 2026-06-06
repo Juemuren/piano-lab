@@ -1,4 +1,9 @@
 import {
+  DEFAULT_COMPRESSOR_ATTACK,
+  DEFAULT_COMPRESSOR_KNEE,
+  DEFAULT_COMPRESSOR_RATIO,
+  DEFAULT_COMPRESSOR_RELEASE,
+  DEFAULT_COMPRESSOR_THRESHOLD,
   DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
@@ -28,6 +33,7 @@ import {
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
 import type {
+  CompressorConfig,
   EffectConfig,
   EqualizerConfig,
   EqualizerType,
@@ -108,6 +114,7 @@ export function createDefaultSynthConfig(): SynthConfig {
     effect: {
       filters: [],
       equalizers: [],
+      compressor: null,
       reverb: createReverbConfig(DEFAULT_REVERB_PRESET, DEFAULT_REVERB_MIX),
     },
   };
@@ -149,6 +156,18 @@ function normalizeEqualizerConfig(value: unknown): EqualizerConfig | null {
     frequency: numberOrDefault(value.frequency, DEFAULT_EQUALIZER_FREQUENCY),
     q: numberOrDefault(value.q, DEFAULT_EQUALIZER_Q),
     gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_GAIN),
+  };
+}
+
+function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    threshold: numberOrDefault(value.threshold, DEFAULT_COMPRESSOR_THRESHOLD),
+    knee: numberOrDefault(value.knee, DEFAULT_COMPRESSOR_KNEE),
+    ratio: numberOrDefault(value.ratio, DEFAULT_COMPRESSOR_RATIO),
+    attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
+    release: numberOrDefault(value.release, DEFAULT_COMPRESSOR_RELEASE),
   };
 }
 
@@ -253,6 +272,13 @@ function normalizeEffectConfig(
     fallback = {
       ...fallback,
       reverb: normalizeReverbConfig(value.reverb),
+    };
+  }
+
+  if (value.compressor !== undefined) {
+    fallback = {
+      ...fallback,
+      compressor: normalizeCompressorConfig(value.compressor),
     };
   }
 

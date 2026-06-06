@@ -7,11 +7,11 @@
 - 组件只负责渲染，业务逻辑相关的代码请写入 hook 中
 - 对于 button/input/select 等基础元素，尽量复用[共享组件](src/components/shared/)
 - 需要由[根组件](src/App.tsx)管理的 state 统一改为 context，避免 prop drilling
-- [SynthConfig](src/services/synth/SynthConfig.ts) 不要兼容旧配置，保持代码干净
 
 ## TypeScript 指南
 
 - 除 `type`/`interface` 外尽量不使用别的类型定义方式
+- [SynthConfig](src/services/synth/SynthConfig.ts) 不要兼容旧配置，保持代码干净
 
 ## Tailwind CSS 指南
 

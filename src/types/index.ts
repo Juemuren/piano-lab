@@ -2,6 +2,7 @@ export type { MidiControlState, MidiInputDevice, MidiStatus } from './piano';
 export type {
   BuiltInReverbPreset,
   BuiltInSpectrumType,
+  CompressorConfig,
   EffectConfig,
   EnvelopeConfig,
   EnvelopeCurve,

@@ -90,6 +90,16 @@
         "gain": "增益比例"
       }
     },
+    "compressor": {
+      "name": "压缩器",
+      "enabled": "启用压缩",
+      "disabled": "关闭压缩",
+      "threshold": "阈值",
+      "knee": "拐点",
+      "ratio": "压缩比",
+      "attack": "启动时间",
+      "release": "恢复时间"
+    },
     "reverb": {
       "name": "混响",
       "presets": {

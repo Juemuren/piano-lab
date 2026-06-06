@@ -1,4 +1,5 @@
 import type {
+  CompressorConfig,
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
@@ -13,12 +14,14 @@ export class EffectChain {
   private outputNode: GainNode | null = null;
   private filterNodes: BiquadFilterNode[] = [];
   private equalizerNodes: BiquadFilterNode[] = [];
+  private compressorNode: DynamicsCompressorNode | null = null;
   private convolverNode: ConvolverNode | null = null;
   private reverbDryGainNode: GainNode | null = null;
   private reverbWetGainNode: GainNode | null = null;
   private effectConfig: EffectConfig = {
     filters: [],
     equalizers: [],
+    compressor: null,
     reverb: null,
   };
 
@@ -74,6 +77,22 @@ export class EffectChain {
     this.reverbWetGainNode?.disconnect();
   }
 
+  private applyCompressorConfig(compressorConfig: CompressorConfig) {
+    if (!this.audioContext) return null;
+
+    if (!this.compressorNode) {
+      this.compressorNode = this.audioContext.createDynamicsCompressor();
+    }
+
+    this.compressorNode.threshold.value = compressorConfig.threshold;
+    this.compressorNode.knee.value = compressorConfig.knee;
+    this.compressorNode.ratio.value = compressorConfig.ratio;
+    this.compressorNode.attack.value = compressorConfig.attack;
+    this.compressorNode.release.value = compressorConfig.release;
+
+    return this.compressorNode;
+  }
+
   private applyReverbConfig(reverbConfig: ReverbConfig) {
     if (!this.audioContext) return null;
 
@@ -114,11 +133,13 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.compressorNode?.disconnect();
     this.disconnectReverbNodes();
 
     if (
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
+      !this.effectConfig.compressor &&
       !this.effectConfig.reverb
     ) {
       this.filterNodes = [];
@@ -155,6 +176,16 @@ export class EffectChain {
       0,
       this.effectConfig.equalizers.length,
     );
+
+    if (this.effectConfig.compressor) {
+      const compressorNode = this.applyCompressorConfig(
+        this.effectConfig.compressor,
+      );
+      if (compressorNode) {
+        previousNode.connect(compressorNode);
+        previousNode = compressorNode;
+      }
+    }
 
     if (this.effectConfig.reverb) {
       const reverbNodes = this.applyReverbConfig(this.effectConfig.reverb);
@@ -201,6 +232,7 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.compressorNode?.disconnect();
     this.disconnectReverbNodes();
     this.outputNode?.disconnect();
     this.audioContext = null;
@@ -208,6 +240,7 @@ export class EffectChain {
     this.inputNode = null;
     this.filterNodes = [];
     this.equalizerNodes = [];
+    this.compressorNode = null;
     this.convolverNode = null;
     this.reverbDryGainNode = null;
     this.reverbWetGainNode = null;
