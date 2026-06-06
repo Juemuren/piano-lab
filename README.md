@@ -101,7 +101,7 @@
 
 ## 使用
 
-访问 <https://juemuren.github.io/piano-lab/> 使用网页版
+访问 <https://piano.raind.me/> 使用网页版
 
 在 <https://github.com/juemuren/piano-lab/releases> 中下载桌面应用
 

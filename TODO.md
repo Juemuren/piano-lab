@@ -3,7 +3,7 @@
 ## Chore
 
 - [ ] 尝试一下 [Biome](https://biomejs.dev/) 或类似的 Rust 工具
-- [ ] 买个国内的域名，优化访问
+- [x] 买个国内的域名，优化访问
 
 ## Refactor
 
@@ -26,7 +26,35 @@
 
 增加新的效果
 
-- [ ] 压缩。参考 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)。压缩是减小音频信号的最大音量与最小音量之间的差距，属于动态调节，无法绘制幅频曲线
+- [ ] 压缩。参考 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)。压缩变换不是线性时不变系统，无法绘制传递函数或脉冲响应，不过有较为清晰的时域描述
+
+1. 峰值检波 $e[n] = |x[n]|$
+2. 包络平滑
+
+$$
+s[n] =
+\begin{cases}
+  \alpha_a e[n] + (1-\alpha_a) s[n-1] & e[n] > s[n-1] \\
+  \alpha_r e[n] + (1-\alpha_r) s[n-1] & e[n] \le s[n-1]
+\end{cases}
+$$
+
+其中 $\alpha_a = 1 - e^{-\frac{\ln(\sqrt{10})}{f_s \tau_a}}$，$\alpha_r = 1 - e^{-\frac{\ln(\sqrt{10})}{f_s \tau_r}}$
+
+3. 对数转换 $s_{\text{dB}}[n] = 20 \log_{10}s[n]$
+4. 软拐点
+
+$$
+g_{\text{dB}}[n] =
+\begin{cases}
+  0 & s_{\text{dB}}[n] \le T - W/2 \\
+  -\dfrac{(1-1/R)(s_{\text{dB}}[n] - T + W/2)^2}{2W} & T - W/2 < s_{\text{dB}}[n] < T + W/2 \\
+  (1-1/R)(T - s_{\text{dB}}[n]) & s_{\text{dB}}[n] \ge T + W/2
+\end{cases}
+$$
+
+5. 输出 $y[n] = x[n]  10^{g_{\text{dB}}[n]/20}$
+
 - [ ] 声像。参考 [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode)/[PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
 - [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括饱和/失真/过载/法兹，公式如下
 

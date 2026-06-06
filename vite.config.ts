@@ -31,10 +31,6 @@ const host = process.env.TAURI_DEV_HOST;
 // https://tauri.app/start/frontend/vite/
 export default defineConfig({
   plugins: [abcPresets(), react(), tailwindcss()],
-  base:
-    process.env.TAURI_ENV_PLATFORM || process.env.VITE_DEBUG
-      ? './'
-      : '/piano-lab/',
   define: {
     global: 'globalThis',
   },

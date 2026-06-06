@@ -101,7 +101,7 @@ Piano Lab は、インタラクティブな仮想鍵盤、カスタマイズ可�
 
 ## 使い方
 
-<https://juemuren.github.io/piano-lab/> にアクセスすると、Web 版を使用できます。
+<https://piano.raind.me/> にアクセスすると、Web 版を使用できます。
 
 <https://github.com/juemuren/piano-lab/releases> からデスクトップアプリをダウンロードできます。
 

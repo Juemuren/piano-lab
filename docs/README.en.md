@@ -101,7 +101,7 @@ Contains filter, equalizer, and reverb components.
 
 ## Usage
 
-Visit <https://juemuren.github.io/piano-lab/> to use the web version.
+Visit <https://piano.raind.me/> to use the web version.
 
 Download the desktop app from <https://github.com/juemuren/piano-lab/releases>.
 
