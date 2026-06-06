@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { BlockMath } from 'react-katex';
 import Scatter from 'react-plotly.js/scatter';
 import type { ReverbConfig } from '../../../../types';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/Reverb';
@@ -60,6 +61,7 @@ function ReverbImpulseResponsePreview({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
+      <BlockMath math={String.raw`h[n]=\delta[n]+h_e[n]+h_l[n]`} />
       <div ref={elementRef} className="w-full">
         {width > 0 && (
           <Scatter

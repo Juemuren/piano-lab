@@ -14,7 +14,7 @@
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
 - [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 https://chromestatus.com/feature/5138066234671104。这个问题好像无法修复，只要调用就会有警告
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
-- [ ] 混响的混合比例设为 1 时，会导致声音变得很小
+- [x] 混响的混合比例设为 1 时，会导致声音变得很小。修复方案是把起始音补上，即 $h[n] = \delta[n] + h_e[n] + h_l[n]$
 
 ## Style
 

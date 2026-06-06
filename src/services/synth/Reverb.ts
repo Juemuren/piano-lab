@@ -101,6 +101,8 @@ export function getReverbImpulseResponseSamples(
   const time = Array.from({ length }, (_, index) => index / sampleRate);
   const amplitude = new Array<number>(length).fill(0);
 
+  amplitude[0] += 1;
+
   for (const reflection of earlyReflections) {
     const index = Math.round(reflection.delay * sampleRate);
     if (index >= length) continue;
