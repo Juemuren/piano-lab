@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { EqualizerEffectConfig, FilterEffectConfig } from '../../../types';
-import { getBiquadEffectMagnitudes } from '../../../services/synth/EffectResponse';
-import useElementWidth from '../../../hooks/useElementWidth';
+import type {
+  EqualizerEffectConfig,
+  FilterEffectConfig,
+} from '../../../../types';
+import { getBiquadEffectMagnitudes } from '../../../../services/synth/EffectResponse';
+import useElementWidth from '../../../../hooks/useElementWidth';
 
 interface EffectMagnitudeResponsePreviewProps {
   title: string;

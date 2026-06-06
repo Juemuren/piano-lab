@@ -1,6 +1,6 @@
 import { InlineMath } from 'react-katex';
-import ControlRange from '../../shared/ControlRange';
-import ControlSelect from '../../shared/ControlSelect';
+import ControlRange from '../../../shared/ControlRange';
+import ControlSelect from '../../../shared/ControlSelect';
 
 interface BaseFrequencyOption {
   pitch: number | 'custom';

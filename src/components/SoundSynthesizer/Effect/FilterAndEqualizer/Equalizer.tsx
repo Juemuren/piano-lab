@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Minus, Plus } from 'lucide-react';
-import { DEFAULT_EQUALIZER_EFFECT_TYPE } from '../../../constants/synth';
+import { DEFAULT_EQUALIZER_EFFECT_TYPE } from '../../../../constants/synth';
 import type {
   EqualizerEffectConfig,
   EqualizerEffectType,
-} from '../../../types';
-import ControlButton from '../../shared/ControlButton';
-import ControlRange from '../../shared/ControlRange';
-import ControlSelect from '../../shared/ControlSelect';
+} from '../../../../types';
+import ControlButton from '../../../shared/ControlButton';
+import ControlRange from '../../../shared/ControlRange';
+import ControlSelect from '../../../shared/ControlSelect';
 
 interface EqualizerEffectProps {
   equalizers: EqualizerEffectConfig[];

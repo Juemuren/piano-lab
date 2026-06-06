@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import Scatter from 'react-plotly.js/scatter';
-import type { ReverbEffectConfig } from '../../../types';
-import { getReverbImpulseResponseSamples } from '../../../services/synth/ReverbImpulse';
-import useElementWidth from '../../../hooks/useElementWidth';
+import type { ReverbEffectConfig } from '../../../../types';
+import { getReverbImpulseResponseSamples } from '../../../../services/synth/ReverbImpulse';
+import useElementWidth from '../../../../hooks/useElementWidth';
 
 interface ReverbImpulseResponsePreviewProps {
   title: string;

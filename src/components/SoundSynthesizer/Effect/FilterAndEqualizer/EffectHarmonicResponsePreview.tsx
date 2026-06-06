@@ -1,14 +1,17 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { EqualizerEffectConfig, FilterEffectConfig } from '../../../types';
-import { getBaseFrequency } from '../../../services/synth/SynthCalculations';
+import type {
+  EqualizerEffectConfig,
+  FilterEffectConfig,
+} from '../../../../types';
+import { getBaseFrequency } from '../../../../services/synth/SynthCalculations';
 import {
   getBiquadEffectMagnitudes,
   RESPONSE_NYQUIST_FREQUENCY,
-} from '../../../services/synth/EffectResponse';
-import useBaseFrequencyOptions from '../../../hooks/synth/useBaseFrequencyOptions';
-import { getHarmonicLabels } from '../../../utils/harmonic';
-import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
+} from '../../../../services/synth/EffectResponse';
+import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
+import { getHarmonicLabels } from '../../../../utils/harmonic';
+import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
 import BaseFrequencyControl from './BaseFrequencyControl';
 
 interface EffectHarmonicResponsePreviewProps {

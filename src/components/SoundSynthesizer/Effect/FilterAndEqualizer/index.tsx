@@ -4,11 +4,11 @@ import type {
   EqualizerEffectType,
   FilterEffectConfig,
   FilterEffectType,
-} from '../../../types';
+} from '../../../../types';
 import EffectHarmonicResponsePreview from './EffectHarmonicResponsePreview';
 import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
-import EqualizerEffect from './EqualizerEffect';
-import FilterEffect from './FilterEffect';
+import Equalizer from './Equalizer';
+import Filter from './Filter';
 
 interface FilterEqualizerEffectProps {
   harmonicCount: number;
@@ -50,7 +50,7 @@ function FilterEqualizerEffect({
       <summary className="text-lg font-bold my-2">
         {t('effect.filterEqualizer.name')}
       </summary>
-      <FilterEffect
+      <Filter
         filters={filters}
         onAdd={onFilterAdd}
         onRemove={onFilterRemove}
@@ -58,7 +58,7 @@ function FilterEqualizerEffect({
         onFrequencyChange={onFilterFrequencyChange}
         onQChange={onFilterQChange}
       />
-      <EqualizerEffect
+      <Equalizer
         equalizers={equalizers}
         onAdd={onEqualizerAdd}
         onRemove={onEqualizerRemove}

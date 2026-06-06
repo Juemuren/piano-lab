@@ -1,7 +1,7 @@
 import type { EffectConfig } from '../../../types';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
-import FilterEqualizerEffect from './FilterEqualizerEffect';
-import ReverbEffect from './ReverbEffect';
+import FilterAndEqualizer from './FilterAndEqualizer';
+import Reverb from './Reverb';
 
 interface EffectProps {
   harmonicCount: number;
@@ -39,7 +39,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
 
   return (
     <>
-      <FilterEqualizerEffect
+      <FilterAndEqualizer
         harmonicCount={harmonicCount}
         filters={filters}
         onFilterAdd={addFilter}
@@ -55,7 +55,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEqualizerQChange={updateEqualizerQ}
         onEqualizerGainChange={updateEqualizerGain}
       />
-      <ReverbEffect
+      <Reverb
         reverb={reverb}
         onPresetChange={updateReverbPreset}
         onMixChange={updateReverbMix}

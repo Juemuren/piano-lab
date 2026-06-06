@@ -4,10 +4,10 @@ import { Minus, Plus } from 'lucide-react';
 import type {
   BuiltInReverbEffectPreset,
   ReverbEffectConfig,
-} from '../../../types';
-import ControlButton from '../../shared/ControlButton';
-import ControlRange from '../../shared/ControlRange';
-import ControlSelect from '../../shared/ControlSelect';
+} from '../../../../types';
+import ControlButton from '../../../shared/ControlButton';
+import ControlRange from '../../../shared/ControlRange';
+import ControlSelect from '../../../shared/ControlSelect';
 import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
 interface ReverbEffectProps {
