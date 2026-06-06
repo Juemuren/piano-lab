@@ -214,7 +214,7 @@ $$
 
 应用内使用 Plotly.js 绘制最终幅频特性曲线。
 
-#### 混响
+#### 卷积
 
 混响为卷积混响，把计算得到的脉冲响应送入 [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) 与干声进行卷积。
 

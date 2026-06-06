@@ -25,9 +25,9 @@
 
 ## Features
 
-Piano Lab provides interactive virtual keys, a sound synthesizer, and a score editor:
+Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor:
 
-- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and transfer function, record audio, and export in formats such as WebM and MP4
+- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects, record audio, and export in formats such as WebM and MP4
 - [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export them as SVG/PNG/PDF/MIDI files
 - [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8 and supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices
 
@@ -35,7 +35,7 @@ The app supports multiple languages, mobile layouts, dark mode, and can be insta
 
 ### Sound Synthesizer
 
-The sound synthesizer consists of three modules: envelope, spectrum, and transfer function.
+The sound synthesizer consists of three modules: envelope, spectrum, and effects.
 
 - Synthesizes sound physically without sampling
 - Uses twelve-tone equal temperament to generate pitches and supports free transposition
@@ -54,11 +54,24 @@ The sound synthesizer consists of three modules: envelope, spectrum, and transfe
 - Allows fully custom harmonic amplitudes
 - Provides several presets and can display the corresponding mathematical formulas
 
-### Transfer Function
+### Effects
 
-- Provides presets with adjustable parameters
-- Can preview amplitude and phase changes for different harmonics
-- Supports choosing a specific fundamental frequency or pitch when previewing
+Contains filter, equalizer, and reverb components.
+
+#### Filter & Equalizer
+
+- Supports lowpass, highpass, bandpass, and notch filter types
+- Supports lowshelf, highshelf, and peaking equalizer types
+- Provides adjustable cutoff frequency, Q (quality factor), and gain
+- Can plot the combined magnitude response curve of filters and equalizers, with per-harmonic sampling at a selected pitch
+
+#### Reverb
+
+- Uses a separated early reflections and late tail approach
+- Provides several presets and fully customizable parameters
+- Early reflections support adjusting reflection count, gain, and delay
+- The late tail uses an exponential-decay impulse response, with adjustable delay time, duration, amplitude coefficient, and decay coefficient
+- Can plot impulse response formulas and waveforms
 
 ### Score Editor
 
@@ -128,11 +141,13 @@ npm run format
 
 > For a more detailed explanation, read my article [The Mathematical Principles of Music: From Vibrating Strings to Modern Music Theory](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/).
 
-### Harmonic Synthesis
+### Sound Synthesis
 
-The sound produced by a vibrating string is ideally composed of a series of harmonics. The fundamental frequency is $f_1$, and the remaining harmonics are integer multiples of that frequency. For a sine wave, the sound pressure can be written as:
+The sound produced by a vibrating string is ideally composed of a series of sine harmonics. The fundamental frequency is $f_1$, and the remaining harmonics are integer multiples of that frequency. The ideal sound pressure can therefore be written as:
 
-$$p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)$$
+$$
+p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)
+$$
 
 Based on this principle, the project synthesizes sound with the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API). To further improve the listening experience, it uses a series of exponential functions to model how amplitude changes over time:
 
@@ -146,7 +161,7 @@ To better match physical behavior, higher harmonics decay and release faster, an
 
 The app uses Plotly.js to draw the amplitude envelope curve.
 
-### Timbre
+### Harmonic Amplitude Spectrum
 
 Timbre is mainly determined by the amplitudes $A_n$ of the harmonic components.
 
@@ -170,28 +185,66 @@ Adjustable parameters:
 
 The app uses KaTeX to render spectrum preset formulas.
 
-### Frequency-Domain Distortion
+### Effects and Transfer Functions
 
-During propagation from source to listener, sound may be distorted in the frequency domain. Harmonic components at different frequencies can be affected differently in amplitude and phase.
+After harmonic synthesis, effects further process the audio signal. This processing can be understood in both the frequency and time domains.
 
-The transfer functions use the following relationships:
+Currently implemented effects include filters, equalizers, and reverb.
 
-| Effect      | Magnitude response                                      | Phase response                                                                    |
-| ----------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Delay       | $1$                                                     | $-2\pi\tau f$                                                                     |
-| Single echo | $\sqrt{1 + \alpha^2 + 2\alpha\cos(2\pi\tau f)}$         | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 + \alpha\cos(2\pi\tau f)}$               |
-| Multi echo  | $\frac1{\sqrt{1 + \alpha^2 - 2\alpha\cos(2\pi\tau f)}}$ | $-\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$               |
-| All-pass    | $1$                                                     | $-2\pi\tau f - 2\arctan\frac{\alpha\sin(2\pi\tau f)}{1 - \alpha\cos(2\pi\tau f)}$ |
-| Low-pass    | $`\mathbf{1}_{f \le f_{\max}}`$                         | $0$                                                                               |
-| High-pass   | $`\mathbf{1}_{f \ge f_{\min}}`$                         | $0$                                                                               |
-| Band-pass   | $`\mathbf{1}_{f \le f_{\max} \land f \ge f_{\min}}`$    | $0$                                                                               |
+#### Filters
 
-Adjustable parameters:
+Both filter and equalizer effects are implemented using the Web Audio API's [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode).
 
-- $\tau$: delay time
-- $\alpha$: attenuation coefficient
-- $f_{\min}$: minimum frequency
-- $f_{\max}$: maximum frequency
+BiquadFilterNode is a biquad filter whose standard transfer function is:
+
+$$
+H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2}}{1 + a_1 z^{-1} + a_2 z^{-2}}
+$$
+
+where $b_0, b_1, b_2, a_1, a_2$ are coefficients. By modifying these 5 coefficients alone, all common filter types can be realized: lowpass/highpass/bandpass/notch/lowshelf/highshelf/peaking.
+
+BiquadFilterNode further encapsulates more practical interfaces:
+
+- **Lowpass/Highpass**: adjustable cutoff frequency and Q. Q controls the height of the bump at the cutoff frequency.
+- **Bandpass/Notch**: adjustable center frequency and bandwidth factor. A larger bandwidth factor gives a narrower bandwidth and a more prominent bump at the center frequency.
+- **Lowshelf/Highshelf**: adjustable cutoff frequency and gain.
+- **Peaking**: adjustable center frequency, bandwidth factor, and gain.
+
+Filters can be chained together in a cascaded effects chain.
+
+The app uses Plotly.js to draw the final magnitude response curve.
+
+#### Convolution
+
+Reverb is convolution-based, feeding a computed impulse response into a [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) to convolve with the dry signal.
+
+ConvolverNode performs discrete convolution, given by:
+
+$$
+(f * g)[n] = \sum_{k=-\infty}^{\infty} f[k] g[n - k]
+$$
+
+The impulse response uses a separated early reflections and late tail approach, which are summed to produce the total impulse response.
+
+**Early reflections** simulate the short-delay echoes that arrive at the listener after a small number of wall reflections, represented as a set of discrete impulses with varying delays and gains:
+
+$$
+h_e[n]=\sum_i a_i\delta[n-d_if_s]
+$$
+
+where $a_i$ is the reflection amplitude and $d_i$ is the reflection delay. $f_s$ is the sample rate, automatically chosen by the [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) based on the current audio output device — typically 44100 Hz or 48000 Hz.
+
+**Late tail** simulates the dense collection of echoes after many reflections, using an exponential-decay envelope as the impulse response:
+
+$$
+h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s
+$$
+
+where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, $D$ and $T$ are the delay time and duration respectively.
+
+The reverb effect provides four presets — bathroom, garage, hall, and cathedral — to simulate spaces from small to large.
+
+The app uses KaTeX and Plotly.js to draw impulse response formulas and waveforms.
 
 ### Scores
 
