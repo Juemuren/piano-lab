@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { BlockMath, InlineMath } from 'react-katex';
-import { Minus, Plus } from 'lucide-react';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
+import EarlyReflections from './EarlyReflections';
+import LateTail from './LateTail';
 import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
 interface ReverbProps {
@@ -87,115 +87,21 @@ function Reverb({
           ))}
         </ControlSelect>
 
-        <details open className="my-2">
-          <summary className="font-bold my-2">
-            {t('effect.reverb.earlyReflection.name')}
-          </summary>
-          <BlockMath math={String.raw`h_e[n]=\sum_i a_i\delta[n-d_if_s]`} />
-          <div className="space-y-3">
-            {reverb.earlyReflections.map((reflection, index) => (
-              <div key={index} className="space-y-2">
-                <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
-                  <ControlButton
-                    title={t('effect.reverb.earlyReflection.name')}
-                    icon={<Minus size={18} />}
-                    onClick={() => onEarlyReflectionRemove(index)}
-                  />
-                  <div className="text-left text-sm font-semibold">
-                    {t('effect.reverb.earlyReflection.item', {
-                      index: index + 1,
-                    })}
-                  </div>
-                </div>
-                <ControlRange
-                  label={t('effect.reverb.earlyReflection.delay')}
-                  symbol={<InlineMath math="d_i" />}
-                  min="0"
-                  max="0.5"
-                  step="0.001"
-                  value={reflection.delay}
-                  displayValue={`${(reflection.delay * 1000).toFixed(0)} ms`}
-                  onChange={(value) =>
-                    onEarlyReflectionDelayChange(index, value)
-                  }
-                />
-                <ControlRange
-                  label={t('effect.reverb.earlyReflection.amplitude')}
-                  symbol={<InlineMath math="a_i" />}
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={reflection.gain}
-                  displayValue={reflection.gain.toFixed(2)}
-                  onChange={(value) =>
-                    onEarlyReflectionGainChange(index, value)
-                  }
-                />
-              </div>
-            ))}
-            <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
-              <ControlButton
-                title={t('effect.reverb.earlyReflection.name')}
-                icon={<Plus size={18} />}
-                onClick={onEarlyReflectionAdd}
-              />
-              <div className="text-left text-sm font-semibold">
-                {t('effect.reverb.earlyReflection.item', {
-                  index: reverb.earlyReflections.length + 1,
-                })}
-              </div>
-            </div>
-          </div>
-        </details>
+        <EarlyReflections
+          earlyReflections={reverb.earlyReflections}
+          onAdd={onEarlyReflectionAdd}
+          onRemove={onEarlyReflectionRemove}
+          onDelayChange={onEarlyReflectionDelayChange}
+          onGainChange={onEarlyReflectionGainChange}
+        />
 
-        <details open className="my-2">
-          <summary className="font-bold my-2">
-            {t('effect.reverb.lateTail.name')}
-          </summary>
-          <BlockMath
-            math={String.raw`h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s`}
-          />
-          <ControlRange
-            label={t('effect.reverb.lateTail.delay')}
-            symbol={<InlineMath math="D" />}
-            min="0"
-            max="1"
-            step="0.001"
-            value={reverb.lateTail.delay}
-            displayValue={`${(reverb.lateTail.delay * 1000).toFixed(0)} ms`}
-            onChange={onLateTailDelayChange}
-          />
-          <ControlRange
-            label={t('effect.reverb.lateTail.duration')}
-            symbol={<InlineMath math="T" />}
-            min="0.1"
-            max="8"
-            step="0.01"
-            value={reverb.lateTail.duration}
-            displayValue={`${reverb.lateTail.duration.toFixed(2)} s`}
-            onChange={onLateTailDurationChange}
-          />
-          <ControlRange
-            label={t('effect.reverb.lateTail.amplitude')}
-            symbol={<InlineMath math="A" />}
-            min="0"
-            max="1"
-            step="0.01"
-            value={reverb.lateTail.amplitude}
-            displayValue={reverb.lateTail.amplitude.toFixed(2)}
-            onChange={onLateTailAmplitudeChange}
-          />
-          <ControlRange
-            label={t('effect.reverb.lateTail.alpha')}
-            symbol={<InlineMath math="\alpha" />}
-            min="0.00001"
-            max="0.001"
-            step="0.00001"
-            value={reverb.lateTail.alpha}
-            displayValue={reverb.lateTail.alpha.toFixed(5)}
-            onChange={onLateTailAlphaChange}
-          />
-        </details>
+        <LateTail
+          lateTail={reverb.lateTail}
+          onDelayChange={onLateTailDelayChange}
+          onDurationChange={onLateTailDurationChange}
+          onAmplitudeChange={onLateTailAmplitudeChange}
+          onAlphaChange={onLateTailAlphaChange}
+        />
 
         <ReverbImpulseResponsePreview
           title={t('effect.reverb.impulseResponse')}
