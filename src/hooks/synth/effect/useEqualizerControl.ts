@@ -3,9 +3,9 @@ import { createDefaultEqualizerConfig } from '../../../services/synth/config/Def
 import type { EqualizerConfig, EqualizerType } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
-function useEqualizerControl(initialEqualizers?: EqualizerConfig[]) {
+function useEqualizerControl(initialEqualizers: EqualizerConfig[]) {
   const [equalizers, setEqualizers] = useState<EqualizerConfig[]>(
-    () => initialEqualizers ?? [],
+    () => initialEqualizers,
   );
 
   const addEqualizer = useCallback((type: EqualizerType) => {

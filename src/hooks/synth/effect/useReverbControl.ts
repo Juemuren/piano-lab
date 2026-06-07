@@ -7,9 +7,9 @@ import { createDefaultReverbConfig } from '../../../services/synth/config/Defaul
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
-function useReverbControl(initialReverb?: ReverbConfig | null) {
+function useReverbControl(initialReverb: ReverbConfig | null) {
   const [reverb, setReverb] = useState<ReverbConfig | null>(
-    () => initialReverb ?? null,
+    () => initialReverb,
   );
 
   const updateReverbEnabled = useCallback((enabled: boolean) => {

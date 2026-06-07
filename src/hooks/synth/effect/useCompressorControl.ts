@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react';
 import { createDefaultCompressorConfig } from '../../../services/synth/config/Defaults';
 import type { CompressorConfig } from '../../../types';
 
-function useCompressorControl(initialCompressor?: CompressorConfig | null) {
+function useCompressorControl(initialCompressor: CompressorConfig | null) {
   const [compressor, setCompressor] = useState<CompressorConfig | null>(
-    () => initialCompressor ?? null,
+    () => initialCompressor,
   );
 
   const updateCompressorEnabled = useCallback((enabled: boolean) => {

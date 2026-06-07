@@ -3,10 +3,8 @@ import { createDefaultFilterConfig } from '../../../services/synth/config/Defaul
 import type { FilterConfig, FilterType } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
-function useFilterControl(initialFilters?: FilterConfig[]) {
-  const [filters, setFilters] = useState<FilterConfig[]>(
-    () => initialFilters ?? [],
-  );
+function useFilterControl(initialFilters: FilterConfig[]) {
+  const [filters, setFilters] = useState<FilterConfig[]>(() => initialFilters);
 
   const addFilter = useCallback((type: FilterType) => {
     setFilters((current) => [...current, createDefaultFilterConfig(type)]);
