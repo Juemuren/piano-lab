@@ -92,9 +92,9 @@
       }
     },
     "compressor": {
-      "name": "压缩器",
+      "name": "压缩",
       "enabled": "启用压缩",
-      "disabled": "关闭压缩",
+      "disabled": "禁用压缩",
       "threshold": "阈值",
       "knee": "拐点",
       "ratio": "压缩比",
@@ -105,7 +105,7 @@
     "panner": {
       "name": "声像",
       "enabled": "启用声像",
-      "disabled": "关闭声像",
+      "disabled": "禁用声像",
       "panningModel": "声像模型",
       "panningModels": {
         "equalpower": "等功率平移算法",
@@ -142,6 +142,8 @@
     },
     "reverb": {
       "name": "混响",
+      "enabled": "启用混响",
+      "disabled": "禁用混响",
       "presets": {
         "bathroom": "浴室",
         "garage": "车库",

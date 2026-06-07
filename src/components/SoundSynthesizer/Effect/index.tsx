@@ -37,6 +37,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updatePannerEnabled,
     updatePannerValue,
     reverb,
+    updateReverbEnabled,
     updateReverbPreset,
     updateReverbMix,
     addReverbEarlyReflection,
@@ -83,6 +84,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
       />
       <Reverb
         reverb={reverb}
+        onEnabledChange={updateReverbEnabled}
         onPresetChange={updateReverbPreset}
         onMixChange={updateReverbMix}
         onEarlyReflectionAdd={addReverbEarlyReflection}

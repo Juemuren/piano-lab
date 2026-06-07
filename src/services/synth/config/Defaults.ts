@@ -157,7 +157,7 @@ export function createDefaultEffectConfig(): EffectConfig {
     equalizers: [],
     compressor: null,
     panner: null,
-    reverb: createDefaultReverbConfig(),
+    reverb: null,
   };
 }
 

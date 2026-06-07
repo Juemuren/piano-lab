@@ -23,7 +23,8 @@
 - [ ] 对项目中的数个 [ControlSelect](src/components/shared/ControlSelect.tsx) 补充 label
 - [ ] [ControlSelect](src/components/shared/ControlSelect.tsx) 中的标签在宽屏上改为横向
 - [ ] 在脚注中补充关于应用的说明
-- [ ] 混响添加一个启用开关
+- [ ] Footer 中添加更多的 Icon
+- [x] 混响添加一个启用开关
 - [x] 频谱中添加公式
 - [x] 包络中添加公式
 
