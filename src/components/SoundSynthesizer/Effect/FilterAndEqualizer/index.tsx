@@ -5,8 +5,8 @@ import type {
   FilterConfig,
   FilterType,
 } from '../../../../types';
-import EffectHarmonicResponsePreview from './EffectHarmonicResponsePreview';
-import EffectMagnitudeResponsePreview from './EffectMagnitudeResponsePreview';
+import HarmonicResponsePreview from './HarmonicResponsePreview';
+import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
 
@@ -67,12 +67,12 @@ function FilterAndEqualizer({
         onQChange={onEqualizerQChange}
         onGainChange={onEqualizerGainChange}
       />
-      <EffectMagnitudeResponsePreview
+      <MagnitudeResponsePreview
         title={t('charts.magnitudeResponseCurve')}
         filters={filters}
         equalizers={equalizers}
       />
-      <EffectHarmonicResponsePreview
+      <HarmonicResponsePreview
         title={t('charts.magnitudeResponseSample')}
         harmonicCount={harmonicCount}
         filters={filters}

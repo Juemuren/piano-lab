@@ -3,7 +3,7 @@ import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import { getBiquadMagnitudes } from '../../../../services/synth/Filter';
 import Scatter from '../../../shared/Scatter';
 
-interface EffectMagnitudeResponsePreviewProps {
+interface MagnitudeResponsePreviewProps {
   title: string;
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
@@ -42,11 +42,11 @@ function getEffectMagnitudeResponse(
   };
 }
 
-function EffectMagnitudeResponsePreview({
+function MagnitudeResponsePreview({
   title,
   filters,
   equalizers,
-}: EffectMagnitudeResponsePreviewProps) {
+}: MagnitudeResponsePreviewProps) {
   const response = useMemo(
     () => getEffectMagnitudeResponse(filters, equalizers),
     [equalizers, filters],
@@ -75,4 +75,4 @@ function EffectMagnitudeResponsePreview({
   );
 }
 
-export default EffectMagnitudeResponsePreview;
+export default MagnitudeResponsePreview;

@@ -11,7 +11,7 @@ import { getHarmonicLabels } from '../../../../utils/harmonic';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
 import BaseFrequencyControl from './BaseFrequencyControl';
 
-interface EffectHarmonicResponsePreviewProps {
+interface HarmonicResponsePreviewProps {
   title: string;
   harmonicCount: number;
   filters: FilterConfig[];
@@ -20,12 +20,12 @@ interface EffectHarmonicResponsePreviewProps {
 
 const DEFAULT_EFFECT_PREVIEW_PITCH = 69;
 
-function EffectHarmonicResponsePreview({
+function HarmonicResponsePreview({
   title,
   harmonicCount,
   filters,
   equalizers,
-}: EffectHarmonicResponsePreviewProps) {
+}: HarmonicResponsePreviewProps) {
   const { t } = useTranslation('synth');
   const [baseFrequency, setBaseFrequency] = useState(() =>
     getBaseFrequency(DEFAULT_EFFECT_PREVIEW_PITCH),
@@ -86,4 +86,4 @@ function EffectHarmonicResponsePreview({
   );
 }
 
-export default EffectHarmonicResponsePreview;
+export default HarmonicResponsePreview;
