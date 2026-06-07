@@ -3,7 +3,7 @@ import {
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
 } from '../../../constants/synth';
-import { createDefaultReverbConfig } from '../../../services/synth/EffectDefaults';
+import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 

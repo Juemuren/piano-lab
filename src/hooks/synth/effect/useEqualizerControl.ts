@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { createDefaultEqualizerConfig } from '../../../services/synth/EffectDefaults';
+import { createDefaultEqualizerConfig } from '../../../services/synth/config/Defaults';
 import type { EqualizerConfig, EqualizerType } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 

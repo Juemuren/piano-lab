@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { createDefaultFilterConfig } from '../../../services/synth/EffectDefaults';
+import { createDefaultFilterConfig } from '../../../services/synth/config/Defaults';
 import type { FilterConfig, FilterType } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
