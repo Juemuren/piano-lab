@@ -21,8 +21,8 @@ function PannerSpatialPreview({ title, panner }: PannerSpatialPreviewProps) {
   const { t } = useTranslation('synth');
 
   const preview = useMemo(() => {
-    const range = getPlotRange(panner);
     const coneRadius = Math.max(panner.refDistance, 0.01);
+    const range = getPlotRange(panner) + coneRadius;
     const outerCone = getPannerConePolygon(
       panner,
       panner.coneOuterAngle,
@@ -112,9 +112,12 @@ function PannerSpatialPreview({ title, panner }: PannerSpatialPreviewProps) {
         }}
         xaxis={{
           title: { text: 'X' },
+          range: [-preview.range, preview.range],
         }}
         yaxis={{
           title: { text: 'Z' },
+          range: [-preview.range, preview.range],
+          scaleanchor: 'x',
         }}
       />
     </details>
