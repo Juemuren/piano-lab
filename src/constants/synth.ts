@@ -30,7 +30,20 @@ export const DEFAULT_COMPRESSOR_RATIO = 12;
 export const DEFAULT_COMPRESSOR_ATTACK = 0.003;
 export const DEFAULT_COMPRESSOR_RELEASE = 0.25;
 
-export const DEFAULT_PANNER_PAN = 0;
+export const DEFAULT_PANNER_PANNING_MODEL: PanningModelType = 'equalpower';
+export const DEFAULT_PANNER_DISTANCE_MODEL: DistanceModelType = 'inverse';
+export const DEFAULT_PANNER_POSITION_X = 0;
+export const DEFAULT_PANNER_POSITION_Y = 0;
+export const DEFAULT_PANNER_POSITION_Z = -1;
+export const DEFAULT_PANNER_ORIENTATION_X = 0;
+export const DEFAULT_PANNER_ORIENTATION_Y = 0;
+export const DEFAULT_PANNER_ORIENTATION_Z = 1;
+export const DEFAULT_PANNER_REF_DISTANCE = 1;
+export const DEFAULT_PANNER_MAX_DISTANCE = 10000;
+export const DEFAULT_PANNER_ROLLOFF_FACTOR = 0;
+export const DEFAULT_PANNER_CONE_INNER_ANGLE = 360;
+export const DEFAULT_PANNER_CONE_OUTER_ANGLE = 360;
+export const DEFAULT_PANNER_CONE_OUTER_GAIN = 0;
 
 export const DEFAULT_REVERB_PRESET = 'bathroom';
 export const DEFAULT_REVERB_MIX = 0;

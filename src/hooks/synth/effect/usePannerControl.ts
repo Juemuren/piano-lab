@@ -13,16 +13,20 @@ function usePannerControl(initialPanner?: PannerConfig | null) {
     );
   }, []);
 
-  const updatePannerPan = useCallback((pan: number) => {
-    setPanner((current) =>
-      current ? { ...current, pan } : createDefaultPannerConfig(),
-    );
-  }, []);
+  const updatePannerValue = useCallback(
+    <Key extends keyof PannerConfig>(key: Key, value: PannerConfig[Key]) => {
+      setPanner((current) => ({
+        ...(current ?? createDefaultPannerConfig()),
+        [key]: value,
+      }));
+    },
+    [],
+  );
 
   return {
     panner,
     updatePannerEnabled,
-    updatePannerPan,
+    updatePannerValue,
   };
 }
 

@@ -81,7 +81,20 @@ export interface CompressorConfig {
 }
 
 export interface PannerConfig {
-  pan: number;
+  panningModel: PanningModelType;
+  distanceModel: DistanceModelType;
+  positionX: number;
+  positionY: number;
+  positionZ: number;
+  orientationX: number;
+  orientationY: number;
+  orientationZ: number;
+  refDistance: number;
+  maxDistance: number;
+  rolloffFactor: number;
+  coneInnerAngle: number;
+  coneOuterAngle: number;
+  coneOuterGain: number;
 }
 
 export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';

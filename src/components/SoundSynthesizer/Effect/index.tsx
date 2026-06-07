@@ -35,7 +35,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateCompressorRelease,
     panner,
     updatePannerEnabled,
-    updatePannerPan,
+    updatePannerValue,
     reverb,
     updateReverbPreset,
     updateReverbMix,
@@ -79,7 +79,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
       <Panner
         panner={panner}
         onEnabledChange={updatePannerEnabled}
-        onPanChange={updatePannerPan}
+        onValueChange={updatePannerValue}
       />
       <Reverb
         reverb={reverb}

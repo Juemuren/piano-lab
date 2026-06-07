@@ -107,17 +107,23 @@ export class EffectChain {
       this.pannerNode = this.audioContext.createPanner();
     }
 
-    const pan = Math.min(Math.max(pannerConfig.pan, -1), 1);
-    const z = -(1 - Math.abs(pan));
-
-    this.pannerNode.panningModel = 'equalpower';
-    this.pannerNode.distanceModel = 'inverse';
-    this.pannerNode.refDistance = 1;
-    this.pannerNode.maxDistance = 10000;
-    this.pannerNode.rolloffFactor = 0;
-    this.pannerNode.positionX.value = pan;
-    this.pannerNode.positionY.value = 0;
-    this.pannerNode.positionZ.value = z;
+    this.pannerNode.panningModel = pannerConfig.panningModel;
+    this.pannerNode.distanceModel = pannerConfig.distanceModel;
+    this.pannerNode.refDistance = Math.max(pannerConfig.refDistance, 0.01);
+    this.pannerNode.maxDistance = Math.max(pannerConfig.maxDistance, 0.01);
+    this.pannerNode.rolloffFactor = Math.max(pannerConfig.rolloffFactor, 0);
+    this.pannerNode.coneInnerAngle = Math.max(pannerConfig.coneInnerAngle, 0);
+    this.pannerNode.coneOuterAngle = Math.max(pannerConfig.coneOuterAngle, 0);
+    this.pannerNode.coneOuterGain = Math.min(
+      Math.max(pannerConfig.coneOuterGain, 0),
+      1,
+    );
+    this.pannerNode.positionX.value = pannerConfig.positionX;
+    this.pannerNode.positionY.value = pannerConfig.positionY;
+    this.pannerNode.positionZ.value = pannerConfig.positionZ;
+    this.pannerNode.orientationX.value = pannerConfig.orientationX;
+    this.pannerNode.orientationY.value = pannerConfig.orientationY;
+    this.pannerNode.orientationZ.value = pannerConfig.orientationZ;
 
     return this.pannerNode;
   }

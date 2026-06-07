@@ -36,6 +36,14 @@ export const EQUALIZER_TYPES: EqualizerType[] = [
   'peaking',
 ];
 
+export const PANNER_PANNING_MODELS: PanningModelType[] = ['equalpower', 'HRTF'];
+
+export const PANNER_DISTANCE_MODELS: DistanceModelType[] = [
+  'linear',
+  'inverse',
+  'exponential',
+];
+
 export const REVERB_PRESETS: ReverbPreset[] = [
   'bathroom',
   'garage',

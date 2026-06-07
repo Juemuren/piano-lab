@@ -106,8 +106,25 @@
       "name": "声像",
       "enabled": "启用声像",
       "disabled": "关闭声像",
-      "pan": "声像位置",
-      "range": "左 -1 / 中 0 / 右 1"
+      "panningModel": "声像模型",
+      "panningModels": {
+        "equalpower": "等功率平移算法",
+        "HRTF": "头部相关传递函数"
+      },
+      "distanceModel": "距离模型",
+      "distanceModels": {
+        "linear": "线性",
+        "inverse": "反比",
+        "exponential": "指数"
+      },
+      "position": "位置",
+      "orientation": "朝向",
+      "refDistance": "参考距离",
+      "maxDistance": "最大距离",
+      "rolloffFactor": "衰减系数",
+      "coneInnerAngle": "内锥角",
+      "coneOuterAngle": "外锥角",
+      "coneOuterGain": "外锥增益"
     },
     "reverb": {
       "name": "混响",

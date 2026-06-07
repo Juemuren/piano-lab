@@ -16,7 +16,20 @@ import {
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
-  DEFAULT_PANNER_PAN,
+  DEFAULT_PANNER_CONE_INNER_ANGLE,
+  DEFAULT_PANNER_CONE_OUTER_ANGLE,
+  DEFAULT_PANNER_CONE_OUTER_GAIN,
+  DEFAULT_PANNER_DISTANCE_MODEL,
+  DEFAULT_PANNER_MAX_DISTANCE,
+  DEFAULT_PANNER_ORIENTATION_X,
+  DEFAULT_PANNER_ORIENTATION_Y,
+  DEFAULT_PANNER_ORIENTATION_Z,
+  DEFAULT_PANNER_PANNING_MODEL,
+  DEFAULT_PANNER_POSITION_X,
+  DEFAULT_PANNER_POSITION_Y,
+  DEFAULT_PANNER_POSITION_Z,
+  DEFAULT_PANNER_REF_DISTANCE,
+  DEFAULT_PANNER_ROLLOFF_FACTOR,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
   DEFAULT_REVERB_LATE_TAIL_ALPHA,
@@ -49,6 +62,8 @@ import {
   EQUALIZER_TYPES,
   FILTER_TYPES,
   OSCILLATOR_TYPES,
+  PANNER_DISTANCE_MODELS,
+  PANNER_PANNING_MODELS,
   REVERB_PRESETS,
   SPECTRUM_TYPES,
 } from './Options';
@@ -109,7 +124,55 @@ function normalizePannerConfig(value: unknown): PannerConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    pan: numberOrDefault(value.pan, DEFAULT_PANNER_PAN),
+    panningModel: unionOrDefault(
+      value.panningModel,
+      PANNER_PANNING_MODELS,
+      DEFAULT_PANNER_PANNING_MODEL,
+    ),
+    distanceModel: unionOrDefault(
+      value.distanceModel,
+      PANNER_DISTANCE_MODELS,
+      DEFAULT_PANNER_DISTANCE_MODEL,
+    ),
+    positionX: numberOrDefault(value.positionX, DEFAULT_PANNER_POSITION_X),
+    positionY: numberOrDefault(value.positionY, DEFAULT_PANNER_POSITION_Y),
+    positionZ: numberOrDefault(value.positionZ, DEFAULT_PANNER_POSITION_Z),
+    orientationX: numberOrDefault(
+      value.orientationX,
+      DEFAULT_PANNER_ORIENTATION_X,
+    ),
+    orientationY: numberOrDefault(
+      value.orientationY,
+      DEFAULT_PANNER_ORIENTATION_Y,
+    ),
+    orientationZ: numberOrDefault(
+      value.orientationZ,
+      DEFAULT_PANNER_ORIENTATION_Z,
+    ),
+    refDistance: numberOrDefault(
+      value.refDistance,
+      DEFAULT_PANNER_REF_DISTANCE,
+    ),
+    maxDistance: numberOrDefault(
+      value.maxDistance,
+      DEFAULT_PANNER_MAX_DISTANCE,
+    ),
+    rolloffFactor: numberOrDefault(
+      value.rolloffFactor,
+      DEFAULT_PANNER_ROLLOFF_FACTOR,
+    ),
+    coneInnerAngle: numberOrDefault(
+      value.coneInnerAngle,
+      DEFAULT_PANNER_CONE_INNER_ANGLE,
+    ),
+    coneOuterAngle: numberOrDefault(
+      value.coneOuterAngle,
+      DEFAULT_PANNER_CONE_OUTER_ANGLE,
+    ),
+    coneOuterGain: numberOrDefault(
+      value.coneOuterGain,
+      DEFAULT_PANNER_CONE_OUTER_GAIN,
+    ),
   };
 }
 
