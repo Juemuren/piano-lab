@@ -124,7 +124,19 @@
       "rolloffFactor": "衰减系数",
       "coneInnerAngle": "内锥角",
       "coneOuterAngle": "外锥角",
-      "coneOuterGain": "外锥增益"
+      "coneOuterGain": "外锥增益",
+      "spatialPreview": "声锥示意图",
+      "distanceGainPreview": "距离增益曲线",
+      "preview": {
+        "outerCone": "外锥",
+        "innerCone": "内锥",
+        "distance": "距离",
+        "orientation": "朝向",
+        "listener": "听者",
+        "source": "声源",
+        "distanceGain": "距离增益",
+        "currentSourceDistance": "当前声源距离"
+      }
     },
     "reverb": {
       "name": "混响",

@@ -36,7 +36,10 @@
   - [x] 绘制实时的 reduction
 - 声像。参考 [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
   - [x] 实现声像效果
-  - [ ] 可视化
+  - [x] 声锥示意图。根据 orientation、coneInnerAngle、coneOuterAngle、coneOuterGain 画极坐标图。coneOuterAngle 之外会按 coneOuterGain 衰减。https://developer.mozilla.org/en-US/docs/Web/API/PannerNode/coneOuterAngle
+  - [x] 距离增益曲线。根据 MDN 给出的计算方式画 linear、inverse、exponential 的曲线。https://developer.mozilla.org/en-US/docs/Web/API/PannerNode/distanceModel
+  - [ ] 实时左右声道能量。在 PannerNode 后接 ChannelSplitterNode + AnalyserNode，分别分析 L/R 的时域 RMS 或频谱
+
 - [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括饱和/失真/过载/法兹，公式如下
 
 | 效果 | 公式                                 | 参数(强度)    |

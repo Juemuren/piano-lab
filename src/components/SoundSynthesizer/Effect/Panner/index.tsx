@@ -4,6 +4,8 @@ import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
+import PannerDistanceGainPreview from './PannerDistanceGainPreview';
+import PannerSpatialPreview from './PannerSpatialPreview';
 
 interface PannerProps {
   panner: PannerConfig | null;
@@ -202,6 +204,15 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
                 onChange={(value) => onValueChange('coneOuterGain', value)}
               />
             </div>
+
+            <PannerSpatialPreview
+              title={t('effect.panner.spatialPreview')}
+              panner={panner}
+            />
+            <PannerDistanceGainPreview
+              title={t('effect.panner.distanceGainPreview')}
+              panner={panner}
+            />
           </div>
         )}
       </div>
