@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import { Zap } from 'lucide-react';
 import type { WaveShaperConfig, WaveShaperPreset } from '../../../../types';
-import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -22,8 +21,8 @@ type WaveShaperParam = Exclude<keyof WaveShaperConfig, 'preset'>;
 
 const presetOptions: WaveShaperPreset[] = [
   'saturation',
-  'distortion',
   'overdrive',
+  'distortion',
   'fuzz',
 ];
 
@@ -122,7 +121,6 @@ function WaveShaper({
                 </option>
               ))}
             </ControlSelect>
-            <BlockMath math={param.formula} />
 
             <ControlRange
               label={t(`effect.waveShaper.parameters.${param.key}`)}
@@ -139,6 +137,7 @@ function WaveShaper({
 
             <WaveShaperCurvePreview
               title={t('effect.waveShaper.curve')}
+              formula={param.formula}
               waveShaper={waveShaper}
             />
           </div>

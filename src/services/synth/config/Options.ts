@@ -39,8 +39,8 @@ export const EQUALIZER_TYPES: EqualizerType[] = [
 
 export const WAVE_SHAPER_PRESETS: WaveShaperPreset[] = [
   'saturation',
-  'distortion',
   'overdrive',
+  'distortion',
   'fuzz',
 ];
 

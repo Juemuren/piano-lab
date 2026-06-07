@@ -25,6 +25,7 @@
 - [x] 频谱中添加公式
 - [x] 包络中添加公式
 - [ ] 在脚注中补充关于应用的说明
+- [ ] 使用 [Catppuccin](https://catppuccin.com/palette/) 的配色方案
 
 ## Feat
 
@@ -37,7 +38,7 @@
   - [x] 实现声像效果
   - [x] 声锥示意图（3D）
   - [x] 距离增益曲线
-- [ ] 波形重塑。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。包括饱和/过载/失真/法兹，公式如下
+- [x] 波形重塑。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。包括饱和/过载/失真/法兹，公式如下
 
 | 效果 | 公式                                 | 参数(强度)    |
 | ---- | ------------------------------------ | ------------- |
