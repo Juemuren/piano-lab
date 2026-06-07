@@ -8,7 +8,7 @@
 ## Refactor
 
 - [x] [synth](src/services/synth) 目录下的文件命名存在误导性，需要修改
-- [ ] [useEffectControl](src/hooks/synth/useEffectControl.ts) 也太长了，必须拆分
+- [x] 拆分 [useEffectControl](src/hooks/synth/useEffectControl.ts)，每个效果单独一个 hook
 
 ## Fix
 
