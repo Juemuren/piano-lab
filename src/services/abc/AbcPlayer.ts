@@ -3,7 +3,7 @@ import { type MidiPitches } from 'abcjs';
 import {
   getHighlightDurationMs,
   getPlaybackDurationSeconds,
-} from './AbcPlaybackCalculations';
+} from './AbcCalculations';
 
 const HIGHLIGHT_INTERVAL_MS = 50;
 
