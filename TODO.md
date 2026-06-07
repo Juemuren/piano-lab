@@ -16,7 +16,9 @@
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
 - [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 https://chromestatus.com/feature/5138066234671104。这个问题好像无法修复，只要调用就会有警告
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
+- [ ] 快速按下不同的琴键，有时会发出类似弦断了的声音。暂时还没找到问题在哪里。
 - [x] 混响的混合比例设为 1 时，会导致声音变得很小。修复方案是把起始音补上，即 $h[n] = \delta[n] + h_e[n] + h_l[n]$，然后再禁用 ConvolverNode 的 normalize
+- [ ] 混响的预设反射声非常明显，需要调小反射的振幅并缩短延迟
 
 ## Style
 
@@ -52,7 +54,6 @@
 已有效果修改
 
 - [ ] 晚期尾音考虑用高斯噪声进行改进。可以用 Box-Muller 变换生成标准正态分布随机数
-- [ ] 混响的预设需要调小反射的振幅并缩短延迟
 
 增加分析子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
 
