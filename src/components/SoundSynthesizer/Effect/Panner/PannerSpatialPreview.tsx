@@ -111,7 +111,7 @@ function PannerSpatialPreview({ title, panner }: PannerSpatialPreviewProps) {
               z: [0],
               mode: 'markers',
               name: t('effect.panner.preview.listener'),
-              marker: { size: 12 },
+              marker: { size: 4 },
             },
             {
               type: 'scatter3d',
@@ -120,7 +120,7 @@ function PannerSpatialPreview({ title, panner }: PannerSpatialPreviewProps) {
               z: [panner.positionZ],
               mode: 'markers',
               name: t('effect.panner.preview.source'),
-              marker: { size: 12 },
+              marker: { size: 4 },
             },
           ] as PlotParams['data']
         }
