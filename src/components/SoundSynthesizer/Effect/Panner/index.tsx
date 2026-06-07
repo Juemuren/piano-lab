@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { MoveHorizontal } from 'lucide-react';
+import type { ReactNode } from 'react';
 import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -14,6 +15,20 @@ interface PannerProps {
     key: Key,
     value: PannerConfig[Key],
   ) => void;
+}
+
+interface PannerControlGroupProps {
+  title: string;
+  children: ReactNode;
+}
+
+function PannerControlGroup({ title, children }: PannerControlGroupProps) {
+  return (
+    <details open className="my-2">
+      <summary className="px-2 pt-2 text-sm font-semibold">{title}</summary>
+      {children}
+    </details>
+  );
 }
 
 function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
@@ -75,10 +90,7 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
               </ControlSelect>
             </div>
 
-            <div>
-              <h4 className="px-2 pt-2 text-sm font-semibold">
-                {t('effect.panner.position')}
-              </h4>
+            <PannerControlGroup title={t('effect.panner.position')}>
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label="X"
@@ -108,12 +120,9 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
                   onChange={(value) => onValueChange('positionZ', value)}
                 />
               </div>
-            </div>
+            </PannerControlGroup>
 
-            <div>
-              <h4 className="px-2 pt-2 text-sm font-semibold">
-                {t('effect.panner.orientation')}
-              </h4>
+            <PannerControlGroup title={t('effect.panner.orientation')}>
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label="X"
@@ -143,67 +152,71 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
                   onChange={(value) => onValueChange('orientationZ', value)}
                 />
               </div>
-            </div>
+            </PannerControlGroup>
 
-            <div className="grid gap-2 md:grid-cols-3">
-              <ControlRange
-                label={t('effect.panner.refDistance')}
-                min="0.01"
-                max="10"
-                step="0.01"
-                value={panner.refDistance}
-                displayValue={panner.refDistance.toFixed(2)}
-                onChange={(value) => onValueChange('refDistance', value)}
-              />
-              <ControlRange
-                label={t('effect.panner.maxDistance')}
-                min="1"
-                max="10000"
-                step="1"
-                value={panner.maxDistance}
-                displayValue={panner.maxDistance.toFixed(0)}
-                onChange={(value) => onValueChange('maxDistance', value)}
-              />
-              <ControlRange
-                label={t('effect.panner.rolloffFactor')}
-                min="0"
-                max="10"
-                step="0.01"
-                value={panner.rolloffFactor}
-                displayValue={panner.rolloffFactor.toFixed(2)}
-                onChange={(value) => onValueChange('rolloffFactor', value)}
-              />
-            </div>
+            <PannerControlGroup title={t('effect.panner.distance')}>
+              <div className="grid gap-2 md:grid-cols-3">
+                <ControlRange
+                  label={t('effect.panner.refDistance')}
+                  min="0.01"
+                  max="10"
+                  step="0.01"
+                  value={panner.refDistance}
+                  displayValue={panner.refDistance.toFixed(2)}
+                  onChange={(value) => onValueChange('refDistance', value)}
+                />
+                <ControlRange
+                  label={t('effect.panner.maxDistance')}
+                  min="1"
+                  max="10000"
+                  step="1"
+                  value={panner.maxDistance}
+                  displayValue={panner.maxDistance.toFixed(0)}
+                  onChange={(value) => onValueChange('maxDistance', value)}
+                />
+                <ControlRange
+                  label={t('effect.panner.rolloffFactor')}
+                  min="0"
+                  max="10"
+                  step="0.01"
+                  value={panner.rolloffFactor}
+                  displayValue={panner.rolloffFactor.toFixed(2)}
+                  onChange={(value) => onValueChange('rolloffFactor', value)}
+                />
+              </div>
+            </PannerControlGroup>
 
-            <div className="grid gap-2 md:grid-cols-3">
-              <ControlRange
-                label={t('effect.panner.coneInnerAngle')}
-                min="0"
-                max="360"
-                step="1"
-                value={panner.coneInnerAngle}
-                displayValue={`${panner.coneInnerAngle.toFixed(0)}°`}
-                onChange={(value) => onValueChange('coneInnerAngle', value)}
-              />
-              <ControlRange
-                label={t('effect.panner.coneOuterAngle')}
-                min="0"
-                max="360"
-                step="1"
-                value={panner.coneOuterAngle}
-                displayValue={`${panner.coneOuterAngle.toFixed(0)}°`}
-                onChange={(value) => onValueChange('coneOuterAngle', value)}
-              />
-              <ControlRange
-                label={t('effect.panner.coneOuterGain')}
-                min="0"
-                max="1"
-                step="0.01"
-                value={panner.coneOuterGain}
-                displayValue={panner.coneOuterGain.toFixed(2)}
-                onChange={(value) => onValueChange('coneOuterGain', value)}
-              />
-            </div>
+            <PannerControlGroup title={t('effect.panner.angle')}>
+              <div className="grid gap-2 md:grid-cols-3">
+                <ControlRange
+                  label={t('effect.panner.coneInnerAngle')}
+                  min="0"
+                  max="360"
+                  step="1"
+                  value={panner.coneInnerAngle}
+                  displayValue={`${panner.coneInnerAngle.toFixed(0)}°`}
+                  onChange={(value) => onValueChange('coneInnerAngle', value)}
+                />
+                <ControlRange
+                  label={t('effect.panner.coneOuterAngle')}
+                  min="0"
+                  max="360"
+                  step="1"
+                  value={panner.coneOuterAngle}
+                  displayValue={`${panner.coneOuterAngle.toFixed(0)}°`}
+                  onChange={(value) => onValueChange('coneOuterAngle', value)}
+                />
+                <ControlRange
+                  label={t('effect.panner.coneOuterGain')}
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={panner.coneOuterGain}
+                  displayValue={panner.coneOuterGain.toFixed(2)}
+                  onChange={(value) => onValueChange('coneOuterGain', value)}
+                />
+              </div>
+            </PannerControlGroup>
 
             <PannerSpatialPreview
               title={t('effect.panner.spatialPreview')}
