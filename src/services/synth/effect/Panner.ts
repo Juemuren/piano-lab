@@ -2,7 +2,6 @@ import type { PannerConfig } from '../../../types';
 
 const DEGREE_TO_RADIAN = Math.PI / 180;
 const DISTANCE_POINT_COUNT = 160;
-const CONE_SEGMENT_COUNT = 48;
 const SPHERE_LATITUDE_COUNT = 12;
 const SPHERE_LONGITUDE_COUNT = 24;
 
@@ -178,7 +177,7 @@ function getPannerConeSphereMesh(config: PannerConfig, radius: number) {
   return mesh;
 }
 
-function getPannerWideConeMesh(
+function getPannerConeSectionMesh(
   config: PannerConfig,
   direction: { x: number; y: number; z: number },
   angle: number,
@@ -187,13 +186,14 @@ function getPannerWideConeMesh(
   const { right, up } = createDirectionBasis(direction);
   const halfAngle = Math.min(Math.max(angle / 2, 0), 180) * DEGREE_TO_RADIAN;
   const mesh: PannerConeMesh = {
-    x: [],
-    y: [],
-    z: [],
+    x: [config.positionX],
+    y: [config.positionY],
+    z: [config.positionZ],
     i: [],
     j: [],
     k: [],
   };
+  const capStartIndex = 1;
 
   for (let latIndex = 0; latIndex <= SPHERE_LATITUDE_COUNT; latIndex += 1) {
     const phi = halfAngle * (latIndex / SPHERE_LATITUDE_COUNT);
@@ -220,13 +220,20 @@ function getPannerWideConeMesh(
   const rowLength = SPHERE_LONGITUDE_COUNT + 1;
   for (let latIndex = 0; latIndex < SPHERE_LATITUDE_COUNT; latIndex += 1) {
     for (let lonIndex = 0; lonIndex < SPHERE_LONGITUDE_COUNT; lonIndex += 1) {
-      const current = latIndex * rowLength + lonIndex;
+      const current = capStartIndex + latIndex * rowLength + lonIndex;
       const next = current + rowLength;
 
       mesh.i.push(current, current + 1);
       mesh.j.push(next, next);
       mesh.k.push(current + 1, next + 1);
     }
+  }
+
+  const edgeStartIndex = capStartIndex + SPHERE_LATITUDE_COUNT * rowLength;
+  for (let lonIndex = 0; lonIndex < SPHERE_LONGITUDE_COUNT; lonIndex += 1) {
+    mesh.i.push(0);
+    mesh.j.push(edgeStartIndex + lonIndex);
+    mesh.k.push(edgeStartIndex + lonIndex + 1);
   }
 
   return mesh;
@@ -247,45 +254,5 @@ export function getPannerConeMesh(
     config.orientationZ,
   );
 
-  if (angle >= 180) {
-    return getPannerWideConeMesh(config, direction, angle, radius);
-  }
-
-  const { right, up } = createDirectionBasis(direction);
-  const halfAngle = Math.min(Math.max(angle / 2, 0), 90) * DEGREE_TO_RADIAN;
-  const baseDistance = Math.cos(halfAngle) * radius;
-  const baseRadius = Math.sin(halfAngle) * radius;
-  const mesh: PannerConeMesh = {
-    x: [config.positionX],
-    y: [config.positionY],
-    z: [config.positionZ],
-    i: [],
-    j: [],
-    k: [],
-  };
-  const baseCenter = {
-    x: config.positionX + direction.x * baseDistance,
-    y: config.positionY + direction.y * baseDistance,
-    z: config.positionZ + direction.z * baseDistance,
-  };
-
-  for (let index = 0; index < CONE_SEGMENT_COUNT; index += 1) {
-    const angle = Math.PI * 2 * (index / CONE_SEGMENT_COUNT);
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
-
-    mesh.x.push(baseCenter.x + (right.x * cos + up.x * sin) * baseRadius);
-    mesh.y.push(baseCenter.y + (right.y * cos + up.y * sin) * baseRadius);
-    mesh.z.push(baseCenter.z + (right.z * cos + up.z * sin) * baseRadius);
-  }
-
-  for (let index = 1; index <= CONE_SEGMENT_COUNT; index += 1) {
-    const nextIndex = index === CONE_SEGMENT_COUNT ? 1 : index + 1;
-
-    mesh.i.push(0);
-    mesh.j.push(index);
-    mesh.k.push(nextIndex);
-  }
-
-  return mesh;
+  return getPannerConeSectionMesh(config, direction, angle, radius);
 }
