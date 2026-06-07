@@ -5,6 +5,10 @@
     "effect": "エフェクト",
     "analysis": "分析"
   },
+  "analysis": {
+    "frequencyDomain": "周波数領域",
+    "timeDomain": "時間領域"
+  },
   "controls": {
     "oscillatorType": "オシレータータイプ",
     "volume": "音量係数",

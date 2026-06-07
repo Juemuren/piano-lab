@@ -5,6 +5,10 @@
     "effect": "效果",
     "analysis": "分析"
   },
+  "analysis": {
+    "frequencyDomain": "频域",
+    "timeDomain": "时域"
+  },
   "controls": {
     "oscillatorType": "振荡器类型",
     "volume": "音量系数",

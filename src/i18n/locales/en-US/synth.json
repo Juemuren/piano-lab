@@ -5,6 +5,10 @@
     "effect": "Effects",
     "analysis": "Analysis"
   },
+  "analysis": {
+    "frequencyDomain": "Frequency Domain",
+    "timeDomain": "Time Domain"
+  },
   "controls": {
     "oscillatorType": "Oscillator Type",
     "volume": "Volume",
