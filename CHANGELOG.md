@@ -2,6 +2,57 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.10.0]
+
+### Added
+
+- Added compressor effect with adjustable threshold, knee, ratio, attack, and release, plus a real-time gain reduction plot.
+- Added stereo panner effect with 3D sound cone visualization, distance gain curve, configurable inner/outer cone angles, and distance model.
+- Added wave shaper effect with saturation, overdrive, distortion, and fuzz types, each providing an adjustable intensity parameter and transfer curve preview.
+- Added audio analysis module with real-time frequency-domain (FFT) and time-domain waveform displays using `AnalyserNode`.
+- Added reverb enable/disable toggle.
+- Added KaTeX formula rendering for the envelope curve and spectrum presets.
+
+### Changed
+
+- Refactored the color scheme using the Catppuccin palette — Latte for light theme and Mocha for dark theme.
+- Renamed synth service files for clarity: `BaseVoice` → `BasicVoice`, `EffectResponse` → `Filter`, `ReverbImpulse` → `Reverb`, `SynthDefinitions` → `Spectrum`, `SynthCalculations` → `VoicePlanner`.
+- Split `SynthConfig` into focused `Defaults`, `Options`, and `Normalize` modules.
+- Split `useEffectControl` into dedicated per-effect hooks.
+- Extracted a shared `Plot2D` component (renamed from `Scatter`) and moved type declarations into the `patches` directory.
+- Moved `Filter` and `Reverb` into a `services/synth/effect` subdirectory.
+- Extracted `Compressor` into its own subdirectory with the reduction preview.
+- Extracted `EarlyReflections` and `LateTail` as focused sub-components from the `Reverb` component.
+- Shortened component names by removing the `Effect` prefix in `FilterAndEqualizer`.
+- Made sub-hooks receive explicit initial values instead of resolving defaults internally.
+- Moved ABC-related calculation functions into `services/abc` and renamed `AbcPlaybackCalculations` to `AbcCalculations`.
+
+### Fixed
+
+- Fixed reverb volume becoming too low at high mix ratios by adding a direct signal path and disabling `ConvolverNode` normalization.
+- Fixed reverb amplitude gain in presets to avoid overly prominent early reflections.
+- Fixed `Select` element colors after the Catppuccin style refactoring.
+- Fixed sound cone sphere size discontinuity in the panner spatial preview.
+- Fixed panner spatial preview failing to render sphere geometry above 180 degrees.
+- Fixed sound cone aspect ratio distortion by matching X and Y axis ranges.
+- Fixed compressor enable/disable button text.
+- Fixed the envelope curve to correctly match the ADSR formula, and added variable symbols.
+- Fixed `BlockMath` formula overflow on mobile by wrapping content in a scrollable container.
+
+### Style
+
+- Adopted the Catppuccin color scheme (Latte for light theme, Mocha for dark theme) across all components.
+- Adjusted Plotly marker sizes for a better mobile experience.
+- Adjusted wave shaper preset order and formula position.
+- Added labels to `Select` components for ABC presets, reverb presets, spectrum presets, and the synth oscillator type.
+- Made panner settings collapsible.
+- Removed display normalization for reverb and adjusted late-tail amplitude and decay for each preset.
+
+### Chore
+
+- Changed the project domain to `piano.raind.me`.
+- Removed stale and out-of-scope TODO items.
+
 ## [0.9.0]
 
 ### Added

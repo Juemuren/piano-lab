@@ -25,7 +25,7 @@
 
 ## Features
 
-Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor:
+Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
 
 - [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects, record audio, and export in formats such as WebM and MP4
 - [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export them as SVG/PNG/PDF/MIDI files
@@ -35,7 +35,7 @@ The app supports multiple languages, mobile layouts, dark mode, and can be insta
 
 ### Sound Synthesizer
 
-The sound synthesizer consists of three modules: envelope, spectrum, and effects.
+The sound synthesizer consists of four modules: envelope, spectrum, effects, and analysis.
 
 - Synthesizes sound physically without sampling
 - Uses twelve-tone equal temperament to generate pitches and supports free transposition
@@ -56,7 +56,7 @@ The sound synthesizer consists of three modules: envelope, spectrum, and effects
 
 ### Effects
 
-Contains filter, equalizer, and reverb components.
+Contains filter, equalizer, reverb, compression, panning, and wave shaping effects.
 
 #### Filter & Equalizer
 
@@ -65,6 +65,25 @@ Contains filter, equalizer, and reverb components.
 - Provides adjustable cutoff frequency, Q (quality factor), and gain
 - Can plot the combined magnitude response curve of filters and equalizers, with per-harmonic sampling at a selected pitch
 
+#### Compression
+
+- Provides dynamic range compression
+- Configurable threshold, knee, ratio, attack time, and release time
+- Displays a real-time gain reduction curve
+
+#### Panning
+
+- Fully customizable panning with adjustable position, orientation, distance, and cone angle
+- Supports equal-power panning and head-related transfer function (HRTF)
+- Supports inverse, linear, and exponential distance models
+- Provides a 3D sound cone diagram and plots the distance gain curve
+
+#### Wave Shaping
+
+- Produces nonlinear distortion effects
+- Provides four types: saturation, overdrive, distortion, and fuzz
+- Each type has an adjustable intensity parameter, with corresponding formulas and curves plotted
+
 #### Reverb
 
 - Uses a separated early reflections and late tail approach
@@ -72,6 +91,11 @@ Contains filter, equalizer, and reverb components.
 - Early reflections support adjusting reflection count, gain, and delay
 - The late tail uses an exponential-decay impulse response, with adjustable delay time, duration, amplitude coefficient, and decay coefficient
 - Can plot impulse response formulas and waveforms
+- Supports enabling or disabling reverb on demand
+
+### Analysis
+
+- Displays real-time frequency-domain and time-domain waveforms
 
 ### Score Editor
 
@@ -185,13 +209,11 @@ Adjustable parameters:
 
 The app uses KaTeX to render spectrum preset formulas.
 
-### Effects and Transfer Functions
+### Impulse Response and Transfer Function
 
-After harmonic synthesis, effects further process the audio signal. This processing can be understood in both the frequency and time domains.
+After harmonic synthesis, effects further process the audio signal. This processing can be understood in both the frequency and time domains. For linear time-invariant systems, the frequency-domain description is the transfer function, and the time-domain description is the impulse response.
 
-Currently implemented effects include filters, equalizers, and reverb.
-
-#### Filters
+#### Filter Principles
 
 Both filter and equalizer effects are implemented using the Web Audio API's [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode).
 
@@ -214,7 +236,7 @@ Filters can be chained together in a cascaded effects chain.
 
 The app uses Plotly.js to draw the final magnitude response curve.
 
-#### Convolution
+#### Reverb Principles
 
 Reverb is convolution-based, feeding a computed impulse response into a [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) to convolve with the dry signal.
 
@@ -232,19 +254,62 @@ $$
 h_e[n]=\sum_i a_i\delta[n-d_if_s]
 $$
 
-where $a_i$ is the reflection amplitude and $d_i$ is the reflection delay. $f_s$ is the sample rate, automatically chosen by the [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) based on the current audio output device — typically 44100 Hz or 48000 Hz.
+where $a_i$ is the reflection amplitude and $d_i$ is the reflection delay.
+
+$f_s$ is the sample rate, automatically chosen by the [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) based on the current audio output device — typically 44100 Hz or 48000 Hz.
 
 **Late tail** simulates the dense collection of echoes after many reflections, using an exponential-decay envelope as the impulse response:
 
 $$
-h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s
+h_l[n]=Ar[n]e^{-\alpha(n-Df_s)}
 $$
 
-where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, $D$ and $T$ are the delay time and duration respectively.
+where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, $D$ and $T$ are the delay time and duration respectively. $r[n] \sim U[-1,1]$ is uniform random noise, used to distribute the impulse response evenly across positive and negative values to prevent a large DC gain $H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t$ during convolution.
 
 The reverb effect provides four presets — bathroom, garage, hall, and cathedral — to simulate spaces from small to large.
 
 The app uses KaTeX and Plotly.js to draw impulse response formulas and waveforms.
+
+#### Compression Principles
+
+Compression is implemented using the Web Audio API's [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode).
+
+DynamicsCompressorNode reduces the dynamic range by attenuating the portion of the signal that exceeds the threshold. Its key parameters are:
+
+- **Threshold**: sets the level above which compression begins to take effect
+- **Knee**: controls the smoothness of the compression transition near the threshold
+- **Ratio**: controls how much the signal above the threshold is compressed
+- **Attack Time**: controls how quickly the compressor responds when the signal exceeds the threshold
+- **Release Time**: controls how quickly the compressor recovers after the signal falls below the threshold
+
+The app uses Plotly.js to draw a real-time gain reduction curve.
+
+#### Panning Principles
+
+Panning is implemented using the Web Audio API's [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode), used to position audio sources in a stereo field or 3D space.
+
+PannerNode supports two panning models: equal-power panning and head-related transfer function (HRTF). HRTF provides a more realistic spatial sensation by simulating how human ears respond to sounds coming from different directions. Its key parameters are:
+
+- **Position** and **Orientation**: control the location and facing direction of the audio source in space
+- **Distance**: controls the distance between the audio source and the listener, supporting linear, inverse, and exponential distance models
+- **Sound Cone**: defines the cone angle of the audio source. Within the inner cone angle, the sound maintains its original volume; beyond the outer cone angle, the sound attenuates to the outer cone gain; a smooth transition occurs between the inner and outer cones
+
+The app uses Plotly.js to draw a 3D sound cone diagram and the distance gain curve.
+
+#### Wave Shaping Principles
+
+Wave shaping is implemented using the Web Audio API's [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode), which produces distortion by applying a nonlinear mapping curve to the signal.
+
+Four distortion types are provided, with the following mapping relationships:
+
+| Effect     | Formula                              | Intensity parameter |
+| ---------- | ------------------------------------ | ------------------- |
+| Saturation | $y = \frac{x}{1+c\|x\|}$             | $c=0\sim1$          |
+| Overdrive  | $y = \frac{\arctan(kx)}{\arctan(k)}$ | $k=1\sim20$         |
+| Distortion | $y = \tanh(gx)$                      | $g=2\sim10$         |
+| Fuzz       | $y = \frac{2}{\pi}\arctan(sx)$       | $s=10\sim100$       |
+
+The app uses Plotly.js to draw the mapping curve for each effect.
 
 ### Scores
 
