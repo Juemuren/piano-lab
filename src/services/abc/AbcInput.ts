@@ -1,4 +1,4 @@
-import { getAbcPitch } from '../../utils/pitch';
+import { getAbcPitch } from './AbcPlaybackCalculations';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 
 const MAX_DENOMINATOR = 32;
