@@ -19,7 +19,7 @@ function LanguageSwitcher() {
     <label className="flex items-center gap-2 text-sm">
       <Languages
         size={18}
-        className="shrink-0 text-app-muted dark:text-app-muted-dark"
+        className="shrink-0 text-app-subtext dark:text-app-subtext-dark"
       />
       <ControlSelect
         value={i18n.resolvedLanguage ?? i18n.language}

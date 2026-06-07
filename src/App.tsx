@@ -19,7 +19,7 @@ function App() {
         className="
           w-full min-h-screen mx-auto p-5
           flex flex-col grow justify-center gap-5
-          bg-app-bg dark:bg-app-bg-dark
+          bg-app-base dark:bg-app-base-dark
           text-app-text dark:text-app-text-dark
         "
       >
@@ -59,7 +59,7 @@ function App() {
         >
           <CollapsibleSection
             title={t('sections.settings')}
-            bgClassName="bg-app-bg dark:bg-app-bg-dark"
+            bgClassName="bg-app-base dark:bg-app-base-dark"
           >
             <SettingsPanel />
           </CollapsibleSection>

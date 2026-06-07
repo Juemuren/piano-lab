@@ -39,14 +39,14 @@ function VerticalSliderGroup({
               onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
               className={`
                 h-1 -rotate-90 rounded-full
-                appearance-none bg-app-accent-weak dark:bg-app-accent-strong
+                appearance-none bg-app-overlay dark:bg-app-overlay-dark
                 border border-app-border dark:border-app-border-dark
                 accent-app-tip dark:accent-app-tip-dark
                 ${disabled ? 'cursor-not-allowed' : ''}
               `}
             />
           </div>
-          <div className="text-xs text-app-muted dark:text-app-muted-dark">
+          <div className="text-xs text-app-subtext dark:text-app-subtext-dark">
             {labels[index]}
           </div>
         </div>

@@ -20,7 +20,7 @@ function KeyboardControlSettings({
         onChange={(e) => setIsKeyboardControlEnabled(e.target.checked)}
       />
       {isKeyboardControlEnabled && (
-        <p className="text-sm text-app-muted dark:text-app-muted-dark">
+        <p className="text-sm text-app-overlay dark:text-app-overlay-dark">
           {t('settings.keyboard.hint')}
         </p>
       )}

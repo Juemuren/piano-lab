@@ -23,8 +23,8 @@ function ControlButton({
       onClick={onClick}
       className="
         inline-flex items-center justify-center gap-2 p-2 rounded-xl transition-colors
-        bg-app-surface dark:bg-app-surface-dark
-        hover:bg-app-surface-muted dark:hover:bg-app-surface-muted-dark
+        bg-app-overlay/25 dark:bg-app-overlay-dark/25
+        hover:bg-app-overlay dark:hover:bg-app-overlay-dark
         disabled:cursor-not-allowed disabled:opacity-50
       "
     >

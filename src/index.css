@@ -4,21 +4,21 @@
   --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
 
-  --color-app-bg: #ffffff;
-  --color-app-bg-dark: #212121;
-  --color-app-surface: #f3f3f3;
-  --color-app-surface-dark: #171717;
-  --color-app-surface-muted: #e8e8e8;
-  --color-app-surface-muted-dark: #303030;
-  --color-app-text: #5d5d5d;
-  --color-app-text-dark: #f3f3f3;
-  --color-app-muted: #8f8f8f;
-  --color-app-muted-dark: #afafaf;
-  --color-app-border: #0d0d0d0d;
-  --color-app-border-dark: #ffffff0d;
+  --color-app-mantle: #e6e9ef;
+  --color-app-mantle-dark: #181825;
+  --color-app-base: #eff1f5;
+  --color-app-base-dark: #1e1e2e;
+  --color-app-surface: #ccd0da;
+  --color-app-surface-dark: #313244;
+  --color-app-overlay: #9ca0b0;
+  --color-app-overlay-dark: #6c7086;
+  --color-app-text: #4c4f69;
+  --color-app-text-dark: #cdd6f4;
+  --color-app-subtext: #6c6f85;
+  --color-app-subtext-dark: #a6adc8;
+  --color-app-border: #4c4f6914;
+  --color-app-border-dark: #cdd6f414;
   --color-app-accent: #808080;
-  --color-app-accent-weak: #c5c5c5;
-  --color-app-accent-strong: #414141;
   --color-app-tip: #10834a;
   --color-app-tip-dark: #54b03d;
   --color-app-info: #005ef4;
@@ -26,9 +26,9 @@
   --color-app-warning: #b56e0b;
   --color-app-warning-dark: #f5ce0b;
   --color-piano-white: #ffffff;
-  --color-piano-white-active: #bfdbfe;
+  --color-piano-white-active: #bcc0cc;
   --color-piano-black: #000000;
-  --color-piano-black-active: #1e40af;
+  --color-piano-black-active: #45475a;
   --color-score-highlight: #16a34a;
 }
 

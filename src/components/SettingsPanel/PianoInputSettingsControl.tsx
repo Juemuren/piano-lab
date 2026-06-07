@@ -39,7 +39,7 @@ function PianoInputSettingsControl({
         onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
       />
       {isPianoInputEnabled && (
-        <div className="text-sm text-app-muted dark:text-app-muted-dark">
+        <div className="text-sm text-app-overlay dark:text-app-overlay-dark">
           <ControlSelect
             label={t('settings.pianoInput.defaultNoteLength')}
             value={pianoInputSettings.defaultNoteLength}

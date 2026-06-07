@@ -25,7 +25,7 @@
 - [x] 频谱中添加公式
 - [x] 包络中添加公式
 - [ ] 在脚注中补充关于应用的说明
-- [ ] 使用 [Catppuccin](https://catppuccin.com/palette/) 的配色方案。亮色为 Latte，暗色为 Mocha
+- [x] 使用 [Catppuccin](https://catppuccin.com/palette/) 的配色方案。亮色为 Latte，暗色为 Mocha
 
 ## Feat
 

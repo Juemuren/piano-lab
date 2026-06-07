@@ -11,8 +11,8 @@ function ControlPanel({ children, className = '' }: ControlPanelProps) {
       className={`
         w-full p-5 rounded-3xl
         border border-app-border dark:border-app-border-dark
-        bg-app-surface/75 dark:bg-app-surface-dark/25
-        shadow-xl shadow-app-muted/5
+        bg-app-mantle/50 dark:bg-app-mantle-dark/50
+        shadow-xl shadow-app-overlay/5
         ${className}
         `}
     >

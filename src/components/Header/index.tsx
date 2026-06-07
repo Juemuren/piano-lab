@@ -51,7 +51,7 @@ function Header() {
     <header
       className={`
         sticky top-0 z-10 px-4 p-2
-        bg-app-bg dark:bg-app-bg-dark
+        bg-app-base dark:bg-app-base-dark
         border-b border-app-border dark:border-app-border-dark
         transition-transform duration-100
         ${isHidden ? '-translate-y-full' : 'translate-y-0'}
@@ -70,7 +70,7 @@ function Header() {
             className="
               absolute left-0 w-max p-2 flex flex-col
               text-sm text-left
-              bg-app-surface-muted dark:bg-app-surface-muted-dark
+              bg-app-surface/50 dark:bg-app-surface-dark/50
             "
           >
             {navLinks}

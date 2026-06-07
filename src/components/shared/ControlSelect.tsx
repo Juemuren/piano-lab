@@ -22,7 +22,7 @@ function ControlSelect({
         id={selectId}
         className={`
           w-full p-2 rounded-2xl text-left flex-1
-          bg-app-surface dark:bg-app-surface-dark
+          bg-app-overlay/25 dark:bg-app-overlay-dark/25
           focus:border-app-accent focus:ring-2 focus:ring-app-accent/50
           ${className}
         `}
