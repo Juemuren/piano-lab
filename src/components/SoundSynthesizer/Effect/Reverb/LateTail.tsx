@@ -27,7 +27,9 @@ function LateTail({
         {t('effect.reverb.lateTail.name')}
       </summary>
       <BlockMath
-        math={String.raw`h_l[n]=Ae^{-\alpha(n-Df_s)} \quad Df_s \le n \le (D+T)f_s`}
+        math={String.raw`
+          h_l[n]=A\left(\frac{1}{3}\sum_{k=0}^{\lfloor Tf_s \rceil - 1} e^{-2\alpha k}\right)^{-1/2}U[-1,1]e^{-\alpha(n-Df_s)}
+        `}
       />
       <ControlRange
         label={t('effect.reverb.lateTail.delay')}

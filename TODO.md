@@ -18,7 +18,7 @@
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
 - [ ] 快速按下不同的琴键，有时会发出类似弦断了的声音。暂时还没找到问题在哪里。
 - [x] 混响的混合比例设为 1 时，会导致声音变得很小。修复方案是把起始音补上，即 $h[n] = \delta[n] + h_e[n] + h_l[n]$，然后再禁用 ConvolverNode 的 normalize
-- [ ] 混响的预设反射声非常明显，需要调小反射的振幅并缩短延迟
+- [x] 混响的预设反射声非常明显，需要调小早期反射的振幅，并对晚期尾音使用均匀噪声进行改进，以消除直流增益。同时还进行了显示的归一化
 
 ## Style
 
