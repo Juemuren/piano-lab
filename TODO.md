@@ -21,11 +21,10 @@
 ## Style
 
 - [x] 对项目中的数个 [ControlSelect](src/components/shared/ControlSelect.tsx) 补充 label
-- [ ] 在脚注中补充关于应用的说明
-- [ ] Footer 中添加更多的 Icon
 - [x] 混响添加一个启用开关
 - [x] 频谱中添加公式
 - [x] 包络中添加公式
+- [ ] 在脚注中补充关于应用的说明
 
 ## Feat
 
@@ -52,8 +51,6 @@
 已有效果修改
 
 - [ ] 晚期尾音考虑用高斯噪声进行改进。可以用 Box-Muller 变换生成标准正态分布随机数
-- [ ] 早期反射考虑一下是否使用 [DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)
-- [ ] 绘制实时左右声道能量。在 PannerNode 后接 ChannelSplitterNode + AnalyserNode，分别分析 L/R 的时域 RMS 或频谱
 
 增加可视化子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
 
@@ -63,14 +60,7 @@
 
 - [ ] 处理调号和节拍
 - [ ] 可以同步 textarea 中的修改
-- [ ] 考虑一下是否把 “将演奏的音符写入乐谱” 这一设置移动到乐谱编辑器中
 
 其余模块
 
 - [ ] 增加修改键位映射的功能
-- [ ] 修改合成器根据频率减少振幅和衰减时间的行为。不要使用谐波次数，而是用真正的频率
-- [ ] [SynthEngine](src/services/synth/SynthEngine.ts) 中 `stopNote` 不会触发稳音期间的振幅衰减。该特性不好用公式表示，考虑一下是否把这个特性在 `playNote` 中也删了
-
-需要考虑是否使用第三方库的
-
-- [ ] 可导入 `.midi` 文件，解析后接入自己的合成器来播放。可以关注 [Tone.js](https://github.com/Tonejs/Tone.js)/[Wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
