@@ -11,7 +11,6 @@ type ReverbPresetDefinition = Pick<
 >;
 
 const LATE_TAIL_RANDOM_SEED = 0x4d595df4;
-const UNIFORM_RANDOM_MEAN_SQUARE = 1 / 3;
 
 export const REVERB_PRESET_DEFINITIONS: Record<
   BuiltInReverbPreset,
@@ -19,60 +18,60 @@ export const REVERB_PRESET_DEFINITIONS: Record<
 > = {
   bathroom: {
     earlyReflections: [
-      { delay: 0.004, gain: 0.28 },
-      { delay: 0.008, gain: 0.18 },
-      { delay: 0.013, gain: 0.12 },
+      { delay: 0.005, gain: 0.3 },
+      { delay: 0.01, gain: 0.2 },
+      { delay: 0.015, gain: 0.1 },
     ],
     lateTail: {
-      delay: 0.018,
-      duration: 0.45,
-      amplitude: 0.15,
-      alpha: 0.00035,
+      delay: 0.02,
+      duration: 0.5,
+      amplitude: 0.02,
+      alpha: 0.0002,
     },
   },
   garage: {
     earlyReflections: [
-      { delay: 0.009, gain: 0.24 },
-      { delay: 0.018, gain: 0.19 },
-      { delay: 0.028, gain: 0.14 },
-      { delay: 0.041, gain: 0.1 },
+      { delay: 0.01, gain: 0.25 },
+      { delay: 0.02, gain: 0.2 },
+      { delay: 0.03, gain: 0.15 },
+      { delay: 0.04, gain: 0.1 },
     ],
     lateTail: {
-      delay: 0.035,
-      duration: 0.9,
-      amplitude: 0.26,
-      alpha: 0.00017,
+      delay: 0.05,
+      duration: 1,
+      amplitude: 0.015,
+      alpha: 0.00015,
     },
   },
   hall: {
     earlyReflections: [
-      { delay: 0.018, gain: 0.18 },
-      { delay: 0.033, gain: 0.14 },
-      { delay: 0.052, gain: 0.1 },
-      { delay: 0.076, gain: 0.075 },
-      { delay: 0.108, gain: 0.05 },
+      { delay: 0.015, gain: 0.15 },
+      { delay: 0.03, gain: 0.125 },
+      { delay: 0.045, gain: 0.1 },
+      { delay: 0.06, gain: 0.075 },
+      { delay: 0.075, gain: 0.05 },
     ],
     lateTail: {
-      delay: 0.07,
-      duration: 2.8,
-      amplitude: 0.32,
-      alpha: 0.000056,
+      delay: 0.09,
+      duration: 2,
+      amplitude: 0.01,
+      alpha: 0.0001,
     },
   },
   cathedral: {
     earlyReflections: [
-      { delay: 0.028, gain: 0.15 },
-      { delay: 0.049, gain: 0.12 },
-      { delay: 0.082, gain: 0.09 },
-      { delay: 0.127, gain: 0.065 },
-      { delay: 0.178, gain: 0.045 },
-      { delay: 0.235, gain: 0.03 },
+      { delay: 0.03, gain: 0.12 },
+      { delay: 0.05, gain: 0.1 },
+      { delay: 0.08, gain: 0.08 },
+      { delay: 0.12, gain: 0.06 },
+      { delay: 0.17, gain: 0.04 },
+      { delay: 0.23, gain: 0.02 },
     ],
     lateTail: {
-      delay: 0.12,
-      duration: 4.8,
-      amplitude: 0.38,
-      alpha: 0.000033,
+      delay: 0.25,
+      duration: 4,
+      amplitude: 0.005,
+      alpha: 0.00005,
     },
   },
 };
@@ -87,19 +86,6 @@ function getImpulseDuration(
   );
 
   return Math.max(maxReflectionDelay, lateTail.delay + lateTail.duration);
-}
-
-function getLateTailEnergyScale(alpha: number, length: number) {
-  if (length <= 0) return 0;
-
-  let energy = 0;
-
-  for (let offset = 0; offset < length; offset += 1) {
-    const envelope = Math.exp(-alpha * offset);
-    energy += UNIFORM_RANDOM_MEAN_SQUARE * envelope * envelope;
-  }
-
-  return energy > 0 ? 1 / Math.sqrt(energy) : 0;
 }
 
 function createRandomAmplitudeGenerator() {
@@ -135,13 +121,11 @@ export function getReverbImpulseResponseSamples(
     amplitude[index] += reflection.gain;
   }
 
-  const tailEnergyScale = getLateTailEnergyScale(lateTail.alpha, tailLength);
   const getRandomAmplitude = createRandomAmplitudeGenerator();
 
   for (let offset = 0; offset < tailLength; offset += 1) {
     amplitude[tailStartIndex + offset] +=
       lateTail.amplitude *
-      tailEnergyScale *
       getRandomAmplitude() *
       Math.exp(-lateTail.alpha * offset);
   }

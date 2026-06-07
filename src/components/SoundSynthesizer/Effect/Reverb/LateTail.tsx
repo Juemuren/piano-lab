@@ -26,11 +26,7 @@ function LateTail({
       <summary className="font-bold my-2">
         {t('effect.reverb.lateTail.name')}
       </summary>
-      <BlockMath
-        math={String.raw`
-          h_l[n]=A\left(\frac{1}{3}\sum_{k=0}^{\lfloor Tf_s \rceil - 1} e^{-2\alpha k}\right)^{-1/2}U[-1,1]e^{-\alpha(n-Df_s)}
-        `}
-      />
+      <BlockMath math={String.raw`h_l[n]=AU[-1,1]e^{-\alpha(n-Df_s)}`} />
       <ControlRange
         label={t('effect.reverb.lateTail.delay')}
         symbol={<InlineMath math="D" />}
@@ -55,10 +51,10 @@ function LateTail({
         label={t('effect.reverb.lateTail.amplitude')}
         symbol={<InlineMath math="A" />}
         min="0"
-        max="1"
-        step="0.01"
+        max="0.1"
+        step="0.001"
         value={lateTail.amplitude}
-        displayValue={lateTail.amplitude.toFixed(2)}
+        displayValue={lateTail.amplitude.toFixed(3)}
         onChange={onAmplitudeChange}
       />
       <ControlRange
@@ -68,7 +64,7 @@ function LateTail({
         max="0.001"
         step="0.00001"
         value={lateTail.alpha}
-        displayValue={lateTail.alpha.toFixed(5)}
+        displayValue={lateTail.alpha.toExponential(5)}
         onChange={onAlphaChange}
       />
     </details>
