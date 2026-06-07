@@ -6,6 +6,7 @@ function Analysis() {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <div className="space-y-2">
+        {/* TODO i18n */}
         <h3 className="font-bold">频域</h3>
         <canvas
           ref={frequencyCanvasRef}

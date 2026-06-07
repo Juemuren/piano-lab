@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+/* https://catppuccin.com/palette/ */
 @theme {
   --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
