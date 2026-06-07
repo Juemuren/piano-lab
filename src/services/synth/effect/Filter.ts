@@ -1,4 +1,4 @@
-import type { EqualizerConfig, FilterConfig } from '../../types';
+import type { EqualizerConfig, FilterConfig } from '../../../types';
 
 export type BiquadConfig = FilterConfig | EqualizerConfig;
 

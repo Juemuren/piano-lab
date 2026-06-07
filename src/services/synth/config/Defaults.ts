@@ -40,7 +40,7 @@ import type {
   SynthBasicConfig,
   SynthConfig,
 } from '../../../types';
-import { createReverbConfig } from '../Reverb';
+import { createReverbConfig } from '../effect/Reverb';
 import { createSpectrum } from '../Spectrum';
 
 export function createDefaultSynthBasicConfig(): SynthBasicConfig {

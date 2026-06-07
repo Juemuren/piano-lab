@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { EqualizerConfig, FilterConfig } from '../../../../types';
-import { getBiquadMagnitudes } from '../../../../services/synth/Filter';
+import { getBiquadMagnitudes } from '../../../../services/synth/effect/Filter';
 import Scatter from '../../../shared/Scatter';
 
 interface MagnitudeResponsePreviewProps {

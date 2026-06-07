@@ -50,7 +50,7 @@ import {
   REVERB_PRESETS,
   SPECTRUM_TYPES,
 } from './Options';
-import { createReverbConfig } from '../Reverb';
+import { createReverbConfig } from '../effect/Reverb';
 
 function normalizeSpectrumConfig(
   value: unknown,

@@ -5,7 +5,7 @@ import type {
   FilterConfig,
   ReverbConfig,
 } from '../../types';
-import { createReverbImpulseResponse } from './Reverb';
+import { createReverbImpulseResponse } from './effect/Reverb';
 
 export class EffectChain {
   private audioContext: AudioContext | null = null;

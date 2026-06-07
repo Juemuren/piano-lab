@@ -5,7 +5,7 @@ import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
 import {
   getBiquadMagnitudes,
   FILTER_RESPONSE_NYQUIST_FREQUENCY,
-} from '../../../../services/synth/Filter';
+} from '../../../../services/synth/effect/Filter';
 import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
 import { getHarmonicLabels } from '../../../../utils/harmonic';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';

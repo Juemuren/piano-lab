@@ -3,7 +3,7 @@ import type {
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
-} from '../../types';
+} from '../../../types';
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
