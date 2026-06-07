@@ -1,5 +1,5 @@
 import useCompressorReductionHistory from '../../../../hooks/synth/useCompressorReductionHistory';
-import Scatter from '../../../shared/Scatter';
+import Plot2D from '../../../shared/Plot2D';
 
 interface CompressorReductionPreviewProps {
   title: string;
@@ -15,7 +15,7 @@ function CompressorReductionPreview({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
-      <Scatter
+      <Plot2D
         data={[
           {
             x: samples.map((sample) => sample.time),

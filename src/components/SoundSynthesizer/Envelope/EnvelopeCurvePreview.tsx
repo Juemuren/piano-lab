@@ -1,5 +1,5 @@
 import type { EnvelopeCurve } from '../../../types';
-import Scatter from '../../shared/Scatter';
+import Plot2D from '../../shared/Plot2D';
 
 interface EnvelopeCurvePreviewProps {
   title: string;
@@ -13,7 +13,7 @@ function EnvelopeCurvePreview({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold">{title}</summary>
-      <Scatter
+      <Plot2D
         data={[
           {
             x: envelopeCurve.time,

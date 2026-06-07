@@ -6,7 +6,7 @@ import {
   getPannerDistanceCurve,
   getPannerDistanceGain,
 } from '../../../../services/synth/effect/Panner';
-import Scatter from '../../../shared/Scatter';
+import Plot2D from '../../../shared/Plot2D';
 
 interface PannerDistanceGainPreviewProps {
   title: string;
@@ -33,7 +33,7 @@ function PannerDistanceGainPreview({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
-      <Scatter
+      <Plot2D
         data={[
           {
             x: preview.distances,

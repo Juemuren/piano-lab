@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { ReverbConfig } from '../../../../types';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/effect/Reverb';
 import BlockMath from '../../../shared/BlockMath';
-import Scatter from '../../../shared/Scatter';
+import Plot2D from '../../../shared/Plot2D';
 
 interface ReverbImpulseResponsePreviewProps {
   title: string;
@@ -60,7 +60,7 @@ function ReverbImpulseResponsePreview({
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
       <BlockMath math={String.raw`h[n]=\delta[n]+h_e[n]+h_l[n]`} />
-      <Scatter
+      <Plot2D
         data={[
           {
             x: response.time,

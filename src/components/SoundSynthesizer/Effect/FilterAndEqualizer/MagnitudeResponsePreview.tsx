@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import { getBiquadMagnitudes } from '../../../../services/synth/effect/Filter';
-import Scatter from '../../../shared/Scatter';
+import Plot2D from '../../../shared/Plot2D';
 
 interface MagnitudeResponsePreviewProps {
   title: string;
@@ -55,7 +55,7 @@ function MagnitudeResponsePreview({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
-      <Scatter
+      <Plot2D
         data={[
           {
             x: response.frequencies,

@@ -3,7 +3,7 @@ import type { PlotParams } from 'react-plotly.js';
 import type { Layout, LayoutAxis } from 'plotly.js';
 import useElementWidth from '../../hooks/useElementWidth';
 
-type ScatterProps = {
+type Plot2DProps = {
   data: PlotParams['data'];
   layout?: Partial<Layout>;
   xaxis?: Partial<LayoutAxis>;
@@ -15,7 +15,7 @@ const defaultAxis: Partial<LayoutAxis> = {
   gridcolor: 'rgba(128,128,128,0.25)',
 };
 
-function Scatter({ data, layout, xaxis, yaxis }: ScatterProps) {
+function Plot2D({ data, layout, xaxis, yaxis }: Plot2DProps) {
   const { elementRef, width } = useElementWidth<HTMLDivElement>();
 
   return (
@@ -55,4 +55,4 @@ function Scatter({ data, layout, xaxis, yaxis }: ScatterProps) {
   );
 }
 
-export default Scatter;
+export default Plot2D;

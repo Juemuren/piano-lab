@@ -1,3 +1,14 @@
+diff --git a/node_modules/@types/react-plotly.js/gl3d.d.ts b/node_modules/@types/react-plotly.js/gl3d.d.ts
+new file mode 100644
+index 0000000..7705c59
+--- /dev/null
++++ b/node_modules/@types/react-plotly.js/gl3d.d.ts
+@@ -0,0 +1,5 @@
++import { PlotParams } from "./index";
++
++declare const Plot3D: React.ComponentType<PlotParams>;
++
++export default Plot3D;
 diff --git a/node_modules/@types/react-plotly.js/scatter.d.ts b/node_modules/@types/react-plotly.js/scatter.d.ts
 new file mode 100644
 index 0000000..50990bd
