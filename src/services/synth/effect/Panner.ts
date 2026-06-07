@@ -252,8 +252,9 @@ export function getPannerConeMesh(
   }
 
   const { right, up } = createDirectionBasis(direction);
-  const halfAngle = Math.min(Math.max(angle / 2, 0), 89) * DEGREE_TO_RADIAN;
-  const baseRadius = Math.tan(halfAngle) * radius;
+  const halfAngle = Math.min(Math.max(angle / 2, 0), 90) * DEGREE_TO_RADIAN;
+  const baseDistance = Math.cos(halfAngle) * radius;
+  const baseRadius = Math.sin(halfAngle) * radius;
   const mesh: PannerConeMesh = {
     x: [config.positionX],
     y: [config.positionY],
@@ -263,9 +264,9 @@ export function getPannerConeMesh(
     k: [],
   };
   const baseCenter = {
-    x: config.positionX + direction.x * radius,
-    y: config.positionY + direction.y * radius,
-    z: config.positionZ + direction.z * radius,
+    x: config.positionX + direction.x * baseDistance,
+    y: config.positionY + direction.y * baseDistance,
+    z: config.positionZ + direction.z * baseDistance,
   };
 
   for (let index = 0; index < CONE_SEGMENT_COUNT; index += 1) {
