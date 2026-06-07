@@ -12,6 +12,39 @@ index 40f3edc..a469685 100644
 +  value: true
 +});
  //# sourceMappingURL=factory.js.map
+diff --git a/node_modules/react-plotly.js/gl3d.js b/node_modules/react-plotly.js/gl3d.js
+new file mode 100644
+index 0000000..b502634
+--- /dev/null
++++ b/node_modules/react-plotly.js/gl3d.js
+@@ -0,0 +1,27 @@
++"use strict";
++
++Object.defineProperty(exports, "__esModule", {
++  value: true
++});
++exports["default"] = void 0;
++
++var _factory = _interopRequireDefault(require("./factory"));
++
++var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
++
++var _scatter3d = _interopRequireDefault(require("plotly.js/lib/scatter3d"));
++
++var _mesh3d = _interopRequireDefault(require("plotly.js/lib/mesh3d"));
++
++function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
++
++_plotly["default"].register([_scatter3d["default"], _mesh3d["default"]]);
++
++var PlotComponent = (0, _factory["default"])(_plotly["default"]);
++var _default = PlotComponent;
++exports["default"] = _default;
++module.exports = _default;
++module.exports.default = _default;
++Object.defineProperty(module.exports, "__esModule", {
++  value: true
++});
 diff --git a/node_modules/react-plotly.js/react-plotly.js b/node_modules/react-plotly.js/react-plotly.js
 index f599b9e..36e0818 100644
 --- a/node_modules/react-plotly.js/react-plotly.js

@@ -127,7 +127,7 @@
       "coneInnerAngle": "内锥角",
       "coneOuterAngle": "外锥角",
       "coneOuterGain": "外锥增益",
-      "spatialPreview": "声锥俯视图",
+      "spatialPreview": "声锥示意图",
       "distanceGainPreview": "距离增益曲线",
       "preview": {
         "outerCone": "外锥",

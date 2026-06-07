@@ -36,7 +36,7 @@
   - [x] 绘制实时的 reduction
 - 声像。参考 [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
   - [x] 实现声像效果
-  - [x] 声锥示意图（俯视2D）
+  - [x] 声锥示意图（3D）
   - [x] 距离增益曲线
 - [ ] 失真。参考 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode)。重塑波形，包括饱和/失真/过载/法兹，公式如下
 
@@ -54,7 +54,6 @@
 - [ ] 晚期尾音考虑用高斯噪声进行改进。可以用 Box-Muller 变换生成标准正态分布随机数
 - [ ] 早期反射考虑一下是否使用 [DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)
 - [ ] 绘制实时左右声道能量。在 PannerNode 后接 ChannelSplitterNode + AnalyserNode，分别分析 L/R 的时域 RMS 或频谱
-- [ ] 声锥示意图改为 3D 的
 
 增加可视化子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
 
