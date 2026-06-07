@@ -3,6 +3,7 @@ import type {
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
+  PannerConfig,
   ReverbConfig,
 } from '../../types';
 import { createReverbImpulseResponse } from './effect/Reverb';
@@ -15,6 +16,7 @@ export class EffectChain {
   private filterNodes: BiquadFilterNode[] = [];
   private equalizerNodes: BiquadFilterNode[] = [];
   private compressorNode: DynamicsCompressorNode | null = null;
+  private pannerNode: PannerNode | null = null;
   private convolverNode: ConvolverNode | null = null;
   private reverbDryGainNode: GainNode | null = null;
   private reverbWetGainNode: GainNode | null = null;
@@ -22,6 +24,7 @@ export class EffectChain {
     filters: [],
     equalizers: [],
     compressor: null,
+    panner: null,
     reverb: null,
   };
 
@@ -97,6 +100,28 @@ export class EffectChain {
     return this.compressorNode;
   }
 
+  private applyPannerConfig(pannerConfig: PannerConfig) {
+    if (!this.audioContext) return null;
+
+    if (!this.pannerNode) {
+      this.pannerNode = this.audioContext.createPanner();
+    }
+
+    const pan = Math.min(Math.max(pannerConfig.pan, -1), 1);
+    const z = -(1 - Math.abs(pan));
+
+    this.pannerNode.panningModel = 'equalpower';
+    this.pannerNode.distanceModel = 'inverse';
+    this.pannerNode.refDistance = 1;
+    this.pannerNode.maxDistance = 10000;
+    this.pannerNode.rolloffFactor = 0;
+    this.pannerNode.positionX.value = pan;
+    this.pannerNode.positionY.value = 0;
+    this.pannerNode.positionZ.value = z;
+
+    return this.pannerNode;
+  }
+
   private applyReverbConfig(reverbConfig: ReverbConfig) {
     if (!this.audioContext) return null;
 
@@ -138,12 +163,14 @@ export class EffectChain {
       equalizerNode.disconnect();
     }
     this.compressorNode?.disconnect();
+    this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
 
     if (
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
       !this.effectConfig.compressor &&
+      !this.effectConfig.panner &&
       !this.effectConfig.reverb
     ) {
       this.filterNodes = [];
@@ -188,6 +215,14 @@ export class EffectChain {
       if (compressorNode) {
         previousNode.connect(compressorNode);
         previousNode = compressorNode;
+      }
+    }
+
+    if (this.effectConfig.panner) {
+      const pannerNode = this.applyPannerConfig(this.effectConfig.panner);
+      if (pannerNode) {
+        previousNode.connect(pannerNode);
+        previousNode = pannerNode;
       }
     }
 
@@ -237,6 +272,7 @@ export class EffectChain {
       equalizerNode.disconnect();
     }
     this.compressorNode?.disconnect();
+    this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
     this.outputNode?.disconnect();
     this.audioContext = null;
@@ -245,6 +281,7 @@ export class EffectChain {
     this.filterNodes = [];
     this.equalizerNodes = [];
     this.compressorNode = null;
+    this.pannerNode = null;
     this.convolverNode = null;
     this.reverbDryGainNode = null;
     this.reverbWetGainNode = null;

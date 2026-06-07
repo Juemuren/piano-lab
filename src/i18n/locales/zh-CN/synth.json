@@ -102,6 +102,13 @@
       "release": "恢复时间",
       "reduction": "实时信号增益"
     },
+    "panner": {
+      "name": "声像",
+      "enabled": "启用声像",
+      "disabled": "关闭声像",
+      "pan": "声像位置",
+      "range": "左 -1 / 中 0 / 右 1"
+    },
     "reverb": {
       "name": "混响",
       "presets": {

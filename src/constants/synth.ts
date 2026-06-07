@@ -30,6 +30,8 @@ export const DEFAULT_COMPRESSOR_RATIO = 12;
 export const DEFAULT_COMPRESSOR_ATTACK = 0.003;
 export const DEFAULT_COMPRESSOR_RELEASE = 0.25;
 
+export const DEFAULT_PANNER_PAN = 0;
+
 export const DEFAULT_REVERB_PRESET = 'bathroom';
 export const DEFAULT_REVERB_MIX = 0;
 export const DEFAULT_REVERB_EARLY_REFLECTION_DELAY = 0.01;

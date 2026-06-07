@@ -2,6 +2,7 @@ import type { EffectConfig } from '../../../types';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
 import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
+import Panner from './Panner';
 import Reverb from './Reverb';
 
 interface EffectProps {
@@ -32,6 +33,9 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateCompressorRatio,
     updateCompressorAttack,
     updateCompressorRelease,
+    panner,
+    updatePannerEnabled,
+    updatePannerPan,
     reverb,
     updateReverbPreset,
     updateReverbMix,
@@ -71,6 +75,11 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onRatioChange={updateCompressorRatio}
         onAttackChange={updateCompressorAttack}
         onReleaseChange={updateCompressorRelease}
+      />
+      <Panner
+        panner={panner}
+        onEnabledChange={updatePannerEnabled}
+        onPanChange={updatePannerPan}
       />
       <Reverb
         reverb={reverb}

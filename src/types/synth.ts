@@ -80,6 +80,10 @@ export interface CompressorConfig {
   release: number;
 }
 
+export interface PannerConfig {
+  pan: number;
+}
+
 export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
 
 export type ReverbPreset = BuiltInReverbPreset | 'custom';
@@ -107,6 +111,7 @@ export interface EffectConfig {
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
   compressor: CompressorConfig | null;
+  panner: PannerConfig | null;
   reverb: ReverbConfig | null;
 }
 

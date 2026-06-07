@@ -16,6 +16,7 @@ import {
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
+  DEFAULT_PANNER_PAN,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
   DEFAULT_REVERB_LATE_TAIL_ALPHA,
@@ -30,6 +31,7 @@ import type {
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
+  PannerConfig,
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
@@ -100,6 +102,14 @@ function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
     ratio: numberOrDefault(value.ratio, DEFAULT_COMPRESSOR_RATIO),
     attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
     release: numberOrDefault(value.release, DEFAULT_COMPRESSOR_RELEASE),
+  };
+}
+
+function normalizePannerConfig(value: unknown): PannerConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    pan: numberOrDefault(value.pan, DEFAULT_PANNER_PAN),
   };
 }
 
@@ -188,6 +198,10 @@ function normalizeEffectConfig(
       value.compressor === undefined
         ? fallback.compressor
         : normalizeCompressorConfig(value.compressor),
+    panner:
+      value.panner === undefined
+        ? fallback.panner
+        : normalizePannerConfig(value.panner),
     reverb:
       value.reverb === undefined
         ? fallback.reverb

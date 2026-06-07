@@ -10,6 +10,7 @@ export type {
   EqualizerType,
   FilterConfig,
   FilterType,
+  PannerConfig,
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbPreset,

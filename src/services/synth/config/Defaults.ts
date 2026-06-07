@@ -16,6 +16,7 @@ import {
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
+  DEFAULT_PANNER_PAN,
   DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_PRESET,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -35,6 +36,7 @@ import type {
   EqualizerType,
   FilterConfig,
   FilterType,
+  PannerConfig,
   ReverbConfig,
   SpectrumConfig,
   SynthBasicConfig,
@@ -110,6 +112,12 @@ export function createDefaultCompressorConfig(): CompressorConfig {
   };
 }
 
+export function createDefaultPannerConfig(): PannerConfig {
+  return {
+    pan: DEFAULT_PANNER_PAN,
+  };
+}
+
 export function createDefaultReverbConfig(
   preset: BuiltInReverbPreset = DEFAULT_REVERB_PRESET,
   mix = DEFAULT_REVERB_MIX,
@@ -122,6 +130,7 @@ export function createDefaultEffectConfig(): EffectConfig {
     filters: [],
     equalizers: [],
     compressor: null,
+    panner: null,
     reverb: createDefaultReverbConfig(),
   };
 }
