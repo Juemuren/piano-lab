@@ -84,6 +84,7 @@ function Reverb({
             />
 
             <ControlSelect
+              label={t('effect.reverb.preset')}
               value={reverb.preset}
               onChange={(e) =>
                 onPresetChange(e.target.value as BuiltInReverbPreset)

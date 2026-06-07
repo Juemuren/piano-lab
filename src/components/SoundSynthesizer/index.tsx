@@ -135,6 +135,7 @@ function SoundSynthesizer() {
         </div>
 
         <ControlSelect
+          label={t('controls.oscillatorType')}
           value={oscillatorType}
           onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
         >

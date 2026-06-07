@@ -17,7 +17,7 @@ function ControlSelect({
 
   return (
     <label className="flex flex-col gap-1 text-center">
-      {label && <span>{label}</span>}
+      {label && <span className="py-2 font-bold">{label}</span>}
       <select
         id={selectId}
         className={`

@@ -5,6 +5,7 @@
     "effect": "效果"
   },
   "controls": {
+    "oscillatorType": "振荡器类型",
     "volume": "音量系数",
     "harmonicCount": "谐波数量",
     "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。"
@@ -25,6 +26,7 @@
   },
   "spectrum": {
     "harmonicSpectrumFormula": "谐波频谱公式",
+    "preset": "频谱预设",
     "presers": {
       "ethereal": "空灵",
       "metallic": "金属",
@@ -144,6 +146,7 @@
       "name": "混响",
       "enabled": "启用混响",
       "disabled": "禁用混响",
+      "preset": "混响预设",
       "presets": {
         "bathroom": "浴室",
         "garage": "车库",

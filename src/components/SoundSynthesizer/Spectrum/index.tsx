@@ -35,6 +35,7 @@ function Spectrum({
     <>
       <BlockMath math={String.raw`p(t) = \sum_{n=1}^{N}A_n\sin(2\pi f_n t)`} />
       <ControlSelect
+        label={t('spectrum.preset')}
         value={spectrumType}
         onChange={(e) => {
           handleSpectrumTypeChange(e.target.value as SpectrumType);

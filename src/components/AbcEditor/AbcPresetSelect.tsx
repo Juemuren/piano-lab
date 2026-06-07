@@ -21,6 +21,7 @@ function AbcPresetSelect({
 
   return (
     <ControlSelect
+      label={t('preset')}
       value={selectedPresetIndex}
       onChange={(e) => onPresetChange(parseInt(e.target.value, 10))}
     >
