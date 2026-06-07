@@ -178,6 +178,60 @@ function getPannerConeSphereMesh(config: PannerConfig, radius: number) {
   return mesh;
 }
 
+function getPannerWideConeMesh(
+  config: PannerConfig,
+  direction: { x: number; y: number; z: number },
+  angle: number,
+  radius: number,
+) {
+  const { right, up } = createDirectionBasis(direction);
+  const halfAngle = Math.min(Math.max(angle / 2, 0), 180) * DEGREE_TO_RADIAN;
+  const mesh: PannerConeMesh = {
+    x: [],
+    y: [],
+    z: [],
+    i: [],
+    j: [],
+    k: [],
+  };
+
+  for (let latIndex = 0; latIndex <= SPHERE_LATITUDE_COUNT; latIndex += 1) {
+    const phi = halfAngle * (latIndex / SPHERE_LATITUDE_COUNT);
+    const forwardScale = Math.cos(phi);
+    const radialScale = Math.sin(phi);
+
+    for (let lonIndex = 0; lonIndex <= SPHERE_LONGITUDE_COUNT; lonIndex += 1) {
+      const theta = Math.PI * 2 * (lonIndex / SPHERE_LONGITUDE_COUNT);
+      const cos = Math.cos(theta);
+      const sin = Math.sin(theta);
+      const x =
+        direction.x * forwardScale + (right.x * cos + up.x * sin) * radialScale;
+      const y =
+        direction.y * forwardScale + (right.y * cos + up.y * sin) * radialScale;
+      const z =
+        direction.z * forwardScale + (right.z * cos + up.z * sin) * radialScale;
+
+      mesh.x.push(config.positionX + x * radius);
+      mesh.y.push(config.positionY + y * radius);
+      mesh.z.push(config.positionZ + z * radius);
+    }
+  }
+
+  const rowLength = SPHERE_LONGITUDE_COUNT + 1;
+  for (let latIndex = 0; latIndex < SPHERE_LATITUDE_COUNT; latIndex += 1) {
+    for (let lonIndex = 0; lonIndex < SPHERE_LONGITUDE_COUNT; lonIndex += 1) {
+      const current = latIndex * rowLength + lonIndex;
+      const next = current + rowLength;
+
+      mesh.i.push(current, current + 1);
+      mesh.j.push(next, next);
+      mesh.k.push(current + 1, next + 1);
+    }
+  }
+
+  return mesh;
+}
+
 export function getPannerConeMesh(
   config: PannerConfig,
   angle: number,
@@ -192,6 +246,11 @@ export function getPannerConeMesh(
     config.orientationY,
     config.orientationZ,
   );
+
+  if (angle >= 180) {
+    return getPannerWideConeMesh(config, direction, angle, radius);
+  }
+
   const { right, up } = createDirectionBasis(direction);
   const halfAngle = Math.min(Math.max(angle / 2, 0), 89) * DEGREE_TO_RADIAN;
   const baseRadius = Math.tan(halfAngle) * radius;

@@ -147,7 +147,7 @@
       "rolloffFactor": "衰减系数",
       "coneInnerAngle": "内锥角",
       "coneOuterAngle": "外锥角",
-      "coneOuterGain": "外锥增益",
+      "coneOuterGain": "锥外增益",
       "spatialPreview": "声锥示意图",
       "distanceGainPreview": "距离增益曲线",
       "preview": {
