@@ -38,6 +38,11 @@ import {
   DEFAULT_REVERB_LATE_TAIL_DURATION,
   DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_PRESET,
+  DEFAULT_WAVE_SHAPER_DISTORTION,
+  DEFAULT_WAVE_SHAPER_FUZZ,
+  DEFAULT_WAVE_SHAPER_OVERDRIVE,
+  DEFAULT_WAVE_SHAPER_PRESET,
+  DEFAULT_WAVE_SHAPER_SATURATION,
 } from '../../../constants/synth';
 import type {
   CompressorConfig,
@@ -50,6 +55,7 @@ import type {
   ReverbLateTailConfig,
   SpectrumConfig,
   SynthConfig,
+  WaveShaperConfig,
 } from '../../../types';
 import {
   isRecord,
@@ -66,6 +72,7 @@ import {
   PANNER_PANNING_MODELS,
   REVERB_PRESETS,
   SPECTRUM_TYPES,
+  WAVE_SHAPER_PRESETS,
 } from './Options';
 import { createReverbConfig } from '../effect/Reverb';
 
@@ -117,6 +124,28 @@ function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
     ratio: numberOrDefault(value.ratio, DEFAULT_COMPRESSOR_RATIO),
     attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
     release: numberOrDefault(value.release, DEFAULT_COMPRESSOR_RELEASE),
+  };
+}
+
+function normalizeWaveShaperConfig(value: unknown): WaveShaperConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    preset: unionOrDefault(
+      value.preset,
+      WAVE_SHAPER_PRESETS,
+      DEFAULT_WAVE_SHAPER_PRESET,
+    ),
+    saturation: numberOrDefault(
+      value.saturation,
+      DEFAULT_WAVE_SHAPER_SATURATION,
+    ),
+    distortion: numberOrDefault(
+      value.distortion,
+      DEFAULT_WAVE_SHAPER_DISTORTION,
+    ),
+    overdrive: numberOrDefault(value.overdrive, DEFAULT_WAVE_SHAPER_OVERDRIVE),
+    fuzz: numberOrDefault(value.fuzz, DEFAULT_WAVE_SHAPER_FUZZ),
   };
 }
 
@@ -257,6 +286,10 @@ function normalizeEffectConfig(
             Boolean(equalizer),
           )
       : fallback.equalizers,
+    waveShaper:
+      value.waveShaper === undefined
+        ? fallback.waveShaper
+        : normalizeWaveShaperConfig(value.waveShaper),
     compressor:
       value.compressor === undefined
         ? fallback.compressor

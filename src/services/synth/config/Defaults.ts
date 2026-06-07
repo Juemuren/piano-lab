@@ -39,6 +39,11 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
+  DEFAULT_WAVE_SHAPER_DISTORTION,
+  DEFAULT_WAVE_SHAPER_FUZZ,
+  DEFAULT_WAVE_SHAPER_OVERDRIVE,
+  DEFAULT_WAVE_SHAPER_PRESET,
+  DEFAULT_WAVE_SHAPER_SATURATION,
 } from '../../../constants/synth';
 import type {
   BuiltInReverbPreset,
@@ -54,6 +59,7 @@ import type {
   SpectrumConfig,
   SynthBasicConfig,
   SynthConfig,
+  WaveShaperConfig,
 } from '../../../types';
 import { createReverbConfig } from '../effect/Reverb';
 import { createSpectrum } from '../Spectrum';
@@ -125,6 +131,16 @@ export function createDefaultCompressorConfig(): CompressorConfig {
   };
 }
 
+export function createDefaultWaveShaperConfig(): WaveShaperConfig {
+  return {
+    preset: DEFAULT_WAVE_SHAPER_PRESET,
+    saturation: DEFAULT_WAVE_SHAPER_SATURATION,
+    distortion: DEFAULT_WAVE_SHAPER_DISTORTION,
+    overdrive: DEFAULT_WAVE_SHAPER_OVERDRIVE,
+    fuzz: DEFAULT_WAVE_SHAPER_FUZZ,
+  };
+}
+
 export function createDefaultPannerConfig(): PannerConfig {
   return {
     panningModel: DEFAULT_PANNER_PANNING_MODEL,
@@ -155,6 +171,7 @@ export function createDefaultEffectConfig(): EffectConfig {
   return {
     filters: [],
     equalizers: [],
+    waveShaper: null,
     compressor: null,
     panner: null,
     reverb: null,

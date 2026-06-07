@@ -4,6 +4,7 @@ import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
 import Panner from './Panner';
 import Reverb from './Reverb';
+import WaveShaper from './WaveShaper';
 
 interface EffectProps {
   harmonicCount: number;
@@ -26,6 +27,10 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    waveShaper,
+    updateWaveShaperEnabled,
+    updateWaveShaperPreset,
+    updateWaveShaperValue,
     compressor,
     updateCompressorEnabled,
     updateCompressorThreshold,
@@ -67,6 +72,12 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEqualizerFrequencyChange={updateEqualizerFrequency}
         onEqualizerQChange={updateEqualizerQ}
         onEqualizerGainChange={updateEqualizerGain}
+      />
+      <WaveShaper
+        waveShaper={waveShaper}
+        onEnabledChange={updateWaveShaperEnabled}
+        onPresetChange={updateWaveShaperPreset}
+        onValueChange={updateWaveShaperValue}
       />
       <Compressor
         compressor={compressor}

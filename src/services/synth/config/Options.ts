@@ -3,6 +3,7 @@ import type {
   FilterType,
   ReverbPreset,
   SpectrumType,
+  WaveShaperPreset,
 } from '../../../types';
 
 export const OSCILLATOR_TYPES: OscillatorType[] = [
@@ -34,6 +35,13 @@ export const EQUALIZER_TYPES: EqualizerType[] = [
   'lowshelf',
   'highshelf',
   'peaking',
+];
+
+export const WAVE_SHAPER_PRESETS: WaveShaperPreset[] = [
+  'saturation',
+  'distortion',
+  'overdrive',
+  'fuzz',
 ];
 
 export const PANNER_PANNING_MODELS: PanningModelType[] = ['equalpower', 'HRTF'];

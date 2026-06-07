@@ -23,4 +23,6 @@ export type {
   StartNoteResult,
   SynthBasicConfig,
   SynthConfig,
+  WaveShaperConfig,
+  WaveShaperPreset,
 } from './synth';

@@ -104,6 +104,25 @@
       "release": "恢复时间",
       "reduction": "实时信号增益"
     },
+    "waveShaper": {
+      "name": "波形重塑",
+      "enabled": "启用波形重塑",
+      "disabled": "禁用波形重塑",
+      "preset": "波形预设",
+      "presets": {
+        "saturation": "饱和",
+        "distortion": "失真",
+        "overdrive": "过载",
+        "fuzz": "法兹"
+      },
+      "parameters": {
+        "saturation": "饱和强度",
+        "distortion": "失真强度",
+        "overdrive": "过载强度",
+        "fuzz": "法兹强度"
+      },
+      "curve": "波形曲线"
+    },
     "panner": {
       "name": "声像",
       "enabled": "启用声像",

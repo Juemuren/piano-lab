@@ -5,8 +5,10 @@ import type {
   FilterConfig,
   PannerConfig,
   ReverbConfig,
+  WaveShaperConfig,
 } from '../../types';
 import { createReverbImpulseResponse } from './effect/Reverb';
+import { createWaveShaperCurve } from './effect/WaveShaper';
 
 export class EffectChain {
   private audioContext: AudioContext | null = null;
@@ -15,6 +17,7 @@ export class EffectChain {
   private outputNode: GainNode | null = null;
   private filterNodes: BiquadFilterNode[] = [];
   private equalizerNodes: BiquadFilterNode[] = [];
+  private waveShaperNode: WaveShaperNode | null = null;
   private compressorNode: DynamicsCompressorNode | null = null;
   private pannerNode: PannerNode | null = null;
   private convolverNode: ConvolverNode | null = null;
@@ -23,6 +26,7 @@ export class EffectChain {
   private effectConfig: EffectConfig = {
     filters: [],
     equalizers: [],
+    waveShaper: null,
     compressor: null,
     panner: null,
     reverb: null,
@@ -82,6 +86,19 @@ export class EffectChain {
     this.convolverNode?.disconnect();
     this.reverbDryGainNode?.disconnect();
     this.reverbWetGainNode?.disconnect();
+  }
+
+  private applyWaveShaperConfig(waveShaperConfig: WaveShaperConfig) {
+    if (!this.audioContext) return null;
+
+    if (!this.waveShaperNode) {
+      this.waveShaperNode = this.audioContext.createWaveShaper();
+    }
+
+    this.waveShaperNode.curve = createWaveShaperCurve(waveShaperConfig);
+    this.waveShaperNode.oversample = '4x';
+
+    return this.waveShaperNode;
   }
 
   private applyCompressorConfig(compressorConfig: CompressorConfig) {
@@ -168,6 +185,7 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
@@ -175,6 +193,7 @@ export class EffectChain {
     if (
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
+      !this.effectConfig.waveShaper &&
       !this.effectConfig.compressor &&
       !this.effectConfig.panner &&
       !this.effectConfig.reverb
@@ -213,6 +232,16 @@ export class EffectChain {
       0,
       this.effectConfig.equalizers.length,
     );
+
+    if (this.effectConfig.waveShaper) {
+      const waveShaperNode = this.applyWaveShaperConfig(
+        this.effectConfig.waveShaper,
+      );
+      if (waveShaperNode) {
+        previousNode.connect(waveShaperNode);
+        previousNode = waveShaperNode;
+      }
+    }
 
     if (this.effectConfig.compressor) {
       const compressorNode = this.applyCompressorConfig(
@@ -277,6 +306,7 @@ export class EffectChain {
     for (const equalizerNode of this.equalizerNodes) {
       equalizerNode.disconnect();
     }
+    this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
@@ -286,6 +316,7 @@ export class EffectChain {
     this.inputNode = null;
     this.filterNodes = [];
     this.equalizerNodes = [];
+    this.waveShaperNode = null;
     this.compressorNode = null;
     this.pannerNode = null;
     this.convolverNode = null;

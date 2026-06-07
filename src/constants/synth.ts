@@ -30,6 +30,12 @@ export const DEFAULT_COMPRESSOR_RATIO = 12;
 export const DEFAULT_COMPRESSOR_ATTACK = 0.003;
 export const DEFAULT_COMPRESSOR_RELEASE = 0.25;
 
+export const DEFAULT_WAVE_SHAPER_PRESET = 'saturation';
+export const DEFAULT_WAVE_SHAPER_SATURATION = 0.5;
+export const DEFAULT_WAVE_SHAPER_DISTORTION = 5;
+export const DEFAULT_WAVE_SHAPER_OVERDRIVE = 8;
+export const DEFAULT_WAVE_SHAPER_FUZZ = 40;
+
 export const DEFAULT_PANNER_PANNING_MODEL: PanningModelType = 'equalpower';
 export const DEFAULT_PANNER_DISTANCE_MODEL: DistanceModelType = 'inverse';
 export const DEFAULT_PANNER_POSITION_X = 0;

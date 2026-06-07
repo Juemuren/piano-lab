@@ -80,6 +80,20 @@ export interface CompressorConfig {
   release: number;
 }
 
+export type WaveShaperPreset =
+  | 'saturation'
+  | 'distortion'
+  | 'overdrive'
+  | 'fuzz';
+
+export interface WaveShaperConfig {
+  preset: WaveShaperPreset;
+  saturation: number;
+  distortion: number;
+  overdrive: number;
+  fuzz: number;
+}
+
 export interface PannerConfig {
   panningModel: PanningModelType;
   distanceModel: DistanceModelType;
@@ -123,6 +137,7 @@ export interface ReverbConfig {
 export interface EffectConfig {
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
+  waveShaper: WaveShaperConfig | null;
   compressor: CompressorConfig | null;
   panner: PannerConfig | null;
   reverb: ReverbConfig | null;
