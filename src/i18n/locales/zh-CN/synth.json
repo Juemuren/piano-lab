@@ -2,7 +2,8 @@
   "sections": {
     "envelope": "包络",
     "spectrum": "频谱",
-    "effect": "效果"
+    "effect": "效果",
+    "analysis": "分析"
   },
   "controls": {
     "oscillatorType": "振荡器类型",

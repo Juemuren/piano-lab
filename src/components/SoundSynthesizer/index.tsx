@@ -23,6 +23,7 @@ import useFileImport from '../../hooks/file/useFileImport';
 import Envelope from './Envelope';
 import Effect from './Effect';
 import Spectrum from './Spectrum';
+import Analysis from './Analysis';
 
 function SoundSynthesizer() {
   const { t } = useTranslation('synth');
@@ -203,6 +204,14 @@ function SoundSynthesizer() {
           initialConfig={importedConfig?.effect}
           onConfigChange={setEffectConfig}
         />
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        title={t('sections.analysis')}
+        bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
+        expanded
+      >
+        <Analysis />
       </CollapsibleSection>
     </ControlPanel>
   );

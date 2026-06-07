@@ -20,6 +20,7 @@ interface SynthRecordingTarget {
 export class SynthEngine {
   private audioContext: AudioContext | null = null;
   private outputGainNode: GainNode | null = null;
+  private analyserNode: AnalyserNode | null = null;
   private basicVoice = new BasicVoice();
   private effectChain = new EffectChain();
   private activeNotes: Map<number, ActiveVoice[]> = new Map();
@@ -29,7 +30,11 @@ export class SynthEngine {
     if (!this.audioContext || this.audioContext.state === 'closed') {
       this.audioContext = new AudioContext({ latencyHint: 'playback' });
       this.outputGainNode = this.audioContext.createGain();
+      this.analyserNode = this.audioContext.createAnalyser();
+      this.analyserNode.fftSize = 2048;
+      this.analyserNode.smoothingTimeConstant = 0.8;
       this.outputGainNode.connect(this.audioContext.destination);
+      this.outputGainNode.connect(this.analyserNode);
     }
   }
 
@@ -51,6 +56,14 @@ export class SynthEngine {
 
   getCompressorReduction() {
     return this.effectChain.getCompressorReduction();
+  }
+
+  getAnalyserNode(): AnalyserNode | null {
+    if (!this.audioContext || this.audioContext.state === 'closed') {
+      this.init();
+    }
+
+    return this.analyserNode;
   }
 
   private async ensureAudioContextRunning(): Promise<void> {

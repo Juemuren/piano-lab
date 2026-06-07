@@ -52,10 +52,11 @@
 已有效果修改
 
 - [ ] 晚期尾音考虑用高斯噪声进行改进。可以用 Box-Muller 变换生成标准正态分布随机数
+- [ ] 混响的预设需要调小反射的振幅并缩短延迟
 
-增加可视化子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
+增加分析子模块，放入 [SoundSynthesizer](src/components/SoundSynthesizer/index.tsx) 下
 
-- 使用 Web Audio API 的 [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) 分别显示频域和时域的波形
+- [x] 使用 Web Audio API 的 [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) 分别显示频域和时域的波形
 
 增强乐谱自动生成功能
 
