@@ -1,7 +1,8 @@
 {
   "custom": "Custom",
-  "playbackTip": "Click a note in the score to change the playback position directly.",
+  "playbackTip": "Click a note in the score to jump to that position",
   "placeholder": "Enter a score, choose a preset, or import a file",
+  "preset": "Score Presets",
   "presets": {
     "小星星": "Twinkle Twinkle Little Star",
     "生日快乐": "Happy Birthday",

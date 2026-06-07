@@ -1,11 +1,11 @@
 {
   "notation": {
     "title": "Score Notation",
-    "body": "Scores use ABC Notation. Read the official tutorial for the full standard."
+    "body": "Scores use the ABC Notation format. Read the official tutorial for the full standard."
   },
   "principle": {
     "title": "How It Works",
-    "body": "Sound is physically synthesized with the Web Audio API. See the article and source code for the math and implementation."
+    "body": "Sound is physically synthesized with the Web Audio API. See my article and the source code for the math and implementation details."
   },
   "links": {
     "article": "Math Article",

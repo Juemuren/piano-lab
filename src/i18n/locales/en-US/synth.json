@@ -2,9 +2,11 @@
   "sections": {
     "envelope": "Envelope",
     "spectrum": "Spectrum",
-    "effect": "Effect"
+    "effect": "Effects",
+    "analysis": "Analysis"
   },
   "controls": {
+    "oscillatorType": "Oscillator Type",
     "volume": "Volume",
     "harmonicCount": "Harmonic Count",
     "harmonicCountWarning": "Do not set this value too high, or the app may lag."
@@ -20,10 +22,12 @@
     "decayTime": "Decay Time",
     "releaseTime": "Release Time",
     "sustainGain": "Sustain Gain",
-    "silenceGain": "Silence Gain"
+    "silenceGain": "Silence Gain",
+    "amplitudeEnvelopeFormula": "Amplitude Envelope Formula"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
+    "preset": "Spectrum Preset",
     "presers": {
       "ethereal": "Ethereal",
       "metallic": "Metallic",
@@ -53,12 +57,12 @@
       "lowpass": {
         "name": "Low Pass",
         "frequency": "Cutoff Frequency",
-        "q": "Q"
+        "q": "Resonance"
       },
       "highpass": {
         "name": "High Pass",
         "frequency": "Cutoff Frequency",
-        "q": "Q"
+        "q": "Resonance"
       },
       "bandpass": {
         "name": "Band Pass",
@@ -76,22 +80,93 @@
       "lowshelf": {
         "name": "Low Shelf",
         "frequency": "Cutoff Frequency",
-        "gain": "Gain"
+        "gain": "Gain Ratio"
       },
       "highshelf": {
         "name": "High Shelf",
         "frequency": "Cutoff Frequency",
-        "gain": "Gain"
+        "gain": "Gain Ratio"
       },
       "peaking": {
         "name": "Peaking",
         "frequency": "Center Frequency",
         "q": "Bandwidth Factor",
-        "gain": "Gain"
+        "gain": "Gain Ratio"
+      }
+    },
+    "compressor": {
+      "name": "Compression",
+      "enabled": "Enable Compression",
+      "disabled": "Disable Compression",
+      "threshold": "Threshold",
+      "knee": "Knee",
+      "ratio": "Ratio",
+      "attack": "Attack Time",
+      "release": "Release Time",
+      "reduction": "Real-time Gain Reduction"
+    },
+    "waveShaper": {
+      "name": "Wave Shaping",
+      "enabled": "Enable Wave Shaping",
+      "disabled": "Disable Wave Shaping",
+      "preset": "Waveform Preset",
+      "presets": {
+        "saturation": "Saturation",
+        "distortion": "Distortion",
+        "overdrive": "Overdrive",
+        "fuzz": "Fuzz"
+      },
+      "parameters": {
+        "saturation": "Saturation Strength",
+        "distortion": "Distortion Strength",
+        "overdrive": "Overdrive Strength",
+        "fuzz": "Fuzz Strength"
+      },
+      "curve": "Waveform Curve"
+    },
+    "panner": {
+      "name": "Panning",
+      "enabled": "Enable Panning",
+      "disabled": "Disable Panning",
+      "panningModel": "Panning Model",
+      "panningModels": {
+        "equalpower": "Equal-power Panning",
+        "HRTF": "Head-Related Transfer Function"
+      },
+      "distanceModel": "Distance Model",
+      "distanceModels": {
+        "linear": "Linear",
+        "inverse": "Inverse",
+        "exponential": "Exponential"
+      },
+      "position": "Position",
+      "orientation": "Orientation",
+      "distance": "Distance",
+      "angle": "Angle",
+      "refDistance": "Reference Distance",
+      "maxDistance": "Maximum Distance",
+      "rolloffFactor": "Rolloff Factor",
+      "coneInnerAngle": "Inner Cone Angle",
+      "coneOuterAngle": "Outer Cone Angle",
+      "coneOuterGain": "Outer Cone Gain",
+      "spatialPreview": "Sound Cone Diagram",
+      "distanceGainPreview": "Distance Gain Curve",
+      "preview": {
+        "outerCone": "Outer Cone",
+        "innerCone": "Inner Cone",
+        "distance": "Distance",
+        "orientation": "Orientation",
+        "listener": "Listener",
+        "source": "Source",
+        "distanceGain": "Distance Gain",
+        "currentSourceDistance": "Current Source Distance"
       }
     },
     "reverb": {
       "name": "Reverb",
+      "enabled": "Enable Reverb",
+      "disabled": "Disable Reverb",
+      "preset": "Reverb Preset",
       "presets": {
         "bathroom": "Bathroom",
         "garage": "Garage",
@@ -112,12 +187,12 @@
         "amplitude": "Initial Amplitude",
         "alpha": "Decay Coefficient"
       },
-      "impulseResponse": "Impulse Response",
+      "impulseResponse": "Total Impulse Response",
       "mix": "Mix Ratio"
     }
   },
   "config": {
-    "importError": "Could not import the config. Check the JSON file format."
+    "importError": "Could not import config. Please check the JSON file format."
   },
   "charts": {
     "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",

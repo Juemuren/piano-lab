@@ -2,9 +2,11 @@
   "sections": {
     "envelope": "エンベロープ",
     "spectrum": "スペクトル",
-    "effect": "エフェクト"
+    "effect": "エフェクト",
+    "analysis": "分析"
   },
   "controls": {
+    "oscillatorType": "オシレータータイプ",
     "volume": "音量係数",
     "harmonicCount": "倍音数",
     "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。"
@@ -20,10 +22,12 @@
     "decayTime": "ディケイ時間",
     "releaseTime": "リリース時間",
     "sustainGain": "サステインゲイン",
-    "silenceGain": "無音ゲイン"
+    "silenceGain": "無音ゲイン",
+    "amplitudeEnvelopeFormula": "振幅エンベロープ式"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "倍音スペクトル式",
+    "preset": "スペクトルプリセット",
     "presers": {
       "ethereal": "幻想",
       "metallic": "金属",
@@ -53,12 +57,12 @@
       "lowpass": {
         "name": "ローパス",
         "frequency": "カットオフ周波数",
-        "q": "Q"
+        "q": "共振係数"
       },
       "highpass": {
         "name": "ハイパス",
         "frequency": "カットオフ周波数",
-        "q": "Q"
+        "q": "共振係数"
       },
       "bandpass": {
         "name": "バンドパス",
@@ -76,22 +80,93 @@
       "lowshelf": {
         "name": "ローシェルフ",
         "frequency": "カットオフ周波数",
-        "gain": "ゲイン"
+        "gain": "ゲイン比率"
       },
       "highshelf": {
         "name": "ハイシェルフ",
         "frequency": "カットオフ周波数",
-        "gain": "ゲイン"
+        "gain": "ゲイン比率"
       },
       "peaking": {
         "name": "ピーキング",
         "frequency": "中心周波数",
         "q": "帯域幅係数",
-        "gain": "ゲイン"
+        "gain": "ゲイン比率"
+      }
+    },
+    "compressor": {
+      "name": "コンプレッション",
+      "enabled": "コンプレッションを有効にする",
+      "disabled": "コンプレッションを無効にする",
+      "threshold": "スレッショルド",
+      "knee": "ニー",
+      "ratio": "レシオ",
+      "attack": "アタック時間",
+      "release": "リリース時間",
+      "reduction": "リアルタイムゲインリダクション"
+    },
+    "waveShaper": {
+      "name": "ウェーブシェーピング",
+      "enabled": "ウェーブシェーピングを有効にする",
+      "disabled": "ウェーブシェーピングを無効にする",
+      "preset": "波形プリセット",
+      "presets": {
+        "saturation": "サチュレーション",
+        "distortion": "ディストーション",
+        "overdrive": "オーバードライブ",
+        "fuzz": "ファズ"
+      },
+      "parameters": {
+        "saturation": "サチュレーション強度",
+        "distortion": "ディストーション強度",
+        "overdrive": "オーバードライブ強度",
+        "fuzz": "ファズ強度"
+      },
+      "curve": "波形曲線"
+    },
+    "panner": {
+      "name": "パンニング",
+      "enabled": "パンニングを有効にする",
+      "disabled": "パンニングを無効にする",
+      "panningModel": "パンニングモデル",
+      "panningModels": {
+        "equalpower": "等パワーパンニング",
+        "HRTF": "頭部伝達関数（HRTF）"
+      },
+      "distanceModel": "距離モデル",
+      "distanceModels": {
+        "linear": "線形",
+        "inverse": "逆比例",
+        "exponential": "指数"
+      },
+      "position": "位置",
+      "orientation": "方向",
+      "distance": "距離",
+      "angle": "角度",
+      "refDistance": "基準距離",
+      "maxDistance": "最大距離",
+      "rolloffFactor": "減衰係数",
+      "coneInnerAngle": "内側コーン角",
+      "coneOuterAngle": "外側コーン角",
+      "coneOuterGain": "コーン外ゲイン",
+      "spatialPreview": "サウンドコーン図",
+      "distanceGainPreview": "距離ゲイン曲線",
+      "preview": {
+        "outerCone": "外側コーン",
+        "innerCone": "内側コーン",
+        "distance": "距離",
+        "orientation": "方向",
+        "listener": "聴取者",
+        "source": "音源",
+        "distanceGain": "距離ゲイン",
+        "currentSourceDistance": "現在の音源距離"
       }
     },
     "reverb": {
       "name": "リバーブ",
+      "enabled": "リバーブを有効にする",
+      "disabled": "リバーブを無効にする",
+      "preset": "リバーブプリセット",
       "presets": {
         "bathroom": "浴室",
         "garage": "ガレージ",
@@ -103,7 +178,7 @@
         "name": "初期反射",
         "item": "反射 {{index}}",
         "delay": "遅延",
-        "amplitude": "ゲイン"
+        "amplitude": "振幅"
       },
       "lateTail": {
         "name": "後期残響",
