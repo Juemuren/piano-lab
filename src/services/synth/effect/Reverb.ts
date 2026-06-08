@@ -5,6 +5,7 @@ import type {
   ReverbLateTailConfig,
 } from '../../../types';
 import { degreesToRadians } from '../../../utils/math';
+import { createSeededGaussianRandomGenerator } from '../../../utils/random';
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
@@ -89,15 +90,6 @@ function getImpulseDuration(
   return Math.max(maxReflectionDelay, lateTail.delay + lateTail.duration);
 }
 
-function createRandomAmplitudeGenerator() {
-  let state = LATE_TAIL_RANDOM_SEED;
-
-  return () => {
-    state = (1664525 * state + 1013904223) >>> 0;
-    return (state / 0xffffffff) * 2 - 1;
-  };
-}
-
 export function getReverbImpulseResponseSamples(
   config: ReverbConfig,
   sampleRate: number,
@@ -123,7 +115,9 @@ export function getReverbImpulseResponseSamples(
       reflection.gain * Math.cos(degreesToRadians(reflection.phase));
   }
 
-  const getRandomAmplitude = createRandomAmplitudeGenerator();
+  const getRandomAmplitude = createSeededGaussianRandomGenerator(
+    LATE_TAIL_RANDOM_SEED,
+  );
 
   for (let offset = 0; offset < tailLength; offset += 1) {
     amplitude[tailStartIndex + offset] +=

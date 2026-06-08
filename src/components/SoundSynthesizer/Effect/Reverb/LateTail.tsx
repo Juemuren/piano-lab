@@ -26,7 +26,9 @@ function LateTail({
       <summary className="font-bold my-2">
         {t('effect.reverb.lateTail.name')}
       </summary>
-      <BlockMath math={String.raw`h_l[n]=AU[-1,1]e^{-\alpha(n-Df_s)}`} />
+      <BlockMath
+        math={String.raw`h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}`}
+      />
       <ControlRange
         label={t('effect.reverb.lateTail.delay')}
         symbol={<InlineMath math="D" />}
