@@ -74,8 +74,8 @@
 #### 声像
 
 - 提供完全的自定义，支持修改位置、朝向、距离和角度
-- 可选择等功率平移算法或头部相关传递函数
-- 可选择反比、线性和指数等不同的距离模型
+- 可选择等功率平移算法和头部相关传递函数两种声像模型
+- 可选择反比、线性和指数三种距离模型
 - 提供三维的声锥示意图，并绘制距离增益曲线
 
 #### 波形重塑
@@ -328,6 +328,12 @@ PannerNode 支持等功率平移算法和头部相关传递函数两种声像模
 ### 输入设备
 
 - MIDI 设备的连接通过 [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API) 实现
+
+### 时域分析和频域分析
+
+- 使用 Web Audio API 的 [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) 获取频域和时域数据
+- 图像绘制使用 Canvas API 实现
+- 动画通过 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) 持续刷新每帧
 
 ## 技术栈
 
