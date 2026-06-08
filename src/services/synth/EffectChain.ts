@@ -5,6 +5,7 @@ import type {
   FilterConfig,
   PannerConfig,
   ReverbConfig,
+  TremoloConfig,
   WaveShaperConfig,
 } from '../../types';
 import { createReverbImpulseResponse } from './effect/Reverb';
@@ -19,6 +20,9 @@ export class EffectChain {
   private equalizerNodes: BiquadFilterNode[] = [];
   private waveShaperNode: WaveShaperNode | null = null;
   private compressorNode: DynamicsCompressorNode | null = null;
+  private tremoloGainNode: GainNode | null = null;
+  private tremoloOscillatorNode: OscillatorNode | null = null;
+  private tremoloDepthGainNode: GainNode | null = null;
   private pannerNode: PannerNode | null = null;
   private convolverNode: ConvolverNode | null = null;
   private reverbDryGainNode: GainNode | null = null;
@@ -26,6 +30,8 @@ export class EffectChain {
   private effectConfig: EffectConfig = {
     filters: [],
     equalizers: [],
+    tremolo: null,
+    vibrato: null,
     waveShaper: null,
     compressor: null,
     panner: null,
@@ -86,6 +92,43 @@ export class EffectChain {
     this.convolverNode?.disconnect();
     this.reverbDryGainNode?.disconnect();
     this.reverbWetGainNode?.disconnect();
+  }
+
+  private disconnectTremoloNodes() {
+    this.tremoloGainNode?.disconnect();
+    this.tremoloOscillatorNode?.disconnect();
+    this.tremoloDepthGainNode?.disconnect();
+  }
+
+  private applyTremoloConfig(tremoloConfig: TremoloConfig) {
+    if (!this.audioContext) return null;
+
+    if (!this.tremoloGainNode) {
+      this.tremoloGainNode = this.audioContext.createGain();
+    }
+    if (!this.tremoloOscillatorNode) {
+      this.tremoloOscillatorNode = this.audioContext.createOscillator();
+      this.tremoloOscillatorNode.type = 'sine';
+      this.tremoloOscillatorNode.start();
+    }
+    if (!this.tremoloDepthGainNode) {
+      this.tremoloDepthGainNode = this.audioContext.createGain();
+    }
+
+    this.tremoloOscillatorNode.disconnect();
+    this.tremoloDepthGainNode.disconnect();
+
+    const depth = Math.min(Math.max(tremoloConfig.depth, 0), 1);
+    this.tremoloOscillatorNode.frequency.value = Math.max(
+      tremoloConfig.frequency,
+      0.01,
+    );
+    this.tremoloGainNode.gain.value = 1 - depth / 2;
+    this.tremoloDepthGainNode.gain.value = depth / 2;
+    this.tremoloOscillatorNode.connect(this.tremoloDepthGainNode);
+    this.tremoloDepthGainNode.connect(this.tremoloGainNode.gain);
+
+    return this.tremoloGainNode;
   }
 
   private applyWaveShaperConfig(waveShaperConfig: WaveShaperConfig) {
@@ -187,12 +230,14 @@ export class EffectChain {
     }
     this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
+    this.disconnectTremoloNodes();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
 
     if (
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
+      !this.effectConfig.tremolo &&
       !this.effectConfig.waveShaper &&
       !this.effectConfig.compressor &&
       !this.effectConfig.panner &&
@@ -232,6 +277,14 @@ export class EffectChain {
       0,
       this.effectConfig.equalizers.length,
     );
+
+    if (this.effectConfig.tremolo) {
+      const tremoloNode = this.applyTremoloConfig(this.effectConfig.tremolo);
+      if (tremoloNode) {
+        previousNode.connect(tremoloNode);
+        previousNode = tremoloNode;
+      }
+    }
 
     if (this.effectConfig.waveShaper) {
       const waveShaperNode = this.applyWaveShaperConfig(
@@ -308,6 +361,8 @@ export class EffectChain {
     }
     this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
+    this.disconnectTremoloNodes();
+    this.tremoloOscillatorNode?.stop();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
     this.outputNode?.disconnect();
@@ -318,6 +373,9 @@ export class EffectChain {
     this.equalizerNodes = [];
     this.waveShaperNode = null;
     this.compressorNode = null;
+    this.tremoloGainNode = null;
+    this.tremoloOscillatorNode = null;
+    this.tremoloDepthGainNode = null;
     this.pannerNode = null;
     this.convolverNode = null;
     this.reverbDryGainNode = null;

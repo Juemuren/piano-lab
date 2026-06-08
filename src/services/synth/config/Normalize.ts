@@ -39,6 +39,10 @@ import {
   DEFAULT_REVERB_LATE_TAIL_DURATION,
   DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_PRESET,
+  DEFAULT_TREMOLO_DEPTH,
+  DEFAULT_TREMOLO_FREQUENCY,
+  DEFAULT_VIBRATO_DEPTH,
+  DEFAULT_VIBRATO_FREQUENCY,
   DEFAULT_WAVE_SHAPER_DISTORTION,
   DEFAULT_WAVE_SHAPER_FUZZ,
   DEFAULT_WAVE_SHAPER_OVERDRIVE,
@@ -56,6 +60,8 @@ import type {
   ReverbLateTailConfig,
   SpectrumConfig,
   SynthConfig,
+  TremoloConfig,
+  VibratoConfig,
   WaveShaperConfig,
 } from '../../../types';
 import {
@@ -125,6 +131,24 @@ function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
     ratio: numberOrDefault(value.ratio, DEFAULT_COMPRESSOR_RATIO),
     attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
     release: numberOrDefault(value.release, DEFAULT_COMPRESSOR_RELEASE),
+  };
+}
+
+function normalizeTremoloConfig(value: unknown): TremoloConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    frequency: numberOrDefault(value.frequency, DEFAULT_TREMOLO_FREQUENCY),
+    depth: numberOrDefault(value.depth, DEFAULT_TREMOLO_DEPTH),
+  };
+}
+
+function normalizeVibratoConfig(value: unknown): VibratoConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    frequency: numberOrDefault(value.frequency, DEFAULT_VIBRATO_FREQUENCY),
+    depth: numberOrDefault(value.depth, DEFAULT_VIBRATO_DEPTH),
   };
 }
 
@@ -288,6 +312,14 @@ function normalizeEffectConfig(
             Boolean(equalizer),
           )
       : fallback.equalizers,
+    tremolo:
+      value.tremolo === undefined
+        ? fallback.tremolo
+        : normalizeTremoloConfig(value.tremolo),
+    vibrato:
+      value.vibrato === undefined
+        ? fallback.vibrato
+        : normalizeVibratoConfig(value.vibrato),
     waveShaper:
       value.waveShaper === undefined
         ? fallback.waveShaper

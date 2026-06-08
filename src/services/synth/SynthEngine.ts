@@ -51,6 +51,7 @@ export class SynthEngine {
   }
 
   configureEffect(config: EffectConfig) {
+    this.basicVoice.configureVibrato(config.vibrato);
     this.effectChain.configure(config);
   }
 
@@ -188,6 +189,9 @@ export class SynthEngine {
     if (!this.isCurrentNoteGeneration(pitch, generationId)) {
       for (const voice of voices) {
         voice.oscillatorNode.stop(
+          Math.max(this.audioContext.currentTime, voice.startTime),
+        );
+        voice.vibratoOscillatorNode?.stop(
           Math.max(this.audioContext.currentTime, voice.startTime),
         );
       }

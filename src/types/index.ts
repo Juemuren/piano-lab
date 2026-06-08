@@ -23,6 +23,8 @@ export type {
   StartNoteResult,
   SynthBasicConfig,
   SynthConfig,
+  TremoloConfig,
+  VibratoConfig,
   WaveShaperConfig,
   WaveShaperPreset,
 } from './synth';

@@ -109,6 +109,17 @@
       "release": "恢复时间",
       "reduction": "实时信号增益"
     },
+    "modulation": {
+      "name": "调制",
+      "tremolo": "颤音",
+      "tremoloEnabled": "启用颤音",
+      "tremoloDisabled": "禁用颤音",
+      "vibrato": "揉弦",
+      "vibratoEnabled": "启用揉弦",
+      "vibratoDisabled": "禁用揉弦",
+      "frequency": "速率",
+      "depth": "深度"
+    },
     "waveShaper": {
       "name": "波形重塑",
       "enabled": "启用波形重塑",

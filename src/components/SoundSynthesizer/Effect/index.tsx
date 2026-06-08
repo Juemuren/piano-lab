@@ -2,6 +2,7 @@ import type { EffectConfig } from '../../../types';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
 import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
+import Modulation from './Modulation';
 import Panner from './Panner';
 import Reverb from './Reverb';
 import WaveShaper from './WaveShaper';
@@ -27,6 +28,14 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
+    tremolo,
+    updateTremoloEnabled,
+    updateTremoloFrequency,
+    updateTremoloDepth,
+    vibrato,
+    updateVibratoEnabled,
+    updateVibratoFrequency,
+    updateVibratoDepth,
     waveShaper,
     updateWaveShaperEnabled,
     updateWaveShaperPreset,
@@ -73,6 +82,16 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEqualizerFrequencyChange={updateEqualizerFrequency}
         onEqualizerQChange={updateEqualizerQ}
         onEqualizerGainChange={updateEqualizerGain}
+      />
+      <Modulation
+        tremolo={tremolo}
+        vibrato={vibrato}
+        onTremoloEnabledChange={updateTremoloEnabled}
+        onTremoloFrequencyChange={updateTremoloFrequency}
+        onTremoloDepthChange={updateTremoloDepth}
+        onVibratoEnabledChange={updateVibratoEnabled}
+        onVibratoFrequencyChange={updateVibratoFrequency}
+        onVibratoDepthChange={updateVibratoDepth}
       />
       <WaveShaper
         waveShaper={waveShaper}

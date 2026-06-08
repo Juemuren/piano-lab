@@ -5,6 +5,7 @@ import type { EffectConfig } from '../../types';
 import useCompressorControl from './effect/useCompressorControl';
 import useEqualizerControl from './effect/useEqualizerControl';
 import useFilterControl from './effect/useFilterControl';
+import useModulationControl from './effect/useModulationControl';
 import usePannerControl from './effect/usePannerControl';
 import useReverbControl from './effect/useReverbControl';
 import useWaveShaperControl from './effect/useWaveShaperControl';
@@ -22,6 +23,10 @@ function useEffectControl(
   const equalizerControl = useEqualizerControl(
     resolvedInitialConfig.equalizers,
   );
+  const modulationControl = useModulationControl(
+    resolvedInitialConfig.tremolo,
+    resolvedInitialConfig.vibrato,
+  );
   const compressorControl = useCompressorControl(
     resolvedInitialConfig.compressor,
   );
@@ -35,6 +40,8 @@ function useEffectControl(
     () => ({
       filters: filterControl.filters,
       equalizers: equalizerControl.equalizers,
+      tremolo: modulationControl.tremolo,
+      vibrato: modulationControl.vibrato,
       waveShaper: waveShaperControl.waveShaper,
       compressor: compressorControl.compressor,
       panner: pannerControl.panner,
@@ -44,6 +51,8 @@ function useEffectControl(
       compressorControl.compressor,
       equalizerControl.equalizers,
       filterControl.filters,
+      modulationControl.tremolo,
+      modulationControl.vibrato,
       pannerControl.panner,
       reverbControl.reverb,
       waveShaperControl.waveShaper,
@@ -61,6 +70,7 @@ function useEffectControl(
   return {
     ...filterControl,
     ...equalizerControl,
+    ...modulationControl,
     ...waveShaperControl,
     ...compressorControl,
     ...pannerControl,

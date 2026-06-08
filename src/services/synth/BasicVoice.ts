@@ -1,4 +1,9 @@
-import type { EnvelopeConfig, Spectrum, SynthBasicConfig } from '../../types';
+import type {
+  EnvelopeConfig,
+  Spectrum,
+  SynthBasicConfig,
+  VibratoConfig,
+} from '../../types';
 import {
   DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
@@ -21,6 +26,8 @@ const MIN_GAIN_VALUE = 1e-10;
 export interface ActiveVoice {
   oscillatorNode: OscillatorNode;
   gainNode: GainNode;
+  vibratoOscillatorNode?: OscillatorNode;
+  vibratoDepthGainNode?: GainNode;
   harmonic: number;
   startTime: number;
   decayEnd: number;
@@ -31,6 +38,8 @@ export interface ActiveVoice {
 export interface ReleasingVoice {
   oscillatorNode: OscillatorNode;
   gainNode: GainNode;
+  vibratoOscillatorNode?: OscillatorNode;
+  vibratoDepthGainNode?: GainNode;
   harmonic: number;
   releaseStart: number;
   silenceGain: number;
@@ -62,6 +71,7 @@ export class BasicVoice {
   private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
   private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
   private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
+  private vibrato: VibratoConfig | null = null;
 
   configureSynth({
     oscillatorType,
@@ -91,6 +101,37 @@ export class BasicVoice {
     this.spectrum = spectrum;
   }
 
+  configureVibrato(vibrato: VibratoConfig | null) {
+    this.vibrato = vibrato;
+  }
+
+  private createVibratoNodes(
+    audioContext: AudioContext,
+    frequency: number,
+    startTime: number,
+  ) {
+    if (!this.vibrato) return null;
+
+    const vibratoOscillatorNode = audioContext.createOscillator();
+    const vibratoDepthGainNode = audioContext.createGain();
+    const depth = Math.max(this.vibrato.depth, 0);
+    const depthHz = frequency * (Math.pow(2, depth / 1200) - 1);
+
+    vibratoOscillatorNode.type = 'sine';
+    vibratoOscillatorNode.frequency.setValueAtTime(
+      Math.max(this.vibrato.frequency, 0.01),
+      startTime,
+    );
+    vibratoDepthGainNode.gain.setValueAtTime(depthHz, startTime);
+    vibratoOscillatorNode.connect(vibratoDepthGainNode);
+    vibratoOscillatorNode.start(startTime);
+
+    return {
+      vibratoOscillatorNode,
+      vibratoDepthGainNode,
+    };
+  }
+
   startVoices({
     audioContext,
     outputNode,
@@ -117,9 +158,15 @@ export class BasicVoice {
     for (const plan of plans) {
       const oscillatorNode = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
+      const vibratoNodes = this.createVibratoNodes(
+        audioContext,
+        plan.frequency,
+        plan.startTime,
+      );
 
       oscillatorNode.type = this.oscillatorType;
       oscillatorNode.frequency.setValueAtTime(plan.frequency, plan.startTime);
+      vibratoNodes?.vibratoDepthGainNode.connect(oscillatorNode.frequency);
 
       gainNode.gain.setValueAtTime(plan.silenceGain, plan.startTime);
       gainNode.gain.exponentialRampToValueAtTime(
@@ -134,12 +181,16 @@ export class BasicVoice {
       oscillatorNode.onended = () => {
         oscillatorNode.disconnect();
         gainNode.disconnect();
+        vibratoNodes?.vibratoOscillatorNode.disconnect();
+        vibratoNodes?.vibratoDepthGainNode.disconnect();
       };
 
       oscillatorNode.start(plan.startTime);
       voices.push({
         oscillatorNode,
         gainNode,
+        vibratoOscillatorNode: vibratoNodes?.vibratoOscillatorNode,
+        vibratoDepthGainNode: vibratoNodes?.vibratoDepthGainNode,
         harmonic: plan.harmonic,
         startTime: plan.startTime,
         decayEnd: plan.decayEnd,
@@ -165,6 +216,7 @@ export class BasicVoice {
         plan.stopTime,
       );
       voice.oscillatorNode.stop(plan.stopTime);
+      voice.vibratoOscillatorNode?.stop(plan.stopTime);
     });
   }
 }

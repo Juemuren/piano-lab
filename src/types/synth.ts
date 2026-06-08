@@ -80,6 +80,16 @@ export interface CompressorConfig {
   release: number;
 }
 
+export interface TremoloConfig {
+  frequency: number;
+  depth: number;
+}
+
+export interface VibratoConfig {
+  frequency: number;
+  depth: number;
+}
+
 export type WaveShaperPreset =
   | 'saturation'
   | 'distortion'
@@ -138,6 +148,8 @@ export interface ReverbConfig {
 export interface EffectConfig {
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
+  tremolo: TremoloConfig | null;
+  vibrato: VibratoConfig | null;
   waveShaper: WaveShaperConfig | null;
   compressor: CompressorConfig | null;
   panner: PannerConfig | null;

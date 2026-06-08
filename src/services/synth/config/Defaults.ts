@@ -39,6 +39,10 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
+  DEFAULT_TREMOLO_DEPTH,
+  DEFAULT_TREMOLO_FREQUENCY,
+  DEFAULT_VIBRATO_DEPTH,
+  DEFAULT_VIBRATO_FREQUENCY,
   DEFAULT_WAVE_SHAPER_DISTORTION,
   DEFAULT_WAVE_SHAPER_FUZZ,
   DEFAULT_WAVE_SHAPER_OVERDRIVE,
@@ -59,6 +63,8 @@ import type {
   SpectrumConfig,
   SynthBasicConfig,
   SynthConfig,
+  TremoloConfig,
+  VibratoConfig,
   WaveShaperConfig,
 } from '../../../types';
 import { createReverbConfig } from '../effect/Reverb';
@@ -131,6 +137,20 @@ export function createDefaultCompressorConfig(): CompressorConfig {
   };
 }
 
+export function createDefaultTremoloConfig(): TremoloConfig {
+  return {
+    frequency: DEFAULT_TREMOLO_FREQUENCY,
+    depth: DEFAULT_TREMOLO_DEPTH,
+  };
+}
+
+export function createDefaultVibratoConfig(): VibratoConfig {
+  return {
+    frequency: DEFAULT_VIBRATO_FREQUENCY,
+    depth: DEFAULT_VIBRATO_DEPTH,
+  };
+}
+
 export function createDefaultWaveShaperConfig(): WaveShaperConfig {
   return {
     preset: DEFAULT_WAVE_SHAPER_PRESET,
@@ -171,6 +191,8 @@ export function createDefaultEffectConfig(): EffectConfig {
   return {
     filters: [],
     equalizers: [],
+    tremolo: null,
+    vibrato: null,
     waveShaper: null,
     compressor: null,
     panner: null,
