@@ -56,7 +56,7 @@ The sound synthesizer consists of four modules: envelope, spectrum, effects, and
 
 ### Effects
 
-Contains filter, equalizer, reverb, compression, panning, and wave shaping effects.
+Contains filter, equalizer, reverb, compression, panning, wave shaping, and modulation effects.
 
 #### Filter & Equalizer
 
@@ -84,12 +84,21 @@ Contains filter, equalizer, reverb, compression, panning, and wave shaping effec
 - Provides four types: saturation, overdrive, distortion, and fuzz
 - Each type has an adjustable intensity parameter, with corresponding formulas and curves plotted
 
+#### Modulation
+
+- Supports amplitude, frequency, phase, and delay modulation. Each type can be independently enabled or disabled.
+- Amplitude modulation produces a tremolo effect, with adjustable modulation frequency and depth
+- Frequency modulation produces a vibrato effect, with adjustable modulation frequency and depth
+- Phase modulation produces a phaser effect, with adjustable modulation frequency and depth
+- Delay modulation produces chorus/flanger effects, with adjustable modulation frequency and depth
+- Displays formulas and draws modulation curves
+
 #### Reverb
 
 - Uses a separated early reflections and late tail approach
 - Provides several presets and fully customizable parameters
-- Early reflections support adjusting reflection count, gain, and delay
-- The late tail uses an exponential-decay impulse response, with adjustable delay time, duration, amplitude coefficient, and decay coefficient
+- Early reflections support adjusting reflection count, gain, delay, and phase
+- The late tail uses an exponential-decay impulse response weighted by standard normal random numbers, with adjustable delay time, duration, amplitude coefficient, and decay coefficient
 - Can plot impulse response formulas and waveforms
 - Supports enabling or disabling reverb on demand
 
@@ -103,7 +112,9 @@ Contains filter, equalizer, reverb, compression, panning, and wave shaping effec
 - Play scores automatically with visual feedback on both the score and keyboard
 - Supports play, pause, replay, and progress adjustment by moving the control bar or clicking notes
 - Adjust tempo, meter, and key signature; chords, repeats, and multiple voices are supported
-- Pressing piano keys can directly edit the score and match note lengths from how long keys are held, making it easier to record melodies
+- Playing piano keys directly edits the score, matching note lengths from key-press duration — convenient for recording melodies
+- Score generation supports setting default note length, tempo, time signature, and key signature, with automatic line breaking
+- Supports one-click reset to defaults or clearing the score
 - Supports importing and exporting ABC files
 - Supports exporting MIDI files
 - Can export rendered scores as SVG/PNG or print them as PDF
@@ -115,12 +126,13 @@ Contains filter, equalizer, reverb, compression, panning, and wave shaping effec
 - Covers 88 keys from A0 to C8, with horizontal scrolling on narrow screens
 - Keys start sounding when pressed and release when lifted, allowing notes of arbitrary duration
 - Supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices, and each input method can be enabled or disabled separately
-- The computer keyboard uses the following key mapping, with `Z` / `X` for octave switching and `Ctrl` / `Shift` combinations for temporary octave changes
+- The computer keyboard uses the following default key mapping, with `Z` / `X` for octave switching and `Ctrl` / `Shift` combinations for temporary octave changes
 
 | Note | C   | C#  | D   | D#  | E   | F   | F#  | G   | G#  | A   | A#  | B   | C   |
 | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Key  | A   | W   | S   | E   | D   | F   | T   | G   | Y   | H   | U   | J   | K   |
 
+- Supports custom keyboard key mapping
 - Displays the connection status of MIDI input devices and lets you choose one device from the list to listen to
 
 ## Usage
@@ -246,25 +258,29 @@ $$
 (f * g)[n] = \sum_{k=-\infty}^{\infty} f[k] g[n - k]
 $$
 
-The impulse response uses a separated early reflections and late tail approach, which are summed to produce the total impulse response.
+The reverb uses a separated early reflections and late tail approach. The total impulse response is:
 
-**Early reflections** simulate the short-delay echoes that arrive at the listener after a small number of wall reflections, represented as a set of discrete impulses with varying delays and gains:
+$$h[n]=\delta[n]+h_e[n]+h_l[n]$$
+
+where $\delta[n]$ is the unit impulse, representing the impulse response of the dry signal.
+
+**Early reflections** simulate the short-delay echoes that reach the listener after a small number of reflections in the space, represented as a set of discrete impulses with varying delays and gains:
 
 $$
-h_e[n]=\sum_i a_i\delta[n-d_if_s]
+h_e[n]=\sum_i a_i\cos(\phi_i)\delta[n-d_if_s]
 $$
 
-where $a_i$ is the reflection amplitude and $d_i$ is the reflection delay.
+where $a_i$ is the reflection amplitude, $d_i$ is the reflection delay, and $\phi_i$ is the reflection phase.
 
 $f_s$ is the sample rate, automatically chosen by the [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) based on the current audio output device — typically 44100 Hz or 48000 Hz.
 
-**Late tail** simulates the dense collection of echoes after many reflections, using an exponential-decay envelope as the impulse response:
+**Late tail** simulates the dense echoes formed after many reflections in the space, using an exponential-decay envelope as the impulse response:
 
 $$
-h_l[n]=Ar[n]e^{-\alpha(n-Df_s)}
+h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}
 $$
 
-where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, $D$ and $T$ are the delay time and duration respectively. $r[n] \sim U[-1,1]$ is uniform random noise, used to distribute the impulse response evenly across positive and negative values to prevent a large DC gain $H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t$ during convolution.
+where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, and $D$ and $T$ are the delay time and duration respectively. $\mathcal{N}(0,1)$ is a standard normal random variable with mean 0 and variance 1, used to make the impulse response evenly distributed across positive and negative values, preventing a large DC gain $H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t$ during convolution.
 
 The reverb effect provides four presets — bathroom, garage, hall, and cathedral — to simulate spaces from small to large.
 
@@ -311,6 +327,46 @@ Four distortion types are provided, with the following mapping relationships:
 
 The app uses Plotly.js to draw the mapping curve for each effect.
 
+#### Modulation Principles
+
+Modulation works by periodically varying a target parameter with a low-frequency oscillator. Depending on what is being modulated, it can produce various effects such as tremolo and chorus.
+
+**Amplitude modulation** periodically varies the signal gain:
+
+$$
+A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)
+$$
+
+where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+
+**Frequency modulation** periodically varies the signal pitch:
+
+$$
+f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)
+$$
+
+where $c$ is the modulation depth in cents and $f_m$ is the modulation frequency.
+
+**Phase modulation** is implemented via all-pass filters, periodically shifting the phase of the signal.
+
+An all-pass filter is also a type of BiquadFilterNode, and the phase shift it introduces can be approximated as:
+
+$$
+\phi(t)=d\sin(2\pi f_m t)
+$$
+
+where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+
+**Delay modulation** periodically varies the signal delay time:
+
+$$
+\tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)
+$$
+
+where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+
+The app uses Plotly.js and KaTeX to draw modulation curves and their corresponding formulas.
+
 ### Scores
 
 - Scores are written in [ABC Notation](https://abcnotation.com/)
@@ -324,6 +380,12 @@ The app uses Plotly.js to draw the mapping curve for each effect.
 ### Input Devices
 
 - MIDI device connections are implemented with the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
+
+### Time-Domain and Frequency-Domain Analysis
+
+- Uses the Web Audio API's [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) to obtain frequency-domain and time-domain data
+- Rendering is implemented with the Canvas API
+- Animation is performed by continuously refreshing each frame via [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)
 
 ## Tech Stack
 
