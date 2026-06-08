@@ -49,7 +49,7 @@ function DelayModulationEffect({
       {delayModulation && (
         <div className="space-y-2">
           <BlockMath
-            math={String.raw`\tau_y(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)`}
+            math={String.raw`\tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)`}
           />
           <ControlRange
             label={t('effect.modulation.frequency')}

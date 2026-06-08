@@ -2,6 +2,50 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.0]
+
+### Added
+
+- Added modulation effects with four types: amplitude modulation (tremolo), frequency modulation (vibrato), phase modulation (phaser), and delay modulation (chorus/flanger), each providing adjustable frequency and depth parameters, formula display, and modulation curve preview.
+- Added adjustable phase parameter for each early reflection in the reverb effect, allowing gain sign inversion.
+- Added Gaussian noise (Box-Muller transform) for the late tail random phase in reverb, producing a more uniform positive/negative impulse distribution.
+- Added key signature and time signature handling to score auto-generation.
+- Added automatic line breaking to score auto-generation.
+- Added reset-to-default and clear-score buttons in the score auto-generation panel.
+- Added custom keyboard mapping for piano control, allowing each note offset to be bound to any single key.
+- Added persistent global settings via `localStorage`, so keyboard mappings and control preferences are preserved across sessions.
+
+### Changed
+
+- Split the Modulation component into focused sub-components for each modulation type.
+- Extracted a shared DEG-to-RAD conversion utility.
+- Removed hardcoded colors in the audio analysis module.
+- Reorganized i18n keys for modulation and reverb, and completed all translations.
+- Made default note length and tempo respect `abcContent` header values first.
+
+### Fixed
+
+- Fixed broadband transient popping when rapidly pressing different piano keys, caused by unreliable `GainNode.gain.value` jumps during fast attack/decay transitions.
+- Fixed frequency-domain analysis plot overflowing the canvas.
+- Fixed the pitch bend formula description in documentation.
+
+### Style
+
+- Adjusted key mapping settings layout for better usability.
+- Added and updated icons throughout the interface, including modulation and reverb sections.
+- Made keyboard control settings disabled by default.
+- Updated footer background color.
+- Reduced `ControlSelect` padding.
+- Adjusted analysis module layout for a cleaner frequency/time-domain display.
+- Arranged reverb early reflection parameters horizontally on wide screens.
+- Wrapped modulation effects in a collapsible details section.
+
+### Docs
+
+- Added app description to the page footer footnote.
+- Completed missing i18n entries across all locales.
+- Updated README and TODO documents.
+
 ## [0.10.0]
 
 ### Added

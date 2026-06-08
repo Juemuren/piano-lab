@@ -48,7 +48,7 @@ function PhaseModulationEffect({
 
       {phaseModulation && (
         <div className="space-y-2">
-          <BlockMath math={String.raw`\phi_y(t)=\phi_x(t)+d\sin(2\pi f_m t)`} />
+          <BlockMath math={String.raw`\phi(t)=d\sin(2\pi f_m t)`} />
           <ControlRange
             label={t('effect.modulation.frequency')}
             symbol={<InlineMath math="f_m" />}
