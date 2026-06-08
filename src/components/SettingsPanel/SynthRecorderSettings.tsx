@@ -1,4 +1,4 @@
-import { Circle, Download, Square } from 'lucide-react';
+import { Circle, Download, Square, Mic } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
@@ -29,6 +29,7 @@ function SynthRecorderSettings() {
     <div className="flex flex-col gap-3">
       <ControlCheckbox
         label={t('settings.recordingEnable')}
+        icon={<Mic size={16} />}
         checked={isExpanded}
         onChange={(e) => setIsExpanded(e.target.checked)}
       />

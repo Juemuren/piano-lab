@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, ArrowLeftRight } from 'lucide-react';
 import type { ReverbEarlyReflectionConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
@@ -28,7 +28,10 @@ function EarlyReflections({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">
-        {t('effect.reverb.earlyReflection.name')}
+        <span className="inline-flex items-center gap-1">
+          <ArrowLeftRight size={16} />
+          {t('effect.reverb.earlyReflection.name')}
+        </span>
       </summary>
       <BlockMath
         math={String.raw`h_e[n]=\sum_i a_i\cos(\phi_i)\delta[n-d_if_s]`}

@@ -1,4 +1,4 @@
-import { Eraser, RotateCcw } from 'lucide-react';
+import { Eraser, RotateCcw, PenLine } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 import { getQuarterNoteSeconds } from '../../services/abc/AbcInput';
@@ -69,6 +69,7 @@ function PianoInputSettingsControl({
     <div className="flex flex-col gap-3">
       <ControlCheckbox
         label={t('settings.pianoInputEnable')}
+        icon={<PenLine size={16} />}
         checked={isPianoInputEnabled}
         onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
       />

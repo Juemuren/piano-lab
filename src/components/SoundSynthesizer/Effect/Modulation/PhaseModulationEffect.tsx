@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AudioLines } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { PhaseModulationConfig } from '../../../../types';
 import { getPhaseModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
@@ -37,7 +36,6 @@ function PhaseModulationEffect({
 
       <ControlButton
         title={t('effect.modulation.phaseModulationEnabled')}
-        icon={<AudioLines size={18} />}
         label={t(
           phaseModulation
             ? 'effect.modulation.phaseModulationDisabled'

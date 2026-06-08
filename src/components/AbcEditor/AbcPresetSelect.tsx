@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { ListMusic } from 'lucide-react';
 import { ABC_PRESETS } from '../../services/abc/AbcPresets';
 import ControlSelect from '../shared/ControlSelect';
 
@@ -22,6 +23,7 @@ function AbcPresetSelect({
   return (
     <ControlSelect
       label={t('preset')}
+      icon={<ListMusic size={16} />}
       value={selectedPresetIndex}
       onChange={(e) => onPresetChange(parseInt(e.target.value, 10))}
     >

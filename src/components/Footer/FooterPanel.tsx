@@ -4,9 +4,10 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 type FooterPanelProps = {
   title: string;
   children: ReactNode;
+  icon?: ReactNode;
 };
 
-function FooterPanel({ title, children }: FooterPanelProps) {
+function FooterPanel({ title, children, icon }: FooterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -25,7 +26,10 @@ function FooterPanel({ title, children }: FooterPanelProps) {
           hover:text-app-subtext dark:hover:text-app-subtext-dark
         "
       >
-        <span className="font-semibold tracking-wide">{title}</span>
+        <span className="inline-flex items-center gap-2 font-semibold tracking-wide">
+          {icon}
+          {title}
+        </span>
         {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
       </button>
       <div className={`${isExpanded ? 'px-4 leading-8' : 'hidden'}`}>

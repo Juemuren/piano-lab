@@ -1,11 +1,13 @@
-import type { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes, ReactNode } from 'react';
 
 type ControlCheckboxProps = {
   label: string;
+  icon?: ReactNode;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
 function ControlCheckbox({
   label,
+  icon,
   className = '',
   ...props
 }: ControlCheckboxProps) {
@@ -16,7 +18,10 @@ function ControlCheckbox({
         className={`size-4 flex-none accent-app-accent ${className}`}
         {...props}
       />
-      <span>{label}</span>
+      <span className="inline-flex items-center gap-1">
+        {icon}
+        {label}
+      </span>
     </label>
   );
 }

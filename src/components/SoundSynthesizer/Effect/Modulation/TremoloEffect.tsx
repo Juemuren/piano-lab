@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AudioLines } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { TremoloConfig } from '../../../../types';
 import { getTremoloCurvePoints } from '../../../../services/synth/effect/Modulation';
@@ -36,7 +35,6 @@ function TremoloEffect({
 
       <ControlButton
         title={t('effect.modulation.tremoloEnabled')}
-        icon={<AudioLines size={18} />}
         label={t(
           tremolo
             ? 'effect.modulation.tremoloDisabled'

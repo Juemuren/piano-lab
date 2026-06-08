@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Download, Upload } from 'lucide-react';
+import {
+  Download,
+  Upload,
+  Activity,
+  Volume,
+  Layers,
+  ChartSpline,
+  ChartColumnDecreasing,
+  Sparkles,
+  ChartLine,
+} from 'lucide-react';
 import type {
   EffectConfig,
   EnvelopeConfig,
@@ -137,6 +147,7 @@ function SoundSynthesizer() {
 
         <ControlSelect
           label={t('controls.oscillatorType')}
+          icon={<Activity size={16} />}
           value={oscillatorType}
           onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
         >
@@ -147,6 +158,7 @@ function SoundSynthesizer() {
         </ControlSelect>
         <ControlRange
           label={t('controls.volume')}
+          icon={<Volume size={16} />}
           min="0"
           max="1"
           step="0.01"
@@ -156,6 +168,7 @@ function SoundSynthesizer() {
         />
         <ControlRange
           label={t('controls.harmonicCount')}
+          icon={<Layers size={16} />}
           min="2"
           max="20"
           step="1"
@@ -170,6 +183,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.envelope')}
+        icon={<ChartSpline size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
       >
@@ -182,6 +196,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.spectrum')}
+        icon={<ChartColumnDecreasing size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
       >
@@ -195,6 +210,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.effect')}
+        icon={<Sparkles size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
       >
@@ -208,6 +224,7 @@ function SoundSynthesizer() {
 
       <CollapsibleSection
         title={t('sections.analysis')}
+        icon={<ChartLine size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
       >

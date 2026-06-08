@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Waves, ScrollText, SlidersHorizontal } from 'lucide-react';
 import CollapsibleSection from './components/shared/CollapsibleSection';
 import Piano from './components/Piano';
 import SoundSynthesizer from './components/SoundSynthesizer';
@@ -35,7 +36,10 @@ function App() {
             id={SECTION_IDS.soundSynthesizer}
             className="mx-auto w-full scroll-mt-16"
           >
-            <CollapsibleSection title={t('sections.soundSynthesizer')}>
+            <CollapsibleSection
+              title={t('sections.soundSynthesizer')}
+              icon={<Waves size={24} />}
+            >
               <SoundSynthesizer />
             </CollapsibleSection>
           </section>
@@ -43,7 +47,10 @@ function App() {
             id={SECTION_IDS.scoreEditor}
             className="mx-auto w-full scroll-mt-16"
           >
-            <CollapsibleSection title={t('sections.scoreEditor')}>
+            <CollapsibleSection
+              title={t('sections.scoreEditor')}
+              icon={<ScrollText size={24} />}
+            >
               <AbcEditor />
             </CollapsibleSection>
           </section>
@@ -59,6 +66,7 @@ function App() {
         >
           <CollapsibleSection
             title={t('sections.settings')}
+            icon={<SlidersHorizontal size={24} />}
             bgClassName="bg-app-base dark:bg-app-base-dark"
           >
             <SettingsPanel />

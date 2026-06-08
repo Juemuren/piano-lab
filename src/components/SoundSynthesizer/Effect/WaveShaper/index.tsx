@@ -91,13 +91,15 @@ function WaveShaper({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.waveShaper.name')}
+        <span className="inline-flex items-center gap-1">
+          <AudioWaveform size={18} />
+          {t('effect.waveShaper.name')}
+        </span>
       </summary>
 
       <div className="space-y-3">
         <ControlButton
           title={t('effect.waveShaper.enabled')}
-          icon={<AudioWaveform size={18} />}
           label={t(
             waveShaper
               ? 'effect.waveShaper.disabled'

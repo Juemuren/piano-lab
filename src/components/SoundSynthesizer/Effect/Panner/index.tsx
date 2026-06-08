@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Radio } from 'lucide-react';
+import { Radio, Crosshair, Compass, Ruler, Triangle } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
@@ -19,13 +19,23 @@ interface PannerProps {
 
 interface PannerControlGroupProps {
   title: string;
+  icon?: ReactNode;
   children: ReactNode;
 }
 
-function PannerControlGroup({ title, children }: PannerControlGroupProps) {
+function PannerControlGroup({
+  title,
+  icon,
+  children,
+}: PannerControlGroupProps) {
   return (
     <details open className="my-2">
-      <summary className="px-2 pt-2 text-sm font-semibold">{title}</summary>
+      <summary className="px-2 pt-2 text-sm font-semibold">
+        <span className="inline-flex items-center gap-1">
+          {icon}
+          {title}
+        </span>
+      </summary>
       {children}
     </details>
   );
@@ -37,13 +47,15 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.panner.name')}
+        <span className="inline-flex items-center gap-1">
+          <Radio size={18} />
+          {t('effect.panner.name')}
+        </span>
       </summary>
 
       <div className="space-y-3">
         <ControlButton
           title={t('effect.panner.enabled')}
-          icon={<Radio size={18} />}
           label={t(panner ? 'effect.panner.disabled' : 'effect.panner.enabled')}
           onClick={() => onEnabledChange(!panner)}
         />
@@ -90,7 +102,10 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
               </ControlSelect>
             </div>
 
-            <PannerControlGroup title={t('effect.panner.position')}>
+            <PannerControlGroup
+              title={t('effect.panner.position')}
+              icon={<Crosshair size={14} />}
+            >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label="X"
@@ -122,7 +137,10 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
               </div>
             </PannerControlGroup>
 
-            <PannerControlGroup title={t('effect.panner.orientation')}>
+            <PannerControlGroup
+              title={t('effect.panner.orientation')}
+              icon={<Compass size={14} />}
+            >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label="X"
@@ -154,7 +172,10 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
               </div>
             </PannerControlGroup>
 
-            <PannerControlGroup title={t('effect.panner.distance')}>
+            <PannerControlGroup
+              title={t('effect.panner.distance')}
+              icon={<Ruler size={14} />}
+            >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label={t('effect.panner.refDistance')}
@@ -186,7 +207,10 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
               </div>
             </PannerControlGroup>
 
-            <PannerControlGroup title={t('effect.panner.angle')}>
+            <PannerControlGroup
+              title={t('effect.panner.angle')}
+              icon={<Triangle size={14} />}
+            >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
                   label={t('effect.panner.coneInnerAngle')}

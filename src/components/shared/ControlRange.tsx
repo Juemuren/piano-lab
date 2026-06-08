@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 type ControlRangeProps = {
   label: string;
+  icon?: ReactNode;
   value: number;
   min: number | string;
   max: number | string;
@@ -16,6 +17,7 @@ type ControlRangeProps = {
 
 function ControlRange({
   label,
+  icon,
   value,
   min,
   max,
@@ -30,7 +32,8 @@ function ControlRange({
   return (
     <div className="p-2">
       <div className="p-2 flex items-center justify-between text-sm">
-        <span>
+        <span className="inline-flex items-center gap-1">
+          {icon}
           {label} {symbol}
         </span>
         <span className="font-semibold">{displayValue}</span>

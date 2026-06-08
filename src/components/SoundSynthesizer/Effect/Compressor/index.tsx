@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Activity } from 'lucide-react';
+import { Ban } from 'lucide-react';
 import type { CompressorConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -29,13 +29,15 @@ function Compressor({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.compressor.name')}
+        <span className="inline-flex items-center gap-1">
+          <Ban size={18} />
+          {t('effect.compressor.name')}
+        </span>
       </summary>
 
       <div className="space-y-3">
         <ControlButton
           title={t('effect.compressor.enabled')}
-          icon={<Activity size={18} />}
           label={t(
             compressor
               ? 'effect.compressor.disabled'

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Cable } from 'lucide-react';
 import type {
   MidiControlState,
   MidiInputDevice,
@@ -60,6 +61,7 @@ function MidiControlSettings({
     <div className="flex flex-col gap-3">
       <ControlCheckbox
         label={t('settings.midiControl')}
+        icon={<Cable size={16} />}
         checked={isMidiControlEnabled}
         onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
       />

@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AudioLines } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { VibratoConfig } from '../../../../types';
 import { getVibratoCurvePoints } from '../../../../services/synth/effect/Modulation';
@@ -36,7 +35,6 @@ function VibratoEffect({
 
       <ControlButton
         title={t('effect.modulation.vibratoEnabled')}
-        icon={<AudioLines size={18} />}
         label={t(
           vibrato
             ? 'effect.modulation.vibratoDisabled'

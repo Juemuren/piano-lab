@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 type CollapsibleSectionProps = {
   title: string;
   children: ReactNode;
+  icon?: ReactNode;
   expanded?: boolean;
   bgClassName?: string;
   hoverBgClassName?: string;
@@ -12,6 +13,7 @@ type CollapsibleSectionProps = {
 function CollapsibleSection({
   title,
   children,
+  icon,
   expanded = false,
   bgClassName = 'bg-app-surface dark:bg-app-surface-dark',
   hoverBgClassName = 'hover:bg-app-mantle dark:hover:bg-app-mantle-dark',
@@ -36,6 +38,7 @@ function CollapsibleSection({
             text-xl font-semibold
           "
         >
+          {icon}
           {title}
           {isExpanded ? <ChevronDown size={24} /> : <ChevronRight size={24} />}
         </h2>

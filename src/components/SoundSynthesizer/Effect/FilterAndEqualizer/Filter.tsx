@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, FilterIcon } from 'lucide-react';
 import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
 import type { FilterConfig, FilterType } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
@@ -37,7 +37,12 @@ function Filter({
 
   return (
     <details open className="my-2">
-      <summary className="font-bold my-2">{t('effect.filter.name')}</summary>
+      <summary className="font-bold my-2">
+        <span className="inline-flex items-center gap-1">
+          <FilterIcon size={16} />
+          {t('effect.filter.name')}
+        </span>
+      </summary>
 
       <div className="space-y-3">
         {filters.map((filter, index) => (

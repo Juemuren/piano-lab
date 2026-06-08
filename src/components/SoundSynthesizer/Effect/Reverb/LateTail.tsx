@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { Speaker } from 'lucide-react';
 import type { ReverbLateTailConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlRange from '../../../shared/ControlRange';
@@ -24,7 +25,10 @@ function LateTail({
   return (
     <details open className="my-2">
       <summary className="font-bold my-2">
-        {t('effect.reverb.lateTail.name')}
+        <span className="inline-flex items-center gap-1">
+          <Speaker size={16} />
+          {t('effect.reverb.lateTail.name')}
+        </span>
       </summary>
       <BlockMath
         math={String.raw`h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}`}

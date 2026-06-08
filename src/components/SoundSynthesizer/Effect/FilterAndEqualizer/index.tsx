@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Equal } from 'lucide-react';
 import type {
   EqualizerConfig,
   EqualizerType,
@@ -48,7 +49,10 @@ function FilterAndEqualizer({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.filterEqualizer.name')}
+        <span className="inline-flex items-center gap-1">
+          <Equal size={18} />
+          {t('effect.filterEqualizer.name')}
+        </span>
       </summary>
       <Filter
         filters={filters}

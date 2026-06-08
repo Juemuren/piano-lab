@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Info, CircuitBoard, BookOpen } from 'lucide-react';
 import { SECTION_IDS } from '../../constants/sections';
 import FooterLink from './FooterLink';
 import FooterPanel from './FooterPanel';
@@ -24,11 +25,19 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
-          <FooterPanel title={t('about.title')}>{t('about.body')}</FooterPanel>
-          <FooterPanel title={t('synthesis.title')}>
+          <FooterPanel title={t('about.title')} icon={<Info size={16} />}>
+            {t('about.body')}
+          </FooterPanel>
+          <FooterPanel
+            title={t('synthesis.title')}
+            icon={<CircuitBoard size={16} />}
+          >
             {t('synthesis.body')}
           </FooterPanel>
-          <FooterPanel title={t('notation.title')}>
+          <FooterPanel
+            title={t('notation.title')}
+            icon={<BookOpen size={16} />}
+          >
             {t('notation.body')}
           </FooterPanel>
         </div>

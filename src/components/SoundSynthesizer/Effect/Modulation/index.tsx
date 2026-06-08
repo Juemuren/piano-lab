@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { AudioLines } from 'lucide-react';
 import type {
   DelayModulationConfig,
   PhaseModulationConfig,
@@ -52,7 +53,10 @@ function Modulation({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.modulation.name')}
+        <span className="inline-flex items-center gap-1">
+          <AudioLines size={18} />
+          {t('effect.modulation.name')}
+        </span>
       </summary>
 
       <div className="space-y-4">

@@ -1,11 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'lucide-react';
+import {
+  Menu,
+  Waves,
+  ScrollText,
+  Piano,
+  SlidersHorizontal,
+  Info,
+} from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { NAV_ITEMS } from '../../constants/sections';
 
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;
+
+const NAV_ICONS: Record<string, ReactNode> = {
+  'sound-synthesizer': <Waves size={16} />,
+  'score-editor': <ScrollText size={16} />,
+  'piano-keyboard': <Piano size={16} />,
+  settings: <SlidersHorizontal size={16} />,
+  about: <Info size={16} />,
+};
 
 function Header() {
   const { t } = useTranslation('app');
@@ -16,9 +31,10 @@ function Header() {
     <a
       key={id}
       href={`#${id}`}
-      className="px-2 py-1 hover:underline"
+      className="px-2 py-1 hover:underline inline-flex items-center gap-1"
       onClick={() => setIsMenuOpen(false)}
     >
+      {NAV_ICONS[id]}
       {t(labelKey)}
     </a>
   ));
@@ -70,7 +86,7 @@ function Header() {
             className="
               absolute left-0 w-max p-2 flex flex-col
               text-sm text-left
-              bg-app-surface/50 dark:bg-app-surface-dark/50
+              bg-app-surface dark:bg-app-surface-dark
             "
           >
             {navLinks}

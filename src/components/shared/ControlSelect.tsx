@@ -2,13 +2,15 @@ import { useId } from 'react';
 import type { ReactNode, SelectHTMLAttributes } from 'react';
 
 type ControlSelectProps = {
-  label?: ReactNode;
+  label?: string;
+  icon?: ReactNode;
 } & SelectHTMLAttributes<HTMLSelectElement>;
 
 function ControlSelect({
   className = '',
   id,
   label,
+  icon,
   children,
   ...props
 }: ControlSelectProps) {
@@ -17,7 +19,12 @@ function ControlSelect({
 
   return (
     <label className="flex flex-col gap-1 text-center">
-      {label && <span className="p-1 font-bold">{label}</span>}
+      {label && (
+        <span className="p-1 font-bold inline-flex items-center justify-center gap-1">
+          {icon}
+          {label}
+        </span>
+      )}
       <select
         id={selectId}
         className={`

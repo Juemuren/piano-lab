@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, SlidersVertical } from 'lucide-react';
 import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
 import type { EqualizerConfig, EqualizerType } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
@@ -38,7 +38,12 @@ function Equalizer({
 
   return (
     <details open className="my-2">
-      <summary className="font-bold my-2">{t('effect.equalizer.name')}</summary>
+      <summary className="font-bold my-2">
+        <span className="inline-flex items-center gap-1">
+          <SlidersVertical size={16} />
+          {t('effect.equalizer.name')}
+        </span>
+      </summary>
 
       <div className="space-y-3">
         {equalizers.map((equalizer, index) => (

@@ -1,4 +1,4 @@
-import { RotateCcw, X } from 'lucide-react';
+import { RotateCcw, X, Keyboard } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -73,6 +73,7 @@ function KeyboardControlSettings({
     <div className="flex flex-col gap-3">
       <ControlCheckbox
         label={t('settings.keyboardControl')}
+        icon={<Keyboard size={16} />}
         checked={isKeyboardControlEnabled}
         onChange={(e) => setIsKeyboardControlEnabled(e.target.checked)}
       />

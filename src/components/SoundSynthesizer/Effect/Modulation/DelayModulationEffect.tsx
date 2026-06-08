@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AudioLines } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { DelayModulationConfig } from '../../../../types';
 import { getDelayModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
@@ -37,7 +36,6 @@ function DelayModulationEffect({
 
       <ControlButton
         title={t('effect.modulation.delayModulationEnabled')}
-        icon={<AudioLines size={18} />}
         label={t(
           delayModulation
             ? 'effect.modulation.delayModulationDisabled'

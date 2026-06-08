@@ -60,13 +60,15 @@ function Reverb({
   return (
     <details open className="my-2">
       <summary className="text-lg font-bold my-2">
-        {t('effect.reverb.name')}
+        <span className="inline-flex items-center gap-1">
+          <House size={18} />
+          {t('effect.reverb.name')}
+        </span>
       </summary>
 
       <div className="space-y-3">
         <ControlButton
           title={t('effect.reverb.enabled')}
-          icon={<House size={18} />}
           label={t(reverb ? 'effect.reverb.disabled' : 'effect.reverb.enabled')}
           onClick={() => onEnabledChange(!reverb)}
         />
