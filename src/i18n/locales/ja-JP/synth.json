@@ -121,7 +121,15 @@
       "vibrato": "周波数モジュレーション",
       "vibratoEnabled": "周波数モジュレーションを有効にする",
       "vibratoDisabled": "周波数モジュレーションを無効にする",
-      "frequencyCurve": "周波数モジュレーション曲線"
+      "frequencyCurve": "周波数モジュレーション曲線",
+      "phaseModulation": "位相変調",
+      "phaseModulationEnabled": "位相変調を有効にする",
+      "phaseModulationDisabled": "位相変調を無効にする",
+      "phaseCurve": "位相変調曲線",
+      "delayModulation": "遅延変調",
+      "delayModulationEnabled": "遅延変調を有効にする",
+      "delayModulationDisabled": "遅延変調を無効にする",
+      "delayCurve": "遅延変調曲線"
     },
     "waveShaper": {
       "name": "ウェーブシェーピング",

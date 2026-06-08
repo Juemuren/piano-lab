@@ -17,7 +17,11 @@
     "pianoInput": {
       "defaultNoteLength": "デフォルトの音符の長さ",
       "tempo": "テンポ",
-      "quarterNoteSeconds": "1/4 音符の長さ：{{seconds}} 秒"
+      "quarterNoteSeconds": "四分音符の長さ {{seconds}} 秒",
+      "timeSignature": "拍子",
+      "keySignature": "調号",
+      "resetHeader": "デフォルトに戻す",
+      "clearScore": "楽譜をクリア"
     },
     "recording": {
       "format": "エクスポート形式",
@@ -31,7 +35,9 @@
       }
     },
     "keyboard": {
-      "hint": "現在のキー割り当ては鍵盤上に表示されています。x/z キーでオクターブを固定的に上げ下げし、shift/ctrl キーで一時的に上げ下げできます。"
+      "hint": "現在のキー割り当ては鍵盤上に表示されています。x/z キーでオクターブを固定的に上げ下げし、shift/ctrl キーで一時的に上げ下げできます。",
+      "reset": "デフォルトに戻す",
+      "empty": "未設定"
     },
     "midi": {
       "inputDevice": "MIDI 入力デバイス",

@@ -121,7 +121,15 @@
       "vibrato": "Frequency Modulation",
       "vibratoEnabled": "Enable Frequency Modulation",
       "vibratoDisabled": "Disable Frequency Modulation",
-      "frequencyCurve": "Frequency Modulation Curve"
+      "frequencyCurve": "Frequency Modulation Curve",
+      "phaseModulation": "Phase Modulation",
+      "phaseModulationEnabled": "Enable Phase Modulation",
+      "phaseModulationDisabled": "Disable Phase Modulation",
+      "phaseCurve": "Phase Modulation Curve",
+      "delayModulation": "Delay Modulation",
+      "delayModulationEnabled": "Enable Delay Modulation",
+      "delayModulationDisabled": "Disable Delay Modulation",
+      "delayCurve": "Delay Modulation Curve"
     },
     "waveShaper": {
       "name": "Wave Shaping",

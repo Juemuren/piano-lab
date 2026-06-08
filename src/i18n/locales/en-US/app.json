@@ -17,7 +17,11 @@
     "pianoInput": {
       "defaultNoteLength": "Default note length",
       "tempo": "Tempo",
-      "quarterNoteSeconds": "1/4 note duration: {{seconds}}s"
+      "quarterNoteSeconds": "Quarter note duration {{seconds}}s",
+      "timeSignature": "Time Signature",
+      "keySignature": "Key Signature",
+      "resetHeader": "Reset to Default",
+      "clearScore": "Clear Score"
     },
     "recording": {
       "format": "Export format",
@@ -31,7 +35,9 @@
       }
     },
     "keyboard": {
-      "hint": "The current key mapping is shown on the piano keys. Press x/z to permanently shift down/up an octave, and hold shift/ctrl to temporarily shift down/up an octave."
+      "hint": "The current key mapping is shown on the piano keys. Press x/z to permanently shift down/up an octave, and hold shift/ctrl to temporarily shift down/up an octave.",
+      "reset": "Reset to Default",
+      "empty": "Not set"
     },
     "midi": {
       "inputDevice": "MIDI input device",
