@@ -68,12 +68,12 @@ function FilterAndEqualizer({
         onGainChange={onEqualizerGainChange}
       />
       <MagnitudeResponsePreview
-        title={t('charts.magnitudeResponseCurve')}
+        title={t('effect.filterEqualizer.magnitudeResponseCurve')}
         filters={filters}
         equalizers={equalizers}
       />
       <HarmonicResponsePreview
-        title={t('charts.magnitudeResponseSample')}
+        title={t('effect.filterEqualizer.magnitudeResponseSample')}
         harmonicCount={harmonicCount}
         filters={filters}
         equalizers={equalizers}

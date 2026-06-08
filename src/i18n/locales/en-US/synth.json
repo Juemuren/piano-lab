@@ -27,7 +27,8 @@
     "releaseTime": "Release Time",
     "sustainGain": "Sustain Gain",
     "silenceGain": "Silence Gain",
-    "amplitudeEnvelopeFormula": "Amplitude Envelope Formula"
+    "amplitudeEnvelopeFormula": "Amplitude Envelope Formula",
+    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
@@ -49,12 +50,12 @@
     }
   },
   "effect": {
-    "preview": {
-      "pitch": "Pitch",
-      "baseFrequency": "Base Frequency"
-    },
     "filterEqualizer": {
-      "name": "Filter & Equalizer"
+      "name": "Filter & Equalizer",
+      "pitch": "Pitch",
+      "baseFrequency": "Base Frequency",
+      "magnitudeResponseCurve": "Magnitude Response Curve",
+      "magnitudeResponseSample": "Magnitude Response Sample"
     },
     "filter": {
       "name": "Filter",
@@ -108,6 +109,19 @@
       "attack": "Attack Time",
       "release": "Release Time",
       "reduction": "Real-time Gain Reduction"
+    },
+    "modulation": {
+      "name": "Modulation",
+      "frequency": "Modulation Frequency",
+      "depth": "Modulation Depth",
+      "tremolo": "Amplitude Modulation",
+      "tremoloEnabled": "Enable Amplitude Modulation",
+      "tremoloDisabled": "Disable Amplitude Modulation",
+      "amplitudeCurve": "Amplitude Modulation Curve",
+      "vibrato": "Frequency Modulation",
+      "vibratoEnabled": "Enable Frequency Modulation",
+      "vibratoDisabled": "Disable Frequency Modulation",
+      "frequencyCurve": "Frequency Modulation Curve"
     },
     "waveShaper": {
       "name": "Wave Shaping",
@@ -182,7 +196,8 @@
         "name": "Early Reflection",
         "item": "Reflection {{index}}",
         "delay": "Delay",
-        "amplitude": "Amplitude"
+        "amplitude": "Amplitude",
+        "phase": "Phase"
       },
       "lateTail": {
         "name": "Late Tail",
@@ -197,11 +212,5 @@
   },
   "config": {
     "importError": "Could not import config. Please check the JSON file format."
-  },
-  "charts": {
-    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",
-    "magnitudeResponseCurve": "Magnitude Response Curve",
-    "magnitudeResponseSample": "Magnitude Response Sample",
-    "phaseResponseCurve": "Phase Response Curve"
   }
 }

@@ -27,7 +27,8 @@
     "releaseTime": "释音时间",
     "sustainGain": "稳音增益",
     "silenceGain": "静音增益",
-    "amplitudeEnvelopeFormula": "振幅包络公式"
+    "amplitudeEnvelopeFormula": "振幅包络公式",
+    "amplitudeEnvelopeCurve": "振幅包络曲线"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "谐波频谱公式",
@@ -49,12 +50,12 @@
     }
   },
   "effect": {
-    "preview": {
-      "pitch": "音高",
-      "baseFrequency": "基频"
-    },
     "filterEqualizer": {
-      "name": "滤波与均衡"
+      "name": "滤波与均衡",
+      "pitch": "音高",
+      "baseFrequency": "基频",
+      "magnitudeResponseCurve": "幅频特性曲线",
+      "magnitudeResponseSample": "幅频特性采样"
     },
     "filter": {
       "name": "滤波器",
@@ -111,15 +112,15 @@
     },
     "modulation": {
       "name": "调制",
+      "frequency": "调制频率",
+      "depth": "调制深度",
       "tremolo": "振幅调制",
       "tremoloEnabled": "启用振幅调制",
       "tremoloDisabled": "禁用振幅调制",
+      "amplitudeCurve": "振幅调制曲线",
       "vibrato": "频率调制",
       "vibratoEnabled": "启用频率调制",
       "vibratoDisabled": "禁用频率调制",
-      "frequency": "调制频率",
-      "depth": "调制深度",
-      "amplitudeCurve": "振幅调制曲线",
       "frequencyCurve": "频率调制曲线"
     },
     "waveShaper": {
@@ -211,11 +212,5 @@
   },
   "config": {
     "importError": "无法导入配置，请检查 JSON 文件格式。"
-  },
-  "charts": {
-    "amplitudeEnvelopeCurve": "振幅包络曲线",
-    "magnitudeResponseCurve": "幅频特性曲线",
-    "magnitudeResponseSample": "幅频特性采样",
-    "phaseResponseCurve": "相频特性曲线"
   }
 }

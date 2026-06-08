@@ -27,7 +27,8 @@
     "releaseTime": "リリース時間",
     "sustainGain": "サステインゲイン",
     "silenceGain": "無音ゲイン",
-    "amplitudeEnvelopeFormula": "振幅エンベロープ式"
+    "amplitudeEnvelopeFormula": "振幅エンベロープ式",
+    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線"
   },
   "spectrum": {
     "harmonicSpectrumFormula": "倍音スペクトル式",
@@ -49,12 +50,12 @@
     }
   },
   "effect": {
-    "preview": {
-      "pitch": "音高",
-      "baseFrequency": "基準周波数"
-    },
     "filterEqualizer": {
-      "name": "フィルターとイコライザー"
+      "name": "フィルターとイコライザー",
+      "pitch": "音高",
+      "baseFrequency": "基準周波数",
+      "magnitudeResponseCurve": "振幅周波数応答曲線",
+      "magnitudeResponseSample": "振幅周波数応答サンプル"
     },
     "filter": {
       "name": "フィルター",
@@ -108,6 +109,19 @@
       "attack": "アタック時間",
       "release": "リリース時間",
       "reduction": "リアルタイムゲインリダクション"
+    },
+    "modulation": {
+      "name": "モジュレーション",
+      "frequency": "モジュレーション周波数",
+      "depth": "モジュレーション深度",
+      "tremolo": "振幅モジュレーション",
+      "tremoloEnabled": "振幅モジュレーションを有効にする",
+      "tremoloDisabled": "振幅モジュレーションを無効にする",
+      "amplitudeCurve": "振幅モジュレーション曲線",
+      "vibrato": "周波数モジュレーション",
+      "vibratoEnabled": "周波数モジュレーションを有効にする",
+      "vibratoDisabled": "周波数モジュレーションを無効にする",
+      "frequencyCurve": "周波数モジュレーション曲線"
     },
     "waveShaper": {
       "name": "ウェーブシェーピング",
@@ -182,7 +196,8 @@
         "name": "初期反射",
         "item": "反射 {{index}}",
         "delay": "遅延",
-        "amplitude": "振幅"
+        "amplitude": "振幅",
+        "phase": "位相"
       },
       "lateTail": {
         "name": "後期残響",
@@ -197,11 +212,5 @@
   },
   "config": {
     "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
-  },
-  "charts": {
-    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",
-    "magnitudeResponseCurve": "振幅周波数応答曲線",
-    "magnitudeResponseSample": "振幅周波数応答サンプル",
-    "phaseResponseCurve": "位相周波数応答曲線"
   }
 }

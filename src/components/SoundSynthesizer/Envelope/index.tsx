@@ -49,7 +49,7 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
       />
       <EnvelopeFormulaPreview title={t('envelope.amplitudeEnvelopeFormula')} />
       <EnvelopeCurvePreview
-        title={t('charts.amplitudeEnvelopeCurve')}
+        title={t('envelope.amplitudeEnvelopeCurve')}
         envelopeCurve={envelopeCurve}
       />
     </>

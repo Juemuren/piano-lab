@@ -63,8 +63,8 @@ function HarmonicResponsePreview({
     <details open className="my-2">
       <summary className="font-bold my-2">{title}</summary>
       <BaseFrequencyControl
-        labelRange={t('effect.preview.baseFrequency')}
-        labelSelect={t('effect.preview.pitch')}
+        labelRange={t('effect.filterEqualizer.baseFrequency')}
+        labelSelect={t('effect.filterEqualizer.pitch')}
         value={baseFrequency}
         selectedPitch={selectedPitch}
         pitchOptions={baseFrequencyPitchOptions}
