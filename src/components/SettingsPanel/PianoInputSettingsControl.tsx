@@ -1,6 +1,8 @@
+import { Eraser, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 import { getQuarterNoteSeconds } from '../../services/abc/AbcInput';
+import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
@@ -30,6 +32,8 @@ type PianoInputSettingsControlProps = {
   setIsPianoInputEnabled: (enabled: boolean) => void;
   pianoInputSettings: PianoInputSettings;
   onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
+  onPianoInputSettingsReset: () => void;
+  onScoreBodyClear: () => void;
 };
 
 function PianoInputSettingsControl({
@@ -37,6 +41,8 @@ function PianoInputSettingsControl({
   setIsPianoInputEnabled,
   pianoInputSettings,
   onPianoInputSettingsChange,
+  onPianoInputSettingsReset,
+  onScoreBodyClear,
 }: PianoInputSettingsControlProps) {
   const { t } = useTranslation('app');
   const quarterNoteSeconds = getQuarterNoteSeconds(
@@ -115,6 +121,18 @@ function PianoInputSettingsControl({
               seconds: quarterNoteSeconds,
             })}
           />
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-3">
+            <ControlButton
+              label={t('settings.pianoInput.resetHeader')}
+              icon={<RotateCcw size={18} />}
+              onClick={onPianoInputSettingsReset}
+            />
+            <ControlButton
+              label={t('settings.pianoInput.clearScore')}
+              icon={<Eraser size={18} />}
+              onClick={onScoreBodyClear}
+            />
+          </div>
         </div>
       )}
     </div>

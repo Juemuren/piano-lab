@@ -11,7 +11,8 @@ import ControlPanel from '../shared/ControlPanel';
 function SettingsPanel() {
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
     useMidiControlContext();
-  const handlePianoInputSettingsChange = usePianoInputSettings();
+  const { updatePianoInputSettings, resetPianoInputSettings, clearScoreBody } =
+    usePianoInputSettings();
   const {
     isPianoInputEnabled,
     setIsPianoInputEnabled,
@@ -53,7 +54,9 @@ function SettingsPanel() {
         isPianoInputEnabled={isPianoInputEnabled}
         setIsPianoInputEnabled={setIsPianoInputEnabled}
         pianoInputSettings={pianoInputSettings}
-        onPianoInputSettingsChange={handlePianoInputSettingsChange}
+        onPianoInputSettingsChange={updatePianoInputSettings}
+        onPianoInputSettingsReset={resetPianoInputSettings}
+        onScoreBodyClear={clearScoreBody}
       />
       <SynthRecorderSettings />
     </ControlPanel>

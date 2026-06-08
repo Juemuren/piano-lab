@@ -96,6 +96,13 @@ export function updateAbcHeader(
   }, content);
 }
 
+export function clearAbcBody(content: string) {
+  return content
+    .split(/\r?\n/)
+    .filter((line) => isHeaderLine(line))
+    .join('\n');
+}
+
 function getAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
   const lines = content.split(/\r?\n/);
   const headerLine = lines.find((line) => line.trim().startsWith(`${key}:`));

@@ -19,7 +19,9 @@
       "timeSignature": "节拍",
       "keySignature": "调号",
       "tempo": "速度",
-      "quarterNoteSeconds": "1/4 音符时长：{{seconds}} 秒"
+      "quarterNoteSeconds": "四分之一音符时长 {{seconds}} 秒",
+      "resetHeader": "恢复默认",
+      "clearScore": "清空乐谱"
     },
     "recording": {
       "format": "导出格式",
