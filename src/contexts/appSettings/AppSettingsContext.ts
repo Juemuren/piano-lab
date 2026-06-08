@@ -1,4 +1,8 @@
 import { createContext } from 'react';
+import {
+  DEFAULT_KEYBOARD_NOTE_MAPPINGS,
+  type KeyboardNoteMapping,
+} from '../../constants/keyboard';
 
 export interface PianoInputSettings {
   defaultNoteLength: string;
@@ -10,6 +14,8 @@ export const DEFAULT_PIANO_INPUT_SETTINGS: PianoInputSettings = {
   tempo: 180,
 };
 
+export const DEFAULT_KEYBOARD_CONTROL_SETTINGS = DEFAULT_KEYBOARD_NOTE_MAPPINGS;
+
 export interface AppSettingsContextValue {
   isPianoInputEnabled: boolean;
   setIsPianoInputEnabled: (enabled: boolean) => void;
@@ -17,6 +23,8 @@ export interface AppSettingsContextValue {
   setPianoInputSettings: (settings: PianoInputSettings) => void;
   isKeyboardControlEnabled: boolean;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
+  keyboardNoteMappings: KeyboardNoteMapping[];
+  setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
   isMouseControlEnabled: boolean;
   setIsMouseControlEnabled: (enabled: boolean) => void;
   isTouchControlEnabled: boolean;

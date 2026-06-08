@@ -18,6 +18,8 @@ function SettingsPanel() {
     pianoInputSettings,
     isKeyboardControlEnabled,
     setIsKeyboardControlEnabled,
+    keyboardNoteMappings,
+    setKeyboardNoteMappings,
     isMouseControlEnabled,
     setIsMouseControlEnabled,
     isTouchControlEnabled,
@@ -37,6 +39,8 @@ function SettingsPanel() {
       <KeyboardControlSettings
         isKeyboardControlEnabled={isKeyboardControlEnabled}
         setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
+        keyboardNoteMappings={keyboardNoteMappings}
+        setKeyboardNoteMappings={setKeyboardNoteMappings}
       />
       <MidiControlSettings
         isMidiControlEnabled={isMidiControlEnabled}

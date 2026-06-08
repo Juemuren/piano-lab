@@ -31,7 +31,11 @@
       }
     },
     "keyboard": {
-      "hint": "当前的键位映射已显示在琴键上。按 x/z 可以永久升/降八度，按 shift/ctrl 可以临时升/降八度。"
+      "hint": "当前的键位映射已显示在琴键上。按 x/z 可以永久升/降八度，按 shift/ctrl 可以临时升/降八度。",
+      "mapping": "键位映射",
+      "reset": "恢复默认键位",
+      "clear": "清空键位",
+      "empty": "未设置"
     },
     "midi": {
       "inputDevice": "MIDI 输入设备",

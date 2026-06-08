@@ -1,45 +1,35 @@
 import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  KEYBOARD_OCTAVE_DOWN_KEY,
+  KEYBOARD_OCTAVE_UP_KEY,
+  type KeyboardNoteMapping,
+} from '../../constants/keyboard';
+import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';
 
 const DEFAULT_KEYBOARD_OCTAVE = 4;
 const MIN_KEYBOARD_OCTAVE = 1;
 const MAX_KEYBOARD_OCTAVE = 7;
 
-const KEYBOARD_OCTAVE_DOWN_KEY = 'z';
-const KEYBOARD_OCTAVE_UP_KEY = 'x';
-const KEYBOARD_NOTE_MAP: ReadonlyMap<
-  string,
-  { label: string; offset: number }
-> = new Map([
-  ['a', { label: 'A', offset: 0 }],
-  ['w', { label: 'W', offset: 1 }],
-  ['s', { label: 'S', offset: 2 }],
-  ['e', { label: 'E', offset: 3 }],
-  ['d', { label: 'D', offset: 4 }],
-  ['f', { label: 'F', offset: 5 }],
-  ['t', { label: 'T', offset: 6 }],
-  ['g', { label: 'G', offset: 7 }],
-  ['y', { label: 'Y', offset: 8 }],
-  ['h', { label: 'H', offset: 9 }],
-  ['u', { label: 'U', offset: 10 }],
-  ['j', { label: 'J', offset: 11 }],
-  ['k', { label: 'K', offset: 12 }],
-]);
-
 interface UseKeyboardPianoControlOptions {
   enabled: boolean;
+  keyboardNoteMappings: KeyboardNoteMapping[];
   activeNotesRef: RefObject<Map<string, number>>;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
 }
 
-function getKeyboardNote(key: string, octave: number) {
-  const keyboardNote = KEYBOARD_NOTE_MAP.get(key);
-  if (!keyboardNote) {
+function getKeyboardNote(
+  key: string,
+  octave: number,
+  keyboardNoteMap: ReadonlyMap<string, number>,
+) {
+  const offset = keyboardNoteMap.get(key);
+  if (offset === undefined) {
     return null;
   }
 
-  return getBasePitchByOctave(octave) + keyboardNote.offset;
+  return getBasePitchByOctave(octave) + offset;
 }
 
 function clampKeyboardOctave(octave: number) {
@@ -64,6 +54,7 @@ function isEditableTarget(target: EventTarget | null) {
 
 function useKeyboardControl({
   enabled,
+  keyboardNoteMappings,
   activeNotesRef,
   onNotePress,
   onNoteRelease,
@@ -74,6 +65,14 @@ function useKeyboardControl({
   useEffect(() => {
     keyboardOctaveRef.current = keyboardOctave;
   }, [keyboardOctave]);
+
+  const keyboardNoteMap = useMemo(() => {
+    return new Map(
+      keyboardNoteMappings
+        .filter((mapping) => mapping.key)
+        .map((mapping) => [mapping.key, mapping.offset]),
+    );
+  }, [keyboardNoteMappings]);
 
   useEffect(() => {
     if (!enabled) {
@@ -109,6 +108,7 @@ function useKeyboardControl({
       const note = getKeyboardNote(
         key,
         getKeyboardOctaveWithModifier(keyboardOctaveRef.current, e),
+        keyboardNoteMap,
       );
       if (note === null) {
         return;
@@ -142,7 +142,7 @@ function useKeyboardControl({
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [activeNotesRef, enabled, onNotePress, onNoteRelease]);
+  }, [activeNotesRef, enabled, keyboardNoteMap, onNotePress, onNoteRelease]);
 
   const keyHints = useMemo(() => {
     const hints = new Map<number, string>();
@@ -153,12 +153,14 @@ function useKeyboardControl({
 
     const basePitch = getBasePitchByOctave(keyboardOctave);
 
-    for (const { label, offset } of KEYBOARD_NOTE_MAP.values()) {
-      hints.set(basePitch + offset, label);
+    for (const { key, offset } of keyboardNoteMappings) {
+      if (key) {
+        hints.set(basePitch + offset, getKeyboardControlKeyLabel(key));
+      }
     }
 
     return hints;
-  }, [enabled, keyboardOctave]);
+  }, [enabled, keyboardNoteMappings, keyboardOctave]);
 
   return { keyHints };
 }

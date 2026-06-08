@@ -117,6 +117,7 @@ function usePianoControl(
     isPianoInputEnabled,
     pianoInputSettings,
     isKeyboardControlEnabled,
+    keyboardNoteMappings,
     isMouseControlEnabled,
     isTouchControlEnabled,
     isMidiControlEnabled,
@@ -192,6 +193,7 @@ function usePianoControl(
 
   const { keyHints } = useKeyboardControl({
     enabled: isKeyboardControlEnabled,
+    keyboardNoteMappings,
     activeNotesRef: activeKeyboardNotesRef,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
