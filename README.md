@@ -246,15 +246,19 @@ $$
 (f * g)[n] = \sum_{k=-\infty}^{\infty} f[k] g[n - k]
 $$
 
-脉冲响应采用分离早期反射和晚期尾音的方案，二者叠加后得到总的脉冲响应
+混响采用分离早期反射和晚期尾音的方案。总的脉冲响应为
+
+$$h[n]=\delta[n]+h_e[n]+h_l[n]$$
+
+其中 $\delta[n]$ 为单位脉冲，表示干声的脉冲响应
 
 **早期反射**模拟声音在空间中经少量反射后到达人耳的短延时回声，使用一组不同延时和增益的离散脉冲表示。可以写为
 
 $$
-h_e[n]=\sum_i a_i\delta[n-d_if_s]
+h_e[n]=\sum_i a_i\cos(\phi_i)\delta[n-d_if_s]
 $$
 
-其中 $a_i$ 为反射的振幅，$d_i$ 为反射的延时。
+其中 $a_i$ 为反射的振幅，$d_i$ 为反射的延时，$\phi_i$ 为反射的相位。
 
 而 $f_s$ 是采样率，其值由 [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) 根据当前的音频输出设备自动选择，通常是 44100 Hz 或 48000 Hz。
 
