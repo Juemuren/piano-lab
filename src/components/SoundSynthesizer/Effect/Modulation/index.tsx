@@ -1,10 +1,16 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, AudioWaveform } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { TremoloConfig, VibratoConfig } from '../../../../types';
+import {
+  getTremoloCurvePoints,
+  getVibratoCurvePoints,
+} from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
+import ModulationCurvePreview from './ModulationCurvePreview';
 
 interface ModulationProps {
   tremolo: TremoloConfig | null;
@@ -28,6 +34,14 @@ function Modulation({
   onVibratoDepthChange,
 }: ModulationProps) {
   const { t } = useTranslation('synth');
+  const tremoloCurve = useMemo(
+    () => (tremolo ? getTremoloCurvePoints(tremolo) : null),
+    [tremolo],
+  );
+  const vibratoCurve = useMemo(
+    () => (vibrato ? getVibratoCurvePoints(vibrato) : null),
+    [vibrato],
+  );
 
   return (
     <details open className="my-2">
@@ -52,7 +66,7 @@ function Modulation({
           {tremolo && (
             <div className="space-y-2">
               <BlockMath
-                math={String.raw`g_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]g_x(t)`}
+                math={String.raw`A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)`}
               />
               <ControlRange
                 label={t('effect.modulation.frequency')}
@@ -74,6 +88,13 @@ function Modulation({
                 displayValue={`${(tremolo.depth * 100).toFixed(0)}%`}
                 onChange={onTremoloDepthChange}
               />
+              {tremoloCurve && (
+                <ModulationCurvePreview
+                  title={t('effect.modulation.amplitudeCurve')}
+                  time={tremoloCurve.time}
+                  values={tremoloCurve.gainRatio}
+                />
+              )}
             </div>
           )}
         </section>
@@ -117,6 +138,13 @@ function Modulation({
                 displayValue={`${vibrato.depth.toFixed(0)} ¢`}
                 onChange={onVibratoDepthChange}
               />
+              {vibratoCurve && (
+                <ModulationCurvePreview
+                  title={t('effect.modulation.frequencyCurve')}
+                  time={vibratoCurve.time}
+                  values={vibratoCurve.frequencyRatio}
+                />
+              )}
             </div>
           )}
         </section>

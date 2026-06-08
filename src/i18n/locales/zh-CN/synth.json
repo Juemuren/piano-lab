@@ -118,7 +118,9 @@
       "vibratoEnabled": "启用频率调制",
       "vibratoDisabled": "禁用频率调制",
       "frequency": "调制频率",
-      "depth": "调制深度"
+      "depth": "调制深度",
+      "amplitudeCurve": "振幅调制曲线",
+      "frequencyCurve": "频率调制曲线"
     },
     "waveShaper": {
       "name": "波形重塑",

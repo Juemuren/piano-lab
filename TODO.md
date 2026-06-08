@@ -24,7 +24,7 @@
 
 - 增加调制效果。用一个低频振荡器让被调制的量周期性变化
   - [x] 振幅调制（Tremolo）
-        公式 $g_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]g_x(t)$
+        公式 $A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)$
         参数
     - d 调制深度
     - f_m 调制频率
