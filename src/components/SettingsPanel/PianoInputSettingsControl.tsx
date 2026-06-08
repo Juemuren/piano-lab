@@ -61,29 +61,31 @@ function PianoInputSettingsControl({
         onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
       />
       {isPianoInputEnabled && (
-        <div className="text-sm text-app-overlay dark:text-app-overlay-dark">
-          <ControlSelect
-            label={t('settings.pianoInput.defaultNoteLength')}
-            value={pianoInputSettings.defaultNoteLength}
-            onChange={(e) =>
-              onPianoInputSettingsChange({
-                defaultNoteLength: e.target.value,
-              })
-            }
-          >
-            {defaultLengthOptions}
-          </ControlSelect>
-          <ControlSelect
-            label={t('settings.pianoInput.keySignature')}
-            value={pianoInputSettings.keySignature}
-            onChange={(e) =>
-              onPianoInputSettingsChange({
-                keySignature: e.target.value,
-              })
-            }
-          >
-            {keySignatureOptions}
-          </ControlSelect>
+        <div className="text-sm text-app-subtext dark:text-app-subtext-dark">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-3">
+            <ControlSelect
+              label={t('settings.pianoInput.defaultNoteLength')}
+              value={pianoInputSettings.defaultNoteLength}
+              onChange={(e) =>
+                onPianoInputSettingsChange({
+                  defaultNoteLength: e.target.value,
+                })
+              }
+            >
+              {defaultLengthOptions}
+            </ControlSelect>
+            <ControlSelect
+              label={t('settings.pianoInput.keySignature')}
+              value={pianoInputSettings.keySignature}
+              onChange={(e) =>
+                onPianoInputSettingsChange({
+                  keySignature: e.target.value,
+                })
+              }
+            >
+              {keySignatureOptions}
+            </ControlSelect>
+          </div>
           <ControlRange
             label={t('settings.pianoInput.tempo')}
             min={40}
