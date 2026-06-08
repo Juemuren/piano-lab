@@ -11,6 +11,7 @@ import {
   type ReleasingVoice,
 } from './BasicVoice';
 import { EffectChain } from './EffectChain';
+import { getVoiceGainAtTime } from './VoicePlanner';
 
 interface SynthRecordingTarget {
   stream: MediaStream;
@@ -218,7 +219,7 @@ export class SynthEngine {
       voices.map((voice) => {
         const releaseStart = Math.max(now, voice.startTime);
         const currentGain = Math.max(
-          voice.gainNode.gain.value,
+          getVoiceGainAtTime(voice, releaseStart),
           voice.silenceGain,
         );
         voice.gainNode.gain.cancelScheduledValues(now);

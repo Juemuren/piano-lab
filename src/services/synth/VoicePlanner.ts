@@ -12,6 +12,15 @@ export interface VoiceStartPlan {
   silenceGain: number;
 }
 
+export interface VoiceEnvelopeState {
+  startTime: number;
+  attackEnd: number;
+  decayEnd: number;
+  attackGain: number;
+  decayGain: number;
+  silenceGain: number;
+}
+
 export interface VoiceStopPlan {
   stopTime: number;
 }
@@ -115,4 +124,48 @@ export function createVoiceStopPlans({
       stopTime,
     };
   });
+}
+
+function getExponentialRampValue(
+  startValue: number,
+  endValue: number,
+  startTime: number,
+  endTime: number,
+  time: number,
+) {
+  if (endTime <= startTime) return endValue;
+
+  const progress = Math.min(
+    Math.max((time - startTime) / (endTime - startTime), 0),
+    1,
+  );
+  return startValue * Math.pow(endValue / startValue, progress);
+}
+
+export function getVoiceGainAtTime(voice: VoiceEnvelopeState, time: number) {
+  if (time <= voice.startTime) {
+    return voice.silenceGain;
+  }
+
+  if (time < voice.attackEnd) {
+    return getExponentialRampValue(
+      voice.silenceGain,
+      voice.attackGain,
+      voice.startTime,
+      voice.attackEnd,
+      time,
+    );
+  }
+
+  if (time < voice.decayEnd) {
+    return getExponentialRampValue(
+      voice.attackGain,
+      voice.decayGain,
+      voice.attackEnd,
+      voice.decayEnd,
+      time,
+    );
+  }
+
+  return voice.decayGain;
 }

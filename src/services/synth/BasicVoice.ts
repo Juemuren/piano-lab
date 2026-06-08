@@ -18,21 +18,22 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
-import { createVoiceStopPlans, createVoiceStartPlans } from './VoicePlanner';
+import {
+  createVoiceStopPlans,
+  createVoiceStartPlans,
+  type VoiceEnvelopeState,
+} from './VoicePlanner';
 import { createSpectrum } from './Spectrum';
 
 const MIN_GAIN_VALUE = 1e-10;
 
-export interface ActiveVoice {
+export interface ActiveVoice extends VoiceEnvelopeState {
   oscillatorNode: OscillatorNode;
   gainNode: GainNode;
   vibratoOscillatorNode?: OscillatorNode;
   vibratoDepthGainNode?: GainNode;
   harmonic: number;
-  startTime: number;
-  decayEnd: number;
   sustainGain: number;
-  silenceGain: number;
 }
 
 export interface ReleasingVoice {
@@ -193,7 +194,10 @@ export class BasicVoice {
         vibratoDepthGainNode: vibratoNodes?.vibratoDepthGainNode,
         harmonic: plan.harmonic,
         startTime: plan.startTime,
+        attackEnd: plan.attackEnd,
         decayEnd: plan.decayEnd,
+        attackGain: plan.attackGain,
+        decayGain: plan.decayGain,
         sustainGain: plan.sustainGain,
         silenceGain: plan.silenceGain,
       });

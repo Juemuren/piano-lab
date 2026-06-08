@@ -11,7 +11,7 @@
 - [ ] 点击音符调整进度时，有时不会正确匹配，未匹配的音符变成红色。目前禁用了颜色变化，但不匹配的问题未能修复
 - [ ] Chrome 对 [useMidiControl](src/hooks/piano/useMidiControl.ts) 中的 `navigator.requestMIDIAccess()` 调用发出警告。官方说明为 <https://chromestatus.com/feature/5138066234671104> 。这个问题好像无法修复，只要调用就会有警告
 - [ ] 使用 [AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet) 处理音频以降低延时
-- [ ] 快速按下不同的琴键，有时会发出类似弦断了的声音。暂时还没找到问题在哪里
+- [x] 快速按下不同的琴键，有时会发出类似弦断了的声音。此时根据频域分析的结果，声音的频谱非常密集，几乎铺满而没有空隙。问题大概出在 [SynthEngine](src/services/synth/SynthEngine.ts) 的 `stopNote()` 函数中。GainNode 的 gain.value 并不可靠，快速松键时可能把正在 attack/decay 的声音瞬间跳到错误电平，再进入 release，从而产生宽频瞬态
 
 ## Style
 
