@@ -50,8 +50,11 @@ function Modulation({
       </summary>
 
       <div className="space-y-4">
-        <section className="space-y-2">
-          <h3 className="font-semibold">{t('effect.modulation.tremolo')}</h3>
+        <details open className="space-y-2">
+          <summary className="font-semibold">
+            {t('effect.modulation.tremolo')}
+          </summary>
+
           <ControlButton
             title={t('effect.modulation.tremoloEnabled')}
             icon={<AudioLines size={18} />}
@@ -97,10 +100,12 @@ function Modulation({
               )}
             </div>
           )}
-        </section>
+        </details>
 
-        <section className="space-y-2">
-          <h3 className="font-semibold">{t('effect.modulation.vibrato')}</h3>
+        <details open className="space-y-2">
+          <summary className="font-semibold">
+            {t('effect.modulation.vibrato')}
+          </summary>
 
           <ControlButton
             title={t('effect.modulation.vibratoEnabled')}
@@ -147,7 +152,7 @@ function Modulation({
               )}
             </div>
           )}
-        </section>
+        </details>
       </div>
     </details>
   );
