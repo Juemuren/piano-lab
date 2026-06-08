@@ -87,7 +87,7 @@ function KeyboardControlSettings({
               <label
                 key={offset}
                 className="
-                    grid grid-cols-[1rem_1fr_2rem] items-center gap-2 p-2
+                    grid grid-cols-[1rem_1fr_2rem] items-center gap-2 py-1 px-3
                     rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
                   "
               >
@@ -96,7 +96,7 @@ function KeyboardControlSettings({
                 </span>
                 <input
                   className="
-                      min-w-0 text-center p-2
+                      min-w-0 text-center p-1
                       rounded-xl bg-app-mantle dark:bg-app-mantle-dark
                       border border-app-border dark:border-app-border-dark
                     "
@@ -114,7 +114,7 @@ function KeyboardControlSettings({
             ))}
             <ControlButton
               label={t('settings.keyboard.reset')}
-              icon={<RotateCcw size={24} />}
+              icon={<RotateCcw size={20} />}
               onClick={() =>
                 setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS)
               }
