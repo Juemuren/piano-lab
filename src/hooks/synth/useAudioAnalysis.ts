@@ -3,6 +3,7 @@ import { useSynthEngine } from '../../contexts/synthEngine';
 
 const CANVAS_HEIGHT = 140;
 const FREQUENCY_BAR_GAP = 1;
+const FREQUENCY_MIN_BAR_WIDTH = 1;
 
 function getCssColor(name: string, fallback: string) {
   const value = getComputedStyle(document.documentElement)
@@ -57,17 +58,33 @@ function drawFrequency(
   const { width, height } = canvas;
   const accentColor = getCssColor('--color-app-info', '#005ef4');
   const tipColor = getCssColor('--color-app-tip', '#10834a');
-  const barWidth = Math.max(width / data.length - FREQUENCY_BAR_GAP, 1);
+  const maxBarCount = Math.floor(
+    width / (FREQUENCY_MIN_BAR_WIDTH + FREQUENCY_BAR_GAP),
+  );
+  const barCount = Math.max(Math.min(data.length, maxBarCount), 1);
+  const barWidth =
+    (width - FREQUENCY_BAR_GAP * Math.max(barCount - 1, 0)) / barCount;
 
   analyserNode.getByteFrequencyData(data);
   drawBackground(context, width, height);
 
-  for (let index = 0; index < data.length; index += 1) {
-    const magnitude = data[index] / 255;
-    const barHeight = magnitude * height;
-    const hueMix = index / data.length;
+  for (let index = 0; index < barCount; index += 1) {
+    const start = Math.floor((index / barCount) * data.length);
+    const end = Math.max(
+      Math.floor(((index + 1) / barCount) * data.length),
+      start + 1,
+    );
+    let peak = 0;
 
-    context.fillStyle = hueMix > 0.55 ? tipColor : accentColor;
+    for (let dataIndex = start; dataIndex < end; dataIndex += 1) {
+      peak = Math.max(peak, data[dataIndex]);
+    }
+
+    const magnitude = peak / 255;
+    const barHeight = magnitude * height;
+    const hueMix = index / barCount;
+
+    context.fillStyle = hueMix > 0.5 ? tipColor : accentColor;
     context.fillRect(
       index * (barWidth + FREQUENCY_BAR_GAP),
       height - barHeight,
