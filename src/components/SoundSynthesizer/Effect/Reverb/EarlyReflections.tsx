@@ -48,36 +48,38 @@ function EarlyReflections({
                 })}
               </div>
             </div>
-            <ControlRange
-              label={t('effect.reverb.earlyReflection.delay')}
-              symbol={<InlineMath math="d_i" />}
-              min="0"
-              max="0.5"
-              step="0.001"
-              value={reflection.delay}
-              displayValue={`${(reflection.delay * 1000).toFixed(0)} ms`}
-              onChange={(value) => onDelayChange(index, value)}
-            />
-            <ControlRange
-              label={t('effect.reverb.earlyReflection.amplitude')}
-              symbol={<InlineMath math="a_i" />}
-              min="0"
-              max="1"
-              step="0.01"
-              value={reflection.gain}
-              displayValue={reflection.gain.toFixed(2)}
-              onChange={(value) => onGainChange(index, value)}
-            />
-            <ControlRange
-              label={t('effect.reverb.earlyReflection.phase')}
-              symbol={<InlineMath math="\phi_i" />}
-              min="0"
-              max="180"
-              step="1"
-              value={reflection.phase}
-              displayValue={`${reflection.phase.toFixed(0)}°`}
-              onChange={(value) => onPhaseChange(index, value)}
-            />
+            <div className="grid sm:grid-cols-3">
+              <ControlRange
+                label={t('effect.reverb.earlyReflection.delay')}
+                symbol={<InlineMath math="d_i" />}
+                min="0"
+                max="0.5"
+                step="0.001"
+                value={reflection.delay}
+                displayValue={`${(reflection.delay * 1000).toFixed(0)} ms`}
+                onChange={(value) => onDelayChange(index, value)}
+              />
+              <ControlRange
+                label={t('effect.reverb.earlyReflection.amplitude')}
+                symbol={<InlineMath math="a_i" />}
+                min="0"
+                max="1"
+                step="0.01"
+                value={reflection.gain}
+                displayValue={reflection.gain.toFixed(2)}
+                onChange={(value) => onGainChange(index, value)}
+              />
+              <ControlRange
+                label={t('effect.reverb.earlyReflection.phase')}
+                symbol={<InlineMath math="\phi_i" />}
+                min="0"
+                max="180"
+                step="1"
+                value={reflection.phase}
+                displayValue={`${reflection.phase.toFixed(0)}°`}
+                onChange={(value) => onPhaseChange(index, value)}
+              />
+            </div>
           </div>
         ))}
         <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
