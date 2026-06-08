@@ -81,52 +81,43 @@ function KeyboardControlSettings({
           <p className="text-sm text-app-overlay dark:text-app-overlay-dark">
             {t('settings.keyboard.hint')}
           </p>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-sm font-bold">
-                {t('settings.keyboard.mapping')}
-              </span>
-              <ControlButton
-                title={t('settings.keyboard.reset')}
-                icon={<RotateCcw size={16} />}
-                onClick={() =>
-                  setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS)
-                }
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {keyboardNoteMappings.map(({ offset, key }) => (
-                <label
-                  key={offset}
-                  className="
-                    grid grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2
-                    rounded-xl bg-app-overlay/10 p-2
-                    dark:bg-app-overlay-dark/10
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
+            {keyboardNoteMappings.map(({ offset, key }) => (
+              <label
+                key={offset}
+                className="
+                    grid grid-cols-[1rem_1fr_2rem] items-center gap-2 p-2
+                    rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
                   "
-                >
-                  <span className="text-sm font-bold">
-                    {getOffsetLabel(offset)}
-                  </span>
-                  <input
-                    className="
-                      min-w-0 rounded-xl border border-app-border
-                      bg-app-mantle p-2 text-center
-                      dark:border-app-border-dark dark:bg-app-mantle-dark
+              >
+                <span className="text-sm font-bold">
+                  {getOffsetLabel(offset)}
+                </span>
+                <input
+                  className="
+                      min-w-0 text-center p-2
+                      rounded-xl bg-app-mantle dark:bg-app-mantle-dark
+                      border border-app-border dark:border-app-border-dark
                     "
-                    readOnly
-                    value={key ? getKeyboardControlKeyLabel(key) : ''}
-                    placeholder={t('settings.keyboard.empty')}
-                    onKeyDown={(e) => handleKeyDown(offset, e)}
-                  />
-                  <ControlButton
-                    title={t('settings.keyboard.clear')}
-                    disabled={!key}
-                    icon={<X size={16} />}
-                    onClick={() => setMappingKey(offset, '')}
-                  />
-                </label>
-              ))}
-            </div>
+                  readOnly
+                  value={key ? getKeyboardControlKeyLabel(key) : ''}
+                  placeholder={t('settings.keyboard.empty')}
+                  onKeyDown={(e) => handleKeyDown(offset, e)}
+                />
+                <ControlButton
+                  disabled={!key}
+                  icon={<X size={16} />}
+                  onClick={() => setMappingKey(offset, '')}
+                />
+              </label>
+            ))}
+            <ControlButton
+              label={t('settings.keyboard.reset')}
+              icon={<RotateCcw size={24} />}
+              onClick={() =>
+                setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS)
+              }
+            />
           </div>
         </>
       )}
