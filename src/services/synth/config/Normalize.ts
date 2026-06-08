@@ -30,6 +30,10 @@ import {
   DEFAULT_PANNER_POSITION_Z,
   DEFAULT_PANNER_REF_DISTANCE,
   DEFAULT_PANNER_ROLLOFF_FACTOR,
+  DEFAULT_DELAY_MODULATION_DEPTH,
+  DEFAULT_DELAY_MODULATION_FREQUENCY,
+  DEFAULT_PHASE_MODULATION_DEPTH,
+  DEFAULT_PHASE_MODULATION_FREQUENCY,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
   DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
@@ -51,10 +55,12 @@ import {
 } from '../../../constants/synth';
 import type {
   CompressorConfig,
+  DelayModulationConfig,
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
   PannerConfig,
+  PhaseModulationConfig,
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
@@ -149,6 +155,34 @@ function normalizeVibratoConfig(value: unknown): VibratoConfig | null {
   return {
     frequency: numberOrDefault(value.frequency, DEFAULT_VIBRATO_FREQUENCY),
     depth: numberOrDefault(value.depth, DEFAULT_VIBRATO_DEPTH),
+  };
+}
+
+function normalizePhaseModulationConfig(
+  value: unknown,
+): PhaseModulationConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_PHASE_MODULATION_FREQUENCY,
+    ),
+    depth: numberOrDefault(value.depth, DEFAULT_PHASE_MODULATION_DEPTH),
+  };
+}
+
+function normalizeDelayModulationConfig(
+  value: unknown,
+): DelayModulationConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_DELAY_MODULATION_FREQUENCY,
+    ),
+    depth: numberOrDefault(value.depth, DEFAULT_DELAY_MODULATION_DEPTH),
   };
 }
 
@@ -320,6 +354,14 @@ function normalizeEffectConfig(
       value.vibrato === undefined
         ? fallback.vibrato
         : normalizeVibratoConfig(value.vibrato),
+    phaseModulation:
+      value.phaseModulation === undefined
+        ? fallback.phaseModulation
+        : normalizePhaseModulationConfig(value.phaseModulation),
+    delayModulation:
+      value.delayModulation === undefined
+        ? fallback.delayModulation
+        : normalizeDelayModulationConfig(value.delayModulation),
     waveShaper:
       value.waveShaper === undefined
         ? fallback.waveShaper

@@ -1,9 +1,11 @@
 import type {
   CompressorConfig,
+  DelayModulationConfig,
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
   PannerConfig,
+  PhaseModulationConfig,
   ReverbConfig,
   TremoloConfig,
   WaveShaperConfig,
@@ -23,6 +25,12 @@ export class EffectChain {
   private tremoloGainNode: GainNode | null = null;
   private tremoloOscillatorNode: OscillatorNode | null = null;
   private tremoloDepthGainNode: GainNode | null = null;
+  private phaseModulationNode: BiquadFilterNode | null = null;
+  private phaseModulationOscillatorNode: OscillatorNode | null = null;
+  private phaseModulationDepthGainNode: GainNode | null = null;
+  private delayModulationNode: DelayNode | null = null;
+  private delayModulationOscillatorNode: OscillatorNode | null = null;
+  private delayModulationDepthGainNode: GainNode | null = null;
   private pannerNode: PannerNode | null = null;
   private convolverNode: ConvolverNode | null = null;
   private reverbDryGainNode: GainNode | null = null;
@@ -32,6 +40,8 @@ export class EffectChain {
     equalizers: [],
     tremolo: null,
     vibrato: null,
+    phaseModulation: null,
+    delayModulation: null,
     waveShaper: null,
     compressor: null,
     panner: null,
@@ -100,6 +110,18 @@ export class EffectChain {
     this.tremoloDepthGainNode?.disconnect();
   }
 
+  private disconnectPhaseModulationNodes() {
+    this.phaseModulationNode?.disconnect();
+    this.phaseModulationOscillatorNode?.disconnect();
+    this.phaseModulationDepthGainNode?.disconnect();
+  }
+
+  private disconnectDelayModulationNodes() {
+    this.delayModulationNode?.disconnect();
+    this.delayModulationOscillatorNode?.disconnect();
+    this.delayModulationDepthGainNode?.disconnect();
+  }
+
   private applyTremoloConfig(tremoloConfig: TremoloConfig) {
     if (!this.audioContext) return null;
 
@@ -129,6 +151,82 @@ export class EffectChain {
     this.tremoloDepthGainNode.connect(this.tremoloGainNode.gain);
 
     return this.tremoloGainNode;
+  }
+
+  private applyPhaseModulationConfig(
+    phaseModulationConfig: PhaseModulationConfig,
+  ) {
+    if (!this.audioContext) return null;
+
+    if (!this.phaseModulationNode) {
+      this.phaseModulationNode = this.audioContext.createBiquadFilter();
+      this.phaseModulationNode.type = 'allpass';
+    }
+    if (!this.phaseModulationOscillatorNode) {
+      this.phaseModulationOscillatorNode = this.audioContext.createOscillator();
+      this.phaseModulationOscillatorNode.type = 'sine';
+      this.phaseModulationOscillatorNode.start();
+    }
+    if (!this.phaseModulationDepthGainNode) {
+      this.phaseModulationDepthGainNode = this.audioContext.createGain();
+    }
+
+    this.phaseModulationOscillatorNode.disconnect();
+    this.phaseModulationDepthGainNode.disconnect();
+
+    const depth = Math.min(Math.max(phaseModulationConfig.depth, 0), 1);
+    this.phaseModulationNode.frequency.value = 700;
+    this.phaseModulationNode.Q.value = 1 + depth * 8;
+    this.phaseModulationOscillatorNode.frequency.value = Math.max(
+      phaseModulationConfig.frequency,
+      0.01,
+    );
+    this.phaseModulationDepthGainNode.gain.value = depth * 600;
+    this.phaseModulationOscillatorNode.connect(
+      this.phaseModulationDepthGainNode,
+    );
+    this.phaseModulationDepthGainNode.connect(
+      this.phaseModulationNode.frequency,
+    );
+
+    return this.phaseModulationNode;
+  }
+
+  private applyDelayModulationConfig(
+    delayModulationConfig: DelayModulationConfig,
+  ) {
+    if (!this.audioContext) return null;
+
+    if (!this.delayModulationNode) {
+      this.delayModulationNode = this.audioContext.createDelay(0.05);
+    }
+    if (!this.delayModulationOscillatorNode) {
+      this.delayModulationOscillatorNode = this.audioContext.createOscillator();
+      this.delayModulationOscillatorNode.type = 'sine';
+      this.delayModulationOscillatorNode.start();
+    }
+    if (!this.delayModulationDepthGainNode) {
+      this.delayModulationDepthGainNode = this.audioContext.createGain();
+    }
+
+    this.delayModulationOscillatorNode.disconnect();
+    this.delayModulationDepthGainNode.disconnect();
+
+    const depth = Math.min(Math.max(delayModulationConfig.depth, 0), 0.05);
+    this.delayModulationNode.delayTime.value = depth / 2;
+    this.delayModulationOscillatorNode.frequency.value = Math.max(
+      delayModulationConfig.frequency,
+      0.01,
+    );
+    this.delayModulationDepthGainNode.gain.value = depth / 2;
+    this.delayModulationOscillatorNode.connect(
+      this.delayModulationDepthGainNode,
+    );
+    this.delayModulationDepthGainNode.connect(
+      this.delayModulationNode.delayTime,
+    );
+
+    return this.delayModulationNode;
   }
 
   private applyWaveShaperConfig(waveShaperConfig: WaveShaperConfig) {
@@ -231,6 +329,8 @@ export class EffectChain {
     this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
     this.disconnectTremoloNodes();
+    this.disconnectPhaseModulationNodes();
+    this.disconnectDelayModulationNodes();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
 
@@ -238,6 +338,8 @@ export class EffectChain {
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
       !this.effectConfig.tremolo &&
+      !this.effectConfig.phaseModulation &&
+      !this.effectConfig.delayModulation &&
       !this.effectConfig.waveShaper &&
       !this.effectConfig.compressor &&
       !this.effectConfig.panner &&
@@ -283,6 +385,26 @@ export class EffectChain {
       if (tremoloNode) {
         previousNode.connect(tremoloNode);
         previousNode = tremoloNode;
+      }
+    }
+
+    if (this.effectConfig.phaseModulation) {
+      const phaseModulationNode = this.applyPhaseModulationConfig(
+        this.effectConfig.phaseModulation,
+      );
+      if (phaseModulationNode) {
+        previousNode.connect(phaseModulationNode);
+        previousNode = phaseModulationNode;
+      }
+    }
+
+    if (this.effectConfig.delayModulation) {
+      const delayModulationNode = this.applyDelayModulationConfig(
+        this.effectConfig.delayModulation,
+      );
+      if (delayModulationNode) {
+        previousNode.connect(delayModulationNode);
+        previousNode = delayModulationNode;
       }
     }
 
@@ -363,6 +485,10 @@ export class EffectChain {
     this.compressorNode?.disconnect();
     this.disconnectTremoloNodes();
     this.tremoloOscillatorNode?.stop();
+    this.disconnectPhaseModulationNodes();
+    this.phaseModulationOscillatorNode?.stop();
+    this.disconnectDelayModulationNodes();
+    this.delayModulationOscillatorNode?.stop();
     this.pannerNode?.disconnect();
     this.disconnectReverbNodes();
     this.outputNode?.disconnect();
@@ -376,6 +502,12 @@ export class EffectChain {
     this.tremoloGainNode = null;
     this.tremoloOscillatorNode = null;
     this.tremoloDepthGainNode = null;
+    this.phaseModulationNode = null;
+    this.phaseModulationOscillatorNode = null;
+    this.phaseModulationDepthGainNode = null;
+    this.delayModulationNode = null;
+    this.delayModulationOscillatorNode = null;
+    this.delayModulationDepthGainNode = null;
     this.pannerNode = null;
     this.convolverNode = null;
     this.reverbDryGainNode = null;

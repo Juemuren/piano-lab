@@ -1,4 +1,9 @@
-import type { TremoloConfig, VibratoConfig } from '../../../types';
+import type {
+  DelayModulationConfig,
+  PhaseModulationConfig,
+  TremoloConfig,
+  VibratoConfig,
+} from '../../../types';
 
 const MODULATION_CURVE_POINT_COUNT = 256;
 const MODULATION_CURVE_DURATION_SECONDS = 1;
@@ -36,6 +41,36 @@ export function getVibratoCurvePoints(vibrato: VibratoConfig) {
     frequencyRatio: time.map(
       (t) =>
         1 + frequencyRatioDepth * Math.sin(2 * Math.PI * vibrato.frequency * t),
+    ),
+  };
+}
+
+export function getPhaseModulationCurvePoints(
+  phaseModulation: PhaseModulationConfig,
+) {
+  const time = createTimePoints();
+  const depth = Math.min(Math.max(phaseModulation.depth, 0), 1);
+
+  return {
+    time,
+    phaseRatio: time.map(
+      (t) => depth * Math.sin(2 * Math.PI * phaseModulation.frequency * t),
+    ),
+  };
+}
+
+export function getDelayModulationCurvePoints(
+  delayModulation: DelayModulationConfig,
+) {
+  const time = createTimePoints();
+  const depth = Math.max(delayModulation.depth, 0);
+
+  return {
+    time,
+    delaySeconds: time.map(
+      (t) =>
+        depth / 2 +
+        (depth / 2) * Math.sin(2 * Math.PI * delayModulation.frequency * t),
     ),
   };
 }

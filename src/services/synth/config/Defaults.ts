@@ -30,6 +30,10 @@ import {
   DEFAULT_PANNER_POSITION_Z,
   DEFAULT_PANNER_REF_DISTANCE,
   DEFAULT_PANNER_ROLLOFF_FACTOR,
+  DEFAULT_DELAY_MODULATION_DEPTH,
+  DEFAULT_DELAY_MODULATION_FREQUENCY,
+  DEFAULT_PHASE_MODULATION_DEPTH,
+  DEFAULT_PHASE_MODULATION_FREQUENCY,
   DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_PRESET,
   DEFAULT_SPECTRUM_DECAY_RATE,
@@ -52,6 +56,7 @@ import {
 import type {
   BuiltInReverbPreset,
   CompressorConfig,
+  DelayModulationConfig,
   EffectConfig,
   EnvelopeConfig,
   EqualizerConfig,
@@ -59,6 +64,7 @@ import type {
   FilterConfig,
   FilterType,
   PannerConfig,
+  PhaseModulationConfig,
   ReverbConfig,
   SpectrumConfig,
   SynthBasicConfig,
@@ -151,6 +157,20 @@ export function createDefaultVibratoConfig(): VibratoConfig {
   };
 }
 
+export function createDefaultPhaseModulationConfig(): PhaseModulationConfig {
+  return {
+    frequency: DEFAULT_PHASE_MODULATION_FREQUENCY,
+    depth: DEFAULT_PHASE_MODULATION_DEPTH,
+  };
+}
+
+export function createDefaultDelayModulationConfig(): DelayModulationConfig {
+  return {
+    frequency: DEFAULT_DELAY_MODULATION_FREQUENCY,
+    depth: DEFAULT_DELAY_MODULATION_DEPTH,
+  };
+}
+
 export function createDefaultWaveShaperConfig(): WaveShaperConfig {
   return {
     preset: DEFAULT_WAVE_SHAPER_PRESET,
@@ -193,6 +213,8 @@ export function createDefaultEffectConfig(): EffectConfig {
     equalizers: [],
     tremolo: null,
     vibrato: null,
+    phaseModulation: null,
+    delayModulation: null,
     waveShaper: null,
     compressor: null,
     panner: null,

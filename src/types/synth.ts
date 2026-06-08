@@ -90,6 +90,16 @@ export interface VibratoConfig {
   depth: number;
 }
 
+export interface PhaseModulationConfig {
+  frequency: number;
+  depth: number;
+}
+
+export interface DelayModulationConfig {
+  frequency: number;
+  depth: number;
+}
+
 export type WaveShaperPreset =
   | 'saturation'
   | 'distortion'
@@ -150,6 +160,8 @@ export interface EffectConfig {
   equalizers: EqualizerConfig[];
   tremolo: TremoloConfig | null;
   vibrato: VibratoConfig | null;
+  phaseModulation: PhaseModulationConfig | null;
+  delayModulation: DelayModulationConfig | null;
   waveShaper: WaveShaperConfig | null;
   compressor: CompressorConfig | null;
   panner: PannerConfig | null;

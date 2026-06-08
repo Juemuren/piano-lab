@@ -36,6 +36,14 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateVibratoEnabled,
     updateVibratoFrequency,
     updateVibratoDepth,
+    phaseModulation,
+    updatePhaseModulationEnabled,
+    updatePhaseModulationFrequency,
+    updatePhaseModulationDepth,
+    delayModulation,
+    updateDelayModulationEnabled,
+    updateDelayModulationFrequency,
+    updateDelayModulationDepth,
     waveShaper,
     updateWaveShaperEnabled,
     updateWaveShaperPreset,
@@ -86,12 +94,20 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
       <Modulation
         tremolo={tremolo}
         vibrato={vibrato}
+        phaseModulation={phaseModulation}
+        delayModulation={delayModulation}
         onTremoloEnabledChange={updateTremoloEnabled}
         onTremoloFrequencyChange={updateTremoloFrequency}
         onTremoloDepthChange={updateTremoloDepth}
         onVibratoEnabledChange={updateVibratoEnabled}
         onVibratoFrequencyChange={updateVibratoFrequency}
         onVibratoDepthChange={updateVibratoDepth}
+        onPhaseModulationEnabledChange={updatePhaseModulationEnabled}
+        onPhaseModulationFrequencyChange={updatePhaseModulationFrequency}
+        onPhaseModulationDepthChange={updatePhaseModulationDepth}
+        onDelayModulationEnabledChange={updateDelayModulationEnabled}
+        onDelayModulationFrequencyChange={updateDelayModulationFrequency}
+        onDelayModulationDepthChange={updateDelayModulationDepth}
       />
       <WaveShaper
         waveShaper={waveShaper}

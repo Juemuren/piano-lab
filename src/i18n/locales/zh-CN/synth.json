@@ -121,7 +121,15 @@
       "vibrato": "频率调制",
       "vibratoEnabled": "启用频率调制",
       "vibratoDisabled": "禁用频率调制",
-      "frequencyCurve": "频率调制曲线"
+      "frequencyCurve": "频率调制曲线",
+      "phaseModulation": "相位调制",
+      "phaseModulationEnabled": "启用相位调制",
+      "phaseModulationDisabled": "禁用相位调制",
+      "phaseCurve": "相位调制曲线",
+      "delayModulation": "延时调制",
+      "delayModulationEnabled": "启用延时调制",
+      "delayModulationDisabled": "禁用延时调制",
+      "delayCurve": "延时调制曲线"
     },
     "waveShaper": {
       "name": "波形重塑",
