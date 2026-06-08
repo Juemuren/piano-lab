@@ -28,15 +28,15 @@ function SettingsPanel() {
 
   return (
     <ControlPanel className="flex flex-col gap-3 text-left">
-      <KeyboardControlSettings
-        isKeyboardControlEnabled={isKeyboardControlEnabled}
-        setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
-      />
       <PointerControlSettings
         isMouseControlEnabled={isMouseControlEnabled}
         setIsMouseControlEnabled={setIsMouseControlEnabled}
         isTouchControlEnabled={isTouchControlEnabled}
         setIsTouchControlEnabled={setIsTouchControlEnabled}
+      />
+      <KeyboardControlSettings
+        isKeyboardControlEnabled={isKeyboardControlEnabled}
+        setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
       />
       <MidiControlSettings
         isMidiControlEnabled={isMidiControlEnabled}

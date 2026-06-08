@@ -14,7 +14,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [pianoInputSettings, setPianoInputSettings] =
     useState<PianoInputSettings>(DEFAULT_PIANO_INPUT_SETTINGS);
   const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] =
-    useState(true);
+    useState(false);
   const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(true);
   const [isTouchControlEnabled, setIsTouchControlEnabled] = useState(true);
   const [isMidiControlEnabled, setIsMidiControlEnabled] = useState(false);
