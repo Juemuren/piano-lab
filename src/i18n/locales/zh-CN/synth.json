@@ -111,14 +111,14 @@
     },
     "modulation": {
       "name": "调制",
-      "tremolo": "颤音",
-      "tremoloEnabled": "启用颤音",
-      "tremoloDisabled": "禁用颤音",
-      "vibrato": "揉弦",
-      "vibratoEnabled": "启用揉弦",
-      "vibratoDisabled": "禁用揉弦",
-      "frequency": "速率",
-      "depth": "深度"
+      "tremolo": "振幅调制",
+      "tremoloEnabled": "启用振幅调制",
+      "tremoloDisabled": "禁用振幅调制",
+      "vibrato": "频率调制",
+      "vibratoEnabled": "启用频率调制",
+      "vibratoDisabled": "禁用频率调制",
+      "frequency": "调制频率",
+      "depth": "调制深度"
     },
     "waveShaper": {
       "name": "波形重塑",

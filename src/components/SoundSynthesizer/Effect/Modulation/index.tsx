@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Activity, AudioWaveform } from 'lucide-react';
+import { InlineMath } from 'react-katex';
 import type { TremoloConfig, VibratoConfig } from '../../../../types';
+import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 
@@ -49,8 +51,12 @@ function Modulation({
 
           {tremolo && (
             <div className="space-y-2">
+              <BlockMath
+                math={String.raw`g_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]g_x(t)`}
+              />
               <ControlRange
                 label={t('effect.modulation.frequency')}
+                symbol={<InlineMath math="f_m" />}
                 min="0.1"
                 max="20"
                 step="0.1"
@@ -60,6 +66,7 @@ function Modulation({
               />
               <ControlRange
                 label={t('effect.modulation.depth')}
+                symbol={<InlineMath math="d" />}
                 min="0"
                 max="1"
                 step="0.01"
@@ -73,6 +80,7 @@ function Modulation({
 
         <section className="space-y-2">
           <h3 className="font-semibold">{t('effect.modulation.vibrato')}</h3>
+
           <ControlButton
             title={t('effect.modulation.vibratoEnabled')}
             icon={<AudioWaveform size={18} />}
@@ -86,8 +94,12 @@ function Modulation({
 
           {vibrato && (
             <div className="space-y-2">
+              <BlockMath
+                math={String.raw`f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)`}
+              />
               <ControlRange
                 label={t('effect.modulation.frequency')}
+                symbol={<InlineMath math="f_m" />}
                 min="0.1"
                 max="20"
                 step="0.1"
@@ -97,6 +109,7 @@ function Modulation({
               />
               <ControlRange
                 label={t('effect.modulation.depth')}
+                symbol={<InlineMath math="c" />}
                 min="0"
                 max="100"
                 step="1"
