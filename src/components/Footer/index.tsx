@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer
       id={SECTION_IDS.about}
-      className="p-8 scroll-mt-16 bg-app-surface/50 dark:bg-app-surface-dark/50"
+      className="p-8 scroll-mt-16 bg-app-mantle dark:bg-app-mantle-dark"
     >
       <div
         className="
