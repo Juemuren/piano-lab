@@ -3,6 +3,7 @@ import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsC
 import { getPitchOctave } from '../../utils/pitch';
 
 const MAX_DENOMINATOR = 32;
+const MEASURES_PER_LINE = 4;
 const PITCH_CLASS_COUNT = 12;
 const NATURAL_PITCH_CLASSES = {
   C: 0,
@@ -202,6 +203,23 @@ function getBodyContent(content: string) {
     .join('\n');
 }
 
+function getLastBodyLine(content: string) {
+  const lines = content.split(/\r?\n/);
+
+  for (let index = lines.length - 1; index >= 0; index--) {
+    const line = lines[index];
+    if (line.trim() && !isHeaderLine(line)) {
+      return line;
+    }
+  }
+
+  return '';
+}
+
+function getCompletedMeasureCount(line: string) {
+  return Array.from(line.matchAll(/\|/g)).length;
+}
+
 function getCurrentMeasureLength(content: string, defaultNoteLength: string) {
   const defaultLength = parseNoteLength(defaultNoteLength);
   const bodyContent = getBodyContent(content);
@@ -213,6 +231,11 @@ function getCurrentMeasureLength(content: string, defaultNoteLength: string) {
   return Array.from(noteMatches).reduce((measureLength, match) => {
     return measureLength + defaultLength * parseDurationSuffix(match[1] ?? '');
   }, 0);
+}
+
+function shouldStartNewLine(content: string) {
+  const lastBodyLine = getLastBodyLine(content);
+  return getCompletedMeasureCount(lastBodyLine) >= MEASURES_PER_LINE;
 }
 
 function getMeasureSeparator(
@@ -230,10 +253,21 @@ function getMeasureSeparator(
 
   const measureLength = getCurrentMeasureLength(content, defaultNoteLength);
   if (measureLength > 0 && measureLength + nextNoteLength > meterLength) {
-    return '| ';
+    return '|';
   }
 
   return '';
+}
+
+function getMeasureSeparatorSuffix(content: string, measureSeparator: string) {
+  if (!measureSeparator) {
+    return '';
+  }
+
+  const lastBodyLine = getLastBodyLine(content);
+  const completedMeasureCount = getCompletedMeasureCount(lastBodyLine) + 1;
+
+  return completedMeasureCount >= MEASURES_PER_LINE ? '\n' : ' ';
 }
 
 function getCompletedMeasureSuffix(
@@ -403,7 +437,12 @@ export function appendPitchToAbc(
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);
   const lastLine = lines[lines.length - 1] ?? '';
-  const separator = isHeaderLine(lastLine) ? '\n' : ' ';
+  const separator =
+    isHeaderLine(lastLine) || shouldStartNewLine(trimmedEnd) ? '\n' : ' ';
+  const measureSeparatorSuffix = getMeasureSeparatorSuffix(
+    content,
+    measureSeparator,
+  );
 
-  return `${trimmedEnd}${trimmedEnd ? separator : ''}${measureSeparator}${note}${completedMeasureSuffix} `;
+  return `${trimmedEnd}${trimmedEnd ? separator : ''}${measureSeparator}${measureSeparatorSuffix}${note}${completedMeasureSuffix} `;
 }
