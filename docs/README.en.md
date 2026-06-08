@@ -25,28 +25,28 @@
 
 ## Features
 
-Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
+弦律 (Piano Lab) provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
 
-- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects, record audio, and export in formats such as WebM and MP4
-- [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export them as SVG/PNG/PDF/MIDI files
-- [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8 and supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices
+- [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects; record audio and export in WebM/MP4 and other formats
+- [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export as SVG/PNG/PDF/MIDI files
+- [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8; supports playing with mouse, touchscreen, computer keyboard, and MIDI input devices
 
-The app supports multiple languages, mobile layouts, dark mode, and can be installed as a [desktop app][link-release].
+The app supports multiple languages, mobile layout, dark mode, and can be installed as a [desktop app][link-release].
 
 ### Sound Synthesizer
 
-The sound synthesizer consists of four modules: envelope, spectrum, effects, and analysis.
+The sound synthesizer consists of the following modules: envelope, spectrum, effects, and analysis.
 
-- Synthesizes sound physically without sampling
-- Uses twelve-tone equal temperament to generate pitches and supports free transposition
+- Pure physical sound synthesis without sampling
+- Uses twelve-tone equal temperament to generate scales, supports free transposition
 - Supports sine, triangle, sawtooth, and square waves
-- Supports adjusting the volume factor and harmonic count
+- Supports adjusting volume factor and harmonic count
 - All configurations can be exported as JSON files for sharing and reuse
-- Can record synthesizer output and export it as WebM/Ogg/MP4 audio depending on browser support
+- Can record synthesizer output and export as WebM/Ogg/MP4 audio depending on browser support
 
 ### Envelope
 
-- Supports editing attack time, decay time, release time, sustain gain, and silence gain
+- Supports modifying attack time, decay time, release time, sustain gain, and silence gain
 - Provides an amplitude envelope curve preview
 
 ### Spectrum
@@ -56,14 +56,14 @@ The sound synthesizer consists of four modules: envelope, spectrum, effects, and
 
 ### Effects
 
-Contains filter, equalizer, reverb, compression, panning, wave shaping, and modulation effects.
+Includes filter, equalizer, reverb, compression, panning, wave shaping, modulation, and more.
 
 #### Filter & Equalizer
 
-- Supports lowpass, highpass, bandpass, and notch filter types
-- Supports lowshelf, highshelf, and peaking equalizer types
-- Provides adjustable cutoff frequency, Q (quality factor), and gain
-- Can plot the combined magnitude response curve of filters and equalizers, with per-harmonic sampling at a selected pitch
+- Supports four filter types: lowpass, highpass, bandpass, and notch
+- Supports three equalizer types: lowshelf, highshelf, and peaking
+- Provides adjustable cutoff frequency, quality factor (Q), and gain
+- Can plot the combined magnitude-frequency response curve and view per-harmonic sampling results at a given pitch
 
 #### Compression
 
@@ -73,9 +73,9 @@ Contains filter, equalizer, reverb, compression, panning, wave shaping, and modu
 
 #### Panning
 
-- Fully customizable panning with adjustable position, orientation, distance, and cone angle
-- Supports equal-power panning and head-related transfer function (HRTF)
-- Supports inverse, linear, and exponential distance models
+- Fully customizable: supports adjusting position, orientation, distance, and angle
+- Supports two panning models: equal-power panning and head-related transfer function (HRTF)
+- Supports three distance models: inverse, linear, and exponential
 - Provides a 3D sound cone diagram and plots the distance gain curve
 
 #### Wave Shaping
@@ -86,19 +86,19 @@ Contains filter, equalizer, reverb, compression, panning, wave shaping, and modu
 
 #### Modulation
 
-- Supports amplitude, frequency, phase, and delay modulation. Each type can be independently enabled or disabled.
+- Supports four modulation types: amplitude, frequency, phase, and delay; each can be independently enabled or disabled
 - Amplitude modulation produces a tremolo effect, with adjustable modulation frequency and depth
 - Frequency modulation produces a vibrato effect, with adjustable modulation frequency and depth
 - Phase modulation produces a phaser effect, with adjustable modulation frequency and depth
 - Delay modulation produces chorus/flanger effects, with adjustable modulation frequency and depth
-- Displays formulas and draws modulation curves
+- Displays formulas and draws curves
 
 #### Reverb
 
 - Uses a separated early reflections and late tail approach
 - Provides several presets and fully customizable parameters
 - Early reflections support adjusting reflection count, gain, delay, and phase
-- The late tail uses an exponential-decay impulse response weighted by standard normal random numbers, with adjustable delay time, duration, amplitude coefficient, and decay coefficient
+- Late tail supports adjusting delay time, duration, amplitude coefficient, and decay coefficient
 - Can plot impulse response formulas and waveforms
 - Supports enabling or disabling reverb on demand
 
@@ -108,32 +108,26 @@ Contains filter, equalizer, reverb, compression, panning, wave shaping, and modu
 
 ### Score Editor
 
-- Write scores as text and render them in real time
-- Play scores automatically with visual feedback on both the score and keyboard
-- Supports play, pause, replay, and progress adjustment by moving the control bar or clicking notes
-- Adjust tempo, meter, and key signature; chords, repeats, and multiple voices are supported
-- Playing piano keys directly edits the score, matching note lengths from key-press duration — convenient for recording melodies
-- Score generation supports setting default note length, tempo, time signature, and key signature, with automatic line breaking
-- Supports one-click reset to defaults or clearing the score
+- Write scores as text with real-time rendering
+- Auto-play with visual feedback on both the score and keys
+- Supports play, pause, and replay; adjust progress by moving the control bar or clicking notes
+- Can modify tempo, meter, and key signature; supports chords, repeats, and multiple voices
+- Playing keys directly edits the score, matching note values to key-press duration — convenient for recording melodies
+- Score generation supports setting default note length, tempo, meter, and key signature, with automatic line breaking
+- One-click reset to defaults or clear the score
 - Supports importing and exporting ABC files
 - Supports exporting MIDI files
-- Can export rendered scores as SVG/PNG or print them as PDF
-- Includes several preset scores of different complexity, from Twinkle Twinkle Little Star to Haruhikage
+- Can export rendered scores as SVG/PNG or print as PDF
+- Provides several preset scores of varying complexity, from Twinkle Twinkle Little Star to Haruhikage
 
 ### Virtual Keys
 
-- Uses the custom sound synthesizer and synchronizes with automatic score playback
+- Connected to the custom sound synthesizer and synchronized with automatic score playback
 - Covers 88 keys from A0 to C8, with horizontal scrolling on narrow screens
-- Keys start sounding when pressed and release when lifted, allowing notes of arbitrary duration
-- Supports performance with a mouse, touchscreen, computer keyboard, and MIDI input devices, and each input method can be enabled or disabled separately
-- The computer keyboard uses the following default key mapping, with `Z` / `X` for octave switching and `Ctrl` / `Shift` combinations for temporary octave changes
-
-| Note | C   | C#  | D   | D#  | E   | F   | F#  | G   | G#  | A   | A#  | B   | C   |
-| ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Key  | A   | W   | S   | E   | D   | F   | T   | G   | Y   | H   | U   | J   | K   |
-
-- Supports custom keyboard key mapping
-- Displays the connection status of MIDI input devices and lets you choose one device from the list to listen to
+- Keys sound when pressed and release when lifted, allowing notes of arbitrary duration
+- Supports playing with mouse, touchscreen, computer keyboard, and MIDI input devices; each can be enabled or disabled individually
+- The computer keyboard uses a single-row chromatic layout and supports custom key mapping
+- Displays MIDI input device connection status and allows selecting one device from the list to listen to
 
 ## Usage
 
@@ -175,33 +169,23 @@ npm run format
 
 ## Principles
 
-> For a more detailed explanation, read my article [The Mathematical Principles of Music: From Vibrating Strings to Modern Music Theory](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/).
+> For a detailed explanation, see my article [The Mathematical Principles of Music: From Vibrating Strings to Modern Music Theory](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/).
 
 ### Sound Synthesis
 
-The sound produced by a vibrating string is ideally composed of a series of sine harmonics. The fundamental frequency is $f_1$, and the remaining harmonics are integer multiples of that frequency. The ideal sound pressure can therefore be written as:
+The sound produced by a vibrating string is ideally composed of a series of sine harmonics, where the fundamental frequency is $f_1$ and the remaining harmonics are integer multiples of the fundamental. The ideal sound pressure can therefore be expressed as:
 
 $$
 p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)
 $$
 
-Based on this principle, the project synthesizes sound with the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API). To further improve the listening experience, it uses a series of exponential functions to model how amplitude changes over time:
-
-- The amplitude is first set to the **silence gain**
-- It then reaches the target gain during the **attack time**
-- During the **decay time**, it decays to the **sustain gain**
-- For the duration of the note, the amplitude stays at the sustain gain
-- During the **release time**, it returns to the silence gain
-
-To better match physical behavior, higher harmonics decay and release faster, and their sustain gain is lower. The implementation uses $t_n = \frac{t_1}{\sqrt n}$ and $g_n = \frac{g_1}{\sqrt{n+1}}$ to model this relationship.
-
-The app uses Plotly.js to draw the amplitude envelope curve.
+Based on this principle, sound is synthesized using the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 ### Harmonic Amplitude Spectrum
 
-Timbre is mainly determined by the amplitudes $A_n$ of the harmonic components.
+Timbre is primarily determined by the amplitudes $A_n$ of the harmonic components.
 
-The preset timbres use the following relationships:
+The specific relationships for each timbre preset are:
 
 | Timbre    | Harmonic amplitude relationship                  |
 | --------- | ------------------------------------------------ |
@@ -213,17 +197,31 @@ The preset timbres use the following relationships:
 | Soft      | $A_n \propto e^{-\sigma n}$                      |
 | Realistic | $A_n \propto \frac1{n^p} e^{-\sigma n}$          |
 
-Adjustable parameters:
+The adjustable parameters are:
 
-- $\sigma$: decay rate
-- $\lambda$: strike point
-- $p$: power exponent
+- $\sigma$ — decay rate
+- $\lambda$ — strike point
+- $p$ — power exponent
 
-The app uses KaTeX to render spectrum preset formulas.
+KaTeX is used in the app to render spectrum preset formulas.
+
+### Amplitude Envelope
+
+A series of exponential functions is used to simulate how amplitude changes over time:
+
+- The amplitude is first set to the **silence gain**
+- Then, during the **attack time**, the amplitude rises to the target gain
+- Next, during the **decay time**, the amplitude decays to the **sustain gain**
+- Throughout the note's duration, the amplitude stays at the sustain gain
+- Finally, during the **release time**, the amplitude returns to the silence gain
+
+To better match physical reality, higher harmonics decay and release faster, and their sustain gain is also smaller. The code uses $t_n = \frac{t_1}{\sqrt n}$ and $g_n = \frac{g_1}{\sqrt{n+1}}$ to model this relationship.
+
+Plotly.js is used in the app to draw the amplitude envelope curve.
 
 ### Impulse Response and Transfer Function
 
-After harmonic synthesis, effects further process the audio signal. This processing can be understood in both the frequency and time domains. For linear time-invariant systems, the frequency-domain description is the transfer function, and the time-domain description is the impulse response.
+After harmonic synthesis, effects further process the audio signal. This processing can be understood in both the frequency domain and the time domain. For linear time-invariant systems, the frequency-domain description is the transfer function, and the time-domain description is the impulse response.
 
 #### Filter Principles
 
@@ -235,22 +233,22 @@ $$
 H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2}}{1 + a_1 z^{-1} + a_2 z^{-2}}
 $$
 
-where $b_0, b_1, b_2, a_1, a_2$ are coefficients. By modifying these 5 coefficients alone, all common filter types can be realized: lowpass/highpass/bandpass/notch/lowshelf/highshelf/peaking.
+where $b_0, b_1, b_2, a_1, a_2$ are coefficients, and by modifying just these 5 coefficients, all common filter types can be realized — lowpass, highpass, bandpass, notch, lowshelf, highshelf, and peaking.
 
 BiquadFilterNode further encapsulates more practical interfaces:
 
-- **Lowpass/Highpass**: adjustable cutoff frequency and Q. Q controls the height of the bump at the cutoff frequency.
+- **Lowpass/Highpass**: adjustable cutoff frequency and resonance (Q). Q determines the height of the bump at the cutoff frequency.
 - **Bandpass/Notch**: adjustable center frequency and bandwidth factor. A larger bandwidth factor gives a narrower bandwidth and a more prominent bump at the center frequency.
-- **Lowshelf/Highshelf**: adjustable cutoff frequency and gain.
-- **Peaking**: adjustable center frequency, bandwidth factor, and gain.
+- **Lowshelf/Highshelf**: adjustable cutoff frequency and gain ratio.
+- **Peaking**: adjustable center frequency, bandwidth factor, and gain ratio.
 
-Filters can be chained together in a cascaded effects chain.
+Filters can be cascaded to form a chained effects chain.
 
-The app uses Plotly.js to draw the final magnitude response curve.
+Plotly.js is used in the app to draw the final magnitude-frequency response curve.
 
 #### Reverb Principles
 
-Reverb is convolution-based, feeding a computed impulse response into a [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) to convolve with the dry signal.
+Reverb is convolution reverb — the computed impulse response is fed into a [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) to convolve with the dry signal.
 
 ConvolverNode performs discrete convolution, given by:
 
@@ -258,65 +256,71 @@ $$
 (f * g)[n] = \sum_{k=-\infty}^{\infty} f[k] g[n - k]
 $$
 
-The reverb uses a separated early reflections and late tail approach. The total impulse response is:
+Reverb uses a separated early reflections and late tail approach. The total impulse response is:
 
 $$h[n]=\delta[n]+h_e[n]+h_l[n]$$
 
 where $\delta[n]$ is the unit impulse, representing the impulse response of the dry signal.
 
-**Early reflections** simulate the short-delay echoes that reach the listener after a small number of reflections in the space, represented as a set of discrete impulses with varying delays and gains:
+**Early reflections** simulate the short-delay echoes that reach the listener after a small number of reflections in the space, represented as a set of discrete impulses with varying delays and gains. This can be written as:
 
 $$
 h_e[n]=\sum_i a_i\cos(\phi_i)\delta[n-d_if_s]
 $$
 
-where $a_i$ is the reflection amplitude, $d_i$ is the reflection delay, and $\phi_i$ is the reflection phase.
+where $a_i$, $d_i$, and $\phi_i$ are the reflection amplitude, delay, and phase, respectively.
 
 $f_s$ is the sample rate, automatically chosen by the [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) based on the current audio output device — typically 44100 Hz or 48000 Hz.
 
-**Late tail** simulates the dense echoes formed after many reflections in the space, using an exponential-decay envelope as the impulse response:
+**Late tail** simulates the dense echoes formed by many overlapping reflections in the space, using an exponential decay curve as the envelope and normal random numbers to model phase. Its expression is:
 
 $$
 h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}
 $$
 
-where $A$ is the initial amplitude, $\alpha$ is the decay coefficient, and $D$ and $T$ are the delay time and duration respectively. $\mathcal{N}(0,1)$ is a standard normal random variable with mean 0 and variance 1, used to make the impulse response evenly distributed across positive and negative values, preventing a large DC gain $H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t$ during convolution.
+where $A$, $\alpha$, $D$, and $T$ are the initial amplitude, decay coefficient, delay time, and duration, respectively.
 
-The reverb effect provides four presets — bathroom, garage, hall, and cathedral — to simulate spaces from small to large.
+$\mathcal{N}(0,1)$ is a normal random variable with mean $0$ and standard deviation $1$, used to distribute the impulse response evenly between positive and negative values, preventing excessive DC gain during convolution:
 
-The app uses KaTeX and Plotly.js to draw impulse response formulas and waveforms.
+$$
+H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t
+$$
+
+The reverb effect provides bathroom, garage, hall, and cathedral presets, simulating spaces from small to large.
+
+KaTeX and Plotly.js are used in the app to draw the impulse response formulas and waveforms.
 
 #### Compression Principles
 
 Compression is implemented using the Web Audio API's [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode).
 
-DynamicsCompressorNode reduces the dynamic range by attenuating the portion of the signal that exceeds the threshold. Its key parameters are:
+DynamicsCompressorNode reduces the dynamic range by attenuating portions of the signal that exceed the threshold. Its key parameters are:
 
-- **Threshold**: sets the level above which compression begins to take effect
-- **Knee**: controls the smoothness of the compression transition near the threshold
+- **Threshold**: sets the level at which compression begins to take effect
+- **Knee**: controls the smoothness of the compression transition around the threshold
 - **Ratio**: controls how much the signal above the threshold is compressed
-- **Attack Time**: controls how quickly the compressor responds when the signal exceeds the threshold
-- **Release Time**: controls how quickly the compressor recovers after the signal falls below the threshold
+- **Attack time**: controls how quickly the compressor responds when the signal exceeds the threshold
+- **Release time**: controls how quickly the compressor recovers after the signal falls below the threshold
 
-The app uses Plotly.js to draw a real-time gain reduction curve.
+Plotly.js is used in the app to draw a real-time gain curve.
 
 #### Panning Principles
 
-Panning is implemented using the Web Audio API's [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode), used to position audio sources in a stereo field or 3D space.
+Panning is implemented using the Web Audio API's [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode), used to position audio sources in the stereo field.
 
-PannerNode supports two panning models: equal-power panning and head-related transfer function (HRTF). HRTF provides a more realistic spatial sensation by simulating how human ears respond to sounds coming from different directions. Its key parameters are:
+PannerNode supports two panning models — equal-power panning and head-related transfer function (HRTF) — simulating sound from different positions and orientations to provide a more realistic spatial sensation. Its key parameters are:
 
-- **Position** and **Orientation**: control the location and facing direction of the audio source in space
-- **Distance**: controls the distance between the audio source and the listener, supporting linear, inverse, and exponential distance models
+- **Position** and **Azimuth**: control the location and facing direction of the audio source in space
+- **Distance**: controls the distance between the audio source and the listener, with linear, inverse, and exponential distance models available
 - **Sound Cone**: defines the cone angle of the audio source. Within the inner cone angle, the sound maintains its original volume; beyond the outer cone angle, the sound attenuates to the outer cone gain; a smooth transition occurs between the inner and outer cones
 
-The app uses Plotly.js to draw a 3D sound cone diagram and the distance gain curve.
+Plotly.js is used in the app to draw a 3D sound cone diagram and the distance gain curve.
 
 #### Wave Shaping Principles
 
 Wave shaping is implemented using the Web Audio API's [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode), which produces distortion by applying a nonlinear mapping curve to the signal.
 
-Four distortion types are provided, with the following mapping relationships:
+Several distortion types are provided, with the following nonlinear mapping formulas:
 
 | Effect     | Formula                              | Intensity parameter |
 | ---------- | ------------------------------------ | ------------------- |
@@ -325,27 +329,27 @@ Four distortion types are provided, with the following mapping relationships:
 | Distortion | $y = \tanh(gx)$                      | $g=2\sim10$         |
 | Fuzz       | $y = \frac{2}{\pi}\arctan(sx)$       | $s=10\sim100$       |
 
-The app uses Plotly.js to draw the mapping curve for each effect.
+Plotly.js is used in the app to draw the mapping curve for each effect.
 
 #### Modulation Principles
 
-Modulation works by periodically varying a target parameter with a low-frequency oscillator. Depending on what is being modulated, it can produce various effects such as tremolo and chorus.
+Modulation works by periodically varying a target parameter with a low-frequency oscillator. Depending on what is being modulated, it can produce various effects such as tremolo, vibrato, phaser, and chorus/flanger.
 
-**Amplitude modulation** periodically varies the signal gain:
+**Amplitude modulation** periodically varies the signal gain. The formula is:
 
 $$
 A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)
 $$
 
-where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
-**Frequency modulation** periodically varies the signal pitch:
+**Frequency modulation** periodically varies the signal pitch. The formula is:
 
 $$
 f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)
 $$
 
-where $c$ is the modulation depth in cents and $f_m$ is the modulation frequency.
+where $c$ and $f_m$ are the modulation depth and modulation frequency, respectively. Here $c$ is in cents, and an octave spans 1200 cents.
 
 **Phase modulation** is implemented via all-pass filters, periodically shifting the phase of the signal.
 
@@ -355,23 +359,23 @@ $$
 \phi(t)=d\sin(2\pi f_m t)
 $$
 
-where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
-**Delay modulation** periodically varies the signal delay time:
+**Delay modulation** periodically varies the signal delay time. The delay amount is calculated as:
 
 $$
 \tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)
 $$
 
-where $d$ is the modulation depth and $f_m$ is the modulation frequency.
+where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
-The app uses Plotly.js and KaTeX to draw modulation curves and their corresponding formulas.
+Plotly.js and KaTeX are used in the app to draw modulation curves and their corresponding formulas.
 
 ### Scores
 
 - Scores are written in [ABC Notation](https://abcnotation.com/)
-- [abcjs](https://www.abcjs.net/) parses the text and renders the score
-- Animation and playback use callbacks generated after rendering the score
+- [abcjs](https://www.abcjs.net/) is used to parse the text and render the scores
+- Animation and playback are implemented using callbacks obtained after rendering the score
 - SVG is provided directly by abcjs
 - PNG is generated by converting SVG with the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 - PDF is generated from SVG through the browser's print feature
@@ -379,17 +383,17 @@ The app uses Plotly.js and KaTeX to draw modulation curves and their correspondi
 
 ### Input Devices
 
-- MIDI device connections are implemented with the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
+- MIDI device connections are implemented via the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
 
 ### Time-Domain and Frequency-Domain Analysis
 
-- Uses the Web Audio API's [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) to obtain frequency-domain and time-domain data
+- The Web Audio API's [AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) is used to obtain frequency-domain and time-domain data
 - Rendering is implemented with the Canvas API
-- Animation is performed by continuously refreshing each frame via [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)
+- Animation is achieved by continuously refreshing each frame via [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)
 
 ## Tech Stack
 
-Built with these open-source projects:
+Built on the following open-source projects:
 
 - React
 - TypeScript
