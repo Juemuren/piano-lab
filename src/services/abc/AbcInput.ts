@@ -63,7 +63,7 @@ function getHeaderInsertLineIndex(lines: string[]) {
 
 export function updateAbcHeaderField(
   content: string,
-  key: 'L' | 'Q',
+  key: 'L' | 'Q' | 'K',
   value: string,
 ) {
   const lines = content ? content.split(/\r?\n/) : [];
@@ -85,10 +85,11 @@ export function updateAbcHeader(
   return [
     ['L', settings.defaultNoteLength],
     ['Q', settings.tempo === undefined ? undefined : `1/4=${settings.tempo}`],
+    ['K', settings.keySignature],
   ].reduce((nextContent, [key, value]) => {
     return value === undefined
       ? nextContent
-      : updateAbcHeaderField(nextContent, key as 'L' | 'Q', value);
+      : updateAbcHeaderField(nextContent, key as 'L' | 'Q' | 'K', value);
   }, content);
 }
 
@@ -158,7 +159,7 @@ function parseKeyRoot(keyValue: string) {
   return `${match[1].toUpperCase()}${match[2]}`;
 }
 
-function getKeySignatureOffset(content: string) {
+function getKeySignatureOffset(content: string, fallbackKeySignature: string) {
   const lines = content.split(/\r?\n/);
 
   for (const line of lines) {
@@ -171,12 +172,19 @@ function getKeySignatureOffset(content: string) {
     return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
   }
 
-  return 0;
+  const keyRoot = parseKeyRoot(fallbackKeySignature);
+  return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
 }
 
-function getKeySignatureAccidentals(content: string) {
+function getKeySignatureAccidentals(
+  content: string,
+  fallbackKeySignature: string,
+) {
   const accidentals = new Map<NaturalPitchClass, KeyAccidental>();
-  const keySignatureOffset = getKeySignatureOffset(content);
+  const keySignatureOffset = getKeySignatureOffset(
+    content,
+    fallbackKeySignature,
+  );
   const accidentalOrder =
     keySignatureOffset >= 0
       ? SHARP_ORDER.slice(0, keySignatureOffset)
@@ -204,8 +212,15 @@ function getAbcPitchToken(
   return `${accidentalToken}${pitchToken}`;
 }
 
-function getAbcPitchWithKeySignature(pitch: number, content: string) {
-  const keySignatureAccidentals = getKeySignatureAccidentals(content);
+function getAbcPitchWithKeySignature(
+  pitch: number,
+  content: string,
+  fallbackKeySignature: string,
+) {
+  const keySignatureAccidentals = getKeySignatureAccidentals(
+    content,
+    fallbackKeySignature,
+  );
   const pitchClass = getPitchClass(pitch);
   const octave = getPitchOctave(pitch);
 
@@ -260,10 +275,11 @@ export function appendPitchToAbc(
     duration,
     getQuarterNoteSeconds(settings.tempo),
   );
-  const note = `${getAbcPitchWithKeySignature(pitch, content)}${getDurationSuffix(
-    noteLength,
-    settings.defaultNoteLength,
-  )}`;
+  const note = `${getAbcPitchWithKeySignature(
+    pitch,
+    content,
+    settings.keySignature,
+  )}${getDurationSuffix(noteLength, settings.defaultNoteLength)}`;
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);
   const lastLine = lines[lines.length - 1] ?? '';

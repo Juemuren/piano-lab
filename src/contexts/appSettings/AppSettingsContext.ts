@@ -7,11 +7,13 @@ import {
 export interface PianoInputSettings {
   defaultNoteLength: string;
   tempo: number;
+  keySignature: string;
 }
 
 export const DEFAULT_PIANO_INPUT_SETTINGS: PianoInputSettings = {
   defaultNoteLength: '1/8',
   tempo: 180,
+  keySignature: 'C',
 };
 
 export const DEFAULT_KEYBOARD_CONTROL_SETTINGS = DEFAULT_KEYBOARD_NOTE_MAPPINGS;

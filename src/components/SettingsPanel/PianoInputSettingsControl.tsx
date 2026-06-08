@@ -6,6 +6,23 @@ import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
 
 const DEFAULT_NOTE_LENGTH_OPTIONS = ['1/4', '1/8', '1/16'];
+const KEY_SIGNATURE_OPTIONS = [
+  'C',
+  'G',
+  'D',
+  'A',
+  'E',
+  'B',
+  'F#',
+  'C#',
+  'F',
+  'Bb',
+  'Eb',
+  'Ab',
+  'Db',
+  'Gb',
+  'Cb',
+];
 
 type PianoInputSettingsControlProps = {
   isPianoInputEnabled: boolean;
@@ -30,6 +47,11 @@ function PianoInputSettingsControl({
       {noteLength}
     </option>
   ));
+  const keySignatureOptions = KEY_SIGNATURE_OPTIONS.map((keySignature) => (
+    <option key={keySignature} value={keySignature}>
+      {keySignature}
+    </option>
+  ));
 
   return (
     <div className="flex flex-col gap-3">
@@ -50,6 +72,17 @@ function PianoInputSettingsControl({
             }
           >
             {defaultLengthOptions}
+          </ControlSelect>
+          <ControlSelect
+            label={t('settings.pianoInput.keySignature')}
+            value={pianoInputSettings.keySignature}
+            onChange={(e) =>
+              onPianoInputSettingsChange({
+                keySignature: e.target.value,
+              })
+            }
+          >
+            {keySignatureOptions}
           </ControlSelect>
           <ControlRange
             label={t('settings.pianoInput.tempo')}

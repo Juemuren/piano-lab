@@ -48,6 +48,10 @@ function getStoredPianoInputSettings(value: unknown): PianoInputSettings {
       DEFAULT_PIANO_INPUT_SETTINGS.defaultNoteLength,
     ),
     tempo: numberOrDefault(value.tempo, DEFAULT_PIANO_INPUT_SETTINGS.tempo),
+    keySignature: stringOrDefault(
+      value.keySignature,
+      DEFAULT_PIANO_INPUT_SETTINGS.keySignature,
+    ),
   };
 }
 
