@@ -47,6 +47,7 @@ const NOTE_LENGTHS = [
 
 type NaturalPitchClass = keyof typeof NATURAL_PITCH_CLASSES;
 type KeyAccidental = -1 | 0 | 1;
+type AbcHeaderFieldKey = 'L' | 'Q' | 'K';
 
 function isHeaderLine(line: string) {
   return /^[A-Z]:/.test(line.trim());
@@ -63,7 +64,7 @@ function getHeaderInsertLineIndex(lines: string[]) {
 
 export function updateAbcHeaderField(
   content: string,
-  key: 'L' | 'Q' | 'K',
+  key: AbcHeaderFieldKey,
   value: string,
 ) {
   const lines = content ? content.split(/\r?\n/) : [];
@@ -89,8 +90,15 @@ export function updateAbcHeader(
   ].reduce((nextContent, [key, value]) => {
     return value === undefined
       ? nextContent
-      : updateAbcHeaderField(nextContent, key as 'L' | 'Q' | 'K', value);
+      : updateAbcHeaderField(nextContent, key as AbcHeaderFieldKey, value);
   }, content);
+}
+
+function getAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
+  const lines = content.split(/\r?\n/);
+  const headerLine = lines.find((line) => line.trim().startsWith(`${key}:`));
+
+  return headerLine?.trim().slice(2).trim();
 }
 
 function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
@@ -109,6 +117,11 @@ function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
 
 export function getQuarterNoteSeconds(tempo: number) {
   return 60 / tempo;
+}
+
+function parseTempo(tempo: string) {
+  const value = tempo.trim().match(/(?:^|=)(\d+(?:\.\d+)?)$/)?.[1];
+  return value === undefined ? Number.NaN : Number(value);
 }
 
 function parseNoteLength(noteLength: string) {
@@ -160,19 +173,9 @@ function parseKeyRoot(keyValue: string) {
 }
 
 function getKeySignatureOffset(content: string, fallbackKeySignature: string) {
-  const lines = content.split(/\r?\n/);
-
-  for (const line of lines) {
-    const trimmedLine = line.trim();
-    if (!trimmedLine.startsWith('K:')) {
-      continue;
-    }
-
-    const keyRoot = parseKeyRoot(trimmedLine.slice(2));
-    return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
-  }
-
-  const keyRoot = parseKeyRoot(fallbackKeySignature);
+  const keyRoot = parseKeyRoot(
+    getAbcHeaderField(content, 'K') ?? fallbackKeySignature,
+  );
   return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
 }
 
@@ -271,15 +274,20 @@ export function appendPitchToAbc(
   duration: number,
   settings: PianoInputSettings,
 ) {
+  const defaultNoteLength =
+    getAbcHeaderField(content, 'L') ?? settings.defaultNoteLength;
+  const tempo = parseTempo(
+    getAbcHeaderField(content, 'Q') ?? `1/4=${settings.tempo}`,
+  );
   const noteLength = getNearestNoteLength(
     duration,
-    getQuarterNoteSeconds(settings.tempo),
+    getQuarterNoteSeconds(Number.isFinite(tempo) ? tempo : settings.tempo),
   );
   const note = `${getAbcPitchWithKeySignature(
     pitch,
     content,
     settings.keySignature,
-  )}${getDurationSuffix(noteLength, settings.defaultNoteLength)}`;
+  )}${getDurationSuffix(noteLength, defaultNoteLength)}`;
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);
   const lastLine = lines[lines.length - 1] ?? '';
