@@ -4,13 +4,20 @@ import { useSynthEngine } from '../../contexts/synthEngine';
 const CANVAS_HEIGHT = 140;
 const FREQUENCY_BAR_GAP = 1;
 const FREQUENCY_MIN_BAR_WIDTH = 1;
+const DARK_COLOR_SCHEME_QUERY = '(prefers-color-scheme: dark)';
 
-function getCssColor(name: string, fallback: string) {
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(name)
+function getThemeColor(name: string) {
+  const isDark = window.matchMedia(DARK_COLOR_SCHEME_QUERY).matches;
+  const themeName = isDark ? `${name}-dark` : name;
+  const themedValue = getComputedStyle(document.documentElement)
+    .getPropertyValue(themeName)
     .trim();
 
-  return value || fallback;
+  if (themedValue) return themedValue;
+
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
 }
 
 function resizeCanvas(canvas: HTMLCanvasElement) {
@@ -27,14 +34,14 @@ function drawBackground(
   width: number,
   height: number,
 ) {
-  const borderColor = getCssColor(
-    '--color-app-border',
-    'rgba(128,128,128,0.2)',
-  );
+  const backgroundColor = getThemeColor('--color-app-mantle');
+  const borderColor = getThemeColor('--color-app-border');
 
   context.clearRect(0, 0, width, height);
-  context.fillStyle = 'rgba(128,128,128,0.08)';
+  context.globalAlpha = 0.35;
+  context.fillStyle = backgroundColor;
   context.fillRect(0, 0, width, height);
+  context.globalAlpha = 1;
   context.strokeStyle = borderColor;
   context.lineWidth = 1;
 
@@ -56,8 +63,8 @@ function drawFrequency(
   if (!context) return;
 
   const { width, height } = canvas;
-  const accentColor = getCssColor('--color-app-info', '#005ef4');
-  const tipColor = getCssColor('--color-app-tip', '#10834a');
+  const accentColor = getThemeColor('--color-app-info');
+  const tipColor = getThemeColor('--color-app-tip');
   const maxBarCount = Math.floor(
     width / (FREQUENCY_MIN_BAR_WIDTH + FREQUENCY_BAR_GAP),
   );
@@ -103,7 +110,7 @@ function drawTimeDomain(
   if (!context) return;
 
   const { width, height } = canvas;
-  const accentColor = getCssColor('--color-app-warning', '#b56e0b');
+  const accentColor = getThemeColor('--color-app-warning');
   const sliceWidth = width / Math.max(data.length - 1, 1);
 
   analyserNode.getByteTimeDomainData(data);
