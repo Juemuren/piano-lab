@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Locate } from 'lucide-react';
+import { Radio } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
@@ -43,7 +43,7 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
       <div className="space-y-3">
         <ControlButton
           title={t('effect.panner.enabled')}
-          icon={<Locate size={18} />}
+          icon={<Radio size={18} />}
           label={t(panner ? 'effect.panner.disabled' : 'effect.panner.enabled')}
           onClick={() => onEnabledChange(!panner)}
         />

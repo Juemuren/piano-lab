@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Activity, AudioWaveform } from 'lucide-react';
+import { AudioLines } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { TremoloConfig, VibratoConfig } from '../../../../types';
 import {
@@ -54,7 +54,7 @@ function Modulation({
           <h3 className="font-semibold">{t('effect.modulation.tremolo')}</h3>
           <ControlButton
             title={t('effect.modulation.tremoloEnabled')}
-            icon={<Activity size={18} />}
+            icon={<AudioLines size={18} />}
             label={t(
               tremolo
                 ? 'effect.modulation.tremoloDisabled'
@@ -104,7 +104,7 @@ function Modulation({
 
           <ControlButton
             title={t('effect.modulation.vibratoEnabled')}
-            icon={<AudioWaveform size={18} />}
+            icon={<AudioLines size={18} />}
             label={t(
               vibrato
                 ? 'effect.modulation.vibratoDisabled'

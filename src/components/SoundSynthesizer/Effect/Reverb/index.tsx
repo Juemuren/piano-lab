@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { AudioLines } from 'lucide-react';
+import { House } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
@@ -66,7 +66,7 @@ function Reverb({
       <div className="space-y-3">
         <ControlButton
           title={t('effect.reverb.enabled')}
-          icon={<AudioLines size={18} />}
+          icon={<House size={18} />}
           label={t(reverb ? 'effect.reverb.disabled' : 'effect.reverb.enabled')}
           onClick={() => onEnabledChange(!reverb)}
         />
