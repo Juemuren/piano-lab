@@ -36,6 +36,8 @@ function PianoKey({
 
   return (
     <button
+      key={note}
+      title={note.toString()}
       type="button"
       onMouseDown={(e) => onKeyDown(e, note)}
       onMouseUp={(e) => onKeyUp(e, note)}

@@ -30,6 +30,7 @@ function VerticalSliderGroup({
           <div className="text-xs">{formatValue(value, index)}</div>
           <div className="relative flex h-36 w-8 items-center justify-center">
             <input
+              title={(index + 1).toString()}
               type="range"
               min={min}
               max={max}

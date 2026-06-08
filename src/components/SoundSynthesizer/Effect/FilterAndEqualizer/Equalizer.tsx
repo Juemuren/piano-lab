@@ -55,6 +55,7 @@ function Equalizer({
                 onClick={() => onRemove(index)}
               />
               <ControlSelect
+                title={t('effect.equalizer.name')}
                 value={equalizer.type}
                 onChange={(e) =>
                   onTypeChange(index, e.target.value as EqualizerType)
@@ -107,6 +108,7 @@ function Equalizer({
             onClick={() => onAdd(selectedEqualizerType)}
           />
           <ControlSelect
+            title={t('effect.equalizer.name')}
             value={selectedEqualizerType}
             onChange={(e) =>
               setSelectedEqualizerType(e.target.value as EqualizerType)

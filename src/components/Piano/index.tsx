@@ -40,7 +40,6 @@ function Piano() {
         <div className="flex">
           {whiteKeys.map((key) => (
             <PianoKey
-              key={key.note}
               note={key.note}
               isPressed={isKeyPressed(key.note)}
               isMouseControlEnabled={isMouseControlEnabled}
@@ -68,7 +67,6 @@ function Piano() {
         <div className="absolute top-0 left-0">
           {blackKeys.map((key) => (
             <PianoKey
-              key={key.note}
               note={key.note}
               isPressed={isKeyPressed(key.note)}
               isMouseControlEnabled={isMouseControlEnabled}

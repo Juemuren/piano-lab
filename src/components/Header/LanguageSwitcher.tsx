@@ -7,7 +7,7 @@ import {
 import ControlSelect from '../shared/ControlSelect';
 
 function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('app');
 
   const languageOptions = SUPPORTED_LANGUAGES.map((language) => (
     <option key={language} value={language}>
@@ -22,6 +22,7 @@ function LanguageSwitcher() {
         className="shrink-0 text-app-subtext dark:text-app-subtext-dark"
       />
       <ControlSelect
+        title={t('languageSwitcher.title')}
         value={i18n.resolvedLanguage ?? i18n.language}
         onChange={(e) => {
           i18n.changeLanguage(e.target.value);

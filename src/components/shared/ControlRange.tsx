@@ -39,6 +39,7 @@ function ControlRange({
         <span className="font-semibold">{displayValue}</span>
       </div>
       <input
+        title={label}
         type="range"
         min={min}
         max={max}

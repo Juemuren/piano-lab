@@ -7,6 +7,9 @@
     "settings": "设置",
     "about": "关于"
   },
+  "languageSwitcher": {
+    "title": "语言切换"
+  },
   "settings": {
     "keyboardControl": "使用键盘控制琴键",
     "mouseControl": "使用鼠标控制琴键",

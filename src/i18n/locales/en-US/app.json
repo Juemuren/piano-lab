@@ -7,6 +7,9 @@
     "settings": "Settings",
     "about": "About"
   },
+  "languageSwitcher": {
+    "title": "Switch language"
+  },
   "settings": {
     "keyboardControl": "Use keyboard to control piano keys",
     "mouseControl": "Use mouse to control piano keys",

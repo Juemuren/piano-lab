@@ -7,6 +7,9 @@
     "settings": "設定",
     "about": "について"
   },
+  "languageSwitcher": {
+    "title": "言語を切り替える"
+  },
   "settings": {
     "keyboardControl": "キーボードで鍵盤を操作する",
     "mouseControl": "マウスで鍵盤を操作する",

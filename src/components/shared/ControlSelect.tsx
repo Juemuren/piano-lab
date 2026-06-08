@@ -27,6 +27,7 @@ function ControlSelect({
       )}
       <select
         id={selectId}
+        title={label}
         className={`
           w-full p-2 rounded-2xl text-left
           bg-app-mantle dark:bg-app-mantle-dark

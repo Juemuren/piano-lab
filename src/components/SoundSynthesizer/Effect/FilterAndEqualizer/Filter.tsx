@@ -54,6 +54,7 @@ function Filter({
                 onClick={() => onRemove(index)}
               />
               <ControlSelect
+                title={t('effect.filter.name')}
                 value={filter.type}
                 onChange={(e) =>
                   onTypeChange(index, e.target.value as FilterType)
@@ -94,6 +95,7 @@ function Filter({
             onClick={() => onAdd(selectedFilterType)}
           />
           <ControlSelect
+            title={t('effect.filter.name')}
             value={selectedFilterType}
             onChange={(e) =>
               setSelectedFilterType(e.target.value as FilterType)

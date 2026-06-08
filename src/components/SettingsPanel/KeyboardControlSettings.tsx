@@ -87,19 +87,20 @@ function KeyboardControlSettings({
               <label
                 key={offset}
                 className="
-                    grid grid-cols-[1rem_1fr_2rem] items-center gap-2 py-1 px-3
-                    rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
-                  "
+                  grid grid-cols-[1rem_1fr_2rem] items-center gap-2 py-1 px-3
+                  rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
+                "
               >
                 <span className="text-sm font-bold">
                   {getOffsetLabel(offset)}
                 </span>
                 <input
+                  id={key}
                   className="
-                      min-w-0 text-center p-1
-                      rounded-xl bg-app-mantle dark:bg-app-mantle-dark
-                      border border-app-border dark:border-app-border-dark
-                    "
+                    min-w-0 text-center p-1
+                    rounded-xl bg-app-mantle dark:bg-app-mantle-dark
+                    border border-app-border dark:border-app-border-dark
+                  "
                   readOnly
                   value={key ? getKeyboardControlKeyLabel(key) : ''}
                   placeholder={t('settings.keyboard.empty')}

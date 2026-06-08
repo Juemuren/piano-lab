@@ -21,6 +21,7 @@ function FileImportButton({
   return (
     <>
       <input
+        title={label}
         ref={fileInputRef}
         type="file"
         accept={accept}
