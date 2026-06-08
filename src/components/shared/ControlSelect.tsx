@@ -17,11 +17,11 @@ function ControlSelect({
 
   return (
     <label className="flex flex-col gap-1 text-center">
-      {label && <span className="py-2 font-bold">{label}</span>}
+      {label && <span className="p-1 font-bold">{label}</span>}
       <select
         id={selectId}
         className={`
-          w-full p-2 rounded-2xl text-left flex-1
+          w-full p-2 rounded-2xl text-left
           bg-app-mantle dark:bg-app-mantle-dark
           border border-app-border dark:border-app-border-dark
           focus:border-app-accent focus:ring-2 focus:ring-app-accent/50
