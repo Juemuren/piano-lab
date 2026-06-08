@@ -4,6 +4,7 @@ import type {
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
 } from '../../../types';
+import { degreesToRadians } from '../../../utils/math';
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
@@ -11,7 +12,6 @@ type ReverbPresetDefinition = Pick<
 >;
 
 const LATE_TAIL_RANDOM_SEED = 0x4d595df4;
-const DEGREES_TO_RADIANS = Math.PI / 180;
 
 export const REVERB_PRESET_DEFINITIONS: Record<
   BuiltInReverbPreset,
@@ -120,7 +120,7 @@ export function getReverbImpulseResponseSamples(
     if (index >= length) continue;
 
     amplitude[index] +=
-      reflection.gain * Math.cos(reflection.phase * DEGREES_TO_RADIANS);
+      reflection.gain * Math.cos(degreesToRadians(reflection.phase));
   }
 
   const getRandomAmplitude = createRandomAmplitudeGenerator();

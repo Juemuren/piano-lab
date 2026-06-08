@@ -1,6 +1,6 @@
 import type { PannerConfig } from '../../../types';
+import { degreesToRadians } from '../../../utils/math';
 
-const DEGREE_TO_RADIAN = Math.PI / 180;
 const DISTANCE_POINT_COUNT = 160;
 const SPHERE_LATITUDE_COUNT = 12;
 const SPHERE_LONGITUDE_COUNT = 24;
@@ -121,7 +121,7 @@ export function getPannerConePolygon(
 ) {
   const direction = normalizeVector(config.orientationX, config.orientationZ);
   const directionAngle = Math.atan2(direction.z, direction.x);
-  const halfAngle = Math.min(Math.max(angle / 2, 0), 180) * DEGREE_TO_RADIAN;
+  const halfAngle = degreesToRadians(Math.min(Math.max(angle / 2, 0), 180));
   const sampleCount = Math.max(8, Math.ceil(angle / 6));
   const x = [config.positionX];
   const z = [config.positionZ];
@@ -184,7 +184,7 @@ function getPannerConeSectionMesh(
   radius: number,
 ) {
   const { right, up } = createDirectionBasis(direction);
-  const halfAngle = Math.min(Math.max(angle / 2, 0), 180) * DEGREE_TO_RADIAN;
+  const halfAngle = degreesToRadians(Math.min(Math.max(angle / 2, 0), 180));
   const mesh: PannerConeMesh = {
     x: [config.positionX],
     y: [config.positionY],
