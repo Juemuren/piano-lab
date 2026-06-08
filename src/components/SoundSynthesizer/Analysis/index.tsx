@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Gauge, Hourglass } from 'lucide-react';
+import { Signal, Hourglass } from 'lucide-react';
 import useAudioAnalysis from '../../../hooks/synth/useAudioAnalysis';
 
 function Analysis() {
@@ -11,7 +11,7 @@ function Analysis() {
       <details open className="space-y-2">
         <summary className="font-bold">
           <span className="inline-flex items-center gap-1">
-            <Gauge size={16} />
+            <Signal size={16} />
             {t('analysis.frequencyDomain')}
           </span>
         </summary>

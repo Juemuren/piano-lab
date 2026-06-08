@@ -1,5 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { Radio, Crosshair, Compass, Ruler, Triangle } from 'lucide-react';
+import {
+  Radio,
+  Crosshair,
+  Compass,
+  Ruler,
+  Triangle,
+  Power,
+  PowerOff,
+} from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
@@ -56,6 +64,7 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
       <div className="space-y-3">
         <ControlButton
           title={t('effect.panner.enabled')}
+          icon={panner ? <Power size={18} /> : <PowerOff size={18} />}
           label={t(panner ? 'effect.panner.disabled' : 'effect.panner.enabled')}
           onClick={() => onEnabledChange(!panner)}
         />

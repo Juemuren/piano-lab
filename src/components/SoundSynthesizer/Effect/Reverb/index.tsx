@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { House } from 'lucide-react';
+import { House, Power, PowerOff } from 'lucide-react';
 import { InlineMath } from 'react-katex';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
@@ -69,6 +69,7 @@ function Reverb({
       <div className="space-y-3">
         <ControlButton
           title={t('effect.reverb.enabled')}
+          icon={reverb ? <Power size={18} /> : <PowerOff size={18} />}
           label={t(reverb ? 'effect.reverb.disabled' : 'effect.reverb.enabled')}
           onClick={() => onEnabledChange(!reverb)}
         />

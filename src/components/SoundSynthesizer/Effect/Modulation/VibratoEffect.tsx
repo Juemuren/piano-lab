@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { Power, PowerOff } from 'lucide-react';
 import type { VibratoConfig } from '../../../../types';
 import { getVibratoCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
@@ -35,6 +36,7 @@ function VibratoEffect({
 
       <ControlButton
         title={t('effect.modulation.vibratoEnabled')}
+        icon={vibrato ? <Power size={18} /> : <PowerOff size={18} />}
         label={t(
           vibrato
             ? 'effect.modulation.vibratoDisabled'

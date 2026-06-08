@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { Power, PowerOff } from 'lucide-react';
 import type { PhaseModulationConfig } from '../../../../types';
 import { getPhaseModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
@@ -36,6 +37,7 @@ function PhaseModulationEffect({
 
       <ControlButton
         title={t('effect.modulation.phaseModulationEnabled')}
+        icon={phaseModulation ? <Power size={18} /> : <PowerOff size={18} />}
         label={t(
           phaseModulation
             ? 'effect.modulation.phaseModulationDisabled'

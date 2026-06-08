@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Ban } from 'lucide-react';
+import { Ban, Power, PowerOff } from 'lucide-react';
 import type { CompressorConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -38,6 +38,7 @@ function Compressor({
       <div className="space-y-3">
         <ControlButton
           title={t('effect.compressor.enabled')}
+          icon={compressor ? <Power size={18} /> : <PowerOff size={18} />}
           label={t(
             compressor
               ? 'effect.compressor.disabled'

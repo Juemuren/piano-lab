@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import { AudioWaveform } from 'lucide-react';
+import { AudioWaveform, Power, PowerOff } from 'lucide-react';
 import type { WaveShaperConfig, WaveShaperPreset } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -100,6 +100,7 @@ function WaveShaper({
       <div className="space-y-3">
         <ControlButton
           title={t('effect.waveShaper.enabled')}
+          icon={waveShaper ? <Power size={18} /> : <PowerOff size={18} />}
           label={t(
             waveShaper
               ? 'effect.waveShaper.disabled'
