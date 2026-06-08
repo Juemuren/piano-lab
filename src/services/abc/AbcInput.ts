@@ -47,7 +47,7 @@ const NOTE_LENGTHS = [
 
 type NaturalPitchClass = keyof typeof NATURAL_PITCH_CLASSES;
 type KeyAccidental = -1 | 0 | 1;
-type AbcHeaderFieldKey = 'L' | 'Q' | 'K';
+type AbcHeaderFieldKey = 'L' | 'Q' | 'K' | 'M';
 
 function isHeaderLine(line: string) {
   return /^[A-Z]:/.test(line.trim());
@@ -129,6 +129,45 @@ function parseNoteLength(noteLength: string) {
   return Number(numerator) / Number(denominator);
 }
 
+function parseMeter(meter: string) {
+  const normalizedMeter = meter.trim();
+  if (normalizedMeter === 'C') {
+    return 1;
+  }
+  if (normalizedMeter === 'C|') {
+    return 1 / 2;
+  }
+  if (normalizedMeter.toLowerCase() === 'none') {
+    return null;
+  }
+
+  const [numerator, denominator] = normalizedMeter.split('/');
+  const meterLength = Number(numerator) / Number(denominator);
+
+  return Number.isFinite(meterLength) && meterLength > 0 ? meterLength : 1;
+}
+
+function parseDurationSuffix(durationSuffix: string) {
+  if (!durationSuffix) {
+    return 1;
+  }
+
+  const match = durationSuffix.match(/^(\d*)(\/+)?(\d*)$/);
+  if (!match) {
+    return 1;
+  }
+
+  const numerator = match[1] ? Number(match[1]) : 1;
+  const slashCount = match[2]?.length ?? 0;
+  const denominator = match[3]
+    ? Number(match[3])
+    : slashCount > 0
+      ? 2 ** slashCount
+      : 1;
+
+  return numerator / denominator;
+}
+
 function getFraction(value: number) {
   for (let denominator = 1; denominator <= MAX_DENOMINATOR; denominator *= 2) {
     const numerator = Math.round(value * denominator);
@@ -153,6 +192,60 @@ function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
   }
 
   return numerator === 1 ? `/${denominator}` : `${numerator}/${denominator}`;
+}
+
+function getBodyContent(content: string) {
+  return content
+    .split(/\r?\n/)
+    .filter((line) => !isHeaderLine(line))
+    .join('\n');
+}
+
+function getCurrentMeasureLength(content: string, defaultNoteLength: string) {
+  const defaultLength = parseNoteLength(defaultNoteLength);
+  const bodyContent = getBodyContent(content);
+  const lastMeasureContent = bodyContent.split('|').at(-1) ?? '';
+  const noteMatches = lastMeasureContent.matchAll(
+    /(?:\^|_|=)*[A-Ga-gz][,']*(\d*(?:\/+\d*)?)/g,
+  );
+
+  return Array.from(noteMatches).reduce((measureLength, match) => {
+    return measureLength + defaultLength * parseDurationSuffix(match[1] ?? '');
+  }, 0);
+}
+
+function getMeasureSeparator(
+  content: string,
+  defaultNoteLength: string,
+  nextNoteLength: number,
+) {
+  const meterLength = parseMeter(getAbcHeaderField(content, 'M') ?? '4/4');
+  if (meterLength === null) {
+    return '';
+  }
+
+  const measureLength = getCurrentMeasureLength(content, defaultNoteLength);
+  if (measureLength > 0 && measureLength + nextNoteLength > meterLength) {
+    return '| ';
+  }
+
+  return '';
+}
+
+function getCompletedMeasureSuffix(
+  content: string,
+  defaultNoteLength: string,
+  nextNoteLength: number,
+) {
+  const meterLength = parseMeter(getAbcHeaderField(content, 'M') ?? '4/4');
+  if (meterLength === null) {
+    return '';
+  }
+
+  const measureLength = getCurrentMeasureLength(content, defaultNoteLength);
+  const nextMeasureLength = (measureLength + nextNoteLength) % meterLength;
+
+  return nextNoteLength > 0 && nextMeasureLength < Number.EPSILON ? ' |' : '';
 }
 
 function normalizePitchClass(value: number) {
@@ -288,10 +381,20 @@ export function appendPitchToAbc(
     content,
     settings.keySignature,
   )}${getDurationSuffix(noteLength, defaultNoteLength)}`;
+  const measureSeparator = getMeasureSeparator(
+    content,
+    defaultNoteLength,
+    noteLength,
+  );
+  const completedMeasureSuffix = getCompletedMeasureSuffix(
+    measureSeparator ? `${content.trimEnd()} ${measureSeparator}` : content,
+    defaultNoteLength,
+    noteLength,
+  );
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);
   const lastLine = lines[lines.length - 1] ?? '';
   const separator = isHeaderLine(lastLine) ? '\n' : ' ';
 
-  return `${trimmedEnd}${trimmedEnd ? separator : ''}${note} `;
+  return `${trimmedEnd}${trimmedEnd ? separator : ''}${measureSeparator}${note}${completedMeasureSuffix} `;
 }
