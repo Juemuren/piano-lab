@@ -24,11 +24,12 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
+          <FooterPanel title={t('about.title')}>{t('about.body')}</FooterPanel>
+          <FooterPanel title={t('synthesis.title')}>
+            {t('synthesis.body')}
+          </FooterPanel>
           <FooterPanel title={t('notation.title')}>
             {t('notation.body')}
-          </FooterPanel>
-          <FooterPanel title={t('principle.title')}>
-            {t('principle.body')}
           </FooterPanel>
         </div>
 
