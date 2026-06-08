@@ -19,6 +19,7 @@ interface ReverbProps {
   onEarlyReflectionRemove: (index: number) => void;
   onEarlyReflectionDelayChange: (index: number, value: number) => void;
   onEarlyReflectionGainChange: (index: number, value: number) => void;
+  onEarlyReflectionPhaseChange: (index: number, value: number) => void;
   onLateTailDelayChange: (value: number) => void;
   onLateTailDurationChange: (value: number) => void;
   onLateTailAmplitudeChange: (value: number) => void;
@@ -41,6 +42,7 @@ function Reverb({
   onEarlyReflectionRemove,
   onEarlyReflectionDelayChange,
   onEarlyReflectionGainChange,
+  onEarlyReflectionPhaseChange,
   onLateTailDelayChange,
   onLateTailDurationChange,
   onLateTailAmplitudeChange,
@@ -108,6 +110,7 @@ function Reverb({
               onRemove={onEarlyReflectionRemove}
               onDelayChange={onEarlyReflectionDelayChange}
               onGainChange={onEarlyReflectionGainChange}
+              onPhaseChange={onEarlyReflectionPhaseChange}
             />
 
             <LateTail

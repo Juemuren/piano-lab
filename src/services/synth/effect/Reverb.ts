@@ -11,6 +11,7 @@ type ReverbPresetDefinition = Pick<
 >;
 
 const LATE_TAIL_RANDOM_SEED = 0x4d595df4;
+const DEGREES_TO_RADIANS = Math.PI / 180;
 
 export const REVERB_PRESET_DEFINITIONS: Record<
   BuiltInReverbPreset,
@@ -18,9 +19,9 @@ export const REVERB_PRESET_DEFINITIONS: Record<
 > = {
   bathroom: {
     earlyReflections: [
-      { delay: 0.005, gain: 0.3 },
-      { delay: 0.01, gain: 0.2 },
-      { delay: 0.015, gain: 0.1 },
+      { delay: 0.005, gain: 0.3, phase: 0 },
+      { delay: 0.01, gain: 0.2, phase: 180 },
+      { delay: 0.015, gain: 0.1, phase: 0 },
     ],
     lateTail: {
       delay: 0.02,
@@ -31,10 +32,10 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   garage: {
     earlyReflections: [
-      { delay: 0.01, gain: 0.25 },
-      { delay: 0.02, gain: 0.2 },
-      { delay: 0.03, gain: 0.15 },
-      { delay: 0.04, gain: 0.1 },
+      { delay: 0.01, gain: 0.25, phase: 0 },
+      { delay: 0.02, gain: 0.2, phase: 180 },
+      { delay: 0.03, gain: 0.15, phase: 0 },
+      { delay: 0.04, gain: 0.1, phase: 180 },
     ],
     lateTail: {
       delay: 0.05,
@@ -45,11 +46,11 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   hall: {
     earlyReflections: [
-      { delay: 0.015, gain: 0.15 },
-      { delay: 0.03, gain: 0.125 },
-      { delay: 0.045, gain: 0.1 },
-      { delay: 0.06, gain: 0.075 },
-      { delay: 0.075, gain: 0.05 },
+      { delay: 0.015, gain: 0.15, phase: 0 },
+      { delay: 0.03, gain: 0.125, phase: 180 },
+      { delay: 0.045, gain: 0.1, phase: 0 },
+      { delay: 0.06, gain: 0.075, phase: 180 },
+      { delay: 0.075, gain: 0.05, phase: 0 },
     ],
     lateTail: {
       delay: 0.09,
@@ -60,12 +61,12 @@ export const REVERB_PRESET_DEFINITIONS: Record<
   },
   cathedral: {
     earlyReflections: [
-      { delay: 0.03, gain: 0.12 },
-      { delay: 0.05, gain: 0.1 },
-      { delay: 0.08, gain: 0.08 },
-      { delay: 0.12, gain: 0.06 },
-      { delay: 0.17, gain: 0.04 },
-      { delay: 0.23, gain: 0.02 },
+      { delay: 0.03, gain: 0.12, phase: 0 },
+      { delay: 0.05, gain: 0.1, phase: 180 },
+      { delay: 0.08, gain: 0.08, phase: 0 },
+      { delay: 0.12, gain: 0.06, phase: 180 },
+      { delay: 0.17, gain: 0.04, phase: 0 },
+      { delay: 0.23, gain: 0.02, phase: 180 },
     ],
     lateTail: {
       delay: 0.25,
@@ -118,7 +119,8 @@ export function getReverbImpulseResponseSamples(
     const index = Math.round(reflection.delay * sampleRate);
     if (index >= length) continue;
 
-    amplitude[index] += reflection.gain;
+    amplitude[index] +=
+      reflection.gain * Math.cos(reflection.phase * DEGREES_TO_RADIANS);
   }
 
   const getRandomAmplitude = createRandomAmplitudeGenerator();

@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import {
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
   DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
+  DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
 } from '../../../constants/synth';
 import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../types';
@@ -40,6 +41,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
         {
           delay: DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
           gain: DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
+          phase: DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
         },
       ],
     }));
@@ -86,6 +88,23 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
           (current ?? fallback).earlyReflections,
           index,
           (reflection) => ({ ...reflection, gain }),
+        ),
+      }));
+    },
+    [],
+  );
+
+  const updateReverbEarlyReflectionPhase = useCallback(
+    (index: number, phase: number) => {
+      const fallback = createDefaultReverbConfig();
+
+      setReverb((current) => ({
+        ...(current ?? fallback),
+        preset: 'custom',
+        earlyReflections: updateItemAt(
+          (current ?? fallback).earlyReflections,
+          index,
+          (reflection) => ({ ...reflection, phase }),
         ),
       }));
     },
@@ -141,6 +160,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
     removeReverbEarlyReflection,
     updateReverbEarlyReflectionDelay,
     updateReverbEarlyReflectionGain,
+    updateReverbEarlyReflectionPhase,
     updateReverbLateTailDelay,
     updateReverbLateTailDuration,
     updateReverbLateTailAmplitude,

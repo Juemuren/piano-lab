@@ -118,6 +118,7 @@ export type ReverbPreset = BuiltInReverbPreset | 'custom';
 export interface ReverbEarlyReflectionConfig {
   delay: number;
   gain: number;
+  phase: number;
 }
 
 export interface ReverbLateTailConfig {

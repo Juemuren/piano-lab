@@ -49,6 +49,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     removeReverbEarlyReflection,
     updateReverbEarlyReflectionDelay,
     updateReverbEarlyReflectionGain,
+    updateReverbEarlyReflectionPhase,
     updateReverbLateTailDelay,
     updateReverbLateTailDuration,
     updateReverbLateTailAmplitude,
@@ -102,6 +103,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEarlyReflectionRemove={removeReverbEarlyReflection}
         onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
         onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
+        onEarlyReflectionPhaseChange={updateReverbEarlyReflectionPhase}
         onLateTailDelayChange={updateReverbLateTailDelay}
         onLateTailDurationChange={updateReverbLateTailDuration}
         onLateTailAmplitudeChange={updateReverbLateTailAmplitude}

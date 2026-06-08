@@ -182,7 +182,8 @@
         "name": "早期反射",
         "item": "反射 {{index}}",
         "delay": "延时",
-        "amplitude": "振幅"
+        "amplitude": "振幅",
+        "phase": "相位"
       },
       "lateTail": {
         "name": "晚期尾音",

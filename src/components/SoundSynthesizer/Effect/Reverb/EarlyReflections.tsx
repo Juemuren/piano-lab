@@ -12,6 +12,7 @@ interface EarlyReflectionsProps {
   onRemove: (index: number) => void;
   onDelayChange: (index: number, value: number) => void;
   onGainChange: (index: number, value: number) => void;
+  onPhaseChange: (index: number, value: number) => void;
 }
 
 function EarlyReflections({
@@ -20,6 +21,7 @@ function EarlyReflections({
   onRemove,
   onDelayChange,
   onGainChange,
+  onPhaseChange,
 }: EarlyReflectionsProps) {
   const { t } = useTranslation('synth');
 
@@ -28,7 +30,9 @@ function EarlyReflections({
       <summary className="font-bold my-2">
         {t('effect.reverb.earlyReflection.name')}
       </summary>
-      <BlockMath math={String.raw`h_e[n]=\sum_i a_i\delta[n-d_if_s]`} />
+      <BlockMath
+        math={String.raw`h_e[n]=\sum_i a_i\cos(\phi_i)\delta[n-d_if_s]`}
+      />
       <div className="space-y-3">
         {earlyReflections.map((reflection, index) => (
           <div key={index} className="space-y-2">
@@ -63,6 +67,16 @@ function EarlyReflections({
               value={reflection.gain}
               displayValue={reflection.gain.toFixed(2)}
               onChange={(value) => onGainChange(index, value)}
+            />
+            <ControlRange
+              label={t('effect.reverb.earlyReflection.phase')}
+              symbol={<InlineMath math="\phi_i" />}
+              min="0"
+              max="180"
+              step="1"
+              value={reflection.phase}
+              displayValue={`${reflection.phase.toFixed(0)}°`}
+              onChange={(value) => onPhaseChange(index, value)}
             />
           </div>
         ))}
