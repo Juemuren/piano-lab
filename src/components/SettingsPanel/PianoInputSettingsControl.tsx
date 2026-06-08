@@ -6,6 +6,7 @@ import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
 
 const DEFAULT_NOTE_LENGTH_OPTIONS = ['1/4', '1/8', '1/16'];
+const TIME_SIGNATURE_OPTIONS = ['2/4', '3/4', '4/4', '6/8', '9/8', '12/8'];
 const KEY_SIGNATURE_OPTIONS = [
   'C',
   'G',
@@ -47,6 +48,11 @@ function PianoInputSettingsControl({
       {noteLength}
     </option>
   ));
+  const timeSignatureOptions = TIME_SIGNATURE_OPTIONS.map((timeSignature) => (
+    <option key={timeSignature} value={timeSignature}>
+      {timeSignature}
+    </option>
+  ));
   const keySignatureOptions = KEY_SIGNATURE_OPTIONS.map((keySignature) => (
     <option key={keySignature} value={keySignature}>
       {keySignature}
@@ -62,7 +68,7 @@ function PianoInputSettingsControl({
       />
       {isPianoInputEnabled && (
         <div className="text-sm text-app-subtext dark:text-app-subtext-dark">
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-3">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-3">
             <ControlSelect
               label={t('settings.pianoInput.defaultNoteLength')}
               value={pianoInputSettings.defaultNoteLength}
@@ -73,6 +79,17 @@ function PianoInputSettingsControl({
               }
             >
               {defaultLengthOptions}
+            </ControlSelect>
+            <ControlSelect
+              label={t('settings.pianoInput.timeSignature')}
+              value={pianoInputSettings.timeSignature}
+              onChange={(e) =>
+                onPianoInputSettingsChange({
+                  timeSignature: e.target.value,
+                })
+              }
+            >
+              {timeSignatureOptions}
             </ControlSelect>
             <ControlSelect
               label={t('settings.pianoInput.keySignature')}

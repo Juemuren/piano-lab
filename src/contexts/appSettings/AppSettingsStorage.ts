@@ -52,6 +52,10 @@ function getStoredPianoInputSettings(value: unknown): PianoInputSettings {
       value.keySignature,
       DEFAULT_PIANO_INPUT_SETTINGS.keySignature,
     ),
+    timeSignature: stringOrDefault(
+      value.timeSignature,
+      DEFAULT_PIANO_INPUT_SETTINGS.timeSignature,
+    ),
   };
 }
 

@@ -16,6 +16,7 @@
     "recordingEnable": "录制合成器音频",
     "pianoInput": {
       "defaultNoteLength": "默认音符长度",
+      "timeSignature": "节拍",
       "keySignature": "调号",
       "tempo": "速度",
       "quarterNoteSeconds": "1/4 音符时长：{{seconds}} 秒"

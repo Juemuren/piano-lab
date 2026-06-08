@@ -86,6 +86,7 @@ export function updateAbcHeader(
   return [
     ['L', settings.defaultNoteLength],
     ['Q', settings.tempo === undefined ? undefined : `1/4=${settings.tempo}`],
+    ['M', settings.timeSignature],
     ['K', settings.keySignature],
   ].reduce((nextContent, [key, value]) => {
     return value === undefined
@@ -218,8 +219,11 @@ function getMeasureSeparator(
   content: string,
   defaultNoteLength: string,
   nextNoteLength: number,
+  fallbackTimeSignature: string,
 ) {
-  const meterLength = parseMeter(getAbcHeaderField(content, 'M') ?? '4/4');
+  const meterLength = parseMeter(
+    getAbcHeaderField(content, 'M') ?? fallbackTimeSignature,
+  );
   if (meterLength === null) {
     return '';
   }
@@ -236,8 +240,11 @@ function getCompletedMeasureSuffix(
   content: string,
   defaultNoteLength: string,
   nextNoteLength: number,
+  fallbackTimeSignature: string,
 ) {
-  const meterLength = parseMeter(getAbcHeaderField(content, 'M') ?? '4/4');
+  const meterLength = parseMeter(
+    getAbcHeaderField(content, 'M') ?? fallbackTimeSignature,
+  );
   if (meterLength === null) {
     return '';
   }
@@ -385,11 +392,13 @@ export function appendPitchToAbc(
     content,
     defaultNoteLength,
     noteLength,
+    settings.timeSignature,
   );
   const completedMeasureSuffix = getCompletedMeasureSuffix(
     measureSeparator ? `${content.trimEnd()} ${measureSeparator}` : content,
     defaultNoteLength,
     noteLength,
+    settings.timeSignature,
   );
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);
