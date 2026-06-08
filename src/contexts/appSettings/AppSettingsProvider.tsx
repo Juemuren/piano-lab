@@ -1,9 +1,9 @@
-import { type ReactNode, useMemo, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useState } from 'react';
+import { AppSettingsContext } from './AppSettingsContext';
 import {
-  AppSettingsContext,
-  DEFAULT_KEYBOARD_CONTROL_SETTINGS,
-  DEFAULT_PIANO_INPUT_SETTINGS,
-} from './AppSettingsContext';
+  readStoredAppSettings,
+  writeStoredAppSettings,
+} from './AppSettingsStorage';
 import type {
   AppSettingsContextValue,
   PianoInputSettings,
@@ -14,17 +14,47 @@ interface AppSettingsProviderProps {
 }
 
 export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
-  const [isPianoInputEnabled, setIsPianoInputEnabled] = useState(false);
-  const [pianoInputSettings, setPianoInputSettings] =
-    useState<PianoInputSettings>(DEFAULT_PIANO_INPUT_SETTINGS);
-  const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] =
-    useState(false);
-  const [keyboardNoteMappings, setKeyboardNoteMappings] = useState(
-    DEFAULT_KEYBOARD_CONTROL_SETTINGS,
+  const [initialSettings] = useState(readStoredAppSettings);
+  const [isPianoInputEnabled, setIsPianoInputEnabled] = useState(
+    initialSettings.isPianoInputEnabled,
   );
-  const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(true);
-  const [isTouchControlEnabled, setIsTouchControlEnabled] = useState(true);
-  const [isMidiControlEnabled, setIsMidiControlEnabled] = useState(false);
+  const [pianoInputSettings, setPianoInputSettings] =
+    useState<PianoInputSettings>(initialSettings.pianoInputSettings);
+  const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] = useState(
+    initialSettings.isKeyboardControlEnabled,
+  );
+  const [keyboardNoteMappings, setKeyboardNoteMappings] = useState(
+    initialSettings.keyboardNoteMappings,
+  );
+  const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(
+    initialSettings.isMouseControlEnabled,
+  );
+  const [isTouchControlEnabled, setIsTouchControlEnabled] = useState(
+    initialSettings.isTouchControlEnabled,
+  );
+  const [isMidiControlEnabled, setIsMidiControlEnabled] = useState(
+    initialSettings.isMidiControlEnabled,
+  );
+
+  useEffect(() => {
+    writeStoredAppSettings({
+      isPianoInputEnabled,
+      pianoInputSettings,
+      isKeyboardControlEnabled,
+      keyboardNoteMappings,
+      isMouseControlEnabled,
+      isTouchControlEnabled,
+      isMidiControlEnabled,
+    });
+  }, [
+    isKeyboardControlEnabled,
+    isMidiControlEnabled,
+    isMouseControlEnabled,
+    isPianoInputEnabled,
+    keyboardNoteMappings,
+    pianoInputSettings,
+    isTouchControlEnabled,
+  ]);
 
   const value = useMemo(
     (): AppSettingsContextValue => ({
