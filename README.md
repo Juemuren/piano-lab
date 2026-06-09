@@ -215,6 +215,23 @@ $$
 - 在音符的持续时间内，振幅维持在稳音增益
 - 最后在**释音时间**内，振幅重新回到静音增益
 
+完整的公式为
+
+$$
+\begin{cases}
+  A(t) = \varepsilon (\frac{1}{\varepsilon})^{\frac{t}{\tau_a}}
+  & 0\le t < \tau_a \\
+  A(t) = S^{\frac{t-\tau_a}{\tau_d}}
+  & \tau_a\le t < \tau_a + \tau_d \\
+  A(t) = S
+  & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
+  A(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}}
+  & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
+\end{cases}
+$$
+
+其中 $\varepsilon, S, \tau_a, \tau_d, \tau_r, T$ 分别表示静音增益、稳音增益、起音时间、延迟时间、释放时间和音符持续时间。
+
 为了更符合物理事实，高次谐波的衰减和释放会变快，且其稳音增益也会变小。代码中使用 $t_n = \frac{t_1}{\sqrt n}$ 和 $g_n = \frac{g_1}{\sqrt{n+1}}$ 来模拟这种关系。
 
 应用内使用 Plotly.js 绘制振幅包络曲线。
