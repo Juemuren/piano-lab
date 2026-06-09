@@ -19,7 +19,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": "biome check --write",
-    "*.{md,css,html,json}": "biome format --write"
+    "*.{css,html,json}": "biome format --write"
   },
   "dependencies": {
     "abcjs": "^6.6.2",

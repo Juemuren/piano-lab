@@ -25,7 +25,7 @@
 
 ## Features
 
-弦律 (Piano Lab) provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
+Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
 
 - [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects; record audio and export in WebM/MP4 and other formats
 - [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export as SVG/PNG/PDF/MIDI files
@@ -158,13 +158,13 @@ npm run build:tauri
 
 ### Code Style
 
-The project uses ESLint and Prettier.
+The project uses Biome.
 
 ```sh
-# eslint
 npm run lint
-# prettier
 npm run format
+# lint + format
+npm run check
 ```
 
 ## Principles
@@ -207,13 +207,30 @@ KaTeX is used in the app to render spectrum preset formulas.
 
 ### Amplitude Envelope
 
-A series of exponential functions is used to simulate how amplitude changes over time:
+A series of exponential functions simulate how amplitude changes over time:
 
 - The amplitude is first set to the **silence gain**
 - Then, during the **attack time**, the amplitude rises to the target gain
 - Next, during the **decay time**, the amplitude decays to the **sustain gain**
 - Throughout the note's duration, the amplitude stays at the sustain gain
 - Finally, during the **release time**, the amplitude returns to the silence gain
+
+The complete formula is:
+
+$$
+\begin{cases}
+  A(t) = \varepsilon (\frac{1}{\varepsilon})^{\frac{t}{\tau_a}}
+  & 0\le t < \tau_a \\
+  A(t) = S^{\frac{t-\tau_a}{\tau_d}}
+  & \tau_a\le t < \tau_a + \tau_d \\
+  A(t) = S
+  & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
+  A(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}}
+  & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
+\end{cases}
+$$
+
+where $\varepsilon, S, \tau_a, \tau_d, \tau_r, T$ denote the silence gain, sustain gain, attack time, decay time, release time, and note duration, respectively.
 
 To better match physical reality, higher harmonics decay and release faster, and their sustain gain is also smaller. The code uses $t_n = \frac{t_1}{\sqrt n}$ and $g_n = \frac{g_1}{\sqrt{n+1}}$ to model this relationship.
 
@@ -280,7 +297,7 @@ $$
 
 where $A$, $\alpha$, $D$, and $T$ are the initial amplitude, decay coefficient, delay time, and duration, respectively.
 
-$\mathcal{N}(0,1)$ is a normal random variable with mean $0$ and standard deviation $1$, used to distribute the impulse response evenly between positive and negative values, preventing excessive DC gain during convolution:
+$\mathcal{N}(0,1)$ is a normal random variable with mean $0$ and standard deviation $1$, used to distribute the impulse response evenly between positive and negative values, preventing excessive DC gain during convolution. The DC gain is calculated as:
 
 $$
 H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t
@@ -338,36 +355,32 @@ Modulation works by periodically varying a target parameter with a low-frequency
 **Amplitude modulation** periodically varies the signal gain. The formula is:
 
 $$
-A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)
+A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)
 $$
 
-where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
+where $\Delta G$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
 **Frequency modulation** periodically varies the signal pitch. The formula is:
 
 $$
-f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)
+f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)
 $$
 
-where $c$ and $f_m$ are the modulation depth and modulation frequency, respectively. Here $c$ is in cents, and an octave spans 1200 cents.
+where $\Delta c$ is in cents, and an octave spans 1200 cents.
 
 **Phase modulation** is implemented via all-pass filters, periodically shifting the phase of the signal.
 
 An all-pass filter is also a type of BiquadFilterNode, and the phase shift it introduces can be approximated as:
 
 $$
-\phi(t)=d\sin(2\pi f_m t)
+\phi(t)=\phi_{\max}\sin(2\pi f_m t)
 $$
-
-where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
 **Delay modulation** periodically varies the signal delay time. The delay amount is calculated as:
 
 $$
-\tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)
+\tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)
 $$
-
-where $d$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
 Plotly.js and KaTeX are used in the app to draw modulation curves and their corresponding formulas.
 
