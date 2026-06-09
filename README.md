@@ -215,6 +215,23 @@ $$
 - 在音符的持续时间内，振幅维持在稳音增益
 - 最后在**释音时间**内，振幅重新回到静音增益
 
+完整的公式为
+
+$$
+\begin{cases}
+  A(t) = \varepsilon (\frac{1}{\varepsilon})^{\frac{t}{\tau_a}}
+  & 0\le t < \tau_a \\
+  A(t) = S^{\frac{t-\tau_a}{\tau_d}}
+  & \tau_a\le t < \tau_a + \tau_d \\
+  A(t) = S
+  & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
+  A(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}}
+  & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
+\end{cases}
+$$
+
+其中 $\varepsilon, S, \tau_a, \tau_d, \tau_r, T$ 分别表示静音增益、稳音增益、起音时间、延迟时间、释放时间和音符持续时间。
+
 为了更符合物理事实，高次谐波的衰减和释放会变快，且其稳音增益也会变小。代码中使用 $t_n = \frac{t_1}{\sqrt n}$ 和 $g_n = \frac{g_1}{\sqrt{n+1}}$ 来模拟这种关系。
 
 应用内使用 Plotly.js 绘制振幅包络曲线。
@@ -338,36 +355,32 @@ PannerNode 的声像模型支持等功率平移算法和头部相关传递函数
 **振幅调制**周期性地改变信号增益，公式为
 
 $$
-A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)
+A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)
 $$
 
-其中 $d,f_m$ 分别为调制深度和调制频率。
+其中 $\Delta G,f_m$ 分别为调制深度和调制频率。
 
 **频率调制**周期性地改变信号音高，公式为
 
 $$
-f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)
+f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)
 $$
 
-其中 $c,f_m$ 分别为调制深度和调制频率。这里 $c$ 的单位是音分，而一个八度的频率跨度为 1200 音分。
+这里 $\Delta c$ 的单位是音分，而一个八度的频率跨度为 1200 音分。
 
 **相位调制**通过全通滤波器实现，周期性地改变信号相位。
 
 全通滤波器也是 BiquadFilterNode 的一种，其产生的相位偏移可近似为
 
 $$
-\phi(t)=d\sin(2\pi f_m t)
+\phi(t)=\phi_{\max}\sin(2\pi f_m t)
 $$
-
-其中 $d,f_m$ 分别为调制深度和调制频率。
 
 **延时调制**周期性地改变信号的延迟时间。延时量的计算公式为
 
 $$
-\tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)
+\tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)
 $$
-
-其中 $d,f_m$ 分别为调制深度和调制频率。
 
 应用内使用 Plotly.js 和 KaTeX 绘制调制曲线及对应公式。
 

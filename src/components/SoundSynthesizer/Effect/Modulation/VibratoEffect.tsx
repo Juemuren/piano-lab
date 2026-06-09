@@ -48,7 +48,7 @@ function VibratoEffect({
       {vibrato && (
         <div className="space-y-2">
           <BlockMath
-            math={String.raw`f_y(t)=[1 + (2^{c/1200}-1)\sin(2\pi f_m t)]f_x(t)`}
+            math={String.raw`f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)`}
           />
           <ControlRange
             label={t('effect.modulation.frequency')}
@@ -62,7 +62,7 @@ function VibratoEffect({
           />
           <ControlRange
             label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="c" />}
+            symbol={<InlineMath math="\Delta c" />}
             min="0"
             max="100"
             step="1"

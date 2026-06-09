@@ -11,13 +11,13 @@ function EnvelopeFormulaPreview({ title }: EnvelopeFormulaPreviewProps) {
       <BlockMath
         math={String.raw`
             \begin{cases}
-            y(t) = \varepsilon (\frac{1}{\varepsilon})^{\frac{t}{\tau_a}}
+            A(t) = \varepsilon (\frac{1}{\varepsilon})^{\frac{t}{\tau_a}}
             & 0\le t < \tau_a \\
-            y(t) = S^{\frac{t-\tau_a}{\tau_d}}
+            A(t) = S^{\frac{t-\tau_a}{\tau_d}}
             & \tau_a\le t < \tau_a + \tau_d \\
-            y(t) = S
+            A(t) = S
             & \tau_a + \tau_d \le t < \tau_a + \tau_d + T \\
-            y(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}}
+            A(t) = S (\frac{\varepsilon}{S})^{\frac{t-\tau_a-\tau_d-T}{\tau_r}}
             & \tau_a + \tau_d + T \le t < \tau_a + \tau_d + T + \tau_r
             \end{cases}
           `}

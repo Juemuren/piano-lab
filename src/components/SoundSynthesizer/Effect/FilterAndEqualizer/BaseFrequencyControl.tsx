@@ -31,7 +31,7 @@ function BaseFrequencyControl({
       <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
         <ControlRange
           label={labelRange}
-          symbol={<InlineMath math="f" />}
+          symbol={<InlineMath math="f_1" />}
           min="20"
           max="5000"
           step="1"

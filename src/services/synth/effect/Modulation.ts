@@ -19,15 +19,12 @@ function createTimePoints() {
 
 export function getTremoloCurvePoints(tremolo: TremoloConfig) {
   const time = createTimePoints();
-  const depth = Math.min(Math.max(tremolo.depth, 0), 1);
+  const depth = Math.min(Math.max(tremolo.depth, 0), 0.5);
 
   return {
     time,
     gainRatio: time.map(
-      (t) =>
-        1 -
-        depth / 2 +
-        (depth / 2) * Math.sin(2 * Math.PI * tremolo.frequency * t),
+      (t) => 1 - depth + depth * Math.sin(2 * Math.PI * tremolo.frequency * t),
     ),
   };
 }
@@ -49,11 +46,11 @@ export function getPhaseModulationCurvePoints(
   phaseModulation: PhaseModulationConfig,
 ) {
   const time = createTimePoints();
-  const depth = Math.min(Math.max(phaseModulation.depth, 0), 1);
+  const depth = Math.min(Math.max(phaseModulation.depth, 0), Math.PI);
 
   return {
     time,
-    phaseRatio: time.map(
+    phase: time.map(
       (t) => depth * Math.sin(2 * Math.PI * phaseModulation.frequency * t),
     ),
   };
