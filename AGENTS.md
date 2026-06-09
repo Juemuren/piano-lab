@@ -29,8 +29,7 @@
 修改了 [src](src) 中的代码后，请运行以下命令以保证质量
 
 ```sh
-npm run format
-npm run lint
+npm run check
 npm run build
 ```
 

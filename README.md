@@ -158,13 +158,13 @@ npm run build:tauri
 
 ### 代码风格
 
-项目使用 ESLint 和 Prettier
+项目使用 Biome
 
 ```sh
-# eslint
 npm run lint
-# prettier
 npm run format
+# lint + format
+npm run check
 ```
 
 ## 原理
