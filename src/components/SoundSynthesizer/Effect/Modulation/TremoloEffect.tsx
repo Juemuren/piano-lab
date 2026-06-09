@@ -48,7 +48,7 @@ function TremoloEffect({
       {tremolo && (
         <div className="space-y-2">
           <BlockMath
-            math={String.raw`A_y(t)=[1-\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)]A_x(t)`}
+            math={String.raw`A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)`}
           />
           <ControlRange
             label={t('effect.modulation.frequency')}
@@ -62,12 +62,12 @@ function TremoloEffect({
           />
           <ControlRange
             label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="d" />}
+            symbol={<InlineMath math="\Delta G" />}
             min="0"
-            max="1"
+            max="0.5"
             step="0.01"
             value={tremolo.depth}
-            displayValue={`${(tremolo.depth * 100).toFixed(0)}%`}
+            displayValue={`${tremolo.depth.toFixed(2)}`}
             onChange={onDepthChange}
           />
           {tremoloCurve && (

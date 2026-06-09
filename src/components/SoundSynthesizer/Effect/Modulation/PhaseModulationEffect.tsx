@@ -48,7 +48,7 @@ function PhaseModulationEffect({
 
       {phaseModulation && (
         <div className="space-y-2">
-          <BlockMath math={String.raw`\phi(t)=d\sin(2\pi f_m t)`} />
+          <BlockMath math={String.raw`\phi(t)=\phi_{\max}\sin(2\pi f_m t)`} />
           <ControlRange
             label={t('effect.modulation.frequency')}
             symbol={<InlineMath math="f_m" />}
@@ -61,19 +61,19 @@ function PhaseModulationEffect({
           />
           <ControlRange
             label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="d" />}
+            symbol={<InlineMath math="\phi_{\max}" />}
             min="0"
-            max="1"
+            max={Math.PI}
             step="0.01"
             value={phaseModulation.depth}
-            displayValue={`${(phaseModulation.depth * 100).toFixed(0)}%`}
+            displayValue={`${phaseModulation.depth.toFixed(2)} rad`}
             onChange={onDepthChange}
           />
           {phaseModulationCurve && (
             <ModulationCurvePreview
               title={t('effect.modulation.phaseCurve')}
               time={phaseModulationCurve.time}
-              values={phaseModulationCurve.phaseRatio}
+              values={phaseModulationCurve.phase}
             />
           )}
         </div>

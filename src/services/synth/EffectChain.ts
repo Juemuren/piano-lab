@@ -140,13 +140,13 @@ export class EffectChain {
     this.tremoloOscillatorNode.disconnect();
     this.tremoloDepthGainNode.disconnect();
 
-    const depth = Math.min(Math.max(tremoloConfig.depth, 0), 1);
+    const depth = Math.min(Math.max(tremoloConfig.depth, 0), 0.5);
     this.tremoloOscillatorNode.frequency.value = Math.max(
       tremoloConfig.frequency,
       0.01,
     );
-    this.tremoloGainNode.gain.value = 1 - depth / 2;
-    this.tremoloDepthGainNode.gain.value = depth / 2;
+    this.tremoloGainNode.gain.value = 1 - depth;
+    this.tremoloDepthGainNode.gain.value = depth;
     this.tremoloOscillatorNode.connect(this.tremoloDepthGainNode);
     this.tremoloDepthGainNode.connect(this.tremoloGainNode.gain);
 
@@ -174,14 +174,15 @@ export class EffectChain {
     this.phaseModulationOscillatorNode.disconnect();
     this.phaseModulationDepthGainNode.disconnect();
 
-    const depth = Math.min(Math.max(phaseModulationConfig.depth, 0), 1);
+    const depth = Math.min(Math.max(phaseModulationConfig.depth, 0), Math.PI);
+    const depthRatio = depth / Math.PI;
     this.phaseModulationNode.frequency.value = 700;
-    this.phaseModulationNode.Q.value = 1 + depth * 8;
+    this.phaseModulationNode.Q.value = 1 + depthRatio * 8;
     this.phaseModulationOscillatorNode.frequency.value = Math.max(
       phaseModulationConfig.frequency,
       0.01,
     );
-    this.phaseModulationDepthGainNode.gain.value = depth * 600;
+    this.phaseModulationDepthGainNode.gain.value = depthRatio * 600;
     this.phaseModulationOscillatorNode.connect(
       this.phaseModulationDepthGainNode,
     );

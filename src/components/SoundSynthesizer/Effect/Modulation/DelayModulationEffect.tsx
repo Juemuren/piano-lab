@@ -49,7 +49,7 @@ function DelayModulationEffect({
       {delayModulation && (
         <div className="space-y-2">
           <BlockMath
-            math={String.raw`\tau(t)=\frac{d}{2}+\frac{d}{2}\sin(2\pi f_m t)`}
+            math={String.raw`\tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)`}
           />
           <ControlRange
             label={t('effect.modulation.frequency')}
@@ -63,7 +63,7 @@ function DelayModulationEffect({
           />
           <ControlRange
             label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="d" />}
+            symbol={<InlineMath math="\tau_{\max}" />}
             min="0"
             max="0.02"
             step="0.001"
