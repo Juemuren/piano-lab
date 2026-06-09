@@ -16,7 +16,7 @@ function LanguageSwitcher() {
   ));
 
   return (
-    <label className="flex items-center gap-2 text-sm">
+    <div className="flex items-center gap-2 text-sm">
       <Languages
         size={18}
         className="shrink-0 text-app-subtext dark:text-app-subtext-dark"
@@ -30,7 +30,7 @@ function LanguageSwitcher() {
       >
         {languageOptions}
       </ControlSelect>
-    </label>
+    </div>
   );
 }
 

@@ -69,7 +69,9 @@ function useSynthRecorder(synthEngine: SynthEngine) {
   const cleanupRecordingTarget = useCallback(() => {
     disconnectRef.current?.();
     disconnectRef.current = null;
-    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current?.getTracks().forEach((track) => {
+      track.stop();
+    });
     streamRef.current = null;
   }, []);
 

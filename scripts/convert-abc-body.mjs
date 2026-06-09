@@ -93,8 +93,7 @@ function parseDefaultNoteLength(abc) {
   }
 
   const meter = tune.getMeterFraction?.();
-  const meterValue =
-    meter && meter.den ? Number(meter.num) / Number(meter.den) : 4 / 4;
+  const meterValue = meter?.den ? Number(meter.num) / Number(meter.den) : 4 / 4;
 
   return meterValue < 0.75
     ? { numerator: 1, denominator: 16 }

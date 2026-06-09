@@ -12,6 +12,7 @@
   "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
   "i18n-ally.sourceLanguage": "zh-CN",
   "json.schemaDownload.trustedDomains": {
+    "https://www.schemastore.org/": true,
     "https://biomejs.dev/schemas/": true
   }
 }

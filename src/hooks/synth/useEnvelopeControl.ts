@@ -21,7 +21,7 @@ function sampleExponentialRamp(
   return Array.from({ length: ENVELOPE_POINTS_PER_SEGMENT + 1 }, (_, index) => {
     const progress = index / ENVELOPE_POINTS_PER_SEGMENT;
     const time = startTime + (endTime - startTime) * progress;
-    const gain = startGain * Math.pow(endGain / startGain, progress);
+    const gain = startGain * (endGain / startGain) ** progress;
 
     return { time, gain };
   });

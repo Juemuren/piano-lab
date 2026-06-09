@@ -49,7 +49,7 @@ interface CreateVoiceStopPlansOptions {
 }
 
 export function getBaseFrequency(pitch: number, cents: number = 0) {
-  return 440 * Math.pow(2, (pitch + cents / 100 - 69) / 12);
+  return 440 * 2 ** ((pitch + cents / 100 - 69) / 12);
 }
 
 export function getTargetGain(
@@ -139,7 +139,7 @@ function getExponentialRampValue(
     Math.max((time - startTime) / (endTime - startTime), 0),
     1,
   );
-  return startValue * Math.pow(endValue / startValue, progress);
+  return startValue * (endValue / startValue) ** progress;
 }
 
 export function getVoiceGainAtTime(voice: VoiceEnvelopeState, time: number) {

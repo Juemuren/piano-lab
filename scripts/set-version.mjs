@@ -113,7 +113,7 @@ function updateJsonFile(label, filePath, update) {
 
 function updateCargoToml(filePath, nextVersion) {
   const input = readFileSync(filePath, 'utf8');
-  const regex = /(^\[package\]\r?\n(?:[^\[]*\r?\n)*?^version\s*=\s*)"([^"]+)"/m;
+  const regex = /(^\[package\]\r?\n(?:[^[]*\r?\n)*?^version\s*=\s*)"([^"]+)"/m;
 
   const match = input.match(regex);
 

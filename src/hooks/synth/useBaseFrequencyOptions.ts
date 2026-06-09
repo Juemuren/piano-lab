@@ -15,7 +15,7 @@ function useBaseFrequencyOptions(baseFrequency: number) {
       ({ pitch }) => getBaseFrequency(pitch) > baseFrequency,
     );
 
-    let pitchRangeLabel;
+    let pitchRangeLabel: string;
     switch (firstHigherPitchIndex) {
       case -1:
         pitchRangeLabel = `> ${PITCH_OPTIONS.at(firstHigherPitchIndex)?.label}`;

@@ -6,9 +6,9 @@ import type { AbcPlayer } from '../../services/abc/AbcPlayer';
 const BEAT_SUBDIVISIONS = 8;
 
 const removeHighlight = () => {
-  document
-    .querySelectorAll('.abcjs-highlight')
-    .forEach((el) => el.classList.remove('abcjs-highlight'));
+  document.querySelectorAll('.abcjs-highlight').forEach((el) => {
+    el.classList.remove('abcjs-highlight');
+  });
 };
 
 const addHighlight = (elements: HTMLElement[]) => {

@@ -34,7 +34,7 @@ export function createSpectrum(
         amplitude = Math.exp(-sigma * n);
         break;
       case 'realistic':
-        amplitude = (1 / Math.pow(n, p)) * Math.exp(-sigma * n);
+        amplitude = (1 / n ** p) * Math.exp(-sigma * n);
         break;
     }
     amplitudes.push(amplitude);

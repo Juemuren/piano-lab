@@ -113,7 +113,7 @@ export class BasicVoice {
     const vibratoOscillatorNode = audioContext.createOscillator();
     const vibratoDepthGainNode = audioContext.createGain();
     const depth = Math.max(this.vibrato.depth, 0);
-    const depthHz = frequency * (Math.pow(2, depth / 1200) - 1);
+    const depthHz = frequency * (2 ** (depth / 1200) - 1);
 
     vibratoOscillatorNode.type = 'sine';
     vibratoOscillatorNode.frequency.setValueAtTime(
