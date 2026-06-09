@@ -1,4 +1,4 @@
-import { type ChangeEventHandler, type ReactNode, type RefObject } from 'react';
+import type { ChangeEventHandler, ReactNode, RefObject } from 'react';
 import ControlButton from './ControlButton';
 
 interface FileImportButtonProps {

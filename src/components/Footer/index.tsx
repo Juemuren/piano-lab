@@ -1,5 +1,5 @@
+import { BookOpen, CircuitBoard, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Info, CircuitBoard, BookOpen } from 'lucide-react';
 import { SECTION_IDS } from '../../constants/sections';
 import FooterLink from './FooterLink';
 import FooterPanel from './FooterPanel';

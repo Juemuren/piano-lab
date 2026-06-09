@@ -1,5 +1,5 @@
+import { Hand, MousePointer } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { MousePointer, Hand } from 'lucide-react';
 import ControlCheckbox from '../shared/ControlCheckbox';
 
 type PointerControlSettingsProps = {

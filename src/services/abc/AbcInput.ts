@@ -1,6 +1,6 @@
-import { getAbcPitch } from './AbcCalculations';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
 import { getPitchOctave } from '../../utils/pitch';
+import { getAbcPitch } from './AbcCalculations';
 
 const MAX_DENOMINATOR = 32;
 const MEASURES_PER_LINE = 4;

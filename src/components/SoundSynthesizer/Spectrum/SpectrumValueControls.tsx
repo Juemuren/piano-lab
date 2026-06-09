@@ -1,5 +1,5 @@
-import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
 import { getHarmonicLabels } from '../../../utils/harmonic';
+import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
 
 interface SpectrumValueControlsProps {
   amplitudes: number[];

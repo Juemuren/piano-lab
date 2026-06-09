@@ -1,39 +1,39 @@
+import {
+  Activity,
+  ChartColumnDecreasing,
+  ChartLine,
+  ChartSpline,
+  Download,
+  Layers,
+  Sparkles,
+  Upload,
+  Volume,
+} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSynthEngine } from '../../contexts/synthEngine';
+import useFileExport from '../../hooks/file/useFileExport';
+import useFileImport from '../../hooks/file/useFileImport';
 import {
-  Download,
-  Upload,
-  Activity,
-  Volume,
-  Layers,
-  ChartSpline,
-  ChartColumnDecreasing,
-  Sparkles,
-  ChartLine,
-} from 'lucide-react';
+  createDefaultSynthConfig,
+  normalizeSynthConfig,
+} from '../../services/synth/SynthConfig';
 import type {
   EffectConfig,
   EnvelopeConfig,
   SpectrumConfig,
   SynthConfig,
 } from '../../types';
-import {
-  createDefaultSynthConfig,
-  normalizeSynthConfig,
-} from '../../services/synth/SynthConfig';
-import { useSynthEngine } from '../../contexts/synthEngine';
 import CollapsibleSection from '../shared/CollapsibleSection';
+import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
-import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
-import useFileExport from '../../hooks/file/useFileExport';
-import useFileImport from '../../hooks/file/useFileImport';
-import Envelope from './Envelope';
-import Effect from './Effect';
-import Spectrum from './Spectrum';
 import Analysis from './Analysis';
+import Effect from './Effect';
+import Envelope from './Envelope';
+import Spectrum from './Spectrum';
 
 function SoundSynthesizer() {
   const { t } = useTranslation('synth');

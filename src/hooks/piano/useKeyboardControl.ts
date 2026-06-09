@@ -1,8 +1,9 @@
-import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { KeyboardNoteMapping } from '../../constants/keyboard';
 import {
   KEYBOARD_OCTAVE_DOWN_KEY,
   KEYBOARD_OCTAVE_UP_KEY,
-  type KeyboardNoteMapping,
 } from '../../constants/keyboard';
 import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';

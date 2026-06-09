@@ -1,10 +1,8 @@
-import { RotateCcw, X, Keyboard } from 'lucide-react';
+import { Keyboard, RotateCcw, X } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  DEFAULT_KEYBOARD_NOTE_MAPPINGS,
-  type KeyboardNoteMapping,
-} from '../../constants/keyboard';
+import type { KeyboardNoteMapping } from '../../constants/keyboard';
+import { DEFAULT_KEYBOARD_NOTE_MAPPINGS } from '../../constants/keyboard';
 import {
   getKeyboardControlKeyLabel,
   normalizeKeyboardControlKey,

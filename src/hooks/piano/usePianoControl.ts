@@ -6,8 +6,8 @@ import { appendPitchToAbc } from '../../services/abc/AbcInput';
 import {
   getPitchName,
   getPitchOctave,
-  MIN_PIANO_PITCH,
   MAX_PIANO_PITCH,
+  MIN_PIANO_PITCH,
 } from '../../utils/pitch';
 import useKeyboardControl from './useKeyboardControl';
 import useMidiControl from './useMidiControl';

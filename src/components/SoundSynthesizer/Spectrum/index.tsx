@@ -1,12 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import type { SpectrumType } from '../../../types';
-import type { SpectrumConfig } from '../../../types';
+import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
+import type { SpectrumConfig, SpectrumType } from '../../../types';
 import BlockMath from '../../shared/BlockMath';
 import ControlSelect from '../../shared/ControlSelect';
-import SpectrumValueControls from './SpectrumValueControls';
-import SpectrumParameterControls from './SpectrumParameterControls';
 import SpectrumFormulaPreview from './SpectrumFormulaPreview';
-import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
+import SpectrumParameterControls from './SpectrumParameterControls';
+import SpectrumValueControls from './SpectrumValueControls';
 
 interface SpectrumProps {
   harmonicCount: number;

@@ -1,6 +1,6 @@
+import { ArrowLeftRight, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import { Minus, Plus, ArrowLeftRight } from 'lucide-react';
 import type { ReverbEarlyReflectionConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';

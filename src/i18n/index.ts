@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-
+import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import appEn from './locales/en-US/app.json';
 import footerEn from './locales/en-US/footer.json';
 import scoreEn from './locales/en-US/score.json';
@@ -13,7 +13,6 @@ import appZhCN from './locales/zh-CN/app.json';
 import footerZhCN from './locales/zh-CN/footer.json';
 import scoreZhCN from './locales/zh-CN/score.json';
 import synthZhCN from './locales/zh-CN/synth.json';
-import { getInitialLanguage, syncDocumentLanguage } from './bootstrap';
 import {
   DEFAULT_LANGUAGE,
   LANGUAGE_STORAGE_KEY,

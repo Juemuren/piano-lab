@@ -1,5 +1,6 @@
+import type { MidiFile } from 'abcjs';
+import { synth } from 'abcjs';
 import { useCallback } from 'react';
-import { type MidiFile, synth } from 'abcjs';
 import { downloadBlob } from '../../utils/file';
 
 function getMidiBinary(midiFile: MidiFile): Uint8Array | null {

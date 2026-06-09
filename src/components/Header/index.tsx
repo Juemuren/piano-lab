@@ -1,15 +1,16 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-  Menu,
-  Waves,
-  ScrollText,
-  Piano,
-  SlidersHorizontal,
   Info,
+  Menu,
+  Piano,
+  ScrollText,
+  SlidersHorizontal,
+  Waves,
 } from 'lucide-react';
-import LanguageSwitcher from './LanguageSwitcher';
+import type { ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NAV_ITEMS } from '../../constants/sections';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;

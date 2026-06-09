@@ -1,4 +1,5 @@
-import { type ReactNode, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { SynthEngine } from '../../services/synth/SynthEngine';
 import { SynthEngineContext } from './SynthEngineContext';
 

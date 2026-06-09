@@ -31,7 +31,7 @@
         "useImportType": {
           "level": "on",
           "options": {
-            "style": "inlineType"
+            "style": "separatedType"
           }
         }
       }

@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { AudioLines } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type {
   DelayModulationConfig,
   PhaseModulationConfig,

@@ -1,5 +1,5 @@
-import { useId } from 'react';
 import type { ReactNode, SelectHTMLAttributes } from 'react';
+import { useId } from 'react';
 
 type ControlSelectProps = {
   label?: string;

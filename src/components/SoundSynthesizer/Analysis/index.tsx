@@ -1,5 +1,5 @@
+import { Hourglass, Signal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Signal, Hourglass } from 'lucide-react';
 import useAudioAnalysis from '../../../hooks/synth/useAudioAnalysis';
 
 function Analysis() {

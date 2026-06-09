@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSynthEngine } from '../../contexts/synthEngine';
-import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
 import {
   DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
@@ -8,6 +6,8 @@ import {
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
 } from '../../constants/synth';
+import { useSynthEngine } from '../../contexts/synthEngine';
+import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_POINTS_PER_SEGMENT = 50;

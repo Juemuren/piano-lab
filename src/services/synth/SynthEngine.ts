@@ -2,14 +2,11 @@ import type {
   EffectConfig,
   EnvelopeConfig,
   Spectrum,
-  SynthBasicConfig,
   StartNoteResult,
+  SynthBasicConfig,
 } from '../../types';
-import {
-  BasicVoice,
-  type ActiveVoice,
-  type ReleasingVoice,
-} from './BasicVoice';
+import type { ActiveVoice, ReleasingVoice } from './BasicVoice';
+import { BasicVoice } from './BasicVoice';
 import { EffectChain } from './EffectChain';
 import { getVoiceGainAtTime } from './VoicePlanner';
 

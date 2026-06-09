@@ -1,6 +1,6 @@
+import { Speaker } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import { Speaker } from 'lucide-react';
 import type { ReverbLateTailConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlRange from '../../../shared/ControlRange';

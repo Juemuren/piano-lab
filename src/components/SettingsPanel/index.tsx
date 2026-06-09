@@ -1,12 +1,12 @@
 import { useAppSettings } from '../../contexts/appSettings';
 import { useMidiControlContext } from '../../contexts/midiControl';
 import usePianoInputSettings from '../../hooks/settings/usePianoInputSettings';
+import ControlPanel from '../shared/ControlPanel';
 import KeyboardControlSettings from './KeyboardControlSettings';
 import MidiControlSettings from './MidiControlSettings';
 import PianoInputSettingsControl from './PianoInputSettingsControl';
 import PointerControlSettings from './PointerControlSettings';
 import SynthRecorderSettings from './SynthRecorderSettings';
-import ControlPanel from '../shared/ControlPanel';
 
 function SettingsPanel() {
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =

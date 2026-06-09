@@ -1,14 +1,14 @@
-import { useTranslation } from 'react-i18next';
 import {
-  Radio,
-  Crosshair,
   Compass,
-  Ruler,
-  Triangle,
+  Crosshair,
   Power,
   PowerOff,
+  Radio,
+  Ruler,
+  Triangle,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { PannerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';

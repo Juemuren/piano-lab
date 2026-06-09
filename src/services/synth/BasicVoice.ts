@@ -1,9 +1,3 @@
-import type {
-  EnvelopeConfig,
-  Spectrum,
-  SynthBasicConfig,
-  VibratoConfig,
-} from '../../types';
 import {
   DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
@@ -18,12 +12,15 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
-import {
-  createVoiceStopPlans,
-  createVoiceStartPlans,
-  type VoiceEnvelopeState,
-} from './VoicePlanner';
+import type {
+  EnvelopeConfig,
+  Spectrum,
+  SynthBasicConfig,
+  VibratoConfig,
+} from '../../types';
 import { createSpectrum } from './Spectrum';
+import type { VoiceEnvelopeState } from './VoicePlanner';
+import { createVoiceStartPlans, createVoiceStopPlans } from './VoicePlanner';
 
 const MIN_GAIN_VALUE = 1e-10;
 

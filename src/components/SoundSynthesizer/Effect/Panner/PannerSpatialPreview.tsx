@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PlotParams } from 'react-plotly.js';
-import type { PannerConfig } from '../../../../types';
 import { getPannerConeMesh } from '../../../../services/synth/effect/Panner';
+import type { PannerConfig } from '../../../../types';
 import Plot3D from '../../../shared/Plot3D';
 
 interface PannerSpatialPreviewProps {

@@ -1,7 +1,5 @@
-import {
-  BlockMath as KatexBlockMath,
-  type MathComponentProps,
-} from 'react-katex';
+import type { MathComponentProps } from 'react-katex';
+import { BlockMath as KatexBlockMath } from 'react-katex';
 
 function BlockMath(props: MathComponentProps) {
   return (

@@ -1,13 +1,14 @@
-import { type ReactNode, useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import type {
+  AppSettingsContextValue,
+  PianoInputSettings,
+} from './AppSettingsContext';
 import { AppSettingsContext } from './AppSettingsContext';
 import {
   readStoredAppSettings,
   writeStoredAppSettings,
 } from './AppSettingsStorage';
-import type {
-  AppSettingsContextValue,
-  PianoInputSettings,
-} from './AppSettingsContext';
 
 interface AppSettingsProviderProps {
   children: ReactNode;

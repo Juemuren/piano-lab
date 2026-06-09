@@ -1,11 +1,5 @@
-import {
-  type MouseEvent,
-  type RefObject,
-  type TouchEvent,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import type { MouseEvent, RefObject, TouchEvent } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 const TOUCH_MOUSE_EVENT_IGNORE_MS = 1000;
 

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import { getBiquadMagnitudes } from '../../../../services/synth/effect/Filter';
+import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import Plot2D from '../../../shared/Plot2D';
 
 interface MagnitudeResponsePreviewProps {

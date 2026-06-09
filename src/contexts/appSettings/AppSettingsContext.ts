@@ -1,8 +1,6 @@
 import { createContext } from 'react';
-import {
-  DEFAULT_KEYBOARD_NOTE_MAPPINGS,
-  type KeyboardNoteMapping,
-} from '../../constants/keyboard';
+import type { KeyboardNoteMapping } from '../../constants/keyboard';
+import { DEFAULT_KEYBOARD_NOTE_MAPPINGS } from '../../constants/keyboard';
 
 export interface PianoInputSettings {
   defaultNoteLength: string;

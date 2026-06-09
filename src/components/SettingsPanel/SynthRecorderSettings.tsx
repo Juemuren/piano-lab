@@ -1,4 +1,4 @@
-import { Circle, Download, Square, Mic } from 'lucide-react';
+import { Circle, Download, Mic, Square } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';

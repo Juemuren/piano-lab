@@ -1,11 +1,11 @@
+import type { KeyboardNoteMapping } from '../../constants/keyboard';
+import { normalizeKeyboardControlKey } from '../../utils/keyboard';
+import { isRecord, numberOrDefault } from '../../utils/runtime';
+import type { PianoInputSettings } from './AppSettingsContext';
 import {
   DEFAULT_KEYBOARD_CONTROL_SETTINGS,
   DEFAULT_PIANO_INPUT_SETTINGS,
 } from './AppSettingsContext';
-import type { PianoInputSettings } from './AppSettingsContext';
-import type { KeyboardNoteMapping } from '../../constants/keyboard';
-import { normalizeKeyboardControlKey } from '../../utils/keyboard';
-import { isRecord, numberOrDefault } from '../../utils/runtime';
 
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 

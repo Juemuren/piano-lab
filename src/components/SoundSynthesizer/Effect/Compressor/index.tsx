@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Ban, Power, PowerOff } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { CompressorConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';

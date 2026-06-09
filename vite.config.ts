@@ -1,6 +1,7 @@
-import { defineConfig, type Plugin, type ViteDevServer } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import type { Plugin, ViteDevServer } from 'vite';
+import { defineConfig } from 'vite';
 import { generateAbcPresets } from './scripts/generateAbcPresets.mjs';
 
 function abcPresets(): Plugin {

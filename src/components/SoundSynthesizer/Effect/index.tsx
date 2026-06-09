@@ -1,5 +1,5 @@
-import type { EffectConfig } from '../../../types';
 import useEffectControl from '../../../hooks/synth/useEffectControl';
+import type { EffectConfig } from '../../../types';
 import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
 import Modulation from './Modulation';

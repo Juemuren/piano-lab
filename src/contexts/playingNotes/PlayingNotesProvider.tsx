@@ -1,4 +1,5 @@
-import { type ReactNode, useCallback, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { PlayingNotesContext } from './PlayingNotesContext';
 
 interface PlayingNotesProviderProps {

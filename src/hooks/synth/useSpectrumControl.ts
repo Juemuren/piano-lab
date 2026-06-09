@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
+import {
+  DEFAULT_SPECTRUM_DECAY_RATE,
+  DEFAULT_SPECTRUM_POWER_EXPONENT,
+  DEFAULT_SPECTRUM_STRIKE_POINT,
+  DEFAULT_SPECTRUM_TYPE,
+} from '../../constants/synth';
+import { useSynthEngine } from '../../contexts/synthEngine';
+import { createSpectrum } from '../../services/synth/Spectrum';
 import type {
   Spectrum,
   SpectrumConfig,
   SpectrumParamUpdates,
   SpectrumType,
 } from '../../types';
-import { createSpectrum } from '../../services/synth/Spectrum';
-import { useSynthEngine } from '../../contexts/synthEngine';
-import {
-  DEFAULT_SPECTRUM_TYPE,
-  DEFAULT_SPECTRUM_DECAY_RATE,
-  DEFAULT_SPECTRUM_POWER_EXPONENT,
-  DEFAULT_SPECTRUM_STRIKE_POINT,
-} from '../../constants/synth';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);

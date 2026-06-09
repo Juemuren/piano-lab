@@ -1,9 +1,9 @@
+import type { SupportedLanguage } from './settings';
 import {
   DEFAULT_LANGUAGE,
   LANGUAGE_DOCUMENT_TITLES,
   LANGUAGE_STORAGE_KEY,
   normalizeLanguage,
-  type SupportedLanguage,
 } from './settings';
 
 function getStoredLanguage() {

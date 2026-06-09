@@ -1,6 +1,6 @@
+import { AudioWaveform, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import { AudioWaveform, Power, PowerOff } from 'lucide-react';
 import type { WaveShaperConfig, WaveShaperPreset } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';

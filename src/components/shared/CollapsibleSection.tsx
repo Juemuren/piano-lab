@@ -1,5 +1,6 @@
-import { type ReactNode, useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 
 type CollapsibleSectionProps = {
   title: string;

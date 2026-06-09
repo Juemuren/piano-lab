@@ -1,5 +1,5 @@
-import { type ChangeEventHandler, type RefObject } from 'react';
-import { Upload, Download, Image, BookImage, Music } from 'lucide-react';
+import { BookImage, Download, Image, Music, Upload } from 'lucide-react';
+import type { ChangeEventHandler, RefObject } from 'react';
 import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
 

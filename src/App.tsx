@@ -1,12 +1,12 @@
+import { ScrollText, SlidersHorizontal, Waves } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Waves, ScrollText, SlidersHorizontal } from 'lucide-react';
-import CollapsibleSection from './components/shared/CollapsibleSection';
-import Piano from './components/Piano';
-import SoundSynthesizer from './components/SoundSynthesizer';
 import AbcEditor from './components/AbcEditor';
-import SettingsPanel from './components/SettingsPanel';
-import Header from './components/Header';
 import Footer from './components/Footer';
+import Header from './components/Header';
+import Piano from './components/Piano';
+import SettingsPanel from './components/SettingsPanel';
+import SoundSynthesizer from './components/SoundSynthesizer';
+import CollapsibleSection from './components/shared/CollapsibleSection';
 import { SECTION_IDS } from './constants/sections';
 
 function App() {

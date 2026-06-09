@@ -1,4 +1,4 @@
-import type { ReactNode, MouseEvent, TouchEvent, CSSProperties } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode, TouchEvent } from 'react';
 
 type PianoKeyProps = {
   note: number;

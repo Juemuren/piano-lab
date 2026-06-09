@@ -1,5 +1,5 @@
-import { SynthEngine } from '../synth/SynthEngine';
-import { type MidiPitches } from 'abcjs';
+import type { MidiPitches } from 'abcjs';
+import type { SynthEngine } from '../synth/SynthEngine';
 import {
   getHighlightDurationMs,
   getPlaybackDurationSeconds,

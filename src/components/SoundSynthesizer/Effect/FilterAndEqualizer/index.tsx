@@ -1,15 +1,15 @@
-import { useTranslation } from 'react-i18next';
 import { Equal } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type {
   EqualizerConfig,
   EqualizerType,
   FilterConfig,
   FilterType,
 } from '../../../../types';
-import HarmonicResponsePreview from './HarmonicResponsePreview';
-import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
+import HarmonicResponsePreview from './HarmonicResponsePreview';
+import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 
 interface FilterAndEqualizerProps {
   harmonicCount: number;

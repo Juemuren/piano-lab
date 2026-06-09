@@ -1,6 +1,6 @@
+import { FilterIcon, Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Minus, Plus, FilterIcon } from 'lucide-react';
 import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
 import type { FilterConfig, FilterType } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';

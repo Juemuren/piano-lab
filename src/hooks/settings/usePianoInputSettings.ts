@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 import { useAbcContent } from '../../contexts/abcContent';
 import { useAppSettings } from '../../contexts/appSettings';
-import {
-  DEFAULT_PIANO_INPUT_SETTINGS,
-  type PianoInputSettings,
-} from '../../contexts/appSettings/AppSettingsContext';
+import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
+import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../contexts/appSettings/AppSettingsContext';
 import { clearAbcBody, updateAbcHeader } from '../../services/abc/AbcInput';
 
 function usePianoInputSettings() {

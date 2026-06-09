@@ -4,6 +4,8 @@ import {
   DEFAULT_COMPRESSOR_RATIO,
   DEFAULT_COMPRESSOR_RELEASE,
   DEFAULT_COMPRESSOR_THRESHOLD,
+  DEFAULT_DELAY_MODULATION_DEPTH,
+  DEFAULT_DELAY_MODULATION_FREQUENCY,
   DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
   DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
@@ -30,8 +32,6 @@ import {
   DEFAULT_PANNER_POSITION_Z,
   DEFAULT_PANNER_REF_DISTANCE,
   DEFAULT_PANNER_ROLLOFF_FACTOR,
-  DEFAULT_DELAY_MODULATION_DEPTH,
-  DEFAULT_DELAY_MODULATION_FREQUENCY,
   DEFAULT_PHASE_MODULATION_DEPTH,
   DEFAULT_PHASE_MODULATION_FREQUENCY,
   DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
@@ -76,6 +76,7 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../../utils/runtime';
+import { createReverbConfig } from '../effect/Reverb';
 import { createDefaultSynthConfig } from './Defaults';
 import {
   EQUALIZER_TYPES,
@@ -87,7 +88,6 @@ import {
   SPECTRUM_TYPES,
   WAVE_SHAPER_PRESETS,
 } from './Options';
-import { createReverbConfig } from '../effect/Reverb';
 
 function normalizeSpectrumConfig(
   value: unknown,

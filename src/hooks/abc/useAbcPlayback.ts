@@ -1,13 +1,7 @@
+import type { AbcElem, BeatCallback, NoteTimingEvent, TuneObject } from 'abcjs';
+import { renderAbc, TimingCallbacks } from 'abcjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  type AbcElem,
-  type BeatCallback,
-  type NoteTimingEvent,
-  type TuneObject,
-  renderAbc,
-  TimingCallbacks,
-} from 'abcjs';
-import { AbcPlayer } from '../../services/abc/AbcPlayer';
+import type { AbcPlayer } from '../../services/abc/AbcPlayer';
 
 const BEAT_SUBDIVISIONS = 8;
 

@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import abcjs from 'abcjs';
+
 const { parseOnly } = abcjs;
 
 const VOICES_BOUNDARY = [

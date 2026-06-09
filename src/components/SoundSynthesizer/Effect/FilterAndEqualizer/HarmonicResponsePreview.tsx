@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { EqualizerConfig, FilterConfig } from '../../../../types';
-import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
-import {
-  getBiquadMagnitudes,
-  FILTER_RESPONSE_NYQUIST_FREQUENCY,
-} from '../../../../services/synth/effect/Filter';
 import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
+import {
+  FILTER_RESPONSE_NYQUIST_FREQUENCY,
+  getBiquadMagnitudes,
+} from '../../../../services/synth/effect/Filter';
+import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
+import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import { getHarmonicLabels } from '../../../../utils/harmonic';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
 import BaseFrequencyControl from './BaseFrequencyControl';

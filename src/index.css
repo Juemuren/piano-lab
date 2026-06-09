@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* https://catppuccin.com/palette/ */
 @theme {
-  --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
 
   --color-app-mantle: #e6e9ef;
@@ -34,7 +34,7 @@
 }
 
 :root {
-  font: 18px/145% var(--font-sans);
+  font: 18px / 145% var(--font-sans);
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

@@ -1,6 +1,6 @@
-import PlotlyScatter from 'react-plotly.js/scatter';
-import type { PlotParams } from 'react-plotly.js';
 import type { Layout, LayoutAxis } from 'plotly.js';
+import type { PlotParams } from 'react-plotly.js';
+import PlotlyScatter from 'react-plotly.js/scatter';
 import useElementWidth from '../../hooks/useElementWidth';
 
 type Plot2DProps = {

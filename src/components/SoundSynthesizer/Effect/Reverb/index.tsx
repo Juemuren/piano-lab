@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { House, Power, PowerOff } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';

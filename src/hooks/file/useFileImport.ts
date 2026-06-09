@@ -1,9 +1,5 @@
-import {
-  type ChangeEventHandler,
-  type RefObject,
-  useCallback,
-  useRef,
-} from 'react';
+import type { ChangeEventHandler, RefObject } from 'react';
+import { useCallback, useRef } from 'react';
 
 interface UseFileImportOptions {
   onImport: (content: string, file: File) => void | Promise<void>;
