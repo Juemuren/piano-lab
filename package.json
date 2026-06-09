@@ -9,19 +9,17 @@
     "build": "tsc -b && vite build",
     "build:tauri": "tauri build --no-bundle",
     "tauri": "tauri",
-    "lint": "eslint .",
-    "format": "prettier . --write",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write",
     "preview": "vite preview",
     "set:version": "node scripts/set-version.mjs",
     "postinstall": "patch-package",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "prettier --write",
-      "eslint"
-    ],
-    "*.{md,css,html,json}": "prettier --write"
+    "*.{ts,tsx,js,jsx}": "biome check --write",
+    "*.{md,css,html,json}": "biome format --write"
   },
   "dependencies": {
     "abcjs": "^6.6.2",
