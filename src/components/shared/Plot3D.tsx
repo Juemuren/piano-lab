@@ -1,6 +1,6 @@
 import type { Layout } from 'plotly.js';
 import type { PlotParams } from 'react-plotly.js';
-import Plotly3D from 'react-plotly.js/gl3d';
+import Plotly3D from 'react-plotly.js/plot3d';
 import useElementWidth from '../../hooks/useElementWidth';
 
 type Plot3DProps = {

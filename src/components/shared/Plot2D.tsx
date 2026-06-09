@@ -1,6 +1,6 @@
 import type { Layout, LayoutAxis } from 'plotly.js';
 import type { PlotParams } from 'react-plotly.js';
-import PlotlyScatter from 'react-plotly.js/scatter';
+import Plotly2D from 'react-plotly.js/plot2d';
 import useElementWidth from '../../hooks/useElementWidth';
 
 type Plot2DProps = {
@@ -21,7 +21,7 @@ function Plot2D({ data, layout, xaxis, yaxis }: Plot2DProps) {
   return (
     <div ref={elementRef} className="w-full">
       {width > 0 && (
-        <PlotlyScatter
+        <Plotly2D
           data={data}
           layout={{
             autosize: true,

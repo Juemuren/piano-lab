@@ -2,7 +2,7 @@
 
 ## Chore
 
-- [ ] 尝试一下 [Biome](https://biomejs.dev/) 或类似的 Rust 工具
+- [x] 迁移到 [Biome](https://biomejs.dev/)
 
 ## Refactor
 

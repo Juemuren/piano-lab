@@ -12,11 +12,42 @@ index 40f3edc..a469685 100644
 +  value: true
 +});
  //# sourceMappingURL=factory.js.map
-diff --git a/node_modules/react-plotly.js/gl3d.js b/node_modules/react-plotly.js/gl3d.js
+diff --git a/node_modules/react-plotly.js/plot2d.js b/node_modules/react-plotly.js/plot2d.js
+new file mode 100644
+index 0000000..4152081
+--- /dev/null
++++ b/node_modules/react-plotly.js/plot2d.js
+@@ -0,0 +1,25 @@
++"use strict";
++
++Object.defineProperty(exports, "__esModule", {
++  value: true
++});
++exports["default"] = void 0;
++
++var _factory = _interopRequireDefault(require("./factory"));
++
++var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
++
++var _scatter = _interopRequireDefault(require("plotly.js/lib/scatter"));
++
++function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
++
++_plotly["default"].register([_scatter["default"]]);
++
++var PlotComponent = (0, _factory["default"])(_plotly["default"]);
++var _default = PlotComponent;
++exports["default"] = _default;
++module.exports = _default;
++module.exports.default = _default;
++Object.defineProperty(module.exports, "__esModule", {
++  value: true
++});
+diff --git a/node_modules/react-plotly.js/plot3d.js b/node_modules/react-plotly.js/plot3d.js
 new file mode 100644
 index 0000000..b502634
 --- /dev/null
-+++ b/node_modules/react-plotly.js/gl3d.js
++++ b/node_modules/react-plotly.js/plot3d.js
 @@ -0,0 +1,27 @@
 +"use strict";
 +
@@ -59,34 +90,3 @@ index f599b9e..36e0818 100644
 +  value: true
 +});
  //# sourceMappingURL=react-plotly.js.map
-diff --git a/node_modules/react-plotly.js/scatter.js b/node_modules/react-plotly.js/scatter.js
-new file mode 100644
-index 0000000..4152081
---- /dev/null
-+++ b/node_modules/react-plotly.js/scatter.js
-@@ -0,0 +1,25 @@
-+"use strict";
-+
-+Object.defineProperty(exports, "__esModule", {
-+  value: true
-+});
-+exports["default"] = void 0;
-+
-+var _factory = _interopRequireDefault(require("./factory"));
-+
-+var _plotly = _interopRequireDefault(require("plotly.js/lib/core"));
-+
-+var _scatter = _interopRequireDefault(require("plotly.js/lib/scatter"));
-+
-+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-+
-+_plotly["default"].register([_scatter["default"]]);
-+
-+var PlotComponent = (0, _factory["default"])(_plotly["default"]);
-+var _default = PlotComponent;
-+exports["default"] = _default;
-+module.exports = _default;
-+module.exports.default = _default;
-+Object.defineProperty(module.exports, "__esModule", {
-+  value: true
-+});
