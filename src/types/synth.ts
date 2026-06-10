@@ -1,14 +1,13 @@
-export type SpectrumType =
+export type BuiltInSpectrumType =
   | 'ethereal'
   | 'metallic'
   | 'pure'
   | 'bright'
   | 'normal'
   | 'soft'
-  | 'realistic'
-  | 'custom';
+  | 'realistic';
 
-export type BuiltInSpectrumType = Exclude<SpectrumType, 'custom'>;
+export type SpectrumType = BuiltInSpectrumType | 'custom';
 
 export interface Spectrum {
   amplitudes: number[];

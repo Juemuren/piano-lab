@@ -18,6 +18,10 @@ function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);
 }
 
+function createEmptyAmplitudes(length: number) {
+  return Array.from({ length }, () => 0);
+}
+
 function useSpectrumControl(
   harmonicCount: number,
   initialConfig?: SpectrumConfig | null,
@@ -85,7 +89,9 @@ function useSpectrumControl(
   ]);
 
   const handleSpectrumTypeChange = (type: SpectrumType) => {
-    if (type !== 'custom') {
+    if (type === 'custom') {
+      setCustomAmplitudes(createEmptyAmplitudes(harmonicCount));
+    } else {
       setCustomAmplitudes(
         createSpectrum({ type, lambda, sigma, p }, harmonicCount).amplitudes,
       );

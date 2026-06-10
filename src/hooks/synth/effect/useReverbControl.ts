@@ -5,7 +5,7 @@ import {
   DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
 } from '../../../constants/synth';
 import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
-import type { BuiltInReverbPreset, ReverbConfig } from '../../../types';
+import type { ReverbConfig, ReverbPreset } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function useReverbControl(initialReverb: ReverbConfig | null) {
@@ -19,8 +19,25 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
     );
   }, []);
 
-  const updateReverbPreset = useCallback((preset: BuiltInReverbPreset) => {
-    setReverb((current) => createDefaultReverbConfig(preset, current?.mix));
+  const updateReverbPreset = useCallback((preset: ReverbPreset) => {
+    setReverb((current) => {
+      if (preset !== 'custom') {
+        return createDefaultReverbConfig(preset, current?.mix);
+      }
+
+      const fallback = createDefaultReverbConfig();
+      const source = current ?? fallback;
+
+      return {
+        ...source,
+        preset,
+        earlyReflections: [],
+        lateTail: {
+          ...source.lateTail,
+          amplitude: 0,
+        },
+      };
+    });
   }, []);
 
   const updateReverbMix = useCallback((mix: number) => {

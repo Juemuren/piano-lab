@@ -1,7 +1,7 @@
 import { House, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import type { BuiltInReverbPreset, ReverbConfig } from '../../../../types';
+import type { ReverbConfig, ReverbPreset } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -13,7 +13,7 @@ import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 interface ReverbProps {
   reverb: ReverbConfig | null;
   onEnabledChange: (enabled: boolean) => void;
-  onPresetChange: (preset: BuiltInReverbPreset) => void;
+  onPresetChange: (preset: ReverbPreset) => void;
   onMixChange: (value: number) => void;
   onEarlyReflectionAdd: () => void;
   onEarlyReflectionRemove: (index: number) => void;
@@ -26,11 +26,12 @@ interface ReverbProps {
   onLateTailAlphaChange: (value: number) => void;
 }
 
-const presetOptions: BuiltInReverbPreset[] = [
+const presetOptions: ReverbPreset[] = [
   'bathroom',
   'garage',
   'hall',
   'cathedral',
+  'custom',
 ];
 
 function Reverb({
@@ -50,11 +51,12 @@ function Reverb({
 }: ReverbProps) {
   const { t } = useTranslation('synth');
 
-  const presetLabels: Record<BuiltInReverbPreset, string> = {
+  const presetLabels: Record<ReverbPreset, string> = {
     bathroom: t('effect.reverb.presets.bathroom'),
     garage: t('effect.reverb.presets.garage'),
     hall: t('effect.reverb.presets.hall'),
     cathedral: t('effect.reverb.presets.cathedral'),
+    custom: t('effect.reverb.presets.custom'),
   };
 
   return (
@@ -91,15 +93,8 @@ function Reverb({
             <ControlSelect
               label={t('effect.reverb.preset')}
               value={reverb.preset}
-              onChange={(e) =>
-                onPresetChange(e.target.value as BuiltInReverbPreset)
-              }
+              onChange={(e) => onPresetChange(e.target.value as ReverbPreset)}
             >
-              {reverb.preset === 'custom' && (
-                <option value="custom" disabled>
-                  {t('effect.reverb.presets.custom')}
-                </option>
-              )}
               {presetOptions.map((preset) => (
                 <option key={preset} value={preset}>
                   {presetLabels[preset]}
