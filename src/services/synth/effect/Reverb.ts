@@ -5,7 +5,7 @@ import type {
   ReverbLateTailConfig,
 } from '../../../types';
 import { degreesToRadians } from '../../../utils/math';
-import { createSeededGaussianRandomGenerator } from '../../../utils/random';
+import { createGaussianRandomGenerator } from '../../../utils/random';
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
@@ -115,7 +115,7 @@ export function getReverbImpulseResponseSamples(
       reflection.gain * Math.cos(degreesToRadians(reflection.phase));
   }
 
-  const getRandomAmplitude = createSeededGaussianRandomGenerator(
+  const getRandomAmplitude = createGaussianRandomGenerator(
     LATE_TAIL_RANDOM_SEED,
   );
 

@@ -1,4 +1,4 @@
-export function createSeededUniformRandomGenerator(seed: number) {
+export function createUniformRandomGenerator(seed: number) {
   let state = seed >>> 0;
 
   return () => {
@@ -7,8 +7,8 @@ export function createSeededUniformRandomGenerator(seed: number) {
   };
 }
 
-export function createSeededGaussianRandomGenerator(seed: number) {
-  const getUniformRandom = createSeededUniformRandomGenerator(seed);
+export function createGaussianRandomGenerator(seed: number) {
+  const getUniformRandom = createUniformRandomGenerator(seed);
   let spare: number | null = null;
 
   return () => {
@@ -19,18 +19,13 @@ export function createSeededGaussianRandomGenerator(seed: number) {
     }
 
     let u = getUniformRandom();
-    let v = getUniformRandom();
-
     while (u === 0) {
       u = getUniformRandom();
     }
-
-    while (v === 0) {
-      v = getUniformRandom();
-    }
+    const v = getUniformRandom();
 
     const magnitude = Math.sqrt(-2 * Math.log(u));
-    const angle = Math.PI * 2 * v;
+    const angle = 2 * Math.PI * v;
 
     spare = magnitude * Math.sin(angle);
     return magnitude * Math.cos(angle);
