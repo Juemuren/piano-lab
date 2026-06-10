@@ -3,6 +3,7 @@
 ## Chore
 
 - [x] 迁移到 [Biome](https://biomejs.dev/)
+- [x] 钩子 npm run build 太慢了，改为只进行类型检查，或者尝试一下 [tsgo](https://github.com/microsoft/typescript-go)
 
 ## Refactor
 
