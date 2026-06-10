@@ -12,7 +12,7 @@
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --build",
     "preview": "vite preview",
     "set:version": "node scripts/set-version.mjs",
     "postinstall": "patch-package",
