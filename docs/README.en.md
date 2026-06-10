@@ -169,8 +169,6 @@ npm run check
 
 ## Principles
 
-> For a detailed explanation, see my article [The Mathematical Principles of Music: From Vibrating Strings to Modern Music Theory](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/).
-
 ### Sound Synthesis
 
 The sound produced by a vibrating string is ideally composed of a series of sine harmonics, where the fundamental frequency is $f_1$ and the remaining harmonics are integer multiples of the fundamental. The ideal sound pressure can therefore be expressed as:
@@ -179,7 +177,9 @@ $$
 p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)
 $$
 
-Based on this principle, sound is synthesized using the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
+Based on this principle, sound is synthesized with the [OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode) and [GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode) from the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
+
+> For a more detailed explanation of the physics behind sound synthesis, see my article [The Mathematical Principles of Music](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/). Its **Vibrating Strings** section starts from the wave equation, solves the partial differential equation step by step, and finally derives the Fourier series of the vibration.
 
 ### Harmonic Amplitude Spectrum
 
@@ -303,6 +303,8 @@ $$
 H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t
 $$
 
+> Gaussian random numbers are obtained from uniform random numbers with the Box-Muller transform. For a more detailed explanation, see my article [Gaussian Random Number Generator](https://juemuren.github.io/blog/posts/math/%E9%AB%98%E6%96%AF%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8/). The article provides a complete mathematical derivation and ends with a seedable JavaScript implementation.
+
 The reverb effect provides bathroom, garage, hall, and cathedral presets, simulating spaces from small to large.
 
 KaTeX and Plotly.js are used in the app to draw the impulse response formulas and waveforms.
@@ -352,7 +354,7 @@ Plotly.js is used in the app to draw the mapping curve for each effect.
 
 Modulation works by periodically varying a target parameter with a low-frequency oscillator. Depending on what is being modulated, it can produce various effects such as tremolo, vibrato, phaser, and chorus/flanger.
 
-**Amplitude modulation** periodically varies the signal gain. The formula is:
+**Amplitude modulation** is implemented by periodically varying [GainNode.gain](https://developer.mozilla.org/en-US/docs/Web/API/GainNode/gain). The formula is:
 
 $$
 A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)
@@ -360,7 +362,7 @@ $$
 
 where $\Delta G$ and $f_m$ are the modulation depth and modulation frequency, respectively.
 
-**Frequency modulation** periodically varies the signal pitch. The formula is:
+**Frequency modulation** is implemented by periodically varying [OscillatorNode.frequency](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode/frequency). The formula is:
 
 $$
 f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)
@@ -376,7 +378,7 @@ $$
 \phi(t)=\phi_{\max}\sin(2\pi f_m t)
 $$
 
-**Delay modulation** periodically varies the signal delay time. The delay amount is calculated as:
+**Delay modulation** is implemented by periodically varying [DelayNode.delayTime](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode/delayTime). The formula is:
 
 $$
 \tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)

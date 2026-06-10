@@ -169,8 +169,6 @@ npm run check
 
 ## 原理
 
-> 詳細な原理については、私の解説記事 [音楽の数学原理：振動する弦から現代音楽理論まで](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/) をご覧ください。
-
 ### 音声合成
 
 弦の振動によって生じる音は、理想的には一連の正弦波倍音で構成されます。基音の周波数を $f_1$ とすると、その他の倍音の周波数はすべて基音の整数倍になります。したがって、理想的な音圧は次のように表せます。
@@ -179,7 +177,9 @@ $$
 p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)
 $$
 
-この原理に基づき、[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) を使用して音声を合成しています。
+この原理に基づき、[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) の [OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode) と [GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode) を使用して音声を合成しています。
+
+> 音声合成のより詳しい物理原理については、私の解説記事 [音楽の数学原理](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/) をご覧ください。この記事の **振動する弦** の章では、波動方程式から始めて偏微分方程式を段階的に解き、最終的に振動のフーリエ級数を導出しています。
 
 ### 倍音振幅スペクトル
 
@@ -303,6 +303,8 @@ $$
 H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t
 $$
 
+> ガウス乱数は Box-Muller 法によって一様乱数から変換して得ています。この部分のより詳しい説明については、私の解説記事 [ガウス乱数生成器](https://juemuren.github.io/blog/posts/math/%E9%AB%98%E6%96%AF%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8/) をご覧ください。この記事では数学的に完全な導出を行い、最後にシードを設定できる JavaScript 実装を示しています。
+
 リバーブ効果は浴室/ガレージ/ホール/大聖堂のプリセットを提供し、小空間から大空間までをシミュレートします。
 
 アプリ内では KaTeX と Plotly.js を使用してインパルス応答の数式と波形を描画しています。
@@ -352,7 +354,7 @@ PannerNode のパンニングモデルは等パワーパンニングと頭部伝
 
 モジュレーションは、低周波発振器によって被変調量を周期的に変化させることで実現され、変調対象によってトレモロ、ビブラート、フェイザー、コーラス/フランジャーなど様々な効果を生み出します。
 
-**振幅モジュレーション**は信号ゲインを周期的に変化させます。式は次のとおりです。
+**振幅モジュレーション**は [GainNode.gain](https://developer.mozilla.org/en-US/docs/Web/API/GainNode/gain) を周期的に変化させることで実現します。式は次のとおりです。
 
 $$
 A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)
@@ -360,7 +362,7 @@ $$
 
 ここで $\Delta G$ と $f_m$ はそれぞれモジュレーションの深さとモジュレーション周波数です。
 
-**周波数モジュレーション**は信号の音高を周期的に変化させます。式は次のとおりです。
+**周波数モジュレーション**は [OscillatorNode.frequency](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode/frequency) を周期的に変化させることで実現します。式は次のとおりです。
 
 $$
 f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)
@@ -376,7 +378,7 @@ $$
 \phi(t)=\phi_{\max}\sin(2\pi f_m t)
 $$
 
-**ディレイモジュレーション**は信号の遅延時間を周期的に変化させます。遅延量の計算式は次のとおりです。
+**ディレイモジュレーション**は [DelayNode.delayTime](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode/delayTime) を周期的に変化させることで実現します。式は次のとおりです。
 
 $$
 \tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)

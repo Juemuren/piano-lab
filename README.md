@@ -169,8 +169,6 @@ npm run check
 
 ## 原理
 
-> 详细的原理可阅读我的科普文章[《音乐的数学原理：从振动弦到现代乐理》](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/)
-
 ### 声音合成
 
 琴弦振动发出的声音，在理想情况下是由一系列正弦谐波组成的，其中基波的频率为 $f_1$，其余谐波的频率都是基频的整数倍。因此理想的声压可表示为
@@ -179,7 +177,9 @@ $$
 p(t) = \sum_{n=1}^{N}A_n\sin(2\pi n f_1 t)
 $$
 
-基于此原理，使用 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) 合成声音。
+基于此原理，使用 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) 的 [OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode) 和 [GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode) 合成声音。
+
+> 关于声音合成更详细的物理原理，可阅读我的科普文章[《音乐的数学原理》](https://juemuren.github.io/blog/posts/math/%E9%9F%B3%E4%B9%90%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/)。该文章的 **振动弦** 章节，从波动方程开始推导，一步步地求解偏微分方程，并最终得到了振动的傅里叶级数。
 
 ### 谐波振幅频谱
 
@@ -244,7 +244,7 @@ $$
 
 滤波和均衡效果都使用 Web Audio API 的 [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode) 实现。
 
-BiquadFilterNode 是双二阶滤波器，其标准传递函数为
+`BiquadFilterNode` 是双二阶滤波器，其标准传递函数为
 
 $$
 H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2}}{1 + a_1 z^{-1} + a_2 z^{-2}}
@@ -252,7 +252,7 @@ $$
 
 其中 $b_0, b_1, b_2, a_1, a_2$ 都是系数，且只需修改这 5 个系数就能够实现低通/高通/带通/带阻/低架/高架/峰值等所有常见的滤波器。
 
-而 BiquadFilterNode 进一步封装了更具实际意义的接口
+而 `BiquadFilterNode` 进一步封装了更具实际意义的接口
 
 - **低通/高通**，可以修改截止频率和谐振系数。其中谐振系数决定了在截止频率处的凸起高度
 - **带通/带阻**，可以修改中心频率和带宽因子。带宽因子越大，则带宽越小，且中心频率处的凸起也越明显
@@ -267,7 +267,7 @@ $$
 
 混响为卷积混响，把计算得到的脉冲响应送入 [ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode) 与干声进行卷积。
 
-ConvolverNode 对离散信号进行卷积，其公式为
+`ConvolverNode` 对离散信号进行卷积，其公式为
 
 $$
 (f * g)[n] = \sum_{k=-\infty}^{\infty} f[k] g[n - k]
@@ -275,7 +275,9 @@ $$
 
 混响采用分离早期反射和晚期尾音的方案。总的脉冲响应为
 
-$$h[n]=\delta[n]+h_e[n]+h_l[n]$$
+$$
+h[n]=\delta[n]+h_e[n]+h_l[n]
+$$
 
 其中 $\delta[n]$ 为单位脉冲，表示干声的脉冲响应。
 
@@ -297,11 +299,13 @@ $$
 
 其中 $A,\alpha,D,T$ 分别为初始振幅、衰减系数、延迟时间和持续时间。
 
-而 $\mathcal{N}(0,1)$ 是均值为 $0$，标准差为 $1$ 的正态随机变量，目的是让脉冲响应正负分布均匀，防止卷积时产生过大的直流增益。直流增益的计算公式为
+而 $\mathcal{N}(0,1)$ 是均值为 $0$，标准差为 $1$ 的正态随机变量，目的是让脉冲响应正负分布均匀，防止卷积时产生过大的直流增益。直流增益的计算公式如下
 
 $$
 H(0)=\int_{-\infty}^{\infty}h(t)\mathrm{d}t
 $$
+
+> 高斯随机数通过 Box-Muller 算法转换均匀随机数得到。此部分更详细的解释可阅读我的科普文章[《高斯随机数生成器》](https://juemuren.github.io/blog/posts/math/%E9%AB%98%E6%96%AF%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8/)。该文章在数学上进行了完整的推导，并最终给出了一个可以设置种子的 JavaScript 实现。
 
 混响效果提供浴室/车库/大厅/教堂预设，以模拟从小到大的不同空间。
 
@@ -311,7 +315,7 @@ $$
 
 压缩效果使用 Web Audio API 的 [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode) 实现。
 
-DynamicsCompressorNode 通过降低信号中超过阈值的部分来减小动态范围。其关键参数为
+`DynamicsCompressorNode` 通过降低信号中超过阈值的部分来减小动态范围。其关键参数为
 
 - **阈值**，设置压缩开始作用的电平
 - **拐点**，控制阈值附近压缩过渡的平滑程度
@@ -325,7 +329,7 @@ DynamicsCompressorNode 通过降低信号中超过阈值的部分来减小动态
 
 声像效果使用 Web Audio API 的 [PannerNode](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode) 实现，用于在立体声场中定位音源。
 
-PannerNode 的声像模型支持等功率平移算法和头部相关传递函数，可模拟来自不同位置和朝向的声音，从而提供更真实的空间感。其关键参数为
+`PannerNode` 的声像模型支持等功率平移算法和头部相关传递函数，可模拟来自不同位置和朝向的声音，从而提供更真实的空间感。其关键参数为
 
 - **坐标**和**方位角**，控制音源在空间中的位置和朝向
 - **距离**，控制音源与听者的距离，距离模型可选择线性/反比/指数
@@ -335,9 +339,11 @@ PannerNode 的声像模型支持等功率平移算法和头部相关传递函数
 
 #### 波形重塑原理
 
-波形重塑效果使用 Web Audio API 的 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode) 实现，通过对信号应用非线性映射曲线来产生失真效果。
+波形重塑效果使用 Web Audio API 的 [WaveShaperNode](https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode) 实现。
 
-提供多种失真类型，其非线性映射公式为
+`WaveShaperNode` 通过对信号施加非线性映射，来改变信号的波形。
+
+本应用提供多种失真类型，非线性映射公式分别为
 
 | 效果 | 公式                                 | 强度参数      |
 | ---- | ------------------------------------ | ------------- |
@@ -352,7 +358,7 @@ PannerNode 的声像模型支持等功率平移算法和头部相关传递函数
 
 调制通过一个低频振荡器周期性地改变被调制量来实现，根据被调制量的不同，可以产生颤音、揉弦、移相、合唱/镶边等多种效果。
 
-**振幅调制**周期性地改变信号增益，公式为
+**振幅调制**通过周期性地改变 [GainNode.gain](https://developer.mozilla.org/en-US/docs/Web/API/GainNode/gain) 实现。公式为
 
 $$
 A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)
@@ -360,7 +366,7 @@ $$
 
 其中 $\Delta G,f_m$ 分别为调制深度和调制频率。
 
-**频率调制**周期性地改变信号音高，公式为
+**频率调制**通过周期性地改变 [OscillatorNode.frequency](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode/frequency) 实现。公式为
 
 $$
 f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)
@@ -370,13 +376,13 @@ $$
 
 **相位调制**通过全通滤波器实现，周期性地改变信号相位。
 
-全通滤波器也是 BiquadFilterNode 的一种，其产生的相位偏移可近似为
+全通滤波器也是 `BiquadFilterNode` 的一种，其产生的相位偏移可近似为
 
 $$
 \phi(t)=\phi_{\max}\sin(2\pi f_m t)
 $$
 
-**延时调制**周期性地改变信号的延迟时间。延时量的计算公式为
+**延时调制**通过周期性地改变 [DelayNode.delayTime](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode/delayTime) 实现。公式为
 
 $$
 \tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)
