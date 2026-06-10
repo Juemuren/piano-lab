@@ -40,7 +40,7 @@ function VerticalSliderGroup({
               onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
               className={`
                 h-1 -rotate-90 rounded-full
-                appearance-none bg-app-overlay dark:bg-app-overlay-dark
+                appearance-none bg-app-surface dark:bg-app-surface-dark
                 border border-app-border dark:border-app-border-dark
                 accent-app-tip dark:accent-app-tip-dark
                 ${disabled ? 'cursor-not-allowed' : ''}

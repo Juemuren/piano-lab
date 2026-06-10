@@ -20,17 +20,17 @@
   --color-app-border: #4c4f6914;
   --color-app-border-dark: #cdd6f414;
   --color-app-accent: #808080;
-  --color-app-tip: #10834a;
-  --color-app-tip-dark: #54b03d;
-  --color-app-info: #005ef4;
-  --color-app-info-dark: #52a6f4;
-  --color-app-warning: #b56e0b;
-  --color-app-warning-dark: #f5ce0b;
+  --color-app-tip: #40a02b;
+  --color-app-tip-dark: #a6e3a1;
+  --color-app-info: #1e66f5;
+  --color-app-info-dark: #89b4fa;
+  --color-app-warning: #df8e1d;
+  --color-app-warning-dark: #f9e2af;
   --color-piano-white: #ffffff;
   --color-piano-white-active: #bcc0cc;
   --color-piano-black: #000000;
   --color-piano-black-active: #45475a;
-  --color-score-highlight: #16a34a;
+  --color-score-highlight: green;
 }
 
 :root {

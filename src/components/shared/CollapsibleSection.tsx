@@ -16,8 +16,8 @@ function CollapsibleSection({
   children,
   icon,
   expanded = false,
-  bgClassName = 'bg-app-surface dark:bg-app-surface-dark',
-  hoverBgClassName = 'hover:bg-app-mantle dark:hover:bg-app-mantle-dark',
+  bgClassName = 'bg-app-mantle dark:bg-app-mantle-dark',
+  hoverBgClassName = 'hover:bg-app-overlay dark:hover:bg-app-overlay-dark',
 }: CollapsibleSectionProps) {
   const [isExpanded, setIsExpanded] = useState(expanded);
 

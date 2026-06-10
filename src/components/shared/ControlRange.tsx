@@ -46,7 +46,11 @@ function ControlRange({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className={`w-full ${accentClassName}`}
+        className={`
+          w-full h-2 rounded-full
+          appearance-none bg-app-surface dark:bg-app-surface-dark
+          ${accentClassName}
+        `}
       />
       {p && <p className={`text-xs text-center ${pClassName}`}>{p}</p>}
     </div>

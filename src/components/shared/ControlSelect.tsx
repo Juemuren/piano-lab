@@ -30,7 +30,7 @@ function ControlSelect({
         title={label}
         className={`
           w-full p-2 rounded-2xl text-left
-          bg-app-mantle dark:bg-app-mantle-dark
+          bg-app-surface dark:bg-app-surface-dark
           border border-app-border dark:border-app-border-dark
           focus:border-app-accent focus:ring-2 focus:ring-app-accent/50
           ${className}

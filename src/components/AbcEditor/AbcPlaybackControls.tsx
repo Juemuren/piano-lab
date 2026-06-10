@@ -60,7 +60,11 @@ function AbcPlaybackControls({
           step={0.1}
           value={currentSeconds}
           onChange={(e) => onProgressChange(parseFloat(e.target.value))}
-          className="flex-1 accent-app-tip dark:accent-app-tip-dark min-w-0"
+          className="
+            flex-1 min-w-0 h-2 rounded-full
+            appearance-none bg-app-surface dark:bg-app-surface-dark
+            accent-app-tip dark:accent-app-tip-dark
+          "
         />
 
         <span className="w-fit text-right tabular-nums text-xs sm:text-sm sm:font-semibold">
