@@ -28,14 +28,14 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     updateEqualizerFrequency,
     updateEqualizerQ,
     updateEqualizerGain,
-    tremolo,
-    updateTremoloEnabled,
-    updateTremoloFrequency,
-    updateTremoloDepth,
-    vibrato,
-    updateVibratoEnabled,
-    updateVibratoFrequency,
-    updateVibratoDepth,
+    amplitudeModulation,
+    updateAmplitudeModulationEnabled,
+    updateAmplitudeModulationFrequency,
+    updateAmplitudeModulationDepth,
+    frequencyModulation,
+    updateFrequencyModulationEnabled,
+    updateFrequencyModulationFrequency,
+    updateFrequencyModulationDepth,
     phaseModulation,
     updatePhaseModulationEnabled,
     updatePhaseModulationFrequency,
@@ -92,16 +92,20 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEqualizerGainChange={updateEqualizerGain}
       />
       <Modulation
-        tremolo={tremolo}
-        vibrato={vibrato}
+        amplitudeModulation={amplitudeModulation}
+        frequencyModulation={frequencyModulation}
         phaseModulation={phaseModulation}
         delayModulation={delayModulation}
-        onTremoloEnabledChange={updateTremoloEnabled}
-        onTremoloFrequencyChange={updateTremoloFrequency}
-        onTremoloDepthChange={updateTremoloDepth}
-        onVibratoEnabledChange={updateVibratoEnabled}
-        onVibratoFrequencyChange={updateVibratoFrequency}
-        onVibratoDepthChange={updateVibratoDepth}
+        onAmplitudeModulationEnabledChange={updateAmplitudeModulationEnabled}
+        onAmplitudeModulationFrequencyChange={
+          updateAmplitudeModulationFrequency
+        }
+        onAmplitudeModulationDepthChange={updateAmplitudeModulationDepth}
+        onFrequencyModulationEnabledChange={updateFrequencyModulationEnabled}
+        onFrequencyModulationFrequencyChange={
+          updateFrequencyModulationFrequency
+        }
+        onFrequencyModulationDepthChange={updateFrequencyModulationDepth}
         onPhaseModulationEnabledChange={updatePhaseModulationEnabled}
         onPhaseModulationFrequencyChange={updatePhaseModulationFrequency}
         onPhaseModulationDepthChange={updatePhaseModulationDepth}

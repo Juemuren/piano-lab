@@ -1,4 +1,6 @@
 import {
+  DEFAULT_AMPLITUDE_MODULATION_DEPTH,
+  DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
   DEFAULT_COMPRESSOR_ATTACK,
   DEFAULT_COMPRESSOR_KNEE,
   DEFAULT_COMPRESSOR_RATIO,
@@ -18,6 +20,8 @@ import {
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
+  DEFAULT_FREQUENCY_MODULATION_DEPTH,
+  DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
   DEFAULT_PANNER_CONE_INNER_ANGLE,
   DEFAULT_PANNER_CONE_OUTER_ANGLE,
   DEFAULT_PANNER_CONE_OUTER_GAIN,
@@ -43,10 +47,6 @@ import {
   DEFAULT_REVERB_LATE_TAIL_DURATION,
   DEFAULT_REVERB_MIX,
   DEFAULT_REVERB_PRESET,
-  DEFAULT_TREMOLO_DEPTH,
-  DEFAULT_TREMOLO_FREQUENCY,
-  DEFAULT_VIBRATO_DEPTH,
-  DEFAULT_VIBRATO_FREQUENCY,
   DEFAULT_WAVE_SHAPER_DISTORTION,
   DEFAULT_WAVE_SHAPER_FUZZ,
   DEFAULT_WAVE_SHAPER_OVERDRIVE,
@@ -54,11 +54,13 @@ import {
   DEFAULT_WAVE_SHAPER_SATURATION,
 } from '../../../constants/synth';
 import type {
+  AmplitudeModulationConfig,
   CompressorConfig,
   DelayModulationConfig,
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
+  FrequencyModulationConfig,
   PannerConfig,
   PhaseModulationConfig,
   ReverbConfig,
@@ -66,8 +68,6 @@ import type {
   ReverbLateTailConfig,
   SpectrumConfig,
   SynthConfig,
-  TremoloConfig,
-  VibratoConfig,
   WaveShaperConfig,
 } from '../../../types';
 import {
@@ -140,21 +140,31 @@ function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
   };
 }
 
-function normalizeTremoloConfig(value: unknown): TremoloConfig | null {
+function normalizeAmplitudeModulationConfig(
+  value: unknown,
+): AmplitudeModulationConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    frequency: numberOrDefault(value.frequency, DEFAULT_TREMOLO_FREQUENCY),
-    depth: numberOrDefault(value.depth, DEFAULT_TREMOLO_DEPTH),
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
+    ),
+    depth: numberOrDefault(value.depth, DEFAULT_AMPLITUDE_MODULATION_DEPTH),
   };
 }
 
-function normalizeVibratoConfig(value: unknown): VibratoConfig | null {
+function normalizeFrequencyModulationConfig(
+  value: unknown,
+): FrequencyModulationConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    frequency: numberOrDefault(value.frequency, DEFAULT_VIBRATO_FREQUENCY),
-    depth: numberOrDefault(value.depth, DEFAULT_VIBRATO_DEPTH),
+    frequency: numberOrDefault(
+      value.frequency,
+      DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
+    ),
+    depth: numberOrDefault(value.depth, DEFAULT_FREQUENCY_MODULATION_DEPTH),
   };
 }
 
@@ -346,14 +356,14 @@ function normalizeEffectConfig(
             Boolean(equalizer),
           )
       : fallback.equalizers,
-    tremolo:
-      value.tremolo === undefined
-        ? fallback.tremolo
-        : normalizeTremoloConfig(value.tremolo),
-    vibrato:
-      value.vibrato === undefined
-        ? fallback.vibrato
-        : normalizeVibratoConfig(value.vibrato),
+    amplitudeModulation:
+      value.amplitudeModulation === undefined
+        ? fallback.amplitudeModulation
+        : normalizeAmplitudeModulationConfig(value.amplitudeModulation),
+    frequencyModulation:
+      value.frequencyModulation === undefined
+        ? fallback.frequencyModulation
+        : normalizeFrequencyModulationConfig(value.frequencyModulation),
     phaseModulation:
       value.phaseModulation === undefined
         ? fallback.phaseModulation

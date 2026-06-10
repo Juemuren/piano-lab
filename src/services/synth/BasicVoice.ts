@@ -14,9 +14,9 @@ import {
 } from '../../constants/synth';
 import type {
   EnvelopeConfig,
+  FrequencyModulationConfig,
   Spectrum,
   SynthBasicConfig,
-  VibratoConfig,
 } from '../../types';
 import { createSpectrum } from './Spectrum';
 import type { VoiceEnvelopeState } from './VoicePlanner';
@@ -27,8 +27,8 @@ const MIN_GAIN_VALUE = 1e-10;
 export interface ActiveVoice extends VoiceEnvelopeState {
   oscillatorNode: OscillatorNode;
   gainNode: GainNode;
-  vibratoOscillatorNode?: OscillatorNode;
-  vibratoDepthGainNode?: GainNode;
+  frequencyModulationOscillatorNode?: OscillatorNode;
+  frequencyModulationDepthGainNode?: GainNode;
   harmonic: number;
   sustainGain: number;
 }
@@ -36,8 +36,8 @@ export interface ActiveVoice extends VoiceEnvelopeState {
 export interface ReleasingVoice {
   oscillatorNode: OscillatorNode;
   gainNode: GainNode;
-  vibratoOscillatorNode?: OscillatorNode;
-  vibratoDepthGainNode?: GainNode;
+  frequencyModulationOscillatorNode?: OscillatorNode;
+  frequencyModulationDepthGainNode?: GainNode;
   harmonic: number;
   releaseStart: number;
   silenceGain: number;
@@ -69,7 +69,7 @@ export class BasicVoice {
   private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
   private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
   private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
-  private vibrato: VibratoConfig | null = null;
+  private frequencyModulation: FrequencyModulationConfig | null = null;
 
   configureSynth({
     oscillatorType,
@@ -99,34 +99,36 @@ export class BasicVoice {
     this.spectrum = spectrum;
   }
 
-  configureVibrato(vibrato: VibratoConfig | null) {
-    this.vibrato = vibrato;
+  configureFrequencyModulation(
+    frequencyModulation: FrequencyModulationConfig | null,
+  ) {
+    this.frequencyModulation = frequencyModulation;
   }
 
-  private createVibratoNodes(
+  private createFrequencyModulationNodes(
     audioContext: AudioContext,
     frequency: number,
     startTime: number,
   ) {
-    if (!this.vibrato) return null;
+    if (!this.frequencyModulation) return null;
 
-    const vibratoOscillatorNode = audioContext.createOscillator();
-    const vibratoDepthGainNode = audioContext.createGain();
-    const depth = Math.max(this.vibrato.depth, 0);
+    const frequencyModulationOscillatorNode = audioContext.createOscillator();
+    const frequencyModulationDepthGainNode = audioContext.createGain();
+    const depth = Math.max(this.frequencyModulation.depth, 0);
     const depthHz = frequency * (2 ** (depth / 1200) - 1);
 
-    vibratoOscillatorNode.type = 'sine';
-    vibratoOscillatorNode.frequency.setValueAtTime(
-      Math.max(this.vibrato.frequency, 0.01),
+    frequencyModulationOscillatorNode.type = 'sine';
+    frequencyModulationOscillatorNode.frequency.setValueAtTime(
+      Math.max(this.frequencyModulation.frequency, 0.01),
       startTime,
     );
-    vibratoDepthGainNode.gain.setValueAtTime(depthHz, startTime);
-    vibratoOscillatorNode.connect(vibratoDepthGainNode);
-    vibratoOscillatorNode.start(startTime);
+    frequencyModulationDepthGainNode.gain.setValueAtTime(depthHz, startTime);
+    frequencyModulationOscillatorNode.connect(frequencyModulationDepthGainNode);
+    frequencyModulationOscillatorNode.start(startTime);
 
     return {
-      vibratoOscillatorNode,
-      vibratoDepthGainNode,
+      frequencyModulationOscillatorNode,
+      frequencyModulationDepthGainNode,
     };
   }
 
@@ -156,7 +158,7 @@ export class BasicVoice {
     for (const plan of plans) {
       const oscillatorNode = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
-      const vibratoNodes = this.createVibratoNodes(
+      const frequencyModulationNodes = this.createFrequencyModulationNodes(
         audioContext,
         plan.frequency,
         plan.startTime,
@@ -164,7 +166,9 @@ export class BasicVoice {
 
       oscillatorNode.type = this.oscillatorType;
       oscillatorNode.frequency.setValueAtTime(plan.frequency, plan.startTime);
-      vibratoNodes?.vibratoDepthGainNode.connect(oscillatorNode.frequency);
+      frequencyModulationNodes?.frequencyModulationDepthGainNode.connect(
+        oscillatorNode.frequency,
+      );
 
       gainNode.gain.setValueAtTime(plan.silenceGain, plan.startTime);
       gainNode.gain.exponentialRampToValueAtTime(
@@ -179,16 +183,18 @@ export class BasicVoice {
       oscillatorNode.onended = () => {
         oscillatorNode.disconnect();
         gainNode.disconnect();
-        vibratoNodes?.vibratoOscillatorNode.disconnect();
-        vibratoNodes?.vibratoDepthGainNode.disconnect();
+        frequencyModulationNodes?.frequencyModulationOscillatorNode.disconnect();
+        frequencyModulationNodes?.frequencyModulationDepthGainNode.disconnect();
       };
 
       oscillatorNode.start(plan.startTime);
       voices.push({
         oscillatorNode,
         gainNode,
-        vibratoOscillatorNode: vibratoNodes?.vibratoOscillatorNode,
-        vibratoDepthGainNode: vibratoNodes?.vibratoDepthGainNode,
+        frequencyModulationOscillatorNode:
+          frequencyModulationNodes?.frequencyModulationOscillatorNode,
+        frequencyModulationDepthGainNode:
+          frequencyModulationNodes?.frequencyModulationDepthGainNode,
         harmonic: plan.harmonic,
         startTime: plan.startTime,
         attackEnd: plan.attackEnd,
@@ -217,7 +223,7 @@ export class BasicVoice {
         plan.stopTime,
       );
       voice.oscillatorNode.stop(plan.stopTime);
-      voice.vibratoOscillatorNode?.stop(plan.stopTime);
+      voice.frequencyModulationOscillatorNode?.stop(plan.stopTime);
     });
   }
 }

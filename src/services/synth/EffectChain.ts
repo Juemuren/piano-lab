@@ -1,4 +1,5 @@
 import type {
+  AmplitudeModulationConfig,
   CompressorConfig,
   DelayModulationConfig,
   EffectConfig,
@@ -7,7 +8,6 @@ import type {
   PannerConfig,
   PhaseModulationConfig,
   ReverbConfig,
-  TremoloConfig,
   WaveShaperConfig,
 } from '../../types';
 import { createReverbImpulseResponse } from './effect/Reverb';
@@ -22,9 +22,9 @@ export class EffectChain {
   private equalizerNodes: BiquadFilterNode[] = [];
   private waveShaperNode: WaveShaperNode | null = null;
   private compressorNode: DynamicsCompressorNode | null = null;
-  private tremoloGainNode: GainNode | null = null;
-  private tremoloOscillatorNode: OscillatorNode | null = null;
-  private tremoloDepthGainNode: GainNode | null = null;
+  private amplitudeModulationGainNode: GainNode | null = null;
+  private amplitudeModulationOscillatorNode: OscillatorNode | null = null;
+  private amplitudeModulationDepthGainNode: GainNode | null = null;
   private phaseModulationNode: BiquadFilterNode | null = null;
   private phaseModulationOscillatorNode: OscillatorNode | null = null;
   private phaseModulationDepthGainNode: GainNode | null = null;
@@ -38,8 +38,8 @@ export class EffectChain {
   private effectConfig: EffectConfig = {
     filters: [],
     equalizers: [],
-    tremolo: null,
-    vibrato: null,
+    amplitudeModulation: null,
+    frequencyModulation: null,
     phaseModulation: null,
     delayModulation: null,
     waveShaper: null,
@@ -111,10 +111,10 @@ export class EffectChain {
     this.reverbWetGainNode = null;
   }
 
-  private disconnectTremoloNodes() {
-    this.tremoloGainNode?.disconnect();
-    this.tremoloOscillatorNode?.disconnect();
-    this.tremoloDepthGainNode?.disconnect();
+  private disconnectAmplitudeModulationNodes() {
+    this.amplitudeModulationGainNode?.disconnect();
+    this.amplitudeModulationOscillatorNode?.disconnect();
+    this.amplitudeModulationDepthGainNode?.disconnect();
   }
 
   private disconnectPhaseModulationNodes() {
@@ -139,7 +139,7 @@ export class EffectChain {
     }
     this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
-    this.disconnectTremoloNodes();
+    this.disconnectAmplitudeModulationNodes();
     this.disconnectPhaseModulationNodes();
     this.disconnectDelayModulationNodes();
     this.pannerNode?.disconnect();
@@ -152,35 +152,42 @@ export class EffectChain {
     this.inputNode.connect(this.outputNode);
   }
 
-  private applyTremoloConfig(tremoloConfig: TremoloConfig) {
+  private applyAmplitudeModulationConfig(
+    amplitudeModulationConfig: AmplitudeModulationConfig,
+  ) {
     if (!this.audioContext) return null;
 
-    if (!this.tremoloGainNode) {
-      this.tremoloGainNode = this.audioContext.createGain();
+    if (!this.amplitudeModulationGainNode) {
+      this.amplitudeModulationGainNode = this.audioContext.createGain();
     }
-    if (!this.tremoloOscillatorNode) {
-      this.tremoloOscillatorNode = this.audioContext.createOscillator();
-      this.tremoloOscillatorNode.type = 'sine';
-      this.tremoloOscillatorNode.start();
+    if (!this.amplitudeModulationOscillatorNode) {
+      this.amplitudeModulationOscillatorNode =
+        this.audioContext.createOscillator();
+      this.amplitudeModulationOscillatorNode.type = 'sine';
+      this.amplitudeModulationOscillatorNode.start();
     }
-    if (!this.tremoloDepthGainNode) {
-      this.tremoloDepthGainNode = this.audioContext.createGain();
+    if (!this.amplitudeModulationDepthGainNode) {
+      this.amplitudeModulationDepthGainNode = this.audioContext.createGain();
     }
 
-    this.tremoloOscillatorNode.disconnect();
-    this.tremoloDepthGainNode.disconnect();
+    this.amplitudeModulationOscillatorNode.disconnect();
+    this.amplitudeModulationDepthGainNode.disconnect();
 
-    const depth = Math.min(Math.max(tremoloConfig.depth, 0), 0.5);
-    this.tremoloOscillatorNode.frequency.value = Math.max(
-      tremoloConfig.frequency,
+    const depth = Math.min(Math.max(amplitudeModulationConfig.depth, 0), 0.5);
+    this.amplitudeModulationOscillatorNode.frequency.value = Math.max(
+      amplitudeModulationConfig.frequency,
       0.01,
     );
-    this.tremoloGainNode.gain.value = 1 - depth;
-    this.tremoloDepthGainNode.gain.value = depth;
-    this.tremoloOscillatorNode.connect(this.tremoloDepthGainNode);
-    this.tremoloDepthGainNode.connect(this.tremoloGainNode.gain);
+    this.amplitudeModulationGainNode.gain.value = 1 - depth;
+    this.amplitudeModulationDepthGainNode.gain.value = depth;
+    this.amplitudeModulationOscillatorNode.connect(
+      this.amplitudeModulationDepthGainNode,
+    );
+    this.amplitudeModulationDepthGainNode.connect(
+      this.amplitudeModulationGainNode.gain,
+    );
 
-    return this.tremoloGainNode;
+    return this.amplitudeModulationGainNode;
   }
 
   private applyPhaseModulationConfig(
@@ -350,7 +357,7 @@ export class EffectChain {
     if (
       this.effectConfig.filters.length === 0 &&
       this.effectConfig.equalizers.length === 0 &&
-      !this.effectConfig.tremolo &&
+      !this.effectConfig.amplitudeModulation &&
       !this.effectConfig.phaseModulation &&
       !this.effectConfig.delayModulation &&
       !this.effectConfig.waveShaper &&
@@ -404,11 +411,13 @@ export class EffectChain {
       this.effectConfig.equalizers.length,
     );
 
-    if (this.effectConfig.tremolo) {
-      const tremoloNode = this.applyTremoloConfig(this.effectConfig.tremolo);
-      if (tremoloNode) {
-        previousNode.connect(tremoloNode);
-        previousNode = tremoloNode;
+    if (this.effectConfig.amplitudeModulation) {
+      const amplitudeModulationNode = this.applyAmplitudeModulationConfig(
+        this.effectConfig.amplitudeModulation,
+      );
+      if (amplitudeModulationNode) {
+        previousNode.connect(amplitudeModulationNode);
+        previousNode = amplitudeModulationNode;
       }
     }
 
@@ -507,8 +516,8 @@ export class EffectChain {
     }
     this.waveShaperNode?.disconnect();
     this.compressorNode?.disconnect();
-    this.disconnectTremoloNodes();
-    this.tremoloOscillatorNode?.stop();
+    this.disconnectAmplitudeModulationNodes();
+    this.amplitudeModulationOscillatorNode?.stop();
     this.disconnectPhaseModulationNodes();
     this.phaseModulationOscillatorNode?.stop();
     this.disconnectDelayModulationNodes();
@@ -523,9 +532,9 @@ export class EffectChain {
     this.equalizerNodes = [];
     this.waveShaperNode = null;
     this.compressorNode = null;
-    this.tremoloGainNode = null;
-    this.tremoloOscillatorNode = null;
-    this.tremoloDepthGainNode = null;
+    this.amplitudeModulationGainNode = null;
+    this.amplitudeModulationOscillatorNode = null;
+    this.amplitudeModulationDepthGainNode = null;
     this.phaseModulationNode = null;
     this.phaseModulationOscillatorNode = null;
     this.phaseModulationDepthGainNode = null;

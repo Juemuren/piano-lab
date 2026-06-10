@@ -1,4 +1,6 @@
 import {
+  DEFAULT_AMPLITUDE_MODULATION_DEPTH,
+  DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
   DEFAULT_COMPRESSOR_ATTACK,
   DEFAULT_COMPRESSOR_KNEE,
   DEFAULT_COMPRESSOR_RATIO,
@@ -18,6 +20,8 @@ import {
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
+  DEFAULT_FREQUENCY_MODULATION_DEPTH,
+  DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
   DEFAULT_PANNER_CONE_INNER_ANGLE,
   DEFAULT_PANNER_CONE_OUTER_ANGLE,
   DEFAULT_PANNER_CONE_OUTER_GAIN,
@@ -43,10 +47,6 @@ import {
   DEFAULT_SYNTH_HARMONIC_COUNT,
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_TREMOLO_DEPTH,
-  DEFAULT_TREMOLO_FREQUENCY,
-  DEFAULT_VIBRATO_DEPTH,
-  DEFAULT_VIBRATO_FREQUENCY,
   DEFAULT_WAVE_SHAPER_DISTORTION,
   DEFAULT_WAVE_SHAPER_FUZZ,
   DEFAULT_WAVE_SHAPER_OVERDRIVE,
@@ -54,6 +54,7 @@ import {
   DEFAULT_WAVE_SHAPER_SATURATION,
 } from '../../../constants/synth';
 import type {
+  AmplitudeModulationConfig,
   BuiltInReverbPreset,
   CompressorConfig,
   DelayModulationConfig,
@@ -63,14 +64,13 @@ import type {
   EqualizerType,
   FilterConfig,
   FilterType,
+  FrequencyModulationConfig,
   PannerConfig,
   PhaseModulationConfig,
   ReverbConfig,
   SpectrumConfig,
   SynthBasicConfig,
   SynthConfig,
-  TremoloConfig,
-  VibratoConfig,
   WaveShaperConfig,
 } from '../../../types';
 import { createReverbConfig } from '../effect/Reverb';
@@ -143,17 +143,17 @@ export function createDefaultCompressorConfig(): CompressorConfig {
   };
 }
 
-export function createDefaultTremoloConfig(): TremoloConfig {
+export function createDefaultAmplitudeModulationConfig(): AmplitudeModulationConfig {
   return {
-    frequency: DEFAULT_TREMOLO_FREQUENCY,
-    depth: DEFAULT_TREMOLO_DEPTH,
+    frequency: DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
+    depth: DEFAULT_AMPLITUDE_MODULATION_DEPTH,
   };
 }
 
-export function createDefaultVibratoConfig(): VibratoConfig {
+export function createDefaultFrequencyModulationConfig(): FrequencyModulationConfig {
   return {
-    frequency: DEFAULT_VIBRATO_FREQUENCY,
-    depth: DEFAULT_VIBRATO_DEPTH,
+    frequency: DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
+    depth: DEFAULT_FREQUENCY_MODULATION_DEPTH,
   };
 }
 
@@ -211,8 +211,8 @@ export function createDefaultEffectConfig(): EffectConfig {
   return {
     filters: [],
     equalizers: [],
-    tremolo: null,
-    vibrato: null,
+    amplitudeModulation: null,
+    frequencyModulation: null,
     phaseModulation: null,
     delayModulation: null,
     waveShaper: null,

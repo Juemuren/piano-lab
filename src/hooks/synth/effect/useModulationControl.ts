@@ -1,70 +1,78 @@
 import { useCallback, useState } from 'react';
 import {
+  createDefaultAmplitudeModulationConfig,
   createDefaultDelayModulationConfig,
+  createDefaultFrequencyModulationConfig,
   createDefaultPhaseModulationConfig,
-  createDefaultTremoloConfig,
-  createDefaultVibratoConfig,
 } from '../../../services/synth/config/Defaults';
 import type {
+  AmplitudeModulationConfig,
   DelayModulationConfig,
+  FrequencyModulationConfig,
   PhaseModulationConfig,
-  TremoloConfig,
-  VibratoConfig,
 } from '../../../types';
 
 function useModulationControl(
-  initialTremolo: TremoloConfig | null,
-  initialVibrato: VibratoConfig | null,
+  initialAmplitudeModulation: AmplitudeModulationConfig | null,
+  initialFrequencyModulation: FrequencyModulationConfig | null,
   initialPhaseModulation: PhaseModulationConfig | null,
   initialDelayModulation: DelayModulationConfig | null,
 ) {
-  const [tremolo, setTremolo] = useState<TremoloConfig | null>(
-    () => initialTremolo,
-  );
-  const [vibrato, setVibrato] = useState<VibratoConfig | null>(
-    () => initialVibrato,
-  );
+  const [amplitudeModulation, setAmplitudeModulation] =
+    useState<AmplitudeModulationConfig | null>(
+      () => initialAmplitudeModulation,
+    );
+  const [frequencyModulation, setFrequencyModulation] =
+    useState<FrequencyModulationConfig | null>(
+      () => initialFrequencyModulation,
+    );
   const [phaseModulation, setPhaseModulation] =
     useState<PhaseModulationConfig | null>(() => initialPhaseModulation);
   const [delayModulation, setDelayModulation] =
     useState<DelayModulationConfig | null>(() => initialDelayModulation);
 
-  const updateTremoloEnabled = useCallback((enabled: boolean) => {
-    setTremolo((current) =>
-      enabled ? (current ?? createDefaultTremoloConfig()) : null,
+  const updateAmplitudeModulationEnabled = useCallback((enabled: boolean) => {
+    setAmplitudeModulation((current) =>
+      enabled ? (current ?? createDefaultAmplitudeModulationConfig()) : null,
     );
   }, []);
 
-  const updateTremoloFrequency = useCallback((frequency: number) => {
-    setTremolo((current) => ({
-      ...(current ?? createDefaultTremoloConfig()),
-      frequency,
-    }));
-  }, []);
+  const updateAmplitudeModulationFrequency = useCallback(
+    (frequency: number) => {
+      setAmplitudeModulation((current) => ({
+        ...(current ?? createDefaultAmplitudeModulationConfig()),
+        frequency,
+      }));
+    },
+    [],
+  );
 
-  const updateTremoloDepth = useCallback((depth: number) => {
-    setTremolo((current) => ({
-      ...(current ?? createDefaultTremoloConfig()),
+  const updateAmplitudeModulationDepth = useCallback((depth: number) => {
+    setAmplitudeModulation((current) => ({
+      ...(current ?? createDefaultAmplitudeModulationConfig()),
       depth,
     }));
   }, []);
 
-  const updateVibratoEnabled = useCallback((enabled: boolean) => {
-    setVibrato((current) =>
-      enabled ? (current ?? createDefaultVibratoConfig()) : null,
+  const updateFrequencyModulationEnabled = useCallback((enabled: boolean) => {
+    setFrequencyModulation((current) =>
+      enabled ? (current ?? createDefaultFrequencyModulationConfig()) : null,
     );
   }, []);
 
-  const updateVibratoFrequency = useCallback((frequency: number) => {
-    setVibrato((current) => ({
-      ...(current ?? createDefaultVibratoConfig()),
-      frequency,
-    }));
-  }, []);
+  const updateFrequencyModulationFrequency = useCallback(
+    (frequency: number) => {
+      setFrequencyModulation((current) => ({
+        ...(current ?? createDefaultFrequencyModulationConfig()),
+        frequency,
+      }));
+    },
+    [],
+  );
 
-  const updateVibratoDepth = useCallback((depth: number) => {
-    setVibrato((current) => ({
-      ...(current ?? createDefaultVibratoConfig()),
+  const updateFrequencyModulationDepth = useCallback((depth: number) => {
+    setFrequencyModulation((current) => ({
+      ...(current ?? createDefaultFrequencyModulationConfig()),
       depth,
     }));
   }, []);
@@ -110,14 +118,14 @@ function useModulationControl(
   }, []);
 
   return {
-    tremolo,
-    updateTremoloEnabled,
-    updateTremoloFrequency,
-    updateTremoloDepth,
-    vibrato,
-    updateVibratoEnabled,
-    updateVibratoFrequency,
-    updateVibratoDepth,
+    amplitudeModulation,
+    updateAmplitudeModulationEnabled,
+    updateAmplitudeModulationFrequency,
+    updateAmplitudeModulationDepth,
+    frequencyModulation,
+    updateFrequencyModulationEnabled,
+    updateFrequencyModulationFrequency,
+    updateFrequencyModulationDepth,
     phaseModulation,
     updatePhaseModulationEnabled,
     updatePhaseModulationFrequency,

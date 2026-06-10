@@ -1,27 +1,27 @@
 import { AudioLines } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type {
+  AmplitudeModulationConfig,
   DelayModulationConfig,
+  FrequencyModulationConfig,
   PhaseModulationConfig,
-  TremoloConfig,
-  VibratoConfig,
 } from '../../../../types';
+import AmplitudeModulationEffect from './AmplitudeModulationEffect';
 import DelayModulationEffect from './DelayModulationEffect';
+import FrequencyModulationEffect from './FrequencyModulationEffect';
 import PhaseModulationEffect from './PhaseModulationEffect';
-import TremoloEffect from './TremoloEffect';
-import VibratoEffect from './VibratoEffect';
 
 interface ModulationProps {
-  tremolo: TremoloConfig | null;
-  vibrato: VibratoConfig | null;
+  amplitudeModulation: AmplitudeModulationConfig | null;
+  frequencyModulation: FrequencyModulationConfig | null;
   phaseModulation: PhaseModulationConfig | null;
   delayModulation: DelayModulationConfig | null;
-  onTremoloEnabledChange: (enabled: boolean) => void;
-  onTremoloFrequencyChange: (value: number) => void;
-  onTremoloDepthChange: (value: number) => void;
-  onVibratoEnabledChange: (enabled: boolean) => void;
-  onVibratoFrequencyChange: (value: number) => void;
-  onVibratoDepthChange: (value: number) => void;
+  onAmplitudeModulationEnabledChange: (enabled: boolean) => void;
+  onAmplitudeModulationFrequencyChange: (value: number) => void;
+  onAmplitudeModulationDepthChange: (value: number) => void;
+  onFrequencyModulationEnabledChange: (enabled: boolean) => void;
+  onFrequencyModulationFrequencyChange: (value: number) => void;
+  onFrequencyModulationDepthChange: (value: number) => void;
   onPhaseModulationEnabledChange: (enabled: boolean) => void;
   onPhaseModulationFrequencyChange: (value: number) => void;
   onPhaseModulationDepthChange: (value: number) => void;
@@ -31,16 +31,16 @@ interface ModulationProps {
 }
 
 function Modulation({
-  tremolo,
-  vibrato,
+  amplitudeModulation,
+  frequencyModulation,
   phaseModulation,
   delayModulation,
-  onTremoloEnabledChange,
-  onTremoloFrequencyChange,
-  onTremoloDepthChange,
-  onVibratoEnabledChange,
-  onVibratoFrequencyChange,
-  onVibratoDepthChange,
+  onAmplitudeModulationEnabledChange,
+  onAmplitudeModulationFrequencyChange,
+  onAmplitudeModulationDepthChange,
+  onFrequencyModulationEnabledChange,
+  onFrequencyModulationFrequencyChange,
+  onFrequencyModulationDepthChange,
   onPhaseModulationEnabledChange,
   onPhaseModulationFrequencyChange,
   onPhaseModulationDepthChange,
@@ -60,17 +60,17 @@ function Modulation({
       </summary>
 
       <div className="space-y-4">
-        <TremoloEffect
-          tremolo={tremolo}
-          onEnabledChange={onTremoloEnabledChange}
-          onFrequencyChange={onTremoloFrequencyChange}
-          onDepthChange={onTremoloDepthChange}
+        <AmplitudeModulationEffect
+          amplitudeModulation={amplitudeModulation}
+          onEnabledChange={onAmplitudeModulationEnabledChange}
+          onFrequencyChange={onAmplitudeModulationFrequencyChange}
+          onDepthChange={onAmplitudeModulationDepthChange}
         />
-        <VibratoEffect
-          vibrato={vibrato}
-          onEnabledChange={onVibratoEnabledChange}
-          onFrequencyChange={onVibratoFrequencyChange}
-          onDepthChange={onVibratoDepthChange}
+        <FrequencyModulationEffect
+          frequencyModulation={frequencyModulation}
+          onEnabledChange={onFrequencyModulationEnabledChange}
+          onFrequencyChange={onFrequencyModulationFrequencyChange}
+          onDepthChange={onFrequencyModulationDepthChange}
         />
         <PhaseModulationEffect
           phaseModulation={phaseModulation}

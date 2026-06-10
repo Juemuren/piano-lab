@@ -24,8 +24,8 @@ function useEffectControl(
     resolvedInitialConfig.equalizers,
   );
   const modulationControl = useModulationControl(
-    resolvedInitialConfig.tremolo,
-    resolvedInitialConfig.vibrato,
+    resolvedInitialConfig.amplitudeModulation,
+    resolvedInitialConfig.frequencyModulation,
     resolvedInitialConfig.phaseModulation,
     resolvedInitialConfig.delayModulation,
   );
@@ -42,8 +42,8 @@ function useEffectControl(
     () => ({
       filters: filterControl.filters,
       equalizers: equalizerControl.equalizers,
-      tremolo: modulationControl.tremolo,
-      vibrato: modulationControl.vibrato,
+      amplitudeModulation: modulationControl.amplitudeModulation,
+      frequencyModulation: modulationControl.frequencyModulation,
       phaseModulation: modulationControl.phaseModulation,
       delayModulation: modulationControl.delayModulation,
       waveShaper: waveShaperControl.waveShaper,
@@ -55,8 +55,8 @@ function useEffectControl(
       compressorControl.compressor,
       equalizerControl.equalizers,
       filterControl.filters,
-      modulationControl.tremolo,
-      modulationControl.vibrato,
+      modulationControl.amplitudeModulation,
+      modulationControl.frequencyModulation,
       modulationControl.phaseModulation,
       modulationControl.delayModulation,
       pannerControl.panner,

@@ -79,12 +79,12 @@ export interface CompressorConfig {
   release: number;
 }
 
-export interface TremoloConfig {
+export interface AmplitudeModulationConfig {
   frequency: number;
   depth: number;
 }
 
-export interface VibratoConfig {
+export interface FrequencyModulationConfig {
   frequency: number;
   depth: number;
 }
@@ -157,8 +157,8 @@ export interface ReverbConfig {
 export interface EffectConfig {
   filters: FilterConfig[];
   equalizers: EqualizerConfig[];
-  tremolo: TremoloConfig | null;
-  vibrato: VibratoConfig | null;
+  amplitudeModulation: AmplitudeModulationConfig | null;
+  frequencyModulation: FrequencyModulationConfig | null;
   phaseModulation: PhaseModulationConfig | null;
   delayModulation: DelayModulationConfig | null;
   waveShaper: WaveShaperConfig | null;

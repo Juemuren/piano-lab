@@ -49,7 +49,7 @@ export class SynthEngine {
   }
 
   configureEffect(config: EffectConfig) {
-    this.basicVoice.configureVibrato(config.vibrato);
+    this.basicVoice.configureFrequencyModulation(config.frequencyModulation);
     this.effectChain.configure(config);
   }
 
@@ -189,7 +189,7 @@ export class SynthEngine {
         voice.oscillatorNode.stop(
           Math.max(this.audioContext.currentTime, voice.startTime),
         );
-        voice.vibratoOscillatorNode?.stop(
+        voice.frequencyModulationOscillatorNode?.stop(
           Math.max(this.audioContext.currentTime, voice.startTime),
         );
       }

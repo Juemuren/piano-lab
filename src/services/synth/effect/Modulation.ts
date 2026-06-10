@@ -1,8 +1,8 @@
 import type {
+  AmplitudeModulationConfig,
   DelayModulationConfig,
+  FrequencyModulationConfig,
   PhaseModulationConfig,
-  TremoloConfig,
-  VibratoConfig,
 } from '../../../types';
 
 const MODULATION_CURVE_POINT_COUNT = 256;
@@ -17,27 +17,37 @@ function createTimePoints() {
   });
 }
 
-export function getTremoloCurvePoints(tremolo: TremoloConfig) {
+export function getAmplitudeModulationCurvePoints(
+  amplitudeModulation: AmplitudeModulationConfig,
+) {
   const time = createTimePoints();
-  const depth = Math.min(Math.max(tremolo.depth, 0), 0.5);
+  const depth = Math.min(Math.max(amplitudeModulation.depth, 0), 0.5);
 
   return {
     time,
     gainRatio: time.map(
-      (t) => 1 - depth + depth * Math.sin(2 * Math.PI * tremolo.frequency * t),
+      (t) =>
+        1 -
+        depth +
+        depth * Math.sin(2 * Math.PI * amplitudeModulation.frequency * t),
     ),
   };
 }
 
-export function getVibratoCurvePoints(vibrato: VibratoConfig) {
+export function getFrequencyModulationCurvePoints(
+  frequencyModulation: FrequencyModulationConfig,
+) {
   const time = createTimePoints();
-  const frequencyRatioDepth = 2 ** (Math.max(vibrato.depth, 0) / 1200) - 1;
+  const frequencyRatioDepth =
+    2 ** (Math.max(frequencyModulation.depth, 0) / 1200) - 1;
 
   return {
     time,
     frequencyRatio: time.map(
       (t) =>
-        1 + frequencyRatioDepth * Math.sin(2 * Math.PI * vibrato.frequency * t),
+        1 +
+        frequencyRatioDepth *
+          Math.sin(2 * Math.PI * frequencyModulation.frequency * t),
     ),
   };
 }
