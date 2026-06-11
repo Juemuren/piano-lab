@@ -3,11 +3,13 @@ import type { InputHTMLAttributes, ReactNode } from 'react';
 type ControlCheckboxProps = {
   label: string;
   icon?: ReactNode;
+  accentClassName?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
 function ControlCheckbox({
   label,
   icon,
+  accentClassName = 'text-app-tip dark:text-app-tip-dark',
   className = '',
   ...props
 }: ControlCheckboxProps) {
@@ -15,9 +17,10 @@ function ControlCheckbox({
     <label className="flex items-center gap-2 text-sm">
       <input
         type="checkbox"
-        className={`size-4 flex-none accent-app-accent ${className}`}
+        className={`checkbox-input ${className}`}
         {...props}
       />
+      <span className={`checkbox-track ${accentClassName}`} />
       <span className="inline-flex items-center gap-1">
         {icon}
         {label}

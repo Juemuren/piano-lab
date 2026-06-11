@@ -140,6 +140,88 @@
   }
 }
 
+/* https://freefrontend.com/css-checkboxes/ */
+@layer components {
+  .checkbox-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  .checkbox-track {
+    --checkbox-track-color: var(--color-app-surface);
+    --checkbox-border-color: var(--color-app-border);
+    --checkbox-indicator-color: var(--color-app-overlay);
+    --checkbox-width: 3rem;
+    --checkbox-height: 1.5rem;
+    --checkbox-indicator-size: 1.125rem;
+    --checkbox-inset: 0.125rem;
+    position: relative;
+    flex: none;
+    width: var(--checkbox-width);
+    height: var(--checkbox-height);
+    border: 1px solid var(--checkbox-border-color);
+    border-radius: calc(infinity * 1px);
+    background: var(--checkbox-track-color);
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      opacity 160ms ease;
+  }
+
+  .checkbox-track::before {
+    position: absolute;
+    top: var(--checkbox-inset);
+    left: var(--checkbox-inset);
+    width: var(--checkbox-indicator-size);
+    height: var(--checkbox-indicator-size);
+    border-radius: calc(infinity * 1px);
+    background: var(--checkbox-indicator-color);
+    content: "";
+    transition:
+      background-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .checkbox-input:disabled + .checkbox-track {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .checkbox-input:not(:disabled):active + .checkbox-track,
+  .checkbox-input:not(:disabled):focus-visible + .checkbox-track {
+    box-shadow: 0 0 0 2px currentcolor;
+  }
+
+  .checkbox-input:checked + .checkbox-track {
+    border-color: currentcolor;
+  }
+
+  .checkbox-input:checked + .checkbox-track::before {
+    background: currentcolor;
+    transform: translateX(
+      calc(
+        var(--checkbox-width) -
+        var(--checkbox-indicator-size) -
+        var(--checkbox-inset) *
+        2
+      )
+    );
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .checkbox-track {
+      --checkbox-track-color: var(--color-app-surface-dark);
+      --checkbox-border-color: var(--color-app-border-dark);
+      --checkbox-indicator-color: var(--color-app-overlay-dark);
+    }
+  }
+}
+
 @media print {
   @page {
     margin: 4mm;
