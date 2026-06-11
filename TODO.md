@@ -2,7 +2,7 @@
 
 ## Chore
 
-- [ ] 尝试一下 [tsgo](https://github.com/microsoft/typescript-go)
+- [x] 尝试一下 [tsgo](https://github.com/microsoft/typescript-go)
 
 ## Refactor
 
