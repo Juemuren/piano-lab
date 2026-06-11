@@ -174,7 +174,7 @@ function SoundSynthesizer() {
           step="1"
           value={harmonicCount}
           displayValue={harmonicCount.toString()}
-          accentClassName="accent-app-warning dark:accent-app-warning-dark"
+          accentClassName="text-app-warning dark:text-app-warning-dark"
           onChange={(value) => setHarmonicCount(Math.round(value))}
           p={t('controls.harmonicCountWarning')}
           pClassName="text-app-warning/50 dark:text-app-warning-dark/50"

@@ -55,6 +55,91 @@
   stroke: var(--color-score-highlight) !important;
 }
 
+/* https://freefrontend.com/css-range-sliders/ */
+@layer components {
+  .range-input {
+    --range-track-color: var(--color-app-surface);
+    --range-track-height: 0.25rem;
+    --range-thumb-size: 1rem;
+    --range-thumb-border: 0.1875rem;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .range-input:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .range-input:disabled::-webkit-slider-thumb {
+    width: 0;
+    height: 0;
+    border: 0;
+  }
+
+  .range-input:disabled::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    border: 0;
+  }
+
+  .range-input::-webkit-slider-runnable-track {
+    height: var(--range-track-height);
+    border-radius: calc(infinity * 1px);
+    background: linear-gradient(
+      to right,
+      currentcolor 0 var(--range-progress),
+      var(--range-track-color) var(--range-progress) 100%
+    );
+  }
+
+  .range-input::-webkit-slider-thumb {
+    appearance: none;
+    box-sizing: border-box;
+    width: var(--range-thumb-size);
+    height: var(--range-thumb-size);
+    margin-top: calc((var(--range-track-height) - var(--range-thumb-size)) / 2);
+    border: solid var(--range-thumb-border) currentcolor;
+    border-radius: calc(infinity * 1px);
+    background: var(--color-app-base);
+  }
+
+  .range-input::-moz-range-track {
+    height: var(--range-track-height);
+    border-radius: calc(infinity * 1px);
+    background: linear-gradient(
+      to right,
+      currentcolor 0 var(--range-progress),
+      var(--range-track-color) var(--range-progress) 100%
+    );
+  }
+
+  .range-input::-moz-range-thumb {
+    box-sizing: border-box;
+    width: var(--range-thumb-size);
+    height: var(--range-thumb-size);
+    border: solid var(--range-thumb-border) currentcolor;
+    border-radius: calc(infinity * 1px);
+    background: var(--color-app-base);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .range-input {
+      --range-track-color: var(--color-app-surface-dark);
+    }
+
+    .range-input::-webkit-slider-thumb {
+      background: var(--color-app-base-dark);
+    }
+
+    .range-input::-moz-range-thumb {
+      background: var(--color-app-base-dark);
+    }
+  }
+}
+
 @media print {
   @page {
     margin: 4mm;

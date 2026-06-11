@@ -37,7 +37,7 @@ function BaseFrequencyControl({
           step="1"
           value={value}
           displayValue={`${value.toFixed(2)} Hz`}
-          accentClassName="accent-app-info dark:accent-app-info-dark"
+          accentClassName="text-app-info dark:text-app-info-dark"
           pClassName="text-app-info/50 dark:text-app-info-dark/50"
           onChange={onChange}
         />

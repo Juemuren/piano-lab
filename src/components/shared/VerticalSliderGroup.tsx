@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { getRangeProgressStyle } from '../../utils/range';
 
 type VerticalSliderGroupProps = {
   values: number[];
@@ -38,12 +39,10 @@ function VerticalSliderGroup({
               value={value}
               disabled={disabled}
               onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
+              style={getRangeProgressStyle(value, min, max)}
               className={`
-                h-1 -rotate-90 rounded-full
-                appearance-none bg-app-surface dark:bg-app-surface-dark
-                border border-app-border dark:border-app-border-dark
-                accent-app-tip dark:accent-app-tip-dark
-                ${disabled ? 'cursor-not-allowed' : ''}
+                range-input w-36 h-6 -rotate-90
+                text-app-tip dark:text-app-tip-dark
               `}
             />
           </div>

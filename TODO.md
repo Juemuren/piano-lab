@@ -16,4 +16,8 @@
 
 ## Style
 
+- [x] [VerticalSliderGroup](src/components/shared/VerticalSliderGroup.tsx) 中的 [<input type="range">](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/range) 在禁用时，滑钮的颜色无法修改，即时设置 `appearance: none` 也是如此。但各浏览器暴露的伪元素不一致，导致必须得写 `::-webkit-` / `::-moz` 这种丑陋的代码。看起来必须得在代码丑陋和界面丑陋里做出抉择。浏览器厂商，我恨你……
+- [x] `<input type="range">` 在使用 `appearance: none` 后自动着色消失了。是的，依旧需要编写 `::-webkit-` / `::-moz` 这种丑代码
+- [ ] [ControlCheckbox](src/components/shared/ControlCheckbox.tsx) 中的 [<input type="checkbox">](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/checkbox) 还在使用原生样式，可能要美化一下
+
 ## Feat

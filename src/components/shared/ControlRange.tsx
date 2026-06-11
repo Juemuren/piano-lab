@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { getRangeProgressStyle } from '../../utils/range';
 
 type ControlRangeProps = {
   label: string;
@@ -26,7 +27,7 @@ function ControlRange({
   symbol,
   displayValue = value.toString(),
   p,
-  accentClassName = 'accent-app-tip dark:accent-app-tip-dark',
+  accentClassName = 'text-app-tip dark:text-app-tip-dark',
   pClassName = 'text-app-tip/50 dark:text-app-tip-dark/50',
 }: ControlRangeProps) {
   return (
@@ -46,9 +47,9 @@ function ControlRange({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
+        style={getRangeProgressStyle(value, min, max)}
         className={`
-          w-full h-2 rounded-full
-          appearance-none bg-app-surface dark:bg-app-surface-dark
+          range-input w-full h-6
           ${accentClassName}
         `}
       />
