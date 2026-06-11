@@ -106,6 +106,7 @@ function KeyboardControlSettings({
                 />
                 <ControlButton
                   disabled={!key}
+                  title={key}
                   icon={<X size={16} />}
                   onClick={() => setMappingKey(offset, '')}
                 />
