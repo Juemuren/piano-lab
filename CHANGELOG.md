@@ -2,6 +2,38 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.0]
+
+### Changed
+
+- Renamed tremolo and vibrato internals and UI text to amplitude modulation and frequency modulation for clearer terminology.
+- Updated modulation formulas to use physically meaningful variable symbols.
+- Updated the envelope formula description and preview labels.
+- Improved the Gaussian random number generator used by the reverb late tail.
+- Moved Plotly type declarations into project types to reduce patch-package usage.
+- Migrated code formatting and linting from ESLint/Prettier to Biome.
+- Reduced pre-commit hook work to type checking and adjusted related npm scripts.
+
+### Fixed
+
+- Fixed the effect chain causing audio to disappear when multiple effects were enabled and reverb settings were changed.
+- Fixed Vite/Rolldown resolution errors caused by Biome's inline type imports by using separated type imports.
+- Fixed the `typecheck` npm script.
+
+### Style
+
+- Improved page and shared control styling.
+- Improved range input styling across browsers, including disabled states.
+- Improved checkbox styling.
+- Cleared previous spectrum and reverb preset parameters when switching to custom settings.
+- Added missing titles to remove browser warnings.
+
+### Docs
+
+- Updated README documentation and translations.
+- Fixed GitHub README formula rendering issues.
+- Added VSCode recommended extensions and settings examples.
+
 ## [1.0.0]
 
 ### Added

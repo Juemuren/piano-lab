@@ -28,7 +28,7 @@
 Piano Lab provides interactive virtual keys, a customizable sound synthesizer, and a playable score editor.
 
 - [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects; record audio and export in WebM/MP4 and other formats
-- [Score Editor](#score-editor): write scores in ABC Notation, render them in real time, play them automatically, and export as SVG/PNG/PDF/MIDI files
+- [Score Editor](#score-editor): write scores in ABC Notation, automatically record played notes, render, play, and export as SVG/PNG/PDF/MIDI files
 - [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8; supports playing with mouse, touchscreen, computer keyboard, and MIDI input devices
 
 The app supports multiple languages, mobile layout, dark mode, and can be installed as a [desktop app][link-release].
@@ -42,7 +42,7 @@ The sound synthesizer consists of the following modules: envelope, spectrum, eff
 - Supports sine, triangle, sawtooth, and square waves
 - Supports adjusting volume factor and harmonic count
 - All configurations can be exported as JSON files for sharing and reuse
-- Can record synthesizer output and export as WebM/Ogg/MP4 audio depending on browser support
+- Can record synthesizer output and export as WebM/OGG/MP4 audio depending on browser support
 
 ### Envelope
 
@@ -144,27 +144,33 @@ npm run dev
 
 ### Build
 
-Build the web app
+Build the web app with Vite
 
 ```bash
 npm run build
 ```
 
-Build the desktop app
+Build the desktop app with Tauri
 
 ```bash
 npm run build:tauri
 ```
 
-### Code Style
+### Code Quality
 
-The project uses Biome.
+Use Biome for linting and formatting.
 
 ```sh
 npm run lint
 npm run format
 # lint + format
 npm run check
+```
+
+Use TypeScript for type checking.
+
+```sh
+npm run typecheck
 ```
 
 ## Principles
