@@ -25,7 +25,7 @@ function VerticalSliderGroup({
   disabled = false,
 }: VerticalSliderGroupProps) {
   return (
-    <div className="flex items-end gap-2 overflow-x-auto py-3">
+    <div className="flex w-full items-end gap-2 overflow-x-auto py-3">
       {values.map((value, index) => (
         <div key={getKey(index)} className="flex flex-1 flex-col items-center">
           <div className="text-xs">{formatValue(value, index)}</div>

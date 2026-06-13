@@ -34,7 +34,7 @@ function App() {
         >
           <section
             id={SECTION_IDS.soundSynthesizer}
-            className="mx-auto w-full scroll-mt-16"
+            className="mx-auto w-full min-w-0 scroll-mt-16 xl:flex-1"
           >
             <CollapsibleSection
               title={t('sections.soundSynthesizer')}
@@ -45,7 +45,7 @@ function App() {
           </section>
           <section
             id={SECTION_IDS.scoreEditor}
-            className="mx-auto w-full scroll-mt-16"
+            className="mx-auto w-full min-w-0 scroll-mt-16 xl:flex-1"
           >
             <CollapsibleSection
               title={t('sections.scoreEditor')}
