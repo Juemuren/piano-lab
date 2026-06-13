@@ -70,6 +70,19 @@
   },
   "overrides": [
     {
+      "includes": ["index.html"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noInvalidUseBeforeDeclaration": "off"
+          },
+          "complexity": {
+            "useArrowFunction": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["src/index.css"],
       "linter": {
         "rules": {
