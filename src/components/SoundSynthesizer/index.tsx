@@ -4,10 +4,13 @@ import {
   ChartLine,
   ChartSpline,
   Download,
-  Layers,
+  Layers2,
+  Layers3,
   Sparkles,
   Upload,
-  Volume,
+  Volume1,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -87,6 +90,17 @@ function SoundSynthesizer() {
     () => JSON.stringify(synthConfig, null, 2),
     [synthConfig],
   );
+  const volumeIcon = useMemo(() => {
+    if (volumeRatio === 0) return <VolumeX size={16} />;
+    if (volumeRatio >= 0.5) return <Volume2 size={16} />;
+
+    return <Volume1 size={16} />;
+  }, [volumeRatio]);
+  const harmonicIcon = useMemo(() => {
+    if (harmonicCount >= 10) return <Layers3 size={16} />;
+
+    return <Layers2 size={16} />;
+  }, [harmonicCount]);
 
   const handleImportConfig = useCallback(
     (content: string) => {
@@ -158,17 +172,17 @@ function SoundSynthesizer() {
         </ControlSelect>
         <ControlRange
           label={t('controls.volume')}
-          icon={<Volume size={16} />}
+          icon={volumeIcon}
           min="0"
           max="1"
           step="0.01"
           value={volumeRatio}
-          displayValue={volumeRatio.toFixed(2)}
+          displayValue={`${Math.trunc(volumeRatio * 100).toString()}%`}
           onChange={setVolumeRatio}
         />
         <ControlRange
           label={t('controls.harmonicCount')}
-          icon={<Layers size={16} />}
+          icon={harmonicIcon}
           min="2"
           max="20"
           step="1"
