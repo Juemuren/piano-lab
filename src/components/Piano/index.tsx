@@ -89,7 +89,7 @@ function Piano() {
                 width={BLACK_KEY_WIDTH_PX}
               >
                 <span className="flex h-full flex-col items-center justify-end py-2">
-                  <kbd className="font-semibold text-piano-white">
+                  <kbd className="text-piano-white">
                     {keyHints.get(key.note)}
                   </kbd>
                 </span>

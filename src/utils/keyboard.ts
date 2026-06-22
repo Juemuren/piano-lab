@@ -30,17 +30,27 @@ export function normalizeKeyboardControlKey(
 }
 
 export function getKeyboardControlKeyLabel(key: string) {
-  if (key === ' ') {
-    return 'Space';
+  switch (key) {
+    case ' ':
+      return 'Space';
+    case 'control':
+      return 'Ctrl';
+    case 'shift':
+      return 'Shift';
+    default:
+      return key.toUpperCase();
   }
+}
 
-  if (key === 'control') {
-    return 'Ctrl';
+export function getKeyboardControlKeyShortLabel(key: string) {
+  switch (key) {
+    case ' ':
+      return '␣';
+    case 'control':
+      return '⌃';
+    case 'shift':
+      return '⇧';
+    default:
+      return getKeyboardControlKeyLabel(key);
   }
-
-  if (key === 'shift') {
-    return 'Shift';
-  }
-
-  return key.toUpperCase();
 }

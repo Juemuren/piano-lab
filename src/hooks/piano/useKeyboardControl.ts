@@ -4,7 +4,10 @@ import type {
   KeyboardNoteMapping,
   KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
-import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
+import {
+  getKeyboardControlKeyLabel,
+  getKeyboardControlKeyShortLabel,
+} from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';
 
 const DEFAULT_KEYBOARD_OCTAVE = 4;
@@ -214,7 +217,7 @@ function useKeyboardControl({
 
     for (const { key, offset } of keyboardNoteMappings) {
       if (key) {
-        hints.set(basePitch + offset, getKeyboardControlKeyLabel(key));
+        hints.set(basePitch + offset, getKeyboardControlKeyShortLabel(key));
       }
     }
 

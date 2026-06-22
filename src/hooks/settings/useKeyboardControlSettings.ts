@@ -29,7 +29,7 @@ interface UseKeyboardControlSettingsOptions {
 }
 
 function isClearKey(key: string) {
-  return key === 'Backspace' || key === 'Delete';
+  return key === 'Backspace' || key === 'Delete' || key === 'Escape';
 }
 
 function isSameSlot(
