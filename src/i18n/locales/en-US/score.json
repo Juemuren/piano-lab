@@ -4,13 +4,14 @@
   "placeholder": "Enter a score, choose a preset, or import a file",
   "preset": "Score Presets",
   "presets": {
-    "小星星": "Twinkle Twinkle Little Star",
-    "生日快乐": "Happy Birthday",
+    "春日影": "Haruhikage",
     "欢乐颂": "Ode to Joy",
+    "幻梦": "One More Chance",
     "两只老虎": "Two Tigers",
     "茉莉花": "Jasmine Flower",
-    "春日影": "Haruhikage",
-    "幻梦": "One More Chance",
+    "生日快乐": "Happy Birthday",
+    "小星星": "Twinkle Twinkle Little Star",
+    "缘之空": "Yosuga no Sora",
     "约会大作战": "Date A Live"
   }
 }
