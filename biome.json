@@ -172,7 +172,13 @@
             "noNonNullAssertion": "off",
             "useArrayLiterals": "error",
             "useAsConstAssertion": "error",
-            "useComponentExportOnlyModules": "error"
+            "useComponentExportOnlyModules": "error",
+            "useImportType": {
+              "level": "on",
+              "options": {
+                "style": "separatedType"
+              }
+            }
           },
           "suspicious": {
             "noArrayIndexKey": "off",

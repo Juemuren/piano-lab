@@ -1,4 +1,3 @@
-import { ScrollText, SlidersHorizontal, Waves } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AbcEditor from './components/AbcEditor';
 import Footer from './components/Footer';
@@ -7,6 +6,7 @@ import Piano from './components/Piano';
 import SettingsPanel from './components/SettingsPanel';
 import SoundSynthesizer from './components/SoundSynthesizer';
 import CollapsibleSection from './components/shared/CollapsibleSection';
+import SectionIcon from './components/shared/SectionIcon';
 import { SECTION_IDS } from './constants/sections';
 
 function App() {
@@ -38,7 +38,12 @@ function App() {
           >
             <CollapsibleSection
               title={t('sections.soundSynthesizer')}
-              icon={<Waves size={24} />}
+              icon={
+                <SectionIcon
+                  sectionId={SECTION_IDS.soundSynthesizer}
+                  size={24}
+                />
+              }
             >
               <SoundSynthesizer />
             </CollapsibleSection>
@@ -49,7 +54,9 @@ function App() {
           >
             <CollapsibleSection
               title={t('sections.scoreEditor')}
-              icon={<ScrollText size={24} />}
+              icon={
+                <SectionIcon sectionId={SECTION_IDS.scoreEditor} size={24} />
+              }
             >
               <AbcEditor />
             </CollapsibleSection>
@@ -66,7 +73,7 @@ function App() {
         >
           <CollapsibleSection
             title={t('sections.settings')}
-            icon={<SlidersHorizontal size={24} />}
+            icon={<SectionIcon sectionId={SECTION_IDS.settings} size={24} />}
             bgClassName="bg-app-base dark:bg-app-base-dark"
           >
             <SettingsPanel />

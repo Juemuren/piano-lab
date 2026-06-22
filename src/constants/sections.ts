@@ -6,6 +6,8 @@ export const SECTION_IDS = {
   about: 'about',
 } as const;
 
+export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
+
 export const NAV_ITEMS = [
   { id: SECTION_IDS.soundSynthesizer, labelKey: 'sections.soundSynthesizer' },
   { id: SECTION_IDS.scoreEditor, labelKey: 'sections.scoreEditor' },

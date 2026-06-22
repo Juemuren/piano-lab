@@ -1,27 +1,12 @@
-import {
-  Info,
-  Menu,
-  Piano,
-  ScrollText,
-  SlidersHorizontal,
-  Waves,
-} from 'lucide-react';
-import type { ReactNode } from 'react';
+import { Menu } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NAV_ITEMS } from '../../constants/sections';
+import SectionIcon from '../shared/SectionIcon';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;
-
-const NAV_ICONS: Record<string, ReactNode> = {
-  'sound-synthesizer': <Waves size={16} />,
-  'score-editor': <ScrollText size={16} />,
-  'piano-keyboard': <Piano size={16} />,
-  settings: <SlidersHorizontal size={16} />,
-  about: <Info size={16} />,
-};
 
 function Header() {
   const { t } = useTranslation('app');
@@ -35,7 +20,7 @@ function Header() {
       className="px-2 py-1 hover:underline inline-flex items-center gap-1"
       onClick={() => setIsMenuOpen(false)}
     >
-      {NAV_ICONS[id]}
+      <SectionIcon sectionId={id} size={16} />
       {t(labelKey)}
     </a>
   ));
