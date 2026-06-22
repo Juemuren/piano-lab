@@ -11,6 +11,10 @@ import {
 import { normalizeKeyboardControlKey } from '../../utils/keyboard';
 
 type KeyboardOctaveDirection = keyof KeyboardOctaveKeyMappings;
+type KeyboardMappingSlot =
+  | { offset: number; type: 'note' }
+  | { direction: KeyboardOctaveDirection; type: 'octave' }
+  | { direction: KeyboardOctaveDirection; type: 'temporaryOctave' };
 
 interface UseKeyboardControlSettingsOptions {
   keyboardNoteMappings: KeyboardNoteMapping[];
@@ -27,6 +31,25 @@ function isClearKey(key: string) {
   return key === 'Backspace' || key === 'Delete';
 }
 
+function isSameSlot(
+  slot: KeyboardMappingSlot,
+  targetSlot: KeyboardMappingSlot,
+) {
+  if (slot.type !== targetSlot.type) {
+    return false;
+  }
+
+  if (slot.type === 'note' && targetSlot.type === 'note') {
+    return slot.offset === targetSlot.offset;
+  }
+
+  if (slot.type !== 'note' && targetSlot.type !== 'note') {
+    return slot.direction === targetSlot.direction;
+  }
+
+  return false;
+}
+
 function useKeyboardControlSettings({
   keyboardNoteMappings,
   keyboardOctaveKeyMappings,
@@ -35,110 +58,77 @@ function useKeyboardControlSettings({
   setKeyboardOctaveKeyMappings,
   setKeyboardTemporaryOctaveKeyMappings,
 }: UseKeyboardControlSettingsOptions) {
-  function clearNoteMappingKey(key: string) {
-    if (!key) {
-      return;
+  function assignKeyboardMappingKey(
+    targetSlot: KeyboardMappingSlot,
+    key: string,
+  ) {
+    const nextNoteMappings = keyboardNoteMappings.map((mapping) => {
+      const slot: KeyboardMappingSlot = {
+        offset: mapping.offset,
+        type: 'note',
+      };
+
+      if (isSameSlot(slot, targetSlot)) {
+        return { ...mapping, key };
+      }
+
+      if (key && mapping.key === key) {
+        return { ...mapping, key: '' };
+      }
+
+      return mapping;
+    });
+
+    function getNextOctaveKeyMappings(
+      type: 'octave' | 'temporaryOctave',
+      mappings: KeyboardOctaveKeyMappings,
+    ) {
+      const nextMappings = { ...mappings };
+
+      for (const direction of Object.keys(
+        mappings,
+      ) as KeyboardOctaveDirection[]) {
+        const slot: KeyboardMappingSlot = { direction, type };
+        const currentKey = mappings[direction];
+
+        if (isSameSlot(slot, targetSlot)) {
+          nextMappings[direction] = key;
+        } else if (key && currentKey === key) {
+          nextMappings[direction] = '';
+        }
+      }
+
+      return nextMappings;
     }
 
-    setKeyboardNoteMappings(
-      keyboardNoteMappings.map((mapping) => {
-        if (mapping.key === key) {
-          return { ...mapping, key: '' };
-        }
-
-        return mapping;
-      }),
+    setKeyboardNoteMappings(nextNoteMappings);
+    setKeyboardOctaveKeyMappings(
+      getNextOctaveKeyMappings('octave', keyboardOctaveKeyMappings),
+    );
+    setKeyboardTemporaryOctaveKeyMappings(
+      getNextOctaveKeyMappings(
+        'temporaryOctave',
+        keyboardTemporaryOctaveKeyMappings,
+      ),
     );
   }
 
   function setNoteMappingKey(offset: number, key: string) {
-    setKeyboardNoteMappings(
-      keyboardNoteMappings.map((mapping) => {
-        if (mapping.offset === offset) {
-          return { ...mapping, key };
-        }
-
-        if (key && mapping.key === key) {
-          return { ...mapping, key: '' };
-        }
-
-        return mapping;
-      }),
-    );
-  }
-
-  function setOctaveMappingKeyValue(
-    mappings: KeyboardOctaveKeyMappings,
-    setMappings: (nextMappings: KeyboardOctaveKeyMappings) => void,
-    direction: KeyboardOctaveDirection,
-    key: string,
-  ) {
-    setMappings({
-      ...mappings,
-      [direction]: key,
-      ...(key && direction === 'downKey' && mappings.upKey === key
-        ? { upKey: '' }
-        : {}),
-      ...(key && direction === 'upKey' && mappings.downKey === key
-        ? { downKey: '' }
-        : {}),
-    });
+    assignKeyboardMappingKey({ offset, type: 'note' }, key);
   }
 
   function setOctaveMappingKey(
     direction: KeyboardOctaveDirection,
     key: string,
   ) {
-    setOctaveMappingKeyValue(
-      keyboardOctaveKeyMappings,
-      setKeyboardOctaveKeyMappings,
-      direction,
-      key,
-    );
-
-    if (key) {
-      clearNoteMappingKey(key);
-      if (keyboardTemporaryOctaveKeyMappings.downKey === key) {
-        setKeyboardTemporaryOctaveKeyMappings({
-          ...keyboardTemporaryOctaveKeyMappings,
-          downKey: '',
-        });
-      }
-      if (keyboardTemporaryOctaveKeyMappings.upKey === key) {
-        setKeyboardTemporaryOctaveKeyMappings({
-          ...keyboardTemporaryOctaveKeyMappings,
-          upKey: '',
-        });
-      }
-    }
+    assignKeyboardMappingKey({ direction, type: 'octave' }, key);
   }
 
   function setTemporaryOctaveMappingKey(
     direction: KeyboardOctaveDirection,
     key: string,
   ) {
-    setOctaveMappingKeyValue(
-      keyboardTemporaryOctaveKeyMappings,
-      setKeyboardTemporaryOctaveKeyMappings,
-      direction,
-      key,
-    );
-
-    if (key) {
-      clearNoteMappingKey(key);
-      if (keyboardOctaveKeyMappings.downKey === key) {
-        setKeyboardOctaveKeyMappings({
-          ...keyboardOctaveKeyMappings,
-          downKey: '',
-        });
-      }
-      if (keyboardOctaveKeyMappings.upKey === key) {
-        setKeyboardOctaveKeyMappings({
-          ...keyboardOctaveKeyMappings,
-          upKey: '',
-        });
-      }
-    }
+    assignKeyboardMappingKey({ direction, type: 'temporaryOctave' }, key);
   }
 
   function handleNoteKeyDown(
@@ -153,12 +143,9 @@ function useKeyboardControlSettings({
       return;
     }
 
-    const key = normalizeKeyboardControlKey(e.key, [
-      keyboardOctaveKeyMappings.downKey,
-      keyboardOctaveKeyMappings.upKey,
-      keyboardTemporaryOctaveKeyMappings.downKey,
-      keyboardTemporaryOctaveKeyMappings.upKey,
-    ]);
+    const key = normalizeKeyboardControlKey(e.key, {
+      allowModifierKeys: true,
+    });
     if (key === null) {
       return;
     }
@@ -178,7 +165,9 @@ function useKeyboardControlSettings({
       return;
     }
 
-    const key = normalizeKeyboardControlKey(e.key);
+    const key = normalizeKeyboardControlKey(e.key, {
+      allowModifierKeys: true,
+    });
     if (key === null) {
       return;
     }

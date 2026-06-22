@@ -99,7 +99,9 @@ function getStoredKeyboardNoteMappings(value: unknown): KeyboardNoteMapping[] {
 
     const key =
       typeof storedMapping.key === 'string'
-        ? normalizeKeyboardControlKey(storedMapping.key)
+        ? normalizeKeyboardControlKey(storedMapping.key, {
+            allowModifierKeys: true,
+          })
         : null;
     if (key === null || usedKeys.has(key)) {
       return getDefaultMapping(defaultMapping);
@@ -119,7 +121,7 @@ function getStoredKeyboardOctaveKeyMappings(
   keyboardNoteMappings: KeyboardNoteMapping[],
   reservedKeys: string[] = [],
   fallback: KeyboardOctaveKeyMappings = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
-  allowModifierKeys = false,
+  allowModifierKeys = true,
 ): KeyboardOctaveKeyMappings {
   if (!isRecord(value)) {
     return fallback;
