@@ -2,6 +2,37 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.3.0]
+
+### Added
+
+- Added configurable keyboard mappings for piano note keys.
+- Added configurable permanent and temporary octave up/down keyboard shortcuts.
+- Added an option to hide keyboard mapping hints on piano keys.
+- Added octave keyboard hints below piano keys, including updates when temporary octave shortcuts are held.
+
+### Changed
+
+- Improved keyboard mapping settings layout on narrow screens.
+- Shortened special key labels shown on piano keys.
+- Moved keyboard control settings logic into a dedicated hook.
+- Simplified keyboard mapping types and constants.
+
+### Fixed
+
+- Fixed note keyboard mappings being unable to select `Shift` or `Ctrl`.
+- Fixed permanent octave shortcuts being unable to replace existing bindings directly.
+
+### Style
+
+- Corrected the built-in Yosuga no Sora score key to B minor.
+- Extended lint rules.
+
+### Docs
+
+- Updated editor configuration examples.
+- Synced translations.
+
 ## [1.2.0]
 
 ### Added
