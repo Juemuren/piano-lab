@@ -12,18 +12,9 @@ function FooterPanel({ title, children, icon }: FooterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section
-      className="
-        text-sm text-app-text dark:text-app-text-dark
-        rounded-lg bg-app-surface/50 dark:bg-app-surface-dark/50
-      "
-    >
+    <section className="rounded-lg bg-app-surface/50 text-app-text text-sm dark:bg-app-surface-dark/50 dark:text-app-text-dark">
       <button
-        className="
-          w-full p-3 rounded-lg flex justify-between transition-colors
-          hover:bg-app-overlay/50 dark:hover:bg-app-overlay-dark/50
-          hover:text-app-subtext dark:hover:text-app-subtext-dark
-        "
+        className="flex w-full justify-between rounded-lg p-3 transition-colors hover:bg-app-overlay/50 hover:text-app-subtext dark:hover:bg-app-overlay-dark/50 dark:hover:text-app-subtext-dark"
         onClick={() => setIsExpanded((prev) => !prev)}
         type="button"
       >

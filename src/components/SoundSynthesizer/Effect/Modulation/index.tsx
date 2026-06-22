@@ -52,7 +52,7 @@ function Modulation({
 
   return (
     <details className="my-2" open>
-      <summary className="text-lg font-bold my-2">
+      <summary className="my-2 font-bold text-lg">
         <span className="inline-flex items-center gap-1">
           <AudioLines size={18} />
           {t('effect.modulation.name')}

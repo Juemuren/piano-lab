@@ -58,7 +58,7 @@ function PannerSpatialPreview({ title, panner }: PannerSpatialPreviewProps) {
 
   return (
     <details className="my-2" open>
-      <summary className="font-bold my-2">{title}</summary>
+      <summary className="my-2 font-bold">{title}</summary>
       <Plot3D
         data={
           [

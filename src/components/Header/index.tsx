@@ -15,7 +15,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinks = NAV_ITEMS.map(({ id, labelKey }) => (
     <a
-      className="px-2 py-1 hover:underline inline-flex items-center gap-1"
+      className="inline-flex items-center gap-1 px-2 py-1 hover:underline"
       href={`#${id}`}
       key={id}
       onClick={() => setIsMenuOpen(false)}
@@ -51,13 +51,7 @@ function Header() {
 
   return (
     <header
-      className={`
-        sticky top-0 z-10 px-4 p-2
-        bg-app-base dark:bg-app-base-dark
-        border-b border-app-border dark:border-app-border-dark
-        transition-transform duration-100
-        ${isHidden ? '-translate-y-full' : 'translate-y-0'}
-      `}
+      className={`sticky top-0 z-10 border-app-border border-b bg-app-base p-2 px-4 transition-transform duration-100 dark:border-app-border-dark dark:bg-app-base-dark ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <div className="flex items-center justify-between">
         <details
@@ -65,16 +59,10 @@ function Header() {
           onToggle={(e) => setIsMenuOpen(e.currentTarget.open)}
           open={isMenuOpen}
         >
-          <summary className="list-none cursor-pointer">
+          <summary className="cursor-pointer list-none">
             <Menu size={24} />
           </summary>
-          <nav
-            className="
-              absolute left-0 w-max p-2 flex flex-col
-              text-sm text-left
-              bg-app-surface dark:bg-app-surface-dark
-            "
-          >
+          <nav className="absolute left-0 flex w-max flex-col bg-app-surface p-2 text-left text-sm dark:bg-app-surface-dark">
             {navLinks}
           </nav>
         </details>

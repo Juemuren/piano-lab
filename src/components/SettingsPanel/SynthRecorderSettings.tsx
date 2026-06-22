@@ -34,7 +34,7 @@ function SynthRecorderSettings() {
         onChange={(e) => setIsExpanded(e.target.checked)}
       />
       {isExpanded && (
-        <div className="flex flex-col gap-3 text-sm text-app-subtext dark:text-app-subtext-dark">
+        <div className="flex flex-col gap-3 text-app-subtext text-sm dark:text-app-subtext-dark">
           {!isUnsupported && (
             <ControlSelect
               disabled={isRecording}

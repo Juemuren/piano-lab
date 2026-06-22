@@ -26,19 +26,11 @@ function CollapsibleSection({
   return (
     <div className="w-full">
       <button
-        className={`
-          w-full p-3 text-center rounded-lg transition-colors
-          ${bgClassName} ${hoverBgClassName}
-        `}
+        className={`w-full rounded-lg p-3 text-center transition-colors ${bgClassName} ${hoverBgClassName}`}
         onClick={handleToggle}
         type="button"
       >
-        <h2
-          className="
-            inline-flex items-center justify-center gap-2
-            text-xl font-semibold
-          "
-        >
+        <h2 className="inline-flex items-center justify-center gap-2 font-semibold text-xl">
           {icon}
           {title}
           {isExpanded ? <ChevronDown size={24} /> : <ChevronRight size={24} />}

@@ -38,7 +38,7 @@ function PannerControlGroup({
 }: PannerControlGroupProps) {
   return (
     <details className="my-2" open>
-      <summary className="px-2 pt-2 text-sm font-semibold">
+      <summary className="px-2 pt-2 font-semibold text-sm">
         <span className="inline-flex items-center gap-1">
           {icon}
           {title}
@@ -54,7 +54,7 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
 
   return (
     <details className="my-2" open>
-      <summary className="text-lg font-bold my-2">
+      <summary className="my-2 font-bold text-lg">
         <span className="inline-flex items-center gap-1">
           <Radio size={18} />
           {t('effect.panner.name')}

@@ -18,19 +18,10 @@ function KeyboardMappingInput({
   placeholder,
 }: KeyboardMappingInputProps) {
   return (
-    <label
-      className="
-        grid grid-cols-[1rem_1fr_1rem] items-center gap-1 py-1 px-2
-        rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
-      "
-    >
+    <label className="grid grid-cols-[1rem_1fr_1rem] items-center gap-1 rounded-xl bg-app-overlay/15 px-2 py-1 dark:bg-app-overlay-dark/15">
       <span className="font-bold">{label}</span>
       <input
-        className="
-          min-w-0 text-center p-1
-          rounded-xl bg-app-mantle dark:bg-app-mantle-dark
-          border border-app-border dark:border-app-border-dark
-        "
+        className="min-w-0 rounded-xl border border-app-border bg-app-mantle p-1 text-center dark:border-app-border-dark dark:bg-app-mantle-dark"
         id={keyValue}
         onKeyDown={onKeyDown}
         placeholder={placeholder}

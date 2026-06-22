@@ -28,7 +28,7 @@ function BaseFrequencyControl({
 }: BaseFrequencyControlProps) {
   return (
     <div className="my-4">
-      <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
+      <div className="grid sm:grid-cols-[2fr_1fr] sm:gap-3">
         <ControlRange
           accentClassName="text-app-info dark:text-app-info-dark"
           displayValue={`${value.toFixed(2)} Hz`}

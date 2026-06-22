@@ -12,7 +12,7 @@ function EnvelopeCurvePreview({
 }: EnvelopeCurvePreviewProps) {
   return (
     <details className="my-2" open>
-      <summary className="text-lg font-bold">{title}</summary>
+      <summary className="font-bold text-lg">{title}</summary>
       <Plot2D
         data={[
           {

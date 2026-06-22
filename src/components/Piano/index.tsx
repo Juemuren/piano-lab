@@ -54,7 +54,7 @@ function Piano() {
                 pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
                 width={WHITE_KEY_WIDTH_PX}
               >
-                <span className="h-full flex flex-col items-center justify-end py-2">
+                <span className="flex h-full flex-col items-center justify-end py-2">
                   <kbd className="text-piano-black">
                     {keyHints.get(key.note)}
                   </kbd>
@@ -88,7 +88,7 @@ function Piano() {
                 }}
                 width={BLACK_KEY_WIDTH_PX}
               >
-                <span className="h-full flex flex-col items-center justify-end py-2">
+                <span className="flex h-full flex-col items-center justify-end py-2">
                   <kbd className="font-semibold text-piano-white">
                     {keyHints.get(key.note)}
                   </kbd>
@@ -100,7 +100,7 @@ function Piano() {
       </div>
 
       {octaveHints.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-4 text-sm text-app-overlay dark:text-app-overlay-dark">
+        <div className="flex flex-wrap justify-center gap-4 text-app-overlay text-sm dark:text-app-overlay-dark">
           {octaveHints.map(({ downMark, downKey, upMark, upKey }) => (
             <span className="flex items-center gap-2" key={downMark}>
               {downKey && (

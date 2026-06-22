@@ -27,7 +27,7 @@ function SpectrumFormulaPreview({
 
   return (
     <details className="my-2" open>
-      <summary className="text-lg font-bold">{label}</summary>
+      <summary className="font-bold text-lg">{label}</summary>
       <BlockMath math={SPECTRUM_FORMULAS[spectrumType]} />
     </details>
   );

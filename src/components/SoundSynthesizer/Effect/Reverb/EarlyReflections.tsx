@@ -27,7 +27,7 @@ function EarlyReflections({
 
   return (
     <details className="my-2" open>
-      <summary className="font-bold my-2">
+      <summary className="my-2 font-bold">
         <span className="inline-flex items-center gap-1">
           <ArrowLeftRight size={16} />
           {t('effect.reverb.earlyReflection.name')}
@@ -39,13 +39,13 @@ function EarlyReflections({
       <div className="space-y-3">
         {earlyReflections.map((reflection, index) => (
           <div className="space-y-2" key={index}>
-            <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
+            <div className="grid grid-cols-[auto_1fr] items-center gap-2">
               <ControlButton
                 icon={<Minus size={18} />}
                 onClick={() => onRemove(index)}
                 title={t('effect.reverb.earlyReflection.name')}
               />
-              <div className="text-left text-sm font-semibold">
+              <div className="text-left font-semibold text-sm">
                 {t('effect.reverb.earlyReflection.item', {
                   index: index + 1,
                 })}
@@ -85,13 +85,13 @@ function EarlyReflections({
             </div>
           </div>
         ))}
-        <div className="grid gap-2 grid-cols-[auto_1fr] items-center">
+        <div className="grid grid-cols-[auto_1fr] items-center gap-2">
           <ControlButton
             icon={<Plus size={18} />}
             onClick={onAdd}
             title={t('effect.reverb.earlyReflection.name')}
           />
-          <div className="text-left text-sm font-semibold">
+          <div className="text-left font-semibold text-sm">
             {t('effect.reverb.earlyReflection.item', {
               index: earlyReflections.length + 1,
             })}

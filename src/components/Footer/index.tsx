@@ -21,16 +21,10 @@ function Footer() {
 
   return (
     <footer
-      className="p-8 scroll-mt-16 bg-app-mantle dark:bg-app-mantle-dark"
+      className="scroll-mt-16 bg-app-mantle p-8 dark:bg-app-mantle-dark"
       id={SECTION_IDS.about}
     >
-      <div
-        className="
-          mx-auto w-full max-w-4xl text-left
-          grid gap-5 sm:grid-cols-2 sm:items-start
-          border-t pt-6 border-app-border dark:border-app-border-dark
-        "
-      >
+      <div className="mx-auto grid w-full max-w-4xl gap-5 border-app-border border-t pt-6 text-left sm:grid-cols-2 sm:items-start dark:border-app-border-dark">
         <div className="grid gap-3">
           <FooterPanel icon={<Info size={16} />} title={t('about.title')}>
             {t('about.body')}

@@ -17,12 +17,7 @@ function ControlButton({
 }: ControlButtonProps) {
   return (
     <button
-      className="
-        inline-flex items-center justify-center gap-2 p-2 rounded-xl transition-colors
-        bg-app-surface dark:bg-app-surface-dark
-        hover:bg-app-overlay dark:hover:bg-app-overlay-dark
-        disabled:cursor-not-allowed disabled:opacity-50
-      "
+      className="inline-flex items-center justify-center gap-2 rounded-xl bg-app-surface p-2 transition-colors hover:bg-app-overlay disabled:cursor-not-allowed disabled:opacity-50 dark:bg-app-surface-dark dark:hover:bg-app-overlay-dark"
       disabled={disabled}
       onClick={onClick}
       title={title}

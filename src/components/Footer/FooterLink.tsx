@@ -10,17 +10,12 @@ interface FooterLinkProps {
 function FooterLink({ href, icon, label }: FooterLinkProps) {
   return (
     <a
-      className="
-        group w-full p-3 flex justify-between text-app-text dark:text-app-text-dark
-        rounded-lg bg-app-surface/50 dark:bg-app-surface-dark/50
-        transition-colors hover:bg-app-overlay/50 dark:hover:bg-app-overlay-dark/50
-        hover:text-app-subtext dark:hover:text-app-subtext-dark
-      "
+      className="group flex w-full justify-between rounded-lg bg-app-surface/50 p-3 text-app-text transition-colors hover:bg-app-overlay/50 hover:text-app-subtext dark:bg-app-surface-dark/50 dark:text-app-text-dark dark:hover:bg-app-overlay-dark/50 dark:hover:text-app-subtext-dark"
       href={href}
       rel="noreferrer"
       target="_blank"
     >
-      <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide">
+      <span className="inline-flex items-center gap-2 font-medium text-sm tracking-wide">
         {icon}
         {label}
       </span>

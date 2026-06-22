@@ -35,7 +35,7 @@ function AbcPlaybackControls({
 
   return (
     <div className="w-full">
-      <div className="w-full rounded-xl py-2 flex items-center gap-2">
+      <div className="flex w-full items-center gap-2 rounded-xl py-2">
         <button
           className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           disabled={isPlaybackEnded}
@@ -55,10 +55,7 @@ function AbcPlaybackControls({
         </button>
 
         <input
-          className="
-            range-input flex-1 min-w-0 h-6
-            text-app-tip dark:text-app-tip-dark
-          "
+          className="range-input h-6 min-w-0 flex-1 text-app-tip dark:text-app-tip-dark"
           max={totalSeconds}
           min={0}
           onChange={(e) => onProgressChange(parseFloat(e.target.value))}
@@ -68,12 +65,12 @@ function AbcPlaybackControls({
           value={currentSeconds}
         />
 
-        <span className="w-fit text-right tabular-nums text-xs sm:text-sm sm:font-semibold">
+        <span className="w-fit text-right text-xs tabular-nums sm:font-semibold sm:text-sm">
           {formatTime(currentSeconds)} / {formatTime(totalSeconds)}
         </span>
       </div>
 
-      <p className="text-xs text-app-tip/50 dark:text-app-tip-dark/50">
+      <p className="text-app-tip/50 text-xs dark:text-app-tip-dark/50">
         {t('playbackTip')}
       </p>
     </div>

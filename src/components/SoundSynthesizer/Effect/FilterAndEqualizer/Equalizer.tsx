@@ -38,7 +38,7 @@ function Equalizer({
 
   return (
     <details className="my-2" open>
-      <summary className="font-bold my-2">
+      <summary className="my-2 font-bold">
         <span className="inline-flex items-center gap-1">
           <SlidersVertical size={16} />
           {t('effect.equalizer.name')}
@@ -48,7 +48,7 @@ function Equalizer({
       <div className="space-y-3">
         {equalizers.map((equalizer, index) => (
           <div className="space-y-2" key={index}>
-            <div className="grid gap-2 grid-cols-[auto_1fr]">
+            <div className="grid grid-cols-[auto_1fr] gap-2">
               <ControlButton
                 icon={<Minus size={18} />}
                 onClick={() => onRemove(index)}
@@ -101,7 +101,7 @@ function Equalizer({
           </div>
         ))}
 
-        <div className="grid gap-2 grid-cols-[auto_1fr]">
+        <div className="grid grid-cols-[auto_1fr] gap-2">
           <ControlButton
             icon={<Plus size={18} />}
             onClick={() => onAdd(selectedEqualizerType)}

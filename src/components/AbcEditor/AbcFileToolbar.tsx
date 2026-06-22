@@ -36,7 +36,7 @@ function AbcFileToolbar({
   onExportMidi,
 }: AbcFileToolbarProps) {
   return (
-    <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
+    <div className="grid grid-cols-2 gap-2 pb-2 sm:grid-cols-3 md:grid-cols-6">
       <FileImportButton
         accept=".abc,text/vnd.abc,text/plain"
         fileInputRef={fileInputRef}

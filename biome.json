@@ -190,6 +190,9 @@
             "useValidTypeof": "error",
             "useYield": "error"
           },
+          "nursery": {
+            "useSortedClasses": "on"
+          },
           "style": {
             "noCommonJs": "error",
             "noNamespace": "error",

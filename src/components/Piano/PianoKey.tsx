@@ -36,10 +36,7 @@ function PianoKey({
 
   return (
     <button
-      className={`
-        text-xs transition-all duration-100
-        ${colorClass} ${cursorClass} ${className}
-      `}
+      className={`text-xs transition-all duration-100 ${colorClass} ${cursorClass} ${className}`}
       key={note}
       onMouseDown={(e) => onKeyDown(e, note)}
       onMouseLeave={(e) => onKeyUp(e, note)}

@@ -143,7 +143,7 @@ function SoundSynthesizer() {
   return (
     <ControlPanel className="space-y-4">
       <div>
-        <div className="pb-2 grid gap-2 grid-cols-2">
+        <div className="grid grid-cols-2 gap-2 pb-2">
           <FileImportButton
             accept=".json,application/json"
             fileInputRef={fileInputRef}

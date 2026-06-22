@@ -31,10 +31,7 @@ function VerticalSliderGroup({
           <div className="text-xs">{formatValue(value, index)}</div>
           <div className="relative flex h-36 w-8 items-center justify-center">
             <input
-              className={`
-                range-input w-36 h-6 -rotate-90
-                text-app-tip dark:text-app-tip-dark
-              `}
+              className="range-input h-6 w-36 -rotate-90 text-app-tip dark:text-app-tip-dark"
               disabled={disabled}
               max={max}
               min={min}
@@ -46,7 +43,7 @@ function VerticalSliderGroup({
               value={value}
             />
           </div>
-          <div className="text-xs text-app-subtext dark:text-app-subtext-dark">
+          <div className="text-app-subtext text-xs dark:text-app-subtext-dark">
             {labels[index]}
           </div>
         </div>

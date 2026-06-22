@@ -16,7 +16,7 @@ function Analysis() {
           </span>
         </summary>
         <canvas
-          className="block w-full h-36 rounded-lg border border-app-border dark:border-app-border-dark"
+          className="block h-36 w-full rounded-lg border border-app-border dark:border-app-border-dark"
           ref={frequencyCanvasRef}
         />
       </details>
@@ -28,7 +28,7 @@ function Analysis() {
           </span>
         </summary>
         <canvas
-          className="block w-full h-36 rounded-lg border border-app-border dark:border-app-border-dark"
+          className="block h-36 w-full rounded-lg border border-app-border dark:border-app-border-dark"
           ref={timeDomainCanvasRef}
         />
       </details>

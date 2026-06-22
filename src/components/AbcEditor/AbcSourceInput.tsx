@@ -10,12 +10,7 @@ function AbcSourceInput({ value, onChange }: AbcSourceInputProps) {
 
   return (
     <textarea
-      className="
-        w-full h-48 p-4 my-2 text-sm
-        bg-app-surface/50 dark:bg-app-surface-dark/50
-        border border-app-border dark:border-app-border-dark
-        focus:outline-none focus:ring-2 focus:ring-app-accent/50
-      "
+      className="my-2 h-48 w-full border border-app-border bg-app-surface/50 p-4 text-sm focus:outline-none focus:ring-2 focus:ring-app-accent/50 dark:border-app-border-dark dark:bg-app-surface-dark/50"
       id="abc-source-input"
       onChange={(e) => onChange(e.target.value)}
       placeholder={t('placeholder')}

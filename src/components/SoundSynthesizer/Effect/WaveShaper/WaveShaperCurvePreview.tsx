@@ -22,7 +22,7 @@ function WaveShaperCurvePreview({
 
   return (
     <details className="my-2" open>
-      <summary className="font-bold my-2">{title}</summary>
+      <summary className="my-2 font-bold">{title}</summary>
       <BlockMath math={formula} />
       <Plot2D
         data={[

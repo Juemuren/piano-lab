@@ -107,7 +107,7 @@ function KeyboardControlSettings({
       />
       {isKeyboardControlEnabled && (
         <>
-          <p className="text-sm text-app-overlay dark:text-app-overlay-dark">
+          <p className="text-app-overlay text-sm dark:text-app-overlay-dark">
             {t('settings.keyboard.hint')}
           </p>
           <div className="flex flex-wrap gap-3">
@@ -122,7 +122,7 @@ function KeyboardControlSettings({
               onChange={(e) => setIsKeyboardOctaveHintEnabled(e.target.checked)}
             />
           </div>
-          <div className="text-xs sm:text-sm grid gap-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm lg:grid-cols-3 xl:grid-cols-4">
             {keyboardNoteMappings.map(({ offset, key }) => (
               <KeyboardMappingInput
                 key={offset}

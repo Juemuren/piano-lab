@@ -16,22 +16,10 @@ function App() {
     <>
       <Header />
 
-      <main
-        className="
-          w-full min-h-screen mx-auto p-5
-          flex flex-col grow justify-center gap-5
-          bg-app-base dark:bg-app-base-dark
-          text-app-text dark:text-app-text-dark
-        "
-      >
-        <h1 className="text-center text-3xl font-bold">{t('title')}</h1>
+      <main className="mx-auto flex min-h-screen w-full grow flex-col justify-center gap-5 bg-app-base p-5 text-app-text dark:bg-app-base-dark dark:text-app-text-dark">
+        <h1 className="text-center font-bold text-3xl">{t('title')}</h1>
 
-        <div
-          className="
-            flex flex-col items-center gap-5
-            xl:flex-row xl:items-start xl:justify-center
-          "
-        >
+        <div className="flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:justify-center">
           <section
             className="mx-auto w-full min-w-0 scroll-mt-16 xl:flex-1"
             id={SECTION_IDS.soundSynthesizer}
@@ -68,7 +56,7 @@ function App() {
         </section>
 
         <section
-          className="mx-auto w-full sm:w-lg lg:w-2xl xl:w-4xl scroll-mt-16"
+          className="mx-auto w-full scroll-mt-16 sm:w-lg lg:w-2xl xl:w-4xl"
           id={SECTION_IDS.settings}
         >
           <CollapsibleSection

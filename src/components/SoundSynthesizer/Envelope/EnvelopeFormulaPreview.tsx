@@ -7,7 +7,7 @@ interface EnvelopeFormulaPreviewProps {
 function EnvelopeFormulaPreview({ title }: EnvelopeFormulaPreviewProps) {
   return (
     <details className="my-2" open>
-      <summary className="text-lg font-bold">{title}</summary>
+      <summary className="font-bold text-lg">{title}</summary>
       <BlockMath
         math={String.raw`
             \begin{cases}

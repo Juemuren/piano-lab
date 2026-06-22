@@ -24,7 +24,7 @@ function LateTail({
 
   return (
     <details className="my-2" open>
-      <summary className="font-bold my-2">
+      <summary className="my-2 font-bold">
         <span className="inline-flex items-center gap-1">
           <Speaker size={16} />
           {t('effect.reverb.lateTail.name')}
