@@ -1,5 +1,5 @@
-import { getHarmonicLabels } from '../../../utils/harmonic';
 import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
+import HarmonicLabel from '../shared/HarmonicLabel';
 
 interface SpectrumValueControlsProps {
   amplitudes: number[];
@@ -10,12 +10,10 @@ function SpectrumValueControls({
   amplitudes,
   onChange,
 }: SpectrumValueControlsProps) {
-  const harmonicLabels = getHarmonicLabels(amplitudes.length);
-
   return (
     <VerticalSliderGroup
       values={amplitudes}
-      labels={harmonicLabels}
+      labels={HarmonicLabel(amplitudes.length)}
       min="0"
       max="1"
       step="0.01"

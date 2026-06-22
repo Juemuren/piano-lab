@@ -7,8 +7,8 @@ import {
 } from '../../../../services/synth/effect/Filter';
 import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
 import type { EqualizerConfig, FilterConfig } from '../../../../types';
-import { getHarmonicLabels } from '../../../../utils/harmonic';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
+import HarmonicLabel from '../../shared/HarmonicLabel';
 import BaseFrequencyControl from './BaseFrequencyControl';
 
 interface HarmonicResponsePreviewProps {
@@ -73,7 +73,7 @@ function HarmonicResponsePreview({
       />
       <VerticalSliderGroup
         values={harmonicMagnitudes}
-        labels={getHarmonicLabels(harmonicCount)}
+        labels={HarmonicLabel(harmonicCount)}
         min="0"
         max={maxMagnitude}
         step="0.01"
