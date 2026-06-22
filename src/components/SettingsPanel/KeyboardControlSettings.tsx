@@ -122,7 +122,7 @@ function KeyboardControlSettings({
               onChange={(e) => setIsKeyboardOctaveHintEnabled(e.target.checked)}
             />
           </div>
-          <div className="grid gap-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="text-xs sm:text-sm grid gap-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {keyboardNoteMappings.map(({ offset, key }) => (
               <KeyboardMappingInput
                 key={offset}
@@ -156,7 +156,7 @@ function KeyboardControlSettings({
               ),
             )}
             <ControlButton
-              icon={<RotateCcw size={20} />}
+              icon={<RotateCcw size={16} />}
               label={t('settings.keyboard.reset')}
               onClick={resetKeyboardMappings}
             />

@@ -100,9 +100,9 @@ function Piano() {
       </div>
 
       {octaveHints.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-3 text-sm text-app-overlay dark:text-app-overlay-dark">
+        <div className="flex flex-wrap justify-center gap-4 text-sm text-app-overlay dark:text-app-overlay-dark">
           {octaveHints.map(({ downMark, downKey, upMark, upKey }) => (
-            <span className="flex items-center gap-1" key={downMark}>
+            <span className="flex items-center gap-2" key={downMark}>
               {downKey && (
                 <span>
                   {downMark}

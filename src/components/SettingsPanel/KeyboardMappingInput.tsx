@@ -1,7 +1,6 @@
 import { X } from 'lucide-react';
 import type { KeyboardEvent, ReactNode } from 'react';
 import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
-import ControlButton from '../shared/ControlButton';
 
 interface KeyboardMappingInputProps {
   keyValue: string;
@@ -21,11 +20,11 @@ function KeyboardMappingInput({
   return (
     <label
       className="
-        grid grid-cols-[1rem_1fr_2rem] items-center gap-1 py-1 px-2
+        grid grid-cols-[1rem_1fr_1rem] items-center gap-1 py-1 px-2
         rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
       "
     >
-      <span className="text-sm font-bold">{label}</span>
+      <span className="font-bold">{label}</span>
       <input
         className="
           min-w-0 text-center p-1
@@ -38,12 +37,15 @@ function KeyboardMappingInput({
         readOnly
         value={keyValue ? getKeyboardControlKeyLabel(keyValue) : ''}
       />
-      <ControlButton
+      <button
+        className="m-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         disabled={!keyValue}
-        icon={<X size={16} />}
         onClick={onClear}
         title={keyValue}
-      />
+        type="button"
+      >
+        <X size={16} />
+      </button>
     </label>
   );
 }
