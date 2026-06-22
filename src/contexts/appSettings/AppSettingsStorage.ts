@@ -221,6 +221,6 @@ export function writeStoredAppSettings(settings: StoredAppSettings) {
   try {
     localStorage.setItem(APP_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
   } catch {
-    // Ignore storage failures so settings still work during the current session.
+    return;
   }
 }

@@ -10,6 +10,16 @@ import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import KeyboardMappingInput from './KeyboardMappingInput';
 
+const OCTAVE_KEY_MAPPING_CONTROLS = [
+  { direction: 'upKey', label: '⇑' },
+  { direction: 'downKey', label: '⇓' },
+] as const;
+
+const TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS = [
+  { direction: 'upKey', label: '↑' },
+  { direction: 'downKey', label: '↓' },
+] as const;
+
 interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
@@ -49,16 +59,6 @@ function getOffsetLabel(offset: number) {
     </span>
   );
 }
-
-const OCTAVE_KEY_MAPPING_CONTROLS = [
-  { direction: 'upKey', label: '⇑' },
-  { direction: 'downKey', label: '⇓' },
-] as const;
-
-const TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS = [
-  { direction: 'upKey', label: '↑' },
-  { direction: 'downKey', label: '↓' },
-] as const;
 
 function KeyboardControlSettings({
   isKeyboardControlEnabled,
