@@ -191,7 +191,7 @@ function usePianoControl(
     ],
   );
 
-  const { keyHints } = useKeyboardControl({
+  const { keyHints, octaveHints } = useKeyboardControl({
     activeNotesRef: activeKeyboardNotesRef,
     enabled: isKeyboardControlEnabled,
     keyboardNoteMappings,
@@ -239,6 +239,7 @@ function usePianoControl(
     isMouseControlEnabled,
     keyHints,
     midiControl,
+    octaveHints,
     whiteKeys,
   };
 }

@@ -16,6 +16,7 @@ function Piano() {
     whiteKeys,
     blackKeys,
     keyHints,
+    octaveHints,
     isKeyPressed,
     midiControl,
     isMouseControlEnabled,
@@ -29,73 +30,96 @@ function Piano() {
   }, [midiControl, setMidiControl]);
 
   return (
-    <div
-      className="w-full overflow-x-auto overscroll-x-contain py-4"
-      style={{ touchAction: 'pan-x' }}
-    >
+    <>
       <div
-        className="relative mx-auto"
-        style={{ height: WHITE_KEY_HEIGHT_PX, width: keyboardWidth }}
+        className="w-full overflow-x-auto overscroll-x-contain py-8"
+        style={{ touchAction: 'pan-x' }}
       >
-        <div className="flex">
-          {whiteKeys.map((key) => (
-            <PianoKey
-              className="shrink-0 border border-app-accent"
-              height={WHITE_KEY_HEIGHT_PX}
-              isMouseControlEnabled={isMouseControlEnabled}
-              isPressed={isKeyPressed(key.note)}
-              key={key.note}
-              normalClassName="bg-piano-white text-piano-black"
-              note={key.note}
-              onKeyDown={handleKeyDown}
-              onKeyUp={handleKeyUp}
-              pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
-              width={WHITE_KEY_WIDTH_PX}
-            >
-              <span className="h-full flex flex-col items-center justify-end py-2">
-                <span className="text-piano-black">
-                  {keyHints.get(key.note)}
+        <div
+          className="relative mx-auto"
+          style={{ height: WHITE_KEY_HEIGHT_PX, width: keyboardWidth }}
+        >
+          <div className="flex">
+            {whiteKeys.map((key) => (
+              <PianoKey
+                className="shrink-0 border border-app-accent"
+                height={WHITE_KEY_HEIGHT_PX}
+                isMouseControlEnabled={isMouseControlEnabled}
+                isPressed={isKeyPressed(key.note)}
+                key={key.note}
+                normalClassName="bg-piano-white text-piano-black"
+                note={key.note}
+                onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
+                pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
+                width={WHITE_KEY_WIDTH_PX}
+              >
+                <span className="h-full flex flex-col items-center justify-end py-2">
+                  <kbd className="text-piano-black">
+                    {keyHints.get(key.note)}
+                  </kbd>
+                  <span>
+                    {key.char}
+                    <sub>{key.number}</sub>
+                  </span>
                 </span>
-                <span>
-                  {key.char}
-                  <sub>{key.number}</sub>
-                </span>
-              </span>
-            </PianoKey>
-          ))}
-        </div>
+              </PianoKey>
+            ))}
+          </div>
 
-        <div className="absolute top-0 left-0">
-          {blackKeys.map((key) => (
-            <PianoKey
-              className="border-none"
-              height={BLACK_KEY_HEIGHT_PX}
-              isMouseControlEnabled={isMouseControlEnabled}
-              isPressed={isKeyPressed(key.note)}
-              key={key.note}
-              normalClassName="bg-piano-black text-piano-white"
-              note={key.note}
-              onKeyDown={handleKeyDown}
-              onKeyUp={handleKeyUp}
-              pressedClassName="bg-piano-black-active text-piano-white shadow-inner"
-              style={{
-                left:
-                  key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
-                position: 'absolute',
-                zIndex: 1,
-              }}
-              width={BLACK_KEY_WIDTH_PX}
-            >
-              <span className="h-full flex flex-col items-center justify-end py-2">
-                <span className="font-semibold text-piano-white">
-                  {keyHints.get(key.note)}
+          <div className="absolute top-0 left-0">
+            {blackKeys.map((key) => (
+              <PianoKey
+                className="border-none"
+                height={BLACK_KEY_HEIGHT_PX}
+                isMouseControlEnabled={isMouseControlEnabled}
+                isPressed={isKeyPressed(key.note)}
+                key={key.note}
+                normalClassName="bg-piano-black text-piano-white"
+                note={key.note}
+                onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
+                pressedClassName="bg-piano-black-active text-piano-white shadow-inner"
+                style={{
+                  left:
+                    key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
+                  position: 'absolute',
+                  zIndex: 1,
+                }}
+                width={BLACK_KEY_WIDTH_PX}
+              >
+                <span className="h-full flex flex-col items-center justify-end py-2">
+                  <kbd className="font-semibold text-piano-white">
+                    {keyHints.get(key.note)}
+                  </kbd>
                 </span>
-              </span>
-            </PianoKey>
-          ))}
+              </PianoKey>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      {octaveHints.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-3 text-sm text-app-overlay dark:text-app-overlay-dark">
+          {octaveHints.map(({ downMark, downKey, upMark, upKey }) => (
+            <span className="flex items-center gap-1" key={downMark}>
+              {downKey && (
+                <span>
+                  {downMark}
+                  <kbd>{downKey}</kbd>
+                </span>
+              )}
+              {upKey && (
+                <span>
+                  {upMark}
+                  <kbd>{upKey}</kbd>
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 

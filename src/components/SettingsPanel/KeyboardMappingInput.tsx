@@ -21,7 +21,7 @@ function KeyboardMappingInput({
   return (
     <label
       className="
-        grid grid-cols-[1rem_1fr_2rem] items-center gap-2 py-1 px-3
+        grid grid-cols-[1rem_1fr_2rem] items-center gap-1 py-1 px-2
         rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
       "
     >

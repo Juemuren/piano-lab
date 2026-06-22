@@ -21,6 +21,13 @@ interface UseKeyboardPianoControlOptions {
   onNoteRelease: (note: number) => void;
 }
 
+interface KeyboardOctaveHint {
+  downKey: string;
+  downMark: string;
+  upKey: string;
+  upMark: string;
+}
+
 function getKeyboardNote(
   key: string,
   octave: number,
@@ -210,7 +217,38 @@ function useKeyboardControl({
     return hints;
   }, [enabled, keyboardNoteMappings, keyboardOctave]);
 
-  return { keyHints };
+  const octaveHints = useMemo<KeyboardOctaveHint[]>(() => {
+    if (!enabled) {
+      return [];
+    }
+
+    return [
+      {
+        downKey: keyboardOctaveKeyMappings.downKey
+          ? getKeyboardControlKeyLabel(keyboardOctaveKeyMappings.downKey)
+          : '',
+        downMark: '⇓',
+        upKey: keyboardOctaveKeyMappings.upKey
+          ? getKeyboardControlKeyLabel(keyboardOctaveKeyMappings.upKey)
+          : '',
+        upMark: '⇑',
+      },
+      {
+        downKey: keyboardTemporaryOctaveKeyMappings.downKey
+          ? getKeyboardControlKeyLabel(
+              keyboardTemporaryOctaveKeyMappings.downKey,
+            )
+          : '',
+        downMark: '↓',
+        upKey: keyboardTemporaryOctaveKeyMappings.upKey
+          ? getKeyboardControlKeyLabel(keyboardTemporaryOctaveKeyMappings.upKey)
+          : '',
+        upMark: '↑',
+      },
+    ].filter(({ downKey, upKey }) => downKey || upKey);
+  }, [enabled, keyboardOctaveKeyMappings, keyboardTemporaryOctaveKeyMappings]);
+
+  return { keyHints, octaveHints };
 }
 
 export default useKeyboardControl;
