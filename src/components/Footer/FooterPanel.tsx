@@ -2,11 +2,11 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
-type FooterPanelProps = {
-  title: string;
+interface FooterPanelProps {
   children: ReactNode;
   icon?: ReactNode;
-};
+  title: string;
+}
 
 function FooterPanel({ title, children, icon }: FooterPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);

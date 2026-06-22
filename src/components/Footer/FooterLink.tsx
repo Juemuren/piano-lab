@@ -1,11 +1,13 @@
 import { ExternalLink } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-type FooterLinkProps = {
+interface FooterLinkProps {
   href: string;
+  icon: ReactNode;
   label: string;
-};
+}
 
-function FooterLink({ href, label }: FooterLinkProps) {
+function FooterLink({ href, icon, label }: FooterLinkProps) {
   return (
     <a
       className="
@@ -18,7 +20,10 @@ function FooterLink({ href, label }: FooterLinkProps) {
       rel="noreferrer"
       target="_blank"
     >
-      <span className="text-sm font-medium">{label}</span>
+      <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide">
+        {icon}
+        {label}
+      </span>
       <ExternalLink size={18} />
     </a>
   );

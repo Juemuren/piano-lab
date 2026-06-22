@@ -1,4 +1,11 @@
-import { BookOpen, CircuitBoard, Info } from 'lucide-react';
+import {
+  BookOpen,
+  CircuitBoard,
+  Code,
+  Info,
+  Music,
+  SquareFunction,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SECTION_IDS } from '../../constants/sections';
 import FooterLink from './FooterLink';
@@ -43,9 +50,21 @@ function Footer() {
         </div>
 
         <div className="grid gap-3">
-          <FooterLink href={articleUrl} label={t('links.article')} />
-          <FooterLink href={repositoryUrl} label={t('links.repository')} />
-          <FooterLink href={abcUrl} label={t('links.abc')} />
+          <FooterLink
+            href={articleUrl}
+            icon={<SquareFunction size={16} />}
+            label={t('links.article')}
+          />
+          <FooterLink
+            href={repositoryUrl}
+            icon={<Code size={16} />}
+            label={t('links.repository')}
+          />
+          <FooterLink
+            href={abcUrl}
+            icon={<Music size={16} />}
+            label={t('links.abc')}
+          />
         </div>
       </div>
     </footer>

@@ -1,4 +1,11 @@
-import { BookImage, Download, Image, Music, Upload } from 'lucide-react';
+import {
+  BookImage,
+  Download,
+  FileCode,
+  FileImage,
+  FileMusic,
+  Upload,
+} from 'lucide-react';
 import type { ChangeEventHandler, RefObject } from 'react';
 import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
@@ -46,13 +53,13 @@ function AbcFileToolbar({
       />
       <ControlButton
         disabled={!canExportRenderedScore}
-        icon={<Image size={18} />}
+        icon={<FileCode size={18} />}
         label="SVG"
         onClick={onExportSvg}
       />
       <ControlButton
         disabled={!canExportRenderedScore}
-        icon={<Image size={18} />}
+        icon={<FileImage size={18} />}
         label="PNG"
         onClick={onExportPng}
       />
@@ -64,7 +71,7 @@ function AbcFileToolbar({
       />
       <ControlButton
         disabled={!canExportRenderedScore}
-        icon={<Music size={18} />}
+        icon={<FileMusic size={18} />}
         label="MIDI"
         onClick={onExportMidi}
       />
