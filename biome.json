@@ -93,6 +93,17 @@
       }
     },
     {
+      "includes": ["src/**/*.json"],
+      "assist": {
+        "enabled": true,
+        "actions": {
+          "source": {
+            "useSortedKeys": "on"
+          }
+        }
+      }
+    },
+    {
       "includes": ["**/*.mts", "**/*.{ts,tsx}", "**/*.cts"],
       "linter": {
         "rules": {

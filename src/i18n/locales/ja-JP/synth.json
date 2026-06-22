@@ -1,224 +1,224 @@
 {
-  "sections": {
-    "envelope": "エンベロープ",
-    "spectrum": "スペクトル",
-    "effect": "エフェクト",
-    "analysis": "分析"
-  },
   "analysis": {
     "frequencyDomain": "周波数領域",
     "timeDomain": "時間領域"
   },
+  "config": {
+    "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
+  },
   "controls": {
-    "oscillatorType": "オシレータータイプ",
-    "volume": "音量係数",
     "harmonicCount": "倍音数",
-    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。"
-  },
-  "oscillator": {
-    "sine": "サイン波",
-    "triangle": "三角波",
-    "sawtooth": "ノコギリ波",
-    "square": "矩形波"
-  },
-  "envelope": {
-    "attackTime": "アタック時間",
-    "decayTime": "ディケイ時間",
-    "releaseTime": "リリース時間",
-    "sustainGain": "サステインゲイン",
-    "silenceGain": "無音ゲイン",
-    "amplitudeEnvelopeFormula": "振幅エンベロープ式",
-    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線"
-  },
-  "spectrum": {
-    "harmonicSpectrumFormula": "倍音スペクトル式",
-    "preset": "スペクトルプリセット",
-    "presers": {
-      "ethereal": "幻想",
-      "metallic": "金属",
-      "pure": "ピュア",
-      "bright": "明るい",
-      "normal": "標準",
-      "soft": "柔らかい",
-      "realistic": "リアル",
-      "custom": "カスタム"
-    },
-    "parameters": {
-      "strikePoint": "打弦位置",
-      "decayRate": "減衰率",
-      "powerExponent": "べき指数"
-    }
+    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。",
+    "oscillatorType": "オシレータータイプ",
+    "volume": "音量係数"
   },
   "effect": {
-    "filterEqualizer": {
-      "name": "フィルターとイコライザー",
-      "pitch": "音高",
-      "baseFrequency": "基準周波数",
-      "magnitudeResponseCurve": "振幅周波数応答曲線",
-      "magnitudeResponseSample": "振幅周波数応答サンプル"
-    },
-    "filter": {
-      "name": "フィルター",
-      "lowpass": {
-        "name": "ローパス",
-        "frequency": "カットオフ周波数",
-        "q": "共振係数"
-      },
-      "highpass": {
-        "name": "ハイパス",
-        "frequency": "カットオフ周波数",
-        "q": "共振係数"
-      },
-      "bandpass": {
-        "name": "バンドパス",
-        "frequency": "中心周波数",
-        "q": "帯域幅係数"
-      },
-      "notch": {
-        "name": "ノッチ",
-        "frequency": "中心周波数",
-        "q": "帯域幅係数"
-      }
+    "compressor": {
+      "attack": "アタック時間",
+      "disabled": "コンプレッションを無効にする",
+      "enabled": "コンプレッションを有効にする",
+      "knee": "ニー",
+      "name": "コンプレッション",
+      "ratio": "レシオ",
+      "reduction": "リアルタイムゲインリダクション",
+      "release": "リリース時間",
+      "threshold": "スレッショルド"
     },
     "equalizer": {
-      "name": "イコライザー",
-      "lowshelf": {
-        "name": "ローシェルフ",
-        "frequency": "カットオフ周波数",
-        "gain": "ゲイン比率"
-      },
       "highshelf": {
-        "name": "ハイシェルフ",
         "frequency": "カットオフ周波数",
-        "gain": "ゲイン比率"
+        "gain": "ゲイン比率",
+        "name": "ハイシェルフ"
       },
+      "lowshelf": {
+        "frequency": "カットオフ周波数",
+        "gain": "ゲイン比率",
+        "name": "ローシェルフ"
+      },
+      "name": "イコライザー",
       "peaking": {
-        "name": "ピーキング",
         "frequency": "中心周波数",
-        "q": "帯域幅係数",
-        "gain": "ゲイン比率"
+        "gain": "ゲイン比率",
+        "name": "ピーキング",
+        "q": "帯域幅係数"
       }
     },
-    "compressor": {
-      "name": "コンプレッション",
-      "enabled": "コンプレッションを有効にする",
-      "disabled": "コンプレッションを無効にする",
-      "threshold": "スレッショルド",
-      "knee": "ニー",
-      "ratio": "レシオ",
-      "attack": "アタック時間",
-      "release": "リリース時間",
-      "reduction": "リアルタイムゲインリダクション"
+    "filter": {
+      "bandpass": {
+        "frequency": "中心周波数",
+        "name": "バンドパス",
+        "q": "帯域幅係数"
+      },
+      "highpass": {
+        "frequency": "カットオフ周波数",
+        "name": "ハイパス",
+        "q": "共振係数"
+      },
+      "lowpass": {
+        "frequency": "カットオフ周波数",
+        "name": "ローパス",
+        "q": "共振係数"
+      },
+      "name": "フィルター",
+      "notch": {
+        "frequency": "中心周波数",
+        "name": "ノッチ",
+        "q": "帯域幅係数"
+      }
+    },
+    "filterEqualizer": {
+      "baseFrequency": "基準周波数",
+      "magnitudeResponseCurve": "振幅周波数応答曲線",
+      "magnitudeResponseSample": "振幅周波数応答サンプル",
+      "name": "フィルターとイコライザー",
+      "pitch": "音高"
     },
     "modulation": {
-      "name": "モジュレーション",
-      "frequency": "モジュレーション周波数",
-      "depth": "モジュレーション深度",
-      "amplitudeModulation": "振幅モジュレーション",
-      "amplitudeModulationEnabled": "振幅モジュレーションを有効にする",
-      "amplitudeModulationDisabled": "振幅モジュレーションを無効にする",
       "amplitudeCurve": "振幅モジュレーション曲線",
-      "frequencyModulation": "周波数モジュレーション",
-      "frequencyModulationEnabled": "周波数モジュレーションを有効にする",
-      "frequencyModulationDisabled": "周波数モジュレーションを無効にする",
-      "frequencyCurve": "周波数モジュレーション曲線",
-      "phaseModulation": "位相変調",
-      "phaseModulationEnabled": "位相変調を有効にする",
-      "phaseModulationDisabled": "位相変調を無効にする",
-      "phaseCurve": "位相変調曲線",
+      "amplitudeModulation": "振幅モジュレーション",
+      "amplitudeModulationDisabled": "振幅モジュレーションを無効にする",
+      "amplitudeModulationEnabled": "振幅モジュレーションを有効にする",
+      "delayCurve": "遅延変調曲線",
       "delayModulation": "遅延変調",
-      "delayModulationEnabled": "遅延変調を有効にする",
       "delayModulationDisabled": "遅延変調を無効にする",
-      "delayCurve": "遅延変調曲線"
-    },
-    "waveShaper": {
-      "name": "ウェーブシェーピング",
-      "enabled": "ウェーブシェーピングを有効にする",
-      "disabled": "ウェーブシェーピングを無効にする",
-      "preset": "波形プリセット",
-      "presets": {
-        "saturation": "サチュレーション",
-        "distortion": "ディストーション",
-        "overdrive": "オーバードライブ",
-        "fuzz": "ファズ"
-      },
-      "parameters": {
-        "saturation": "サチュレーション強度",
-        "distortion": "ディストーション強度",
-        "overdrive": "オーバードライブ強度",
-        "fuzz": "ファズ強度"
-      },
-      "curve": "波形曲線"
+      "delayModulationEnabled": "遅延変調を有効にする",
+      "depth": "モジュレーション深度",
+      "frequency": "モジュレーション周波数",
+      "frequencyCurve": "周波数モジュレーション曲線",
+      "frequencyModulation": "周波数モジュレーション",
+      "frequencyModulationDisabled": "周波数モジュレーションを無効にする",
+      "frequencyModulationEnabled": "周波数モジュレーションを有効にする",
+      "name": "モジュレーション",
+      "phaseCurve": "位相変調曲線",
+      "phaseModulation": "位相変調",
+      "phaseModulationDisabled": "位相変調を無効にする",
+      "phaseModulationEnabled": "位相変調を有効にする"
     },
     "panner": {
-      "name": "パンニング",
-      "enabled": "パンニングを有効にする",
+      "angle": "角度",
+      "coneInnerAngle": "内側コーン角",
+      "coneOuterAngle": "外側コーン角",
+      "coneOuterGain": "コーン外ゲイン",
       "disabled": "パンニングを無効にする",
+      "distance": "距離",
+      "distanceGainPreview": "距離ゲイン曲線",
+      "distanceModel": "距離モデル",
+      "distanceModels": {
+        "exponential": "指数",
+        "inverse": "逆比例",
+        "linear": "線形"
+      },
+      "enabled": "パンニングを有効にする",
+      "maxDistance": "最大距離",
+      "name": "パンニング",
+      "orientation": "方向",
       "panningModel": "パンニングモデル",
       "panningModels": {
         "equalpower": "等パワーパンニング",
         "HRTF": "頭部伝達関数（HRTF）"
       },
-      "distanceModel": "距離モデル",
-      "distanceModels": {
-        "linear": "線形",
-        "inverse": "逆比例",
-        "exponential": "指数"
-      },
       "position": "位置",
-      "orientation": "方向",
-      "distance": "距離",
-      "angle": "角度",
-      "refDistance": "基準距離",
-      "maxDistance": "最大距離",
-      "rolloffFactor": "減衰係数",
-      "coneInnerAngle": "内側コーン角",
-      "coneOuterAngle": "外側コーン角",
-      "coneOuterGain": "コーン外ゲイン",
-      "spatialPreview": "サウンドコーン図",
-      "distanceGainPreview": "距離ゲイン曲線",
       "preview": {
-        "outerCone": "外側コーン",
-        "innerCone": "内側コーン",
+        "currentSourceDistance": "現在の音源距離",
         "distance": "距離",
-        "orientation": "方向",
-        "listener": "聴取者",
-        "source": "音源",
         "distanceGain": "距離ゲイン",
-        "currentSourceDistance": "現在の音源距離"
-      }
+        "innerCone": "内側コーン",
+        "listener": "聴取者",
+        "orientation": "方向",
+        "outerCone": "外側コーン",
+        "source": "音源"
+      },
+      "refDistance": "基準距離",
+      "rolloffFactor": "減衰係数",
+      "spatialPreview": "サウンドコーン図"
     },
     "reverb": {
-      "name": "リバーブ",
-      "enabled": "リバーブを有効にする",
       "disabled": "リバーブを無効にする",
+      "earlyReflection": {
+        "amplitude": "振幅",
+        "delay": "遅延",
+        "item": "反射 {{index}}",
+        "name": "初期反射",
+        "phase": "位相"
+      },
+      "enabled": "リバーブを有効にする",
+      "impulseResponse": "総インパルス応答",
+      "lateTail": {
+        "alpha": "減衰係数",
+        "amplitude": "初期振幅",
+        "delay": "遅延時間",
+        "duration": "持続時間",
+        "name": "後期残響"
+      },
+      "mix": "ミックス比",
+      "name": "リバーブ",
       "preset": "リバーブプリセット",
       "presets": {
         "bathroom": "浴室",
-        "garage": "ガレージ",
-        "hall": "ホール",
         "cathedral": "大聖堂",
-        "custom": "カスタム"
+        "custom": "カスタム",
+        "garage": "ガレージ",
+        "hall": "ホール"
+      }
+    },
+    "waveShaper": {
+      "curve": "波形曲線",
+      "disabled": "ウェーブシェーピングを無効にする",
+      "enabled": "ウェーブシェーピングを有効にする",
+      "name": "ウェーブシェーピング",
+      "parameters": {
+        "distortion": "ディストーション強度",
+        "fuzz": "ファズ強度",
+        "overdrive": "オーバードライブ強度",
+        "saturation": "サチュレーション強度"
       },
-      "earlyReflection": {
-        "name": "初期反射",
-        "item": "反射 {{index}}",
-        "delay": "遅延",
-        "amplitude": "振幅",
-        "phase": "位相"
-      },
-      "lateTail": {
-        "name": "後期残響",
-        "delay": "遅延時間",
-        "duration": "持続時間",
-        "amplitude": "初期振幅",
-        "alpha": "減衰係数"
-      },
-      "impulseResponse": "総インパルス応答",
-      "mix": "ミックス比"
+      "preset": "波形プリセット",
+      "presets": {
+        "distortion": "ディストーション",
+        "fuzz": "ファズ",
+        "overdrive": "オーバードライブ",
+        "saturation": "サチュレーション"
+      }
     }
   },
-  "config": {
-    "importError": "設定をインポートできません。JSON ファイル形式を確認してください。"
+  "envelope": {
+    "amplitudeEnvelopeCurve": "振幅エンベロープ曲線",
+    "amplitudeEnvelopeFormula": "振幅エンベロープ式",
+    "attackTime": "アタック時間",
+    "decayTime": "ディケイ時間",
+    "releaseTime": "リリース時間",
+    "silenceGain": "無音ゲイン",
+    "sustainGain": "サステインゲイン"
+  },
+  "oscillator": {
+    "sawtooth": "ノコギリ波",
+    "sine": "サイン波",
+    "square": "矩形波",
+    "triangle": "三角波"
+  },
+  "sections": {
+    "analysis": "分析",
+    "effect": "エフェクト",
+    "envelope": "エンベロープ",
+    "spectrum": "スペクトル"
+  },
+  "spectrum": {
+    "harmonicSpectrumFormula": "倍音スペクトル式",
+    "parameters": {
+      "decayRate": "減衰率",
+      "powerExponent": "べき指数",
+      "strikePoint": "打弦位置"
+    },
+    "presers": {
+      "bright": "明るい",
+      "custom": "カスタム",
+      "ethereal": "幻想",
+      "metallic": "金属",
+      "normal": "標準",
+      "pure": "ピュア",
+      "realistic": "リアル",
+      "soft": "柔らかい"
+    },
+    "preset": "スペクトルプリセット"
   }
 }

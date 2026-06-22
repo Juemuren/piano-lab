@@ -1,224 +1,224 @@
 {
-  "sections": {
-    "envelope": "包络",
-    "spectrum": "频谱",
-    "effect": "效果",
-    "analysis": "分析"
-  },
   "analysis": {
     "frequencyDomain": "频域",
     "timeDomain": "时域"
   },
+  "config": {
+    "importError": "无法导入配置，请检查 JSON 文件格式。"
+  },
   "controls": {
-    "oscillatorType": "振荡器类型",
-    "volume": "音量系数",
     "harmonicCount": "谐波数量",
-    "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。"
-  },
-  "oscillator": {
-    "sine": "正弦波",
-    "triangle": "三角波",
-    "sawtooth": "锯齿波",
-    "square": "方波"
-  },
-  "envelope": {
-    "attackTime": "起音时间",
-    "decayTime": "衰音时间",
-    "releaseTime": "释音时间",
-    "sustainGain": "稳音增益",
-    "silenceGain": "静音增益",
-    "amplitudeEnvelopeFormula": "振幅包络公式",
-    "amplitudeEnvelopeCurve": "振幅包络曲线"
-  },
-  "spectrum": {
-    "harmonicSpectrumFormula": "谐波频谱公式",
-    "preset": "频谱预设",
-    "presers": {
-      "ethereal": "空灵",
-      "metallic": "金属",
-      "pure": "纯净",
-      "bright": "明亮",
-      "normal": "常规",
-      "soft": "柔和",
-      "realistic": "真实",
-      "custom": "自定义"
-    },
-    "parameters": {
-      "strikePoint": "击弦点",
-      "decayRate": "衰减率",
-      "powerExponent": "幂指数"
-    }
+    "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。",
+    "oscillatorType": "振荡器类型",
+    "volume": "音量系数"
   },
   "effect": {
-    "filterEqualizer": {
-      "name": "滤波与均衡",
-      "pitch": "音高",
-      "baseFrequency": "基频",
-      "magnitudeResponseCurve": "幅频特性曲线",
-      "magnitudeResponseSample": "幅频特性采样"
-    },
-    "filter": {
-      "name": "滤波器",
-      "lowpass": {
-        "name": "低通",
-        "frequency": "截止频率",
-        "q": "谐振系数"
-      },
-      "highpass": {
-        "name": "高通",
-        "frequency": "截止频率",
-        "q": "谐振系数"
-      },
-      "bandpass": {
-        "name": "带通",
-        "frequency": "中心频率",
-        "q": "带宽因子"
-      },
-      "notch": {
-        "name": "带阻",
-        "frequency": "中心频率",
-        "q": "带宽因子"
-      }
+    "compressor": {
+      "attack": "启动时间",
+      "disabled": "禁用压缩",
+      "enabled": "启用压缩",
+      "knee": "拐点",
+      "name": "压缩",
+      "ratio": "压缩比",
+      "reduction": "实时信号增益",
+      "release": "恢复时间",
+      "threshold": "阈值"
     },
     "equalizer": {
-      "name": "均衡器",
-      "lowshelf": {
-        "name": "低架",
-        "frequency": "截止频率",
-        "gain": "增益比例"
-      },
       "highshelf": {
-        "name": "高架",
         "frequency": "截止频率",
-        "gain": "增益比例"
+        "gain": "增益比例",
+        "name": "高架"
       },
+      "lowshelf": {
+        "frequency": "截止频率",
+        "gain": "增益比例",
+        "name": "低架"
+      },
+      "name": "均衡器",
       "peaking": {
-        "name": "峰值",
         "frequency": "中心频率",
-        "q": "带宽因子",
-        "gain": "增益比例"
+        "gain": "增益比例",
+        "name": "峰值",
+        "q": "带宽因子"
       }
     },
-    "compressor": {
-      "name": "压缩",
-      "enabled": "启用压缩",
-      "disabled": "禁用压缩",
-      "threshold": "阈值",
-      "knee": "拐点",
-      "ratio": "压缩比",
-      "attack": "启动时间",
-      "release": "恢复时间",
-      "reduction": "实时信号增益"
+    "filter": {
+      "bandpass": {
+        "frequency": "中心频率",
+        "name": "带通",
+        "q": "带宽因子"
+      },
+      "highpass": {
+        "frequency": "截止频率",
+        "name": "高通",
+        "q": "谐振系数"
+      },
+      "lowpass": {
+        "frequency": "截止频率",
+        "name": "低通",
+        "q": "谐振系数"
+      },
+      "name": "滤波器",
+      "notch": {
+        "frequency": "中心频率",
+        "name": "带阻",
+        "q": "带宽因子"
+      }
+    },
+    "filterEqualizer": {
+      "baseFrequency": "基频",
+      "magnitudeResponseCurve": "幅频特性曲线",
+      "magnitudeResponseSample": "幅频特性采样",
+      "name": "滤波与均衡",
+      "pitch": "音高"
     },
     "modulation": {
-      "name": "调制",
-      "frequency": "调制频率",
-      "depth": "调制深度",
-      "amplitudeModulation": "振幅调制",
-      "amplitudeModulationEnabled": "启用振幅调制",
-      "amplitudeModulationDisabled": "禁用振幅调制",
       "amplitudeCurve": "振幅调制曲线",
-      "frequencyModulation": "频率调制",
-      "frequencyModulationEnabled": "启用频率调制",
-      "frequencyModulationDisabled": "禁用频率调制",
-      "frequencyCurve": "频率调制曲线",
-      "phaseModulation": "相位调制",
-      "phaseModulationEnabled": "启用相位调制",
-      "phaseModulationDisabled": "禁用相位调制",
-      "phaseCurve": "相位调制曲线",
+      "amplitudeModulation": "振幅调制",
+      "amplitudeModulationDisabled": "禁用振幅调制",
+      "amplitudeModulationEnabled": "启用振幅调制",
+      "delayCurve": "延时调制曲线",
       "delayModulation": "延时调制",
-      "delayModulationEnabled": "启用延时调制",
       "delayModulationDisabled": "禁用延时调制",
-      "delayCurve": "延时调制曲线"
-    },
-    "waveShaper": {
-      "name": "波形重塑",
-      "enabled": "启用波形重塑",
-      "disabled": "禁用波形重塑",
-      "preset": "波形预设",
-      "presets": {
-        "saturation": "饱和",
-        "distortion": "失真",
-        "overdrive": "过载",
-        "fuzz": "法兹"
-      },
-      "parameters": {
-        "saturation": "饱和强度",
-        "distortion": "失真强度",
-        "overdrive": "过载强度",
-        "fuzz": "法兹强度"
-      },
-      "curve": "波形曲线"
+      "delayModulationEnabled": "启用延时调制",
+      "depth": "调制深度",
+      "frequency": "调制频率",
+      "frequencyCurve": "频率调制曲线",
+      "frequencyModulation": "频率调制",
+      "frequencyModulationDisabled": "禁用频率调制",
+      "frequencyModulationEnabled": "启用频率调制",
+      "name": "调制",
+      "phaseCurve": "相位调制曲线",
+      "phaseModulation": "相位调制",
+      "phaseModulationDisabled": "禁用相位调制",
+      "phaseModulationEnabled": "启用相位调制"
     },
     "panner": {
-      "name": "声像",
-      "enabled": "启用声像",
+      "angle": "角度",
+      "coneInnerAngle": "内锥角",
+      "coneOuterAngle": "外锥角",
+      "coneOuterGain": "锥外增益",
       "disabled": "禁用声像",
+      "distance": "距离",
+      "distanceGainPreview": "距离增益曲线",
+      "distanceModel": "距离模型",
+      "distanceModels": {
+        "exponential": "指数",
+        "inverse": "反比",
+        "linear": "线性"
+      },
+      "enabled": "启用声像",
+      "maxDistance": "最大距离",
+      "name": "声像",
+      "orientation": "朝向",
       "panningModel": "声像模型",
       "panningModels": {
         "equalpower": "等功率平移算法",
         "HRTF": "头部相关传递函数"
       },
-      "distanceModel": "距离模型",
-      "distanceModels": {
-        "linear": "线性",
-        "inverse": "反比",
-        "exponential": "指数"
-      },
       "position": "位置",
-      "orientation": "朝向",
-      "distance": "距离",
-      "angle": "角度",
-      "refDistance": "参考距离",
-      "maxDistance": "最大距离",
-      "rolloffFactor": "衰减系数",
-      "coneInnerAngle": "内锥角",
-      "coneOuterAngle": "外锥角",
-      "coneOuterGain": "锥外增益",
-      "spatialPreview": "声锥示意图",
-      "distanceGainPreview": "距离增益曲线",
       "preview": {
-        "outerCone": "外锥",
-        "innerCone": "内锥",
+        "currentSourceDistance": "当前声源距离",
         "distance": "距离",
-        "orientation": "朝向",
-        "listener": "听者",
-        "source": "声源",
         "distanceGain": "距离增益",
-        "currentSourceDistance": "当前声源距离"
-      }
+        "innerCone": "内锥",
+        "listener": "听者",
+        "orientation": "朝向",
+        "outerCone": "外锥",
+        "source": "声源"
+      },
+      "refDistance": "参考距离",
+      "rolloffFactor": "衰减系数",
+      "spatialPreview": "声锥示意图"
     },
     "reverb": {
-      "name": "混响",
-      "enabled": "启用混响",
       "disabled": "禁用混响",
+      "earlyReflection": {
+        "amplitude": "振幅",
+        "delay": "延时",
+        "item": "反射 {{index}}",
+        "name": "早期反射",
+        "phase": "相位"
+      },
+      "enabled": "启用混响",
+      "impulseResponse": "总脉冲响应",
+      "lateTail": {
+        "alpha": "衰减系数",
+        "amplitude": "初始振幅",
+        "delay": "延迟时间",
+        "duration": "持续时间",
+        "name": "晚期尾音"
+      },
+      "mix": "混合比例",
+      "name": "混响",
       "preset": "混响预设",
       "presets": {
         "bathroom": "浴室",
-        "garage": "车库",
-        "hall": "大厅",
         "cathedral": "教堂",
-        "custom": "自定义"
+        "custom": "自定义",
+        "garage": "车库",
+        "hall": "大厅"
+      }
+    },
+    "waveShaper": {
+      "curve": "波形曲线",
+      "disabled": "禁用波形重塑",
+      "enabled": "启用波形重塑",
+      "name": "波形重塑",
+      "parameters": {
+        "distortion": "失真强度",
+        "fuzz": "法兹强度",
+        "overdrive": "过载强度",
+        "saturation": "饱和强度"
       },
-      "earlyReflection": {
-        "name": "早期反射",
-        "item": "反射 {{index}}",
-        "delay": "延时",
-        "amplitude": "振幅",
-        "phase": "相位"
-      },
-      "lateTail": {
-        "name": "晚期尾音",
-        "delay": "延迟时间",
-        "duration": "持续时间",
-        "amplitude": "初始振幅",
-        "alpha": "衰减系数"
-      },
-      "impulseResponse": "总脉冲响应",
-      "mix": "混合比例"
+      "preset": "波形预设",
+      "presets": {
+        "distortion": "失真",
+        "fuzz": "法兹",
+        "overdrive": "过载",
+        "saturation": "饱和"
+      }
     }
   },
-  "config": {
-    "importError": "无法导入配置，请检查 JSON 文件格式。"
+  "envelope": {
+    "amplitudeEnvelopeCurve": "振幅包络曲线",
+    "amplitudeEnvelopeFormula": "振幅包络公式",
+    "attackTime": "起音时间",
+    "decayTime": "衰音时间",
+    "releaseTime": "释音时间",
+    "silenceGain": "静音增益",
+    "sustainGain": "稳音增益"
+  },
+  "oscillator": {
+    "sawtooth": "锯齿波",
+    "sine": "正弦波",
+    "square": "方波",
+    "triangle": "三角波"
+  },
+  "sections": {
+    "analysis": "分析",
+    "effect": "效果",
+    "envelope": "包络",
+    "spectrum": "频谱"
+  },
+  "spectrum": {
+    "harmonicSpectrumFormula": "谐波频谱公式",
+    "parameters": {
+      "decayRate": "衰减率",
+      "powerExponent": "幂指数",
+      "strikePoint": "击弦点"
+    },
+    "presers": {
+      "bright": "明亮",
+      "custom": "自定义",
+      "ethereal": "空灵",
+      "metallic": "金属",
+      "normal": "常规",
+      "pure": "纯净",
+      "realistic": "真实",
+      "soft": "柔和"
+    },
+    "preset": "频谱预设"
   }
 }

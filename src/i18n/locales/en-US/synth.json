@@ -1,224 +1,224 @@
 {
-  "sections": {
-    "envelope": "Envelope",
-    "spectrum": "Spectrum",
-    "effect": "Effects",
-    "analysis": "Analysis"
-  },
   "analysis": {
     "frequencyDomain": "Frequency Domain",
     "timeDomain": "Time Domain"
   },
+  "config": {
+    "importError": "Could not import config. Please check the JSON file format."
+  },
   "controls": {
-    "oscillatorType": "Oscillator Type",
-    "volume": "Volume",
     "harmonicCount": "Harmonic Count",
-    "harmonicCountWarning": "Do not set this value too high, or the app may lag."
-  },
-  "oscillator": {
-    "sine": "Sine",
-    "triangle": "Triangle",
-    "sawtooth": "Sawtooth",
-    "square": "Square"
-  },
-  "envelope": {
-    "attackTime": "Attack Time",
-    "decayTime": "Decay Time",
-    "releaseTime": "Release Time",
-    "sustainGain": "Sustain Gain",
-    "silenceGain": "Silence Gain",
-    "amplitudeEnvelopeFormula": "Amplitude Envelope Formula",
-    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve"
-  },
-  "spectrum": {
-    "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
-    "preset": "Spectrum Preset",
-    "presers": {
-      "ethereal": "Ethereal",
-      "metallic": "Metallic",
-      "pure": "Pure",
-      "bright": "Bright",
-      "normal": "Normal",
-      "soft": "Soft",
-      "realistic": "Realistic",
-      "custom": "Custom"
-    },
-    "parameters": {
-      "strikePoint": "Strike Point",
-      "decayRate": "Decay Rate",
-      "powerExponent": "Power Exponent"
-    }
+    "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
+    "oscillatorType": "Oscillator Type",
+    "volume": "Volume"
   },
   "effect": {
-    "filterEqualizer": {
-      "name": "Filter & Equalizer",
-      "pitch": "Pitch",
-      "baseFrequency": "Base Frequency",
-      "magnitudeResponseCurve": "Magnitude Response Curve",
-      "magnitudeResponseSample": "Magnitude Response Sample"
-    },
-    "filter": {
-      "name": "Filter",
-      "lowpass": {
-        "name": "Low Pass",
-        "frequency": "Cutoff Frequency",
-        "q": "Resonance"
-      },
-      "highpass": {
-        "name": "High Pass",
-        "frequency": "Cutoff Frequency",
-        "q": "Resonance"
-      },
-      "bandpass": {
-        "name": "Band Pass",
-        "frequency": "Center Frequency",
-        "q": "Bandwidth Factor"
-      },
-      "notch": {
-        "name": "Notch",
-        "frequency": "Center Frequency",
-        "q": "Bandwidth Factor"
-      }
+    "compressor": {
+      "attack": "Attack Time",
+      "disabled": "Disable Compression",
+      "enabled": "Enable Compression",
+      "knee": "Knee",
+      "name": "Compression",
+      "ratio": "Ratio",
+      "reduction": "Real-time Gain Reduction",
+      "release": "Release Time",
+      "threshold": "Threshold"
     },
     "equalizer": {
-      "name": "Equalizer",
-      "lowshelf": {
-        "name": "Low Shelf",
-        "frequency": "Cutoff Frequency",
-        "gain": "Gain Ratio"
-      },
       "highshelf": {
-        "name": "High Shelf",
         "frequency": "Cutoff Frequency",
-        "gain": "Gain Ratio"
+        "gain": "Gain Ratio",
+        "name": "High Shelf"
       },
+      "lowshelf": {
+        "frequency": "Cutoff Frequency",
+        "gain": "Gain Ratio",
+        "name": "Low Shelf"
+      },
+      "name": "Equalizer",
       "peaking": {
-        "name": "Peaking",
         "frequency": "Center Frequency",
-        "q": "Bandwidth Factor",
-        "gain": "Gain Ratio"
+        "gain": "Gain Ratio",
+        "name": "Peaking",
+        "q": "Bandwidth Factor"
       }
     },
-    "compressor": {
-      "name": "Compression",
-      "enabled": "Enable Compression",
-      "disabled": "Disable Compression",
-      "threshold": "Threshold",
-      "knee": "Knee",
-      "ratio": "Ratio",
-      "attack": "Attack Time",
-      "release": "Release Time",
-      "reduction": "Real-time Gain Reduction"
+    "filter": {
+      "bandpass": {
+        "frequency": "Center Frequency",
+        "name": "Band Pass",
+        "q": "Bandwidth Factor"
+      },
+      "highpass": {
+        "frequency": "Cutoff Frequency",
+        "name": "High Pass",
+        "q": "Resonance"
+      },
+      "lowpass": {
+        "frequency": "Cutoff Frequency",
+        "name": "Low Pass",
+        "q": "Resonance"
+      },
+      "name": "Filter",
+      "notch": {
+        "frequency": "Center Frequency",
+        "name": "Notch",
+        "q": "Bandwidth Factor"
+      }
+    },
+    "filterEqualizer": {
+      "baseFrequency": "Base Frequency",
+      "magnitudeResponseCurve": "Magnitude Response Curve",
+      "magnitudeResponseSample": "Magnitude Response Sample",
+      "name": "Filter & Equalizer",
+      "pitch": "Pitch"
     },
     "modulation": {
-      "name": "Modulation",
-      "frequency": "Modulation Frequency",
-      "depth": "Modulation Depth",
-      "amplitudeModulation": "Amplitude Modulation",
-      "amplitudeModulationEnabled": "Enable Amplitude Modulation",
-      "amplitudeModulationDisabled": "Disable Amplitude Modulation",
       "amplitudeCurve": "Amplitude Modulation Curve",
-      "frequencyModulation": "Frequency Modulation",
-      "frequencyModulationEnabled": "Enable Frequency Modulation",
-      "frequencyModulationDisabled": "Disable Frequency Modulation",
-      "frequencyCurve": "Frequency Modulation Curve",
-      "phaseModulation": "Phase Modulation",
-      "phaseModulationEnabled": "Enable Phase Modulation",
-      "phaseModulationDisabled": "Disable Phase Modulation",
-      "phaseCurve": "Phase Modulation Curve",
+      "amplitudeModulation": "Amplitude Modulation",
+      "amplitudeModulationDisabled": "Disable Amplitude Modulation",
+      "amplitudeModulationEnabled": "Enable Amplitude Modulation",
+      "delayCurve": "Delay Modulation Curve",
       "delayModulation": "Delay Modulation",
-      "delayModulationEnabled": "Enable Delay Modulation",
       "delayModulationDisabled": "Disable Delay Modulation",
-      "delayCurve": "Delay Modulation Curve"
-    },
-    "waveShaper": {
-      "name": "Wave Shaping",
-      "enabled": "Enable Wave Shaping",
-      "disabled": "Disable Wave Shaping",
-      "preset": "Waveform Preset",
-      "presets": {
-        "saturation": "Saturation",
-        "distortion": "Distortion",
-        "overdrive": "Overdrive",
-        "fuzz": "Fuzz"
-      },
-      "parameters": {
-        "saturation": "Saturation Strength",
-        "distortion": "Distortion Strength",
-        "overdrive": "Overdrive Strength",
-        "fuzz": "Fuzz Strength"
-      },
-      "curve": "Waveform Curve"
+      "delayModulationEnabled": "Enable Delay Modulation",
+      "depth": "Modulation Depth",
+      "frequency": "Modulation Frequency",
+      "frequencyCurve": "Frequency Modulation Curve",
+      "frequencyModulation": "Frequency Modulation",
+      "frequencyModulationDisabled": "Disable Frequency Modulation",
+      "frequencyModulationEnabled": "Enable Frequency Modulation",
+      "name": "Modulation",
+      "phaseCurve": "Phase Modulation Curve",
+      "phaseModulation": "Phase Modulation",
+      "phaseModulationDisabled": "Disable Phase Modulation",
+      "phaseModulationEnabled": "Enable Phase Modulation"
     },
     "panner": {
-      "name": "Panning",
-      "enabled": "Enable Panning",
+      "angle": "Angle",
+      "coneInnerAngle": "Inner Cone Angle",
+      "coneOuterAngle": "Outer Cone Angle",
+      "coneOuterGain": "Outer Cone Gain",
       "disabled": "Disable Panning",
+      "distance": "Distance",
+      "distanceGainPreview": "Distance Gain Curve",
+      "distanceModel": "Distance Model",
+      "distanceModels": {
+        "exponential": "Exponential",
+        "inverse": "Inverse",
+        "linear": "Linear"
+      },
+      "enabled": "Enable Panning",
+      "maxDistance": "Maximum Distance",
+      "name": "Panning",
+      "orientation": "Orientation",
       "panningModel": "Panning Model",
       "panningModels": {
         "equalpower": "Equal-power Panning",
         "HRTF": "Head-Related Transfer Function"
       },
-      "distanceModel": "Distance Model",
-      "distanceModels": {
-        "linear": "Linear",
-        "inverse": "Inverse",
-        "exponential": "Exponential"
-      },
       "position": "Position",
-      "orientation": "Orientation",
-      "distance": "Distance",
-      "angle": "Angle",
-      "refDistance": "Reference Distance",
-      "maxDistance": "Maximum Distance",
-      "rolloffFactor": "Rolloff Factor",
-      "coneInnerAngle": "Inner Cone Angle",
-      "coneOuterAngle": "Outer Cone Angle",
-      "coneOuterGain": "Outer Cone Gain",
-      "spatialPreview": "Sound Cone Diagram",
-      "distanceGainPreview": "Distance Gain Curve",
       "preview": {
-        "outerCone": "Outer Cone",
-        "innerCone": "Inner Cone",
+        "currentSourceDistance": "Current Source Distance",
         "distance": "Distance",
-        "orientation": "Orientation",
-        "listener": "Listener",
-        "source": "Source",
         "distanceGain": "Distance Gain",
-        "currentSourceDistance": "Current Source Distance"
-      }
+        "innerCone": "Inner Cone",
+        "listener": "Listener",
+        "orientation": "Orientation",
+        "outerCone": "Outer Cone",
+        "source": "Source"
+      },
+      "refDistance": "Reference Distance",
+      "rolloffFactor": "Rolloff Factor",
+      "spatialPreview": "Sound Cone Diagram"
     },
     "reverb": {
-      "name": "Reverb",
-      "enabled": "Enable Reverb",
       "disabled": "Disable Reverb",
+      "earlyReflection": {
+        "amplitude": "Amplitude",
+        "delay": "Delay",
+        "item": "Reflection {{index}}",
+        "name": "Early Reflection",
+        "phase": "Phase"
+      },
+      "enabled": "Enable Reverb",
+      "impulseResponse": "Total Impulse Response",
+      "lateTail": {
+        "alpha": "Decay Coefficient",
+        "amplitude": "Initial Amplitude",
+        "delay": "Delay Time",
+        "duration": "Duration",
+        "name": "Late Tail"
+      },
+      "mix": "Mix Ratio",
+      "name": "Reverb",
       "preset": "Reverb Preset",
       "presets": {
         "bathroom": "Bathroom",
-        "garage": "Garage",
-        "hall": "Hall",
         "cathedral": "Cathedral",
-        "custom": "Custom"
+        "custom": "Custom",
+        "garage": "Garage",
+        "hall": "Hall"
+      }
+    },
+    "waveShaper": {
+      "curve": "Waveform Curve",
+      "disabled": "Disable Wave Shaping",
+      "enabled": "Enable Wave Shaping",
+      "name": "Wave Shaping",
+      "parameters": {
+        "distortion": "Distortion Strength",
+        "fuzz": "Fuzz Strength",
+        "overdrive": "Overdrive Strength",
+        "saturation": "Saturation Strength"
       },
-      "earlyReflection": {
-        "name": "Early Reflection",
-        "item": "Reflection {{index}}",
-        "delay": "Delay",
-        "amplitude": "Amplitude",
-        "phase": "Phase"
-      },
-      "lateTail": {
-        "name": "Late Tail",
-        "delay": "Delay Time",
-        "duration": "Duration",
-        "amplitude": "Initial Amplitude",
-        "alpha": "Decay Coefficient"
-      },
-      "impulseResponse": "Total Impulse Response",
-      "mix": "Mix Ratio"
+      "preset": "Waveform Preset",
+      "presets": {
+        "distortion": "Distortion",
+        "fuzz": "Fuzz",
+        "overdrive": "Overdrive",
+        "saturation": "Saturation"
+      }
     }
   },
-  "config": {
-    "importError": "Could not import config. Please check the JSON file format."
+  "envelope": {
+    "amplitudeEnvelopeCurve": "Amplitude Envelope Curve",
+    "amplitudeEnvelopeFormula": "Amplitude Envelope Formula",
+    "attackTime": "Attack Time",
+    "decayTime": "Decay Time",
+    "releaseTime": "Release Time",
+    "silenceGain": "Silence Gain",
+    "sustainGain": "Sustain Gain"
+  },
+  "oscillator": {
+    "sawtooth": "Sawtooth",
+    "sine": "Sine",
+    "square": "Square",
+    "triangle": "Triangle"
+  },
+  "sections": {
+    "analysis": "Analysis",
+    "effect": "Effects",
+    "envelope": "Envelope",
+    "spectrum": "Spectrum"
+  },
+  "spectrum": {
+    "harmonicSpectrumFormula": "Harmonic Spectrum Formula",
+    "parameters": {
+      "decayRate": "Decay Rate",
+      "powerExponent": "Power Exponent",
+      "strikePoint": "Strike Point"
+    },
+    "presers": {
+      "bright": "Bright",
+      "custom": "Custom",
+      "ethereal": "Ethereal",
+      "metallic": "Metallic",
+      "normal": "Normal",
+      "pure": "Pure",
+      "realistic": "Realistic",
+      "soft": "Soft"
+    },
+    "preset": "Spectrum Preset"
   }
 }

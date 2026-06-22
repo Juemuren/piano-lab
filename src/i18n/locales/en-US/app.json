@@ -1,55 +1,55 @@
 {
-  "title": "Piano Lab",
-  "sections": {
-    "soundSynthesizer": "Sound Synthesizer",
-    "scoreEditor": "Score Editor",
-    "pianoKeyboard": "Piano Keys",
-    "settings": "Settings",
-    "about": "About"
-  },
   "languageSwitcher": {
     "title": "Switch language"
   },
+  "sections": {
+    "about": "About",
+    "pianoKeyboard": "Piano Keys",
+    "scoreEditor": "Score Editor",
+    "settings": "Settings",
+    "soundSynthesizer": "Sound Synthesizer"
+  },
   "settings": {
-    "keyboardControl": "Use keyboard to control piano keys",
-    "mouseControl": "Use mouse to control piano keys",
-    "touchControl": "Use touch to control piano keys",
-    "midiControl": "Use MIDI devices to control piano keys",
-    "pianoInputEnable": "Write played notes to the score",
-    "recordingEnable": "Record synthesizer audio",
-    "pianoInput": {
-      "defaultNoteLength": "Default note length",
-      "tempo": "Tempo",
-      "quarterNoteSeconds": "Quarter note duration {{seconds}}s",
-      "timeSignature": "Time Signature",
-      "keySignature": "Key Signature",
-      "resetHeader": "Reset to Default",
-      "clearScore": "Clear Score"
-    },
-    "recording": {
-      "format": "Export format",
-      "start": "Start",
-      "stop": "Stop",
-      "download": "Download",
-      "status": {
-        "recording": "Recording audio from the synthesizer...",
-        "unsupported": "This browser does not support audio recording.",
-        "error": "Recording failed. Please check your browser audio settings."
-      }
-    },
     "keyboard": {
+      "empty": "Not set",
       "hint": "The current key mapping is shown on the piano keys. Press x/z to permanently shift down/up an octave, and hold shift/ctrl to temporarily shift down/up an octave.",
-      "reset": "Reset to Default",
-      "empty": "Not set"
+      "reset": "Reset to Default"
     },
+    "keyboardControl": "Use keyboard to control piano keys",
     "midi": {
       "inputDevice": "MIDI input device",
       "status": {
-        "unsupported": "This browser does not support the Web MIDI API.",
-        "requesting": "Requesting MIDI device permission...",
+        "error": "MIDI device permission request failed. Please check your browser permission settings.",
         "noDevices": "No MIDI input devices found.",
-        "error": "MIDI device permission request failed. Please check your browser permission settings."
+        "requesting": "Requesting MIDI device permission...",
+        "unsupported": "This browser does not support the Web MIDI API."
       }
-    }
-  }
+    },
+    "midiControl": "Use MIDI devices to control piano keys",
+    "mouseControl": "Use mouse to control piano keys",
+    "pianoInput": {
+      "clearScore": "Clear Score",
+      "defaultNoteLength": "Default note length",
+      "keySignature": "Key Signature",
+      "quarterNoteSeconds": "Quarter note duration {{seconds}}s",
+      "resetHeader": "Reset to Default",
+      "tempo": "Tempo",
+      "timeSignature": "Time Signature"
+    },
+    "pianoInputEnable": "Write played notes to the score",
+    "recording": {
+      "download": "Download",
+      "format": "Export format",
+      "start": "Start",
+      "status": {
+        "error": "Recording failed. Please check your browser audio settings.",
+        "recording": "Recording audio from the synthesizer...",
+        "unsupported": "This browser does not support audio recording."
+      },
+      "stop": "Stop"
+    },
+    "recordingEnable": "Record synthesizer audio",
+    "touchControl": "Use touch to control piano keys"
+  },
+  "title": "Piano Lab"
 }

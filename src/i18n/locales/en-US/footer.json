@@ -1,19 +1,19 @@
 {
   "about": {
-    "title": "About",
-    "body": "Piano Lab is a web-based sound experiment platform. Play with a variety of input devices, customize sound, and edit scores."
-  },
-  "synthesis": {
-    "title": "Sound Synthesis",
-    "body": "Sound is synthesized in real time with the Web Audio API. See my article for the math and the source code for the implementation."
-  },
-  "notation": {
-    "title": "Score Notation",
-    "body": "Scores use the ABC Notation format. Read the official tutorial for the full standard."
+    "body": "Piano Lab is a web-based sound experiment platform. Play with a variety of input devices, customize sound, and edit scores.",
+    "title": "About"
   },
   "links": {
+    "abc": "Notation Tutorial",
     "article": "Math Article",
-    "repository": "Source Repository",
-    "abc": "Notation Tutorial"
+    "repository": "Source Repository"
+  },
+  "notation": {
+    "body": "Scores use the ABC Notation format. Read the official tutorial for the full standard.",
+    "title": "Score Notation"
+  },
+  "synthesis": {
+    "body": "Sound is synthesized in real time with the Web Audio API. See my article for the math and the source code for the implementation.",
+    "title": "Sound Synthesis"
   }
 }

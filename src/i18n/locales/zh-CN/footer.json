@@ -1,19 +1,19 @@
 {
   "about": {
-    "title": "关于本应用",
-    "body": "弦律是一个基于 Web 的声音实验平台，支持使用多种设备进行弹奏，并可定制声音和编辑乐谱"
-  },
-  "synthesis": {
-    "title": "声音合成",
-    "body": "声音基于 Web Audio API 实时合成，数学原理和代码实现可分别参考我的科普文章与源代码"
-  },
-  "notation": {
-    "title": "乐谱编码",
-    "body": "乐谱使用 ABC Notation 编码格式，详细的标准请阅读官方教程"
+    "body": "弦律是一个基于 Web 的声音实验平台，支持使用多种设备进行弹奏，并可定制声音和编辑乐谱",
+    "title": "关于本应用"
   },
   "links": {
+    "abc": "记谱法教程",
     "article": "数学原理科普文章",
-    "repository": "源代码仓库",
-    "abc": "记谱法教程"
+    "repository": "源代码仓库"
+  },
+  "notation": {
+    "body": "乐谱使用 ABC Notation 编码格式，详细的标准请阅读官方教程",
+    "title": "乐谱编码"
+  },
+  "synthesis": {
+    "body": "声音基于 Web Audio API 实时合成，数学原理和代码实现可分别参考我的科普文章与源代码",
+    "title": "声音合成"
   }
 }

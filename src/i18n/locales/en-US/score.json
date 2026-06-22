@@ -1,17 +1,17 @@
 {
   "custom": "Custom",
-  "playbackTip": "Click a note in the score to jump to that position",
   "placeholder": "Enter a score, choose a preset, or import a file",
+  "playbackTip": "Click a note in the score to jump to that position",
   "preset": "Score Presets",
   "presets": {
+    "两只老虎": "Two Tigers",
+    "小星星": "Twinkle Twinkle Little Star",
+    "幻梦": "One More Chance",
     "春日影": "Haruhikage",
     "欢乐颂": "Ode to Joy",
-    "幻梦": "One More Chance",
-    "两只老虎": "Two Tigers",
-    "茉莉花": "Jasmine Flower",
     "生日快乐": "Happy Birthday",
-    "小星星": "Twinkle Twinkle Little Star",
+    "约会大作战": "Date A Live",
     "缘之空": "Yosuga no Sora",
-    "约会大作战": "Date A Live"
+    "茉莉花": "Jasmine Flower"
   }
 }

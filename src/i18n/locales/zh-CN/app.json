@@ -1,55 +1,55 @@
 {
-  "title": "弦律",
-  "sections": {
-    "soundSynthesizer": "声音合成器",
-    "scoreEditor": "乐谱编辑器",
-    "pianoKeyboard": "琴键",
-    "settings": "设置",
-    "about": "关于"
-  },
   "languageSwitcher": {
     "title": "语言切换"
   },
+  "sections": {
+    "about": "关于",
+    "pianoKeyboard": "琴键",
+    "scoreEditor": "乐谱编辑器",
+    "settings": "设置",
+    "soundSynthesizer": "声音合成器"
+  },
   "settings": {
-    "keyboardControl": "使用键盘控制琴键",
-    "mouseControl": "使用鼠标控制琴键",
-    "touchControl": "使用触摸控制琴键",
-    "midiControl": "使用 MIDI 设备控制琴键",
-    "pianoInputEnable": "将演奏的音符写入乐谱",
-    "recordingEnable": "录制合成器音频",
-    "pianoInput": {
-      "defaultNoteLength": "默认音符长度",
-      "timeSignature": "节拍",
-      "keySignature": "调号",
-      "tempo": "速度",
-      "quarterNoteSeconds": "四分之一音符时长 {{seconds}} 秒",
-      "resetHeader": "恢复默认",
-      "clearScore": "清空乐谱"
-    },
-    "recording": {
-      "format": "导出格式",
-      "start": "开始",
-      "stop": "停止",
-      "download": "下载",
-      "status": {
-        "recording": "正在录制合成器产生的音频...",
-        "unsupported": "当前浏览器不支持音频录制。",
-        "error": "录制失败，请检查浏览器音频功能。"
-      }
-    },
     "keyboard": {
+      "empty": "未设置",
       "hint": "当前的键位映射已显示在琴键上。按 x/z 可以永久升/降八度，按 shift/ctrl 可以临时升/降八度。",
-      "reset": "恢复默认",
-      "empty": "未设置"
+      "reset": "恢复默认"
     },
+    "keyboardControl": "使用键盘控制琴键",
     "midi": {
       "inputDevice": "MIDI 输入设备",
       "status": {
-        "unsupported": "当前浏览器不支持 Web MIDI API。",
-        "requesting": "正在请求 MIDI 设备权限...",
+        "error": "MIDI 设备权限请求失败，请检查浏览器权限设置。",
         "noDevices": "未发现可用的 MIDI 输入设备。",
-        "error": "MIDI 设备权限请求失败，请检查浏览器权限设置。"
+        "requesting": "正在请求 MIDI 设备权限...",
+        "unsupported": "当前浏览器不支持 Web MIDI API。"
       }
-    }
-  }
+    },
+    "midiControl": "使用 MIDI 设备控制琴键",
+    "mouseControl": "使用鼠标控制琴键",
+    "pianoInput": {
+      "clearScore": "清空乐谱",
+      "defaultNoteLength": "默认音符长度",
+      "keySignature": "调号",
+      "quarterNoteSeconds": "四分之一音符时长 {{seconds}} 秒",
+      "resetHeader": "恢复默认",
+      "tempo": "速度",
+      "timeSignature": "节拍"
+    },
+    "pianoInputEnable": "将演奏的音符写入乐谱",
+    "recording": {
+      "download": "下载",
+      "format": "导出格式",
+      "start": "开始",
+      "status": {
+        "error": "录制失败，请检查浏览器音频功能。",
+        "recording": "正在录制合成器产生的音频...",
+        "unsupported": "当前浏览器不支持音频录制。"
+      },
+      "stop": "停止"
+    },
+    "recordingEnable": "录制合成器音频",
+    "touchControl": "使用触摸控制琴键"
+  },
+  "title": "弦律"
 }
