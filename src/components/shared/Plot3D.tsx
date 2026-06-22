@@ -12,24 +12,24 @@ function Plot3D({ data, layout }: Plot3DProps) {
   const { elementRef, width } = useElementWidth<HTMLDivElement>();
 
   return (
-    <div ref={elementRef} className="w-full">
+    <div className="w-full" ref={elementRef}>
       {width > 0 && (
         <Plotly3D
-          data={data}
-          layout={{
-            autosize: true,
-            margin: { t: 20, r: 20, b: 20, l: 20 },
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            ...layout,
-          }}
           config={{
             autosizable: true,
             displayModeBar: false,
           }}
+          data={data}
+          layout={{
+            autosize: true,
+            margin: { b: 20, l: 20, r: 20, t: 20 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            ...layout,
+          }}
           style={{
-            width: `${width}px`,
             height: '360px',
+            width: `${width}px`,
           }}
           useResizeHandler
         />

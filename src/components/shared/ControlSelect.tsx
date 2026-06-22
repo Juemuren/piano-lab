@@ -26,8 +26,6 @@ function ControlSelect({
         </span>
       )}
       <select
-        id={selectId}
-        title={label}
         className={`
           w-full p-2 rounded-xl text-left
           bg-app-surface dark:bg-app-surface-dark
@@ -35,6 +33,8 @@ function ControlSelect({
           focus:border-app-accent focus:ring-2 focus:ring-app-accent/50
           ${className}
         `}
+        id={selectId}
+        title={label}
         {...props}
       >
         {children}

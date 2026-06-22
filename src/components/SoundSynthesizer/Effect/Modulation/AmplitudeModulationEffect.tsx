@@ -11,9 +11,9 @@ import ModulationCurvePreview from './ModulationCurvePreview';
 
 interface AmplitudeModulationEffectProps {
   amplitudeModulation: AmplitudeModulationConfig | null;
+  onDepthChange: (value: number) => void;
   onEnabledChange: (enabled: boolean) => void;
   onFrequencyChange: (value: number) => void;
-  onDepthChange: (value: number) => void;
 }
 
 function AmplitudeModulationEffect({
@@ -32,13 +32,12 @@ function AmplitudeModulationEffect({
   );
 
   return (
-    <details open className="space-y-2">
+    <details className="space-y-2" open>
       <summary className="font-semibold">
         {t('effect.modulation.amplitudeModulation')}
       </summary>
 
       <ControlButton
-        title={t('effect.modulation.amplitudeModulationEnabled')}
         icon={
           amplitudeModulation ? <Power size={18} /> : <PowerOff size={18} />
         }
@@ -48,6 +47,7 @@ function AmplitudeModulationEffect({
             : 'effect.modulation.amplitudeModulationEnabled',
         )}
         onClick={() => onEnabledChange(!amplitudeModulation)}
+        title={t('effect.modulation.amplitudeModulationEnabled')}
       />
 
       {amplitudeModulation && (
@@ -56,29 +56,29 @@ function AmplitudeModulationEffect({
             math={String.raw`A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)`}
           />
           <ControlRange
-            label={t('effect.modulation.frequency')}
-            symbol={<InlineMath math="f_m" />}
-            min="0.1"
-            max="20"
-            step="0.1"
-            value={amplitudeModulation.frequency}
             displayValue={`${amplitudeModulation.frequency.toFixed(1)} Hz`}
+            label={t('effect.modulation.frequency')}
+            max="20"
+            min="0.1"
             onChange={onFrequencyChange}
+            step="0.1"
+            symbol={<InlineMath math="f_m" />}
+            value={amplitudeModulation.frequency}
           />
           <ControlRange
-            label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="\Delta G" />}
-            min="0"
-            max="0.5"
-            step="0.01"
-            value={amplitudeModulation.depth}
             displayValue={`${amplitudeModulation.depth.toFixed(2)}`}
+            label={t('effect.modulation.depth')}
+            max="0.5"
+            min="0"
             onChange={onDepthChange}
+            step="0.01"
+            symbol={<InlineMath math="\Delta G" />}
+            value={amplitudeModulation.depth}
           />
           {amplitudeModulationCurve && (
             <ModulationCurvePreview
-              title={t('effect.modulation.amplitudeCurve')}
               time={amplitudeModulationCurve.time}
+              title={t('effect.modulation.amplitudeCurve')}
               values={amplitudeModulationCurve.gainRatio}
             />
           )}

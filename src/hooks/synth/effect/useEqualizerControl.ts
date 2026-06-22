@@ -53,13 +53,13 @@ function useEqualizerControl(initialEqualizers: EqualizerConfig[]) {
   }, []);
 
   return {
-    equalizers,
     addEqualizer,
+    equalizers,
     removeEqualizer,
-    updateEqualizerType,
     updateEqualizerFrequency,
-    updateEqualizerQ,
     updateEqualizerGain,
+    updateEqualizerQ,
+    updateEqualizerType,
   };
 }
 

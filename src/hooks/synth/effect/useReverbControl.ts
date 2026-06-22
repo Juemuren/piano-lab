@@ -30,12 +30,12 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
       return {
         ...source,
-        preset,
         earlyReflections: [],
         lateTail: {
           ...source.lateTail,
           amplitude: 0,
         },
+        preset,
       };
     });
   }, []);
@@ -52,7 +52,6 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       earlyReflections: [
         ...(current ?? fallback).earlyReflections,
         {
@@ -61,6 +60,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
           phase: DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
         },
       ],
+      preset: 'custom',
     }));
   }, []);
 
@@ -69,11 +69,11 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       earlyReflections: removeItemAt(
         (current ?? fallback).earlyReflections,
         index,
       ),
+      preset: 'custom',
     }));
   }, []);
 
@@ -83,12 +83,12 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
       setReverb((current) => ({
         ...(current ?? fallback),
-        preset: 'custom',
         earlyReflections: updateItemAt(
           (current ?? fallback).earlyReflections,
           index,
           (reflection) => ({ ...reflection, delay }),
         ),
+        preset: 'custom',
       }));
     },
     [],
@@ -100,12 +100,12 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
       setReverb((current) => ({
         ...(current ?? fallback),
-        preset: 'custom',
         earlyReflections: updateItemAt(
           (current ?? fallback).earlyReflections,
           index,
           (reflection) => ({ ...reflection, gain }),
         ),
+        preset: 'custom',
       }));
     },
     [],
@@ -117,12 +117,12 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
       setReverb((current) => ({
         ...(current ?? fallback),
-        preset: 'custom',
         earlyReflections: updateItemAt(
           (current ?? fallback).earlyReflections,
           index,
           (reflection) => ({ ...reflection, phase }),
         ),
+        preset: 'custom',
       }));
     },
     [],
@@ -133,8 +133,8 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       lateTail: { ...(current ?? fallback).lateTail, duration },
+      preset: 'custom',
     }));
   }, []);
 
@@ -143,8 +143,8 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       lateTail: { ...(current ?? fallback).lateTail, delay },
+      preset: 'custom',
     }));
   }, []);
 
@@ -153,8 +153,8 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       lateTail: { ...(current ?? fallback).lateTail, amplitude },
+      preset: 'custom',
     }));
   }, []);
 
@@ -163,25 +163,25 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
     setReverb((current) => ({
       ...(current ?? fallback),
-      preset: 'custom',
       lateTail: { ...(current ?? fallback).lateTail, alpha },
+      preset: 'custom',
     }));
   }, []);
 
   return {
-    reverb,
-    updateReverbEnabled,
-    updateReverbPreset,
-    updateReverbMix,
     addReverbEarlyReflection,
     removeReverbEarlyReflection,
+    reverb,
     updateReverbEarlyReflectionDelay,
     updateReverbEarlyReflectionGain,
     updateReverbEarlyReflectionPhase,
+    updateReverbEnabled,
+    updateReverbLateTailAlpha,
+    updateReverbLateTailAmplitude,
     updateReverbLateTailDelay,
     updateReverbLateTailDuration,
-    updateReverbLateTailAmplitude,
-    updateReverbLateTailAlpha,
+    updateReverbMix,
+    updateReverbPreset,
   };
 }
 

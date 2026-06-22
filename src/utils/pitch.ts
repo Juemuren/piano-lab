@@ -39,8 +39,8 @@ export function getPitchOptions(
   return Array.from({ length: maxPitch - minPitch + 1 }, (_, index) => {
     const pitch = minPitch + index;
     return {
-      pitch,
       label: getPitchLabel(pitch),
+      pitch,
     };
   });
 }

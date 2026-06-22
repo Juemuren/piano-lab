@@ -27,23 +27,23 @@ function VerticalSliderGroup({
   return (
     <div className="flex w-full items-end gap-2 overflow-x-auto py-3">
       {values.map((value, index) => (
-        <div key={getKey(index)} className="flex flex-1 flex-col items-center">
+        <div className="flex flex-1 flex-col items-center" key={getKey(index)}>
           <div className="text-xs">{formatValue(value, index)}</div>
           <div className="relative flex h-36 w-8 items-center justify-center">
             <input
-              title={(index + 1).toString()}
-              type="range"
-              min={min}
-              max={max}
-              step={step}
-              value={value}
-              disabled={disabled}
-              onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
-              style={getRangeProgressStyle(value, min, max)}
               className={`
                 range-input w-36 h-6 -rotate-90
                 text-app-tip dark:text-app-tip-dark
               `}
+              disabled={disabled}
+              max={max}
+              min={min}
+              onChange={(e) => onChange?.(index, parseFloat(e.target.value))}
+              step={step}
+              style={getRangeProgressStyle(value, min, max)}
+              title={(index + 1).toString()}
+              type="range"
+              value={value}
             />
           </div>
           <div className="text-xs text-app-subtext dark:text-app-subtext-dark">

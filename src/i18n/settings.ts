@@ -20,9 +20,9 @@ export const LANGUAGE_DISPLAY_NAMES: Record<SupportedLanguage, string> = {
 
 const LANGUAGE_ALIASES: Array<{ language: string; alias: SupportedLanguage }> =
   [
-    { language: 'en', alias: 'en-US' },
-    { language: 'ja', alias: 'ja-JP' },
-    { language: 'zh', alias: 'zh-CN' },
+    { alias: 'en-US', language: 'en' },
+    { alias: 'ja-JP', language: 'ja' },
+    { alias: 'zh-CN', language: 'zh' },
   ];
 
 export function normalizeLanguage(

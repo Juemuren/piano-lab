@@ -4,35 +4,35 @@ import { DEFAULT_KEYBOARD_NOTE_MAPPINGS } from '../../constants/keyboard';
 
 export interface PianoInputSettings {
   defaultNoteLength: string;
-  tempo: number;
   keySignature: string;
+  tempo: number;
   timeSignature: string;
 }
 
 export const DEFAULT_PIANO_INPUT_SETTINGS: PianoInputSettings = {
   defaultNoteLength: '1/8',
-  tempo: 180,
   keySignature: 'C',
+  tempo: 180,
   timeSignature: '4/4',
 };
 
 export const DEFAULT_KEYBOARD_CONTROL_SETTINGS = DEFAULT_KEYBOARD_NOTE_MAPPINGS;
 
 export interface AppSettingsContextValue {
-  isPianoInputEnabled: boolean;
-  setIsPianoInputEnabled: (enabled: boolean) => void;
-  pianoInputSettings: PianoInputSettings;
-  setPianoInputSettings: (settings: PianoInputSettings) => void;
   isKeyboardControlEnabled: boolean;
-  setIsKeyboardControlEnabled: (enabled: boolean) => void;
-  keyboardNoteMappings: KeyboardNoteMapping[];
-  setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
-  isMouseControlEnabled: boolean;
-  setIsMouseControlEnabled: (enabled: boolean) => void;
-  isTouchControlEnabled: boolean;
-  setIsTouchControlEnabled: (enabled: boolean) => void;
   isMidiControlEnabled: boolean;
+  isMouseControlEnabled: boolean;
+  isPianoInputEnabled: boolean;
+  isTouchControlEnabled: boolean;
+  keyboardNoteMappings: KeyboardNoteMapping[];
+  pianoInputSettings: PianoInputSettings;
+  setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setIsMidiControlEnabled: (enabled: boolean) => void;
+  setIsMouseControlEnabled: (enabled: boolean) => void;
+  setIsPianoInputEnabled: (enabled: boolean) => void;
+  setIsTouchControlEnabled: (enabled: boolean) => void;
+  setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
+  setPianoInputSettings: (settings: PianoInputSettings) => void;
 }
 
 export const AppSettingsContext = createContext<AppSettingsContextValue | null>(

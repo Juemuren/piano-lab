@@ -34,10 +34,10 @@ function useWaveShaperControl(initialWaveShaper: WaveShaperConfig | null) {
   );
 
   return {
-    waveShaper,
     updateWaveShaperEnabled,
     updateWaveShaperPreset,
     updateWaveShaperValue,
+    waveShaper,
   };
 }
 

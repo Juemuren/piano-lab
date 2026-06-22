@@ -85,39 +85,39 @@ function AbcEditor() {
   return (
     <ControlPanel>
       <AbcFileToolbar
-        fileInputRef={fileInputRef}
         canExportAbc={Boolean(abcContent.trim())}
         canExportRenderedScore={hasNotes}
-        onImportClick={openFileDialog}
-        onImportChange={handleFileChange}
+        fileInputRef={fileInputRef}
         onExportAbc={handleExportAbc}
-        onExportSvg={handleExportSvg}
-        onExportPng={handleExportPng}
-        onExportPdf={handleExportPdf}
         onExportMidi={handleExportMidi}
+        onExportPdf={handleExportPdf}
+        onExportPng={handleExportPng}
+        onExportSvg={handleExportSvg}
+        onImportChange={handleFileChange}
+        onImportClick={openFileDialog}
       />
 
       <AbcPresetSelect
-        selectedPresetIndex={selectedPresetIndex}
         onPresetChange={handlePresetChange}
+        selectedPresetIndex={selectedPresetIndex}
       />
 
-      <AbcSourceInput value={abcContent} onChange={handleContentChange} />
+      <AbcSourceInput onChange={handleContentChange} value={abcContent} />
 
       {hasNotes && (
         <AbcPlaybackControls
-          isPlaying={isPlaying}
-          isPlaybackEnded={isPlaybackEnded}
           currentSeconds={currentSeconds}
-          totalSeconds={totalSeconds}
-          onPlay={handlePlay}
+          isPlaybackEnded={isPlaybackEnded}
+          isPlaying={isPlaying}
           onPause={handlePause}
-          onReplay={handleReplay}
+          onPlay={handlePlay}
           onProgressChange={handleProgressChange}
+          onReplay={handleReplay}
+          totalSeconds={totalSeconds}
         />
       )}
 
-      <div id={RENDER_TARGET_ID} ref={renderTargetRef} className="w-full" />
+      <div className="w-full" id={RENDER_TARGET_ID} ref={renderTargetRef} />
     </ControlPanel>
   );
 }

@@ -126,6 +126,19 @@
     },
     {
       "includes": ["**/*.{ts,tsx}"],
+      "assist": {
+        "enabled": true,
+        "actions": {
+          "source": {
+            "noDuplicateClasses": "on",
+            "organizeImports": "on",
+            "useSortedAttributes": "on",
+            "useSortedInterfaceMembers": "on",
+            "useSortedKeys": "on",
+            "useSortedProperties": "on"
+          }
+        }
+      },
       "linter": {
         "rules": {
           "complexity": {

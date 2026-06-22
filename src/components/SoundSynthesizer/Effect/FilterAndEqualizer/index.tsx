@@ -12,20 +12,20 @@ import HarmonicResponsePreview from './HarmonicResponsePreview';
 import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 
 interface FilterAndEqualizerProps {
-  harmonicCount: number;
-  filters: FilterConfig[];
-  onFilterAdd: (type: FilterType) => void;
-  onFilterRemove: (index: number) => void;
-  onFilterTypeChange: (index: number, type: FilterType) => void;
-  onFilterFrequencyChange: (index: number, value: number) => void;
-  onFilterQChange: (index: number, value: number) => void;
   equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+  harmonicCount: number;
   onEqualizerAdd: (type: EqualizerType) => void;
+  onEqualizerFrequencyChange: (index: number, value: number) => void;
+  onEqualizerGainChange: (index: number, value: number) => void;
+  onEqualizerQChange: (index: number, value: number) => void;
   onEqualizerRemove: (index: number) => void;
   onEqualizerTypeChange: (index: number, type: EqualizerType) => void;
-  onEqualizerFrequencyChange: (index: number, value: number) => void;
-  onEqualizerQChange: (index: number, value: number) => void;
-  onEqualizerGainChange: (index: number, value: number) => void;
+  onFilterAdd: (type: FilterType) => void;
+  onFilterFrequencyChange: (index: number, value: number) => void;
+  onFilterQChange: (index: number, value: number) => void;
+  onFilterRemove: (index: number) => void;
+  onFilterTypeChange: (index: number, type: FilterType) => void;
 }
 
 function FilterAndEqualizer({
@@ -47,7 +47,7 @@ function FilterAndEqualizer({
   const { t } = useTranslation('synth');
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="text-lg font-bold my-2">
         <span className="inline-flex items-center gap-1">
           <Equal size={18} />
@@ -57,30 +57,30 @@ function FilterAndEqualizer({
       <Filter
         filters={filters}
         onAdd={onFilterAdd}
-        onRemove={onFilterRemove}
-        onTypeChange={onFilterTypeChange}
         onFrequencyChange={onFilterFrequencyChange}
         onQChange={onFilterQChange}
+        onRemove={onFilterRemove}
+        onTypeChange={onFilterTypeChange}
       />
       <Equalizer
         equalizers={equalizers}
         onAdd={onEqualizerAdd}
+        onFrequencyChange={onEqualizerFrequencyChange}
+        onGainChange={onEqualizerGainChange}
+        onQChange={onEqualizerQChange}
         onRemove={onEqualizerRemove}
         onTypeChange={onEqualizerTypeChange}
-        onFrequencyChange={onEqualizerFrequencyChange}
-        onQChange={onEqualizerQChange}
-        onGainChange={onEqualizerGainChange}
       />
       <MagnitudeResponsePreview
-        title={t('effect.filterEqualizer.magnitudeResponseCurve')}
-        filters={filters}
         equalizers={equalizers}
+        filters={filters}
+        title={t('effect.filterEqualizer.magnitudeResponseCurve')}
       />
       <HarmonicResponsePreview
-        title={t('effect.filterEqualizer.magnitudeResponseSample')}
-        harmonicCount={harmonicCount}
-        filters={filters}
         equalizers={equalizers}
+        filters={filters}
+        harmonicCount={harmonicCount}
+        title={t('effect.filterEqualizer.magnitudeResponseSample')}
       />
     </details>
   );

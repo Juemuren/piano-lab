@@ -5,8 +5,8 @@ import BlockMath from '../../../shared/BlockMath';
 import Plot2D from '../../../shared/Plot2D';
 
 interface WaveShaperCurvePreviewProps {
-  title: string;
   formula: string;
+  title: string;
   waveShaper: WaveShaperConfig;
 }
 
@@ -21,15 +21,15 @@ function WaveShaperCurvePreview({
   );
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <BlockMath math={formula} />
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: points.x,
             y: points.y,
-            mode: 'lines',
           },
         ]}
         xaxis={{

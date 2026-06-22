@@ -19,13 +19,17 @@ function Plot2D({ data, layout, xaxis, yaxis }: Plot2DProps) {
   const { elementRef, width } = useElementWidth<HTMLDivElement>();
 
   return (
-    <div ref={elementRef} className="w-full">
+    <div className="w-full" ref={elementRef}>
       {width > 0 && (
         <Plotly2D
+          config={{
+            autosizable: true,
+            displayModeBar: false,
+          }}
           data={data}
           layout={{
             autosize: true,
-            margin: { t: 40, r: 40, b: 40, l: 40 },
+            margin: { b: 40, l: 40, r: 40, t: 40 },
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             ...layout,
@@ -40,13 +44,9 @@ function Plot2D({ data, layout, xaxis, yaxis }: Plot2DProps) {
               ...yaxis,
             },
           }}
-          config={{
-            autosizable: true,
-            displayModeBar: false,
-          }}
           style={{
-            width: `${width}px`,
             height: '100%',
+            width: `${width}px`,
           }}
           useResizeHandler
         />

@@ -13,9 +13,9 @@ const MIN_KEYBOARD_OCTAVE = 1;
 const MAX_KEYBOARD_OCTAVE = 7;
 
 interface UseKeyboardPianoControlOptions {
+  activeNotesRef: RefObject<Map<string, number>>;
   enabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
-  activeNotesRef: RefObject<Map<string, number>>;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
 }

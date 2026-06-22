@@ -6,10 +6,10 @@ const TOUCH_MOUSE_EVENT_IGNORE_MS = 1000;
 type NotePressHandler = (note: number) => void | Promise<void>;
 
 interface UsePointerControlOptions {
-  isMouseControlEnabled: boolean;
-  isTouchControlEnabled: boolean;
   activeMouseNotesRef: RefObject<Set<number>>;
   activeTouchNotesRef: RefObject<Set<number>>;
+  isMouseControlEnabled: boolean;
+  isTouchControlEnabled: boolean;
   onNotePress: NotePressHandler;
   onNoteRelease: (note: number) => void;
 }

@@ -28,19 +28,19 @@ function SynthRecorderSettings() {
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.recordingEnable')}
-        icon={<Mic size={16} />}
         checked={isExpanded}
+        icon={<Mic size={16} />}
+        label={t('settings.recordingEnable')}
         onChange={(e) => setIsExpanded(e.target.checked)}
       />
       {isExpanded && (
         <div className="flex flex-col gap-3 text-sm text-app-subtext dark:text-app-subtext-dark">
           {!isUnsupported && (
             <ControlSelect
-              label={t('settings.recording.format')}
-              value={selectedMimeType}
               disabled={isRecording}
+              label={t('settings.recording.format')}
               onChange={(e) => setSelectedMimeType(e.target.value)}
+              value={selectedMimeType}
             >
               {supportedFormats.map((format) => (
                 <option key={format.mimeType} value={format.mimeType}>
@@ -51,21 +51,21 @@ function SynthRecorderSettings() {
           )}
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-3">
             <ControlButton
-              label={t('settings.recording.start')}
-              icon={<Circle size={18} />}
               disabled={isRecording || isUnsupported}
+              icon={<Circle size={18} />}
+              label={t('settings.recording.start')}
               onClick={startRecording}
             />
             <ControlButton
-              label={t('settings.recording.stop')}
-              icon={<Square size={18} />}
               disabled={!isRecording}
+              icon={<Square size={18} />}
+              label={t('settings.recording.stop')}
               onClick={stopRecording}
             />
             <ControlButton
-              label={t('settings.recording.download')}
-              icon={<Download size={18} />}
               disabled={!recordingBlob || isRecording}
+              icon={<Download size={18} />}
+              label={t('settings.recording.download')}
               onClick={downloadRecording}
             />
           </div>

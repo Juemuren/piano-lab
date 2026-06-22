@@ -17,8 +17,8 @@ export function MidiControlProvider({ children }: MidiControlProviderProps) {
   const value = useMemo(
     () => ({
       midiControl,
-      setMidiControl,
       selectedMidiInputId,
+      setMidiControl,
       setSelectedMidiInputId,
     }),
     [midiControl, selectedMidiInputId],

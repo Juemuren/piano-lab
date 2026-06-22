@@ -26,12 +26,12 @@ function CollapsibleSection({
   return (
     <div className="w-full">
       <button
-        type="button"
-        onClick={handleToggle}
         className={`
           w-full p-3 text-center rounded-lg transition-colors
           ${bgClassName} ${hoverBgClassName}
         `}
+        onClick={handleToggle}
+        type="button"
       >
         <h2
           className="

@@ -78,9 +78,9 @@ import { createSpectrum } from '../Spectrum';
 
 export function createDefaultSynthBasicConfig(): SynthBasicConfig {
   return {
+    harmonicCount: DEFAULT_SYNTH_HARMONIC_COUNT,
     oscillatorType: DEFAULT_SYNTH_OSCILLATOR_TYPE,
     volumeRatio: DEFAULT_SYNTH_VOLUME_RATIO,
-    harmonicCount: DEFAULT_SYNTH_HARMONIC_COUNT,
   };
 }
 
@@ -89,26 +89,26 @@ export function createDefaultEnvelopeConfig(): EnvelopeConfig {
     attackTime: DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
     decayTime: DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
     releaseTime: DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-    sustainGain: DEFAULT_ENVELOPE_SUSTAIN_GAIN,
     silenceGain: DEFAULT_ENVELOPE_SILENCE_GAIN,
+    sustainGain: DEFAULT_ENVELOPE_SUSTAIN_GAIN,
   };
 }
 
 export function createDefaultSpectrumConfig(): SpectrumConfig {
   return {
-    type: DEFAULT_SPECTRUM_TYPE,
-    lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-    sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-    p: DEFAULT_SPECTRUM_POWER_EXPONENT,
     customAmplitudes: createSpectrum(
       {
-        type: DEFAULT_SPECTRUM_TYPE,
         lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-        sigma: DEFAULT_SPECTRUM_DECAY_RATE,
         p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+        sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+        type: DEFAULT_SPECTRUM_TYPE,
       },
       DEFAULT_SYNTH_HARMONIC_COUNT,
     ).amplitudes,
+    lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
+    p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+    sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+    type: DEFAULT_SPECTRUM_TYPE,
   };
 }
 
@@ -116,9 +116,9 @@ export function createDefaultFilterConfig(
   type: FilterType = DEFAULT_FILTER_TYPE,
 ): FilterConfig {
   return {
-    type,
     frequency: DEFAULT_FILTER_FREQUENCY,
     q: DEFAULT_FILTER_Q,
+    type,
   };
 }
 
@@ -126,77 +126,77 @@ export function createDefaultEqualizerConfig(
   type: EqualizerType = DEFAULT_EQUALIZER_TYPE,
 ): EqualizerConfig {
   return {
-    type,
     frequency: DEFAULT_EQUALIZER_FREQUENCY,
-    q: DEFAULT_EQUALIZER_Q,
     gain: DEFAULT_EQUALIZER_GAIN,
+    q: DEFAULT_EQUALIZER_Q,
+    type,
   };
 }
 
 export function createDefaultCompressorConfig(): CompressorConfig {
   return {
-    threshold: DEFAULT_COMPRESSOR_THRESHOLD,
+    attack: DEFAULT_COMPRESSOR_ATTACK,
     knee: DEFAULT_COMPRESSOR_KNEE,
     ratio: DEFAULT_COMPRESSOR_RATIO,
-    attack: DEFAULT_COMPRESSOR_ATTACK,
     release: DEFAULT_COMPRESSOR_RELEASE,
+    threshold: DEFAULT_COMPRESSOR_THRESHOLD,
   };
 }
 
 export function createDefaultAmplitudeModulationConfig(): AmplitudeModulationConfig {
   return {
-    frequency: DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
     depth: DEFAULT_AMPLITUDE_MODULATION_DEPTH,
+    frequency: DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
   };
 }
 
 export function createDefaultFrequencyModulationConfig(): FrequencyModulationConfig {
   return {
-    frequency: DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
     depth: DEFAULT_FREQUENCY_MODULATION_DEPTH,
+    frequency: DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
   };
 }
 
 export function createDefaultPhaseModulationConfig(): PhaseModulationConfig {
   return {
-    frequency: DEFAULT_PHASE_MODULATION_FREQUENCY,
     depth: DEFAULT_PHASE_MODULATION_DEPTH,
+    frequency: DEFAULT_PHASE_MODULATION_FREQUENCY,
   };
 }
 
 export function createDefaultDelayModulationConfig(): DelayModulationConfig {
   return {
-    frequency: DEFAULT_DELAY_MODULATION_FREQUENCY,
     depth: DEFAULT_DELAY_MODULATION_DEPTH,
+    frequency: DEFAULT_DELAY_MODULATION_FREQUENCY,
   };
 }
 
 export function createDefaultWaveShaperConfig(): WaveShaperConfig {
   return {
+    distortion: DEFAULT_WAVE_SHAPER_DISTORTION,
+    fuzz: DEFAULT_WAVE_SHAPER_FUZZ,
+    overdrive: DEFAULT_WAVE_SHAPER_OVERDRIVE,
     preset: DEFAULT_WAVE_SHAPER_PRESET,
     saturation: DEFAULT_WAVE_SHAPER_SATURATION,
-    distortion: DEFAULT_WAVE_SHAPER_DISTORTION,
-    overdrive: DEFAULT_WAVE_SHAPER_OVERDRIVE,
-    fuzz: DEFAULT_WAVE_SHAPER_FUZZ,
   };
 }
 
 export function createDefaultPannerConfig(): PannerConfig {
   return {
-    panningModel: DEFAULT_PANNER_PANNING_MODEL,
-    distanceModel: DEFAULT_PANNER_DISTANCE_MODEL,
-    positionX: DEFAULT_PANNER_POSITION_X,
-    positionY: DEFAULT_PANNER_POSITION_Y,
-    positionZ: DEFAULT_PANNER_POSITION_Z,
-    orientationX: DEFAULT_PANNER_ORIENTATION_X,
-    orientationY: DEFAULT_PANNER_ORIENTATION_Y,
-    orientationZ: DEFAULT_PANNER_ORIENTATION_Z,
-    refDistance: DEFAULT_PANNER_REF_DISTANCE,
-    maxDistance: DEFAULT_PANNER_MAX_DISTANCE,
-    rolloffFactor: DEFAULT_PANNER_ROLLOFF_FACTOR,
     coneInnerAngle: DEFAULT_PANNER_CONE_INNER_ANGLE,
     coneOuterAngle: DEFAULT_PANNER_CONE_OUTER_ANGLE,
     coneOuterGain: DEFAULT_PANNER_CONE_OUTER_GAIN,
+    distanceModel: DEFAULT_PANNER_DISTANCE_MODEL,
+    maxDistance: DEFAULT_PANNER_MAX_DISTANCE,
+    orientationX: DEFAULT_PANNER_ORIENTATION_X,
+    orientationY: DEFAULT_PANNER_ORIENTATION_Y,
+    orientationZ: DEFAULT_PANNER_ORIENTATION_Z,
+    panningModel: DEFAULT_PANNER_PANNING_MODEL,
+    positionX: DEFAULT_PANNER_POSITION_X,
+    positionY: DEFAULT_PANNER_POSITION_Y,
+    positionZ: DEFAULT_PANNER_POSITION_Z,
+    refDistance: DEFAULT_PANNER_REF_DISTANCE,
+    rolloffFactor: DEFAULT_PANNER_ROLLOFF_FACTOR,
   };
 }
 
@@ -209,24 +209,24 @@ export function createDefaultReverbConfig(
 
 export function createDefaultEffectConfig(): EffectConfig {
   return {
-    filters: [],
-    equalizers: [],
     amplitudeModulation: null,
-    frequencyModulation: null,
-    phaseModulation: null,
-    delayModulation: null,
-    waveShaper: null,
     compressor: null,
+    delayModulation: null,
+    equalizers: [],
+    filters: [],
+    frequencyModulation: null,
     panner: null,
+    phaseModulation: null,
     reverb: null,
+    waveShaper: null,
   };
 }
 
 export function createDefaultSynthConfig(): SynthConfig {
   return {
-    synth: createDefaultSynthBasicConfig(),
+    effect: createDefaultEffectConfig(),
     envelope: createDefaultEnvelopeConfig(),
     spectrum: createDefaultSpectrumConfig(),
-    effect: createDefaultEffectConfig(),
+    synth: createDefaultSynthBasicConfig(),
   };
 }

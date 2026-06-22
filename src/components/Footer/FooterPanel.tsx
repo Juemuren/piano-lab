@@ -19,13 +19,13 @@ function FooterPanel({ title, children, icon }: FooterPanelProps) {
       "
     >
       <button
-        type="button"
-        onClick={() => setIsExpanded((prev) => !prev)}
         className="
           w-full p-3 rounded-lg flex justify-between transition-colors
           hover:bg-app-overlay/50 dark:hover:bg-app-overlay-dark/50
           hover:text-app-subtext dark:hover:text-app-subtext-dark
         "
+        onClick={() => setIsExpanded((prev) => !prev)}
+        type="button"
       >
         <span className="inline-flex items-center gap-2 font-semibold tracking-wide">
           {icon}

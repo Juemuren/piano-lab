@@ -1,9 +1,9 @@
 export const SECTION_IDS = {
-  soundSynthesizer: 'sound-synthesizer',
-  scoreEditor: 'score-editor',
-  pianoKeyboard: 'piano-keyboard',
-  settings: 'settings',
   about: 'about',
+  pianoKeyboard: 'piano-keyboard',
+  scoreEditor: 'score-editor',
+  settings: 'settings',
+  soundSynthesizer: 'sound-synthesizer',
 } as const;
 
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];

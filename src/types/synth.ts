@@ -14,89 +14,89 @@ export interface Spectrum {
 }
 
 export interface SpectrumDefinition {
-  type: BuiltInSpectrumType;
   lambda: number;
-  sigma: number;
   p: number;
+  sigma: number;
+  type: BuiltInSpectrumType;
 }
 
 export interface SpectrumConfig {
-  type: SpectrumType;
-  lambda: number;
-  sigma: number;
-  p: number;
   customAmplitudes: number[];
+  lambda: number;
+  p: number;
+  sigma: number;
+  type: SpectrumType;
 }
 
 export interface SpectrumParamUpdates {
   lambda?: number;
-  sigma?: number;
   p?: number;
+  sigma?: number;
 }
 
 export interface EnvelopeConfig {
   attackTime: number;
   decayTime: number;
   releaseTime: number;
-  sustainGain: number;
   silenceGain: number;
+  sustainGain: number;
 }
 
 export interface EnvelopeCurve {
-  time: number[];
   gain: number[];
   maxTime: number;
+  time: number[];
 }
 
 export interface SynthBasicConfig {
+  harmonicCount: number;
   oscillatorType: OscillatorType;
   volumeRatio: number;
-  harmonicCount: number;
 }
 
 export type FilterType = 'lowpass' | 'highpass' | 'bandpass' | 'notch';
 
 export interface FilterConfig {
-  type: FilterType;
   frequency: number;
   q: number;
+  type: FilterType;
 }
 
 export type EqualizerType = 'lowshelf' | 'highshelf' | 'peaking';
 
 export interface EqualizerConfig {
-  type: EqualizerType;
   frequency: number;
-  q: number;
   gain: number;
+  q: number;
+  type: EqualizerType;
 }
 
 export interface CompressorConfig {
-  threshold: number;
+  attack: number;
   knee: number;
   ratio: number;
-  attack: number;
   release: number;
+  threshold: number;
 }
 
 export interface AmplitudeModulationConfig {
-  frequency: number;
   depth: number;
+  frequency: number;
 }
 
 export interface FrequencyModulationConfig {
-  frequency: number;
   depth: number;
+  frequency: number;
 }
 
 export interface PhaseModulationConfig {
-  frequency: number;
   depth: number;
+  frequency: number;
 }
 
 export interface DelayModulationConfig {
-  frequency: number;
   depth: number;
+  frequency: number;
 }
 
 export type WaveShaperPreset =
@@ -106,28 +106,28 @@ export type WaveShaperPreset =
   | 'fuzz';
 
 export interface WaveShaperConfig {
+  distortion: number;
+  fuzz: number;
+  overdrive: number;
   preset: WaveShaperPreset;
   saturation: number;
-  distortion: number;
-  overdrive: number;
-  fuzz: number;
 }
 
 export interface PannerConfig {
-  panningModel: PanningModelType;
-  distanceModel: DistanceModelType;
-  positionX: number;
-  positionY: number;
-  positionZ: number;
-  orientationX: number;
-  orientationY: number;
-  orientationZ: number;
-  refDistance: number;
-  maxDistance: number;
-  rolloffFactor: number;
   coneInnerAngle: number;
   coneOuterAngle: number;
   coneOuterGain: number;
+  distanceModel: DistanceModelType;
+  maxDistance: number;
+  orientationX: number;
+  orientationY: number;
+  orientationZ: number;
+  panningModel: PanningModelType;
+  positionX: number;
+  positionY: number;
+  positionZ: number;
+  refDistance: number;
+  rolloffFactor: number;
 }
 
 export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
@@ -141,37 +141,37 @@ export interface ReverbEarlyReflectionConfig {
 }
 
 export interface ReverbLateTailConfig {
+  alpha: number;
+  amplitude: number;
   delay: number;
   duration: number;
-  amplitude: number;
-  alpha: number;
 }
 
 export interface ReverbConfig {
-  preset: ReverbPreset;
-  mix: number;
   earlyReflections: ReverbEarlyReflectionConfig[];
   lateTail: ReverbLateTailConfig;
+  mix: number;
+  preset: ReverbPreset;
 }
 
 export interface EffectConfig {
-  filters: FilterConfig[];
-  equalizers: EqualizerConfig[];
   amplitudeModulation: AmplitudeModulationConfig | null;
-  frequencyModulation: FrequencyModulationConfig | null;
-  phaseModulation: PhaseModulationConfig | null;
-  delayModulation: DelayModulationConfig | null;
-  waveShaper: WaveShaperConfig | null;
   compressor: CompressorConfig | null;
+  delayModulation: DelayModulationConfig | null;
+  equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+  frequencyModulation: FrequencyModulationConfig | null;
   panner: PannerConfig | null;
+  phaseModulation: PhaseModulationConfig | null;
   reverb: ReverbConfig | null;
+  waveShaper: WaveShaperConfig | null;
 }
 
 export interface SynthConfig {
-  synth: SynthBasicConfig;
+  effect: EffectConfig;
   envelope: EnvelopeConfig;
   spectrum: SpectrumConfig;
-  effect: EffectConfig;
+  synth: SynthBasicConfig;
 }
 
 export type StartNoteResult =

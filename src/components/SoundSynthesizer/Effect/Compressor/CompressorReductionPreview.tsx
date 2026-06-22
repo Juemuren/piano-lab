@@ -2,8 +2,8 @@ import useCompressorReductionHistory from '../../../../hooks/synth/useCompressor
 import Plot2D from '../../../shared/Plot2D';
 
 interface CompressorReductionPreviewProps {
-  title: string;
   enabled: boolean;
+  title: string;
 }
 
 function CompressorReductionPreview({
@@ -13,14 +13,14 @@ function CompressorReductionPreview({
   const samples = useCompressorReductionHistory(enabled);
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: samples.map((sample) => sample.time),
             y: samples.map((sample) => sample.reduction),
-            mode: 'lines',
           },
         ]}
         xaxis={{

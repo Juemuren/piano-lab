@@ -45,10 +45,10 @@ function useSpectrumControl(
       initialConfig?.customAmplitudes ??
       createSpectrum(
         {
-          type: DEFAULT_SPECTRUM_TYPE,
           lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-          sigma: DEFAULT_SPECTRUM_DECAY_RATE,
           p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+          sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+          type: DEFAULT_SPECTRUM_TYPE,
         },
         harmonicCount,
       ).amplitudes,
@@ -61,7 +61,7 @@ function useSpectrumControl(
       };
     }
     return createSpectrum(
-      { type: spectrumType, lambda, sigma, p },
+      { lambda, p, sigma, type: spectrumType },
       harmonicCount,
     );
   }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
@@ -72,11 +72,11 @@ function useSpectrumControl(
 
   useEffect(() => {
     onConfigChange?.({
-      type: spectrumType,
-      lambda,
-      sigma,
-      p,
       customAmplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
+      lambda,
+      p,
+      sigma,
+      type: spectrumType,
     });
   }, [
     customAmplitudes,
@@ -93,7 +93,7 @@ function useSpectrumControl(
       setCustomAmplitudes(createEmptyAmplitudes(harmonicCount));
     } else {
       setCustomAmplitudes(
-        createSpectrum({ type, lambda, sigma, p }, harmonicCount).amplitudes,
+        createSpectrum({ lambda, p, sigma, type }, harmonicCount).amplitudes,
       );
     }
     setSpectrumType(type);
@@ -115,14 +115,14 @@ function useSpectrumControl(
   };
 
   return {
-    lambda,
-    sigma,
-    p,
-    spectrumType,
-    spectrum,
-    handleSpectrumTypeChange,
-    handleParamsChange,
     handleAmplitudeChange,
+    handleParamsChange,
+    handleSpectrumTypeChange,
+    lambda,
+    p,
+    sigma,
+    spectrum,
+    spectrumType,
   };
 }
 

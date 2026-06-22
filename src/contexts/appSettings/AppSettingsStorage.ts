@@ -10,23 +10,23 @@ import {
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 
 export interface StoredAppSettings {
-  isPianoInputEnabled: boolean;
-  pianoInputSettings: PianoInputSettings;
   isKeyboardControlEnabled: boolean;
-  keyboardNoteMappings: KeyboardNoteMapping[];
-  isMouseControlEnabled: boolean;
-  isTouchControlEnabled: boolean;
   isMidiControlEnabled: boolean;
+  isMouseControlEnabled: boolean;
+  isPianoInputEnabled: boolean;
+  isTouchControlEnabled: boolean;
+  keyboardNoteMappings: KeyboardNoteMapping[];
+  pianoInputSettings: PianoInputSettings;
 }
 
 export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
-  isPianoInputEnabled: false,
-  pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
   isKeyboardControlEnabled: false,
-  keyboardNoteMappings: DEFAULT_KEYBOARD_CONTROL_SETTINGS,
-  isMouseControlEnabled: true,
-  isTouchControlEnabled: true,
   isMidiControlEnabled: false,
+  isMouseControlEnabled: true,
+  isPianoInputEnabled: false,
+  isTouchControlEnabled: true,
+  keyboardNoteMappings: DEFAULT_KEYBOARD_CONTROL_SETTINGS,
+  pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
 };
 
 function booleanOrDefault(value: unknown, fallback: boolean) {
@@ -47,11 +47,11 @@ function getStoredPianoInputSettings(value: unknown): PianoInputSettings {
       value.defaultNoteLength,
       DEFAULT_PIANO_INPUT_SETTINGS.defaultNoteLength,
     ),
-    tempo: numberOrDefault(value.tempo, DEFAULT_PIANO_INPUT_SETTINGS.tempo),
     keySignature: stringOrDefault(
       value.keySignature,
       DEFAULT_PIANO_INPUT_SETTINGS.keySignature,
     ),
+    tempo: numberOrDefault(value.tempo, DEFAULT_PIANO_INPUT_SETTINGS.tempo),
     timeSignature: stringOrDefault(
       value.timeSignature,
       DEFAULT_PIANO_INPUT_SETTINGS.timeSignature,
@@ -110,30 +110,30 @@ function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
   }
 
   return {
-    isPianoInputEnabled: booleanOrDefault(
-      value.isPianoInputEnabled,
-      DEFAULT_STORED_APP_SETTINGS.isPianoInputEnabled,
-    ),
-    pianoInputSettings: getStoredPianoInputSettings(value.pianoInputSettings),
     isKeyboardControlEnabled: booleanOrDefault(
       value.isKeyboardControlEnabled,
       DEFAULT_STORED_APP_SETTINGS.isKeyboardControlEnabled,
-    ),
-    keyboardNoteMappings: getStoredKeyboardNoteMappings(
-      value.keyboardNoteMappings,
-    ),
-    isMouseControlEnabled: booleanOrDefault(
-      value.isMouseControlEnabled,
-      DEFAULT_STORED_APP_SETTINGS.isMouseControlEnabled,
-    ),
-    isTouchControlEnabled: booleanOrDefault(
-      value.isTouchControlEnabled,
-      DEFAULT_STORED_APP_SETTINGS.isTouchControlEnabled,
     ),
     isMidiControlEnabled: booleanOrDefault(
       value.isMidiControlEnabled,
       DEFAULT_STORED_APP_SETTINGS.isMidiControlEnabled,
     ),
+    isMouseControlEnabled: booleanOrDefault(
+      value.isMouseControlEnabled,
+      DEFAULT_STORED_APP_SETTINGS.isMouseControlEnabled,
+    ),
+    isPianoInputEnabled: booleanOrDefault(
+      value.isPianoInputEnabled,
+      DEFAULT_STORED_APP_SETTINGS.isPianoInputEnabled,
+    ),
+    isTouchControlEnabled: booleanOrDefault(
+      value.isTouchControlEnabled,
+      DEFAULT_STORED_APP_SETTINGS.isTouchControlEnabled,
+    ),
+    keyboardNoteMappings: getStoredKeyboardNoteMappings(
+      value.keyboardNoteMappings,
+    ),
+    pianoInputSettings: getStoredPianoInputSettings(value.pianoInputSettings),
   };
 }
 

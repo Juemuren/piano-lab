@@ -67,14 +67,14 @@ function SoundSynthesizer() {
 
   const synthConfig = useMemo<SynthConfig>(
     () => ({
-      synth: {
-        oscillatorType,
-        volumeRatio,
-        harmonicCount,
-      },
+      effect: effectConfig,
       envelope: envelopeConfig,
       spectrum: spectrumConfig,
-      effect: effectConfig,
+      synth: {
+        harmonicCount,
+        oscillatorType,
+        volumeRatio,
+      },
     }),
     [
       effectConfig,
@@ -134,9 +134,9 @@ function SoundSynthesizer() {
 
   useEffect(() => {
     synthEngine.configureSynth({
+      harmonicCount,
       oscillatorType,
       volumeRatio,
-      harmonicCount,
     });
   }, [harmonicCount, oscillatorType, synthEngine, volumeRatio]);
 
@@ -145,25 +145,25 @@ function SoundSynthesizer() {
       <div>
         <div className="pb-2 grid gap-2 grid-cols-2">
           <FileImportButton
-            fileInputRef={fileInputRef}
             accept=".json,application/json"
-            label="JSON"
+            fileInputRef={fileInputRef}
             icon={<Upload size={18} />}
-            onClick={openFileDialog}
+            label="JSON"
             onChange={handleFileChange}
+            onClick={openFileDialog}
           />
           <ControlButton
-            label="JSON"
             icon={<Download size={18} />}
+            label="JSON"
             onClick={handleExportConfig}
           />
         </div>
 
         <ControlSelect
-          label={t('controls.oscillatorType')}
           icon={<Activity size={16} />}
-          value={oscillatorType}
+          label={t('controls.oscillatorType')}
           onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
+          value={oscillatorType}
         >
           <option value="sine">{t('oscillator.sine')}</option>
           <option value="triangle">{t('oscillator.triangle')}</option>
@@ -171,76 +171,76 @@ function SoundSynthesizer() {
           <option value="square">{t('oscillator.square')}</option>
         </ControlSelect>
         <ControlRange
-          label={t('controls.volume')}
+          displayValue={`${Math.trunc(volumeRatio * 100).toString()}%`}
           icon={volumeIcon}
-          min="0"
+          label={t('controls.volume')}
           max="1"
+          min="0"
+          onChange={setVolumeRatio}
           step="0.01"
           value={volumeRatio}
-          displayValue={`${Math.trunc(volumeRatio * 100).toString()}%`}
-          onChange={setVolumeRatio}
         />
         <ControlRange
-          label={t('controls.harmonicCount')}
-          icon={harmonicIcon}
-          min="2"
-          max="20"
-          step="1"
-          value={harmonicCount}
-          displayValue={harmonicCount.toString()}
           accentClassName="text-app-warning dark:text-app-warning-dark"
+          displayValue={harmonicCount.toString()}
+          icon={harmonicIcon}
+          label={t('controls.harmonicCount')}
+          max="20"
+          min="2"
           onChange={(value) => setHarmonicCount(Math.round(value))}
           p={t('controls.harmonicCountWarning')}
           pClassName="text-app-warning/50 dark:text-app-warning-dark/50"
+          step="1"
+          value={harmonicCount}
         />
       </div>
 
       <CollapsibleSection
-        title={t('sections.spectrum')}
-        icon={<ChartColumnDecreasing size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
+        icon={<ChartColumnDecreasing size={20} />}
+        title={t('sections.spectrum')}
       >
         <Spectrum
-          key={`spectrum-${importRevision}`}
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.spectrum}
+          key={`spectrum-${importRevision}`}
           onConfigChange={setSpectrumConfig}
         />
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={t('sections.envelope')}
-        icon={<ChartSpline size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
+        icon={<ChartSpline size={20} />}
+        title={t('sections.envelope')}
       >
         <Envelope
-          key={`envelope-${importRevision}`}
           initialConfig={importedConfig?.envelope}
+          key={`envelope-${importRevision}`}
           onConfigChange={setEnvelopeConfig}
         />
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={t('sections.effect')}
-        icon={<Sparkles size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
+        icon={<Sparkles size={20} />}
+        title={t('sections.effect')}
       >
         <Effect
-          key={`effect-${importRevision}`}
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.effect}
+          key={`effect-${importRevision}`}
           onConfigChange={setEffectConfig}
         />
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={t('sections.analysis')}
-        icon={<ChartLine size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
         expanded
+        icon={<ChartLine size={20} />}
+        title={t('sections.analysis')}
       >
         <Analysis />
       </CollapsibleSection>

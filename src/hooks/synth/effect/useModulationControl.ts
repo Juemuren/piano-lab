@@ -119,21 +119,21 @@ function useModulationControl(
 
   return {
     amplitudeModulation,
+    delayModulation,
+    frequencyModulation,
+    phaseModulation,
+    updateAmplitudeModulationDepth,
     updateAmplitudeModulationEnabled,
     updateAmplitudeModulationFrequency,
-    updateAmplitudeModulationDepth,
-    frequencyModulation,
-    updateFrequencyModulationEnabled,
-    updateFrequencyModulationFrequency,
-    updateFrequencyModulationDepth,
-    phaseModulation,
-    updatePhaseModulationEnabled,
-    updatePhaseModulationFrequency,
-    updatePhaseModulationDepth,
-    delayModulation,
+    updateDelayModulationDepth,
     updateDelayModulationEnabled,
     updateDelayModulationFrequency,
-    updateDelayModulationDepth,
+    updateFrequencyModulationDepth,
+    updateFrequencyModulationEnabled,
+    updateFrequencyModulationFrequency,
+    updatePhaseModulationDepth,
+    updatePhaseModulationEnabled,
+    updatePhaseModulationFrequency,
   };
 }
 

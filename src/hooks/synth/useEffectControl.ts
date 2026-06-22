@@ -40,16 +40,16 @@ function useEffectControl(
 
   const effectConfig = useMemo<EffectConfig>(
     () => ({
-      filters: filterControl.filters,
-      equalizers: equalizerControl.equalizers,
       amplitudeModulation: modulationControl.amplitudeModulation,
-      frequencyModulation: modulationControl.frequencyModulation,
-      phaseModulation: modulationControl.phaseModulation,
-      delayModulation: modulationControl.delayModulation,
-      waveShaper: waveShaperControl.waveShaper,
       compressor: compressorControl.compressor,
+      delayModulation: modulationControl.delayModulation,
+      equalizers: equalizerControl.equalizers,
+      filters: filterControl.filters,
+      frequencyModulation: modulationControl.frequencyModulation,
       panner: pannerControl.panner,
+      phaseModulation: modulationControl.phaseModulation,
       reverb: reverbControl.reverb,
+      waveShaper: waveShaperControl.waveShaper,
     }),
     [
       compressorControl.compressor,

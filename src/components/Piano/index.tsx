@@ -35,22 +35,22 @@ function Piano() {
     >
       <div
         className="relative mx-auto"
-        style={{ width: keyboardWidth, height: WHITE_KEY_HEIGHT_PX }}
+        style={{ height: WHITE_KEY_HEIGHT_PX, width: keyboardWidth }}
       >
         <div className="flex">
           {whiteKeys.map((key) => (
             <PianoKey
-              key={key.note}
-              note={key.note}
-              isPressed={isKeyPressed(key.note)}
+              className="shrink-0 border border-app-accent"
+              height={WHITE_KEY_HEIGHT_PX}
               isMouseControlEnabled={isMouseControlEnabled}
+              isPressed={isKeyPressed(key.note)}
+              key={key.note}
+              normalClassName="bg-piano-white text-piano-black"
+              note={key.note}
               onKeyDown={handleKeyDown}
               onKeyUp={handleKeyUp}
-              className="shrink-0 border border-app-accent"
-              normalClassName="bg-piano-white text-piano-black"
               pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
               width={WHITE_KEY_WIDTH_PX}
-              height={WHITE_KEY_HEIGHT_PX}
             >
               <span className="h-full flex flex-col items-center justify-end py-2">
                 <span className="text-piano-black">
@@ -68,23 +68,23 @@ function Piano() {
         <div className="absolute top-0 left-0">
           {blackKeys.map((key) => (
             <PianoKey
-              key={key.note}
-              note={key.note}
-              isPressed={isKeyPressed(key.note)}
+              className="border-none"
+              height={BLACK_KEY_HEIGHT_PX}
               isMouseControlEnabled={isMouseControlEnabled}
+              isPressed={isKeyPressed(key.note)}
+              key={key.note}
+              normalClassName="bg-piano-black text-piano-white"
+              note={key.note}
               onKeyDown={handleKeyDown}
               onKeyUp={handleKeyUp}
-              className="border-none"
-              normalClassName="bg-piano-black text-piano-white"
               pressedClassName="bg-piano-black-active text-piano-white shadow-inner"
-              width={BLACK_KEY_WIDTH_PX}
-              height={BLACK_KEY_HEIGHT_PX}
               style={{
-                position: 'absolute',
                 left:
                   key.position * WHITE_KEY_WIDTH_PX - BLACK_KEY_WIDTH_PX / 2,
+                position: 'absolute',
                 zIndex: 1,
               }}
+              width={BLACK_KEY_WIDTH_PX}
             >
               <span className="h-full flex flex-col items-center justify-end py-2">
                 <span className="font-semibold text-piano-white">

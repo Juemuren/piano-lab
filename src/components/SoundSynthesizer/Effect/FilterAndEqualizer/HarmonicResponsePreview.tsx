@@ -12,10 +12,10 @@ import HarmonicLabel from '../../shared/HarmonicLabel';
 import BaseFrequencyControl from './BaseFrequencyControl';
 
 interface HarmonicResponsePreviewProps {
-  title: string;
-  harmonicCount: number;
-  filters: FilterConfig[];
   equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+  harmonicCount: number;
+  title: string;
 }
 
 const DEFAULT_EFFECT_PREVIEW_PITCH = 69;
@@ -60,27 +60,27 @@ function HarmonicResponsePreview({
   );
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <BaseFrequencyControl
+        getBaseFrequency={getBaseFrequency}
         labelRange={t('effect.filterEqualizer.baseFrequency')}
         labelSelect={t('effect.filterEqualizer.pitch')}
-        value={baseFrequency}
-        selectedPitch={selectedPitch}
-        pitchOptions={baseFrequencyPitchOptions}
-        getBaseFrequency={getBaseFrequency}
         onChange={setBaseFrequency}
+        pitchOptions={baseFrequencyPitchOptions}
+        selectedPitch={selectedPitch}
+        value={baseFrequency}
       />
       <VerticalSliderGroup
-        values={harmonicMagnitudes}
-        labels={HarmonicLabel(harmonicCount)}
-        min="0"
-        max={maxMagnitude}
-        step="0.01"
+        disabled
         formatValue={(value, index) =>
           isHarmonicFrequencySupported[index] ? value.toFixed(2) : '--'
         }
-        disabled
+        labels={HarmonicLabel(harmonicCount)}
+        max={maxMagnitude}
+        min="0"
+        step="0.01"
+        values={harmonicMagnitudes}
       />
     </details>
   );

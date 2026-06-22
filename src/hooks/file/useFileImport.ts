@@ -7,8 +7,8 @@ interface UseFileImportOptions {
 
 interface UseFileImportResult {
   fileInputRef: RefObject<HTMLInputElement | null>;
-  openFileDialog: () => void;
   handleFileChange: ChangeEventHandler<HTMLInputElement>;
+  openFileDialog: () => void;
 }
 
 function useFileImport({
@@ -33,8 +33,8 @@ function useFileImport({
 
   return {
     fileInputRef,
-    openFileDialog,
     handleFileChange,
+    openFileDialog,
   };
 }
 

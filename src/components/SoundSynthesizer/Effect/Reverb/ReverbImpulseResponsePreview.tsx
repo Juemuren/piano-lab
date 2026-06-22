@@ -5,8 +5,8 @@ import BlockMath from '../../../shared/BlockMath';
 import Plot2D from '../../../shared/Plot2D';
 
 interface ReverbImpulseResponsePreviewProps {
-  title: string;
   reverb: ReverbConfig;
+  title: string;
 }
 
 const PREVIEW_AUDIO_SAMPLE_RATE = 44100;
@@ -14,7 +14,7 @@ const MAX_PREVIEW_POINTS = 2400;
 
 function downsampleImpulseResponse(time: number[], amplitude: number[]) {
   if (time.length <= MAX_PREVIEW_POINTS) {
-    return { time, amplitude };
+    return { amplitude, time };
   }
 
   const bucketSize = Math.ceil(time.length / MAX_PREVIEW_POINTS);
@@ -38,8 +38,8 @@ function downsampleImpulseResponse(time: number[], amplitude: number[]) {
   }
 
   return {
-    time: previewTime,
     amplitude: previewAmplitude,
+    time: previewTime,
   };
 }
 
@@ -57,15 +57,15 @@ function ReverbImpulseResponsePreview({
   }, [reverb]);
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <BlockMath math={String.raw`h[n]=\delta[n]+h_e[n]+h_l[n]`} />
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: response.time,
             y: response.amplitude,
-            mode: 'lines',
           },
         ]}
         xaxis={{

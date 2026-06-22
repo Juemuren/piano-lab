@@ -5,8 +5,8 @@ const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 export interface RenderedSvg {
   content: string;
-  width: number;
   height: number;
+  width: number;
 }
 
 export type GetRenderedSvg = () => RenderedSvg | null;
@@ -35,8 +35,8 @@ const getSingleRenderedSvg = (
 
   return {
     content: new XMLSerializer().serializeToString(clonedSvg),
-    width,
     height,
+    width,
   };
 };
 
@@ -45,8 +45,8 @@ const getCombinedRenderedSvg = (
 ): RenderedSvg | null => {
   const renderedLines = svgElements
     .map((svgElement) => ({
-      svgElement,
       dimensions: getSvgDimensions(svgElement),
+      svgElement,
     }))
     .filter(({ dimensions }) => dimensions.width > 0 && dimensions.height > 0);
 
@@ -85,8 +85,8 @@ const getCombinedRenderedSvg = (
 
   return {
     content: new XMLSerializer().serializeToString(combinedSvg),
-    width,
     height,
+    width,
   };
 };
 
@@ -104,8 +104,8 @@ function useRenderedSvg() {
   }, []);
 
   return {
-    renderTargetRef,
     getRenderedSvg,
+    renderTargetRef,
   };
 }
 

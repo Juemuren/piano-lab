@@ -6,12 +6,12 @@ const SPHERE_LATITUDE_COUNT = 12;
 const SPHERE_LONGITUDE_COUNT = 24;
 
 export interface PannerConeMesh {
-  x: number[];
-  y: number[];
-  z: number[];
   i: number[];
   j: number[];
   k: number[];
+  x: number[];
+  y: number[];
+  z: number[];
 }
 
 export function getPannerDistance(config: PannerConfig) {
@@ -142,12 +142,12 @@ export function getPannerConePolygon(
 
 function getPannerConeSphereMesh(config: PannerConfig, radius: number) {
   const mesh: PannerConeMesh = {
-    x: [],
-    y: [],
-    z: [],
     i: [],
     j: [],
     k: [],
+    x: [],
+    y: [],
+    z: [],
   };
 
   for (let latIndex = 0; latIndex <= SPHERE_LATITUDE_COUNT; latIndex += 1) {
@@ -186,12 +186,12 @@ function getPannerConeSectionMesh(
   const { right, up } = createDirectionBasis(direction);
   const halfAngle = degreesToRadians(Math.min(Math.max(angle / 2, 0), 180));
   const mesh: PannerConeMesh = {
-    x: [config.positionX],
-    y: [config.positionY],
-    z: [config.positionZ],
     i: [],
     j: [],
     k: [],
+    x: [config.positionX],
+    y: [config.positionY],
+    z: [config.positionZ],
   };
   const capStartIndex = 1;
 

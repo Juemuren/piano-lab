@@ -1,10 +1,10 @@
 import Plot2D from '../../../shared/Plot2D';
 
 interface ModulationCurvePreviewProps {
-  title: string;
   time: number[];
-  values: number[];
+  title: string;
   valueSuffix?: string;
+  values: number[];
 }
 
 function ModulationCurvePreview({
@@ -14,14 +14,14 @@ function ModulationCurvePreview({
   valueSuffix,
 }: ModulationCurvePreviewProps) {
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: time,
             y: values,
-            mode: 'lines',
           },
         ]}
         xaxis={{

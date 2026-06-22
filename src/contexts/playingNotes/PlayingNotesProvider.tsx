@@ -31,9 +31,9 @@ export function PlayingNotesProvider({ children }: PlayingNotesProviderProps) {
 
   const value = useMemo(
     () => ({
+      endPlayingNote,
       playingNotes,
       startPlayingNote,
-      endPlayingNote,
       stopPlayingNotes,
     }),
     [endPlayingNote, playingNotes, startPlayingNote, stopPlayingNotes],

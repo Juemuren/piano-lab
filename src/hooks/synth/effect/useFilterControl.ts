@@ -36,12 +36,12 @@ function useFilterControl(initialFilters: FilterConfig[]) {
   }, []);
 
   return {
-    filters,
     addFilter,
+    filters,
     removeFilter,
-    updateFilterType,
     updateFilterFrequency,
     updateFilterQ,
+    updateFilterType,
   };
 }
 

@@ -22,6 +22,13 @@ import {
 const initialLanguage = getInitialLanguage();
 
 i18n.use(initReactI18next).init({
+  defaultNS: 'common',
+  fallbackLng: DEFAULT_LANGUAGE,
+  interpolation: {
+    escapeValue: false,
+  },
+  lng: initialLanguage,
+  ns: ['app', 'common', 'footer', 'score', 'synth'],
   resources: {
     'en-US': {
       app: appEn,
@@ -41,13 +48,6 @@ i18n.use(initReactI18next).init({
       score: scoreZhCN,
       synth: synthZhCN,
     },
-  },
-  lng: initialLanguage,
-  fallbackLng: DEFAULT_LANGUAGE,
-  defaultNS: 'common',
-  ns: ['app', 'common', 'footer', 'score', 'synth'],
-  interpolation: {
-    escapeValue: false,
   },
 });
 

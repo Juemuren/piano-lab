@@ -3,11 +3,11 @@ import { Info, Piano, ScrollText, Settings, Waves } from 'lucide-react';
 import type { SectionId } from '../../constants/sections';
 
 const SECTION_ICONS: Record<SectionId, LucideIcon> = {
-  'sound-synthesizer': Waves,
-  'score-editor': ScrollText,
-  'piano-keyboard': Piano,
-  settings: Settings,
   about: Info,
+  'piano-keyboard': Piano,
+  'score-editor': ScrollText,
+  settings: Settings,
+  'sound-synthesizer': Waves,
 };
 
 interface SectionIconProps {

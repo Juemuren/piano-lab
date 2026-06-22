@@ -13,16 +13,16 @@ const EMPTY_MIDI_DEVICES: MidiInputDevice[] = [];
 
 interface UseMidiControlOptions {
   enabled: boolean;
-  selectedInputId?: string;
-  onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   onNoteOff: (note: number) => void;
+  onNoteOn: (note: number, velocity: number) => void | Promise<void>;
+  selectedInputId?: string;
 }
 
 export function createInitialMidiControlState(): MidiControlState {
   return {
+    activeInputId: '',
     activeNotes: new Set(),
     devices: [],
-    activeInputId: '',
     status: 'idle',
   };
 }
@@ -33,11 +33,11 @@ function isPianoRangeNote(note: number) {
 
 function getInputDevice(input: MIDIInput): MidiInputDevice {
   return {
-    id: input.id,
-    name: input.name || input.id,
-    manufacturer: input.manufacturer || '',
-    state: input.state,
     connection: input.connection,
+    id: input.id,
+    manufacturer: input.manufacturer || '',
+    name: input.name || input.id,
+    state: input.state,
   };
 }
 
@@ -206,9 +206,9 @@ function useMidiControl({
 
   return useMemo(
     () => ({
+      activeInputId: enabled ? activeInputId : '',
       activeNotes: enabled ? activeNotes : EMPTY_ACTIVE_NOTES,
       devices: enabled ? devices : EMPTY_MIDI_DEVICES,
-      activeInputId: enabled ? activeInputId : '',
       status: enabled ? status : 'idle',
     }),
     [activeInputId, activeNotes, devices, enabled, status],

@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { getRangeProgressStyle } from '../../utils/range';
 
 interface AbcPlaybackControlsProps {
-  isPlaying: boolean;
-  isPlaybackEnded: boolean;
   currentSeconds: number;
-  totalSeconds: number;
-  onPlay: () => void;
+  isPlaybackEnded: boolean;
+  isPlaying: boolean;
   onPause: () => void;
-  onReplay: () => void;
+  onPlay: () => void;
   onProgressChange: (seconds: number) => void;
+  onReplay: () => void;
+  totalSeconds: number;
 }
 
 const formatTime = (seconds: number) => {
@@ -37,35 +37,35 @@ function AbcPlaybackControls({
     <div className="w-full">
       <div className="w-full rounded-xl py-2 flex items-center gap-2">
         <button
-          type="button"
+          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           disabled={isPlaybackEnded}
           onClick={isPlaying ? onPause : onPlay}
-          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          type="button"
         >
           {isPlaying ? <Pause size={18} /> : <Play size={18} />}
         </button>
 
         <button
-          type="button"
+          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           disabled={currentSeconds <= 0}
           onClick={onReplay}
-          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          type="button"
         >
           <RotateCcw size={18} />
         </button>
 
         <input
-          type="range"
-          min={0}
-          max={totalSeconds}
-          step={0.1}
-          value={currentSeconds}
-          onChange={(e) => onProgressChange(parseFloat(e.target.value))}
-          style={getRangeProgressStyle(currentSeconds, 0, totalSeconds)}
           className="
             range-input flex-1 min-w-0 h-6
             text-app-tip dark:text-app-tip-dark
           "
+          max={totalSeconds}
+          min={0}
+          onChange={(e) => onProgressChange(parseFloat(e.target.value))}
+          step={0.1}
+          style={getRangeProgressStyle(currentSeconds, 0, totalSeconds)}
+          type="range"
+          value={currentSeconds}
         />
 
         <span className="w-fit text-right tabular-nums text-xs sm:text-sm sm:font-semibold">

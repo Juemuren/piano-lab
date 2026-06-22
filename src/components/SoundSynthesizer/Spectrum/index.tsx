@@ -35,10 +35,10 @@ function Spectrum({
       <BlockMath math={String.raw`p(t) = \sum_{n=1}^{N}A_n\sin(2\pi f_n t)`} />
       <ControlSelect
         label={t('spectrum.preset')}
-        value={spectrumType}
         onChange={(e) => {
           handleSpectrumTypeChange(e.target.value as SpectrumType);
         }}
+        value={spectrumType}
       >
         <option value="metallic">{t('spectrum.presers.metallic')}</option>
         <option value="pure">{t('spectrum.presers.pure')}</option>
@@ -56,21 +56,21 @@ function Spectrum({
       />
 
       <SpectrumParameterControls
-        spectrumType={spectrumType}
-        lambda={lambda}
-        sigma={sigma}
-        p={p}
         labels={{
-          strikePoint: t('spectrum.parameters.strikePoint'),
           decayRate: t('spectrum.parameters.decayRate'),
           powerExponent: t('spectrum.parameters.powerExponent'),
+          strikePoint: t('spectrum.parameters.strikePoint'),
         }}
+        lambda={lambda}
         onChange={handleParamsChange}
+        p={p}
+        sigma={sigma}
+        spectrumType={spectrumType}
       />
 
       <SpectrumFormulaPreview
-        spectrumType={spectrumType}
         label={t('spectrum.harmonicSpectrumFormula')}
+        spectrumType={spectrumType}
       />
     </>
   );

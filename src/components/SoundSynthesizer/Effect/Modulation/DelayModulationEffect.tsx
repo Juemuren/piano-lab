@@ -11,9 +11,9 @@ import ModulationCurvePreview from './ModulationCurvePreview';
 
 interface DelayModulationEffectProps {
   delayModulation: DelayModulationConfig | null;
+  onDepthChange: (value: number) => void;
   onEnabledChange: (enabled: boolean) => void;
   onFrequencyChange: (value: number) => void;
-  onDepthChange: (value: number) => void;
 }
 
 function DelayModulationEffect({
@@ -30,13 +30,12 @@ function DelayModulationEffect({
   );
 
   return (
-    <details open className="space-y-2">
+    <details className="space-y-2" open>
       <summary className="font-semibold">
         {t('effect.modulation.delayModulation')}
       </summary>
 
       <ControlButton
-        title={t('effect.modulation.delayModulationEnabled')}
         icon={delayModulation ? <Power size={18} /> : <PowerOff size={18} />}
         label={t(
           delayModulation
@@ -44,6 +43,7 @@ function DelayModulationEffect({
             : 'effect.modulation.delayModulationEnabled',
         )}
         onClick={() => onEnabledChange(!delayModulation)}
+        title={t('effect.modulation.delayModulationEnabled')}
       />
 
       {delayModulation && (
@@ -52,29 +52,29 @@ function DelayModulationEffect({
             math={String.raw`\tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)`}
           />
           <ControlRange
-            label={t('effect.modulation.frequency')}
-            symbol={<InlineMath math="f_m" />}
-            min="0.1"
-            max="10"
-            step="0.1"
-            value={delayModulation.frequency}
             displayValue={`${delayModulation.frequency.toFixed(1)} Hz`}
+            label={t('effect.modulation.frequency')}
+            max="10"
+            min="0.1"
             onChange={onFrequencyChange}
+            step="0.1"
+            symbol={<InlineMath math="f_m" />}
+            value={delayModulation.frequency}
           />
           <ControlRange
-            label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="\tau_{\max}" />}
-            min="0"
-            max="0.02"
-            step="0.001"
-            value={delayModulation.depth}
             displayValue={`${(delayModulation.depth * 1000).toFixed(0)} ms`}
+            label={t('effect.modulation.depth')}
+            max="0.02"
+            min="0"
             onChange={onDepthChange}
+            step="0.001"
+            symbol={<InlineMath math="\tau_{\max}" />}
+            value={delayModulation.depth}
           />
           {delayModulationCurve && (
             <ModulationCurvePreview
-              title={t('effect.modulation.delayCurve')}
               time={delayModulationCurve.time}
+              title={t('effect.modulation.delayCurve')}
               values={delayModulationCurve.delaySeconds}
             />
           )}

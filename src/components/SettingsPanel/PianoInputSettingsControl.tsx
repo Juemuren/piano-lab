@@ -68,9 +68,9 @@ function PianoInputSettingsControl({
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.pianoInputEnable')}
-        icon={<PenLine size={16} />}
         checked={isPianoInputEnabled}
+        icon={<PenLine size={16} />}
+        label={t('settings.pianoInputEnable')}
         onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
       />
       {isPianoInputEnabled && (
@@ -78,59 +78,59 @@ function PianoInputSettingsControl({
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-3">
             <ControlSelect
               label={t('settings.pianoInput.defaultNoteLength')}
-              value={pianoInputSettings.defaultNoteLength}
               onChange={(e) =>
                 onPianoInputSettingsChange({
                   defaultNoteLength: e.target.value,
                 })
               }
+              value={pianoInputSettings.defaultNoteLength}
             >
               {defaultLengthOptions}
             </ControlSelect>
             <ControlSelect
               label={t('settings.pianoInput.timeSignature')}
-              value={pianoInputSettings.timeSignature}
               onChange={(e) =>
                 onPianoInputSettingsChange({
                   timeSignature: e.target.value,
                 })
               }
+              value={pianoInputSettings.timeSignature}
             >
               {timeSignatureOptions}
             </ControlSelect>
             <ControlSelect
               label={t('settings.pianoInput.keySignature')}
-              value={pianoInputSettings.keySignature}
               onChange={(e) =>
                 onPianoInputSettingsChange({
                   keySignature: e.target.value,
                 })
               }
+              value={pianoInputSettings.keySignature}
             >
               {keySignatureOptions}
             </ControlSelect>
           </div>
           <ControlRange
-            label={t('settings.pianoInput.tempo')}
-            min={40}
-            max={240}
-            step={1}
-            value={pianoInputSettings.tempo}
             displayValue={`${pianoInputSettings.tempo}`}
+            label={t('settings.pianoInput.tempo')}
+            max={240}
+            min={40}
             onChange={(tempo) => onPianoInputSettingsChange({ tempo })}
             p={t('settings.pianoInput.quarterNoteSeconds', {
               seconds: quarterNoteSeconds,
             })}
+            step={1}
+            value={pianoInputSettings.tempo}
           />
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-3">
             <ControlButton
-              label={t('settings.pianoInput.resetHeader')}
               icon={<RotateCcw size={18} />}
+              label={t('settings.pianoInput.resetHeader')}
               onClick={onPianoInputSettingsReset}
             />
             <ControlButton
-              label={t('settings.pianoInput.clearScore')}
               icon={<Eraser size={18} />}
+              label={t('settings.pianoInput.clearScore')}
               onClick={onScoreBodyClear}
             />
           </div>

@@ -25,40 +25,40 @@ import { createVoiceStartPlans, createVoiceStopPlans } from './VoicePlanner';
 const MIN_GAIN_VALUE = 1e-10;
 
 export interface ActiveVoice extends VoiceEnvelopeState {
-  oscillatorNode: OscillatorNode;
-  gainNode: GainNode;
-  frequencyModulationOscillatorNode?: OscillatorNode;
   frequencyModulationDepthGainNode?: GainNode;
+  frequencyModulationOscillatorNode?: OscillatorNode;
+  gainNode: GainNode;
   harmonic: number;
+  oscillatorNode: OscillatorNode;
   sustainGain: number;
 }
 
 export interface ReleasingVoice {
-  oscillatorNode: OscillatorNode;
-  gainNode: GainNode;
-  frequencyModulationOscillatorNode?: OscillatorNode;
   frequencyModulationDepthGainNode?: GainNode;
+  frequencyModulationOscillatorNode?: OscillatorNode;
+  gainNode: GainNode;
   harmonic: number;
+  oscillatorNode: OscillatorNode;
   releaseStart: number;
   silenceGain: number;
 }
 
 interface StartNoteOptions {
   audioContext: AudioContext;
+  cents: number;
   outputNode: AudioNode;
   pitch: number;
   volume: number;
-  cents: number;
 }
 
 export class BasicVoice {
   private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
   private spectrum: Spectrum = createSpectrum(
     {
-      type: DEFAULT_SPECTRUM_TYPE,
       lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-      sigma: DEFAULT_SPECTRUM_DECAY_RATE,
       p: DEFAULT_SPECTRUM_POWER_EXPONENT,
+      sigma: DEFAULT_SPECTRUM_DECAY_RATE,
+      type: DEFAULT_SPECTRUM_TYPE,
     },
     this.harmonicCount,
   );
@@ -127,8 +127,8 @@ export class BasicVoice {
     frequencyModulationOscillatorNode.start(startTime);
 
     return {
-      frequencyModulationOscillatorNode,
       frequencyModulationDepthGainNode,
+      frequencyModulationOscillatorNode,
     };
   }
 
@@ -140,18 +140,18 @@ export class BasicVoice {
     cents,
   }: StartNoteOptions): ActiveVoice[] {
     const plans = createVoiceStartPlans({
-      pitch,
-      volume,
-      cents,
-      now: audioContext.currentTime,
-      harmonics: this.harmonicCount,
-      spectrum: this.spectrum,
-      volumeRatio: this.volumeRatio,
       attackTime: this.attackTime,
+      cents,
       decayTime: this.decayTime,
-      sustainGain: this.sustainGain,
-      silenceGain: this.silenceGain,
+      harmonics: this.harmonicCount,
       minGainValue: MIN_GAIN_VALUE,
+      now: audioContext.currentTime,
+      pitch,
+      silenceGain: this.silenceGain,
+      spectrum: this.spectrum,
+      sustainGain: this.sustainGain,
+      volume,
+      volumeRatio: this.volumeRatio,
     });
     const voices: ActiveVoice[] = [];
 
@@ -189,20 +189,20 @@ export class BasicVoice {
 
       oscillatorNode.start(plan.startTime);
       voices.push({
-        oscillatorNode,
-        gainNode,
-        frequencyModulationOscillatorNode:
-          frequencyModulationNodes?.frequencyModulationOscillatorNode,
+        attackEnd: plan.attackEnd,
+        attackGain: plan.attackGain,
+        decayEnd: plan.decayEnd,
+        decayGain: plan.decayGain,
         frequencyModulationDepthGainNode:
           frequencyModulationNodes?.frequencyModulationDepthGainNode,
+        frequencyModulationOscillatorNode:
+          frequencyModulationNodes?.frequencyModulationOscillatorNode,
+        gainNode,
         harmonic: plan.harmonic,
-        startTime: plan.startTime,
-        attackEnd: plan.attackEnd,
-        decayEnd: plan.decayEnd,
-        attackGain: plan.attackGain,
-        decayGain: plan.decayGain,
-        sustainGain: plan.sustainGain,
+        oscillatorNode,
         silenceGain: plan.silenceGain,
+        startTime: plan.startTime,
+        sustainGain: plan.sustainGain,
       });
     }
 
@@ -211,8 +211,8 @@ export class BasicVoice {
 
   stopVoices(voices: ReleasingVoice[]) {
     const plans = createVoiceStopPlans({
-      voices,
       releaseTime: this.releaseTime,
+      voices,
     });
 
     voices.forEach((voice, index) => {

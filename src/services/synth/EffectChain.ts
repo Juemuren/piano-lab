@@ -36,16 +36,16 @@ export class EffectChain {
   private reverbDryGainNode: GainNode | null = null;
   private reverbWetGainNode: GainNode | null = null;
   private effectConfig: EffectConfig = {
-    filters: [],
-    equalizers: [],
     amplitudeModulation: null,
-    frequencyModulation: null,
-    phaseModulation: null,
-    delayModulation: null,
-    waveShaper: null,
     compressor: null,
+    delayModulation: null,
+    equalizers: [],
+    filters: [],
+    frequencyModulation: null,
     panner: null,
+    phaseModulation: null,
     reverb: null,
+    waveShaper: null,
   };
 
   configure(config: EffectConfig) {

@@ -6,7 +6,6 @@ import { generateAbcPresets } from './scripts/generateAbcPresets.mjs';
 
 function abcPresets(): Plugin {
   return {
-    name: 'abc-presets',
     async buildStart() {
       await generateAbcPresets();
     },
@@ -23,6 +22,7 @@ function abcPresets(): Plugin {
         }
       });
     },
+    name: 'abc-presets',
   };
 }
 
@@ -31,49 +31,49 @@ const host = process.env.TAURI_DEV_HOST;
 // https://vite.dev/config/
 // https://tauri.app/start/frontend/vite/
 export default defineConfig({
-  plugins: [abcPresets(), react(), tailwindcss()],
-  define: {
-    global: 'globalThis',
-  },
-  server: {
-    port: 5173,
-    strictPort: true,
-    host: host || false,
-    hmr: host
-      ? {
-          protocol: 'ws',
-          host,
-          port: 1421,
-        }
-      : undefined,
-    watch: {
-      ignored: ['**/src-tauri/**'],
-    },
-  },
-  envPrefix: ['VITE_', 'TAURI_ENV_*'],
   build: {
     rolldownOptions: {
       output: {
         codeSplitting: {
-          minSize: 20000,
-          maxSize: 500000,
           groups: [
             {
               name: 'react-vendor',
-              test: /node_modules[\\/]react/,
               priority: 20,
+              test: /node_modules[\\/]react/,
             },
             {
               name: 'vendor',
-              test: /node_modules/,
               priority: 10,
+              test: /node_modules/,
             },
           ],
+          maxSize: 500000,
+          minSize: 20000,
         },
       },
     },
+    sourcemap: !!process.env.TAURI_ENV_DEBUG,
     target:
       process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari13',
-    sourcemap: !!process.env.TAURI_ENV_DEBUG,
+  },
+  define: {
+    global: 'globalThis',
+  },
+  envPrefix: ['VITE_', 'TAURI_ENV_*'],
+  plugins: [abcPresets(), react(), tailwindcss()],
+  server: {
+    hmr: host
+      ? {
+          host,
+          port: 1421,
+          protocol: 'ws',
+        }
+      : undefined,
+    host: host || false,
+    port: 5173,
+    strictPort: true,
+    watch: {
+      ignored: ['**/src-tauri/**'],
+    },
   },
 });

@@ -15,9 +15,9 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinks = NAV_ITEMS.map(({ id, labelKey }) => (
     <a
-      key={id}
-      href={`#${id}`}
       className="px-2 py-1 hover:underline inline-flex items-center gap-1"
+      href={`#${id}`}
+      key={id}
       onClick={() => setIsMenuOpen(false)}
     >
       <SectionIcon sectionId={id} size={16} />
@@ -62,8 +62,8 @@ function Header() {
       <div className="flex items-center justify-between">
         <details
           className="relative md:hidden"
-          open={isMenuOpen}
           onToggle={(e) => setIsMenuOpen(e.currentTarget.open)}
+          open={isMenuOpen}
         >
           <summary className="list-none cursor-pointer">
             <Menu size={24} />

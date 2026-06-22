@@ -17,16 +17,16 @@ function ControlButton({
 }: ControlButtonProps) {
   return (
     <button
-      type="button"
-      disabled={disabled}
-      title={title}
-      onClick={onClick}
       className="
         inline-flex items-center justify-center gap-2 p-2 rounded-xl transition-colors
         bg-app-surface dark:bg-app-surface-dark
         hover:bg-app-overlay dark:hover:bg-app-overlay-dark
         disabled:cursor-not-allowed disabled:opacity-50
       "
+      disabled={disabled}
+      onClick={onClick}
+      title={title}
+      type="button"
     >
       {icon}
       {label && <span>{label}</span>}

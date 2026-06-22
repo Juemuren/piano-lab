@@ -9,8 +9,8 @@ import type { PannerConfig } from '../../../../types';
 import Plot2D from '../../../shared/Plot2D';
 
 interface PannerDistanceGainPreviewProps {
-  title: string;
   panner: PannerConfig;
+  title: string;
 }
 
 function PannerDistanceGainPreview({
@@ -31,21 +31,21 @@ function PannerDistanceGainPreview({
   }, [panner]);
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <Plot2D
         data={[
           {
-            x: preview.distances,
-            y: preview.gains,
             mode: 'lines',
             name: t('effect.panner.preview.distanceGain'),
+            x: preview.distances,
+            y: preview.gains,
           },
           {
-            x: [preview.currentDistance],
-            y: [preview.currentGain],
             mode: 'markers',
             name: t('effect.panner.preview.currentSourceDistance'),
+            x: [preview.currentDistance],
+            y: [preview.currentGain],
           },
         ]}
         layout={{

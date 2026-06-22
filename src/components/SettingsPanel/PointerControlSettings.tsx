@@ -20,15 +20,15 @@ function PointerControlSettings({
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.mouseControl')}
-        icon={<MousePointer size={16} />}
         checked={isMouseControlEnabled}
+        icon={<MousePointer size={16} />}
+        label={t('settings.mouseControl')}
         onChange={(e) => setIsMouseControlEnabled(e.target.checked)}
       />
       <ControlCheckbox
-        label={t('settings.touchControl')}
-        icon={<Hand size={16} />}
         checked={isTouchControlEnabled}
+        icon={<Hand size={16} />}
+        label={t('settings.touchControl')}
         onChange={(e) => setIsTouchControlEnabled(e.target.checked)}
       />
     </div>

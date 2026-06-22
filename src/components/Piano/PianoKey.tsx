@@ -36,25 +36,25 @@ function PianoKey({
 
   return (
     <button
-      key={note}
-      title={note.toString()}
-      type="button"
-      onMouseDown={(e) => onKeyDown(e, note)}
-      onMouseUp={(e) => onKeyUp(e, note)}
-      onMouseLeave={(e) => onKeyUp(e, note)}
-      onTouchStart={(e) => onKeyDown(e, note)}
-      onTouchEnd={(e) => onKeyUp(e, note)}
-      onTouchCancel={(e) => onKeyUp(e, note)}
       className={`
         text-xs transition-all duration-100
         ${colorClass} ${cursorClass} ${className}
       `}
+      key={note}
+      onMouseDown={(e) => onKeyDown(e, note)}
+      onMouseLeave={(e) => onKeyUp(e, note)}
+      onMouseUp={(e) => onKeyUp(e, note)}
+      onTouchCancel={(e) => onKeyUp(e, note)}
+      onTouchEnd={(e) => onKeyUp(e, note)}
+      onTouchStart={(e) => onKeyDown(e, note)}
       style={{
         ...style,
-        width: width,
         height: height,
         transform: isPressed ? 'translateY(2px)' : 'translateY(0px)',
+        width: width,
       }}
+      title={note.toString()}
+      type="button"
     >
       {children}
     </button>

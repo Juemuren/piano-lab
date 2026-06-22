@@ -4,8 +4,8 @@ import { ABC_PRESETS } from '../../services/abc/AbcPresets';
 import ControlSelect from '../shared/ControlSelect';
 
 interface AbcPresetSelectProps {
-  selectedPresetIndex: number;
   onPresetChange: (presetIndex: number) => void;
+  selectedPresetIndex: number;
 }
 
 function AbcPresetSelect({
@@ -22,10 +22,10 @@ function AbcPresetSelect({
 
   return (
     <ControlSelect
-      label={t('preset')}
       icon={<ListMusic size={16} />}
-      value={selectedPresetIndex}
+      label={t('preset')}
       onChange={(e) => onPresetChange(parseInt(e.target.value, 10))}
+      value={selectedPresetIndex}
     >
       <option value={-1}>{t('custom')}</option>
       {persetsOptions}

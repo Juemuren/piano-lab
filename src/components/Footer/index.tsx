@@ -14,8 +14,8 @@ function Footer() {
 
   return (
     <footer
-      id={SECTION_IDS.about}
       className="p-8 scroll-mt-16 bg-app-mantle dark:bg-app-mantle-dark"
+      id={SECTION_IDS.about}
     >
       <div
         className="
@@ -25,18 +25,18 @@ function Footer() {
         "
       >
         <div className="grid gap-3">
-          <FooterPanel title={t('about.title')} icon={<Info size={16} />}>
+          <FooterPanel icon={<Info size={16} />} title={t('about.title')}>
             {t('about.body')}
           </FooterPanel>
           <FooterPanel
-            title={t('synthesis.title')}
             icon={<CircuitBoard size={16} />}
+            title={t('synthesis.title')}
           >
             {t('synthesis.body')}
           </FooterPanel>
           <FooterPanel
-            title={t('notation.title')}
             icon={<BookOpen size={16} />}
+            title={t('notation.title')}
           >
             {t('notation.body')}
           </FooterPanel>

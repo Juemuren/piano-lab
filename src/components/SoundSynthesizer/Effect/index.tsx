@@ -76,77 +76,77 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   return (
     <>
       <FilterAndEqualizer
-        harmonicCount={harmonicCount}
-        filters={filters}
-        onFilterAdd={addFilter}
-        onFilterRemove={removeFilter}
-        onFilterTypeChange={updateFilterType}
-        onFilterFrequencyChange={updateFilterFrequency}
-        onFilterQChange={updateFilterQ}
         equalizers={equalizers}
+        filters={filters}
+        harmonicCount={harmonicCount}
         onEqualizerAdd={addEqualizer}
+        onEqualizerFrequencyChange={updateEqualizerFrequency}
+        onEqualizerGainChange={updateEqualizerGain}
+        onEqualizerQChange={updateEqualizerQ}
         onEqualizerRemove={removeEqualizer}
         onEqualizerTypeChange={updateEqualizerType}
-        onEqualizerFrequencyChange={updateEqualizerFrequency}
-        onEqualizerQChange={updateEqualizerQ}
-        onEqualizerGainChange={updateEqualizerGain}
+        onFilterAdd={addFilter}
+        onFilterFrequencyChange={updateFilterFrequency}
+        onFilterQChange={updateFilterQ}
+        onFilterRemove={removeFilter}
+        onFilterTypeChange={updateFilterType}
       />
       <Modulation
         amplitudeModulation={amplitudeModulation}
-        frequencyModulation={frequencyModulation}
-        phaseModulation={phaseModulation}
         delayModulation={delayModulation}
+        frequencyModulation={frequencyModulation}
+        onAmplitudeModulationDepthChange={updateAmplitudeModulationDepth}
         onAmplitudeModulationEnabledChange={updateAmplitudeModulationEnabled}
         onAmplitudeModulationFrequencyChange={
           updateAmplitudeModulationFrequency
         }
-        onAmplitudeModulationDepthChange={updateAmplitudeModulationDepth}
+        onDelayModulationDepthChange={updateDelayModulationDepth}
+        onDelayModulationEnabledChange={updateDelayModulationEnabled}
+        onDelayModulationFrequencyChange={updateDelayModulationFrequency}
+        onFrequencyModulationDepthChange={updateFrequencyModulationDepth}
         onFrequencyModulationEnabledChange={updateFrequencyModulationEnabled}
         onFrequencyModulationFrequencyChange={
           updateFrequencyModulationFrequency
         }
-        onFrequencyModulationDepthChange={updateFrequencyModulationDepth}
+        onPhaseModulationDepthChange={updatePhaseModulationDepth}
         onPhaseModulationEnabledChange={updatePhaseModulationEnabled}
         onPhaseModulationFrequencyChange={updatePhaseModulationFrequency}
-        onPhaseModulationDepthChange={updatePhaseModulationDepth}
-        onDelayModulationEnabledChange={updateDelayModulationEnabled}
-        onDelayModulationFrequencyChange={updateDelayModulationFrequency}
-        onDelayModulationDepthChange={updateDelayModulationDepth}
+        phaseModulation={phaseModulation}
       />
       <WaveShaper
-        waveShaper={waveShaper}
         onEnabledChange={updateWaveShaperEnabled}
         onPresetChange={updateWaveShaperPreset}
         onValueChange={updateWaveShaperValue}
+        waveShaper={waveShaper}
       />
       <Compressor
         compressor={compressor}
+        onAttackChange={updateCompressorAttack}
         onEnabledChange={updateCompressorEnabled}
-        onThresholdChange={updateCompressorThreshold}
         onKneeChange={updateCompressorKnee}
         onRatioChange={updateCompressorRatio}
-        onAttackChange={updateCompressorAttack}
         onReleaseChange={updateCompressorRelease}
+        onThresholdChange={updateCompressorThreshold}
       />
       <Panner
-        panner={panner}
         onEnabledChange={updatePannerEnabled}
         onValueChange={updatePannerValue}
+        panner={panner}
       />
       <Reverb
-        reverb={reverb}
-        onEnabledChange={updateReverbEnabled}
-        onPresetChange={updateReverbPreset}
-        onMixChange={updateReverbMix}
         onEarlyReflectionAdd={addReverbEarlyReflection}
-        onEarlyReflectionRemove={removeReverbEarlyReflection}
         onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
         onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
         onEarlyReflectionPhaseChange={updateReverbEarlyReflectionPhase}
+        onEarlyReflectionRemove={removeReverbEarlyReflection}
+        onEnabledChange={updateReverbEnabled}
+        onLateTailAlphaChange={updateReverbLateTailAlpha}
+        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
         onLateTailDelayChange={updateReverbLateTailDelay}
         onLateTailDurationChange={updateReverbLateTailDuration}
-        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
-        onLateTailAlphaChange={updateReverbLateTailAlpha}
+        onMixChange={updateReverbMix}
+        onPresetChange={updateReverbPreset}
+        reverb={reverb}
       />
     </>
   );

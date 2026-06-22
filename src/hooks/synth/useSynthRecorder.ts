@@ -4,28 +4,28 @@ import { downloadBlob } from '../../utils/file';
 
 const RECORDING_FORMAT_OPTIONS: RecordingFormat[] = [
   {
+    extension: 'webm',
     label: 'WebM',
     mimeType: 'audio/webm',
-    extension: 'webm',
   },
   {
+    extension: 'ogg',
     label: 'OGG',
     mimeType: 'audio/ogg',
-    extension: 'ogg',
   },
   {
+    extension: 'mp4',
     label: 'MP4',
     mimeType: 'audio/mp4',
-    extension: 'mp4',
   },
 ];
 
 type RecorderStatus = 'idle' | 'recording' | 'ready' | 'unsupported';
 
 interface RecordingFormat {
+  extension: string;
   label: string;
   mimeType: string;
-  extension: string;
 }
 
 const getSupportedRecordingFormats = () => {
@@ -181,15 +181,15 @@ function useSynthRecorder(synthEngine: SynthEngine) {
   );
 
   return {
-    status,
-    supportedFormats,
+    downloadRecording,
+    errorKey,
+    recordingBlob,
     selectedMimeType,
     setSelectedMimeType,
-    recordingBlob,
-    errorKey,
     startRecording,
+    status,
     stopRecording,
-    downloadRecording,
+    supportedFormats,
   };
 }
 

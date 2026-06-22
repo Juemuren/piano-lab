@@ -4,9 +4,6 @@ import ControlRange from '../../shared/ControlRange';
 interface EnvelopeParameterControlsProps {
   attackTime: number;
   decayTime: number;
-  releaseTime: number;
-  sustainGain: number;
-  silenceGain: number;
   labels: {
     attackTime: string;
     decayTime: string;
@@ -17,8 +14,11 @@ interface EnvelopeParameterControlsProps {
   onAttackTimeChange: (value: number) => void;
   onDecayTimeChange: (value: number) => void;
   onReleaseTimeChange: (value: number) => void;
-  onSustainGainChange: (value: number) => void;
   onSilenceGainChange: (value: number) => void;
+  onSustainGainChange: (value: number) => void;
+  releaseTime: number;
+  silenceGain: number;
+  sustainGain: number;
 }
 
 function EnvelopeParameterControls({
@@ -37,54 +37,54 @@ function EnvelopeParameterControls({
   return (
     <>
       <ControlRange
-        label={labels.attackTime}
-        symbol={<InlineMath math="\tau_a" />}
-        min="0.001"
-        max="0.1"
-        step="0.001"
-        value={attackTime}
         displayValue={`${attackTime.toFixed(3)} s`}
+        label={labels.attackTime}
+        max="0.1"
+        min="0.001"
         onChange={onAttackTimeChange}
+        step="0.001"
+        symbol={<InlineMath math="\tau_a" />}
+        value={attackTime}
       />
       <ControlRange
-        label={labels.decayTime}
-        symbol={<InlineMath math="\tau_d" />}
-        min="0.01"
-        max="1"
-        step="0.01"
-        value={decayTime}
         displayValue={`${decayTime.toFixed(2)} s`}
-        onChange={onDecayTimeChange}
-      />
-      <ControlRange
-        label={labels.releaseTime}
-        symbol={<InlineMath math="\tau_r" />}
-        min="0.1"
-        max="10"
-        step="0.1"
-        value={releaseTime}
-        displayValue={`${releaseTime.toFixed(2)} s`}
-        onChange={onReleaseTimeChange}
-      />
-      <ControlRange
-        label={labels.sustainGain}
-        symbol={<InlineMath math="S" />}
-        min="0.1"
+        label={labels.decayTime}
         max="1"
+        min="0.01"
+        onChange={onDecayTimeChange}
         step="0.01"
-        value={sustainGain}
-        displayValue={sustainGain.toFixed(2)}
-        onChange={onSustainGainChange}
+        symbol={<InlineMath math="\tau_d" />}
+        value={decayTime}
       />
       <ControlRange
-        label={labels.silenceGain}
-        symbol={<InlineMath math="\varepsilon" />}
-        min="0.000001"
-        max="0.001"
-        step="0.000001"
-        value={silenceGain}
+        displayValue={`${releaseTime.toFixed(2)} s`}
+        label={labels.releaseTime}
+        max="10"
+        min="0.1"
+        onChange={onReleaseTimeChange}
+        step="0.1"
+        symbol={<InlineMath math="\tau_r" />}
+        value={releaseTime}
+      />
+      <ControlRange
+        displayValue={sustainGain.toFixed(2)}
+        label={labels.sustainGain}
+        max="1"
+        min="0.1"
+        onChange={onSustainGainChange}
+        step="0.01"
+        symbol={<InlineMath math="S" />}
+        value={sustainGain}
+      />
+      <ControlRange
         displayValue={silenceGain.toExponential(2)}
+        label={labels.silenceGain}
+        max="0.001"
+        min="0.000001"
         onChange={onSilenceGainChange}
+        step="0.000001"
+        symbol={<InlineMath math="\varepsilon" />}
+        value={silenceGain}
       />
     </>
   );

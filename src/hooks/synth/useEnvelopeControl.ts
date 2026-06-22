@@ -23,7 +23,7 @@ function sampleExponentialRamp(
     const time = startTime + (endTime - startTime) * progress;
     const gain = startGain * (endGain / startGain) ** progress;
 
-    return { time, gain };
+    return { gain, time };
   });
 }
 
@@ -53,8 +53,8 @@ function useEnvelopeControl(
       attackTime,
       decayTime,
       releaseTime,
-      sustainGain,
       silenceGain,
+      sustainGain,
     }),
     [attackTime, decayTime, releaseTime, silenceGain, sustainGain],
   );
@@ -83,24 +83,24 @@ function useEnvelopeControl(
     ];
 
     return {
-      time: points.map(({ time }) => time),
       gain: points.map(({ gain }) => gain),
       maxTime: releaseEnd,
+      time: points.map(({ time }) => time),
     };
   }, [attackTime, decayTime, releaseTime, silenceGain, sustainGain]);
 
   return {
     attackTime,
-    setAttackTime,
     decayTime,
-    setDecayTime,
+    envelopeCurve,
     releaseTime,
+    setAttackTime,
+    setDecayTime,
     setReleaseTime,
-    sustainGain,
+    setSilenceGain,
     setSustainGain,
     silenceGain,
-    setSilenceGain,
-    envelopeCurve,
+    sustainGain,
   };
 }
 

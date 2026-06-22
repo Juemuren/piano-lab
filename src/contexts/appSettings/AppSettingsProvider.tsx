@@ -39,13 +39,13 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
 
   useEffect(() => {
     writeStoredAppSettings({
-      isPianoInputEnabled,
-      pianoInputSettings,
       isKeyboardControlEnabled,
-      keyboardNoteMappings,
-      isMouseControlEnabled,
-      isTouchControlEnabled,
       isMidiControlEnabled,
+      isMouseControlEnabled,
+      isPianoInputEnabled,
+      isTouchControlEnabled,
+      keyboardNoteMappings,
+      pianoInputSettings,
     });
   }, [
     isKeyboardControlEnabled,
@@ -59,20 +59,20 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
 
   const value = useMemo(
     (): AppSettingsContextValue => ({
-      isPianoInputEnabled,
-      setIsPianoInputEnabled,
-      pianoInputSettings,
-      setPianoInputSettings,
       isKeyboardControlEnabled,
-      setIsKeyboardControlEnabled,
-      keyboardNoteMappings,
-      setKeyboardNoteMappings,
-      isMouseControlEnabled,
-      setIsMouseControlEnabled,
-      isTouchControlEnabled,
-      setIsTouchControlEnabled,
       isMidiControlEnabled,
+      isMouseControlEnabled,
+      isPianoInputEnabled,
+      isTouchControlEnabled,
+      keyboardNoteMappings,
+      pianoInputSettings,
+      setIsKeyboardControlEnabled,
       setIsMidiControlEnabled,
+      setIsMouseControlEnabled,
+      setIsPianoInputEnabled,
+      setIsTouchControlEnabled,
+      setKeyboardNoteMappings,
+      setPianoInputSettings,
     }),
     [
       isKeyboardControlEnabled,

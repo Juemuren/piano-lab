@@ -1,6 +1,6 @@
 interface SaveFilePickerOptions {
-  suggestedName?: string;
   startIn?: 'downloads';
+  suggestedName?: string;
   types?: {
     description: string;
     accept: Record<string, string[]>;
@@ -29,17 +29,17 @@ const getSaveFilePickerOptions = (
   const mimeType = getFileMimeType(blob);
 
   if (!mimeType || !extension)
-    return { suggestedName: fileName, startIn: 'downloads' };
+    return { startIn: 'downloads', suggestedName: fileName };
 
   return {
-    suggestedName: fileName,
     startIn: 'downloads',
+    suggestedName: fileName,
     types: [
       {
-        description: `${extension.slice(1).toUpperCase()} file`,
         accept: {
           [mimeType]: [extension],
         },
+        description: `${extension.slice(1).toUpperCase()} file`,
       },
     ],
   };
@@ -83,8 +83,8 @@ export const getSvgDimensions = (svgElement: SVGSVGElement) => {
   const height = svgElement.height.baseVal.value || viewBox.height;
 
   return {
-    width: Math.ceil(width || svgElement.getBoundingClientRect().width),
     height: Math.ceil(height || svgElement.getBoundingClientRect().height),
+    width: Math.ceil(width || svgElement.getBoundingClientRect().width),
   };
 };
 

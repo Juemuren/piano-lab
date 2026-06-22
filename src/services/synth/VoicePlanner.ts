@@ -1,24 +1,24 @@
 import type { Spectrum } from '../../types';
 
 export interface VoiceStartPlan {
-  harmonic: number;
-  frequency: number;
-  startTime: number;
   attackEnd: number;
-  decayEnd: number;
   attackGain: number;
+  decayEnd: number;
   decayGain: number;
-  sustainGain: number;
+  frequency: number;
+  harmonic: number;
   silenceGain: number;
+  startTime: number;
+  sustainGain: number;
 }
 
 export interface VoiceEnvelopeState {
-  startTime: number;
   attackEnd: number;
-  decayEnd: number;
   attackGain: number;
+  decayEnd: number;
   decayGain: number;
   silenceGain: number;
+  startTime: number;
 }
 
 export interface VoiceStopPlan {
@@ -26,26 +26,26 @@ export interface VoiceStopPlan {
 }
 
 interface CreateVoiceStartPlansOptions {
-  pitch: number;
-  volume: number;
-  cents: number;
-  now: number;
-  harmonics: number;
-  spectrum: Spectrum;
-  volumeRatio: number;
   attackTime: number;
+  cents: number;
   decayTime: number;
-  sustainGain: number;
-  silenceGain: number;
+  harmonics: number;
   minGainValue: number;
+  now: number;
+  pitch: number;
+  silenceGain: number;
+  spectrum: Spectrum;
+  sustainGain: number;
+  volume: number;
+  volumeRatio: number;
 }
 
 interface CreateVoiceStopPlansOptions {
+  releaseTime: number;
   voices: {
     harmonic: number;
     releaseStart: number;
   }[];
-  releaseTime: number;
 }
 
 export function getBaseFrequency(pitch: number, cents: number = 0) {
@@ -97,15 +97,15 @@ export function createVoiceStartPlans({
     const sustainGain = Math.max(decayGain / Math.sqrt(1 + n), silenceGain);
 
     plans.push({
-      harmonic: n,
-      frequency,
-      startTime,
       attackEnd,
-      decayEnd,
       attackGain,
+      decayEnd,
       decayGain,
-      sustainGain,
+      frequency,
+      harmonic: n,
       silenceGain,
+      startTime,
+      sustainGain,
     });
   }
 

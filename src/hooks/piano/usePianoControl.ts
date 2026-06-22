@@ -16,8 +16,8 @@ import usePointerControl from './usePointerControl';
 const DEFAULT_VOLUME = 100;
 
 interface PianoKey {
-  note: number;
   char: string;
+  note: number;
   number: number;
 }
 
@@ -37,8 +37,8 @@ function getPianoKeys() {
     const name = getPitchName(note);
     const octave = getPitchOctave(note);
     const keyInfo = {
-      note,
       char: name[0],
+      note,
       number: octave,
     };
 
@@ -50,7 +50,7 @@ function getPianoKeys() {
     }
   }
 
-  return { whiteKeys, blackKeys };
+  return { blackKeys, whiteKeys };
 }
 
 const pianoKeys = getPianoKeys();
@@ -97,13 +97,13 @@ function useActivePianoNotes() {
   }, []);
 
   return {
+    activateInputNote,
     activeInputNotes,
     activeKeyboardNotesRef,
     activeMouseNotesRef,
     activeTouchNotesRef,
-    activateInputNote,
-    releaseInputNote,
     isInputNoteActive,
+    releaseInputNote,
   };
 }
 
@@ -192,9 +192,9 @@ function usePianoControl(
   );
 
   const { keyHints } = useKeyboardControl({
+    activeNotesRef: activeKeyboardNotesRef,
     enabled: isKeyboardControlEnabled,
     keyboardNoteMappings,
-    activeNotesRef: activeKeyboardNotesRef,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
   });
@@ -208,16 +208,16 @@ function usePianoControl(
 
   const midiControl = useMidiControl({
     enabled: isMidiControlEnabled,
-    selectedInputId: selectedMidiInputId,
-    onNoteOn: startMidiPressedKey,
     onNoteOff: stopInputNote,
+    onNoteOn: startMidiPressedKey,
+    selectedInputId: selectedMidiInputId,
   });
 
   const { handleKeyDown, handleKeyUp } = usePointerControl({
-    isMouseControlEnabled,
-    isTouchControlEnabled,
     activeMouseNotesRef,
     activeTouchNotesRef,
+    isMouseControlEnabled,
+    isTouchControlEnabled,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
   });
@@ -230,14 +230,14 @@ function usePianoControl(
   );
 
   return {
-    whiteKeys,
     blackKeys,
-    keyHints,
-    isKeyPressed,
-    midiControl,
-    isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
+    isKeyPressed,
+    isMouseControlEnabled,
+    keyHints,
+    midiControl,
+    whiteKeys,
   };
 }
 

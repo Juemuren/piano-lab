@@ -4,9 +4,9 @@ import type { EqualizerConfig, FilterConfig } from '../../../../types';
 import Plot2D from '../../../shared/Plot2D';
 
 interface MagnitudeResponsePreviewProps {
-  title: string;
-  filters: FilterConfig[];
   equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+  title: string;
 }
 
 const FREQUENCY_POINT_COUNT = 256;
@@ -34,11 +34,11 @@ function getEffectMagnitudeResponse(
   ]);
 
   return {
-    frequencies,
     decibels: Array.from(
       totalMagnitudes,
       (magnitude) => 20 * Math.log10(Math.max(magnitude, 1e-8)),
     ),
+    frequencies,
   };
 }
 
@@ -53,19 +53,19 @@ function MagnitudeResponsePreview({
   );
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">{title}</summary>
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: response.frequencies,
             y: response.decibels,
-            mode: 'lines',
           },
         ]}
         xaxis={{
-          type: 'log',
           ticksuffix: 'Hz',
+          type: 'log',
         }}
         yaxis={{
           ticksuffix: 'dB',

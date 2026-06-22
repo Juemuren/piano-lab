@@ -33,30 +33,30 @@ function SettingsPanel() {
     <ControlPanel className="flex flex-col gap-3 text-left">
       <PointerControlSettings
         isMouseControlEnabled={isMouseControlEnabled}
-        setIsMouseControlEnabled={setIsMouseControlEnabled}
         isTouchControlEnabled={isTouchControlEnabled}
+        setIsMouseControlEnabled={setIsMouseControlEnabled}
         setIsTouchControlEnabled={setIsTouchControlEnabled}
       />
       <KeyboardControlSettings
         isKeyboardControlEnabled={isKeyboardControlEnabled}
-        setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
         keyboardNoteMappings={keyboardNoteMappings}
+        setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
         setKeyboardNoteMappings={setKeyboardNoteMappings}
       />
       <MidiControlSettings
         isMidiControlEnabled={isMidiControlEnabled}
-        setIsMidiControlEnabled={setIsMidiControlEnabled}
         midiControl={midiControl}
         selectedMidiInputId={selectedMidiInputId}
+        setIsMidiControlEnabled={setIsMidiControlEnabled}
         setSelectedMidiInputId={setSelectedMidiInputId}
       />
       <PianoInputSettingsControl
         isPianoInputEnabled={isPianoInputEnabled}
-        setIsPianoInputEnabled={setIsPianoInputEnabled}
-        pianoInputSettings={pianoInputSettings}
         onPianoInputSettingsChange={updatePianoInputSettings}
         onPianoInputSettingsReset={resetPianoInputSettings}
         onScoreBodyClear={clearScoreBody}
+        pianoInputSettings={pianoInputSettings}
+        setIsPianoInputEnabled={setIsPianoInputEnabled}
       />
       <SynthRecorderSettings />
     </ControlPanel>

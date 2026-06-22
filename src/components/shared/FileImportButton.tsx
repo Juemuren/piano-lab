@@ -2,12 +2,12 @@ import type { ChangeEventHandler, ReactNode, RefObject } from 'react';
 import ControlButton from './ControlButton';
 
 interface FileImportButtonProps {
-  label: string;
-  icon?: ReactNode;
-  fileInputRef: RefObject<HTMLInputElement | null>;
   accept?: string;
-  onClick: () => void;
+  fileInputRef: RefObject<HTMLInputElement | null>;
+  icon?: ReactNode;
+  label: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  onClick: () => void;
 }
 
 function FileImportButton({
@@ -21,14 +21,14 @@ function FileImportButton({
   return (
     <>
       <input
-        title={label}
-        ref={fileInputRef}
-        type="file"
         accept={accept}
         className="hidden"
         onChange={onChange}
+        ref={fileInputRef}
+        title={label}
+        type="file"
       />
-      <ControlButton label={label} icon={icon} onClick={onClick} />
+      <ControlButton icon={icon} label={label} onClick={onClick} />
     </>
   );
 }

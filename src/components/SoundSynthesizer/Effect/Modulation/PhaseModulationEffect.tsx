@@ -10,10 +10,10 @@ import ControlRange from '../../../shared/ControlRange';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
 interface PhaseModulationEffectProps {
-  phaseModulation: PhaseModulationConfig | null;
+  onDepthChange: (value: number) => void;
   onEnabledChange: (enabled: boolean) => void;
   onFrequencyChange: (value: number) => void;
-  onDepthChange: (value: number) => void;
+  phaseModulation: PhaseModulationConfig | null;
 }
 
 function PhaseModulationEffect({
@@ -30,13 +30,12 @@ function PhaseModulationEffect({
   );
 
   return (
-    <details open className="space-y-2">
+    <details className="space-y-2" open>
       <summary className="font-semibold">
         {t('effect.modulation.phaseModulation')}
       </summary>
 
       <ControlButton
-        title={t('effect.modulation.phaseModulationEnabled')}
         icon={phaseModulation ? <Power size={18} /> : <PowerOff size={18} />}
         label={t(
           phaseModulation
@@ -44,35 +43,36 @@ function PhaseModulationEffect({
             : 'effect.modulation.phaseModulationEnabled',
         )}
         onClick={() => onEnabledChange(!phaseModulation)}
+        title={t('effect.modulation.phaseModulationEnabled')}
       />
 
       {phaseModulation && (
         <div className="space-y-2">
           <BlockMath math={String.raw`\phi(t)=\phi_{\max}\sin(2\pi f_m t)`} />
           <ControlRange
-            label={t('effect.modulation.frequency')}
-            symbol={<InlineMath math="f_m" />}
-            min="0.1"
-            max="10"
-            step="0.1"
-            value={phaseModulation.frequency}
             displayValue={`${phaseModulation.frequency.toFixed(1)} Hz`}
+            label={t('effect.modulation.frequency')}
+            max="10"
+            min="0.1"
             onChange={onFrequencyChange}
+            step="0.1"
+            symbol={<InlineMath math="f_m" />}
+            value={phaseModulation.frequency}
           />
           <ControlRange
-            label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="\phi_{\max}" />}
-            min="0"
-            max={Math.PI}
-            step="0.01"
-            value={phaseModulation.depth}
             displayValue={`${phaseModulation.depth.toFixed(2)} rad`}
+            label={t('effect.modulation.depth')}
+            max={Math.PI}
+            min="0"
             onChange={onDepthChange}
+            step="0.01"
+            symbol={<InlineMath math="\phi_{\max}" />}
+            value={phaseModulation.depth}
           />
           {phaseModulationCurve && (
             <ModulationCurvePreview
-              title={t('effect.modulation.phaseCurve')}
               time={phaseModulationCurve.time}
+              title={t('effect.modulation.phaseCurve')}
               values={phaseModulationCurve.phase}
             />
           )}

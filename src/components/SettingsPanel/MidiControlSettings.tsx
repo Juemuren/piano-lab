@@ -60,9 +60,9 @@ function MidiControlSettings({
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.midiControl')}
-        icon={<Cable size={16} />}
         checked={isMidiControlEnabled}
+        icon={<Cable size={16} />}
+        label={t('settings.midiControl')}
         onChange={(e) => setIsMidiControlEnabled(e.target.checked)}
       />
       {isMidiControlEnabled && (
@@ -71,8 +71,8 @@ function MidiControlSettings({
           {midiControl.devices.length > 0 && (
             <ControlSelect
               label={t('settings.midi.inputDevice')}
-              value={selectedDeviceId}
               onChange={(e) => setSelectedMidiInputId(e.target.value)}
+              value={selectedDeviceId}
             >
               {midiControl.devices.map((device) => (
                 <option key={device.id} value={device.id}>

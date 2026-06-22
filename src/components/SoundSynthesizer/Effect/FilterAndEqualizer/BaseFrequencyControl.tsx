@@ -3,18 +3,18 @@ import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 
 interface BaseFrequencyOption {
-  pitch: number | 'custom';
   label: string;
+  pitch: number | 'custom';
 }
 
 interface BaseFrequencyControlProps {
+  getBaseFrequency: (pitch: number) => number;
   labelRange: string;
   labelSelect: string;
-  value: number;
-  selectedPitch?: number;
-  pitchOptions: BaseFrequencyOption[];
-  getBaseFrequency: (pitch: number) => number;
   onChange: (value: number) => void;
+  pitchOptions: BaseFrequencyOption[];
+  selectedPitch?: number;
+  value: number;
 }
 
 function BaseFrequencyControl({
@@ -30,24 +30,24 @@ function BaseFrequencyControl({
     <div className="my-4">
       <div className="grid sm:gap-3 sm:grid-cols-[2fr_1fr]">
         <ControlRange
-          label={labelRange}
-          symbol={<InlineMath math="f_1" />}
-          min="20"
-          max="5000"
-          step="1"
-          value={value}
-          displayValue={`${value.toFixed(2)} Hz`}
           accentClassName="text-app-info dark:text-app-info-dark"
-          pClassName="text-app-info/50 dark:text-app-info-dark/50"
+          displayValue={`${value.toFixed(2)} Hz`}
+          label={labelRange}
+          max="5000"
+          min="20"
           onChange={onChange}
+          pClassName="text-app-info/50 dark:text-app-info-dark/50"
+          step="1"
+          symbol={<InlineMath math="f_1" />}
+          value={value}
         />
         <ControlSelect
           label={labelSelect}
-          value={selectedPitch ?? 'custom'}
           onChange={(e) => {
             if (e.target.value === 'custom') return;
             onChange(getBaseFrequency(Number(e.target.value)));
           }}
+          value={selectedPitch ?? 'custom'}
         >
           {pitchOptions.map(({ pitch, label }) => (
             <option key={pitch} value={pitch}>

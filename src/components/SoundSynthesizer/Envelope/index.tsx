@@ -31,26 +31,26 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
       <EnvelopeParameterControls
         attackTime={attackTime}
         decayTime={decayTime}
-        releaseTime={releaseTime}
-        sustainGain={sustainGain}
-        silenceGain={silenceGain}
         labels={{
           attackTime: t('envelope.attackTime'),
           decayTime: t('envelope.decayTime'),
           releaseTime: t('envelope.releaseTime'),
-          sustainGain: t('envelope.sustainGain'),
           silenceGain: t('envelope.silenceGain'),
+          sustainGain: t('envelope.sustainGain'),
         }}
         onAttackTimeChange={setAttackTime}
         onDecayTimeChange={setDecayTime}
         onReleaseTimeChange={setReleaseTime}
-        onSustainGainChange={setSustainGain}
         onSilenceGainChange={setSilenceGain}
+        onSustainGainChange={setSustainGain}
+        releaseTime={releaseTime}
+        silenceGain={silenceGain}
+        sustainGain={sustainGain}
       />
       <EnvelopeFormulaPreview title={t('envelope.amplitudeEnvelopeFormula')} />
       <EnvelopeCurvePreview
-        title={t('envelope.amplitudeEnvelopeCurve')}
         envelopeCurve={envelopeCurve}
+        title={t('envelope.amplitudeEnvelopeCurve')}
       />
     </>
   );

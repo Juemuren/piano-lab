@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 
 export interface CompressorReductionSample {
-  time: number;
   reduction: number;
+  time: number;
 }
 
 const SAMPLE_INTERVAL_MS = 100;
@@ -27,7 +27,7 @@ function useCompressorReductionHistory(enabled: boolean) {
         ...current.filter(
           (sample) => time - sample.time <= HISTORY_DURATION_SECONDS,
         ),
-        { time, reduction },
+        { reduction, time },
       ]);
     }, SAMPLE_INTERVAL_MS);
 

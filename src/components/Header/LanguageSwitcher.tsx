@@ -18,15 +18,15 @@ function LanguageSwitcher() {
   return (
     <div className="flex items-center gap-2 text-sm">
       <Languages
-        size={18}
         className="shrink-0 text-app-subtext dark:text-app-subtext-dark"
+        size={18}
       />
       <ControlSelect
-        title={t('languageSwitcher.title')}
-        value={i18n.resolvedLanguage ?? i18n.language}
         onChange={(e) => {
           i18n.changeLanguage(e.target.value);
         }}
+        title={t('languageSwitcher.title')}
+        value={i18n.resolvedLanguage ?? i18n.language}
       >
         {languageOptions}
       </ControlSelect>

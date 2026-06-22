@@ -36,14 +36,14 @@ function useBaseFrequencyOptions(baseFrequency: number) {
       selectedPitch === undefined
         ? [
             ...PITCH_OPTIONS.slice(0, customPitchOptionIndex),
-            { pitch: 'custom' as const, label: pitchRangeLabel },
+            { label: pitchRangeLabel, pitch: 'custom' as const },
             ...PITCH_OPTIONS.slice(customPitchOptionIndex),
           ]
         : PITCH_OPTIONS;
 
     return {
-      selectedPitch,
       baseFrequencyPitchOptions,
+      selectedPitch,
     };
   }, [baseFrequency]);
 }

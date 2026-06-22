@@ -7,12 +7,12 @@ import CompressorReductionPreview from './CompressorReductionPreview';
 
 interface CompressorProps {
   compressor: CompressorConfig | null;
+  onAttackChange: (value: number) => void;
   onEnabledChange: (enabled: boolean) => void;
-  onThresholdChange: (value: number) => void;
   onKneeChange: (value: number) => void;
   onRatioChange: (value: number) => void;
-  onAttackChange: (value: number) => void;
   onReleaseChange: (value: number) => void;
+  onThresholdChange: (value: number) => void;
 }
 
 function Compressor({
@@ -27,7 +27,7 @@ function Compressor({
   const { t } = useTranslation('synth');
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="text-lg font-bold my-2">
         <span className="inline-flex items-center gap-1">
           <Ban size={18} />
@@ -37,7 +37,6 @@ function Compressor({
 
       <div className="space-y-3">
         <ControlButton
-          title={t('effect.compressor.enabled')}
           icon={compressor ? <Power size={18} /> : <PowerOff size={18} />}
           label={t(
             compressor
@@ -45,58 +44,59 @@ function Compressor({
               : 'effect.compressor.enabled',
           )}
           onClick={() => onEnabledChange(!compressor)}
+          title={t('effect.compressor.enabled')}
         />
 
         {compressor && (
           <div className="space-y-2">
             <ControlRange
+              displayValue={`${compressor.threshold.toFixed(0)} dB`}
               label={t('effect.compressor.threshold')}
-              min="-100"
               max="0"
+              min="-100"
+              onChange={onThresholdChange}
               step="1"
               value={compressor.threshold}
-              displayValue={`${compressor.threshold.toFixed(0)} dB`}
-              onChange={onThresholdChange}
             />
             <ControlRange
+              displayValue={`${compressor.knee.toFixed(0)} dB`}
               label={t('effect.compressor.knee')}
-              min="0"
               max="40"
+              min="0"
+              onChange={onKneeChange}
               step="1"
               value={compressor.knee}
-              displayValue={`${compressor.knee.toFixed(0)} dB`}
-              onChange={onKneeChange}
             />
             <ControlRange
+              displayValue={`${compressor.ratio.toFixed(1)}:1`}
               label={t('effect.compressor.ratio')}
-              min="1"
               max="20"
+              min="1"
+              onChange={onRatioChange}
               step="0.1"
               value={compressor.ratio}
-              displayValue={`${compressor.ratio.toFixed(1)}:1`}
-              onChange={onRatioChange}
             />
             <ControlRange
+              displayValue={`${(compressor.attack * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.attack')}
-              min="0"
               max="1"
+              min="0"
+              onChange={onAttackChange}
               step="0.001"
               value={compressor.attack}
-              displayValue={`${(compressor.attack * 1000).toFixed(0)} ms`}
-              onChange={onAttackChange}
             />
             <ControlRange
+              displayValue={`${(compressor.release * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.release')}
-              min="0"
               max="1"
+              min="0"
+              onChange={onReleaseChange}
               step="0.001"
               value={compressor.release}
-              displayValue={`${(compressor.release * 1000).toFixed(0)} ms`}
-              onChange={onReleaseChange}
             />
             <CompressorReductionPreview
-              title={t('effect.compressor.reduction')}
               enabled={Boolean(compressor)}
+              title={t('effect.compressor.reduction')}
             />
           </div>
         )}

@@ -70,9 +70,9 @@ function KeyboardControlSettings({
   return (
     <div className="flex flex-col gap-3">
       <ControlCheckbox
-        label={t('settings.keyboardControl')}
-        icon={<Keyboard size={16} />}
         checked={isKeyboardControlEnabled}
+        icon={<Keyboard size={16} />}
+        label={t('settings.keyboardControl')}
         onChange={(e) => setIsKeyboardControlEnabled(e.target.checked)}
       />
       {isKeyboardControlEnabled && (
@@ -83,38 +83,38 @@ function KeyboardControlSettings({
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
             {keyboardNoteMappings.map(({ offset, key }) => (
               <label
-                key={offset}
                 className="
                   grid grid-cols-[1rem_1fr_2rem] items-center gap-2 py-1 px-3
                   rounded-xl bg-app-overlay/15 dark:bg-app-overlay-dark/15
                 "
+                key={offset}
               >
                 <span className="text-sm font-bold">
                   {getOffsetLabel(offset)}
                 </span>
                 <input
-                  id={key}
                   className="
                     min-w-0 text-center p-1
                     rounded-xl bg-app-mantle dark:bg-app-mantle-dark
                     border border-app-border dark:border-app-border-dark
                   "
+                  id={key}
+                  onKeyDown={(e) => handleKeyDown(offset, e)}
+                  placeholder={t('settings.keyboard.empty')}
                   readOnly
                   value={key ? getKeyboardControlKeyLabel(key) : ''}
-                  placeholder={t('settings.keyboard.empty')}
-                  onKeyDown={(e) => handleKeyDown(offset, e)}
                 />
                 <ControlButton
                   disabled={!key}
-                  title={key}
                   icon={<X size={16} />}
                   onClick={() => setMappingKey(offset, '')}
+                  title={key}
                 />
               </label>
             ))}
             <ControlButton
-              label={t('settings.keyboard.reset')}
               icon={<RotateCcw size={20} />}
+              label={t('settings.keyboard.reset')}
               onClick={() =>
                 setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS)
               }

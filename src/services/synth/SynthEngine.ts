@@ -11,8 +11,8 @@ import { EffectChain } from './EffectChain';
 import { getVoiceGainAtTime } from './VoicePlanner';
 
 interface SynthRecordingTarget {
-  stream: MediaStream;
   disconnect: () => void;
+  stream: MediaStream;
 }
 
 export class SynthEngine {
@@ -89,10 +89,10 @@ export class SynthEngine {
     const destinationNode = this.audioContext.createMediaStreamDestination();
     this.outputGainNode.connect(destinationNode);
     return {
-      stream: destinationNode.stream,
       disconnect: () => {
         this.outputGainNode?.disconnect(destinationNode);
       },
+      stream: destinationNode.stream,
     };
   }
 
@@ -126,10 +126,10 @@ export class SynthEngine {
 
     return this.basicVoice.startVoices({
       audioContext: this.audioContext,
+      cents,
       outputNode: effectInputNode,
       pitch,
       volume,
-      cents,
     });
   }
 

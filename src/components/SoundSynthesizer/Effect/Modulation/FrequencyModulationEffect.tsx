@@ -11,9 +11,9 @@ import ModulationCurvePreview from './ModulationCurvePreview';
 
 interface FrequencyModulationEffectProps {
   frequencyModulation: FrequencyModulationConfig | null;
+  onDepthChange: (value: number) => void;
   onEnabledChange: (enabled: boolean) => void;
   onFrequencyChange: (value: number) => void;
-  onDepthChange: (value: number) => void;
 }
 
 function FrequencyModulationEffect({
@@ -32,13 +32,12 @@ function FrequencyModulationEffect({
   );
 
   return (
-    <details open className="space-y-2">
+    <details className="space-y-2" open>
       <summary className="font-semibold">
         {t('effect.modulation.frequencyModulation')}
       </summary>
 
       <ControlButton
-        title={t('effect.modulation.frequencyModulationEnabled')}
         icon={
           frequencyModulation ? <Power size={18} /> : <PowerOff size={18} />
         }
@@ -48,6 +47,7 @@ function FrequencyModulationEffect({
             : 'effect.modulation.frequencyModulationEnabled',
         )}
         onClick={() => onEnabledChange(!frequencyModulation)}
+        title={t('effect.modulation.frequencyModulationEnabled')}
       />
 
       {frequencyModulation && (
@@ -56,29 +56,29 @@ function FrequencyModulationEffect({
             math={String.raw`f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)`}
           />
           <ControlRange
-            label={t('effect.modulation.frequency')}
-            symbol={<InlineMath math="f_m" />}
-            min="0.1"
-            max="20"
-            step="0.1"
-            value={frequencyModulation.frequency}
             displayValue={`${frequencyModulation.frequency.toFixed(1)} Hz`}
+            label={t('effect.modulation.frequency')}
+            max="20"
+            min="0.1"
             onChange={onFrequencyChange}
+            step="0.1"
+            symbol={<InlineMath math="f_m" />}
+            value={frequencyModulation.frequency}
           />
           <ControlRange
-            label={t('effect.modulation.depth')}
-            symbol={<InlineMath math="\Delta c" />}
-            min="0"
-            max="100"
-            step="1"
-            value={frequencyModulation.depth}
             displayValue={`${frequencyModulation.depth.toFixed(0)} ¢`}
+            label={t('effect.modulation.depth')}
+            max="100"
+            min="0"
             onChange={onDepthChange}
+            step="1"
+            symbol={<InlineMath math="\Delta c" />}
+            value={frequencyModulation.depth}
           />
           {frequencyModulationCurve && (
             <ModulationCurvePreview
-              title={t('effect.modulation.frequencyCurve')}
               time={frequencyModulationCurve.time}
+              title={t('effect.modulation.frequencyCurve')}
               values={frequencyModulationCurve.frequencyRatio}
             />
           )}

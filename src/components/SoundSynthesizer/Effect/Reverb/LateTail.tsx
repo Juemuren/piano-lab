@@ -7,10 +7,10 @@ import ControlRange from '../../../shared/ControlRange';
 
 interface LateTailProps {
   lateTail: ReverbLateTailConfig;
+  onAlphaChange: (value: number) => void;
+  onAmplitudeChange: (value: number) => void;
   onDelayChange: (value: number) => void;
   onDurationChange: (value: number) => void;
-  onAmplitudeChange: (value: number) => void;
-  onAlphaChange: (value: number) => void;
 }
 
 function LateTail({
@@ -23,7 +23,7 @@ function LateTail({
   const { t } = useTranslation('synth');
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">
         <span className="inline-flex items-center gap-1">
           <Speaker size={16} />
@@ -34,44 +34,44 @@ function LateTail({
         math={String.raw`h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}`}
       />
       <ControlRange
-        label={t('effect.reverb.lateTail.delay')}
-        symbol={<InlineMath math="D" />}
-        min="0"
-        max="1"
-        step="0.001"
-        value={lateTail.delay}
         displayValue={`${(lateTail.delay * 1000).toFixed(0)} ms`}
-        onChange={onDelayChange}
-      />
-      <ControlRange
-        label={t('effect.reverb.lateTail.duration')}
-        symbol={<InlineMath math="T" />}
-        min="0.1"
-        max="8"
-        step="0.01"
-        value={lateTail.duration}
-        displayValue={`${lateTail.duration.toFixed(2)} s`}
-        onChange={onDurationChange}
-      />
-      <ControlRange
-        label={t('effect.reverb.lateTail.amplitude')}
-        symbol={<InlineMath math="A" />}
+        label={t('effect.reverb.lateTail.delay')}
+        max="1"
         min="0"
-        max="0.1"
+        onChange={onDelayChange}
         step="0.001"
-        value={lateTail.amplitude}
-        displayValue={lateTail.amplitude.toFixed(3)}
-        onChange={onAmplitudeChange}
+        symbol={<InlineMath math="D" />}
+        value={lateTail.delay}
       />
       <ControlRange
-        label={t('effect.reverb.lateTail.alpha')}
-        symbol={<InlineMath math="\alpha" />}
-        min="0.00001"
-        max="0.001"
-        step="0.00001"
-        value={lateTail.alpha}
+        displayValue={`${lateTail.duration.toFixed(2)} s`}
+        label={t('effect.reverb.lateTail.duration')}
+        max="8"
+        min="0.1"
+        onChange={onDurationChange}
+        step="0.01"
+        symbol={<InlineMath math="T" />}
+        value={lateTail.duration}
+      />
+      <ControlRange
+        displayValue={lateTail.amplitude.toFixed(3)}
+        label={t('effect.reverb.lateTail.amplitude')}
+        max="0.1"
+        min="0"
+        onChange={onAmplitudeChange}
+        step="0.001"
+        symbol={<InlineMath math="A" />}
+        value={lateTail.amplitude}
+      />
+      <ControlRange
         displayValue={lateTail.alpha.toExponential(5)}
+        label={t('effect.reverb.lateTail.alpha')}
+        max="0.001"
+        min="0.00001"
         onChange={onAlphaChange}
+        step="0.00001"
+        symbol={<InlineMath math="\alpha" />}
+        value={lateTail.alpha}
       />
     </details>
   );

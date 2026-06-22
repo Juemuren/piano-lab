@@ -10,10 +10,10 @@ import ControlSelect from '../../../shared/ControlSelect';
 interface FilterProps {
   filters: FilterConfig[];
   onAdd: (type: FilterType) => void;
-  onRemove: (index: number) => void;
-  onTypeChange: (index: number, type: FilterType) => void;
   onFrequencyChange: (index: number, value: number) => void;
   onQChange: (index: number, value: number) => void;
+  onRemove: (index: number) => void;
+  onTypeChange: (index: number, type: FilterType) => void;
 }
 
 function Filter({
@@ -29,14 +29,14 @@ function Filter({
     useState<FilterType>(DEFAULT_FILTER_TYPE);
 
   const filterTypeLabels: Record<FilterType, string> = {
-    lowpass: t('effect.filter.lowpass.name'),
-    highpass: t('effect.filter.highpass.name'),
     bandpass: t('effect.filter.bandpass.name'),
+    highpass: t('effect.filter.highpass.name'),
+    lowpass: t('effect.filter.lowpass.name'),
     notch: t('effect.filter.notch.name'),
   };
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="font-bold my-2">
         <span className="inline-flex items-center gap-1">
           <FilterIcon size={16} />
@@ -46,19 +46,19 @@ function Filter({
 
       <div className="space-y-3">
         {filters.map((filter, index) => (
-          <div key={index} className="space-y-2">
+          <div className="space-y-2" key={index}>
             <div className="grid gap-2 grid-cols-[auto_1fr]">
               <ControlButton
-                title={t('effect.filter.name')}
                 icon={<Minus size={18} />}
                 onClick={() => onRemove(index)}
+                title={t('effect.filter.name')}
               />
               <ControlSelect
-                title={t('effect.filter.name')}
-                value={filter.type}
                 onChange={(e) =>
                   onTypeChange(index, e.target.value as FilterType)
                 }
+                title={t('effect.filter.name')}
+                value={filter.type}
               >
                 <option value="lowpass">{filterTypeLabels.lowpass}</option>
                 <option value="highpass">{filterTypeLabels.highpass}</option>
@@ -68,38 +68,38 @@ function Filter({
             </div>
 
             <ControlRange
+              displayValue={`${filter.frequency.toFixed(0)} Hz`}
               label={t(`effect.filter.${filter.type}.frequency`)}
-              min="20"
               max="20000"
+              min="20"
+              onChange={(value) => onFrequencyChange(index, value)}
               step="1"
               value={filter.frequency}
-              displayValue={`${filter.frequency.toFixed(0)} Hz`}
-              onChange={(value) => onFrequencyChange(index, value)}
             />
             <ControlRange
+              displayValue={filter.q.toFixed(1)}
               label={t(`effect.filter.${filter.type}.q`)}
-              min="0.1"
               max="20"
+              min="0.1"
+              onChange={(value) => onQChange(index, value)}
               step="0.1"
               value={filter.q}
-              displayValue={filter.q.toFixed(1)}
-              onChange={(value) => onQChange(index, value)}
             />
           </div>
         ))}
 
         <div className="grid gap-2 grid-cols-[auto_1fr]">
           <ControlButton
-            title={t('effect.filter.name')}
             icon={<Plus size={18} />}
             onClick={() => onAdd(selectedFilterType)}
+            title={t('effect.filter.name')}
           />
           <ControlSelect
-            title={t('effect.filter.name')}
-            value={selectedFilterType}
             onChange={(e) =>
               setSelectedFilterType(e.target.value as FilterType)
             }
+            title={t('effect.filter.name')}
+            value={selectedFilterType}
           >
             <option value="lowpass">{filterTypeLabels.lowpass}</option>
             <option value="highpass">{filterTypeLabels.highpass}</option>

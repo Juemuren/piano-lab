@@ -33,48 +33,48 @@ function App() {
           "
         >
           <section
-            id={SECTION_IDS.soundSynthesizer}
             className="mx-auto w-full min-w-0 scroll-mt-16 xl:flex-1"
+            id={SECTION_IDS.soundSynthesizer}
           >
             <CollapsibleSection
-              title={t('sections.soundSynthesizer')}
               icon={
                 <SectionIcon
                   sectionId={SECTION_IDS.soundSynthesizer}
                   size={24}
                 />
               }
+              title={t('sections.soundSynthesizer')}
             >
               <SoundSynthesizer />
             </CollapsibleSection>
           </section>
           <section
-            id={SECTION_IDS.scoreEditor}
             className="mx-auto w-full min-w-0 scroll-mt-16 xl:flex-1"
+            id={SECTION_IDS.scoreEditor}
           >
             <CollapsibleSection
-              title={t('sections.scoreEditor')}
               icon={
                 <SectionIcon sectionId={SECTION_IDS.scoreEditor} size={24} />
               }
+              title={t('sections.scoreEditor')}
             >
               <AbcEditor />
             </CollapsibleSection>
           </section>
         </div>
 
-        <section id={SECTION_IDS.pianoKeyboard} className="scroll-mt-16">
+        <section className="scroll-mt-16" id={SECTION_IDS.pianoKeyboard}>
           <Piano />
         </section>
 
         <section
-          id={SECTION_IDS.settings}
           className="mx-auto w-full sm:w-lg lg:w-2xl xl:w-4xl scroll-mt-16"
+          id={SECTION_IDS.settings}
         >
           <CollapsibleSection
-            title={t('sections.settings')}
-            icon={<SectionIcon sectionId={SECTION_IDS.settings} size={24} />}
             bgClassName="bg-app-base dark:bg-app-base-dark"
+            icon={<SectionIcon sectionId={SECTION_IDS.settings} size={24} />}
+            title={t('sections.settings')}
           >
             <SettingsPanel />
           </CollapsibleSection>

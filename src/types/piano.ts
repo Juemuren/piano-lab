@@ -6,16 +6,16 @@ export type MidiStatus =
   | 'error';
 
 export interface MidiInputDevice {
-  id: string;
-  name: string;
-  manufacturer: string;
-  state: MIDIPortDeviceState;
   connection: MIDIPortConnectionState;
+  id: string;
+  manufacturer: string;
+  name: string;
+  state: MIDIPortDeviceState;
 }
 
 export interface MidiControlState {
+  activeInputId: string;
   activeNotes: Set<number>;
   devices: MidiInputDevice[];
-  activeInputId: string;
   status: MidiStatus;
 }

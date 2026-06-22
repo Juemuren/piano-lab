@@ -45,12 +45,12 @@ function useCompressorControl(initialCompressor: CompressorConfig | null) {
 
   return {
     compressor,
+    updateCompressorAttack,
     updateCompressorEnabled,
-    updateCompressorThreshold,
     updateCompressorKnee,
     updateCompressorRatio,
-    updateCompressorAttack,
     updateCompressorRelease,
+    updateCompressorThreshold,
   };
 }
 

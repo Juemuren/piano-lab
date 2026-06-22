@@ -18,12 +18,12 @@ function useAbcExports(abcContent: string) {
   const handleExportMidi = useMidiExport(abcContent);
 
   return {
-    renderTargetRef,
     handleExportAbc,
-    handleExportSvg,
-    handleExportPng,
-    handleExportPdf,
     handleExportMidi,
+    handleExportPdf,
+    handleExportPng,
+    handleExportSvg,
+    renderTargetRef,
   };
 }
 

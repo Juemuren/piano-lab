@@ -13,21 +13,21 @@ import PhaseModulationEffect from './PhaseModulationEffect';
 
 interface ModulationProps {
   amplitudeModulation: AmplitudeModulationConfig | null;
-  frequencyModulation: FrequencyModulationConfig | null;
-  phaseModulation: PhaseModulationConfig | null;
   delayModulation: DelayModulationConfig | null;
+  frequencyModulation: FrequencyModulationConfig | null;
+  onAmplitudeModulationDepthChange: (value: number) => void;
   onAmplitudeModulationEnabledChange: (enabled: boolean) => void;
   onAmplitudeModulationFrequencyChange: (value: number) => void;
-  onAmplitudeModulationDepthChange: (value: number) => void;
-  onFrequencyModulationEnabledChange: (enabled: boolean) => void;
-  onFrequencyModulationFrequencyChange: (value: number) => void;
-  onFrequencyModulationDepthChange: (value: number) => void;
-  onPhaseModulationEnabledChange: (enabled: boolean) => void;
-  onPhaseModulationFrequencyChange: (value: number) => void;
-  onPhaseModulationDepthChange: (value: number) => void;
+  onDelayModulationDepthChange: (value: number) => void;
   onDelayModulationEnabledChange: (enabled: boolean) => void;
   onDelayModulationFrequencyChange: (value: number) => void;
-  onDelayModulationDepthChange: (value: number) => void;
+  onFrequencyModulationDepthChange: (value: number) => void;
+  onFrequencyModulationEnabledChange: (enabled: boolean) => void;
+  onFrequencyModulationFrequencyChange: (value: number) => void;
+  onPhaseModulationDepthChange: (value: number) => void;
+  onPhaseModulationEnabledChange: (enabled: boolean) => void;
+  onPhaseModulationFrequencyChange: (value: number) => void;
+  phaseModulation: PhaseModulationConfig | null;
 }
 
 function Modulation({
@@ -51,7 +51,7 @@ function Modulation({
   const { t } = useTranslation('synth');
 
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="text-lg font-bold my-2">
         <span className="inline-flex items-center gap-1">
           <AudioLines size={18} />
@@ -62,27 +62,27 @@ function Modulation({
       <div className="space-y-4">
         <AmplitudeModulationEffect
           amplitudeModulation={amplitudeModulation}
+          onDepthChange={onAmplitudeModulationDepthChange}
           onEnabledChange={onAmplitudeModulationEnabledChange}
           onFrequencyChange={onAmplitudeModulationFrequencyChange}
-          onDepthChange={onAmplitudeModulationDepthChange}
         />
         <FrequencyModulationEffect
           frequencyModulation={frequencyModulation}
+          onDepthChange={onFrequencyModulationDepthChange}
           onEnabledChange={onFrequencyModulationEnabledChange}
           onFrequencyChange={onFrequencyModulationFrequencyChange}
-          onDepthChange={onFrequencyModulationDepthChange}
         />
         <PhaseModulationEffect
-          phaseModulation={phaseModulation}
+          onDepthChange={onPhaseModulationDepthChange}
           onEnabledChange={onPhaseModulationEnabledChange}
           onFrequencyChange={onPhaseModulationFrequencyChange}
-          onDepthChange={onPhaseModulationDepthChange}
+          phaseModulation={phaseModulation}
         />
         <DelayModulationEffect
           delayModulation={delayModulation}
+          onDepthChange={onDelayModulationDepthChange}
           onEnabledChange={onDelayModulationEnabledChange}
           onFrequencyChange={onDelayModulationFrequencyChange}
-          onDepthChange={onDelayModulationDepthChange}
         />
       </div>
     </details>

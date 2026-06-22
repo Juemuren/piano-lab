@@ -178,10 +178,10 @@ function useAbcPlayback({
     };
 
     visualObjRef.current = renderAbc(renderTargetId, abcContent, {
+      clickListener,
+      oneSvgPerLine: true,
       responsive: 'resize',
       selectionColor: 'currentColor',
-      oneSvgPerLine: true,
-      clickListener,
     })[0];
     visualObjRef.current.setUpAudio({});
     const timingCallbacks = new TimingCallbacks(visualObjRef.current, {
@@ -221,16 +221,16 @@ function useAbcPlayback({
   ]);
 
   return {
-    isPlaying,
-    isPlaybackEnded,
-    hasNotes,
     currentSeconds,
-    totalSeconds,
-    handlePlay,
     handlePause,
-    handleReplay,
+    handlePlay,
     handleProgressChange,
+    handleReplay,
+    hasNotes,
+    isPlaybackEnded,
+    isPlaying,
     resetProgress,
+    totalSeconds,
   };
 }
 

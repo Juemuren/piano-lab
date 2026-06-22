@@ -96,14 +96,14 @@ function normalizeSpectrumConfig(
   const record = isRecord(value) ? value : {};
 
   return {
-    type: unionOrDefault(record.type, SPECTRUM_TYPES, fallback.type),
-    lambda: numberOrDefault(record.lambda, fallback.lambda),
-    sigma: numberOrDefault(record.sigma, fallback.sigma),
-    p: numberOrDefault(record.p, fallback.p),
     customAmplitudes: numberArrayOrDefault(
       record.customAmplitudes,
       fallback.customAmplitudes,
     ),
+    lambda: numberOrDefault(record.lambda, fallback.lambda),
+    p: numberOrDefault(record.p, fallback.p),
+    sigma: numberOrDefault(record.sigma, fallback.sigma),
+    type: unionOrDefault(record.type, SPECTRUM_TYPES, fallback.type),
   };
 }
 
@@ -111,9 +111,9 @@ function normalizeFilterConfig(value: unknown): FilterConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    type: unionOrDefault(value.type, FILTER_TYPES, DEFAULT_FILTER_TYPE),
     frequency: numberOrDefault(value.frequency, DEFAULT_FILTER_FREQUENCY),
     q: numberOrDefault(value.q, DEFAULT_FILTER_Q),
+    type: unionOrDefault(value.type, FILTER_TYPES, DEFAULT_FILTER_TYPE),
   };
 }
 
@@ -121,10 +121,10 @@ function normalizeEqualizerConfig(value: unknown): EqualizerConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    type: unionOrDefault(value.type, EQUALIZER_TYPES, DEFAULT_EQUALIZER_TYPE),
     frequency: numberOrDefault(value.frequency, DEFAULT_EQUALIZER_FREQUENCY),
-    q: numberOrDefault(value.q, DEFAULT_EQUALIZER_Q),
     gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_GAIN),
+    q: numberOrDefault(value.q, DEFAULT_EQUALIZER_Q),
+    type: unionOrDefault(value.type, EQUALIZER_TYPES, DEFAULT_EQUALIZER_TYPE),
   };
 }
 
@@ -132,11 +132,11 @@ function normalizeCompressorConfig(value: unknown): CompressorConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    threshold: numberOrDefault(value.threshold, DEFAULT_COMPRESSOR_THRESHOLD),
+    attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
     knee: numberOrDefault(value.knee, DEFAULT_COMPRESSOR_KNEE),
     ratio: numberOrDefault(value.ratio, DEFAULT_COMPRESSOR_RATIO),
-    attack: numberOrDefault(value.attack, DEFAULT_COMPRESSOR_ATTACK),
     release: numberOrDefault(value.release, DEFAULT_COMPRESSOR_RELEASE),
+    threshold: numberOrDefault(value.threshold, DEFAULT_COMPRESSOR_THRESHOLD),
   };
 }
 
@@ -146,11 +146,11 @@ function normalizeAmplitudeModulationConfig(
   if (!isRecord(value)) return null;
 
   return {
+    depth: numberOrDefault(value.depth, DEFAULT_AMPLITUDE_MODULATION_DEPTH),
     frequency: numberOrDefault(
       value.frequency,
       DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
     ),
-    depth: numberOrDefault(value.depth, DEFAULT_AMPLITUDE_MODULATION_DEPTH),
   };
 }
 
@@ -160,11 +160,11 @@ function normalizeFrequencyModulationConfig(
   if (!isRecord(value)) return null;
 
   return {
+    depth: numberOrDefault(value.depth, DEFAULT_FREQUENCY_MODULATION_DEPTH),
     frequency: numberOrDefault(
       value.frequency,
       DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
     ),
-    depth: numberOrDefault(value.depth, DEFAULT_FREQUENCY_MODULATION_DEPTH),
   };
 }
 
@@ -174,11 +174,11 @@ function normalizePhaseModulationConfig(
   if (!isRecord(value)) return null;
 
   return {
+    depth: numberOrDefault(value.depth, DEFAULT_PHASE_MODULATION_DEPTH),
     frequency: numberOrDefault(
       value.frequency,
       DEFAULT_PHASE_MODULATION_FREQUENCY,
     ),
-    depth: numberOrDefault(value.depth, DEFAULT_PHASE_MODULATION_DEPTH),
   };
 }
 
@@ -188,11 +188,11 @@ function normalizeDelayModulationConfig(
   if (!isRecord(value)) return null;
 
   return {
+    depth: numberOrDefault(value.depth, DEFAULT_DELAY_MODULATION_DEPTH),
     frequency: numberOrDefault(
       value.frequency,
       DEFAULT_DELAY_MODULATION_FREQUENCY,
     ),
-    depth: numberOrDefault(value.depth, DEFAULT_DELAY_MODULATION_DEPTH),
   };
 }
 
@@ -200,6 +200,12 @@ function normalizeWaveShaperConfig(value: unknown): WaveShaperConfig | null {
   if (!isRecord(value)) return null;
 
   return {
+    distortion: numberOrDefault(
+      value.distortion,
+      DEFAULT_WAVE_SHAPER_DISTORTION,
+    ),
+    fuzz: numberOrDefault(value.fuzz, DEFAULT_WAVE_SHAPER_FUZZ),
+    overdrive: numberOrDefault(value.overdrive, DEFAULT_WAVE_SHAPER_OVERDRIVE),
     preset: unionOrDefault(
       value.preset,
       WAVE_SHAPER_PRESETS,
@@ -209,12 +215,6 @@ function normalizeWaveShaperConfig(value: unknown): WaveShaperConfig | null {
       value.saturation,
       DEFAULT_WAVE_SHAPER_SATURATION,
     ),
-    distortion: numberOrDefault(
-      value.distortion,
-      DEFAULT_WAVE_SHAPER_DISTORTION,
-    ),
-    overdrive: numberOrDefault(value.overdrive, DEFAULT_WAVE_SHAPER_OVERDRIVE),
-    fuzz: numberOrDefault(value.fuzz, DEFAULT_WAVE_SHAPER_FUZZ),
   };
 }
 
@@ -222,19 +222,27 @@ function normalizePannerConfig(value: unknown): PannerConfig | null {
   if (!isRecord(value)) return null;
 
   return {
-    panningModel: unionOrDefault(
-      value.panningModel,
-      PANNER_PANNING_MODELS,
-      DEFAULT_PANNER_PANNING_MODEL,
+    coneInnerAngle: numberOrDefault(
+      value.coneInnerAngle,
+      DEFAULT_PANNER_CONE_INNER_ANGLE,
+    ),
+    coneOuterAngle: numberOrDefault(
+      value.coneOuterAngle,
+      DEFAULT_PANNER_CONE_OUTER_ANGLE,
+    ),
+    coneOuterGain: numberOrDefault(
+      value.coneOuterGain,
+      DEFAULT_PANNER_CONE_OUTER_GAIN,
     ),
     distanceModel: unionOrDefault(
       value.distanceModel,
       PANNER_DISTANCE_MODELS,
       DEFAULT_PANNER_DISTANCE_MODEL,
     ),
-    positionX: numberOrDefault(value.positionX, DEFAULT_PANNER_POSITION_X),
-    positionY: numberOrDefault(value.positionY, DEFAULT_PANNER_POSITION_Y),
-    positionZ: numberOrDefault(value.positionZ, DEFAULT_PANNER_POSITION_Z),
+    maxDistance: numberOrDefault(
+      value.maxDistance,
+      DEFAULT_PANNER_MAX_DISTANCE,
+    ),
     orientationX: numberOrDefault(
       value.orientationX,
       DEFAULT_PANNER_ORIENTATION_X,
@@ -247,29 +255,21 @@ function normalizePannerConfig(value: unknown): PannerConfig | null {
       value.orientationZ,
       DEFAULT_PANNER_ORIENTATION_Z,
     ),
+    panningModel: unionOrDefault(
+      value.panningModel,
+      PANNER_PANNING_MODELS,
+      DEFAULT_PANNER_PANNING_MODEL,
+    ),
+    positionX: numberOrDefault(value.positionX, DEFAULT_PANNER_POSITION_X),
+    positionY: numberOrDefault(value.positionY, DEFAULT_PANNER_POSITION_Y),
+    positionZ: numberOrDefault(value.positionZ, DEFAULT_PANNER_POSITION_Z),
     refDistance: numberOrDefault(
       value.refDistance,
       DEFAULT_PANNER_REF_DISTANCE,
     ),
-    maxDistance: numberOrDefault(
-      value.maxDistance,
-      DEFAULT_PANNER_MAX_DISTANCE,
-    ),
     rolloffFactor: numberOrDefault(
       value.rolloffFactor,
       DEFAULT_PANNER_ROLLOFF_FACTOR,
-    ),
-    coneInnerAngle: numberOrDefault(
-      value.coneInnerAngle,
-      DEFAULT_PANNER_CONE_INNER_ANGLE,
-    ),
-    coneOuterAngle: numberOrDefault(
-      value.coneOuterAngle,
-      DEFAULT_PANNER_CONE_OUTER_ANGLE,
-    ),
-    coneOuterGain: numberOrDefault(
-      value.coneOuterGain,
-      DEFAULT_PANNER_CONE_OUTER_GAIN,
     ),
   };
 }
@@ -292,8 +292,6 @@ function normalizeReverbConfig(value: unknown): ReverbConfig | null {
       : createReverbConfig(preset, mix);
 
   return {
-    preset,
-    mix,
     earlyReflections: Array.isArray(value.earlyReflections)
       ? value.earlyReflections
           .map(normalizeReverbEarlyReflectionConfig)
@@ -302,6 +300,8 @@ function normalizeReverbConfig(value: unknown): ReverbConfig | null {
           )
       : fallback.earlyReflections,
     lateTail: normalizeReverbLateTailConfig(value.lateTail, fallback.lateTail),
+    mix,
+    preset,
   };
 }
 
@@ -324,16 +324,16 @@ function normalizeReverbLateTailConfig(
   if (!isRecord(value)) return fallback;
 
   return {
+    alpha: numberOrDefault(value.alpha, DEFAULT_REVERB_LATE_TAIL_ALPHA),
+    amplitude: numberOrDefault(
+      value.amplitude,
+      DEFAULT_REVERB_LATE_TAIL_AMPLITUDE,
+    ),
     delay: numberOrDefault(value.delay, DEFAULT_REVERB_LATE_TAIL_DELAY),
     duration: numberOrDefault(
       value.duration,
       DEFAULT_REVERB_LATE_TAIL_DURATION,
     ),
-    amplitude: numberOrDefault(
-      value.amplitude,
-      DEFAULT_REVERB_LATE_TAIL_AMPLITUDE,
-    ),
-    alpha: numberOrDefault(value.alpha, DEFAULT_REVERB_LATE_TAIL_ALPHA),
   };
 }
 
@@ -344,11 +344,18 @@ function normalizeEffectConfig(
   if (!isRecord(value)) return fallback;
 
   return {
-    filters: Array.isArray(value.filters)
-      ? value.filters
-          .map(normalizeFilterConfig)
-          .filter((filter): filter is FilterConfig => Boolean(filter))
-      : fallback.filters,
+    amplitudeModulation:
+      value.amplitudeModulation === undefined
+        ? fallback.amplitudeModulation
+        : normalizeAmplitudeModulationConfig(value.amplitudeModulation),
+    compressor:
+      value.compressor === undefined
+        ? fallback.compressor
+        : normalizeCompressorConfig(value.compressor),
+    delayModulation:
+      value.delayModulation === undefined
+        ? fallback.delayModulation
+        : normalizeDelayModulationConfig(value.delayModulation),
     equalizers: Array.isArray(value.equalizers)
       ? value.equalizers
           .map(normalizeEqualizerConfig)
@@ -356,38 +363,31 @@ function normalizeEffectConfig(
             Boolean(equalizer),
           )
       : fallback.equalizers,
-    amplitudeModulation:
-      value.amplitudeModulation === undefined
-        ? fallback.amplitudeModulation
-        : normalizeAmplitudeModulationConfig(value.amplitudeModulation),
+    filters: Array.isArray(value.filters)
+      ? value.filters
+          .map(normalizeFilterConfig)
+          .filter((filter): filter is FilterConfig => Boolean(filter))
+      : fallback.filters,
     frequencyModulation:
       value.frequencyModulation === undefined
         ? fallback.frequencyModulation
         : normalizeFrequencyModulationConfig(value.frequencyModulation),
-    phaseModulation:
-      value.phaseModulation === undefined
-        ? fallback.phaseModulation
-        : normalizePhaseModulationConfig(value.phaseModulation),
-    delayModulation:
-      value.delayModulation === undefined
-        ? fallback.delayModulation
-        : normalizeDelayModulationConfig(value.delayModulation),
-    waveShaper:
-      value.waveShaper === undefined
-        ? fallback.waveShaper
-        : normalizeWaveShaperConfig(value.waveShaper),
-    compressor:
-      value.compressor === undefined
-        ? fallback.compressor
-        : normalizeCompressorConfig(value.compressor),
     panner:
       value.panner === undefined
         ? fallback.panner
         : normalizePannerConfig(value.panner),
+    phaseModulation:
+      value.phaseModulation === undefined
+        ? fallback.phaseModulation
+        : normalizePhaseModulationConfig(value.phaseModulation),
     reverb:
       value.reverb === undefined
         ? fallback.reverb
         : normalizeReverbConfig(value.reverb),
+    waveShaper:
+      value.waveShaper === undefined
+        ? fallback.waveShaper
+        : normalizeWaveShaperConfig(value.waveShaper),
   };
 }
 
@@ -399,20 +399,7 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
   const envelope = isRecord(value.envelope) ? value.envelope : {};
 
   return {
-    synth: {
-      oscillatorType: unionOrDefault(
-        synth.oscillatorType,
-        OSCILLATOR_TYPES,
-        fallback.synth.oscillatorType,
-      ),
-      volumeRatio: numberOrDefault(
-        synth.volumeRatio,
-        fallback.synth.volumeRatio,
-      ),
-      harmonicCount: Math.round(
-        numberOrDefault(synth.harmonicCount, fallback.synth.harmonicCount),
-      ),
-    },
+    effect: normalizeEffectConfig(value.effect, fallback.effect),
     envelope: {
       attackTime: numberOrDefault(
         envelope.attackTime,
@@ -426,16 +413,29 @@ export function normalizeSynthConfig(value: unknown): SynthConfig | null {
         envelope.releaseTime,
         DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
       ),
-      sustainGain: numberOrDefault(
-        envelope.sustainGain,
-        DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-      ),
       silenceGain: numberOrDefault(
         envelope.silenceGain,
         DEFAULT_ENVELOPE_SILENCE_GAIN,
       ),
+      sustainGain: numberOrDefault(
+        envelope.sustainGain,
+        DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+      ),
     },
     spectrum: normalizeSpectrumConfig(value.spectrum, fallback.spectrum),
-    effect: normalizeEffectConfig(value.effect, fallback.effect),
+    synth: {
+      harmonicCount: Math.round(
+        numberOrDefault(synth.harmonicCount, fallback.synth.harmonicCount),
+      ),
+      oscillatorType: unionOrDefault(
+        synth.oscillatorType,
+        OSCILLATOR_TYPES,
+        fallback.synth.oscillatorType,
+      ),
+      volumeRatio: numberOrDefault(
+        synth.volumeRatio,
+        fallback.synth.volumeRatio,
+      ),
+    },
   };
 }

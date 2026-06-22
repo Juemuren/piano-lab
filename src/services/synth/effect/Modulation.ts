@@ -24,13 +24,13 @@ export function getAmplitudeModulationCurvePoints(
   const depth = Math.min(Math.max(amplitudeModulation.depth, 0), 0.5);
 
   return {
-    time,
     gainRatio: time.map(
       (t) =>
         1 -
         depth +
         depth * Math.sin(2 * Math.PI * amplitudeModulation.frequency * t),
     ),
+    time,
   };
 }
 
@@ -42,13 +42,13 @@ export function getFrequencyModulationCurvePoints(
     2 ** (Math.max(frequencyModulation.depth, 0) / 1200) - 1;
 
   return {
-    time,
     frequencyRatio: time.map(
       (t) =>
         1 +
         frequencyRatioDepth *
           Math.sin(2 * Math.PI * frequencyModulation.frequency * t),
     ),
+    time,
   };
 }
 
@@ -59,10 +59,10 @@ export function getPhaseModulationCurvePoints(
   const depth = Math.min(Math.max(phaseModulation.depth, 0), Math.PI);
 
   return {
-    time,
     phase: time.map(
       (t) => depth * Math.sin(2 * Math.PI * phaseModulation.frequency * t),
     ),
+    time,
   };
 }
 
@@ -73,11 +73,11 @@ export function getDelayModulationCurvePoints(
   const depth = Math.max(delayModulation.depth, 0);
 
   return {
-    time,
     delaySeconds: time.map(
       (t) =>
         depth / 2 +
         (depth / 2) * Math.sin(2 * Math.PI * delayModulation.frequency * t),
     ),
+    time,
   };
 }

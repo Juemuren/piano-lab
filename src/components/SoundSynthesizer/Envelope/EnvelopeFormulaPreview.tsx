@@ -6,7 +6,7 @@ interface EnvelopeFormulaPreviewProps {
 
 function EnvelopeFormulaPreview({ title }: EnvelopeFormulaPreviewProps) {
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="text-lg font-bold">{title}</summary>
       <BlockMath
         math={String.raw`

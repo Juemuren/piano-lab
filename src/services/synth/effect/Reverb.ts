@@ -25,39 +25,10 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       { delay: 0.015, gain: 0.1, phase: 0 },
     ],
     lateTail: {
+      alpha: 0.0002,
+      amplitude: 0.02,
       delay: 0.02,
       duration: 0.5,
-      amplitude: 0.02,
-      alpha: 0.0002,
-    },
-  },
-  garage: {
-    earlyReflections: [
-      { delay: 0.01, gain: 0.25, phase: 0 },
-      { delay: 0.02, gain: 0.2, phase: 180 },
-      { delay: 0.03, gain: 0.15, phase: 0 },
-      { delay: 0.04, gain: 0.1, phase: 180 },
-    ],
-    lateTail: {
-      delay: 0.05,
-      duration: 1,
-      amplitude: 0.015,
-      alpha: 0.00015,
-    },
-  },
-  hall: {
-    earlyReflections: [
-      { delay: 0.015, gain: 0.15, phase: 0 },
-      { delay: 0.03, gain: 0.125, phase: 180 },
-      { delay: 0.045, gain: 0.1, phase: 0 },
-      { delay: 0.06, gain: 0.075, phase: 180 },
-      { delay: 0.075, gain: 0.05, phase: 0 },
-    ],
-    lateTail: {
-      delay: 0.09,
-      duration: 2,
-      amplitude: 0.01,
-      alpha: 0.0001,
     },
   },
   cathedral: {
@@ -70,10 +41,39 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       { delay: 0.23, gain: 0.02, phase: 180 },
     ],
     lateTail: {
+      alpha: 0.00005,
+      amplitude: 0.005,
       delay: 0.25,
       duration: 4,
-      amplitude: 0.005,
-      alpha: 0.00005,
+    },
+  },
+  garage: {
+    earlyReflections: [
+      { delay: 0.01, gain: 0.25, phase: 0 },
+      { delay: 0.02, gain: 0.2, phase: 180 },
+      { delay: 0.03, gain: 0.15, phase: 0 },
+      { delay: 0.04, gain: 0.1, phase: 180 },
+    ],
+    lateTail: {
+      alpha: 0.00015,
+      amplitude: 0.015,
+      delay: 0.05,
+      duration: 1,
+    },
+  },
+  hall: {
+    earlyReflections: [
+      { delay: 0.015, gain: 0.15, phase: 0 },
+      { delay: 0.03, gain: 0.125, phase: 180 },
+      { delay: 0.045, gain: 0.1, phase: 0 },
+      { delay: 0.06, gain: 0.075, phase: 180 },
+      { delay: 0.075, gain: 0.05, phase: 0 },
+    ],
+    lateTail: {
+      alpha: 0.0001,
+      amplitude: 0.01,
+      delay: 0.09,
+      duration: 2,
     },
   },
 };
@@ -127,8 +127,8 @@ export function getReverbImpulseResponseSamples(
   }
 
   return {
-    time,
     amplitude,
+    time,
   };
 }
 
@@ -139,14 +139,14 @@ export function createReverbConfig(
   const definition = REVERB_PRESET_DEFINITIONS[preset];
 
   return {
-    preset,
-    mix,
     earlyReflections: definition.earlyReflections.map((reflection) => ({
       ...reflection,
     })),
     lateTail: {
       ...definition.lateTail,
     },
+    mix,
+    preset,
   };
 }
 

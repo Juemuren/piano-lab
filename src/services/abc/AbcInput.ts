@@ -6,30 +6,30 @@ const MAX_DENOMINATOR = 32;
 const MEASURES_PER_LINE = 4;
 const PITCH_CLASS_COUNT = 12;
 const NATURAL_PITCH_CLASSES = {
+  A: 9,
+  B: 11,
   C: 0,
   D: 2,
   E: 4,
   F: 5,
   G: 7,
-  A: 9,
-  B: 11,
 } as const;
 const KEY_ACCIDENTALS = [
-  { root: 'C', offset: 0 },
-  { root: 'G', offset: 1 },
-  { root: 'D', offset: 2 },
-  { root: 'A', offset: 3 },
-  { root: 'E', offset: 4 },
-  { root: 'B', offset: 5 },
-  { root: 'F', offset: -1 },
-  { root: 'Bb', offset: -2 },
-  { root: 'Eb', offset: -3 },
-  { root: 'Ab', offset: -4 },
-  { root: 'Db', offset: -5 },
-  { root: 'F#', offset: 6 },
-  { root: 'C#', offset: 7 },
-  { root: 'Gb', offset: -6 },
-  { root: 'Cb', offset: -7 },
+  { offset: 0, root: 'C' },
+  { offset: 1, root: 'G' },
+  { offset: 2, root: 'D' },
+  { offset: 3, root: 'A' },
+  { offset: 4, root: 'E' },
+  { offset: 5, root: 'B' },
+  { offset: -1, root: 'F' },
+  { offset: -2, root: 'Bb' },
+  { offset: -3, root: 'Eb' },
+  { offset: -4, root: 'Ab' },
+  { offset: -5, root: 'Db' },
+  { offset: 6, root: 'F#' },
+  { offset: 7, root: 'C#' },
+  { offset: -6, root: 'Gb' },
+  { offset: -7, root: 'Cb' },
 ] as const;
 const SHARP_ORDER = ['F', 'C', 'G', 'D', 'A', 'E', 'B'] as const;
 const FLAT_ORDER = ['B', 'E', 'A', 'D', 'G', 'C', 'F'] as const;
@@ -181,11 +181,11 @@ function getFraction(value: number) {
   for (let denominator = 1; denominator <= MAX_DENOMINATOR; denominator *= 2) {
     const numerator = Math.round(value * denominator);
     if (Math.abs(value - numerator / denominator) < Number.EPSILON) {
-      return { numerator, denominator };
+      return { denominator, numerator };
     }
   }
 
-  return { numerator: Math.round(value), denominator: 1 };
+  return { denominator: 1, numerator: Math.round(value) };
 }
 
 function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
@@ -386,12 +386,12 @@ function getAbcPitchWithKeySignature(
       const keyAccidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
 
       return ([-1, 1] as const).map((accidental) => ({
-        naturalPitchClass,
         accidental,
+        naturalPitchClass,
+        priority: Math.abs(accidental - keyAccidental),
         signedPitchClass: normalizePitchClass(
           NATURAL_PITCH_CLASSES[naturalPitchClass] + accidental,
         ),
-        priority: Math.abs(accidental - keyAccidental),
       }));
     })
     .filter(({ signedPitchClass }) => signedPitchClass === pitchClass)

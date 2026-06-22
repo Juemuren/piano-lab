@@ -4,16 +4,16 @@ import ControlButton from '../shared/ControlButton';
 import FileImportButton from '../shared/FileImportButton';
 
 interface AbcFileToolbarProps {
-  fileInputRef: RefObject<HTMLInputElement | null>;
   canExportAbc: boolean;
   canExportRenderedScore: boolean;
-  onImportClick: () => void;
-  onImportChange: ChangeEventHandler<HTMLInputElement>;
+  fileInputRef: RefObject<HTMLInputElement | null>;
   onExportAbc: () => void;
-  onExportSvg: () => void;
-  onExportPng: () => void;
-  onExportPdf: () => void;
   onExportMidi: () => void;
+  onExportPdf: () => void;
+  onExportPng: () => void;
+  onExportSvg: () => void;
+  onImportChange: ChangeEventHandler<HTMLInputElement>;
+  onImportClick: () => void;
 }
 
 function AbcFileToolbar({
@@ -31,41 +31,41 @@ function AbcFileToolbar({
   return (
     <div className="pb-2 grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
       <FileImportButton
-        fileInputRef={fileInputRef}
         accept=".abc,text/vnd.abc,text/plain"
-        label="ABC"
+        fileInputRef={fileInputRef}
         icon={<Upload size={18} />}
-        onClick={onImportClick}
+        label="ABC"
         onChange={onImportChange}
+        onClick={onImportClick}
       />
       <ControlButton
-        label="ABC"
-        icon={<Download size={18} />}
         disabled={!canExportAbc}
+        icon={<Download size={18} />}
+        label="ABC"
         onClick={onExportAbc}
       />
       <ControlButton
-        label="SVG"
-        icon={<Image size={18} />}
         disabled={!canExportRenderedScore}
+        icon={<Image size={18} />}
+        label="SVG"
         onClick={onExportSvg}
       />
       <ControlButton
-        label="PNG"
-        icon={<Image size={18} />}
         disabled={!canExportRenderedScore}
+        icon={<Image size={18} />}
+        label="PNG"
         onClick={onExportPng}
       />
       <ControlButton
-        label="PDF"
-        icon={<BookImage size={18} />}
         disabled={!canExportRenderedScore}
+        icon={<BookImage size={18} />}
+        label="PDF"
         onClick={onExportPdf}
       />
       <ControlButton
-        label="MIDI"
-        icon={<Music size={18} />}
         disabled={!canExportRenderedScore}
+        icon={<Music size={18} />}
+        label="MIDI"
         onClick={onExportMidi}
       />
     </div>

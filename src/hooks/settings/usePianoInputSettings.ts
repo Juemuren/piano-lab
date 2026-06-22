@@ -32,9 +32,9 @@ function usePianoInputSettings() {
   }, [setAbcContent]);
 
   return {
-    updatePianoInputSettings,
-    resetPianoInputSettings,
     clearScoreBody,
+    resetPianoInputSettings,
+    updatePianoInputSettings,
   };
 }
 

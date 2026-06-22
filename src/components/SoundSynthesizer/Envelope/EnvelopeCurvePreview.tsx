@@ -2,8 +2,8 @@ import type { EnvelopeCurve } from '../../../types';
 import Plot2D from '../../shared/Plot2D';
 
 interface EnvelopeCurvePreviewProps {
-  title: string;
   envelopeCurve: EnvelopeCurve;
+  title: string;
 }
 
 function EnvelopeCurvePreview({
@@ -11,14 +11,14 @@ function EnvelopeCurvePreview({
   envelopeCurve,
 }: EnvelopeCurvePreviewProps) {
   return (
-    <details open className="my-2">
+    <details className="my-2" open>
       <summary className="text-lg font-bold">{title}</summary>
       <Plot2D
         data={[
           {
+            mode: 'lines',
             x: envelopeCurve.time,
             y: envelopeCurve.gain,
-            mode: 'lines',
           },
         ]}
         xaxis={{
