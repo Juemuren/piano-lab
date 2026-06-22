@@ -11,6 +11,7 @@ import {
 import { normalizeKeyboardControlKey } from '../../utils/keyboard';
 
 type KeyboardOctaveDirection = keyof KeyboardOctaveKeyMappings;
+
 type KeyboardMappingSlot =
   | { offset: number; type: 'note' }
   | { direction: KeyboardOctaveDirection; type: 'octave' }

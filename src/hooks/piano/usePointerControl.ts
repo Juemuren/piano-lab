@@ -3,14 +3,12 @@ import { useCallback, useEffect, useRef } from 'react';
 
 const TOUCH_MOUSE_EVENT_IGNORE_MS = 1000;
 
-type NotePressHandler = (note: number) => void | Promise<void>;
-
 interface UsePointerControlOptions {
   activeMouseNotesRef: RefObject<Set<number>>;
   activeTouchNotesRef: RefObject<Set<number>>;
   isMouseControlEnabled: boolean;
   isTouchControlEnabled: boolean;
-  onNotePress: NotePressHandler;
+  onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
 }
 

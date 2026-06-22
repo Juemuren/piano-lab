@@ -15,15 +15,13 @@ import usePointerControl from './usePointerControl';
 
 const DEFAULT_VOLUME = 100;
 
-interface PianoKey {
+interface WhitePianoKey {
   char: string;
   note: number;
   number: number;
 }
 
-type WhitePianoKey = PianoKey;
-
-interface BlackPianoKey extends PianoKey {
+interface BlackPianoKey extends WhitePianoKey {
   position: number;
 }
 

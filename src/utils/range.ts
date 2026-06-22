@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 
-type RangeProgressStyle = CSSProperties & {
+interface RangeProgressStyle extends CSSProperties {
   '--range-progress': string;
-};
+}
 
 export const getRangeProgressStyle = (
   value: number,
