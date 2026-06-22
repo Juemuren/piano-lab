@@ -19,8 +19,8 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": "biome check --write",
-    "*.{css,html,json}": "biome format --write"
+    "*.{ts,tsx,js,jsx}": "biome check --write --no-errors-on-unmatched",
+    "*.{css,html,json}": "biome format --write --no-errors-on-unmatched"
   },
   "dependencies": {
     "abcjs": "^6.6.2",
