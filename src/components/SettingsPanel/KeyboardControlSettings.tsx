@@ -22,10 +22,14 @@ const TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS = [
 
 interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
+  isKeyboardKeyHintEnabled: boolean;
+  isKeyboardOctaveHintEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
   keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
   keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
+  setIsKeyboardKeyHintEnabled: (enabled: boolean) => void;
+  setIsKeyboardOctaveHintEnabled: (enabled: boolean) => void;
   setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
   setKeyboardOctaveKeyMappings: (mappings: KeyboardOctaveKeyMappings) => void;
   setKeyboardTemporaryOctaveKeyMappings: (
@@ -62,7 +66,11 @@ function getOffsetLabel(offset: number) {
 
 function KeyboardControlSettings({
   isKeyboardControlEnabled,
+  isKeyboardKeyHintEnabled,
+  isKeyboardOctaveHintEnabled,
   setIsKeyboardControlEnabled,
+  setIsKeyboardKeyHintEnabled,
+  setIsKeyboardOctaveHintEnabled,
   keyboardNoteMappings,
   keyboardOctaveKeyMappings,
   keyboardTemporaryOctaveKeyMappings,
@@ -102,6 +110,18 @@ function KeyboardControlSettings({
           <p className="text-sm text-app-overlay dark:text-app-overlay-dark">
             {t('settings.keyboard.hint')}
           </p>
+          <div className="flex flex-wrap gap-3">
+            <ControlCheckbox
+              checked={isKeyboardKeyHintEnabled}
+              label={t('settings.keyboard.keyHint')}
+              onChange={(e) => setIsKeyboardKeyHintEnabled(e.target.checked)}
+            />
+            <ControlCheckbox
+              checked={isKeyboardOctaveHintEnabled}
+              label={t('settings.keyboard.octaveHint')}
+              onChange={(e) => setIsKeyboardOctaveHintEnabled(e.target.checked)}
+            />
+          </div>
           <div className="grid gap-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {keyboardNoteMappings.map(({ offset, key }) => (
               <KeyboardMappingInput

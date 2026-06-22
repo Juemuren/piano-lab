@@ -115,6 +115,8 @@ function usePianoControl(
     isPianoInputEnabled,
     pianoInputSettings,
     isKeyboardControlEnabled,
+    isKeyboardKeyHintEnabled,
+    isKeyboardOctaveHintEnabled,
     keyboardNoteMappings,
     keyboardOctaveKeyMappings,
     keyboardTemporaryOctaveKeyMappings,
@@ -199,6 +201,8 @@ function usePianoControl(
     keyboardTemporaryOctaveKeyMappings,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
+    showKeyHints: isKeyboardKeyHintEnabled,
+    showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
   const startMidiPressedKey = useCallback(

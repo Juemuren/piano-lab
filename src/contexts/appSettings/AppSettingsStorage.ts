@@ -16,6 +16,8 @@ const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 
 export interface StoredAppSettings {
   isKeyboardControlEnabled: boolean;
+  isKeyboardKeyHintEnabled: boolean;
+  isKeyboardOctaveHintEnabled: boolean;
   isMidiControlEnabled: boolean;
   isMouseControlEnabled: boolean;
   isPianoInputEnabled: boolean;
@@ -28,6 +30,8 @@ export interface StoredAppSettings {
 
 export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
   isKeyboardControlEnabled: false,
+  isKeyboardKeyHintEnabled: true,
+  isKeyboardOctaveHintEnabled: true,
   isMidiControlEnabled: false,
   isMouseControlEnabled: true,
   isPianoInputEnabled: false,
@@ -174,6 +178,14 @@ function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
     isKeyboardControlEnabled: booleanOrDefault(
       value.isKeyboardControlEnabled,
       DEFAULT_STORED_APP_SETTINGS.isKeyboardControlEnabled,
+    ),
+    isKeyboardKeyHintEnabled: booleanOrDefault(
+      value.isKeyboardKeyHintEnabled,
+      DEFAULT_STORED_APP_SETTINGS.isKeyboardKeyHintEnabled,
+    ),
+    isKeyboardOctaveHintEnabled: booleanOrDefault(
+      value.isKeyboardOctaveHintEnabled,
+      DEFAULT_STORED_APP_SETTINGS.isKeyboardOctaveHintEnabled,
     ),
     isMidiControlEnabled: booleanOrDefault(
       value.isMidiControlEnabled,

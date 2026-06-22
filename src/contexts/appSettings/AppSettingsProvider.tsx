@@ -24,6 +24,11 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [isKeyboardControlEnabled, setIsKeyboardControlEnabled] = useState(
     initialSettings.isKeyboardControlEnabled,
   );
+  const [isKeyboardKeyHintEnabled, setIsKeyboardKeyHintEnabled] = useState(
+    initialSettings.isKeyboardKeyHintEnabled,
+  );
+  const [isKeyboardOctaveHintEnabled, setIsKeyboardOctaveHintEnabled] =
+    useState(initialSettings.isKeyboardOctaveHintEnabled);
   const [keyboardNoteMappings, setKeyboardNoteMappings] = useState(
     initialSettings.keyboardNoteMappings,
   );
@@ -47,6 +52,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   useEffect(() => {
     writeStoredAppSettings({
       isKeyboardControlEnabled,
+      isKeyboardKeyHintEnabled,
+      isKeyboardOctaveHintEnabled,
       isMidiControlEnabled,
       isMouseControlEnabled,
       isPianoInputEnabled,
@@ -58,6 +65,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
     });
   }, [
     isKeyboardControlEnabled,
+    isKeyboardKeyHintEnabled,
+    isKeyboardOctaveHintEnabled,
     isMidiControlEnabled,
     isMouseControlEnabled,
     isPianoInputEnabled,
@@ -71,6 +80,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const value = useMemo(
     (): AppSettingsContextValue => ({
       isKeyboardControlEnabled,
+      isKeyboardKeyHintEnabled,
+      isKeyboardOctaveHintEnabled,
       isMidiControlEnabled,
       isMouseControlEnabled,
       isPianoInputEnabled,
@@ -80,6 +91,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       keyboardTemporaryOctaveKeyMappings,
       pianoInputSettings,
       setIsKeyboardControlEnabled,
+      setIsKeyboardKeyHintEnabled,
+      setIsKeyboardOctaveHintEnabled,
       setIsMidiControlEnabled,
       setIsMouseControlEnabled,
       setIsPianoInputEnabled,
@@ -91,6 +104,8 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
     }),
     [
       isKeyboardControlEnabled,
+      isKeyboardKeyHintEnabled,
+      isKeyboardOctaveHintEnabled,
       keyboardNoteMappings,
       keyboardOctaveKeyMappings,
       keyboardTemporaryOctaveKeyMappings,

@@ -18,7 +18,11 @@ function SettingsPanel() {
     setIsPianoInputEnabled,
     pianoInputSettings,
     isKeyboardControlEnabled,
+    isKeyboardKeyHintEnabled,
+    isKeyboardOctaveHintEnabled,
     setIsKeyboardControlEnabled,
+    setIsKeyboardKeyHintEnabled,
+    setIsKeyboardOctaveHintEnabled,
     keyboardNoteMappings,
     keyboardOctaveKeyMappings,
     keyboardTemporaryOctaveKeyMappings,
@@ -43,10 +47,14 @@ function SettingsPanel() {
       />
       <KeyboardControlSettings
         isKeyboardControlEnabled={isKeyboardControlEnabled}
+        isKeyboardKeyHintEnabled={isKeyboardKeyHintEnabled}
+        isKeyboardOctaveHintEnabled={isKeyboardOctaveHintEnabled}
         keyboardNoteMappings={keyboardNoteMappings}
         keyboardOctaveKeyMappings={keyboardOctaveKeyMappings}
         keyboardTemporaryOctaveKeyMappings={keyboardTemporaryOctaveKeyMappings}
         setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
+        setIsKeyboardKeyHintEnabled={setIsKeyboardKeyHintEnabled}
+        setIsKeyboardOctaveHintEnabled={setIsKeyboardOctaveHintEnabled}
         setKeyboardNoteMappings={setKeyboardNoteMappings}
         setKeyboardOctaveKeyMappings={setKeyboardOctaveKeyMappings}
         setKeyboardTemporaryOctaveKeyMappings={

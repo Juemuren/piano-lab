@@ -31,6 +31,8 @@ export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS =
 
 export interface AppSettingsContextValue {
   isKeyboardControlEnabled: boolean;
+  isKeyboardKeyHintEnabled: boolean;
+  isKeyboardOctaveHintEnabled: boolean;
   isMidiControlEnabled: boolean;
   isMouseControlEnabled: boolean;
   isPianoInputEnabled: boolean;
@@ -40,6 +42,8 @@ export interface AppSettingsContextValue {
   keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   pianoInputSettings: PianoInputSettings;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
+  setIsKeyboardKeyHintEnabled: (enabled: boolean) => void;
+  setIsKeyboardOctaveHintEnabled: (enabled: boolean) => void;
   setIsMidiControlEnabled: (enabled: boolean) => void;
   setIsMouseControlEnabled: (enabled: boolean) => void;
   setIsPianoInputEnabled: (enabled: boolean) => void;
