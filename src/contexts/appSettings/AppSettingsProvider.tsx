@@ -27,6 +27,9 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [keyboardNoteMappings, setKeyboardNoteMappings] = useState(
     initialSettings.keyboardNoteMappings,
   );
+  const [keyboardOctaveKeyMappings, setKeyboardOctaveKeyMappings] = useState(
+    initialSettings.keyboardOctaveKeyMappings,
+  );
   const [isMouseControlEnabled, setIsMouseControlEnabled] = useState(
     initialSettings.isMouseControlEnabled,
   );
@@ -45,6 +48,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       isPianoInputEnabled,
       isTouchControlEnabled,
       keyboardNoteMappings,
+      keyboardOctaveKeyMappings,
       pianoInputSettings,
     });
   }, [
@@ -53,6 +57,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
     isMouseControlEnabled,
     isPianoInputEnabled,
     keyboardNoteMappings,
+    keyboardOctaveKeyMappings,
     pianoInputSettings,
     isTouchControlEnabled,
   ]);
@@ -65,6 +70,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       isPianoInputEnabled,
       isTouchControlEnabled,
       keyboardNoteMappings,
+      keyboardOctaveKeyMappings,
       pianoInputSettings,
       setIsKeyboardControlEnabled,
       setIsMidiControlEnabled,
@@ -72,11 +78,13 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       setIsPianoInputEnabled,
       setIsTouchControlEnabled,
       setKeyboardNoteMappings,
+      setKeyboardOctaveKeyMappings,
       setPianoInputSettings,
     }),
     [
       isKeyboardControlEnabled,
       keyboardNoteMappings,
+      keyboardOctaveKeyMappings,
       isMidiControlEnabled,
       isMouseControlEnabled,
       isPianoInputEnabled,

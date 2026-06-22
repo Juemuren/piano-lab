@@ -118,6 +118,7 @@ function usePianoControl(
     pianoInputSettings,
     isKeyboardControlEnabled,
     keyboardNoteMappings,
+    keyboardOctaveKeyMappings,
     isMouseControlEnabled,
     isTouchControlEnabled,
     isMidiControlEnabled,
@@ -195,6 +196,7 @@ function usePianoControl(
     activeNotesRef: activeKeyboardNotesRef,
     enabled: isKeyboardControlEnabled,
     keyboardNoteMappings,
+    keyboardOctaveKeyMappings,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
   });

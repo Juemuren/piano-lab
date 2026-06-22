@@ -1,9 +1,13 @@
-import type { KeyboardNoteMapping } from '../../constants/keyboard';
+import type {
+  KeyboardNoteMapping,
+  KeyboardOctaveKeyMappings,
+} from '../../constants/keyboard';
 import { normalizeKeyboardControlKey } from '../../utils/keyboard';
 import { isRecord, numberOrDefault } from '../../utils/runtime';
 import type { PianoInputSettings } from './AppSettingsContext';
 import {
   DEFAULT_KEYBOARD_CONTROL_SETTINGS,
+  DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
   DEFAULT_PIANO_INPUT_SETTINGS,
 } from './AppSettingsContext';
 
@@ -16,6 +20,7 @@ export interface StoredAppSettings {
   isPianoInputEnabled: boolean;
   isTouchControlEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
+  keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
   pianoInputSettings: PianoInputSettings;
 }
 
@@ -26,6 +31,7 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
   isPianoInputEnabled: false,
   isTouchControlEnabled: true,
   keyboardNoteMappings: DEFAULT_KEYBOARD_CONTROL_SETTINGS,
+  keyboardOctaveKeyMappings: DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
   pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
 };
 
@@ -104,10 +110,48 @@ function getStoredKeyboardNoteMappings(value: unknown): KeyboardNoteMapping[] {
   });
 }
 
+function getStoredKeyboardOctaveKeyMappings(
+  value: unknown,
+  keyboardNoteMappings: KeyboardNoteMapping[],
+): KeyboardOctaveKeyMappings {
+  if (!isRecord(value)) {
+    return DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS;
+  }
+
+  const noteKeys = new Set(
+    keyboardNoteMappings.map((mapping) => mapping.key).filter(Boolean),
+  );
+  const defaultDownKey = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS.downKey;
+  const defaultUpKey = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS.upKey;
+  const downKey =
+    typeof value.downKey === 'string'
+      ? normalizeKeyboardControlKey(value.downKey)
+      : null;
+  const upKey =
+    typeof value.upKey === 'string'
+      ? normalizeKeyboardControlKey(value.upKey)
+      : null;
+  const nextDownKey =
+    downKey === null || noteKeys.has(downKey) ? defaultDownKey : downKey;
+  const nextUpKey =
+    upKey === null || noteKeys.has(upKey) || upKey === nextDownKey
+      ? defaultUpKey
+      : upKey;
+
+  return {
+    downKey: nextDownKey === nextUpKey ? '' : nextDownKey,
+    upKey: nextUpKey,
+  };
+}
+
 function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
   if (!isRecord(value)) {
     return DEFAULT_STORED_APP_SETTINGS;
   }
+
+  const keyboardNoteMappings = getStoredKeyboardNoteMappings(
+    value.keyboardNoteMappings,
+  );
 
   return {
     isKeyboardControlEnabled: booleanOrDefault(
@@ -130,8 +174,10 @@ function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
       value.isTouchControlEnabled,
       DEFAULT_STORED_APP_SETTINGS.isTouchControlEnabled,
     ),
-    keyboardNoteMappings: getStoredKeyboardNoteMappings(
-      value.keyboardNoteMappings,
+    keyboardNoteMappings,
+    keyboardOctaveKeyMappings: getStoredKeyboardOctaveKeyMappings(
+      value.keyboardOctaveKeyMappings,
+      keyboardNoteMappings,
     ),
     pianoInputSettings: getStoredPianoInputSettings(value.pianoInputSettings),
   };

@@ -3,8 +3,15 @@ export interface KeyboardNoteMapping {
   offset: number;
 }
 
-export const KEYBOARD_OCTAVE_DOWN_KEY = 'z';
-export const KEYBOARD_OCTAVE_UP_KEY = 'x';
+export interface KeyboardOctaveKeyMappings {
+  downKey: string;
+  upKey: string;
+}
+
+export const DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings = {
+  downKey: 'z',
+  upKey: 'x',
+};
 
 export const DEFAULT_KEYBOARD_NOTE_MAPPINGS: KeyboardNoteMapping[] = [
   { key: 'a', offset: -3 },

@@ -1,9 +1,8 @@
 import type { RefObject } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { KeyboardNoteMapping } from '../../constants/keyboard';
-import {
-  KEYBOARD_OCTAVE_DOWN_KEY,
-  KEYBOARD_OCTAVE_UP_KEY,
+import type {
+  KeyboardNoteMapping,
+  KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
 import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';
@@ -16,6 +15,7 @@ interface UseKeyboardPianoControlOptions {
   activeNotesRef: RefObject<Map<string, number>>;
   enabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
+  keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
 }
@@ -56,6 +56,7 @@ function isEditableTarget(target: EventTarget | null) {
 function useKeyboardControl({
   enabled,
   keyboardNoteMappings,
+  keyboardOctaveKeyMappings,
   activeNotesRef,
   onNotePress,
   onNoteRelease,
@@ -95,10 +96,13 @@ function useKeyboardControl({
 
       const key = e.key.toLowerCase();
 
-      if (key === KEYBOARD_OCTAVE_DOWN_KEY || key === KEYBOARD_OCTAVE_UP_KEY) {
+      if (
+        key === keyboardOctaveKeyMappings.downKey ||
+        key === keyboardOctaveKeyMappings.upKey
+      ) {
         e.preventDefault();
         if (!e.repeat) {
-          const octaveDelta = key === KEYBOARD_OCTAVE_UP_KEY ? +1 : -1;
+          const octaveDelta = key === keyboardOctaveKeyMappings.upKey ? +1 : -1;
           setKeyboardOctave((current) =>
             clampKeyboardOctave(current + octaveDelta),
           );
@@ -143,7 +147,14 @@ function useKeyboardControl({
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
-  }, [activeNotesRef, enabled, keyboardNoteMap, onNotePress, onNoteRelease]);
+  }, [
+    activeNotesRef,
+    enabled,
+    keyboardNoteMap,
+    keyboardOctaveKeyMappings,
+    onNotePress,
+    onNoteRelease,
+  ]);
 
   const keyHints = useMemo(() => {
     const hints = new Map<number, string>();

@@ -11,6 +11,7 @@
 ## TypeScript 指南
 
 - 除 `type`/`interface` 外尽量不使用别的类型定义方式
+- React 组件的 Props 优先使用 `interface`
 - [SynthConfig](src/services/synth/SynthConfig.ts) 不要兼容旧配置，保持代码干净
 
 ## Tailwind CSS 指南
