@@ -196,19 +196,6 @@ function SoundSynthesizer() {
       </div>
 
       <CollapsibleSection
-        title={t('sections.envelope')}
-        icon={<ChartSpline size={20} />}
-        bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
-        expanded
-      >
-        <Envelope
-          key={`envelope-${importRevision}`}
-          initialConfig={importedConfig?.envelope}
-          onConfigChange={setEnvelopeConfig}
-        />
-      </CollapsibleSection>
-
-      <CollapsibleSection
         title={t('sections.spectrum')}
         icon={<ChartColumnDecreasing size={20} />}
         bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
@@ -219,6 +206,19 @@ function SoundSynthesizer() {
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.spectrum}
           onConfigChange={setSpectrumConfig}
+        />
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        title={t('sections.envelope')}
+        icon={<ChartSpline size={20} />}
+        bgClassName="bg-app-surface/50 dark:bg-app-surface-dark/50"
+        expanded
+      >
+        <Envelope
+          key={`envelope-${importRevision}`}
+          initialConfig={importedConfig?.envelope}
+          onConfigChange={setEnvelopeConfig}
         />
       </CollapsibleSection>
 
