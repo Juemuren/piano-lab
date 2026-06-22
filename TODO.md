@@ -2,7 +2,7 @@
 
 ## Chore
 
-- [x] 尝试一下 [tsgo](https://github.com/microsoft/typescript-go)
+- [ ] 迁移到 pnpm 上
 
 ## Refactor
 
@@ -13,7 +13,5 @@
 - [ ] 相位调制目前还不是真正的相位调制，而是使用全通滤波器进行近似
 
 ## Style
-
-- [x] 修复谐波数量增多时在宽屏上原始布局被破坏的问题
 
 ## Feat

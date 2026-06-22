@@ -150,7 +150,7 @@ npm run dev
 npm run build
 ```
 
-使用 Tauti 构建桌面应用
+使用 Tauri 构建桌面应用
 
 ```bash
 npm run build:tauri

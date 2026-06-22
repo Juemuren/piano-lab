@@ -2,6 +2,32 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.2.0]
+
+### Added
+
+- Added a built-in ABC score preset.
+- Added Baidu Analytics configuration for the deployed site.
+
+### Changed
+
+- Switched TypeScript project checking from `tsc --build` to `tsgo --build`.
+- Extended Biome rules and assists for TypeScript, TSX, JSON, and HTML files.
+- Extracted repeated section icons into a shared component.
+- Moved `HarmonicLabel` into the sound synthesizer component directory.
+
+### Fixed
+
+- Fixed the wide-screen layout breaking when the harmonic count is increased.
+
+### Style
+
+- Reordered the sound synthesizer spectrum and envelope sections.
+- Updated sound synthesizer section icons to reflect volume and harmonic controls.
+- Added icons to footer links.
+- Reduced the border radius of select controls.
+- Standardized component props declarations to use interfaces.
+
 ## [1.1.0]
 
 ### Changed
