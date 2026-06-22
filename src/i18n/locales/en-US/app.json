@@ -12,7 +12,9 @@
   "settings": {
     "keyboard": {
       "empty": "Not set",
-      "hint": "The current key mapping is shown on the piano keys. Press x/z to permanently shift down/up an octave, and hold shift/ctrl to temporarily shift down/up an octave.",
+      "hint": "⇑/⇓ indicate permanent octave up/down, while ↑/↓ indicate temporary octave up/down.",
+      "keyHint": "Show key hints",
+      "octaveHint": "Show octave hints",
       "reset": "Reset to Default"
     },
     "keyboardControl": "Use keyboard to control piano keys",
