@@ -19,11 +19,30 @@ interface KeyboardControlSettingsProps {
 }
 
 function getOffsetLabel(offset: number) {
-  if (offset === 12) {
-    return 'C+';
-  }
+  const noteName =
+    NOTE_NAMES[
+      ((offset % NOTE_NAMES.length) + NOTE_NAMES.length) % NOTE_NAMES.length
+    ];
+  const accidental = noteName.endsWith('#') ? '#' : '';
+  const naturalName = accidental ? noteName.slice(0, -1) : noteName;
+  const octaveMark = offset < 0 ? '-' : offset >= NOTE_NAMES.length ? '+' : '';
 
-  return NOTE_NAMES[offset];
+  return (
+    <span>
+      {naturalName}
+      {accidental && octaveMark ? (
+        <span>
+          <sup>{accidental}</sup>
+          <sub className="ml-[-1ch]">{octaveMark}</sub>
+        </span>
+      ) : (
+        <span>
+          {accidental && <sup>{accidental}</sup>}
+          {octaveMark && <sub>{octaveMark}</sub>}
+        </span>
+      )}
+    </span>
+  );
 }
 
 function KeyboardControlSettings({
