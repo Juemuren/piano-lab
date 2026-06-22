@@ -1,19 +1,19 @@
 import type { CSSProperties, MouseEvent, ReactNode, TouchEvent } from 'react';
 
-type PianoKeyProps = {
-  note: number;
-  isPressed: boolean;
-  isMouseControlEnabled: boolean;
-  className: string;
-  normalClassName: string;
-  pressedClassName: string;
-  width: number;
-  height: number;
-  style?: CSSProperties;
+interface PianoKeyProps {
   children: ReactNode;
+  className: string;
+  height: number;
+  isMouseControlEnabled: boolean;
+  isPressed: boolean;
+  normalClassName: string;
+  note: number;
   onKeyDown: (e: MouseEvent | TouchEvent, note: number) => void;
   onKeyUp: (e: MouseEvent | TouchEvent, note: number) => void;
-};
+  pressedClassName: string;
+  style?: CSSProperties;
+  width: number;
+}
 
 function PianoKey({
   note,

@@ -1,20 +1,20 @@
 import type { ReactNode } from 'react';
 import { getRangeProgressStyle } from '../../utils/range';
 
-type ControlRangeProps = {
-  label: string;
-  icon?: ReactNode;
-  value: number;
-  min: number | string;
-  max: number | string;
-  step: number | string;
-  onChange: (value: number) => void;
-  symbol?: ReactNode;
-  displayValue?: string;
-  p?: ReactNode;
+interface ControlRangeProps {
   accentClassName?: string;
+  displayValue?: string;
+  icon?: ReactNode;
+  label: string;
+  max: number | string;
+  min: number | string;
+  onChange: (value: number) => void;
+  p?: ReactNode;
   pClassName?: string;
-};
+  step: number | string;
+  symbol?: ReactNode;
+  value: number;
+}
 
 function ControlRange({
   label,

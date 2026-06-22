@@ -11,12 +11,12 @@ import { NOTE_NAMES } from '../../utils/pitch';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 
-type KeyboardControlSettingsProps = {
+interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
-  setIsKeyboardControlEnabled: (enabled: boolean) => void;
   keyboardNoteMappings: KeyboardNoteMapping[];
+  setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
-};
+}
 
 function getOffsetLabel(offset: number) {
   if (offset === 12) {

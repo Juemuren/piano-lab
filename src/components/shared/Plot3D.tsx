@@ -3,10 +3,10 @@ import type { PlotParams } from 'react-plotly.js';
 import Plotly3D from 'react-plotly.js/plot3d';
 import useElementWidth from '../../hooks/useElementWidth';
 
-type Plot3DProps = {
+interface Plot3DProps {
   data: PlotParams['data'];
   layout?: Partial<Layout>;
-};
+}
 
 function Plot3D({ data, layout }: Plot3DProps) {
   const { elementRef, width } = useElementWidth<HTMLDivElement>();

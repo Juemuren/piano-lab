@@ -27,14 +27,14 @@ const KEY_SIGNATURE_OPTIONS = [
   'Cb',
 ];
 
-type PianoInputSettingsControlProps = {
+interface PianoInputSettingsControlProps {
   isPianoInputEnabled: boolean;
-  setIsPianoInputEnabled: (enabled: boolean) => void;
-  pianoInputSettings: PianoInputSettings;
   onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
   onPianoInputSettingsReset: () => void;
   onScoreBodyClear: () => void;
-};
+  pianoInputSettings: PianoInputSettings;
+  setIsPianoInputEnabled: (enabled: boolean) => void;
+}
 
 function PianoInputSettingsControl({
   isPianoInputEnabled,

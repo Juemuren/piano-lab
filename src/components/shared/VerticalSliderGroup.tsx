@@ -1,17 +1,17 @@
 import type { ReactNode } from 'react';
 import { getRangeProgressStyle } from '../../utils/range';
 
-type VerticalSliderGroupProps = {
-  values: number[];
-  labels: ReactNode[];
-  min: number | string;
-  max: number | string;
-  step: number | string;
-  getKey?: (index: number) => string | number;
-  formatValue?: (value: number, index: number) => string;
-  onChange?: (index: number, value: number) => void;
+interface VerticalSliderGroupProps {
   disabled?: boolean;
-};
+  formatValue?: (value: number, index: number) => string;
+  getKey?: (index: number) => string | number;
+  labels: ReactNode[];
+  max: number | string;
+  min: number | string;
+  onChange?: (index: number, value: number) => void;
+  step: number | string;
+  values: number[];
+}
 
 function VerticalSliderGroup({
   values,

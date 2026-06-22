@@ -2,12 +2,12 @@ import { Hand, MousePointer } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ControlCheckbox from '../shared/ControlCheckbox';
 
-type PointerControlSettingsProps = {
+interface PointerControlSettingsProps {
   isMouseControlEnabled: boolean;
-  setIsMouseControlEnabled: (enabled: boolean) => void;
   isTouchControlEnabled: boolean;
+  setIsMouseControlEnabled: (enabled: boolean) => void;
   setIsTouchControlEnabled: (enabled: boolean) => void;
-};
+}
 
 function PointerControlSettings({
   isMouseControlEnabled,

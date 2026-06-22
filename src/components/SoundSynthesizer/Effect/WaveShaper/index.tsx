@@ -17,8 +17,6 @@ interface WaveShaperProps {
   waveShaper: WaveShaperConfig | null;
 }
 
-type WaveShaperParam = Exclude<keyof WaveShaperConfig, 'preset'>;
-
 const presetOptions: WaveShaperPreset[] = [
   'saturation',
   'overdrive',
@@ -29,7 +27,7 @@ const presetOptions: WaveShaperPreset[] = [
 const presetParams: Record<
   WaveShaperPreset,
   {
-    key: WaveShaperParam;
+    key: Exclude<keyof WaveShaperConfig, 'preset'>;
     symbol: string;
     min: number;
     max: number;

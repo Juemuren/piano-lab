@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
-type ControlPanelProps = {
+interface ControlPanelProps {
   children: ReactNode;
   className?: string;
-};
+}
 
 function ControlPanel({ children, className = '' }: ControlPanelProps) {
   return (

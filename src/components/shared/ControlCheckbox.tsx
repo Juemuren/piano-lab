@@ -1,10 +1,11 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 
-type ControlCheckboxProps = {
-  label: string;
-  icon?: ReactNode;
+interface ControlCheckboxProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   accentClassName?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>;
+  icon?: ReactNode;
+  label: string;
+}
 
 function ControlCheckbox({
   label,

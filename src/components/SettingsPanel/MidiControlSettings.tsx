@@ -8,13 +8,13 @@ import type {
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlSelect from '../shared/ControlSelect';
 
-type MidiControlSettingsProps = {
+interface MidiControlSettingsProps {
   isMidiControlEnabled: boolean;
-  setIsMidiControlEnabled: (enabled: boolean) => void;
   midiControl: MidiControlState;
   selectedMidiInputId: string;
+  setIsMidiControlEnabled: (enabled: boolean) => void;
   setSelectedMidiInputId: (id: string) => void;
-};
+}
 
 function getMidiStatusMessageKey(status: MidiStatus, deviceCount: number) {
   if (status === 'unsupported') {

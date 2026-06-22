@@ -3,12 +3,12 @@ import type { PlotParams } from 'react-plotly.js';
 import Plotly2D from 'react-plotly.js/plot2d';
 import useElementWidth from '../../hooks/useElementWidth';
 
-type Plot2DProps = {
+interface Plot2DProps {
   data: PlotParams['data'];
   layout?: Partial<Layout>;
   xaxis?: Partial<LayoutAxis>;
   yaxis?: Partial<LayoutAxis>;
-};
+}
 
 const defaultAxis: Partial<LayoutAxis> = {
   fixedrange: true,

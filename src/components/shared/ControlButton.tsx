@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 
-type ControlButtonProps = {
-  label?: string;
-  icon?: ReactNode;
+interface ControlButtonProps {
   disabled?: boolean;
-  title?: string;
+  icon?: ReactNode;
+  label?: string;
   onClick: () => void;
-};
+  title?: string;
+}
 
 function ControlButton({
   label,

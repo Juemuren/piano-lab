@@ -2,14 +2,14 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
-type CollapsibleSectionProps = {
-  title: string;
-  children: ReactNode;
-  icon?: ReactNode;
-  expanded?: boolean;
+interface CollapsibleSectionProps {
   bgClassName?: string;
+  children: ReactNode;
+  expanded?: boolean;
   hoverBgClassName?: string;
-};
+  icon?: ReactNode;
+  title: string;
+}
 
 function CollapsibleSection({
   title,
