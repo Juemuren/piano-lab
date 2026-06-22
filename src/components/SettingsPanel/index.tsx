@@ -21,8 +21,10 @@ function SettingsPanel() {
     setIsKeyboardControlEnabled,
     keyboardNoteMappings,
     keyboardOctaveKeyMappings,
+    keyboardTemporaryOctaveKeyMappings,
     setKeyboardNoteMappings,
     setKeyboardOctaveKeyMappings,
+    setKeyboardTemporaryOctaveKeyMappings,
     isMouseControlEnabled,
     setIsMouseControlEnabled,
     isTouchControlEnabled,
@@ -43,9 +45,13 @@ function SettingsPanel() {
         isKeyboardControlEnabled={isKeyboardControlEnabled}
         keyboardNoteMappings={keyboardNoteMappings}
         keyboardOctaveKeyMappings={keyboardOctaveKeyMappings}
+        keyboardTemporaryOctaveKeyMappings={keyboardTemporaryOctaveKeyMappings}
         setIsKeyboardControlEnabled={setIsKeyboardControlEnabled}
         setKeyboardNoteMappings={setKeyboardNoteMappings}
         setKeyboardOctaveKeyMappings={setKeyboardOctaveKeyMappings}
+        setKeyboardTemporaryOctaveKeyMappings={
+          setKeyboardTemporaryOctaveKeyMappings
+        }
       />
       <MidiControlSettings
         isMidiControlEnabled={isMidiControlEnabled}

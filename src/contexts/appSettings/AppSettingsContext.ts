@@ -6,6 +6,7 @@ import type {
 import {
   DEFAULT_KEYBOARD_NOTE_MAPPINGS,
   DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS,
+  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS,
 } from '../../constants/keyboard';
 
 export interface PianoInputSettings {
@@ -25,6 +26,8 @@ export const DEFAULT_PIANO_INPUT_SETTINGS: PianoInputSettings = {
 export const DEFAULT_KEYBOARD_CONTROL_SETTINGS = DEFAULT_KEYBOARD_NOTE_MAPPINGS;
 export const DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS =
   DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS;
+export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS =
+  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS;
 
 export interface AppSettingsContextValue {
   isKeyboardControlEnabled: boolean;
@@ -34,6 +37,7 @@ export interface AppSettingsContextValue {
   isTouchControlEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
   keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
+  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   pianoInputSettings: PianoInputSettings;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setIsMidiControlEnabled: (enabled: boolean) => void;
@@ -42,6 +46,9 @@ export interface AppSettingsContextValue {
   setIsTouchControlEnabled: (enabled: boolean) => void;
   setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
   setKeyboardOctaveKeyMappings: (mappings: KeyboardOctaveKeyMappings) => void;
+  setKeyboardTemporaryOctaveKeyMappings: (
+    mappings: KeyboardOctaveKeyMappings,
+  ) => void;
   setPianoInputSettings: (settings: PianoInputSettings) => void;
 }
 

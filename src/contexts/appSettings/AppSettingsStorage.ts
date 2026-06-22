@@ -8,6 +8,7 @@ import type { PianoInputSettings } from './AppSettingsContext';
 import {
   DEFAULT_KEYBOARD_CONTROL_SETTINGS,
   DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
+  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
   DEFAULT_PIANO_INPUT_SETTINGS,
 } from './AppSettingsContext';
 
@@ -21,6 +22,7 @@ export interface StoredAppSettings {
   isTouchControlEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
   keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
+  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   pianoInputSettings: PianoInputSettings;
 }
 
@@ -32,6 +34,8 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
   isTouchControlEnabled: true,
   keyboardNoteMappings: DEFAULT_KEYBOARD_CONTROL_SETTINGS,
   keyboardOctaveKeyMappings: DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
+  keyboardTemporaryOctaveKeyMappings:
+    DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
   pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
 };
 
@@ -113,23 +117,30 @@ function getStoredKeyboardNoteMappings(value: unknown): KeyboardNoteMapping[] {
 function getStoredKeyboardOctaveKeyMappings(
   value: unknown,
   keyboardNoteMappings: KeyboardNoteMapping[],
+  reservedKeys: string[] = [],
+  fallback: KeyboardOctaveKeyMappings = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
+  allowModifierKeys = false,
 ): KeyboardOctaveKeyMappings {
   if (!isRecord(value)) {
-    return DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS;
+    return fallback;
   }
 
   const noteKeys = new Set(
-    keyboardNoteMappings.map((mapping) => mapping.key).filter(Boolean),
+    [
+      ...keyboardNoteMappings.map((mapping) => mapping.key),
+      ...reservedKeys,
+    ].filter(Boolean),
   );
-  const defaultDownKey = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS.downKey;
-  const defaultUpKey = DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS.upKey;
+  const defaultDownKey = fallback.downKey;
+  const defaultUpKey = fallback.upKey;
+  const normalizeOptions = { allowModifierKeys };
   const downKey =
     typeof value.downKey === 'string'
-      ? normalizeKeyboardControlKey(value.downKey)
+      ? normalizeKeyboardControlKey(value.downKey, normalizeOptions)
       : null;
   const upKey =
     typeof value.upKey === 'string'
-      ? normalizeKeyboardControlKey(value.upKey)
+      ? normalizeKeyboardControlKey(value.upKey, normalizeOptions)
       : null;
   const nextDownKey =
     downKey === null || noteKeys.has(downKey) ? defaultDownKey : downKey;
@@ -151,6 +162,10 @@ function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
 
   const keyboardNoteMappings = getStoredKeyboardNoteMappings(
     value.keyboardNoteMappings,
+  );
+  const keyboardOctaveKeyMappings = getStoredKeyboardOctaveKeyMappings(
+    value.keyboardOctaveKeyMappings,
+    keyboardNoteMappings,
   );
 
   return {
@@ -175,9 +190,13 @@ function normalizeStoredAppSettings(value: unknown): StoredAppSettings {
       DEFAULT_STORED_APP_SETTINGS.isTouchControlEnabled,
     ),
     keyboardNoteMappings,
-    keyboardOctaveKeyMappings: getStoredKeyboardOctaveKeyMappings(
-      value.keyboardOctaveKeyMappings,
+    keyboardOctaveKeyMappings,
+    keyboardTemporaryOctaveKeyMappings: getStoredKeyboardOctaveKeyMappings(
+      value.keyboardTemporaryOctaveKeyMappings,
       keyboardNoteMappings,
+      Object.values(keyboardOctaveKeyMappings),
+      DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
+      true,
     ),
     pianoInputSettings: getStoredPianoInputSettings(value.pianoInputSettings),
   };

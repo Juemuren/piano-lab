@@ -16,6 +16,7 @@ interface UseKeyboardPianoControlOptions {
   enabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
   keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
+  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
 }
@@ -37,8 +38,16 @@ function clampKeyboardOctave(octave: number) {
   return Math.min(MAX_KEYBOARD_OCTAVE, Math.max(MIN_KEYBOARD_OCTAVE, octave));
 }
 
-function getKeyboardOctaveWithModifier(octave: number, e: KeyboardEvent) {
-  const modifierDelta = (e.shiftKey ? 1 : 0) + (e.ctrlKey ? -1 : 0);
+function getKeyboardOctaveWithTemporaryShift(
+  octave: number,
+  activeTemporaryOctaveKeys: ReadonlySet<string>,
+  temporaryOctaveKeyMappings: KeyboardOctaveKeyMappings,
+) {
+  const modifierDelta =
+    (activeTemporaryOctaveKeys.has(temporaryOctaveKeyMappings.upKey) ? 1 : 0) +
+    (activeTemporaryOctaveKeys.has(temporaryOctaveKeyMappings.downKey)
+      ? -1
+      : 0);
 
   return clampKeyboardOctave(octave + modifierDelta);
 }
@@ -57,11 +66,13 @@ function useKeyboardControl({
   enabled,
   keyboardNoteMappings,
   keyboardOctaveKeyMappings,
+  keyboardTemporaryOctaveKeyMappings,
   activeNotesRef,
   onNotePress,
   onNoteRelease,
 }: UseKeyboardPianoControlOptions) {
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
+  const activeTemporaryOctaveKeysRef = useRef<Set<string>>(new Set());
   const keyboardOctaveRef = useRef(DEFAULT_KEYBOARD_OCTAVE);
 
   useEffect(() => {
@@ -79,6 +90,7 @@ function useKeyboardControl({
   useEffect(() => {
     if (!enabled) {
       const keyboardNotes = activeNotesRef.current;
+      activeTemporaryOctaveKeysRef.current.clear();
       if (keyboardNotes.size > 0) {
         const releasedNotes = Array.from(keyboardNotes.values());
         keyboardNotes.clear();
@@ -97,6 +109,15 @@ function useKeyboardControl({
       const key = e.key.toLowerCase();
 
       if (
+        key === keyboardTemporaryOctaveKeyMappings.downKey ||
+        key === keyboardTemporaryOctaveKeyMappings.upKey
+      ) {
+        e.preventDefault();
+        activeTemporaryOctaveKeysRef.current.add(key);
+        return;
+      }
+
+      if (
         key === keyboardOctaveKeyMappings.downKey ||
         key === keyboardOctaveKeyMappings.upKey
       ) {
@@ -112,7 +133,11 @@ function useKeyboardControl({
 
       const note = getKeyboardNote(
         key,
-        getKeyboardOctaveWithModifier(keyboardOctaveRef.current, e),
+        getKeyboardOctaveWithTemporaryShift(
+          keyboardOctaveRef.current,
+          activeTemporaryOctaveKeysRef.current,
+          keyboardTemporaryOctaveKeyMappings,
+        ),
         keyboardNoteMap,
       );
       if (note === null) {
@@ -130,6 +155,15 @@ function useKeyboardControl({
 
     function handleKeyboardKeyUp(e: KeyboardEvent) {
       const key = e.key.toLowerCase();
+      if (
+        key === keyboardTemporaryOctaveKeyMappings.downKey ||
+        key === keyboardTemporaryOctaveKeyMappings.upKey
+      ) {
+        e.preventDefault();
+        activeTemporaryOctaveKeysRef.current.delete(key);
+        return;
+      }
+
       const note = activeNotesRef.current.get(key);
       if (note === undefined) {
         return;
@@ -144,6 +178,7 @@ function useKeyboardControl({
     window.addEventListener('keyup', handleKeyboardKeyUp);
 
     return () => {
+      activeTemporaryOctaveKeysRef.current.clear();
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
     };
@@ -152,6 +187,7 @@ function useKeyboardControl({
     enabled,
     keyboardNoteMap,
     keyboardOctaveKeyMappings,
+    keyboardTemporaryOctaveKeyMappings,
     onNotePress,
     onNoteRelease,
   ]);

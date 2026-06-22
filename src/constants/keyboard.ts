@@ -13,6 +13,12 @@ export const DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings = {
   upKey: 'x',
 };
 
+export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings =
+  {
+    downKey: 'control',
+    upKey: 'shift',
+  };
+
 export const DEFAULT_KEYBOARD_NOTE_MAPPINGS: KeyboardNoteMapping[] = [
   { key: 'a', offset: -3 },
   { key: 'w', offset: -2 },

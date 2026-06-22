@@ -14,9 +14,13 @@ interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
   keyboardNoteMappings: KeyboardNoteMapping[];
   keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
+  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
   setKeyboardOctaveKeyMappings: (mappings: KeyboardOctaveKeyMappings) => void;
+  setKeyboardTemporaryOctaveKeyMappings: (
+    mappings: KeyboardOctaveKeyMappings,
+  ) => void;
 }
 
 function getOffsetLabel(offset: number) {
@@ -51,26 +55,37 @@ const OCTAVE_KEY_MAPPING_CONTROLS = [
   { direction: 'downKey', label: '⇓' },
 ] as const;
 
+const TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS = [
+  { direction: 'upKey', label: '↑' },
+  { direction: 'downKey', label: '↓' },
+] as const;
+
 function KeyboardControlSettings({
   isKeyboardControlEnabled,
   setIsKeyboardControlEnabled,
   keyboardNoteMappings,
   keyboardOctaveKeyMappings,
+  keyboardTemporaryOctaveKeyMappings,
   setKeyboardNoteMappings,
   setKeyboardOctaveKeyMappings,
+  setKeyboardTemporaryOctaveKeyMappings,
 }: KeyboardControlSettingsProps) {
   const { t } = useTranslation('app');
   const {
     handleNoteKeyDown,
     handleOctaveKeyDown,
+    handleTemporaryOctaveKeyDown,
     resetKeyboardMappings,
     setNoteMappingKey,
     setOctaveMappingKey,
+    setTemporaryOctaveMappingKey,
   } = useKeyboardControlSettings({
     keyboardNoteMappings,
     keyboardOctaveKeyMappings,
+    keyboardTemporaryOctaveKeyMappings,
     setKeyboardNoteMappings,
     setKeyboardOctaveKeyMappings,
+    setKeyboardTemporaryOctaveKeyMappings,
   });
   const emptyKeyboardMappingText = t('settings.keyboard.empty');
 
@@ -108,6 +123,18 @@ function KeyboardControlSettings({
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
+            {TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS.map(
+              ({ direction, label }) => (
+                <KeyboardMappingInput
+                  key={`temporary-${direction}`}
+                  keyValue={keyboardTemporaryOctaveKeyMappings[direction]}
+                  label={label}
+                  onClear={() => setTemporaryOctaveMappingKey(direction, '')}
+                  onKeyDown={(e) => handleTemporaryOctaveKeyDown(direction, e)}
+                  placeholder={emptyKeyboardMappingText}
+                />
+              ),
+            )}
             <ControlButton
               icon={<RotateCcw size={20} />}
               label={t('settings.keyboard.reset')}
