@@ -125,6 +125,7 @@ function KeyboardControlSettings({
           <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm lg:grid-cols-3 xl:grid-cols-4">
             {keyboardNoteMappings.map(({ offset, key }) => (
               <KeyboardMappingInput
+                id={offset.toString()}
                 key={offset}
                 keyValue={key}
                 label={getOffsetLabel(offset)}
@@ -135,6 +136,7 @@ function KeyboardControlSettings({
             ))}
             {OCTAVE_KEY_MAPPING_CONTROLS.map(({ direction, label }) => (
               <KeyboardMappingInput
+                id={direction}
                 key={direction}
                 keyValue={keyboardOctaveKeyMappings[direction]}
                 label={label}
@@ -146,6 +148,7 @@ function KeyboardControlSettings({
             {TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS.map(
               ({ direction, label }) => (
                 <KeyboardMappingInput
+                  id={`temporary-${direction}`}
                   key={`temporary-${direction}`}
                   keyValue={keyboardTemporaryOctaveKeyMappings[direction]}
                   label={label}

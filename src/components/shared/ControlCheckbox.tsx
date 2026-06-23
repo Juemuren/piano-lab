@@ -18,6 +18,7 @@ function ControlCheckbox({
     <label className="flex items-center gap-2 text-sm">
       <input
         className={`checkbox-input ${className}`}
+        title={label}
         type="checkbox"
         {...props}
       />
