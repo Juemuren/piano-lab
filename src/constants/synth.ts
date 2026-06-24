@@ -1,4 +1,11 @@
-import type { BuiltInSpectrumType } from '../types';
+import type {
+  BuiltInFilterEqualizerPreset,
+  BuiltInReverbPreset,
+  BuiltInSpectrumType,
+  EqualizerType,
+  FilterType,
+  WaveShaperPreset,
+} from '../types';
 
 export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;
@@ -15,14 +22,16 @@ export const DEFAULT_SPECTRUM_STRIKE_POINT = 0.5;
 export const DEFAULT_SPECTRUM_DECAY_RATE = 0.8;
 export const DEFAULT_SPECTRUM_POWER_EXPONENT = 1.5;
 
-export const DEFAULT_FILTER_TYPE = 'lowpass';
+export const DEFAULT_FILTER_TYPE: FilterType = 'lowpass';
 export const DEFAULT_FILTER_FREQUENCY = 1000;
 export const DEFAULT_FILTER_Q = 1;
 
-export const DEFAULT_EQUALIZER_TYPE = 'lowshelf';
+export const DEFAULT_EQUALIZER_TYPE: EqualizerType = 'lowshelf';
 export const DEFAULT_EQUALIZER_FREQUENCY = 1000;
 export const DEFAULT_EQUALIZER_Q = 1;
 export const DEFAULT_EQUALIZER_GAIN = 0;
+export const DEFAULT_FILTER_EQUALIZER_PRESET: BuiltInFilterEqualizerPreset =
+  'classical';
 
 export const DEFAULT_COMPRESSOR_THRESHOLD = -24;
 export const DEFAULT_COMPRESSOR_KNEE = 30;
@@ -42,7 +51,7 @@ export const DEFAULT_PHASE_MODULATION_DEPTH = 0.5;
 export const DEFAULT_DELAY_MODULATION_FREQUENCY = 0.3;
 export const DEFAULT_DELAY_MODULATION_DEPTH = 0.008;
 
-export const DEFAULT_WAVE_SHAPER_PRESET = 'saturation';
+export const DEFAULT_WAVE_SHAPER_PRESET: WaveShaperPreset = 'saturation';
 export const DEFAULT_WAVE_SHAPER_SATURATION = 0.5;
 export const DEFAULT_WAVE_SHAPER_DISTORTION = 5;
 export const DEFAULT_WAVE_SHAPER_OVERDRIVE = 8;
@@ -63,7 +72,7 @@ export const DEFAULT_PANNER_CONE_INNER_ANGLE = 360;
 export const DEFAULT_PANNER_CONE_OUTER_ANGLE = 360;
 export const DEFAULT_PANNER_CONE_OUTER_GAIN = 0;
 
-export const DEFAULT_REVERB_PRESET = 'bathroom';
+export const DEFAULT_REVERB_PRESET: BuiltInReverbPreset = 'bathroom';
 export const DEFAULT_REVERB_MIX = 0;
 export const DEFAULT_REVERB_EARLY_REFLECTION_DELAY = 0.01;
 export const DEFAULT_REVERB_EARLY_REFLECTION_GAIN = 0.2;

@@ -17,6 +17,7 @@ import {
   DEFAULT_EQUALIZER_GAIN,
   DEFAULT_EQUALIZER_Q,
   DEFAULT_EQUALIZER_TYPE,
+  DEFAULT_FILTER_EQUALIZER_PRESET,
   DEFAULT_FILTER_FREQUENCY,
   DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
@@ -137,7 +138,7 @@ export function createDefaultEqualizerConfig(
 }
 
 export function createDefaultFilterEqualizerConfig(
-  preset: FilterEqualizerPreset = 'custom',
+  preset: FilterEqualizerPreset = DEFAULT_FILTER_EQUALIZER_PRESET,
 ): FilterEqualizerConfig {
   return createFilterEqualizerConfig(preset);
 }
