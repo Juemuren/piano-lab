@@ -1,11 +1,18 @@
 {
-  "editor.defaultFormatter": "biomejs.biome",
   "editor.wordWrap": "on",
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "markdownlint.config": {
+    "MD033": false,
+    "MD041": false
+  },
+  "markdown.validate.enabled": false,
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "markdown.validate.enabled": false,
   "tailwindCSS.experimental.classRegex": [
     "(?:\\b\\w*ClassName)=\"([^\"]*)\"",
     "(?:\\b\\w*ClassName) = \"([^\"]*)\""
