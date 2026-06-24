@@ -28,7 +28,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       alpha: 0.0002,
       amplitude: 0.02,
       delay: 0.02,
-      duration: 0.5,
+      duration: 1,
     },
   },
   cathedral: {
@@ -44,7 +44,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       alpha: 0.00005,
       amplitude: 0.005,
       delay: 0.25,
-      duration: 4,
+      duration: 8,
     },
   },
   garage: {
@@ -58,7 +58,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       alpha: 0.00015,
       amplitude: 0.015,
       delay: 0.05,
-      duration: 1,
+      duration: 2,
     },
   },
   hall: {
@@ -73,7 +73,7 @@ export const REVERB_PRESET_DEFINITIONS: Record<
       alpha: 0.0001,
       amplitude: 0.01,
       delay: 0.09,
-      duration: 2,
+      duration: 4,
     },
   },
 };

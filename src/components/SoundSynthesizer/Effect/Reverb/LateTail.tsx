@@ -46,8 +46,8 @@ function LateTail({
       <ControlRange
         displayValue={`${lateTail.duration.toFixed(2)} s`}
         label={t('effect.reverb.lateTail.duration')}
-        max="8"
-        min="0.1"
+        max="10"
+        min="1"
         onChange={onDurationChange}
         step="0.01"
         symbol={<InlineMath math="T" />}

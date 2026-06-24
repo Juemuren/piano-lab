@@ -34,6 +34,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
         lateTail: {
           ...source.lateTail,
           amplitude: 0,
+          delay: 0,
         },
         preset,
       };
