@@ -6,6 +6,14 @@ export function numberOrDefault(value: unknown, fallback: number) {
   return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 }
 
+export function booleanOrDefault(value: unknown, fallback: boolean) {
+  return typeof value === 'boolean' ? value : fallback;
+}
+
+export function stringOrDefault(value: unknown, fallback: string) {
+  return typeof value === 'string' && value ? value : fallback;
+}
+
 export function unionOrDefault<T extends string>(
   value: unknown,
   allowedValues: readonly T[],

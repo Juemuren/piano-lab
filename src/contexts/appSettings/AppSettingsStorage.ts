@@ -3,7 +3,12 @@ import type {
   KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
 import { normalizeKeyboardControlKey } from '../../utils/keyboard';
-import { isRecord, numberOrDefault } from '../../utils/runtime';
+import {
+  booleanOrDefault,
+  isRecord,
+  numberOrDefault,
+  stringOrDefault,
+} from '../../utils/runtime';
 import type { PianoInputSettings } from './AppSettingsContext';
 import {
   DEFAULT_KEYBOARD_CONTROL_SETTINGS,
@@ -42,14 +47,6 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
     DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
   pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
 };
-
-function booleanOrDefault(value: unknown, fallback: boolean) {
-  return typeof value === 'boolean' ? value : fallback;
-}
-
-function stringOrDefault(value: unknown, fallback: string) {
-  return typeof value === 'string' && value ? value : fallback;
-}
 
 function getStoredPianoInputSettings(value: unknown): PianoInputSettings {
   if (!isRecord(value)) {
