@@ -17,6 +17,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   const {
     filterEqualizer,
     updateFilterEqualizerEnabled,
+    updateFilterEqualizerPreset,
     addFilter,
     removeFilter,
     updateFilterType,
@@ -90,6 +91,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onFilterQChange={updateFilterQ}
         onFilterRemove={removeFilter}
         onFilterTypeChange={updateFilterType}
+        onPresetChange={updateFilterEqualizerPreset}
       />
       <Reverb
         onEarlyReflectionAdd={addReverbEarlyReflection}

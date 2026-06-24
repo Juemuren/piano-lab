@@ -77,10 +77,12 @@ import {
   numberOrDefault,
   unionOrDefault,
 } from '../../../utils/runtime';
+import { createFilterEqualizerConfig } from '../effect/FilterEqualizer';
 import { createReverbConfig } from '../effect/Reverb';
 import { createDefaultSynthConfig } from './Defaults';
 import {
   EQUALIZER_TYPES,
+  FILTER_EQUALIZER_PRESETS,
   FILTER_TYPES,
   OSCILLATOR_TYPES,
   PANNER_DISTANCE_MODELS,
@@ -134,6 +136,13 @@ function normalizeFilterEqualizerConfig(
 ): FilterEqualizerConfig | null {
   if (!isRecord(value)) return null;
 
+  const preset = unionOrDefault(
+    value.preset,
+    FILTER_EQUALIZER_PRESETS,
+    'custom',
+  );
+  const fallback = createFilterEqualizerConfig(preset);
+
   return {
     equalizers: Array.isArray(value.equalizers)
       ? value.equalizers
@@ -141,12 +150,13 @@ function normalizeFilterEqualizerConfig(
           .filter((equalizer): equalizer is EqualizerConfig =>
             Boolean(equalizer),
           )
-      : [],
+      : fallback.equalizers,
     filters: Array.isArray(value.filters)
       ? value.filters
           .map(normalizeFilterConfig)
           .filter((filter): filter is FilterConfig => Boolean(filter))
-      : [],
+      : fallback.filters,
+    preset,
   };
 }
 

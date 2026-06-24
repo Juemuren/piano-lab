@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import type {
   EqualizerType,
   FilterEqualizerConfig,
+  FilterEqualizerPreset,
   FilterType,
 } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
+import ControlSelect from '../../../shared/ControlSelect';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
 import HarmonicResponsePreview from './HarmonicResponsePreview';
@@ -26,12 +28,14 @@ interface FilterAndEqualizerProps {
   onFilterQChange: (index: number, value: number) => void;
   onFilterRemove: (index: number) => void;
   onFilterTypeChange: (index: number, type: FilterType) => void;
+  onPresetChange: (preset: FilterEqualizerPreset) => void;
 }
 
 function FilterAndEqualizer({
   harmonicCount,
   filterEqualizer,
   onEnabledChange,
+  onPresetChange,
   onFilterAdd,
   onFilterRemove,
   onFilterTypeChange,
@@ -45,6 +49,20 @@ function FilterAndEqualizer({
   onEqualizerGainChange,
 }: FilterAndEqualizerProps) {
   const { t } = useTranslation('synth');
+  const presetOptions: FilterEqualizerPreset[] = [
+    'classical',
+    'pop',
+    'rock',
+    'jazz',
+    'custom',
+  ];
+  const presetLabels: Record<FilterEqualizerPreset, string> = {
+    classical: t('effect.filterEqualizer.presets.classical'),
+    custom: t('effect.filterEqualizer.presets.custom'),
+    jazz: t('effect.filterEqualizer.presets.jazz'),
+    pop: t('effect.filterEqualizer.presets.pop'),
+    rock: t('effect.filterEqualizer.presets.rock'),
+  };
 
   return (
     <details className="my-2" open>
@@ -67,7 +85,21 @@ function FilterAndEqualizer({
         />
 
         {filterEqualizer && (
-          <div>
+          <div className="space-y-3">
+            <ControlSelect
+              label={t('effect.filterEqualizer.preset')}
+              onChange={(event) =>
+                onPresetChange(event.target.value as FilterEqualizerPreset)
+              }
+              value={filterEqualizer.preset}
+            >
+              {presetOptions.map((preset) => (
+                <option key={preset} value={preset}>
+                  {presetLabels[preset]}
+                </option>
+              ))}
+            </ControlSelect>
+
             <Filter
               filters={filterEqualizer.filters}
               onAdd={onFilterAdd}

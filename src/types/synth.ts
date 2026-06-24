@@ -71,9 +71,18 @@ export interface EqualizerConfig {
   type: EqualizerType;
 }
 
+export type BuiltInFilterEqualizerPreset =
+  | 'classical'
+  | 'pop'
+  | 'rock'
+  | 'jazz';
+
+export type FilterEqualizerPreset = BuiltInFilterEqualizerPreset | 'custom';
+
 export interface FilterEqualizerConfig {
   equalizers: EqualizerConfig[];
   filters: FilterConfig[];
+  preset: FilterEqualizerPreset;
 }
 
 export interface CompressorConfig {

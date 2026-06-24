@@ -73,7 +73,15 @@
       "magnitudeResponseCurve": "幅频特性曲线",
       "magnitudeResponseSample": "幅频特性采样",
       "name": "滤波与均衡",
-      "pitch": "音高"
+      "pitch": "音高",
+      "preset": "滤波与均衡预设",
+      "presets": {
+        "classical": "古典",
+        "custom": "自定义",
+        "jazz": "爵士",
+        "pop": "流行",
+        "rock": "摇滚"
+      }
     },
     "modulation": {
       "amplitudeCurve": "振幅调制曲线",

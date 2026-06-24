@@ -1,6 +1,7 @@
 export type { MidiControlState, MidiInputDevice, MidiStatus } from './piano';
 export type {
   AmplitudeModulationConfig,
+  BuiltInFilterEqualizerPreset,
   BuiltInReverbPreset,
   BuiltInSpectrumType,
   CompressorConfig,
@@ -12,6 +13,7 @@ export type {
   EqualizerType,
   FilterConfig,
   FilterEqualizerConfig,
+  FilterEqualizerPreset,
   FilterType,
   FrequencyModulationConfig,
   PannerConfig,

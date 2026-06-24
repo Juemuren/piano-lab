@@ -64,6 +64,7 @@ import type {
   EqualizerType,
   FilterConfig,
   FilterEqualizerConfig,
+  FilterEqualizerPreset,
   FilterType,
   FrequencyModulationConfig,
   PannerConfig,
@@ -74,6 +75,7 @@ import type {
   SynthConfig,
   WaveShaperConfig,
 } from '../../../types';
+import { createFilterEqualizerConfig } from '../effect/FilterEqualizer';
 import { createReverbConfig } from '../effect/Reverb';
 import { createSpectrum } from '../Spectrum';
 
@@ -134,11 +136,10 @@ export function createDefaultEqualizerConfig(
   };
 }
 
-export function createDefaultFilterEqualizerConfig(): FilterEqualizerConfig {
-  return {
-    equalizers: [],
-    filters: [],
-  };
+export function createDefaultFilterEqualizerConfig(
+  preset: FilterEqualizerPreset = 'custom',
+): FilterEqualizerConfig {
+  return createFilterEqualizerConfig(preset);
 }
 
 export function createDefaultCompressorConfig(): CompressorConfig {

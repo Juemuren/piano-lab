@@ -1,5 +1,6 @@
 import type {
   EqualizerType,
+  FilterEqualizerPreset,
   FilterType,
   ReverbPreset,
   SpectrumType,
@@ -35,6 +36,14 @@ export const EQUALIZER_TYPES: EqualizerType[] = [
   'lowshelf',
   'highshelf',
   'peaking',
+];
+
+export const FILTER_EQUALIZER_PRESETS: FilterEqualizerPreset[] = [
+  'classical',
+  'pop',
+  'rock',
+  'jazz',
+  'custom',
 ];
 
 export const WAVE_SHAPER_PRESETS: WaveShaperPreset[] = [

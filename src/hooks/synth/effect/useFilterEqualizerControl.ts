@@ -7,6 +7,7 @@ import {
 import type {
   EqualizerType,
   FilterEqualizerConfig,
+  FilterEqualizerPreset,
   FilterType,
 } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
@@ -23,6 +24,13 @@ function useFilterEqualizerControl(
     );
   }, []);
 
+  const updateFilterEqualizerPreset = useCallback(
+    (preset: FilterEqualizerPreset) => {
+      setFilterEqualizer(() => createDefaultFilterEqualizerConfig(preset));
+    },
+    [],
+  );
+
   const addFilter = useCallback((type: FilterType) => {
     setFilterEqualizer((current) => {
       const source = current ?? createDefaultFilterEqualizerConfig();
@@ -30,6 +38,7 @@ function useFilterEqualizerControl(
       return {
         ...source,
         filters: [...source.filters, createDefaultFilterConfig(type)],
+        preset: 'custom',
       };
     });
   }, []);
@@ -41,6 +50,7 @@ function useFilterEqualizerControl(
       return {
         ...source,
         filters: removeItemAt(source.filters, index),
+        preset: 'custom',
       };
     });
   }, []);
@@ -55,6 +65,7 @@ function useFilterEqualizerControl(
           ...filter,
           type,
         })),
+        preset: 'custom',
       };
     });
   }, []);
@@ -70,6 +81,7 @@ function useFilterEqualizerControl(
             ...filter,
             frequency,
           })),
+          preset: 'custom',
         };
       });
     },
@@ -86,6 +98,7 @@ function useFilterEqualizerControl(
           ...filter,
           q,
         })),
+        preset: 'custom',
       };
     });
   }, []);
@@ -97,6 +110,7 @@ function useFilterEqualizerControl(
       return {
         ...source,
         equalizers: [...source.equalizers, createDefaultEqualizerConfig(type)],
+        preset: 'custom',
       };
     });
   }, []);
@@ -108,6 +122,7 @@ function useFilterEqualizerControl(
       return {
         ...source,
         equalizers: removeItemAt(source.equalizers, index),
+        preset: 'custom',
       };
     });
   }, []);
@@ -123,6 +138,7 @@ function useFilterEqualizerControl(
             ...equalizer,
             type,
           })),
+          preset: 'custom',
         };
       });
     },
@@ -140,6 +156,7 @@ function useFilterEqualizerControl(
             ...equalizer,
             frequency,
           })),
+          preset: 'custom',
         };
       });
     },
@@ -156,6 +173,7 @@ function useFilterEqualizerControl(
           ...equalizer,
           q,
         })),
+        preset: 'custom',
       };
     });
   }, []);
@@ -170,6 +188,7 @@ function useFilterEqualizerControl(
           ...equalizer,
           gain,
         })),
+        preset: 'custom',
       };
     });
   }, []);
@@ -185,6 +204,7 @@ function useFilterEqualizerControl(
     updateEqualizerQ,
     updateEqualizerType,
     updateFilterEqualizerEnabled,
+    updateFilterEqualizerPreset,
     updateFilterFrequency,
     updateFilterQ,
     updateFilterType,
