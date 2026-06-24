@@ -91,6 +91,21 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onFilterRemove={removeFilter}
         onFilterTypeChange={updateFilterType}
       />
+      <Reverb
+        onEarlyReflectionAdd={addReverbEarlyReflection}
+        onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
+        onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
+        onEarlyReflectionPhaseChange={updateReverbEarlyReflectionPhase}
+        onEarlyReflectionRemove={removeReverbEarlyReflection}
+        onEnabledChange={updateReverbEnabled}
+        onLateTailAlphaChange={updateReverbLateTailAlpha}
+        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
+        onLateTailDelayChange={updateReverbLateTailDelay}
+        onLateTailDurationChange={updateReverbLateTailDuration}
+        onMixChange={updateReverbMix}
+        onPresetChange={updateReverbPreset}
+        reverb={reverb}
+      />
       <Modulation
         amplitudeModulation={amplitudeModulation}
         delayModulation={delayModulation}
@@ -132,21 +147,6 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
         onEnabledChange={updatePannerEnabled}
         onValueChange={updatePannerValue}
         panner={panner}
-      />
-      <Reverb
-        onEarlyReflectionAdd={addReverbEarlyReflection}
-        onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
-        onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
-        onEarlyReflectionPhaseChange={updateReverbEarlyReflectionPhase}
-        onEarlyReflectionRemove={removeReverbEarlyReflection}
-        onEnabledChange={updateReverbEnabled}
-        onLateTailAlphaChange={updateReverbLateTailAlpha}
-        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
-        onLateTailDelayChange={updateReverbLateTailDelay}
-        onLateTailDurationChange={updateReverbLateTailDuration}
-        onMixChange={updateReverbMix}
-        onPresetChange={updateReverbPreset}
-        reverb={reverb}
       />
     </>
   );
