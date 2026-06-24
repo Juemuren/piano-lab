@@ -3,8 +3,7 @@ import { useSynthEngine } from '../../contexts/synthEngine';
 import { createDefaultEffectConfig } from '../../services/synth/config/Defaults';
 import type { EffectConfig } from '../../types';
 import useCompressorControl from './effect/useCompressorControl';
-import useEqualizerControl from './effect/useEqualizerControl';
-import useFilterControl from './effect/useFilterControl';
+import useFilterEqualizerControl from './effect/useFilterEqualizerControl';
 import useModulationControl from './effect/useModulationControl';
 import usePannerControl from './effect/usePannerControl';
 import useReverbControl from './effect/useReverbControl';
@@ -19,9 +18,8 @@ function useEffectControl(
     () => initialConfig ?? createDefaultEffectConfig(),
     [initialConfig],
   );
-  const filterControl = useFilterControl(resolvedInitialConfig.filters);
-  const equalizerControl = useEqualizerControl(
-    resolvedInitialConfig.equalizers,
+  const filterEqualizerControl = useFilterEqualizerControl(
+    resolvedInitialConfig.filterEqualizer,
   );
   const modulationControl = useModulationControl(
     resolvedInitialConfig.amplitudeModulation,
@@ -43,8 +41,7 @@ function useEffectControl(
       amplitudeModulation: modulationControl.amplitudeModulation,
       compressor: compressorControl.compressor,
       delayModulation: modulationControl.delayModulation,
-      equalizers: equalizerControl.equalizers,
-      filters: filterControl.filters,
+      filterEqualizer: filterEqualizerControl.filterEqualizer,
       frequencyModulation: modulationControl.frequencyModulation,
       panner: pannerControl.panner,
       phaseModulation: modulationControl.phaseModulation,
@@ -53,8 +50,7 @@ function useEffectControl(
     }),
     [
       compressorControl.compressor,
-      equalizerControl.equalizers,
-      filterControl.filters,
+      filterEqualizerControl.filterEqualizer,
       modulationControl.amplitudeModulation,
       modulationControl.frequencyModulation,
       modulationControl.phaseModulation,
@@ -74,8 +70,7 @@ function useEffectControl(
   }, [effectConfig, onConfigChange]);
 
   return {
-    ...filterControl,
-    ...equalizerControl,
+    ...filterEqualizerControl,
     ...modulationControl,
     ...waveShaperControl,
     ...compressorControl,

@@ -63,6 +63,7 @@ import type {
   EqualizerConfig,
   EqualizerType,
   FilterConfig,
+  FilterEqualizerConfig,
   FilterType,
   FrequencyModulationConfig,
   PannerConfig,
@@ -130,6 +131,13 @@ export function createDefaultEqualizerConfig(
     gain: DEFAULT_EQUALIZER_GAIN,
     q: DEFAULT_EQUALIZER_Q,
     type,
+  };
+}
+
+export function createDefaultFilterEqualizerConfig(): FilterEqualizerConfig {
+  return {
+    equalizers: [],
+    filters: [],
   };
 }
 
@@ -212,8 +220,7 @@ export function createDefaultEffectConfig(): EffectConfig {
     amplitudeModulation: null,
     compressor: null,
     delayModulation: null,
-    equalizers: [],
-    filters: [],
+    filterEqualizer: null,
     frequencyModulation: null,
     panner: null,
     phaseModulation: null,

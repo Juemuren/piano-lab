@@ -71,6 +71,11 @@ export interface EqualizerConfig {
   type: EqualizerType;
 }
 
+export interface FilterEqualizerConfig {
+  equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+}
+
 export interface CompressorConfig {
   attack: number;
   knee: number;
@@ -158,8 +163,7 @@ export interface EffectConfig {
   amplitudeModulation: AmplitudeModulationConfig | null;
   compressor: CompressorConfig | null;
   delayModulation: DelayModulationConfig | null;
-  equalizers: EqualizerConfig[];
-  filters: FilterConfig[];
+  filterEqualizer: FilterEqualizerConfig | null;
   frequencyModulation: FrequencyModulationConfig | null;
   panner: PannerConfig | null;
   phaseModulation: PhaseModulationConfig | null;

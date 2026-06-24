@@ -39,8 +39,7 @@ export class EffectChain {
     amplitudeModulation: null,
     compressor: null,
     delayModulation: null,
-    equalizers: [],
-    filters: [],
+    filterEqualizer: null,
     frequencyModulation: null,
     panner: null,
     phaseModulation: null,
@@ -355,8 +354,9 @@ export class EffectChain {
     this.disconnectEffectNodes();
 
     if (
-      this.effectConfig.filters.length === 0 &&
-      this.effectConfig.equalizers.length === 0 &&
+      (!this.effectConfig.filterEqualizer ||
+        (this.effectConfig.filterEqualizer.filters.length === 0 &&
+          this.effectConfig.filterEqualizer.equalizers.length === 0)) &&
       !this.effectConfig.amplitudeModulation &&
       !this.effectConfig.phaseModulation &&
       !this.effectConfig.delayModulation &&
@@ -383,33 +383,41 @@ export class EffectChain {
     if (!this.inputNode || !this.outputNode) return;
 
     let previousNode: AudioNode = this.inputNode;
-    for (const [index, filterConfig] of this.effectConfig.filters.entries()) {
-      const filterNode = this.getFilterNode(index, filterConfig);
-      if (!filterNode) continue;
+    if (this.effectConfig.filterEqualizer) {
+      for (const [
+        index,
+        filterConfig,
+      ] of this.effectConfig.filterEqualizer.filters.entries()) {
+        const filterNode = this.getFilterNode(index, filterConfig);
+        if (!filterNode) continue;
 
-      previousNode.connect(filterNode);
-      previousNode = filterNode;
+        previousNode.connect(filterNode);
+        previousNode = filterNode;
+      }
+
+      this.filterNodes = this.filterNodes.slice(
+        0,
+        this.effectConfig.filterEqualizer.filters.length,
+      );
+      for (const [
+        index,
+        equalizerConfig,
+      ] of this.effectConfig.filterEqualizer.equalizers.entries()) {
+        const equalizerNode = this.getEqualizerNode(index, equalizerConfig);
+        if (!equalizerNode) continue;
+
+        previousNode.connect(equalizerNode);
+        previousNode = equalizerNode;
+      }
+
+      this.equalizerNodes = this.equalizerNodes.slice(
+        0,
+        this.effectConfig.filterEqualizer.equalizers.length,
+      );
+    } else {
+      this.filterNodes = [];
+      this.equalizerNodes = [];
     }
-
-    this.filterNodes = this.filterNodes.slice(
-      0,
-      this.effectConfig.filters.length,
-    );
-    for (const [
-      index,
-      equalizerConfig,
-    ] of this.effectConfig.equalizers.entries()) {
-      const equalizerNode = this.getEqualizerNode(index, equalizerConfig);
-      if (!equalizerNode) continue;
-
-      previousNode.connect(equalizerNode);
-      previousNode = equalizerNode;
-    }
-
-    this.equalizerNodes = this.equalizerNodes.slice(
-      0,
-      this.effectConfig.equalizers.length,
-    );
 
     if (this.effectConfig.amplitudeModulation) {
       const amplitudeModulationNode = this.applyAmplitudeModulationConfig(

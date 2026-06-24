@@ -11,6 +11,7 @@ export type {
   EqualizerConfig,
   EqualizerType,
   FilterConfig,
+  FilterEqualizerConfig,
   FilterType,
   FrequencyModulationConfig,
   PannerConfig,

@@ -1,20 +1,20 @@
-import { Equal } from 'lucide-react';
+import { Equal, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type {
-  EqualizerConfig,
   EqualizerType,
-  FilterConfig,
+  FilterEqualizerConfig,
   FilterType,
 } from '../../../../types';
+import ControlButton from '../../../shared/ControlButton';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
 import HarmonicResponsePreview from './HarmonicResponsePreview';
 import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 
 interface FilterAndEqualizerProps {
-  equalizers: EqualizerConfig[];
-  filters: FilterConfig[];
+  filterEqualizer: FilterEqualizerConfig | null;
   harmonicCount: number;
+  onEnabledChange: (enabled: boolean) => void;
   onEqualizerAdd: (type: EqualizerType) => void;
   onEqualizerFrequencyChange: (index: number, value: number) => void;
   onEqualizerGainChange: (index: number, value: number) => void;
@@ -30,13 +30,13 @@ interface FilterAndEqualizerProps {
 
 function FilterAndEqualizer({
   harmonicCount,
-  filters,
+  filterEqualizer,
+  onEnabledChange,
   onFilterAdd,
   onFilterRemove,
   onFilterTypeChange,
   onFilterFrequencyChange,
   onFilterQChange,
-  equalizers,
   onEqualizerAdd,
   onEqualizerRemove,
   onEqualizerTypeChange,
@@ -54,34 +54,51 @@ function FilterAndEqualizer({
           {t('effect.filterEqualizer.name')}
         </span>
       </summary>
-      <Filter
-        filters={filters}
-        onAdd={onFilterAdd}
-        onFrequencyChange={onFilterFrequencyChange}
-        onQChange={onFilterQChange}
-        onRemove={onFilterRemove}
-        onTypeChange={onFilterTypeChange}
-      />
-      <Equalizer
-        equalizers={equalizers}
-        onAdd={onEqualizerAdd}
-        onFrequencyChange={onEqualizerFrequencyChange}
-        onGainChange={onEqualizerGainChange}
-        onQChange={onEqualizerQChange}
-        onRemove={onEqualizerRemove}
-        onTypeChange={onEqualizerTypeChange}
-      />
-      <MagnitudeResponsePreview
-        equalizers={equalizers}
-        filters={filters}
-        title={t('effect.filterEqualizer.magnitudeResponseCurve')}
-      />
-      <HarmonicResponsePreview
-        equalizers={equalizers}
-        filters={filters}
-        harmonicCount={harmonicCount}
-        title={t('effect.filterEqualizer.magnitudeResponseSample')}
-      />
+      <div className="space-y-3">
+        <ControlButton
+          icon={filterEqualizer ? <Power size={18} /> : <PowerOff size={18} />}
+          label={t(
+            filterEqualizer
+              ? 'effect.filterEqualizer.disabled'
+              : 'effect.filterEqualizer.enabled',
+          )}
+          onClick={() => onEnabledChange(!filterEqualizer)}
+          title={t('effect.filterEqualizer.enabled')}
+        />
+
+        {filterEqualizer && (
+          <div>
+            <Filter
+              filters={filterEqualizer.filters}
+              onAdd={onFilterAdd}
+              onFrequencyChange={onFilterFrequencyChange}
+              onQChange={onFilterQChange}
+              onRemove={onFilterRemove}
+              onTypeChange={onFilterTypeChange}
+            />
+            <Equalizer
+              equalizers={filterEqualizer.equalizers}
+              onAdd={onEqualizerAdd}
+              onFrequencyChange={onEqualizerFrequencyChange}
+              onGainChange={onEqualizerGainChange}
+              onQChange={onEqualizerQChange}
+              onRemove={onEqualizerRemove}
+              onTypeChange={onEqualizerTypeChange}
+            />
+            <MagnitudeResponsePreview
+              equalizers={filterEqualizer.equalizers}
+              filters={filterEqualizer.filters}
+              title={t('effect.filterEqualizer.magnitudeResponseCurve')}
+            />
+            <HarmonicResponsePreview
+              equalizers={filterEqualizer.equalizers}
+              filters={filterEqualizer.filters}
+              harmonicCount={harmonicCount}
+              title={t('effect.filterEqualizer.magnitudeResponseSample')}
+            />
+          </div>
+        )}
+      </div>
     </details>
   );
 }

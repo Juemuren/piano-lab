@@ -15,13 +15,13 @@ interface EffectProps {
 
 function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   const {
-    filters,
+    filterEqualizer,
+    updateFilterEqualizerEnabled,
     addFilter,
     removeFilter,
     updateFilterType,
     updateFilterFrequency,
     updateFilterQ,
-    equalizers,
     addEqualizer,
     removeEqualizer,
     updateEqualizerType,
@@ -76,9 +76,9 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   return (
     <>
       <FilterAndEqualizer
-        equalizers={equalizers}
-        filters={filters}
+        filterEqualizer={filterEqualizer}
         harmonicCount={harmonicCount}
+        onEnabledChange={updateFilterEqualizerEnabled}
         onEqualizerAdd={addEqualizer}
         onEqualizerFrequencyChange={updateEqualizerFrequency}
         onEqualizerGainChange={updateEqualizerGain}

@@ -60,6 +60,7 @@ import type {
   EffectConfig,
   EqualizerConfig,
   FilterConfig,
+  FilterEqualizerConfig,
   FrequencyModulationConfig,
   PannerConfig,
   PhaseModulationConfig,
@@ -125,6 +126,27 @@ function normalizeEqualizerConfig(value: unknown): EqualizerConfig | null {
     gain: numberOrDefault(value.gain, DEFAULT_EQUALIZER_GAIN),
     q: numberOrDefault(value.q, DEFAULT_EQUALIZER_Q),
     type: unionOrDefault(value.type, EQUALIZER_TYPES, DEFAULT_EQUALIZER_TYPE),
+  };
+}
+
+function normalizeFilterEqualizerConfig(
+  value: unknown,
+): FilterEqualizerConfig | null {
+  if (!isRecord(value)) return null;
+
+  return {
+    equalizers: Array.isArray(value.equalizers)
+      ? value.equalizers
+          .map(normalizeEqualizerConfig)
+          .filter((equalizer): equalizer is EqualizerConfig =>
+            Boolean(equalizer),
+          )
+      : [],
+    filters: Array.isArray(value.filters)
+      ? value.filters
+          .map(normalizeFilterConfig)
+          .filter((filter): filter is FilterConfig => Boolean(filter))
+      : [],
   };
 }
 
@@ -356,18 +378,10 @@ function normalizeEffectConfig(
       value.delayModulation === undefined
         ? fallback.delayModulation
         : normalizeDelayModulationConfig(value.delayModulation),
-    equalizers: Array.isArray(value.equalizers)
-      ? value.equalizers
-          .map(normalizeEqualizerConfig)
-          .filter((equalizer): equalizer is EqualizerConfig =>
-            Boolean(equalizer),
-          )
-      : fallback.equalizers,
-    filters: Array.isArray(value.filters)
-      ? value.filters
-          .map(normalizeFilterConfig)
-          .filter((filter): filter is FilterConfig => Boolean(filter))
-      : fallback.filters,
+    filterEqualizer:
+      value.filterEqualizer === undefined
+        ? fallback.filterEqualizer
+        : normalizeFilterEqualizerConfig(value.filterEqualizer),
     frequencyModulation:
       value.frequencyModulation === undefined
         ? fallback.frequencyModulation
