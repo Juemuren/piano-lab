@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
 import type { SpectrumType } from '../../../services/synth/config/Options';
 import { SPECTRUM_TYPES } from '../../../services/synth/config/Options';
-import type { SpectrumConfig } from '../../../types';
+import type { SpectrumConfig } from '../../../types/synth';
 import BlockMath from '../../shared/BlockMath';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumFormulaPreview from './SpectrumFormulaPreview';

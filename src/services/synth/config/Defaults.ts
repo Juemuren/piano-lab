@@ -71,7 +71,7 @@ import type {
   SynthBasicConfig,
   SynthConfig,
   WaveShaperConfig,
-} from '../../../types';
+} from '../../../types/synth';
 import { createFilterEqualizerConfig } from '../effect/FilterEqualizer';
 import { createReverbConfig } from '../effect/Reverb';
 import { createSpectrum } from '../Spectrum';

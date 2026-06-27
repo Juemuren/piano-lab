@@ -12,7 +12,7 @@ import type {
   Spectrum,
   SpectrumConfig,
   SpectrumParamUpdates,
-} from '../../types';
+} from '../../types/synth';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);

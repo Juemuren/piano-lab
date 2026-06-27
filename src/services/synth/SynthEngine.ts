@@ -4,7 +4,7 @@ import type {
   Spectrum,
   StartNoteResult,
   SynthBasicConfig,
-} from '../../types';
+} from '../../types/synth';
 import type { ActiveVoice, ReleasingVoice } from './BasicVoice';
 import { BasicVoice } from './BasicVoice';
 import { EffectChain } from './EffectChain';

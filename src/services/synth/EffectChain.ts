@@ -9,7 +9,7 @@ import type {
   PhaseModulationConfig,
   ReverbConfig,
   WaveShaperConfig,
-} from '../../types';
+} from '../../types/synth';
 import { createReverbImpulseResponse } from './effect/Reverb';
 import { createWaveShaperCurve } from './effect/WaveShaper';
 

@@ -3,7 +3,7 @@ import type {
   DelayModulationConfig,
   FrequencyModulationConfig,
   PhaseModulationConfig,
-} from '../../../types';
+} from '../../../types/synth';
 
 const MODULATION_CURVE_POINT_COUNT = 256;
 const MODULATION_CURVE_DURATION_SECONDS = 1;

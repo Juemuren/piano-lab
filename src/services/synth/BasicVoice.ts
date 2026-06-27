@@ -17,7 +17,7 @@ import type {
   FrequencyModulationConfig,
   Spectrum,
   SynthBasicConfig,
-} from '../../types';
+} from '../../types/synth';
 import { createSpectrum } from './Spectrum';
 import type { VoiceEnvelopeState } from './VoicePlanner';
 import { createVoiceStartPlans, createVoiceStopPlans } from './VoicePlanner';

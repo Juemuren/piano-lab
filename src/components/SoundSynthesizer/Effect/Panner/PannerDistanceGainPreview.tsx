@@ -5,7 +5,7 @@ import {
   getPannerDistanceCurve,
   getPannerDistanceGain,
 } from '../../../../services/synth/effect/Panner';
-import type { PannerConfig } from '../../../../types';
+import type { PannerConfig } from '../../../../types/synth';
 import Plot2D from '../../../shared/Plot2D';
 
 interface PannerDistanceGainPreviewProps {

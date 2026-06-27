@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import { getPhaseModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
-import type { PhaseModulationConfig } from '../../../../types';
+import type { PhaseModulationConfig } from '../../../../types/synth';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';

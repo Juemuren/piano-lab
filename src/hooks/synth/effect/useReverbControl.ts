@@ -6,7 +6,7 @@ import {
 } from '../../../constants/synth';
 import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
 import type { ReverbPreset } from '../../../services/synth/config/Options';
-import type { ReverbConfig } from '../../../types';
+import type { ReverbConfig } from '../../../types/synth';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function getReverbConfig(config: ReverbConfig | null) {

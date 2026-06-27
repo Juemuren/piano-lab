@@ -1,4 +1,4 @@
-import type { Spectrum, SpectrumDefinition } from '../../types';
+import type { Spectrum, SpectrumDefinition } from '../../types/synth';
 
 function normalizeAmplitudes(amplitudes: number[]) {
   const maxAmplitude = Math.max(...amplitudes);

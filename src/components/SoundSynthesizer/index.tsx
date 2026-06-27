@@ -23,7 +23,7 @@ import type {
   EnvelopeConfig,
   SpectrumConfig,
   SynthConfig,
-} from '../../types';
+} from '../../types/synth';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';

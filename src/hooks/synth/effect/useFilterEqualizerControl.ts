@@ -9,7 +9,7 @@ import type {
   FilterEqualizerPreset,
   FilterType,
 } from '../../../services/synth/config/Options';
-import type { FilterEqualizerConfig } from '../../../types';
+import type { FilterEqualizerConfig } from '../../../types/synth';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function useFilterEqualizerControl(

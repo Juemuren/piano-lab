@@ -3,7 +3,7 @@ import type {
   MidiControlState,
   MidiInputDevice,
   MidiStatus,
-} from '../../types';
+} from '../../types/piano';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const MIDI_COMMAND_NOTE_OFF = 0x80;

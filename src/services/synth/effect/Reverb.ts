@@ -2,7 +2,7 @@ import type {
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
-} from '../../../types';
+} from '../../../types/synth';
 import { degreesToRadians } from '../../../utils/math';
 import { createGaussianRandomGenerator } from '../../../utils/random';
 import type { BuiltInReverbPreset } from '../config/Options';

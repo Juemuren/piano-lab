@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { getReverbImpulseResponseSamples } from '../../../../services/synth/effect/Reverb';
-import type { ReverbConfig } from '../../../../types';
+import type { ReverbConfig } from '../../../../types/synth';
 import BlockMath from '../../../shared/BlockMath';
 import Plot2D from '../../../shared/Plot2D';
 

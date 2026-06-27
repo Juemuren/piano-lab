@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
 import type { EqualizerType } from '../../../../services/synth/config/Options';
 import { EQUALIZER_TYPES } from '../../../../services/synth/config/Options';
-import type { EqualizerConfig } from '../../../../types';
+import type { EqualizerConfig } from '../../../../types/synth';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';

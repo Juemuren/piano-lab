@@ -1,4 +1,4 @@
-import type { Spectrum } from '../../types';
+import type { Spectrum } from '../../types/synth';
 
 export interface VoiceStartPlan {
   attackEnd: number;

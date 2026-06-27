@@ -2,7 +2,7 @@ import type {
   EqualizerConfig,
   FilterConfig,
   FilterEqualizerConfig,
-} from '../../../types';
+} from '../../../types/synth';
 import type {
   BuiltInFilterEqualizerPreset,
   FilterEqualizerPreset,

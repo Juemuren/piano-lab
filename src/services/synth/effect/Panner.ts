@@ -1,4 +1,4 @@
-import type { PannerConfig } from '../../../types';
+import type { PannerConfig } from '../../../types/synth';
 import { degreesToRadians } from '../../../utils/math';
 
 const DISTANCE_POINT_COUNT = 160;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import type { WaveShaperPreset } from '../../../../services/synth/config/Options';
 import { WAVE_SHAPER_PRESETS } from '../../../../services/synth/config/Options';
-import type { WaveShaperConfig } from '../../../../types';
+import type { WaveShaperConfig } from '../../../../types/synth';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';

@@ -6,7 +6,7 @@ import {
   getBiquadMagnitudes,
 } from '../../../../services/synth/effect/Filter';
 import { getBaseFrequency } from '../../../../services/synth/VoicePlanner';
-import type { EqualizerConfig, FilterConfig } from '../../../../types';
+import type { EqualizerConfig, FilterConfig } from '../../../../types/synth';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
 import HarmonicLabel from '../../shared/HarmonicLabel';
 import BaseFrequencyControl from './BaseFrequencyControl';

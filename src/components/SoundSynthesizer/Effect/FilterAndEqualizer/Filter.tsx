@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
 import type { FilterType } from '../../../../services/synth/config/Options';
 import { FILTER_TYPES } from '../../../../services/synth/config/Options';
-import type { FilterConfig } from '../../../../types';
+import type { FilterConfig } from '../../../../types/synth';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';

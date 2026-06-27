@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import useEnvelopeControl from '../../../hooks/synth/useEnvelopeControl';
-import type { EnvelopeConfig } from '../../../types';
+import type { EnvelopeConfig } from '../../../types/synth';
 import EnvelopeCurvePreview from './EnvelopeCurvePreview';
 import EnvelopeFormulaPreview from './EnvelopeFormulaPreview';
 import EnvelopeParameterControls from './EnvelopeParameterControls';

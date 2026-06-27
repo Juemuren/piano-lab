@@ -7,7 +7,7 @@ import {
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
 } from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
-import type { EnvelopeConfig, EnvelopeCurve } from '../../types';
+import type { EnvelopeConfig, EnvelopeCurve } from '../../types/synth';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_POINTS_PER_SEGMENT = 50;

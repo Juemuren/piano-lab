@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { MidiControlState } from '../../types';
+import type { MidiControlState } from '../../types/piano';
 
 export interface MidiControlContextValue {
   midiControl: MidiControlState;
