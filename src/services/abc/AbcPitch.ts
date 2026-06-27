@@ -42,15 +42,12 @@ function normalizePitchClass(value: number) {
   return ((value % PITCH_CLASS_COUNT) + PITCH_CLASS_COUNT) % PITCH_CLASS_COUNT;
 }
 
-function getSignedPitchClass(
-  pitchClass: NaturalPitchClass,
-  accidental: KeyAccidental,
-) {
+function getSignedPitchClass({ accidental, pitchClass }: AbcPitchSpelling) {
   return normalizePitchClass(NATURAL_PITCH_CLASSES[pitchClass] + accidental);
 }
 
-function parseKeyRoot(keyValue: string) {
-  const match = keyValue.trim().match(/^([A-Ga-g])([#b]?)/);
+function parseKeyRoot(keySignature: string) {
+  const match = keySignature.trim().match(/^([A-Ga-g])([#b]?)/);
   if (!match) {
     return null;
   }
@@ -63,80 +60,100 @@ function getKeySignatureOffset(keySignature: string) {
   return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
 }
 
-function getKeySignatureAccidentals(keySignature: string) {
-  const accidentals = new Map<NaturalPitchClass, KeyAccidental>();
-  const keySignatureOffset = getKeySignatureOffset(keySignature);
-  const accidentalOrder =
-    keySignatureOffset >= 0
-      ? SHARP_ORDER.slice(0, keySignatureOffset)
-      : FLAT_ORDER.slice(0, -keySignatureOffset);
-  const accidental = keySignatureOffset >= 0 ? 1 : -1;
+function getKeyAccidentalMap(keySignature: string) {
+  const offset = getKeySignatureOffset(keySignature);
+  const pitchClasses =
+    offset >= 0 ? SHARP_ORDER.slice(0, offset) : FLAT_ORDER.slice(0, -offset);
+  const accidental = offset >= 0 ? 1 : -1;
 
-  for (const pitchClass of accidentalOrder) {
-    accidentals.set(pitchClass, accidental);
-  }
-
-  return accidentals;
+  return new Map<NaturalPitchClass, KeyAccidental>(
+    pitchClasses.map((pitchClass) => [pitchClass, accidental]),
+  );
 }
 
-function getAbcPitchToken(pitch: number, spelling?: AbcPitchSpelling) {
-  const defaultName = spelling === undefined ? getPitchName(pitch) : undefined;
+function getDefaultPitchSpelling(pitch: number): AbcPitchSpelling {
+  const pitchName = getPitchName(pitch);
+
+  return {
+    accidental: pitchName.includes('#') ? 1 : 0,
+    pitchClass: pitchName[0] as NaturalPitchClass,
+  };
+}
+
+function formatAbcPitch(pitch: number, spelling: AbcPitchSpelling) {
   const octave = getPitchOctave(pitch);
-  const pitchClass =
-    spelling?.pitchClass ?? (defaultName?.[0] as NaturalPitchClass);
-  const accidental =
-    spelling?.accidental ?? (defaultName?.includes('#') ? 1 : 0);
-  const accidentalToken = accidental === 1 ? '^' : accidental === -1 ? '_' : '';
+  const accidentalToken =
+    spelling.accidental === 1 ? '^' : spelling.accidental === -1 ? '_' : '';
   const pitchToken =
     octave <= 4
-      ? `${pitchClass}${','.repeat(4 - octave)}`
-      : `${pitchClass.toLowerCase()}${"'".repeat(octave - 5)}`;
+      ? `${spelling.pitchClass}${','.repeat(4 - octave)}`
+      : `${spelling.pitchClass.toLowerCase()}${"'".repeat(octave - 5)}`;
 
   return `${accidentalToken}${pitchToken}`;
+}
+
+function getNaturalKeySpelling(
+  pitchClass: number,
+  keyAccidentals: Map<NaturalPitchClass, KeyAccidental>,
+): AbcPitchSpelling | null {
+  for (const naturalPitchClass of Object.keys(
+    NATURAL_PITCH_CLASSES,
+  ) as NaturalPitchClass[]) {
+    const spelling: AbcPitchSpelling = {
+      accidental: keyAccidentals.get(naturalPitchClass) ?? 0,
+      pitchClass: naturalPitchClass,
+    };
+
+    if (getSignedPitchClass(spelling) === pitchClass) {
+      return {
+        accidental: 0,
+        pitchClass: naturalPitchClass,
+      };
+    }
+  }
+
+  return null;
+}
+
+function getExplicitAccidentalSpelling(
+  pitchClass: number,
+  keyAccidentals: Map<NaturalPitchClass, KeyAccidental>,
+): AbcPitchSpelling | null {
+  const candidates = (Object.keys(NATURAL_PITCH_CLASSES) as NaturalPitchClass[])
+    .flatMap((naturalPitchClass) => {
+      const keyAccidental = keyAccidentals.get(naturalPitchClass) ?? 0;
+
+      return ([-1, 1] as const).map((accidental) => ({
+        priority: Math.abs(accidental - keyAccidental),
+        spelling: {
+          accidental,
+          pitchClass: naturalPitchClass,
+        },
+      }));
+    })
+    .filter(({ spelling }) => getSignedPitchClass(spelling) === pitchClass)
+    .sort((left, right) => left.priority - right.priority);
+
+  return candidates[0]?.spelling ?? null;
+}
+
+function getPitchSpellingInKey(
+  pitch: number,
+  keySignature: string,
+): AbcPitchSpelling {
+  const pitchClass = normalizePitchClass(pitch);
+  const keyAccidentals = getKeyAccidentalMap(keySignature);
+
+  return (
+    getNaturalKeySpelling(pitchClass, keyAccidentals) ??
+    getExplicitAccidentalSpelling(pitchClass, keyAccidentals) ??
+    getDefaultPitchSpelling(pitch)
+  );
 }
 
 export function getAbcPitchWithKeySignature(
   pitch: number,
   keySignature: string,
 ) {
-  const keySignatureAccidentals = getKeySignatureAccidentals(keySignature);
-  const pitchClass = normalizePitchClass(pitch);
-
-  for (const naturalPitchClass of Object.keys(
-    NATURAL_PITCH_CLASSES,
-  ) as NaturalPitchClass[]) {
-    const accidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
-    const signedPitchClass = getSignedPitchClass(naturalPitchClass, accidental);
-
-    if (signedPitchClass === pitchClass) {
-      return getAbcPitchToken(pitch, {
-        accidental: 0,
-        pitchClass: naturalPitchClass,
-      });
-    }
-  }
-
-  const candidates = (Object.keys(NATURAL_PITCH_CLASSES) as NaturalPitchClass[])
-    .flatMap((naturalPitchClass) => {
-      const keyAccidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
-
-      return ([-1, 1] as const).map((accidental) => ({
-        accidental,
-        naturalPitchClass,
-        priority: Math.abs(accidental - keyAccidental),
-        signedPitchClass: getSignedPitchClass(naturalPitchClass, accidental),
-      }));
-    })
-    .filter(({ signedPitchClass }) => signedPitchClass === pitchClass)
-    .sort((left, right) => left.priority - right.priority);
-
-  const candidate = candidates[0];
-  if (!candidate) {
-    return getAbcPitchToken(pitch);
-  }
-
-  return getAbcPitchToken(pitch, {
-    accidental: candidate.accidental,
-    pitchClass: candidate.naturalPitchClass,
-  });
+  return formatAbcPitch(pitch, getPitchSpellingInKey(pitch, keySignature));
 }

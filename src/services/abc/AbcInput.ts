@@ -10,6 +10,7 @@ import {
 
 const MAX_DENOMINATOR = 32;
 const MEASURES_PER_LINE = 4;
+const ABC_NOTE_PATTERN = /(?:\^|_|=)*[A-Ga-gz][,']*(\d*(?:\/+\d*)?)/g;
 const NOTE_LENGTHS = [
   1 / 32,
   1 / 16,
@@ -22,6 +23,27 @@ const NOTE_LENGTHS = [
   3 / 4,
   1,
 ] as const;
+
+interface AbcInputHeader {
+  defaultNoteLength: string;
+  keySignature: string;
+  meterLength: number | null;
+  tempo: number;
+}
+
+interface MeasureState {
+  currentLength: number;
+  measuresInLastLine: number;
+}
+
+function readAbcInputHeader(content: string): AbcInputHeader {
+  return {
+    defaultNoteLength: getRequiredAbcHeaderField(content, 'L'),
+    keySignature: getRequiredAbcHeaderField(content, 'K'),
+    meterLength: parseMeter(getRequiredAbcHeaderField(content, 'M')),
+    tempo: parseTempo(getRequiredAbcHeaderField(content, 'Q')),
+  };
+}
 
 function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
   const pressedLength = duration / quarterNoteSeconds / 4;
@@ -48,7 +70,7 @@ function getFraction(value: number) {
   return { denominator: 1, numerator: Math.round(value) };
 }
 
-function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
+function formatDurationSuffix(noteLength: number, defaultNoteLength: string) {
   const ratio = noteLength / parseNoteLength(defaultNoteLength);
   const { numerator, denominator } = getFraction(ratio);
 
@@ -63,19 +85,16 @@ function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
   return numerator === 1 ? `/${denominator}` : `${numerator}/${denominator}`;
 }
 
-function getBodyContent(content: string) {
-  return content
-    .split(/\r?\n/)
-    .filter((line) => !isAbcHeaderLine(line))
-    .join('\n');
+function getBodyLines(content: string) {
+  return content.split(/\r?\n/).filter((line) => !isAbcHeaderLine(line));
 }
 
 function getLastBodyLine(content: string) {
-  const lines = content.split(/\r?\n/);
+  const lines = getBodyLines(content);
 
   for (let index = lines.length - 1; index >= 0; index--) {
     const line = lines[index];
-    if (line.trim() && !isAbcHeaderLine(line)) {
+    if (line.trim()) {
       return line;
     }
   }
@@ -83,71 +102,83 @@ function getLastBodyLine(content: string) {
   return '';
 }
 
-function getCompletedMeasureCount(line: string) {
+function countCompletedMeasures(line: string) {
   return Array.from(line.matchAll(/\|/g)).length;
 }
 
 function getCurrentMeasureLength(content: string, defaultNoteLength: string) {
   const defaultLength = parseNoteLength(defaultNoteLength);
-  const bodyContent = getBodyContent(content);
-  const lastMeasureContent = bodyContent.split('|').at(-1) ?? '';
-  const noteMatches = lastMeasureContent.matchAll(
-    /(?:\^|_|=)*[A-Ga-gz][,']*(\d*(?:\/+\d*)?)/g,
+  const bodyContent = getBodyLines(content).join('\n');
+  const currentMeasure = bodyContent.split('|').at(-1) ?? '';
+
+  return Array.from(currentMeasure.matchAll(ABC_NOTE_PATTERN)).reduce(
+    (measureLength, match) => {
+      return (
+        measureLength + defaultLength * parseDurationSuffix(match[1] ?? '')
+      );
+    },
+    0,
   );
-
-  return Array.from(noteMatches).reduce((measureLength, match) => {
-    return measureLength + defaultLength * parseDurationSuffix(match[1] ?? '');
-  }, 0);
 }
 
-function shouldStartNewLine(content: string) {
-  const lastBodyLine = getLastBodyLine(content);
-  return getCompletedMeasureCount(lastBodyLine) >= MEASURES_PER_LINE;
-}
-
-function getMeasureSeparator(
+function getMeasureState(
   content: string,
   defaultNoteLength: string,
-  nextNoteLength: number,
-) {
-  const meterLength = parseMeter(getRequiredAbcHeaderField(content, 'M'));
-  if (meterLength === null) {
-    return '';
-  }
+): MeasureState {
+  const lastBodyLine = getLastBodyLine(content);
 
-  const measureLength = getCurrentMeasureLength(content, defaultNoteLength);
-  if (measureLength > 0 && measureLength + nextNoteLength > meterLength) {
-    return '|';
-  }
-
-  return '';
+  return {
+    currentLength: getCurrentMeasureLength(content, defaultNoteLength),
+    measuresInLastLine: countCompletedMeasures(lastBodyLine),
+  };
 }
 
-function getMeasureSeparatorSuffix(content: string, measureSeparator: string) {
-  if (!measureSeparator) {
+function shouldBreakBeforeNextNote(trimmedContent: string) {
+  const lastLine = trimmedContent.split(/\r?\n/).at(-1) ?? '';
+  if (isAbcHeaderLine(lastLine)) {
+    return true;
+  }
+
+  const lastBodyLine = getLastBodyLine(trimmedContent);
+  return countCompletedMeasures(lastBodyLine) >= MEASURES_PER_LINE;
+}
+
+function getContentSeparator(trimmedContent: string) {
+  if (!trimmedContent) {
     return '';
   }
 
-  const lastBodyLine = getLastBodyLine(content);
-  const completedMeasureCount = getCompletedMeasureCount(lastBodyLine) + 1;
+  return shouldBreakBeforeNextNote(trimmedContent) ? '\n' : ' ';
+}
 
-  return completedMeasureCount >= MEASURES_PER_LINE ? '\n' : ' ';
+function shouldStartNewMeasure(
+  measureState: MeasureState,
+  meterLength: number | null,
+  nextNoteLength: number,
+) {
+  return (
+    meterLength !== null &&
+    measureState.currentLength > 0 &&
+    measureState.currentLength + nextNoteLength > meterLength
+  );
+}
+
+function getMeasurePrefixSuffix(measuresInLastLine: number) {
+  return measuresInLastLine + 1 >= MEASURES_PER_LINE ? '\n' : ' ';
 }
 
 function getCompletedMeasureSuffix(
-  content: string,
-  defaultNoteLength: string,
+  measureLengthBeforeNote: number,
+  meterLength: number | null,
   nextNoteLength: number,
 ) {
-  const meterLength = parseMeter(getRequiredAbcHeaderField(content, 'M'));
-  if (meterLength === null) {
+  if (meterLength === null || nextNoteLength <= 0) {
     return '';
   }
 
-  const measureLength = getCurrentMeasureLength(content, defaultNoteLength);
-  const nextMeasureLength = (measureLength + nextNoteLength) % meterLength;
-
-  return nextNoteLength > 0 && nextMeasureLength < Number.EPSILON ? ' |' : '';
+  const nextMeasureLength =
+    (measureLengthBeforeNote + nextNoteLength) % meterLength;
+  return nextMeasureLength < Number.EPSILON ? ' |' : '';
 }
 
 export function appendPitchToAbc(
@@ -155,33 +186,42 @@ export function appendPitchToAbc(
   pitch: number,
   duration: number,
 ) {
-  const defaultNoteLength = getRequiredAbcHeaderField(content, 'L');
-  const keySignature = getRequiredAbcHeaderField(content, 'K');
-  const tempo = parseTempo(getRequiredAbcHeaderField(content, 'Q'));
+  const header = readAbcInputHeader(content);
   const noteLength = getNearestNoteLength(
     duration,
-    getQuarterNoteSeconds(tempo),
+    getQuarterNoteSeconds(header.tempo),
   );
-  const note = `${getAbcPitchWithKeySignature(pitch, keySignature)}${getDurationSuffix(noteLength, defaultNoteLength)}`;
-  const measureSeparator = getMeasureSeparator(
-    content,
-    defaultNoteLength,
+  const note = [
+    getAbcPitchWithKeySignature(pitch, header.keySignature),
+    formatDurationSuffix(noteLength, header.defaultNoteLength),
+  ].join('');
+  const measureState = getMeasureState(content, header.defaultNoteLength);
+  const startsNewMeasure = shouldStartNewMeasure(
+    measureState,
+    header.meterLength,
     noteLength,
   );
+  const measurePrefix = startsNewMeasure ? '|' : '';
+  const measurePrefixSuffix = startsNewMeasure
+    ? getMeasurePrefixSuffix(measureState.measuresInLastLine)
+    : '';
+  const measureLengthBeforeNote = startsNewMeasure
+    ? 0
+    : measureState.currentLength;
   const completedMeasureSuffix = getCompletedMeasureSuffix(
-    measureSeparator ? `${content.trimEnd()} ${measureSeparator}` : content,
-    defaultNoteLength,
+    measureLengthBeforeNote,
+    header.meterLength,
     noteLength,
   );
-  const trimmedEnd = content.trimEnd();
-  const lines = trimmedEnd.split(/\r?\n/);
-  const lastLine = lines[lines.length - 1] ?? '';
-  const separator =
-    isAbcHeaderLine(lastLine) || shouldStartNewLine(trimmedEnd) ? '\n' : ' ';
-  const measureSeparatorSuffix = getMeasureSeparatorSuffix(
-    content,
-    measureSeparator,
-  );
+  const trimmedContent = content.trimEnd();
 
-  return `${trimmedEnd}${trimmedEnd ? separator : ''}${measureSeparator}${measureSeparatorSuffix}${note}${completedMeasureSuffix} `;
+  return [
+    trimmedContent,
+    getContentSeparator(trimmedContent),
+    measurePrefix,
+    measurePrefixSuffix,
+    note,
+    completedMeasureSuffix,
+    ' ',
+  ].join('');
 }
