@@ -2,21 +2,6 @@ export function getQuarterNoteSeconds(tempo: number) {
   return 60 / tempo;
 }
 
-export function getPlaybackDurationSeconds(
-  duration: number,
-  millisecondsPerDuration: number,
-) {
-  return (duration * millisecondsPerDuration) / 1000;
-}
-
-export function getHighlightDurationMs(
-  duration: number,
-  millisecondsPerDuration: number,
-  highlightIntervalMs: number,
-) {
-  return duration * millisecondsPerDuration - highlightIntervalMs;
-}
-
 export function parseTempo(tempo: string) {
   return Number(tempo.trim().match(/(?:^|=)(\d+(?:\.\d+)?)$/)?.[1]);
 }

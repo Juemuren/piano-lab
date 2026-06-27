@@ -2,12 +2,12 @@ import type {
   KeyboardNoteMapping,
   KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
-import type { PianoInputSettings } from './AppSettingsContext';
+import type { PianoInputSettings } from '../../services/abc/AbcSettings';
+import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../services/abc/AbcSettings';
 import {
   DEFAULT_KEYBOARD_CONTROL_SETTINGS,
   DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
   DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
-  DEFAULT_PIANO_INPUT_SETTINGS,
 } from './AppSettingsContext';
 
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';

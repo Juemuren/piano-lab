@@ -8,20 +8,7 @@ import {
   DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS,
   DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS,
 } from '../../constants/keyboard';
-
-export interface PianoInputSettings {
-  defaultNoteLength: string;
-  keySignature: string;
-  tempo: number;
-  timeSignature: string;
-}
-
-export const DEFAULT_PIANO_INPUT_SETTINGS: PianoInputSettings = {
-  defaultNoteLength: '1/8',
-  keySignature: 'C',
-  tempo: 180,
-  timeSignature: '4/4',
-};
+import type { PianoInputSettings } from '../../services/abc/AbcSettings';
 
 export const DEFAULT_KEYBOARD_CONTROL_SETTINGS = DEFAULT_KEYBOARD_NOTE_MAPPINGS;
 export const DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS =

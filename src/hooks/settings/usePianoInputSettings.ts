@@ -1,14 +1,14 @@
 import { useCallback, useEffect } from 'react';
 import { useAbcContent } from '../../contexts/abcContent';
 import { useAppSettings } from '../../contexts/appSettings';
-import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
-import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../contexts/appSettings/AppSettingsContext';
 import {
   clearAbcBody,
   getPianoInputSettingsFromAbcHeader,
   hasPianoInputSettingsHeader,
   updateAbcHeader,
 } from '../../services/abc/AbcHeader';
+import type { PianoInputSettings } from '../../services/abc/AbcSettings';
+import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../services/abc/AbcSettings';
 
 function isSamePianoInputSettings(
   left: PianoInputSettings,

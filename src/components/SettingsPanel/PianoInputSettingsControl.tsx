@@ -1,31 +1,16 @@
 import { Eraser, PenLine, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
+import type { PianoInputSettings } from '../../services/abc/AbcSettings';
+import {
+  DEFAULT_NOTE_LENGTH_OPTIONS,
+  KEY_SIGNATURE_OPTIONS,
+  TIME_SIGNATURE_OPTIONS,
+} from '../../services/abc/AbcSettings';
 import { getQuarterNoteSeconds } from '../../services/abc/AbcTiming';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
-
-const DEFAULT_NOTE_LENGTH_OPTIONS = ['1/4', '1/8', '1/16'];
-const TIME_SIGNATURE_OPTIONS = ['2/4', '3/4', '4/4', '6/8', '9/8', '12/8'];
-const KEY_SIGNATURE_OPTIONS = [
-  'C',
-  'G',
-  'D',
-  'A',
-  'E',
-  'B',
-  'F#',
-  'C#',
-  'F',
-  'Bb',
-  'Eb',
-  'Ab',
-  'Db',
-  'Gb',
-  'Cb',
-];
 
 interface PianoInputSettingsControlProps {
   isPianoInputEnabled: boolean;

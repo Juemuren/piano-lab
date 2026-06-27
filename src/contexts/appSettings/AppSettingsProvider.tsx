@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import type {
-  AppSettingsContextValue,
-  PianoInputSettings,
-} from './AppSettingsContext';
+import type { PianoInputSettings } from '../../services/abc/AbcSettings';
+import type { AppSettingsContextValue } from './AppSettingsContext';
 import { AppSettingsContext } from './AppSettingsContext';
 import {
   readStoredAppSettings,

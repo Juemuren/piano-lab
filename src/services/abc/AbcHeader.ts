@@ -1,4 +1,4 @@
-import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
+import type { PianoInputSettings } from './AbcSettings';
 import { parseTempo } from './AbcTiming';
 
 type AbcHeaderFieldKey = 'L' | 'Q' | 'K' | 'M';

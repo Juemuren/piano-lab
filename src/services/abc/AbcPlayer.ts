@@ -1,11 +1,22 @@
 import type { MidiPitches } from 'abcjs';
 import type { SynthEngine } from '../synth/SynthEngine';
-import {
-  getHighlightDurationMs,
-  getPlaybackDurationSeconds,
-} from './AbcTiming';
 
 const HIGHLIGHT_INTERVAL_MS = 50;
+
+export function getPlaybackDurationSeconds(
+  duration: number,
+  millisecondsPerDuration: number,
+) {
+  return (duration * millisecondsPerDuration) / 1000;
+}
+
+export function getHighlightDurationMs(
+  duration: number,
+  millisecondsPerDuration: number,
+  highlightIntervalMs: number,
+) {
+  return duration * millisecondsPerDuration - highlightIntervalMs;
+}
 
 export class AbcPlayer {
   private synthEngine: SynthEngine;

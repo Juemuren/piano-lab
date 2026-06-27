@@ -33,8 +33,20 @@ const FLAT_ORDER = ['B', 'E', 'A', 'D', 'G', 'C', 'F'] as const;
 type NaturalPitchClass = keyof typeof NATURAL_PITCH_CLASSES;
 type KeyAccidental = -1 | 0 | 1;
 
+interface AbcPitchSpelling {
+  accidental: KeyAccidental;
+  pitchClass: NaturalPitchClass;
+}
+
 function normalizePitchClass(value: number) {
   return ((value % PITCH_CLASS_COUNT) + PITCH_CLASS_COUNT) % PITCH_CLASS_COUNT;
+}
+
+function getSignedPitchClass(
+  pitchClass: NaturalPitchClass,
+  accidental: KeyAccidental,
+) {
+  return normalizePitchClass(NATURAL_PITCH_CLASSES[pitchClass] + accidental);
 }
 
 function parseKeyRoot(keyValue: string) {
@@ -67,11 +79,13 @@ function getKeySignatureAccidentals(keySignature: string) {
   return accidentals;
 }
 
-function getAbcPitchToken(
-  pitchClass: NaturalPitchClass,
-  octave: number,
-  accidental: KeyAccidental,
-) {
+function getAbcPitchToken(pitch: number, spelling?: AbcPitchSpelling) {
+  const defaultName = spelling === undefined ? getPitchName(pitch) : undefined;
+  const octave = getPitchOctave(pitch);
+  const pitchClass =
+    spelling?.pitchClass ?? (defaultName?.[0] as NaturalPitchClass);
+  const accidental =
+    spelling?.accidental ?? (defaultName?.includes('#') ? 1 : 0);
   const accidentalToken = accidental === 1 ? '^' : accidental === -1 ? '_' : '';
   const pitchToken =
     octave <= 4
@@ -81,36 +95,24 @@ function getAbcPitchToken(
   return `${accidentalToken}${pitchToken}`;
 }
 
-function getAbcPitch(pitch: number) {
-  const name = getPitchName(pitch);
-  const octave = getPitchOctave(pitch);
-  const accidental = name.includes('#') ? '^' : '';
-  const pitchClass = name[0];
-
-  if (octave <= 4) {
-    return `${accidental}${pitchClass}${','.repeat(4 - octave)}`;
-  }
-  return `${accidental}${pitchClass.toLowerCase()}${"'".repeat(octave - 5)}`;
-}
-
 export function getAbcPitchWithKeySignature(
   pitch: number,
   keySignature: string,
 ) {
   const keySignatureAccidentals = getKeySignatureAccidentals(keySignature);
   const pitchClass = normalizePitchClass(pitch);
-  const octave = getPitchOctave(pitch);
 
   for (const naturalPitchClass of Object.keys(
     NATURAL_PITCH_CLASSES,
   ) as NaturalPitchClass[]) {
     const accidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
-    const signedPitchClass = normalizePitchClass(
-      NATURAL_PITCH_CLASSES[naturalPitchClass] + accidental,
-    );
+    const signedPitchClass = getSignedPitchClass(naturalPitchClass, accidental);
 
     if (signedPitchClass === pitchClass) {
-      return getAbcPitchToken(naturalPitchClass, octave, 0);
+      return getAbcPitchToken(pitch, {
+        accidental: 0,
+        pitchClass: naturalPitchClass,
+      });
     }
   }
 
@@ -122,9 +124,7 @@ export function getAbcPitchWithKeySignature(
         accidental,
         naturalPitchClass,
         priority: Math.abs(accidental - keyAccidental),
-        signedPitchClass: normalizePitchClass(
-          NATURAL_PITCH_CLASSES[naturalPitchClass] + accidental,
-        ),
+        signedPitchClass: getSignedPitchClass(naturalPitchClass, accidental),
       }));
     })
     .filter(({ signedPitchClass }) => signedPitchClass === pitchClass)
@@ -132,12 +132,11 @@ export function getAbcPitchWithKeySignature(
 
   const candidate = candidates[0];
   if (!candidate) {
-    return getAbcPitch(pitch);
+    return getAbcPitchToken(pitch);
   }
 
-  return getAbcPitchToken(
-    candidate.naturalPitchClass,
-    octave,
-    candidate.accidental,
-  );
+  return getAbcPitchToken(pitch, {
+    accidental: candidate.accidental,
+    pitchClass: candidate.naturalPitchClass,
+  });
 }
