@@ -29,16 +29,16 @@ const KEY_SIGNATURE_OPTIONS = [
 
 interface PianoInputSettingsControlProps {
   isPianoInputEnabled: boolean;
+  onPianoInputEnabledChange: (enabled: boolean) => void;
   onPianoInputSettingsChange: (settings: Partial<PianoInputSettings>) => void;
   onPianoInputSettingsReset: () => void;
   onScoreBodyClear: () => void;
   pianoInputSettings: PianoInputSettings;
-  setIsPianoInputEnabled: (enabled: boolean) => void;
 }
 
 function PianoInputSettingsControl({
   isPianoInputEnabled,
-  setIsPianoInputEnabled,
+  onPianoInputEnabledChange,
   pianoInputSettings,
   onPianoInputSettingsChange,
   onPianoInputSettingsReset,
@@ -71,7 +71,7 @@ function PianoInputSettingsControl({
         checked={isPianoInputEnabled}
         icon={<PenLine size={16} />}
         label={t('settings.pianoInputEnable')}
-        onChange={(e) => setIsPianoInputEnabled(e.target.checked)}
+        onChange={(e) => onPianoInputEnabledChange(e.target.checked)}
       />
       {isPianoInputEnabled && (
         <div className="text-app-subtext text-sm dark:text-app-subtext-dark">

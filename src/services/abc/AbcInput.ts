@@ -96,6 +96,26 @@ export function updateAbcHeader(
   }, content);
 }
 
+export function getPianoInputSettingsFromAbcHeader(
+  content: string,
+): PianoInputSettings {
+  return {
+    defaultNoteLength: getRequiredAbcHeaderField(content, 'L'),
+    keySignature: getRequiredAbcHeaderField(content, 'K'),
+    tempo: parseTempo(getRequiredAbcHeaderField(content, 'Q')),
+    timeSignature: getRequiredAbcHeaderField(content, 'M'),
+  };
+}
+
+export function hasPianoInputSettingsHeader(content: string) {
+  return (
+    getAbcHeaderField(content, 'L') !== undefined &&
+    getAbcHeaderField(content, 'Q') !== undefined &&
+    getAbcHeaderField(content, 'M') !== undefined &&
+    getAbcHeaderField(content, 'K') !== undefined
+  );
+}
+
 export function clearAbcBody(content: string) {
   return content
     .split(/\r?\n/)
@@ -108,6 +128,10 @@ function getAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
   const headerLine = lines.find((line) => line.trim().startsWith(`${key}:`));
 
   return headerLine?.trim().slice(2).trim();
+}
+
+function getRequiredAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
+  return getAbcHeaderField(content, key) as string;
 }
 
 function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
@@ -129,8 +153,7 @@ export function getQuarterNoteSeconds(tempo: number) {
 }
 
 function parseTempo(tempo: string) {
-  const value = tempo.trim().match(/(?:^|=)(\d+(?:\.\d+)?)$/)?.[1];
-  return value === undefined ? Number.NaN : Number(value);
+  return Number(tempo.trim().match(/(?:^|=)(\d+(?:\.\d+)?)$/)?.[1]);
 }
 
 function parseNoteLength(noteLength: string) {
@@ -153,7 +176,7 @@ function parseMeter(meter: string) {
   const [numerator, denominator] = normalizedMeter.split('/');
   const meterLength = Number(numerator) / Number(denominator);
 
-  return Number.isFinite(meterLength) && meterLength > 0 ? meterLength : 1;
+  return meterLength;
 }
 
 function parseDurationSuffix(durationSuffix: string) {
@@ -249,11 +272,8 @@ function getMeasureSeparator(
   content: string,
   defaultNoteLength: string,
   nextNoteLength: number,
-  fallbackTimeSignature: string,
 ) {
-  const meterLength = parseMeter(
-    getAbcHeaderField(content, 'M') ?? fallbackTimeSignature,
-  );
+  const meterLength = parseMeter(getRequiredAbcHeaderField(content, 'M'));
   if (meterLength === null) {
     return '';
   }
@@ -281,11 +301,8 @@ function getCompletedMeasureSuffix(
   content: string,
   defaultNoteLength: string,
   nextNoteLength: number,
-  fallbackTimeSignature: string,
 ) {
-  const meterLength = parseMeter(
-    getAbcHeaderField(content, 'M') ?? fallbackTimeSignature,
-  );
+  const meterLength = parseMeter(getRequiredAbcHeaderField(content, 'M'));
   if (meterLength === null) {
     return '';
   }
@@ -313,22 +330,14 @@ function parseKeyRoot(keyValue: string) {
   return `${match[1].toUpperCase()}${match[2]}`;
 }
 
-function getKeySignatureOffset(content: string, fallbackKeySignature: string) {
-  const keyRoot = parseKeyRoot(
-    getAbcHeaderField(content, 'K') ?? fallbackKeySignature,
-  );
+function getKeySignatureOffset(content: string) {
+  const keyRoot = parseKeyRoot(getRequiredAbcHeaderField(content, 'K'));
   return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
 }
 
-function getKeySignatureAccidentals(
-  content: string,
-  fallbackKeySignature: string,
-) {
+function getKeySignatureAccidentals(content: string) {
   const accidentals = new Map<NaturalPitchClass, KeyAccidental>();
-  const keySignatureOffset = getKeySignatureOffset(
-    content,
-    fallbackKeySignature,
-  );
+  const keySignatureOffset = getKeySignatureOffset(content);
   const accidentalOrder =
     keySignatureOffset >= 0
       ? SHARP_ORDER.slice(0, keySignatureOffset)
@@ -356,15 +365,8 @@ function getAbcPitchToken(
   return `${accidentalToken}${pitchToken}`;
 }
 
-function getAbcPitchWithKeySignature(
-  pitch: number,
-  content: string,
-  fallbackKeySignature: string,
-) {
-  const keySignatureAccidentals = getKeySignatureAccidentals(
-    content,
-    fallbackKeySignature,
-  );
+function getAbcPitchWithKeySignature(pitch: number, content: string) {
+  const keySignatureAccidentals = getKeySignatureAccidentals(content);
   const pitchClass = getPitchClass(pitch);
   const octave = getPitchOctave(pitch);
 
@@ -413,33 +415,23 @@ export function appendPitchToAbc(
   content: string,
   pitch: number,
   duration: number,
-  settings: PianoInputSettings,
 ) {
-  const defaultNoteLength =
-    getAbcHeaderField(content, 'L') ?? settings.defaultNoteLength;
-  const tempo = parseTempo(
-    getAbcHeaderField(content, 'Q') ?? `1/4=${settings.tempo}`,
-  );
+  const defaultNoteLength = getRequiredAbcHeaderField(content, 'L');
+  const tempo = parseTempo(getRequiredAbcHeaderField(content, 'Q'));
   const noteLength = getNearestNoteLength(
     duration,
-    getQuarterNoteSeconds(Number.isFinite(tempo) ? tempo : settings.tempo),
+    getQuarterNoteSeconds(tempo),
   );
-  const note = `${getAbcPitchWithKeySignature(
-    pitch,
-    content,
-    settings.keySignature,
-  )}${getDurationSuffix(noteLength, defaultNoteLength)}`;
+  const note = `${getAbcPitchWithKeySignature(pitch, content)}${getDurationSuffix(noteLength, defaultNoteLength)}`;
   const measureSeparator = getMeasureSeparator(
     content,
     defaultNoteLength,
     noteLength,
-    settings.timeSignature,
   );
   const completedMeasureSuffix = getCompletedMeasureSuffix(
     measureSeparator ? `${content.trimEnd()} ${measureSeparator}` : content,
     defaultNoteLength,
     noteLength,
-    settings.timeSignature,
   );
   const trimmedEnd = content.trimEnd();
   const lines = trimmedEnd.split(/\r?\n/);

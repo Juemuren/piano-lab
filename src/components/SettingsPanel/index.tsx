@@ -11,8 +11,12 @@ import SynthRecorderSettings from './SynthRecorderSettings';
 function SettingsPanel() {
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
     useMidiControlContext();
-  const { updatePianoInputSettings, resetPianoInputSettings, clearScoreBody } =
-    usePianoInputSettings();
+  const {
+    syncPianoInputSettings,
+    updatePianoInputSettings,
+    resetPianoInputSettings,
+    clearScoreBody,
+  } = usePianoInputSettings();
   const {
     isPianoInputEnabled,
     setIsPianoInputEnabled,
@@ -36,6 +40,12 @@ function SettingsPanel() {
     isMidiControlEnabled,
     setIsMidiControlEnabled,
   } = useAppSettings();
+  const handlePianoInputEnabledChange = (enabled: boolean) => {
+    setIsPianoInputEnabled(enabled);
+    if (enabled) {
+      syncPianoInputSettings();
+    }
+  };
 
   return (
     <ControlPanel className="flex flex-col gap-3 text-left">
@@ -70,11 +80,11 @@ function SettingsPanel() {
       />
       <PianoInputSettingsControl
         isPianoInputEnabled={isPianoInputEnabled}
+        onPianoInputEnabledChange={handlePianoInputEnabledChange}
         onPianoInputSettingsChange={updatePianoInputSettings}
         onPianoInputSettingsReset={resetPianoInputSettings}
         onScoreBodyClear={clearScoreBody}
         pianoInputSettings={pianoInputSettings}
-        setIsPianoInputEnabled={setIsPianoInputEnabled}
       />
       <SynthRecorderSettings />
     </ControlPanel>

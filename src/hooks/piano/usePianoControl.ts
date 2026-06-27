@@ -113,7 +113,6 @@ function usePianoControl(
   const { setAbcContent } = useAbcContent();
   const {
     isPianoInputEnabled,
-    pianoInputSettings,
     isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled,
     isKeyboardOctaveHintEnabled,
@@ -179,18 +178,11 @@ function usePianoControl(
             content,
             note,
             (performance.now() - startedAt) / 1000,
-            pianoInputSettings,
           ),
         );
       }
     },
-    [
-      isPianoInputEnabled,
-      pianoInputSettings,
-      releaseInputNote,
-      setAbcContent,
-      synthEngine,
-    ],
+    [isPianoInputEnabled, releaseInputNote, setAbcContent, synthEngine],
   );
 
   const { keyHints, octaveHints } = useKeyboardControl({
