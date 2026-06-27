@@ -8,6 +8,10 @@ import { createDefaultReverbConfig } from '../../../services/synth/config/Defaul
 import type { ReverbConfig, ReverbPreset } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
+function getReverbConfig(config: ReverbConfig | null) {
+  return config ?? createDefaultReverbConfig();
+}
+
 function useReverbControl(initialReverb: ReverbConfig | null) {
   const [reverb, setReverb] = useState<ReverbConfig | null>(
     () => initialReverb,
@@ -25,8 +29,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
         return createDefaultReverbConfig(preset, current?.mix);
       }
 
-      const fallback = createDefaultReverbConfig();
-      const source = current ?? fallback;
+      const source = getReverbConfig(current);
 
       return {
         ...source,
@@ -43,130 +46,145 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
   const updateReverbMix = useCallback((mix: number) => {
     setReverb((current) => ({
-      ...(current ?? createDefaultReverbConfig()),
+      ...getReverbConfig(current),
       mix,
     }));
   }, []);
 
   const addReverbEarlyReflection = useCallback(() => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      earlyReflections: [
-        ...(current ?? fallback).earlyReflections,
-        {
-          delay: DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
-          gain: DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
-          phase: DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
-        },
-      ],
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        earlyReflections: [
+          ...source.earlyReflections,
+          {
+            delay: DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
+            gain: DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
+            phase: DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
+          },
+        ],
+        preset: 'custom',
+      };
+    });
   }, []);
 
   const removeReverbEarlyReflection = useCallback((index: number) => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      earlyReflections: removeItemAt(
-        (current ?? fallback).earlyReflections,
-        index,
-      ),
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        earlyReflections: removeItemAt(source.earlyReflections, index),
+        preset: 'custom',
+      };
+    });
   }, []);
 
   const updateReverbEarlyReflectionDelay = useCallback(
     (index: number, delay: number) => {
-      const fallback = createDefaultReverbConfig();
+      setReverb((current) => {
+        const source = getReverbConfig(current);
 
-      setReverb((current) => ({
-        ...(current ?? fallback),
-        earlyReflections: updateItemAt(
-          (current ?? fallback).earlyReflections,
-          index,
-          (reflection) => ({ ...reflection, delay }),
-        ),
-        preset: 'custom',
-      }));
+        return {
+          ...source,
+          earlyReflections: updateItemAt(
+            source.earlyReflections,
+            index,
+            (reflection) => ({ ...reflection, delay }),
+          ),
+          preset: 'custom',
+        };
+      });
     },
     [],
   );
 
   const updateReverbEarlyReflectionGain = useCallback(
     (index: number, gain: number) => {
-      const fallback = createDefaultReverbConfig();
+      setReverb((current) => {
+        const source = getReverbConfig(current);
 
-      setReverb((current) => ({
-        ...(current ?? fallback),
-        earlyReflections: updateItemAt(
-          (current ?? fallback).earlyReflections,
-          index,
-          (reflection) => ({ ...reflection, gain }),
-        ),
-        preset: 'custom',
-      }));
+        return {
+          ...source,
+          earlyReflections: updateItemAt(
+            source.earlyReflections,
+            index,
+            (reflection) => ({ ...reflection, gain }),
+          ),
+          preset: 'custom',
+        };
+      });
     },
     [],
   );
 
   const updateReverbEarlyReflectionPhase = useCallback(
     (index: number, phase: number) => {
-      const fallback = createDefaultReverbConfig();
+      setReverb((current) => {
+        const source = getReverbConfig(current);
 
-      setReverb((current) => ({
-        ...(current ?? fallback),
-        earlyReflections: updateItemAt(
-          (current ?? fallback).earlyReflections,
-          index,
-          (reflection) => ({ ...reflection, phase }),
-        ),
-        preset: 'custom',
-      }));
+        return {
+          ...source,
+          earlyReflections: updateItemAt(
+            source.earlyReflections,
+            index,
+            (reflection) => ({ ...reflection, phase }),
+          ),
+          preset: 'custom',
+        };
+      });
     },
     [],
   );
 
   const updateReverbLateTailDuration = useCallback((duration: number) => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      lateTail: { ...(current ?? fallback).lateTail, duration },
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        lateTail: { ...source.lateTail, duration },
+        preset: 'custom',
+      };
+    });
   }, []);
 
   const updateReverbLateTailDelay = useCallback((delay: number) => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      lateTail: { ...(current ?? fallback).lateTail, delay },
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        lateTail: { ...source.lateTail, delay },
+        preset: 'custom',
+      };
+    });
   }, []);
 
   const updateReverbLateTailAmplitude = useCallback((amplitude: number) => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      lateTail: { ...(current ?? fallback).lateTail, amplitude },
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        lateTail: { ...source.lateTail, amplitude },
+        preset: 'custom',
+      };
+    });
   }, []);
 
   const updateReverbLateTailAlpha = useCallback((alpha: number) => {
-    const fallback = createDefaultReverbConfig();
+    setReverb((current) => {
+      const source = getReverbConfig(current);
 
-    setReverb((current) => ({
-      ...(current ?? fallback),
-      lateTail: { ...(current ?? fallback).lateTail, alpha },
-      preset: 'custom',
-    }));
+      return {
+        ...source,
+        lateTail: { ...source.lateTail, alpha },
+        preset: 'custom',
+      };
+    });
   }, []);
 
   return {

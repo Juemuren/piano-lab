@@ -1,4 +1,4 @@
-export const LANGUAGE_STORAGE_KEY = 'piano-lab.language';
+export const LANGUAGE_STORAGE_KEY = 'piano-lab:language';
 
 export const DEFAULT_LANGUAGE = 'en-US';
 

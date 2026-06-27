@@ -17,10 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
-import {
-  createDefaultSynthConfig,
-  normalizeSynthConfig,
-} from '../../services/synth/SynthConfig';
+import { createDefaultSynthConfig } from '../../services/synth/SynthConfig';
 import type {
   EffectConfig,
   EnvelopeConfig,
@@ -105,8 +102,7 @@ function SoundSynthesizer() {
   const handleImportConfig = useCallback(
     (content: string) => {
       try {
-        const config = normalizeSynthConfig(JSON.parse(content));
-        if (!config) throw new Error('Invalid synth config');
+        const config = JSON.parse(content) as SynthConfig;
 
         setOscillatorType(config.synth.oscillatorType);
         setVolumeRatio(config.synth.volumeRatio);
