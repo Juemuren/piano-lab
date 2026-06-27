@@ -5,10 +5,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "markdownlint.config": {
-    "MD033": false,
-    "MD041": false
-  },
   "markdown.validate.enabled": false,
   "files.associations": {
     "*.css": "tailwindcss"
