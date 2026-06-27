@@ -1,4 +1,5 @@
 import { getPitchName, getPitchOctave } from '../../utils/pitch';
+import { KEY_ACCIDENTALS } from './AbcSettings';
 
 const PITCH_CLASS_COUNT = 12;
 const NATURAL_PITCH_CLASSES = {
@@ -10,23 +11,6 @@ const NATURAL_PITCH_CLASSES = {
   F: 5,
   G: 7,
 } as const;
-const KEY_ACCIDENTALS = [
-  { offset: 0, root: 'C' },
-  { offset: 1, root: 'G' },
-  { offset: 2, root: 'D' },
-  { offset: 3, root: 'A' },
-  { offset: 4, root: 'E' },
-  { offset: 5, root: 'B' },
-  { offset: -1, root: 'F' },
-  { offset: -2, root: 'Bb' },
-  { offset: -3, root: 'Eb' },
-  { offset: -4, root: 'Ab' },
-  { offset: -5, root: 'Db' },
-  { offset: 6, root: 'F#' },
-  { offset: 7, root: 'C#' },
-  { offset: -6, root: 'Gb' },
-  { offset: -7, root: 'Cb' },
-] as const;
 const SHARP_ORDER = ['F', 'C', 'G', 'D', 'A', 'E', 'B'] as const;
 const FLAT_ORDER = ['B', 'E', 'A', 'D', 'G', 'C', 'F'] as const;
 
