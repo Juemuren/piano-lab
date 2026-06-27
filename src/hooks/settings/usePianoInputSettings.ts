@@ -8,7 +8,7 @@ import {
   getPianoInputSettingsFromAbcHeader,
   hasPianoInputSettingsHeader,
   updateAbcHeader,
-} from '../../services/abc/AbcInput';
+} from '../../services/abc/AbcHeader';
 
 function isSamePianoInputSettings(
   left: PianoInputSettings,

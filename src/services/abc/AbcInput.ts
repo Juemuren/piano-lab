@@ -1,38 +1,15 @@
-import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
-import { getPitchOctave } from '../../utils/pitch';
-import { getAbcPitch } from './AbcCalculations';
+import { getRequiredAbcHeaderField, isAbcHeaderLine } from './AbcHeader';
+import { getAbcPitchWithKeySignature } from './AbcPitch';
+import {
+  getQuarterNoteSeconds,
+  parseDurationSuffix,
+  parseMeter,
+  parseNoteLength,
+  parseTempo,
+} from './AbcTiming';
 
 const MAX_DENOMINATOR = 32;
 const MEASURES_PER_LINE = 4;
-const PITCH_CLASS_COUNT = 12;
-const NATURAL_PITCH_CLASSES = {
-  A: 9,
-  B: 11,
-  C: 0,
-  D: 2,
-  E: 4,
-  F: 5,
-  G: 7,
-} as const;
-const KEY_ACCIDENTALS = [
-  { offset: 0, root: 'C' },
-  { offset: 1, root: 'G' },
-  { offset: 2, root: 'D' },
-  { offset: 3, root: 'A' },
-  { offset: 4, root: 'E' },
-  { offset: 5, root: 'B' },
-  { offset: -1, root: 'F' },
-  { offset: -2, root: 'Bb' },
-  { offset: -3, root: 'Eb' },
-  { offset: -4, root: 'Ab' },
-  { offset: -5, root: 'Db' },
-  { offset: 6, root: 'F#' },
-  { offset: 7, root: 'C#' },
-  { offset: -6, root: 'Gb' },
-  { offset: -7, root: 'Cb' },
-] as const;
-const SHARP_ORDER = ['F', 'C', 'G', 'D', 'A', 'E', 'B'] as const;
-const FLAT_ORDER = ['B', 'E', 'A', 'D', 'G', 'C', 'F'] as const;
 const NOTE_LENGTHS = [
   1 / 32,
   1 / 16,
@@ -46,94 +23,6 @@ const NOTE_LENGTHS = [
   1,
 ] as const;
 
-type NaturalPitchClass = keyof typeof NATURAL_PITCH_CLASSES;
-type KeyAccidental = -1 | 0 | 1;
-type AbcHeaderFieldKey = 'L' | 'Q' | 'K' | 'M';
-
-function isHeaderLine(line: string) {
-  return /^[A-Z]:/.test(line.trim());
-}
-
-function getHeaderInsertLineIndex(lines: string[]) {
-  const bodyLineIndex = lines.findIndex((line) => {
-    const trimmedLine = line.trim();
-    return trimmedLine && !isHeaderLine(trimmedLine);
-  });
-
-  return bodyLineIndex >= 0 ? bodyLineIndex : lines.length;
-}
-
-export function updateAbcHeaderField(
-  content: string,
-  key: AbcHeaderFieldKey,
-  value: string,
-) {
-  const lines = content ? content.split(/\r?\n/) : [];
-  const headerLineIndex = lines.findIndex((line) => line.startsWith(`${key}:`));
-
-  if (headerLineIndex >= 0) {
-    lines[headerLineIndex] = `${key}:${value}`;
-    return lines.join('\n');
-  }
-
-  lines.splice(getHeaderInsertLineIndex(lines), 0, `${key}:${value}`);
-  return lines.join('\n');
-}
-
-export function updateAbcHeader(
-  content: string,
-  settings: Partial<PianoInputSettings>,
-) {
-  return [
-    ['L', settings.defaultNoteLength],
-    ['Q', settings.tempo === undefined ? undefined : `1/4=${settings.tempo}`],
-    ['M', settings.timeSignature],
-    ['K', settings.keySignature],
-  ].reduce((nextContent, [key, value]) => {
-    return value === undefined
-      ? nextContent
-      : updateAbcHeaderField(nextContent, key as AbcHeaderFieldKey, value);
-  }, content);
-}
-
-export function getPianoInputSettingsFromAbcHeader(
-  content: string,
-): PianoInputSettings {
-  return {
-    defaultNoteLength: getRequiredAbcHeaderField(content, 'L'),
-    keySignature: getRequiredAbcHeaderField(content, 'K'),
-    tempo: parseTempo(getRequiredAbcHeaderField(content, 'Q')),
-    timeSignature: getRequiredAbcHeaderField(content, 'M'),
-  };
-}
-
-export function hasPianoInputSettingsHeader(content: string) {
-  return (
-    getAbcHeaderField(content, 'L') !== undefined &&
-    getAbcHeaderField(content, 'Q') !== undefined &&
-    getAbcHeaderField(content, 'M') !== undefined &&
-    getAbcHeaderField(content, 'K') !== undefined
-  );
-}
-
-export function clearAbcBody(content: string) {
-  return content
-    .split(/\r?\n/)
-    .filter((line) => isHeaderLine(line))
-    .join('\n');
-}
-
-function getAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
-  const lines = content.split(/\r?\n/);
-  const headerLine = lines.find((line) => line.trim().startsWith(`${key}:`));
-
-  return headerLine?.trim().slice(2).trim();
-}
-
-function getRequiredAbcHeaderField(content: string, key: AbcHeaderFieldKey) {
-  return getAbcHeaderField(content, key) as string;
-}
-
 function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
   const pressedLength = duration / quarterNoteSeconds / 4;
   if (pressedLength <= 0) {
@@ -146,58 +35,6 @@ function getNearestNoteLength(duration: number, quarterNoteSeconds: number) {
 
     return currentDistance < nearestDistance ? noteLength : nearest;
   });
-}
-
-export function getQuarterNoteSeconds(tempo: number) {
-  return 60 / tempo;
-}
-
-function parseTempo(tempo: string) {
-  return Number(tempo.trim().match(/(?:^|=)(\d+(?:\.\d+)?)$/)?.[1]);
-}
-
-function parseNoteLength(noteLength: string) {
-  const [numerator, denominator = '1'] = noteLength.split('/');
-  return Number(numerator) / Number(denominator);
-}
-
-function parseMeter(meter: string) {
-  const normalizedMeter = meter.trim();
-  if (normalizedMeter === 'C') {
-    return 1;
-  }
-  if (normalizedMeter === 'C|') {
-    return 1 / 2;
-  }
-  if (normalizedMeter.toLowerCase() === 'none') {
-    return null;
-  }
-
-  const [numerator, denominator] = normalizedMeter.split('/');
-  const meterLength = Number(numerator) / Number(denominator);
-
-  return meterLength;
-}
-
-function parseDurationSuffix(durationSuffix: string) {
-  if (!durationSuffix) {
-    return 1;
-  }
-
-  const match = durationSuffix.match(/^(\d*)(\/+)?(\d*)$/);
-  if (!match) {
-    return 1;
-  }
-
-  const numerator = match[1] ? Number(match[1]) : 1;
-  const slashCount = match[2]?.length ?? 0;
-  const denominator = match[3]
-    ? Number(match[3])
-    : slashCount > 0
-      ? 2 ** slashCount
-      : 1;
-
-  return numerator / denominator;
 }
 
 function getFraction(value: number) {
@@ -229,7 +66,7 @@ function getDurationSuffix(noteLength: number, defaultNoteLength: string) {
 function getBodyContent(content: string) {
   return content
     .split(/\r?\n/)
-    .filter((line) => !isHeaderLine(line))
+    .filter((line) => !isAbcHeaderLine(line))
     .join('\n');
 }
 
@@ -238,7 +75,7 @@ function getLastBodyLine(content: string) {
 
   for (let index = lines.length - 1; index >= 0; index--) {
     const line = lines[index];
-    if (line.trim() && !isHeaderLine(line)) {
+    if (line.trim() && !isAbcHeaderLine(line)) {
       return line;
     }
   }
@@ -313,116 +150,19 @@ function getCompletedMeasureSuffix(
   return nextNoteLength > 0 && nextMeasureLength < Number.EPSILON ? ' |' : '';
 }
 
-function normalizePitchClass(value: number) {
-  return ((value % PITCH_CLASS_COUNT) + PITCH_CLASS_COUNT) % PITCH_CLASS_COUNT;
-}
-
-function getPitchClass(pitch: number) {
-  return normalizePitchClass(pitch);
-}
-
-function parseKeyRoot(keyValue: string) {
-  const match = keyValue.trim().match(/^([A-Ga-g])([#b]?)/);
-  if (!match) {
-    return null;
-  }
-
-  return `${match[1].toUpperCase()}${match[2]}`;
-}
-
-function getKeySignatureOffset(content: string) {
-  const keyRoot = parseKeyRoot(getRequiredAbcHeaderField(content, 'K'));
-  return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
-}
-
-function getKeySignatureAccidentals(content: string) {
-  const accidentals = new Map<NaturalPitchClass, KeyAccidental>();
-  const keySignatureOffset = getKeySignatureOffset(content);
-  const accidentalOrder =
-    keySignatureOffset >= 0
-      ? SHARP_ORDER.slice(0, keySignatureOffset)
-      : FLAT_ORDER.slice(0, -keySignatureOffset);
-  const accidental = keySignatureOffset >= 0 ? 1 : -1;
-
-  for (const pitchClass of accidentalOrder) {
-    accidentals.set(pitchClass, accidental);
-  }
-
-  return accidentals;
-}
-
-function getAbcPitchToken(
-  pitchClass: NaturalPitchClass,
-  octave: number,
-  accidental: KeyAccidental,
-) {
-  const accidentalToken = accidental === 1 ? '^' : accidental === -1 ? '_' : '';
-  const pitchToken =
-    octave <= 4
-      ? `${pitchClass}${','.repeat(4 - octave)}`
-      : `${pitchClass.toLowerCase()}${"'".repeat(octave - 5)}`;
-
-  return `${accidentalToken}${pitchToken}`;
-}
-
-function getAbcPitchWithKeySignature(pitch: number, content: string) {
-  const keySignatureAccidentals = getKeySignatureAccidentals(content);
-  const pitchClass = getPitchClass(pitch);
-  const octave = getPitchOctave(pitch);
-
-  for (const naturalPitchClass of Object.keys(
-    NATURAL_PITCH_CLASSES,
-  ) as NaturalPitchClass[]) {
-    const accidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
-    const signedPitchClass = normalizePitchClass(
-      NATURAL_PITCH_CLASSES[naturalPitchClass] + accidental,
-    );
-
-    if (signedPitchClass === pitchClass) {
-      return getAbcPitchToken(naturalPitchClass, octave, 0);
-    }
-  }
-
-  const candidates = (Object.keys(NATURAL_PITCH_CLASSES) as NaturalPitchClass[])
-    .flatMap((naturalPitchClass) => {
-      const keyAccidental = keySignatureAccidentals.get(naturalPitchClass) ?? 0;
-
-      return ([-1, 1] as const).map((accidental) => ({
-        accidental,
-        naturalPitchClass,
-        priority: Math.abs(accidental - keyAccidental),
-        signedPitchClass: normalizePitchClass(
-          NATURAL_PITCH_CLASSES[naturalPitchClass] + accidental,
-        ),
-      }));
-    })
-    .filter(({ signedPitchClass }) => signedPitchClass === pitchClass)
-    .sort((left, right) => left.priority - right.priority);
-
-  const candidate = candidates[0];
-  if (!candidate) {
-    return getAbcPitch(pitch);
-  }
-
-  return getAbcPitchToken(
-    candidate.naturalPitchClass,
-    octave,
-    candidate.accidental,
-  );
-}
-
 export function appendPitchToAbc(
   content: string,
   pitch: number,
   duration: number,
 ) {
   const defaultNoteLength = getRequiredAbcHeaderField(content, 'L');
+  const keySignature = getRequiredAbcHeaderField(content, 'K');
   const tempo = parseTempo(getRequiredAbcHeaderField(content, 'Q'));
   const noteLength = getNearestNoteLength(
     duration,
     getQuarterNoteSeconds(tempo),
   );
-  const note = `${getAbcPitchWithKeySignature(pitch, content)}${getDurationSuffix(noteLength, defaultNoteLength)}`;
+  const note = `${getAbcPitchWithKeySignature(pitch, keySignature)}${getDurationSuffix(noteLength, defaultNoteLength)}`;
   const measureSeparator = getMeasureSeparator(
     content,
     defaultNoteLength,
@@ -437,7 +177,7 @@ export function appendPitchToAbc(
   const lines = trimmedEnd.split(/\r?\n/);
   const lastLine = lines[lines.length - 1] ?? '';
   const separator =
-    isHeaderLine(lastLine) || shouldStartNewLine(trimmedEnd) ? '\n' : ' ';
+    isAbcHeaderLine(lastLine) || shouldStartNewLine(trimmedEnd) ? '\n' : ' ';
   const measureSeparatorSuffix = getMeasureSeparatorSuffix(
     content,
     measureSeparator,

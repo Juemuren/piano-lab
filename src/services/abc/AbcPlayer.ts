@@ -3,7 +3,7 @@ import type { SynthEngine } from '../synth/SynthEngine';
 import {
   getHighlightDurationMs,
   getPlaybackDurationSeconds,
-} from './AbcCalculations';
+} from './AbcTiming';
 
 const HIGHLIGHT_INTERVAL_MS = 50;
 

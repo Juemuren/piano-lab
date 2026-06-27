@@ -1,7 +1,7 @@
 import { Eraser, PenLine, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PianoInputSettings } from '../../contexts/appSettings/AppSettingsContext';
-import { getQuarterNoteSeconds } from '../../services/abc/AbcInput';
+import { getQuarterNoteSeconds } from '../../services/abc/AbcTiming';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlRange from '../shared/ControlRange';
