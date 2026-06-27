@@ -20,5 +20,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "scripts/generateAbcPresets.d.mts"]
+  "include": ["vite.config.ts", "plugins/**/*.ts"]
 }

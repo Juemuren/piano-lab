@@ -1,30 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import type { Plugin, ViteDevServer } from 'vite';
 import { defineConfig } from 'vite';
-import { generateAbcPresets } from './scripts/generateAbcPresets.mjs';
-
-function abcPresets(): Plugin {
-  return {
-    async buildStart() {
-      await generateAbcPresets();
-    },
-    configureServer(server: ViteDevServer) {
-      server.watcher.add('public/presets/*.abc');
-      server.watcher.on('add', async (file: string) => {
-        if (file.endsWith('.abc')) {
-          await generateAbcPresets();
-        }
-      });
-      server.watcher.on('unlink', async (file: string) => {
-        if (file.endsWith('.abc')) {
-          await generateAbcPresets();
-        }
-      });
-    },
-    name: 'abc-presets',
-  };
-}
+import { abcPresets } from './plugins/abcPresets.ts';
 
 const host = process.env.TAURI_DEV_HOST;
 

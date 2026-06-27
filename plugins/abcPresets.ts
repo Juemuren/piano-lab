@@ -1,8 +1,8 @@
 import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import type { Plugin, ViteDevServer } from 'vite';
 
-const projectRoot = path.resolve(fileURLToPath(import.meta.url), '..', '..');
+const projectRoot = path.resolve(import.meta.dirname, '..');
 const presetsDir = path.join(projectRoot, 'public', 'presets');
 const outputFile = path.join(
   projectRoot,
@@ -17,7 +17,7 @@ const collator = new Intl.Collator('zh-CN', {
   sensitivity: 'base',
 });
 
-export async function generateAbcPresets() {
+async function generateAbcPresets() {
   const entries = await readdir(presetsDir, { withFileTypes: true });
   const presetNames = entries
     .filter((entry) => entry.isFile())
@@ -28,12 +28,26 @@ export async function generateAbcPresets() {
 
   await mkdir(path.dirname(outputFile), { recursive: true });
   await writeFile(outputFile, `${JSON.stringify(presetNames, null, 2)}\n`);
-
-  return presetNames;
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const presetNames = await generateAbcPresets();
-  console.log(`Generated ${path.relative(projectRoot, outputFile)}`);
-  console.log(`Found ${presetNames.length} ABC presets.`);
+export function abcPresets(): Plugin {
+  return {
+    async buildStart() {
+      await generateAbcPresets();
+    },
+    configureServer(server: ViteDevServer) {
+      server.watcher.add('public/presets/*.abc');
+      server.watcher.on('add', async (file: string) => {
+        if (file.endsWith('.abc')) {
+          await generateAbcPresets();
+        }
+      });
+      server.watcher.on('unlink', async (file: string) => {
+        if (file.endsWith('.abc')) {
+          await generateAbcPresets();
+        }
+      });
+    },
+    name: 'abc-presets',
+  };
 }
