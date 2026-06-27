@@ -2,6 +2,37 @@
 
 All notable changes to this project are documented in this file.
 
+## 1.4.0
+
+### Added
+
+- Added presets for filter and equalizer effects.
+- Added enable/disable controls for individual filter and equalizer effects.
+- Added minor key parsing for ABC input.
+- Added minor key display support in ABC key signatures.
+
+### Changed
+
+- Refactored the ABC module, including pitch, input, header, settings, and timing handling.
+- Refactored synthesizer options, defaults, and effect control logic.
+- Moved local type definitions closer to their implementations and removed the shared type barrel.
+- Moved reverb controls within the effect section.
+- Adjusted default presets for filter, equalizer, and reverb effects.
+- Removed obsolete defensive code paths.
+
+### Fixed
+
+- Fixed synchronization between ABC headers and app settings.
+- Removed browser warnings from form controls.
+
+### Chore
+
+- Added commonly used helper scripts.
+- Updated the changelog extraction script.
+- Extracted markdownlint configuration into a dedicated file.
+- Updated editor configuration examples.
+- Completed translation entries.
+
 ## 1.3.0
 
 ### Added

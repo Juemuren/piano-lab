@@ -60,6 +60,8 @@ Includes filter, equalizer, reverb, compression, panning, wave shaping, modulati
 
 #### Filter & Equalizer
 
+- Provides several presets and can be fully customized
+- Allows any number of filters and equalizers, with all parameters adjustable
 - Supports four filter types: lowpass, highpass, bandpass, and notch
 - Supports three equalizer types: lowshelf, highshelf, and peaking
 - Provides adjustable cutoff frequency, quality factor (Q), and gain
