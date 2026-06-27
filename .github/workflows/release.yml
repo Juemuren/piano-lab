@@ -59,29 +59,11 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-
-          awk -v version="$version" '
-            $0 ~ "^## \\[" version "\\]" {
-              in_section = 1
-              print
-              next
-            }
-            in_section && /^## \[/ {
-              exit
-            }
-            in_section {
-              print
-            }
-          ' CHANGELOG.md > release-notes.md
-
-          if [ ! -s release-notes.md ]; then
-            echo "No changelog section found for ${version}" >&2
-            exit 1
-          fi
+          body="$(bash scripts/load-changelog.sh "$version")"
 
           {
             echo 'body<<EOF'
-            cat release-notes.md
+            printf '%s\n' "$body"
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: Build and publish Tauri release

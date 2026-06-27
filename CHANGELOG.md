@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [1.3.0]
+## 1.3.0
 
 ### Added
 
@@ -33,7 +33,7 @@ All notable changes to this project are documented in this file.
 - Updated editor configuration examples.
 - Synced translations.
 
-## [1.2.0]
+## 1.2.0
 
 ### Added
 
@@ -59,7 +59,7 @@ All notable changes to this project are documented in this file.
 - Reduced the border radius of select controls.
 - Standardized component props declarations to use interfaces.
 
-## [1.1.0]
+## 1.1.0
 
 ### Changed
 
@@ -91,7 +91,7 @@ All notable changes to this project are documented in this file.
 - Fixed GitHub README formula rendering issues.
 - Added VSCode recommended extensions and settings examples.
 
-## [1.0.0]
+## 1.0.0
 
 ### Added
 
@@ -135,7 +135,7 @@ All notable changes to this project are documented in this file.
 - Completed missing i18n entries across all locales.
 - Updated README and TODO documents.
 
-## [0.10.0]
+## 0.10.0
 
 ### Added
 
@@ -186,7 +186,7 @@ All notable changes to this project are documented in this file.
 - Changed the project domain to `piano.raind.me`.
 - Removed stale and out-of-scope TODO items.
 
-## [0.9.0]
+## 0.9.0
 
 ### Added
 
@@ -215,7 +215,7 @@ All notable changes to this project are documented in this file.
 - Fixed `ControlCheckbox` size to prevent it from shrinking in some layouts.
 - Fixed `SettingsPanel` width so it no longer changes automatically.
 
-## [0.8.0]
+## 0.8.0
 
 ### Added
 
@@ -236,7 +236,7 @@ All notable changes to this project are documented in this file.
 - Fixed incorrect first-note duration during piano input and score playback.
 - Fixed release clicks at the end of notes.
 
-## [0.7.0]
+## 0.7.0
 
 ### Added
 
@@ -261,7 +261,7 @@ All notable changes to this project are documented in this file.
 - Fixed browser warnings by adding IDs to all select and textarea elements.
 - Disabled the unmatched-note red highlight while the underlying score-position mismatch is still being investigated.
 
-## [0.6.0]
+## 0.6.0
 
 ### Added
 
@@ -285,7 +285,7 @@ All notable changes to this project are documented in this file.
 - Fixed occasional keyboard-highlight failures during score playback.
 - Fixed playback callback timing by using seconds instead of beats.
 
-## [0.5.0]
+## 0.5.0
 
 ### Added
 
@@ -313,7 +313,7 @@ All notable changes to this project are documented in this file.
 - Refactored score playback, rendered score export, file import/export, and synthesizer state handling into shared hooks and services.
 - Renamed the audio engine service directory to `synth` and provided synthesizer context management.
 
-## [0.4.0]
+## 0.4.0
 
 ### Added
 
@@ -342,7 +342,7 @@ All notable changes to this project are documented in this file.
 - Refactored pitch naming and pitch option generation into shared utilities.
 - Standardized component declarations, exports, and i18n constant naming.
 
-## [0.3.0]
+## 0.3.0
 
 ### Added
 
@@ -357,7 +357,7 @@ All notable changes to this project are documented in this file.
 - Centralized language display names in the i18n settings.
 - Updated the release workflow to use only the changelog section for the current tag as the release body.
 
-## [0.2.0]
+## 0.2.0
 
 ### Added
 
@@ -367,7 +367,7 @@ All notable changes to this project are documented in this file.
 
 - Improved release workflow for building tauri app.
 
-## [0.1.1]
+## 0.1.1
 
 ### Added
 
