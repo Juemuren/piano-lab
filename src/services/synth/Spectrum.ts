@@ -1,4 +1,29 @@
-import type { Spectrum, SpectrumDefinition } from '../../types/synth';
+import type { BuiltInSpectrumType, SpectrumType } from './config/Options';
+
+export interface Spectrum {
+  amplitudes: number[];
+}
+
+export interface SpectrumConfig {
+  customAmplitudes: number[];
+  lambda: number;
+  p: number;
+  sigma: number;
+  type: SpectrumType;
+}
+
+export interface SpectrumParamUpdates {
+  lambda?: number;
+  p?: number;
+  sigma?: number;
+}
+
+export interface SpectrumDefinition {
+  lambda: number;
+  p: number;
+  sigma: number;
+  type: BuiltInSpectrumType;
+}
 
 function normalizeAmplitudes(amplitudes: number[]) {
   const maxAmplitude = Math.max(...amplitudes);

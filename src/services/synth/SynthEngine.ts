@@ -1,19 +1,23 @@
 import type {
-  EffectConfig,
-  EnvelopeConfig,
-  Spectrum,
-  StartNoteResult,
+  ActiveVoice,
+  ReleasingVoice,
   SynthBasicConfig,
-} from '../../types/synth';
-import type { ActiveVoice, ReleasingVoice } from './BasicVoice';
+} from './BasicVoice';
 import { BasicVoice } from './BasicVoice';
+import type { EffectConfig } from './EffectChain';
 import { EffectChain } from './EffectChain';
-import { getVoiceGainAtTime } from './VoicePlanner';
+import type { EnvelopeConfig } from './Envelope';
+import { getVoiceGainAtTime } from './Envelope';
+import type { Spectrum } from './Spectrum';
 
 interface SynthRecordingTarget {
   disconnect: () => void;
   stream: MediaStream;
 }
+
+type StartNoteResult =
+  | { started: true; startedAt: number }
+  | { started: false };
 
 export class SynthEngine {
   private audioContext: AudioContext | null = null;

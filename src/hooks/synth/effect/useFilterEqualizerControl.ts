@@ -1,15 +1,16 @@
 import { useCallback, useState } from 'react';
-import {
-  createDefaultEqualizerConfig,
-  createDefaultFilterConfig,
-  createDefaultFilterEqualizerConfig,
-} from '../../../services/synth/config/Defaults';
+import { createDefaultFilterEqualizerConfig } from '../../../services/synth/config/Defaults';
 import type {
   EqualizerType,
   FilterEqualizerPreset,
   FilterType,
 } from '../../../services/synth/config/Options';
-import type { FilterEqualizerConfig } from '../../../types/synth';
+import type { FilterEqualizerConfig } from '../../../services/synth/effect/FilterEqualizer';
+import {
+  createEqualizerConfig,
+  createFilterConfig,
+  createFilterEqualizerConfig,
+} from '../../../services/synth/effect/FilterEqualizer';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function useFilterEqualizerControl(
@@ -26,7 +27,7 @@ function useFilterEqualizerControl(
 
   const updateFilterEqualizerPreset = useCallback(
     (preset: FilterEqualizerPreset) => {
-      setFilterEqualizer(() => createDefaultFilterEqualizerConfig(preset));
+      setFilterEqualizer(() => createFilterEqualizerConfig(preset));
     },
     [],
   );
@@ -37,7 +38,7 @@ function useFilterEqualizerControl(
 
       return {
         ...source,
-        filters: [...source.filters, createDefaultFilterConfig(type)],
+        filters: [...source.filters, createFilterConfig(type)],
         preset: 'custom',
       };
     });
@@ -109,7 +110,7 @@ function useFilterEqualizerControl(
 
       return {
         ...source,
-        equalizers: [...source.equalizers, createDefaultEqualizerConfig(type)],
+        equalizers: [...source.equalizers, createEqualizerConfig(type)],
         preset: 'custom',
       };
     });

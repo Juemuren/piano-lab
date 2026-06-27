@@ -17,13 +17,11 @@ import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
-import { createDefaultSynthConfig } from '../../services/synth/SynthConfig';
-import type {
-  EffectConfig,
-  EnvelopeConfig,
-  SpectrumConfig,
-  SynthConfig,
-} from '../../types/synth';
+import type { SynthConfig } from '../../services/synth/config/Defaults';
+import { createDefaultSynthConfig } from '../../services/synth/config/Defaults';
+import type { EffectConfig } from '../../services/synth/EffectChain';
+import type { EnvelopeConfig } from '../../services/synth/Envelope';
+import type { SpectrumConfig } from '../../services/synth/Spectrum';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';

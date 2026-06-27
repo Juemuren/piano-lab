@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { createDefaultPannerConfig } from '../../../services/synth/config/Defaults';
-import type { PannerConfig } from '../../../types/synth';
+import type { PannerConfig } from '../../../services/synth/effect/Panner';
 
 function usePannerControl(initialPanner: PannerConfig | null) {
   const [panner, setPanner] = useState<PannerConfig | null>(

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import { createDefaultEffectConfig } from '../../services/synth/config/Defaults';
-import type { EffectConfig } from '../../types/synth';
+import type { EffectConfig } from '../../services/synth/EffectChain';
 import useCompressorControl from './effect/useCompressorControl';
 import useFilterEqualizerControl from './effect/useFilterEqualizerControl';
 import useModulationControl from './effect/useModulationControl';

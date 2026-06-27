@@ -1,6 +1,6 @@
 import { Ban, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { CompressorConfig } from '../../../../types/synth';
+import type { CompressorConfig } from '../../../../services/synth/effect/Compressor';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import CompressorReductionPreview from './CompressorReductionPreview';

@@ -1,7 +1,14 @@
-import type { WaveShaperConfig } from '../../../types/synth';
 import type { WaveShaperPreset } from '../config/Options';
 
 const CURVE_SAMPLE_COUNT = 2048;
+
+export interface WaveShaperConfig {
+  distortion: number;
+  fuzz: number;
+  overdrive: number;
+  preset: WaveShaperPreset;
+  saturation: number;
+}
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

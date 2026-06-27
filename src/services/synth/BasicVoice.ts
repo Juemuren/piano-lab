@@ -12,17 +12,19 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
-import type {
-  EnvelopeConfig,
-  FrequencyModulationConfig,
-  Spectrum,
-  SynthBasicConfig,
-} from '../../types/synth';
+import type { EnvelopeConfig, VoiceEnvelopeState } from './Envelope';
+import { createVoiceStartPlans, createVoiceStopPlans } from './Envelope';
+import type { FrequencyModulationConfig } from './effect/Modulation';
+import type { Spectrum } from './Spectrum';
 import { createSpectrum } from './Spectrum';
-import type { VoiceEnvelopeState } from './VoicePlanner';
-import { createVoiceStartPlans, createVoiceStopPlans } from './VoicePlanner';
 
 const MIN_GAIN_VALUE = 1e-10;
+
+export interface SynthBasicConfig {
+  harmonicCount: number;
+  oscillatorType: OscillatorType;
+  volumeRatio: number;
+}
 
 export interface ActiveVoice extends VoiceEnvelopeState {
   frequencyModulationDepthGainNode?: GainNode;

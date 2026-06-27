@@ -1,11 +1,26 @@
-import type {
-  ReverbConfig,
-  ReverbEarlyReflectionConfig,
-  ReverbLateTailConfig,
-} from '../../../types/synth';
 import { degreesToRadians } from '../../../utils/math';
 import { createGaussianRandomGenerator } from '../../../utils/random';
-import type { BuiltInReverbPreset } from '../config/Options';
+import type { BuiltInReverbPreset, ReverbPreset } from '../config/Options';
+
+export interface ReverbEarlyReflectionConfig {
+  delay: number;
+  gain: number;
+  phase: number;
+}
+
+export interface ReverbLateTailConfig {
+  alpha: number;
+  amplitude: number;
+  delay: number;
+  duration: number;
+}
+
+export interface ReverbConfig {
+  earlyReflections: ReverbEarlyReflectionConfig[];
+  lateTail: ReverbLateTailConfig;
+  mix: number;
+  preset: ReverbPreset;
+}
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,

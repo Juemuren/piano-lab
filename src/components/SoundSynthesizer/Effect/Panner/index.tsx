@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PannerConfig } from '../../../../types/synth';
+import type { PannerConfig } from '../../../../services/synth/effect/Panner';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';

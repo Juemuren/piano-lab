@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { createDefaultCompressorConfig } from '../../../services/synth/config/Defaults';
-import type { CompressorConfig } from '../../../types/synth';
+import type { CompressorConfig } from '../../../services/synth/effect/Compressor';
 
 function useCompressorControl(initialCompressor: CompressorConfig | null) {
   const [compressor, setCompressor] = useState<CompressorConfig | null>(

@@ -1,4 +1,12 @@
-import type { Spectrum } from '../../types/synth';
+import type { Spectrum } from './Spectrum';
+
+export interface EnvelopeConfig {
+  attackTime: number;
+  decayTime: number;
+  releaseTime: number;
+  silenceGain: number;
+  sustainGain: number;
+}
 
 export interface VoiceStartPlan {
   attackEnd: number;

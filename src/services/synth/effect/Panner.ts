@@ -1,9 +1,25 @@
-import type { PannerConfig } from '../../../types/synth';
 import { degreesToRadians } from '../../../utils/math';
 
 const DISTANCE_POINT_COUNT = 160;
 const SPHERE_LATITUDE_COUNT = 12;
 const SPHERE_LONGITUDE_COUNT = 24;
+
+export interface PannerConfig {
+  coneInnerAngle: number;
+  coneOuterAngle: number;
+  coneOuterGain: number;
+  distanceModel: DistanceModelType;
+  maxDistance: number;
+  orientationX: number;
+  orientationY: number;
+  orientationZ: number;
+  panningModel: PanningModelType;
+  positionX: number;
+  positionY: number;
+  positionZ: number;
+  refDistance: number;
+  rolloffFactor: number;
+}
 
 export interface PannerConeMesh {
   i: number[];

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { PannerConfig } from '../../../../services/synth/effect/Panner';
 import {
   getPannerDistance,
   getPannerDistanceCurve,
   getPannerDistanceGain,
 } from '../../../../services/synth/effect/Panner';
-import type { PannerConfig } from '../../../../types/synth';
 import Plot2D from '../../../shared/Plot2D';
 
 interface PannerDistanceGainPreviewProps {

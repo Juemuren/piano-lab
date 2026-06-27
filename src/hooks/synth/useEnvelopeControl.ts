@@ -7,10 +7,16 @@ import {
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
 } from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
-import type { EnvelopeConfig, EnvelopeCurve } from '../../types/synth';
+import type { EnvelopeConfig } from '../../services/synth/Envelope';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_POINTS_PER_SEGMENT = 50;
+
+export interface EnvelopeCurve {
+  gain: number[];
+  maxTime: number;
+  time: number[];
+}
 
 function sampleExponentialRamp(
   startTime: number,

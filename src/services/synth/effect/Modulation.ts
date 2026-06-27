@@ -1,9 +1,22 @@
-import type {
-  AmplitudeModulationConfig,
-  DelayModulationConfig,
-  FrequencyModulationConfig,
-  PhaseModulationConfig,
-} from '../../../types/synth';
+export interface AmplitudeModulationConfig {
+  depth: number;
+  frequency: number;
+}
+
+export interface FrequencyModulationConfig {
+  depth: number;
+  frequency: number;
+}
+
+export interface PhaseModulationConfig {
+  depth: number;
+  frequency: number;
+}
+
+export interface DelayModulationConfig {
+  depth: number;
+  frequency: number;
+}
 
 const MODULATION_CURVE_POINT_COUNT = 256;
 const MODULATION_CURVE_DURATION_SECONDS = 1;

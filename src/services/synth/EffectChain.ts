@@ -1,17 +1,32 @@
+import type { CompressorConfig } from './effect/Compressor';
 import type {
-  AmplitudeModulationConfig,
-  CompressorConfig,
-  DelayModulationConfig,
-  EffectConfig,
   EqualizerConfig,
   FilterConfig,
-  PannerConfig,
+  FilterEqualizerConfig,
+} from './effect/FilterEqualizer';
+import type {
+  AmplitudeModulationConfig,
+  DelayModulationConfig,
+  FrequencyModulationConfig,
   PhaseModulationConfig,
-  ReverbConfig,
-  WaveShaperConfig,
-} from '../../types/synth';
+} from './effect/Modulation';
+import type { PannerConfig } from './effect/Panner';
+import type { ReverbConfig } from './effect/Reverb';
 import { createReverbImpulseResponse } from './effect/Reverb';
+import type { WaveShaperConfig } from './effect/WaveShaper';
 import { createWaveShaperCurve } from './effect/WaveShaper';
+
+export interface EffectConfig {
+  amplitudeModulation: AmplitudeModulationConfig | null;
+  compressor: CompressorConfig | null;
+  delayModulation: DelayModulationConfig | null;
+  filterEqualizer: FilterEqualizerConfig | null;
+  frequencyModulation: FrequencyModulationConfig | null;
+  panner: PannerConfig | null;
+  phaseModulation: PhaseModulationConfig | null;
+  reverb: ReverbConfig | null;
+  waveShaper: WaveShaperConfig | null;
+}
 
 export class EffectChain {
   private audioContext: AudioContext | null = null;

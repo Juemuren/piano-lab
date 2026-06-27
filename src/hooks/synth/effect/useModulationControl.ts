@@ -10,7 +10,7 @@ import type {
   DelayModulationConfig,
   FrequencyModulationConfig,
   PhaseModulationConfig,
-} from '../../../types/synth';
+} from '../../../services/synth/effect/Modulation';
 
 function useModulationControl(
   initialAmplitudeModulation: AmplitudeModulationConfig | null,

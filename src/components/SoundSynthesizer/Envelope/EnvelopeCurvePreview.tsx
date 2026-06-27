@@ -1,4 +1,4 @@
-import type { EnvelopeCurve } from '../../../types/synth';
+import type { EnvelopeCurve } from '../../../hooks/synth/useEnvelopeControl';
 import Plot2D from '../../shared/Plot2D';
 
 interface EnvelopeCurvePreviewProps {

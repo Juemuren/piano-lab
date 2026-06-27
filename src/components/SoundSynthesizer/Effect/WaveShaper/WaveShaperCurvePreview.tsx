@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
+import type { WaveShaperConfig } from '../../../../services/synth/effect/WaveShaper';
 import { getWaveShaperCurvePoints } from '../../../../services/synth/effect/WaveShaper';
-import type { WaveShaperConfig } from '../../../../types/synth';
 import BlockMath from '../../../shared/BlockMath';
 import Plot2D from '../../../shared/Plot2D';
 

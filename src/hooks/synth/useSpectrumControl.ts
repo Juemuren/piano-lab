@@ -7,12 +7,12 @@ import {
 } from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import type { SpectrumType } from '../../services/synth/config/Options';
-import { createSpectrum } from '../../services/synth/Spectrum';
 import type {
   Spectrum,
   SpectrumConfig,
   SpectrumParamUpdates,
-} from '../../types/synth';
+} from '../../services/synth/Spectrum';
+import { createSpectrum } from '../../services/synth/Spectrum';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);

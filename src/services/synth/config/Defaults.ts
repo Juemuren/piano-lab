@@ -13,13 +13,8 @@ import {
   DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
   DEFAULT_ENVELOPE_SILENCE_GAIN,
   DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  DEFAULT_EQUALIZER_FREQUENCY,
-  DEFAULT_EQUALIZER_GAIN,
-  DEFAULT_EQUALIZER_Q,
   DEFAULT_EQUALIZER_TYPE,
   DEFAULT_FILTER_EQUALIZER_PRESET,
-  DEFAULT_FILTER_FREQUENCY,
-  DEFAULT_FILTER_Q,
   DEFAULT_FILTER_TYPE,
   DEFAULT_FREQUENCY_MODULATION_DEPTH,
   DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
@@ -54,33 +49,39 @@ import {
   DEFAULT_WAVE_SHAPER_PRESET,
   DEFAULT_WAVE_SHAPER_SATURATION,
 } from '../../../constants/synth';
+import type { SynthBasicConfig } from '../BasicVoice';
+import type { EffectConfig } from '../EffectChain';
+import type { EnvelopeConfig } from '../Envelope';
+import type { CompressorConfig } from '../effect/Compressor';
 import type {
-  AmplitudeModulationConfig,
-  CompressorConfig,
-  DelayModulationConfig,
-  EffectConfig,
-  EnvelopeConfig,
   EqualizerConfig,
   FilterConfig,
   FilterEqualizerConfig,
-  FrequencyModulationConfig,
-  PannerConfig,
-  PhaseModulationConfig,
-  ReverbConfig,
-  SpectrumConfig,
-  SynthBasicConfig,
-  SynthConfig,
-  WaveShaperConfig,
-} from '../../../types/synth';
-import { createFilterEqualizerConfig } from '../effect/FilterEqualizer';
-import { createReverbConfig } from '../effect/Reverb';
-import { createSpectrum } from '../Spectrum';
+} from '../effect/FilterEqualizer';
+import {
+  createEqualizerConfig,
+  createFilterConfig,
+  createFilterEqualizerConfig,
+} from '../effect/FilterEqualizer';
 import type {
-  BuiltInReverbPreset,
-  EqualizerType,
-  FilterEqualizerPreset,
-  FilterType,
-} from './Options';
+  AmplitudeModulationConfig,
+  DelayModulationConfig,
+  FrequencyModulationConfig,
+  PhaseModulationConfig,
+} from '../effect/Modulation';
+import type { PannerConfig } from '../effect/Panner';
+import type { ReverbConfig } from '../effect/Reverb';
+import { createReverbConfig } from '../effect/Reverb';
+import type { WaveShaperConfig } from '../effect/WaveShaper';
+import type { SpectrumConfig } from '../Spectrum';
+import { createSpectrum } from '../Spectrum';
+
+export interface SynthConfig {
+  effect: EffectConfig;
+  envelope: EnvelopeConfig;
+  spectrum: SpectrumConfig;
+  synth: SynthBasicConfig;
+}
 
 export function createDefaultSynthBasicConfig(): SynthBasicConfig {
   return {
@@ -118,31 +119,16 @@ export function createDefaultSpectrumConfig(): SpectrumConfig {
   };
 }
 
-export function createDefaultFilterConfig(
-  type: FilterType = DEFAULT_FILTER_TYPE,
-): FilterConfig {
-  return {
-    frequency: DEFAULT_FILTER_FREQUENCY,
-    q: DEFAULT_FILTER_Q,
-    type,
-  };
+export function createDefaultFilterConfig(): FilterConfig {
+  return createFilterConfig(DEFAULT_FILTER_TYPE);
 }
 
-export function createDefaultEqualizerConfig(
-  type: EqualizerType = DEFAULT_EQUALIZER_TYPE,
-): EqualizerConfig {
-  return {
-    frequency: DEFAULT_EQUALIZER_FREQUENCY,
-    gain: DEFAULT_EQUALIZER_GAIN,
-    q: DEFAULT_EQUALIZER_Q,
-    type,
-  };
+export function createDefaultEqualizerConfig(): EqualizerConfig {
+  return createEqualizerConfig(DEFAULT_EQUALIZER_TYPE);
 }
 
-export function createDefaultFilterEqualizerConfig(
-  preset: FilterEqualizerPreset = DEFAULT_FILTER_EQUALIZER_PRESET,
-): FilterEqualizerConfig {
-  return createFilterEqualizerConfig(preset);
+export function createDefaultFilterEqualizerConfig(): FilterEqualizerConfig {
+  return createFilterEqualizerConfig(DEFAULT_FILTER_EQUALIZER_PRESET);
 }
 
 export function createDefaultCompressorConfig(): CompressorConfig {
@@ -212,11 +198,8 @@ export function createDefaultPannerConfig(): PannerConfig {
   };
 }
 
-export function createDefaultReverbConfig(
-  preset: BuiltInReverbPreset = DEFAULT_REVERB_PRESET,
-  mix = DEFAULT_REVERB_MIX,
-): ReverbConfig {
-  return createReverbConfig(preset, mix);
+export function createDefaultReverbConfig(): ReverbConfig {
+  return createReverbConfig(DEFAULT_REVERB_PRESET, DEFAULT_REVERB_MIX);
 }
 
 export function createDefaultEffectConfig(): EffectConfig {

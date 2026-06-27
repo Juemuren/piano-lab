@@ -5,7 +5,7 @@ import type {
   DelayModulationConfig,
   FrequencyModulationConfig,
   PhaseModulationConfig,
-} from '../../../../types/synth';
+} from '../../../../services/synth/effect/Modulation';
 import AmplitudeModulationEffect from './AmplitudeModulationEffect';
 import DelayModulationEffect from './DelayModulationEffect';
 import FrequencyModulationEffect from './FrequencyModulationEffect';

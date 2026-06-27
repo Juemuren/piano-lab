@@ -1,12 +1,35 @@
-import type {
-  EqualizerConfig,
-  FilterConfig,
-  FilterEqualizerConfig,
-} from '../../../types/synth';
+import {
+  DEFAULT_EQUALIZER_FREQUENCY,
+  DEFAULT_EQUALIZER_GAIN,
+  DEFAULT_EQUALIZER_Q,
+  DEFAULT_FILTER_FREQUENCY,
+  DEFAULT_FILTER_Q,
+} from '../../../constants/synth';
 import type {
   BuiltInFilterEqualizerPreset,
+  EqualizerType,
   FilterEqualizerPreset,
+  FilterType,
 } from '../config/Options';
+
+export interface FilterConfig {
+  frequency: number;
+  q: number;
+  type: FilterType;
+}
+
+export interface EqualizerConfig {
+  frequency: number;
+  gain: number;
+  q: number;
+  type: EqualizerType;
+}
+
+export interface FilterEqualizerConfig {
+  equalizers: EqualizerConfig[];
+  filters: FilterConfig[];
+  preset: FilterEqualizerPreset;
+}
 
 interface FilterEqualizerPresetDefinition {
   equalizers: EqualizerConfig[];
@@ -24,6 +47,23 @@ function createEqualizers(gains: number[]): EqualizerConfig[] {
       type: 'peaking' as const,
     }))
     .filter((equalizer) => equalizer.gain !== 0);
+}
+
+export function createFilterConfig(type: FilterType): FilterConfig {
+  return {
+    frequency: DEFAULT_FILTER_FREQUENCY,
+    q: DEFAULT_FILTER_Q,
+    type,
+  };
+}
+
+export function createEqualizerConfig(type: EqualizerType): EqualizerConfig {
+  return {
+    frequency: DEFAULT_EQUALIZER_FREQUENCY,
+    gain: DEFAULT_EQUALIZER_GAIN,
+    q: DEFAULT_EQUALIZER_Q,
+    type,
+  };
 }
 
 export const FILTER_EQUALIZER_PRESET_DEFINITIONS: Record<

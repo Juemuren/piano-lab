@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { createInitialMidiControlState } from '../../hooks/piano/useMidiControl';
-import type { MidiControlState } from '../../types/piano';
+import type { MidiControlState } from './MidiControlContext';
 import { MidiControlContext } from './MidiControlContext';
 
 interface MidiControlProviderProps {

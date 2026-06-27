@@ -6,7 +6,7 @@ import type {
   FilterType,
 } from '../../../../services/synth/config/Options';
 import { FILTER_EQUALIZER_PRESETS } from '../../../../services/synth/config/Options';
-import type { FilterEqualizerConfig } from '../../../../types/synth';
+import type { FilterEqualizerConfig } from '../../../../services/synth/effect/FilterEqualizer';
 import ControlButton from '../../../shared/ControlButton';
 import ControlSelect from '../../../shared/ControlSelect';
 import Equalizer from './Equalizer';
