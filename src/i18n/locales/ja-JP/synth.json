@@ -68,10 +68,20 @@
     },
     "filterEqualizer": {
       "baseFrequency": "基準周波数",
+      "disabled": "フィルターとイコライザーを無効にする",
+      "enabled": "フィルターとイコライザーを有効にする",
       "magnitudeResponseCurve": "振幅周波数応答曲線",
       "magnitudeResponseSample": "振幅周波数応答サンプル",
       "name": "フィルターとイコライザー",
-      "pitch": "音高"
+      "pitch": "音高",
+      "preset": "フィルターとイコライザーのプリセット",
+      "presets": {
+        "classical": "クラシック",
+        "custom": "カスタム",
+        "jazz": "ジャズ",
+        "pop": "ポップ",
+        "rock": "ロック"
+      }
     },
     "modulation": {
       "amplitudeCurve": "振幅モジュレーション曲線",

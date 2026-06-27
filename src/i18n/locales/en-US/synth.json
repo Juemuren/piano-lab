@@ -68,10 +68,20 @@
     },
     "filterEqualizer": {
       "baseFrequency": "Base Frequency",
+      "disabled": "Disable Filter & Equalizer",
+      "enabled": "Enable Filter & Equalizer",
       "magnitudeResponseCurve": "Magnitude Response Curve",
       "magnitudeResponseSample": "Magnitude Response Sample",
       "name": "Filter & Equalizer",
-      "pitch": "Pitch"
+      "pitch": "Pitch",
+      "preset": "Filter & Equalizer Preset",
+      "presets": {
+        "classical": "Classical",
+        "custom": "Custom",
+        "jazz": "Jazz",
+        "pop": "Pop",
+        "rock": "Rock"
+      }
     },
     "modulation": {
       "amplitudeCurve": "Amplitude Modulation Curve",
