@@ -1,11 +1,11 @@
 import type {
-  BuiltInReverbPreset,
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
 } from '../../../types';
 import { degreesToRadians } from '../../../utils/math';
 import { createGaussianRandomGenerator } from '../../../utils/random';
+import type { BuiltInReverbPreset } from '../config/Options';
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,

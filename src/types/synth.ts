@@ -1,13 +1,12 @@
-export type BuiltInSpectrumType =
-  | 'ethereal'
-  | 'metallic'
-  | 'pure'
-  | 'bright'
-  | 'normal'
-  | 'soft'
-  | 'realistic';
-
-export type SpectrumType = BuiltInSpectrumType | 'custom';
+import type {
+  BuiltInSpectrumType,
+  EqualizerType,
+  FilterEqualizerPreset,
+  FilterType,
+  ReverbPreset,
+  SpectrumType,
+  WaveShaperPreset,
+} from '../services/synth/config/Options';
 
 export interface Spectrum {
   amplitudes: number[];
@@ -54,15 +53,11 @@ export interface SynthBasicConfig {
   volumeRatio: number;
 }
 
-export type FilterType = 'lowpass' | 'highpass' | 'bandpass' | 'notch';
-
 export interface FilterConfig {
   frequency: number;
   q: number;
   type: FilterType;
 }
-
-export type EqualizerType = 'lowshelf' | 'highshelf' | 'peaking';
 
 export interface EqualizerConfig {
   frequency: number;
@@ -70,14 +65,6 @@ export interface EqualizerConfig {
   q: number;
   type: EqualizerType;
 }
-
-export type BuiltInFilterEqualizerPreset =
-  | 'classical'
-  | 'pop'
-  | 'rock'
-  | 'jazz';
-
-export type FilterEqualizerPreset = BuiltInFilterEqualizerPreset | 'custom';
 
 export interface FilterEqualizerConfig {
   equalizers: EqualizerConfig[];
@@ -113,12 +100,6 @@ export interface DelayModulationConfig {
   frequency: number;
 }
 
-export type WaveShaperPreset =
-  | 'saturation'
-  | 'distortion'
-  | 'overdrive'
-  | 'fuzz';
-
 export interface WaveShaperConfig {
   distortion: number;
   fuzz: number;
@@ -143,10 +124,6 @@ export interface PannerConfig {
   refDistance: number;
   rolloffFactor: number;
 }
-
-export type BuiltInReverbPreset = 'bathroom' | 'garage' | 'hall' | 'cathedral';
-
-export type ReverbPreset = BuiltInReverbPreset | 'custom';
 
 export interface ReverbEarlyReflectionConfig {
   delay: number;

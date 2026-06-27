@@ -2,10 +2,11 @@ import { Equal, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type {
   EqualizerType,
-  FilterEqualizerConfig,
   FilterEqualizerPreset,
   FilterType,
-} from '../../../../types';
+} from '../../../../services/synth/config/Options';
+import { FILTER_EQUALIZER_PRESETS } from '../../../../services/synth/config/Options';
+import type { FilterEqualizerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlSelect from '../../../shared/ControlSelect';
 import Equalizer from './Equalizer';
@@ -49,13 +50,6 @@ function FilterAndEqualizer({
   onEqualizerGainChange,
 }: FilterAndEqualizerProps) {
   const { t } = useTranslation('synth');
-  const presetOptions: FilterEqualizerPreset[] = [
-    'classical',
-    'pop',
-    'rock',
-    'jazz',
-    'custom',
-  ];
   const presetLabels: Record<FilterEqualizerPreset, string> = {
     classical: t('effect.filterEqualizer.presets.classical'),
     custom: t('effect.filterEqualizer.presets.custom'),
@@ -93,7 +87,7 @@ function FilterAndEqualizer({
               }
               value={filterEqualizer.preset}
             >
-              {presetOptions.map((preset) => (
+              {FILTER_EQUALIZER_PRESETS.map((preset) => (
                 <option key={preset} value={preset}>
                   {presetLabels[preset]}
                 </option>

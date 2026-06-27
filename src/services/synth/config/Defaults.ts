@@ -56,17 +56,13 @@ import {
 } from '../../../constants/synth';
 import type {
   AmplitudeModulationConfig,
-  BuiltInReverbPreset,
   CompressorConfig,
   DelayModulationConfig,
   EffectConfig,
   EnvelopeConfig,
   EqualizerConfig,
-  EqualizerType,
   FilterConfig,
   FilterEqualizerConfig,
-  FilterEqualizerPreset,
-  FilterType,
   FrequencyModulationConfig,
   PannerConfig,
   PhaseModulationConfig,
@@ -79,6 +75,12 @@ import type {
 import { createFilterEqualizerConfig } from '../effect/FilterEqualizer';
 import { createReverbConfig } from '../effect/Reverb';
 import { createSpectrum } from '../Spectrum';
+import type {
+  BuiltInReverbPreset,
+  EqualizerType,
+  FilterEqualizerPreset,
+  FilterType,
+} from './Options';
 
 export function createDefaultSynthBasicConfig(): SynthBasicConfig {
   return {

@@ -1,7 +1,9 @@
 import { House, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import type { ReverbConfig, ReverbPreset } from '../../../../types';
+import type { ReverbPreset } from '../../../../services/synth/config/Options';
+import { REVERB_PRESETS } from '../../../../services/synth/config/Options';
+import type { ReverbConfig } from '../../../../types';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -25,14 +27,6 @@ interface ReverbProps {
   onPresetChange: (preset: ReverbPreset) => void;
   reverb: ReverbConfig | null;
 }
-
-const presetOptions: ReverbPreset[] = [
-  'bathroom',
-  'garage',
-  'hall',
-  'cathedral',
-  'custom',
-];
 
 function Reverb({
   reverb,
@@ -95,7 +89,7 @@ function Reverb({
               onChange={(e) => onPresetChange(e.target.value as ReverbPreset)}
               value={reverb.preset}
             >
-              {presetOptions.map((preset) => (
+              {REVERB_PRESETS.map((preset) => (
                 <option key={preset} value={preset}>
                   {presetLabels[preset]}
                 </option>

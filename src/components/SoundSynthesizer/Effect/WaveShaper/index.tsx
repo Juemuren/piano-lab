@@ -1,7 +1,9 @@
 import { AudioWaveform, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
-import type { WaveShaperConfig, WaveShaperPreset } from '../../../../types';
+import type { WaveShaperPreset } from '../../../../services/synth/config/Options';
+import { WAVE_SHAPER_PRESETS } from '../../../../services/synth/config/Options';
+import type { WaveShaperConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -16,13 +18,6 @@ interface WaveShaperProps {
   ) => void;
   waveShaper: WaveShaperConfig | null;
 }
-
-const presetOptions: WaveShaperPreset[] = [
-  'saturation',
-  'overdrive',
-  'distortion',
-  'fuzz',
-];
 
 const presetParams: Record<
   WaveShaperPreset,
@@ -116,7 +111,7 @@ function WaveShaper({
               }
               value={waveShaper.preset}
             >
-              {presetOptions.map((preset) => (
+              {WAVE_SHAPER_PRESETS.map((preset) => (
                 <option key={preset} value={preset}>
                   {presetLabels[preset]}
                 </option>

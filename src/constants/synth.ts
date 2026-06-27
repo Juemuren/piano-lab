@@ -5,7 +5,7 @@ import type {
   EqualizerType,
   FilterType,
   WaveShaperPreset,
-} from '../types';
+} from '../services/synth/config/Options';
 
 export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;
@@ -33,10 +33,10 @@ export const DEFAULT_EQUALIZER_GAIN = 0;
 export const DEFAULT_FILTER_EQUALIZER_PRESET: BuiltInFilterEqualizerPreset =
   'classical';
 
-export const DEFAULT_COMPRESSOR_THRESHOLD = -24;
+export const DEFAULT_COMPRESSOR_THRESHOLD = -20;
 export const DEFAULT_COMPRESSOR_KNEE = 30;
-export const DEFAULT_COMPRESSOR_RATIO = 12;
-export const DEFAULT_COMPRESSOR_ATTACK = 0.003;
+export const DEFAULT_COMPRESSOR_RATIO = 15;
+export const DEFAULT_COMPRESSOR_ATTACK = 0.005;
 export const DEFAULT_COMPRESSOR_RELEASE = 0.25;
 
 export const DEFAULT_AMPLITUDE_MODULATION_FREQUENCY = 5;
@@ -67,10 +67,10 @@ export const DEFAULT_PANNER_ORIENTATION_Y = 0;
 export const DEFAULT_PANNER_ORIENTATION_Z = 1;
 export const DEFAULT_PANNER_REF_DISTANCE = 1;
 export const DEFAULT_PANNER_MAX_DISTANCE = 10000;
-export const DEFAULT_PANNER_ROLLOFF_FACTOR = 0;
-export const DEFAULT_PANNER_CONE_INNER_ANGLE = 360;
-export const DEFAULT_PANNER_CONE_OUTER_ANGLE = 360;
-export const DEFAULT_PANNER_CONE_OUTER_GAIN = 0;
+export const DEFAULT_PANNER_ROLLOFF_FACTOR = 1;
+export const DEFAULT_PANNER_CONE_INNER_ANGLE = 60;
+export const DEFAULT_PANNER_CONE_OUTER_ANGLE = 120;
+export const DEFAULT_PANNER_CONE_OUTER_GAIN = 0.5;
 
 export const DEFAULT_REVERB_PRESET: BuiltInReverbPreset = 'bathroom';
 export const DEFAULT_REVERB_MIX = 0;

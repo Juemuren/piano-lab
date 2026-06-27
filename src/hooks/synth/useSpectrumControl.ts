@@ -6,12 +6,12 @@ import {
   DEFAULT_SPECTRUM_TYPE,
 } from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import type { SpectrumType } from '../../services/synth/config/Options';
 import { createSpectrum } from '../../services/synth/Spectrum';
 import type {
   Spectrum,
   SpectrumConfig,
   SpectrumParamUpdates,
-  SpectrumType,
 } from '../../types';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {

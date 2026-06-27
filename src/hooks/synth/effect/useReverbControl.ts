@@ -5,7 +5,8 @@ import {
   DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
 } from '../../../constants/synth';
 import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
-import type { ReverbConfig, ReverbPreset } from '../../../types';
+import type { ReverbPreset } from '../../../services/synth/config/Options';
+import type { ReverbConfig } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function getReverbConfig(config: ReverbConfig | null) {

@@ -1,10 +1,12 @@
 import type {
-  BuiltInFilterEqualizerPreset,
   EqualizerConfig,
   FilterConfig,
   FilterEqualizerConfig,
-  FilterEqualizerPreset,
 } from '../../../types';
+import type {
+  BuiltInFilterEqualizerPreset,
+  FilterEqualizerPreset,
+} from '../config/Options';
 
 interface FilterEqualizerPresetDefinition {
   equalizers: EqualizerConfig[];

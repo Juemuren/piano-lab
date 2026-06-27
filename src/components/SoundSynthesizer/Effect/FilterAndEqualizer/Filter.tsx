@@ -2,7 +2,9 @@ import { FilterIcon, Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
-import type { FilterConfig, FilterType } from '../../../../types';
+import type { FilterType } from '../../../../services/synth/config/Options';
+import { FILTER_TYPES } from '../../../../services/synth/config/Options';
+import type { FilterConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -60,10 +62,11 @@ function Filter({
                 title={t('effect.filter.name')}
                 value={filter.type}
               >
-                <option value="lowpass">{filterTypeLabels.lowpass}</option>
-                <option value="highpass">{filterTypeLabels.highpass}</option>
-                <option value="bandpass">{filterTypeLabels.bandpass}</option>
-                <option value="notch">{filterTypeLabels.notch}</option>
+                {FILTER_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {filterTypeLabels[type]}
+                  </option>
+                ))}
               </ControlSelect>
             </div>
 
@@ -101,10 +104,11 @@ function Filter({
             title={t('effect.filter.name')}
             value={selectedFilterType}
           >
-            <option value="lowpass">{filterTypeLabels.lowpass}</option>
-            <option value="highpass">{filterTypeLabels.highpass}</option>
-            <option value="bandpass">{filterTypeLabels.bandpass}</option>
-            <option value="notch">{filterTypeLabels.notch}</option>
+            {FILTER_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {filterTypeLabels[type]}
+              </option>
+            ))}
           </ControlSelect>
         </div>
       </div>

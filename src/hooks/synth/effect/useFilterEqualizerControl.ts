@@ -6,10 +6,10 @@ import {
 } from '../../../services/synth/config/Defaults';
 import type {
   EqualizerType,
-  FilterEqualizerConfig,
   FilterEqualizerPreset,
   FilterType,
-} from '../../../types';
+} from '../../../services/synth/config/Options';
+import type { FilterEqualizerConfig } from '../../../types';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function useFilterEqualizerControl(

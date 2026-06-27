@@ -2,7 +2,9 @@ import { Minus, Plus, SlidersVertical } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
-import type { EqualizerConfig, EqualizerType } from '../../../../types';
+import type { EqualizerType } from '../../../../services/synth/config/Options';
+import { EQUALIZER_TYPES } from '../../../../services/synth/config/Options';
+import type { EqualizerConfig } from '../../../../types';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -61,11 +63,11 @@ function Equalizer({
                 title={t('effect.equalizer.name')}
                 value={equalizer.type}
               >
-                <option value="lowshelf">{equalizerTypeLabels.lowshelf}</option>
-                <option value="highshelf">
-                  {equalizerTypeLabels.highshelf}
-                </option>
-                <option value="peaking">{equalizerTypeLabels.peaking}</option>
+                {EQUALIZER_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {equalizerTypeLabels[type]}
+                  </option>
+                ))}
               </ControlSelect>
             </div>
 
@@ -114,9 +116,11 @@ function Equalizer({
             title={t('effect.equalizer.name')}
             value={selectedEqualizerType}
           >
-            <option value="lowshelf">{equalizerTypeLabels.lowshelf}</option>
-            <option value="highshelf">{equalizerTypeLabels.highshelf}</option>
-            <option value="peaking">{equalizerTypeLabels.peaking}</option>
+            {EQUALIZER_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {equalizerTypeLabels[type]}
+              </option>
+            ))}
           </ControlSelect>
         </div>
       </div>

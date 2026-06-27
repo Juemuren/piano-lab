@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
-import type { SpectrumConfig, SpectrumType } from '../../../types';
+import type { SpectrumType } from '../../../services/synth/config/Options';
+import { SPECTRUM_TYPES } from '../../../services/synth/config/Options';
+import type { SpectrumConfig } from '../../../types';
 import BlockMath from '../../shared/BlockMath';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumFormulaPreview from './SpectrumFormulaPreview';
@@ -40,14 +42,11 @@ function Spectrum({
         }}
         value={spectrumType}
       >
-        <option value="metallic">{t('spectrum.presers.metallic')}</option>
-        <option value="pure">{t('spectrum.presers.pure')}</option>
-        <option value="bright">{t('spectrum.presers.bright')}</option>
-        <option value="ethereal">{t('spectrum.presers.ethereal')}</option>
-        <option value="normal">{t('spectrum.presers.normal')}</option>
-        <option value="soft">{t('spectrum.presers.soft')}</option>
-        <option value="realistic">{t('spectrum.presers.realistic')}</option>
-        <option value="custom">{t('spectrum.presers.custom')}</option>
+        {SPECTRUM_TYPES.map((type) => (
+          <option key={type} value={type}>
+            {t(`spectrum.presers.${type}`)}
+          </option>
+        ))}
       </ControlSelect>
 
       <SpectrumValueControls

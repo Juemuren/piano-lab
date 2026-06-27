@@ -1,4 +1,4 @@
-import type { SpectrumType } from '../../../types';
+import type { SpectrumType } from '../../../services/synth/config/Options';
 import BlockMath from '../../shared/BlockMath';
 
 const SPECTRUM_FORMULAS: Record<SpectrumType, string> = {

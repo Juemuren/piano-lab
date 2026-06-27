@@ -1,4 +1,5 @@
-import type { WaveShaperConfig, WaveShaperPreset } from '../../../types';
+import type { WaveShaperConfig } from '../../../types';
+import type { WaveShaperPreset } from '../config/Options';
 
 const CURVE_SAMPLE_COUNT = 2048;
 

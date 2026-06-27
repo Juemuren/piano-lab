@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { createDefaultWaveShaperConfig } from '../../../services/synth/config/Defaults';
-import type { WaveShaperConfig, WaveShaperPreset } from '../../../types';
+import type { WaveShaperPreset } from '../../../services/synth/config/Options';
+import type { WaveShaperConfig } from '../../../types';
 
 function useWaveShaperControl(initialWaveShaper: WaveShaperConfig | null) {
   const [waveShaper, setWaveShaper] = useState<WaveShaperConfig | null>(
