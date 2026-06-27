@@ -1,5 +1,6 @@
-import { getPitchName, getPitchOctave } from '../../utils/pitch';
-import { KEY_ACCIDENTALS } from './AbcSettings';
+import type { Accidental } from 'abcjs';
+import { parseOnly } from 'abcjs';
+import { getPitchName } from '../../utils/pitch';
 
 const PITCH_CLASS_COUNT = 12;
 const NATURAL_PITCH_CLASSES = {
@@ -11,8 +12,10 @@ const NATURAL_PITCH_CLASSES = {
   F: 5,
   G: 7,
 } as const;
-const SHARP_ORDER = ['F', 'C', 'G', 'D', 'A', 'E', 'B'] as const;
-const FLAT_ORDER = ['B', 'E', 'A', 'D', 'G', 'C', 'F'] as const;
+const keyAccidentalMaps = new Map<
+  string,
+  Map<NaturalPitchClass, KeyAccidental>
+>();
 
 type NaturalPitchClass = keyof typeof NATURAL_PITCH_CLASSES;
 type KeyAccidental = -1 | 0 | 1;
@@ -20,39 +23,43 @@ type KeyAccidental = -1 | 0 | 1;
 interface AbcPitchSpelling {
   accidental: KeyAccidental;
   pitchClass: NaturalPitchClass;
+  soundingAccidental: KeyAccidental;
 }
 
 function normalizePitchClass(value: number) {
   return ((value % PITCH_CLASS_COUNT) + PITCH_CLASS_COUNT) % PITCH_CLASS_COUNT;
 }
 
-function getSignedPitchClass({ accidental, pitchClass }: AbcPitchSpelling) {
-  return normalizePitchClass(NATURAL_PITCH_CLASSES[pitchClass] + accidental);
+function getSignedPitchClass({
+  pitchClass,
+  soundingAccidental,
+}: AbcPitchSpelling) {
+  return normalizePitchClass(
+    NATURAL_PITCH_CLASSES[pitchClass] + soundingAccidental,
+  );
 }
 
-function parseKeyRoot(keySignature: string) {
-  const match = keySignature.trim().match(/^([A-Ga-g])([#b]?)/);
-  if (!match) {
-    return null;
-  }
-
-  return `${match[1].toUpperCase()}${match[2]}`;
-}
-
-function getKeySignatureOffset(keySignature: string) {
-  const keyRoot = parseKeyRoot(keySignature);
-  return KEY_ACCIDENTALS.find(({ root }) => root === keyRoot)?.offset ?? 0;
+function getAccidentalValue(accidental: Accidental['acc']): KeyAccidental {
+  return accidental === 'sharp' ? 1 : accidental === 'flat' ? -1 : 0;
 }
 
 function getKeyAccidentalMap(keySignature: string) {
-  const offset = getKeySignatureOffset(keySignature);
-  const pitchClasses =
-    offset >= 0 ? SHARP_ORDER.slice(0, offset) : FLAT_ORDER.slice(0, -offset);
-  const accidental = offset >= 0 ? 1 : -1;
+  const cachedMap = keyAccidentalMaps.get(keySignature);
+  if (cachedMap) {
+    return cachedMap;
+  }
 
-  return new Map<NaturalPitchClass, KeyAccidental>(
-    pitchClasses.map((pitchClass) => [pitchClass, accidental]),
+  const keySignatureMap = new Map<NaturalPitchClass, KeyAccidental>(
+    parseOnly(`K:${keySignature}\nC`)[0]
+      .getKeySignature()
+      .accidentals?.map(({ acc, note }) => [
+        note.toUpperCase() as NaturalPitchClass,
+        getAccidentalValue(acc),
+      ]) ?? [],
   );
+  keyAccidentalMaps.set(keySignature, keySignatureMap);
+
+  return keySignatureMap;
 }
 
 function getDefaultPitchSpelling(pitch: number): AbcPitchSpelling {
@@ -61,11 +68,17 @@ function getDefaultPitchSpelling(pitch: number): AbcPitchSpelling {
   return {
     accidental: pitchName.includes('#') ? 1 : 0,
     pitchClass: pitchName[0] as NaturalPitchClass,
+    soundingAccidental: pitchName.includes('#') ? 1 : 0,
   };
 }
 
 function formatAbcPitch(pitch: number, spelling: AbcPitchSpelling) {
-  const octave = getPitchOctave(pitch);
+  const octave =
+    (pitch -
+      spelling.soundingAccidental -
+      NATURAL_PITCH_CLASSES[spelling.pitchClass]) /
+      PITCH_CLASS_COUNT -
+    1;
   const accidentalToken =
     spelling.accidental === 1 ? '^' : spelling.accidental === -1 ? '_' : '';
   const pitchToken =
@@ -83,16 +96,15 @@ function getNaturalKeySpelling(
   for (const naturalPitchClass of Object.keys(
     NATURAL_PITCH_CLASSES,
   ) as NaturalPitchClass[]) {
+    const keyAccidental = keyAccidentals.get(naturalPitchClass) ?? 0;
     const spelling: AbcPitchSpelling = {
-      accidental: keyAccidentals.get(naturalPitchClass) ?? 0,
+      accidental: 0,
       pitchClass: naturalPitchClass,
+      soundingAccidental: keyAccidental,
     };
 
     if (getSignedPitchClass(spelling) === pitchClass) {
-      return {
-        accidental: 0,
-        pitchClass: naturalPitchClass,
-      };
+      return spelling;
     }
   }
 
@@ -112,6 +124,7 @@ function getExplicitAccidentalSpelling(
         spelling: {
           accidental,
           pitchClass: naturalPitchClass,
+          soundingAccidental: accidental,
         },
       }));
     })
