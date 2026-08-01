@@ -4,10 +4,7 @@ import type {
   KeyboardNoteMapping,
   KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
-import {
-  getKeyboardControlKeyLabel,
-  getKeyboardControlKeyShortLabel,
-} from '../../utils/keyboard';
+import { normalizeKeyboardControlKey } from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';
 
 const DEFAULT_KEYBOARD_OCTAVE = 4;
@@ -124,7 +121,10 @@ function useKeyboardControl({
         return;
       }
 
-      const key = e.key.toLowerCase();
+      const key = normalizeKeyboardControlKey(e.key);
+      if (key === null) {
+        return;
+      }
 
       if (
         key === keyboardTemporaryOctaveKeyMappings.downKey ||
@@ -177,7 +177,10 @@ function useKeyboardControl({
     }
 
     function handleKeyboardKeyUp(e: KeyboardEvent) {
-      const key = e.key.toLowerCase();
+      const key = normalizeKeyboardControlKey(e.key);
+      if (key === null) {
+        return;
+      }
       if (
         key === keyboardTemporaryOctaveKeyMappings.downKey ||
         key === keyboardTemporaryOctaveKeyMappings.upKey
@@ -237,7 +240,7 @@ function useKeyboardControl({
 
     for (const { key, offset } of keyboardNoteMappings) {
       if (key) {
-        hints.set(basePitch + offset, getKeyboardControlKeyShortLabel(key));
+        hints.set(basePitch + offset, key.toUpperCase());
       }
     }
 
@@ -259,23 +262,21 @@ function useKeyboardControl({
     return [
       {
         downKey: keyboardOctaveKeyMappings.downKey
-          ? getKeyboardControlKeyLabel(keyboardOctaveKeyMappings.downKey)
+          ? keyboardOctaveKeyMappings.downKey.toUpperCase()
           : '',
         downMark: '⇓',
         upKey: keyboardOctaveKeyMappings.upKey
-          ? getKeyboardControlKeyLabel(keyboardOctaveKeyMappings.upKey)
+          ? keyboardOctaveKeyMappings.upKey.toUpperCase()
           : '',
         upMark: '⇑',
       },
       {
         downKey: keyboardTemporaryOctaveKeyMappings.downKey
-          ? getKeyboardControlKeyLabel(
-              keyboardTemporaryOctaveKeyMappings.downKey,
-            )
+          ? keyboardTemporaryOctaveKeyMappings.downKey.toUpperCase()
           : '',
         downMark: '↓',
         upKey: keyboardTemporaryOctaveKeyMappings.upKey
-          ? getKeyboardControlKeyLabel(keyboardTemporaryOctaveKeyMappings.upKey)
+          ? keyboardTemporaryOctaveKeyMappings.upKey.toUpperCase()
           : '',
         upMark: '↑',
       },

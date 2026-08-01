@@ -1,6 +1,5 @@
 import { X } from 'lucide-react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { getKeyboardControlKeyLabel } from '../../utils/keyboard';
 
 interface KeyboardMappingInputProps {
   id: string;
@@ -28,7 +27,7 @@ function KeyboardMappingInput({
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         readOnly
-        value={keyValue ? getKeyboardControlKeyLabel(keyValue) : ''}
+        value={keyValue.toUpperCase()}
       />
       <button
         className="m-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"

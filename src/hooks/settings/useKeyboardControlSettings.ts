@@ -32,6 +32,24 @@ function isClearKey(key: string) {
   return key === 'Backspace' || key === 'Delete' || key === 'Escape';
 }
 
+function handleMappingKeyDown(
+  e: KeyboardEvent<HTMLInputElement>,
+  setKey: (key: string) => void,
+) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (isClearKey(e.key)) {
+    setKey('');
+    return;
+  }
+
+  const key = normalizeKeyboardControlKey(e.key);
+  if (key !== null) {
+    setKey(key);
+  }
+}
+
 function isSameSlot(
   slot: KeyboardMappingSlot,
   targetSlot: KeyboardMappingSlot,
@@ -136,64 +154,23 @@ function useKeyboardControlSettings({
     offset: number,
     e: KeyboardEvent<HTMLInputElement>,
   ) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isClearKey(e.key)) {
-      setNoteMappingKey(offset, '');
-      return;
-    }
-
-    const key = normalizeKeyboardControlKey(e.key, {
-      allowModifierKeys: true,
-    });
-    if (key === null) {
-      return;
-    }
-
-    setNoteMappingKey(offset, key);
+    handleMappingKeyDown(e, (key) => setNoteMappingKey(offset, key));
   }
 
   function handleOctaveKeyDown(
     direction: KeyboardOctaveDirection,
     e: KeyboardEvent<HTMLInputElement>,
   ) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isClearKey(e.key)) {
-      setOctaveMappingKey(direction, '');
-      return;
-    }
-
-    const key = normalizeKeyboardControlKey(e.key, {
-      allowModifierKeys: true,
-    });
-    if (key === null) {
-      return;
-    }
-
-    setOctaveMappingKey(direction, key);
+    handleMappingKeyDown(e, (key) => setOctaveMappingKey(direction, key));
   }
 
   function handleTemporaryOctaveKeyDown(
     direction: KeyboardOctaveDirection,
     e: KeyboardEvent<HTMLInputElement>,
   ) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isClearKey(e.key)) {
-      setTemporaryOctaveMappingKey(direction, '');
-      return;
-    }
-
-    const key = normalizeKeyboardControlKey(e.key, { allowModifierKeys: true });
-    if (key === null) {
-      return;
-    }
-
-    setTemporaryOctaveMappingKey(direction, key);
+    handleMappingKeyDown(e, (key) =>
+      setTemporaryOctaveMappingKey(direction, key),
+    );
   }
 
   function resetKeyboardMappings() {
