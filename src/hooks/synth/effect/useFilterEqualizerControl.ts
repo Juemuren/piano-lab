@@ -4,7 +4,11 @@ import type {
   FilterEqualizerPreset,
   FilterType,
 } from '../../../services/synth/config/Options';
-import type { FilterEqualizerConfig } from '../../../services/synth/effect/FilterEqualizer';
+import type {
+  EqualizerConfig,
+  FilterConfig,
+  FilterEqualizerConfig,
+} from '../../../services/synth/effect/FilterEqualizer';
 import {
   createEqualizerConfig,
   createFilterConfig,
@@ -26,7 +30,7 @@ function useFilterEqualizerControl(
 
   const updateFilterEqualizerPreset = useCallback(
     (preset: FilterEqualizerPreset) => {
-      setFilterEqualizer(() => createFilterEqualizerConfig(preset));
+      setFilterEqualizer(createFilterEqualizerConfig(preset));
     },
     [],
   );
@@ -55,23 +59,12 @@ function useFilterEqualizerControl(
     });
   }, []);
 
-  const updateFilterType = useCallback((index: number, type: FilterType) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        filters: updateItemAt(source.filters, index, (filter) => ({
-          ...filter,
-          type,
-        })),
-        preset: 'custom',
-      };
-    });
-  }, []);
-
-  const updateFilterFrequency = useCallback(
-    (index: number, frequency: number) => {
+  const updateFilter = useCallback(
+    <Key extends keyof FilterConfig>(
+      index: number,
+      key: Key,
+      value: FilterConfig[Key],
+    ) => {
       setFilterEqualizer((current) => {
         const source = current ?? createFilterEqualizerConfig();
 
@@ -79,7 +72,7 @@ function useFilterEqualizerControl(
           ...source,
           filters: updateItemAt(source.filters, index, (filter) => ({
             ...filter,
-            frequency,
+            [key]: value,
           })),
           preset: 'custom',
         };
@@ -87,21 +80,6 @@ function useFilterEqualizerControl(
     },
     [],
   );
-
-  const updateFilterQ = useCallback((index: number, q: number) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        filters: updateItemAt(source.filters, index, (filter) => ({
-          ...filter,
-          q,
-        })),
-        preset: 'custom',
-      };
-    });
-  }, []);
 
   const addEqualizer = useCallback((type: EqualizerType) => {
     setFilterEqualizer((current) => {
@@ -127,8 +105,12 @@ function useFilterEqualizerControl(
     });
   }, []);
 
-  const updateEqualizerType = useCallback(
-    (index: number, type: EqualizerType) => {
+  const updateEqualizer = useCallback(
+    <Key extends keyof EqualizerConfig>(
+      index: number,
+      key: Key,
+      value: EqualizerConfig[Key],
+    ) => {
       setFilterEqualizer((current) => {
         const source = current ?? createFilterEqualizerConfig();
 
@@ -136,7 +118,7 @@ function useFilterEqualizerControl(
           ...source,
           equalizers: updateItemAt(source.equalizers, index, (equalizer) => ({
             ...equalizer,
-            type,
+            [key]: value,
           })),
           preset: 'custom',
         };
@@ -144,54 +126,6 @@ function useFilterEqualizerControl(
     },
     [],
   );
-
-  const updateEqualizerFrequency = useCallback(
-    (index: number, frequency: number) => {
-      setFilterEqualizer((current) => {
-        const source = current ?? createFilterEqualizerConfig();
-
-        return {
-          ...source,
-          equalizers: updateItemAt(source.equalizers, index, (equalizer) => ({
-            ...equalizer,
-            frequency,
-          })),
-          preset: 'custom',
-        };
-      });
-    },
-    [],
-  );
-
-  const updateEqualizerQ = useCallback((index: number, q: number) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        equalizers: updateItemAt(source.equalizers, index, (equalizer) => ({
-          ...equalizer,
-          q,
-        })),
-        preset: 'custom',
-      };
-    });
-  }, []);
-
-  const updateEqualizerGain = useCallback((index: number, gain: number) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        equalizers: updateItemAt(source.equalizers, index, (equalizer) => ({
-          ...equalizer,
-          gain,
-        })),
-        preset: 'custom',
-      };
-    });
-  }, []);
 
   return {
     addEqualizer,
@@ -199,15 +133,10 @@ function useFilterEqualizerControl(
     filterEqualizer,
     removeEqualizer,
     removeFilter,
-    updateEqualizerFrequency,
-    updateEqualizerGain,
-    updateEqualizerQ,
-    updateEqualizerType,
+    updateEqualizer,
+    updateFilter,
     updateFilterEqualizerEnabled,
     updateFilterEqualizerPreset,
-    updateFilterFrequency,
-    updateFilterQ,
-    updateFilterType,
   };
 }
 

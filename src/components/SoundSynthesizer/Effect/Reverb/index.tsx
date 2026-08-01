@@ -4,7 +4,15 @@ import { InlineMath } from 'react-katex';
 import type { ReverbPreset } from '../../../../services/synth/config/Options';
 import { REVERB_PRESETS } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { ReverbConfig } from '../../../../services/synth/effect/Reverb';
+import type {
+  ReverbConfig,
+  ReverbEarlyReflectionConfig,
+  ReverbLateTailConfig,
+} from '../../../../services/synth/effect/Reverb';
+import type {
+  ConfigValueChangeHandler,
+  IndexedConfigValueChangeHandler,
+} from '../../../../types/config';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -15,15 +23,10 @@ import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
 interface ReverbProps {
   onEarlyReflectionAdd: () => void;
-  onEarlyReflectionDelayChange: (index: number, value: number) => void;
-  onEarlyReflectionGainChange: (index: number, value: number) => void;
-  onEarlyReflectionPhaseChange: (index: number, value: number) => void;
+  onEarlyReflectionChange: IndexedConfigValueChangeHandler<ReverbEarlyReflectionConfig>;
   onEarlyReflectionRemove: (index: number) => void;
   onEnabledChange: (enabled: boolean) => void;
-  onLateTailAlphaChange: (value: number) => void;
-  onLateTailAmplitudeChange: (value: number) => void;
-  onLateTailDelayChange: (value: number) => void;
-  onLateTailDurationChange: (value: number) => void;
+  onLateTailChange: ConfigValueChangeHandler<ReverbLateTailConfig>;
   onMixChange: (value: number) => void;
   onPresetChange: (preset: ReverbPreset) => void;
   reverb: ReverbConfig | null;
@@ -35,14 +38,9 @@ function Reverb({
   onPresetChange,
   onMixChange,
   onEarlyReflectionAdd,
+  onEarlyReflectionChange,
   onEarlyReflectionRemove,
-  onEarlyReflectionDelayChange,
-  onEarlyReflectionGainChange,
-  onEarlyReflectionPhaseChange,
-  onLateTailDelayChange,
-  onLateTailDurationChange,
-  onLateTailAmplitudeChange,
-  onLateTailAlphaChange,
+  onLateTailChange,
 }: ReverbProps) {
   const { t } = useTranslation('synth');
 
@@ -99,19 +97,11 @@ function Reverb({
             <EarlyReflections
               earlyReflections={reverb.earlyReflections}
               onAdd={onEarlyReflectionAdd}
-              onDelayChange={onEarlyReflectionDelayChange}
-              onGainChange={onEarlyReflectionGainChange}
-              onPhaseChange={onEarlyReflectionPhaseChange}
+              onChange={onEarlyReflectionChange}
               onRemove={onEarlyReflectionRemove}
             />
 
-            <LateTail
-              lateTail={reverb.lateTail}
-              onAlphaChange={onLateTailAlphaChange}
-              onAmplitudeChange={onLateTailAmplitudeChange}
-              onDelayChange={onLateTailDelayChange}
-              onDurationChange={onLateTailDurationChange}
-            />
+            <LateTail lateTail={reverb.lateTail} onChange={onLateTailChange} />
 
             <ReverbImpulseResponsePreview
               reverb={reverb}

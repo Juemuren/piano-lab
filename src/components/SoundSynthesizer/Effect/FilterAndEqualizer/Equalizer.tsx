@@ -6,6 +6,7 @@ import type { EqualizerType } from '../../../../services/synth/config/Options';
 import { EQUALIZER_TYPES } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { EqualizerConfig } from '../../../../services/synth/effect/FilterEqualizer';
+import type { IndexedConfigValueChangeHandler } from '../../../../types/config';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -13,22 +14,11 @@ import ControlSelect from '../../../shared/ControlSelect';
 interface EqualizerProps {
   equalizers: EqualizerConfig[];
   onAdd: (type: EqualizerType) => void;
-  onFrequencyChange: (index: number, value: number) => void;
-  onGainChange: (index: number, value: number) => void;
-  onQChange: (index: number, value: number) => void;
+  onChange: IndexedConfigValueChangeHandler<EqualizerConfig>;
   onRemove: (index: number) => void;
-  onTypeChange: (index: number, type: EqualizerType) => void;
 }
 
-function Equalizer({
-  equalizers,
-  onAdd,
-  onRemove,
-  onTypeChange,
-  onFrequencyChange,
-  onQChange,
-  onGainChange,
-}: EqualizerProps) {
+function Equalizer({ equalizers, onAdd, onChange, onRemove }: EqualizerProps) {
   const { t } = useTranslation('synth');
   const [selectedEqualizerType, setSelectedEqualizerType] =
     useState<EqualizerType>(
@@ -61,7 +51,7 @@ function Equalizer({
               />
               <ControlSelect
                 onChange={(e) =>
-                  onTypeChange(index, e.target.value as EqualizerType)
+                  onChange(index, 'type', e.target.value as EqualizerType)
                 }
                 title={t('effect.equalizer.name')}
                 value={equalizer.type}
@@ -78,7 +68,7 @@ function Equalizer({
               {...SYNTH_CONFIG_RANGES.effect.equalizer.frequency}
               displayValue={`${equalizer.frequency.toFixed(0)} Hz`}
               label={t(`effect.equalizer.${equalizer.type}.frequency`)}
-              onChange={(value) => onFrequencyChange(index, value)}
+              onChange={(value) => onChange(index, 'frequency', value)}
               step="1"
               value={equalizer.frequency}
             />
@@ -87,7 +77,7 @@ function Equalizer({
                 {...SYNTH_CONFIG_RANGES.effect.equalizer.q}
                 displayValue={equalizer.q.toFixed(1)}
                 label={t('effect.equalizer.peaking.q')}
-                onChange={(value) => onQChange(index, value)}
+                onChange={(value) => onChange(index, 'q', value)}
                 step="0.1"
                 value={equalizer.q}
               />
@@ -96,7 +86,7 @@ function Equalizer({
               {...SYNTH_CONFIG_RANGES.effect.equalizer.gain}
               displayValue={`${equalizer.gain.toFixed(1)} dB`}
               label={t(`effect.equalizer.${equalizer.type}.gain`)}
-              onChange={(value) => onGainChange(index, value)}
+              onChange={(value) => onChange(index, 'gain', value)}
               step="0.1"
               value={equalizer.gain}
             />

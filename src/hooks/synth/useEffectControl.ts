@@ -70,12 +70,12 @@ function useEffectControl(
   }, [effectConfig, onConfigChange]);
 
   return {
-    ...filterEqualizerControl,
-    ...modulationControl,
-    ...waveShaperControl,
-    ...compressorControl,
-    ...pannerControl,
-    ...reverbControl,
+    compressorControl,
+    filterEqualizerControl,
+    modulationControl,
+    pannerControl,
+    reverbControl,
+    waveShaperControl,
   };
 }
 

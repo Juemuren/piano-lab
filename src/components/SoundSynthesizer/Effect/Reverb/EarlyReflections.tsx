@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { ReverbEarlyReflectionConfig } from '../../../../services/synth/effect/Reverb';
+import type { IndexedConfigValueChangeHandler } from '../../../../types/config';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -10,19 +11,15 @@ import ControlRange from '../../../shared/ControlRange';
 interface EarlyReflectionsProps {
   earlyReflections: ReverbEarlyReflectionConfig[];
   onAdd: () => void;
-  onDelayChange: (index: number, value: number) => void;
-  onGainChange: (index: number, value: number) => void;
-  onPhaseChange: (index: number, value: number) => void;
+  onChange: IndexedConfigValueChangeHandler<ReverbEarlyReflectionConfig>;
   onRemove: (index: number) => void;
 }
 
 function EarlyReflections({
   earlyReflections,
   onAdd,
+  onChange,
   onRemove,
-  onDelayChange,
-  onGainChange,
-  onPhaseChange,
 }: EarlyReflectionsProps) {
   const { t } = useTranslation('synth');
 
@@ -57,7 +54,7 @@ function EarlyReflections({
                 {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.delay}
                 displayValue={`${(reflection.delay * 1000).toFixed(0)} ms`}
                 label={t('effect.reverb.earlyReflection.delay')}
-                onChange={(value) => onDelayChange(index, value)}
+                onChange={(value) => onChange(index, 'delay', value)}
                 step="0.001"
                 symbol={<InlineMath math="d_i" />}
                 value={reflection.delay}
@@ -66,7 +63,7 @@ function EarlyReflections({
                 {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.gain}
                 displayValue={reflection.gain.toFixed(2)}
                 label={t('effect.reverb.earlyReflection.amplitude')}
-                onChange={(value) => onGainChange(index, value)}
+                onChange={(value) => onChange(index, 'gain', value)}
                 step="0.01"
                 symbol={<InlineMath math="a_i" />}
                 value={reflection.gain}
@@ -75,7 +72,7 @@ function EarlyReflections({
                 {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.phase}
                 displayValue={`${reflection.phase.toFixed(0)}°`}
                 label={t('effect.reverb.earlyReflection.phase')}
-                onChange={(value) => onPhaseChange(index, value)}
+                onChange={(value) => onChange(index, 'phase', value)}
                 step="1"
                 symbol={<InlineMath math="\phi_i" />}
                 value={reflection.phase}

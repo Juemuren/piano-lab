@@ -30,19 +30,6 @@ interface FilterEqualizerPresetDefinition {
   filters: FilterConfig[];
 }
 
-function createEqualizers(gains: number[]): EqualizerConfig[] {
-  const frequencies = [40, 160, 640, 2560, 10240];
-
-  return frequencies
-    .map((frequency, index) => ({
-      frequency,
-      gain: gains[index],
-      q: 1,
-      type: 'peaking' as const,
-    }))
-    .filter((equalizer) => equalizer.gain !== 0);
-}
-
 export function createFilterConfig(type: FilterType): FilterConfig {
   return {
     frequency: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.filter.frequency,
@@ -58,6 +45,19 @@ export function createEqualizerConfig(type: EqualizerType): EqualizerConfig {
     q: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.equalizer.q,
     type,
   };
+}
+
+function createEqualizers(gains: number[]): EqualizerConfig[] {
+  const frequencies = [40, 160, 640, 2560, 10240];
+
+  return frequencies
+    .map((frequency, index) => ({
+      frequency,
+      gain: gains[index],
+      q: 1,
+      type: 'peaking' as const,
+    }))
+    .filter((equalizer) => equalizer.gain !== 0);
 }
 
 export const FILTER_EQUALIZER_PRESET_DEFINITIONS: Record<

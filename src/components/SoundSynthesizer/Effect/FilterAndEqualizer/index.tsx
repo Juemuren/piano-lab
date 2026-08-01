@@ -6,7 +6,12 @@ import type {
   FilterType,
 } from '../../../../services/synth/config/Options';
 import { FILTER_EQUALIZER_PRESETS } from '../../../../services/synth/config/Options';
-import type { FilterEqualizerConfig } from '../../../../services/synth/effect/FilterEqualizer';
+import type {
+  EqualizerConfig,
+  FilterConfig,
+  FilterEqualizerConfig,
+} from '../../../../services/synth/effect/FilterEqualizer';
+import type { IndexedConfigValueChangeHandler } from '../../../../types/config';
 import ControlButton from '../../../shared/ControlButton';
 import ControlSelect from '../../../shared/ControlSelect';
 import Equalizer from './Equalizer';
@@ -19,16 +24,11 @@ interface FilterAndEqualizerProps {
   harmonicCount: number;
   onEnabledChange: (enabled: boolean) => void;
   onEqualizerAdd: (type: EqualizerType) => void;
-  onEqualizerFrequencyChange: (index: number, value: number) => void;
-  onEqualizerGainChange: (index: number, value: number) => void;
-  onEqualizerQChange: (index: number, value: number) => void;
+  onEqualizerChange: IndexedConfigValueChangeHandler<EqualizerConfig>;
   onEqualizerRemove: (index: number) => void;
-  onEqualizerTypeChange: (index: number, type: EqualizerType) => void;
   onFilterAdd: (type: FilterType) => void;
-  onFilterFrequencyChange: (index: number, value: number) => void;
-  onFilterQChange: (index: number, value: number) => void;
+  onFilterChange: IndexedConfigValueChangeHandler<FilterConfig>;
   onFilterRemove: (index: number) => void;
-  onFilterTypeChange: (index: number, type: FilterType) => void;
   onPresetChange: (preset: FilterEqualizerPreset) => void;
 }
 
@@ -38,16 +38,11 @@ function FilterAndEqualizer({
   onEnabledChange,
   onPresetChange,
   onFilterAdd,
+  onFilterChange,
   onFilterRemove,
-  onFilterTypeChange,
-  onFilterFrequencyChange,
-  onFilterQChange,
   onEqualizerAdd,
+  onEqualizerChange,
   onEqualizerRemove,
-  onEqualizerTypeChange,
-  onEqualizerFrequencyChange,
-  onEqualizerQChange,
-  onEqualizerGainChange,
 }: FilterAndEqualizerProps) {
   const { t } = useTranslation('synth');
   const presetLabels: Record<FilterEqualizerPreset, string> = {
@@ -97,19 +92,14 @@ function FilterAndEqualizer({
             <Filter
               filters={filterEqualizer.filters}
               onAdd={onFilterAdd}
-              onFrequencyChange={onFilterFrequencyChange}
-              onQChange={onFilterQChange}
+              onChange={onFilterChange}
               onRemove={onFilterRemove}
-              onTypeChange={onFilterTypeChange}
             />
             <Equalizer
               equalizers={filterEqualizer.equalizers}
               onAdd={onEqualizerAdd}
-              onFrequencyChange={onEqualizerFrequencyChange}
-              onGainChange={onEqualizerGainChange}
-              onQChange={onEqualizerQChange}
+              onChange={onEqualizerChange}
               onRemove={onEqualizerRemove}
-              onTypeChange={onEqualizerTypeChange}
             />
             <MagnitudeResponsePreview
               equalizers={filterEqualizer.equalizers}

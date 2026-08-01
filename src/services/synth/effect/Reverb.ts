@@ -23,10 +23,6 @@ export interface ReverbConfig {
   preset: ReverbPreset;
 }
 
-export function createReverbEarlyReflectionConfig(): ReverbEarlyReflectionConfig {
-  return { ...SYNTH_CONFIG_DEFAULTS.effect.reverb.earlyReflection };
-}
-
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
   'earlyReflections' | 'lateTail'
@@ -152,6 +148,10 @@ export function getReverbImpulseResponseSamples(
   };
 }
 
+export function createReverbEarlyReflectionConfig(): ReverbEarlyReflectionConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.reverb.earlyReflection };
+}
+
 export function createReverbConfig(
   preset: BuiltInReverbPreset = SYNTH_CONFIG_DEFAULTS.effect.reverb.preset,
   mix: number = SYNTH_CONFIG_DEFAULTS.effect.reverb.mix,
@@ -166,6 +166,28 @@ export function createReverbConfig(
       ...definition.lateTail,
     },
     mix,
+    preset,
+  };
+}
+
+export function changeReverbPreset(
+  config: ReverbConfig | null,
+  preset: ReverbPreset,
+): ReverbConfig {
+  if (preset !== 'custom') {
+    return createReverbConfig(preset, config?.mix);
+  }
+
+  const source = config ?? createReverbConfig();
+
+  return {
+    ...source,
+    earlyReflections: [],
+    lateTail: {
+      ...source.lateTail,
+      amplitude: 0,
+      delay: 0,
+    },
     preset,
   };
 }

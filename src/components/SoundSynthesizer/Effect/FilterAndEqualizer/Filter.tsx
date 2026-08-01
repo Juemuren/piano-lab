@@ -6,6 +6,7 @@ import type { FilterType } from '../../../../services/synth/config/Options';
 import { FILTER_TYPES } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { FilterConfig } from '../../../../services/synth/effect/FilterEqualizer';
+import type { IndexedConfigValueChangeHandler } from '../../../../types/config';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
@@ -13,20 +14,11 @@ import ControlSelect from '../../../shared/ControlSelect';
 interface FilterProps {
   filters: FilterConfig[];
   onAdd: (type: FilterType) => void;
-  onFrequencyChange: (index: number, value: number) => void;
-  onQChange: (index: number, value: number) => void;
+  onChange: IndexedConfigValueChangeHandler<FilterConfig>;
   onRemove: (index: number) => void;
-  onTypeChange: (index: number, type: FilterType) => void;
 }
 
-function Filter({
-  filters,
-  onAdd,
-  onRemove,
-  onTypeChange,
-  onFrequencyChange,
-  onQChange,
-}: FilterProps) {
+function Filter({ filters, onAdd, onChange, onRemove }: FilterProps) {
   const { t } = useTranslation('synth');
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(
     SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.filter.type,
@@ -59,7 +51,7 @@ function Filter({
               />
               <ControlSelect
                 onChange={(e) =>
-                  onTypeChange(index, e.target.value as FilterType)
+                  onChange(index, 'type', e.target.value as FilterType)
                 }
                 title={t('effect.filter.name')}
                 value={filter.type}
@@ -76,7 +68,7 @@ function Filter({
               {...SYNTH_CONFIG_RANGES.effect.filter.frequency}
               displayValue={`${filter.frequency.toFixed(0)} Hz`}
               label={t(`effect.filter.${filter.type}.frequency`)}
-              onChange={(value) => onFrequencyChange(index, value)}
+              onChange={(value) => onChange(index, 'frequency', value)}
               step="1"
               value={filter.frequency}
             />
@@ -84,7 +76,7 @@ function Filter({
               {...SYNTH_CONFIG_RANGES.effect.filter.q}
               displayValue={filter.q.toFixed(1)}
               label={t(`effect.filter.${filter.type}.q`)}
-              onChange={(value) => onQChange(index, value)}
+              onChange={(value) => onChange(index, 'q', value)}
               step="0.1"
               value={filter.q}
             />

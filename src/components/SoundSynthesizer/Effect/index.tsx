@@ -15,140 +15,99 @@ interface EffectProps {
 
 function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
   const {
-    filterEqualizer,
-    updateFilterEqualizerEnabled,
-    updateFilterEqualizerPreset,
-    addFilter,
-    removeFilter,
-    updateFilterType,
-    updateFilterFrequency,
-    updateFilterQ,
-    addEqualizer,
-    removeEqualizer,
-    updateEqualizerType,
-    updateEqualizerFrequency,
-    updateEqualizerQ,
-    updateEqualizerGain,
-    amplitudeModulation,
-    updateAmplitudeModulationEnabled,
-    updateAmplitudeModulationFrequency,
-    updateAmplitudeModulationDepth,
-    frequencyModulation,
-    updateFrequencyModulationEnabled,
-    updateFrequencyModulationFrequency,
-    updateFrequencyModulationDepth,
-    phaseModulation,
-    updatePhaseModulationEnabled,
-    updatePhaseModulationFrequency,
-    updatePhaseModulationDepth,
-    delayModulation,
-    updateDelayModulationEnabled,
-    updateDelayModulationFrequency,
-    updateDelayModulationDepth,
-    waveShaper,
-    updateWaveShaperEnabled,
-    updateWaveShaperPreset,
-    updateWaveShaperValue,
-    compressor,
-    updateCompressorEnabled,
-    updateCompressorThreshold,
-    updateCompressorKnee,
-    updateCompressorRatio,
-    updateCompressorAttack,
-    updateCompressorRelease,
-    panner,
-    updatePannerEnabled,
-    updatePannerValue,
-    reverb,
-    updateReverbEnabled,
-    updateReverbPreset,
-    updateReverbMix,
-    addReverbEarlyReflection,
-    removeReverbEarlyReflection,
-    updateReverbEarlyReflectionDelay,
-    updateReverbEarlyReflectionGain,
-    updateReverbEarlyReflectionPhase,
-    updateReverbLateTailDelay,
-    updateReverbLateTailDuration,
-    updateReverbLateTailAmplitude,
-    updateReverbLateTailAlpha,
+    compressorControl,
+    filterEqualizerControl,
+    modulationControl,
+    pannerControl,
+    reverbControl,
+    waveShaperControl,
   } = useEffectControl(initialConfig, onConfigChange);
 
   return (
     <>
       <FilterAndEqualizer
-        filterEqualizer={filterEqualizer}
+        filterEqualizer={filterEqualizerControl.filterEqualizer}
         harmonicCount={harmonicCount}
-        onEnabledChange={updateFilterEqualizerEnabled}
-        onEqualizerAdd={addEqualizer}
-        onEqualizerFrequencyChange={updateEqualizerFrequency}
-        onEqualizerGainChange={updateEqualizerGain}
-        onEqualizerQChange={updateEqualizerQ}
-        onEqualizerRemove={removeEqualizer}
-        onEqualizerTypeChange={updateEqualizerType}
-        onFilterAdd={addFilter}
-        onFilterFrequencyChange={updateFilterFrequency}
-        onFilterQChange={updateFilterQ}
-        onFilterRemove={removeFilter}
-        onFilterTypeChange={updateFilterType}
-        onPresetChange={updateFilterEqualizerPreset}
+        onEnabledChange={filterEqualizerControl.updateFilterEqualizerEnabled}
+        onEqualizerAdd={filterEqualizerControl.addEqualizer}
+        onEqualizerChange={filterEqualizerControl.updateEqualizer}
+        onEqualizerRemove={filterEqualizerControl.removeEqualizer}
+        onFilterAdd={filterEqualizerControl.addFilter}
+        onFilterChange={filterEqualizerControl.updateFilter}
+        onFilterRemove={filterEqualizerControl.removeFilter}
+        onPresetChange={filterEqualizerControl.updateFilterEqualizerPreset}
       />
       <Reverb
-        onEarlyReflectionAdd={addReverbEarlyReflection}
-        onEarlyReflectionDelayChange={updateReverbEarlyReflectionDelay}
-        onEarlyReflectionGainChange={updateReverbEarlyReflectionGain}
-        onEarlyReflectionPhaseChange={updateReverbEarlyReflectionPhase}
-        onEarlyReflectionRemove={removeReverbEarlyReflection}
-        onEnabledChange={updateReverbEnabled}
-        onLateTailAlphaChange={updateReverbLateTailAlpha}
-        onLateTailAmplitudeChange={updateReverbLateTailAmplitude}
-        onLateTailDelayChange={updateReverbLateTailDelay}
-        onLateTailDurationChange={updateReverbLateTailDuration}
-        onMixChange={updateReverbMix}
-        onPresetChange={updateReverbPreset}
-        reverb={reverb}
+        onEarlyReflectionAdd={reverbControl.addReverbEarlyReflection}
+        onEarlyReflectionChange={reverbControl.updateReverbEarlyReflection}
+        onEarlyReflectionRemove={reverbControl.removeReverbEarlyReflection}
+        onEnabledChange={reverbControl.updateReverbEnabled}
+        onLateTailChange={reverbControl.updateReverbLateTail}
+        onMixChange={reverbControl.updateReverbMix}
+        onPresetChange={reverbControl.updateReverbPreset}
+        reverb={reverbControl.reverb}
       />
       <Modulation
-        amplitudeModulation={amplitudeModulation}
-        delayModulation={delayModulation}
-        frequencyModulation={frequencyModulation}
-        onAmplitudeModulationDepthChange={updateAmplitudeModulationDepth}
-        onAmplitudeModulationEnabledChange={updateAmplitudeModulationEnabled}
+        amplitudeModulation={modulationControl.amplitudeModulation}
+        delayModulation={modulationControl.delayModulation}
+        frequencyModulation={modulationControl.frequencyModulation}
+        onAmplitudeModulationDepthChange={
+          modulationControl.updateAmplitudeModulationDepth
+        }
+        onAmplitudeModulationEnabledChange={
+          modulationControl.updateAmplitudeModulationEnabled
+        }
         onAmplitudeModulationFrequencyChange={
-          updateAmplitudeModulationFrequency
+          modulationControl.updateAmplitudeModulationFrequency
         }
-        onDelayModulationDepthChange={updateDelayModulationDepth}
-        onDelayModulationEnabledChange={updateDelayModulationEnabled}
-        onDelayModulationFrequencyChange={updateDelayModulationFrequency}
-        onFrequencyModulationDepthChange={updateFrequencyModulationDepth}
-        onFrequencyModulationEnabledChange={updateFrequencyModulationEnabled}
+        onDelayModulationDepthChange={
+          modulationControl.updateDelayModulationDepth
+        }
+        onDelayModulationEnabledChange={
+          modulationControl.updateDelayModulationEnabled
+        }
+        onDelayModulationFrequencyChange={
+          modulationControl.updateDelayModulationFrequency
+        }
+        onFrequencyModulationDepthChange={
+          modulationControl.updateFrequencyModulationDepth
+        }
+        onFrequencyModulationEnabledChange={
+          modulationControl.updateFrequencyModulationEnabled
+        }
         onFrequencyModulationFrequencyChange={
-          updateFrequencyModulationFrequency
+          modulationControl.updateFrequencyModulationFrequency
         }
-        onPhaseModulationDepthChange={updatePhaseModulationDepth}
-        onPhaseModulationEnabledChange={updatePhaseModulationEnabled}
-        onPhaseModulationFrequencyChange={updatePhaseModulationFrequency}
-        phaseModulation={phaseModulation}
+        onPhaseModulationDepthChange={
+          modulationControl.updatePhaseModulationDepth
+        }
+        onPhaseModulationEnabledChange={
+          modulationControl.updatePhaseModulationEnabled
+        }
+        onPhaseModulationFrequencyChange={
+          modulationControl.updatePhaseModulationFrequency
+        }
+        phaseModulation={modulationControl.phaseModulation}
       />
       <WaveShaper
-        onEnabledChange={updateWaveShaperEnabled}
-        onPresetChange={updateWaveShaperPreset}
-        onValueChange={updateWaveShaperValue}
-        waveShaper={waveShaper}
+        onEnabledChange={waveShaperControl.updateWaveShaperEnabled}
+        onPresetChange={waveShaperControl.updateWaveShaperPreset}
+        onValueChange={waveShaperControl.updateWaveShaperValue}
+        waveShaper={waveShaperControl.waveShaper}
       />
       <Compressor
-        compressor={compressor}
-        onAttackChange={updateCompressorAttack}
-        onEnabledChange={updateCompressorEnabled}
-        onKneeChange={updateCompressorKnee}
-        onRatioChange={updateCompressorRatio}
-        onReleaseChange={updateCompressorRelease}
-        onThresholdChange={updateCompressorThreshold}
+        compressor={compressorControl.compressor}
+        onAttackChange={compressorControl.updateCompressorAttack}
+        onEnabledChange={compressorControl.updateCompressorEnabled}
+        onKneeChange={compressorControl.updateCompressorKnee}
+        onRatioChange={compressorControl.updateCompressorRatio}
+        onReleaseChange={compressorControl.updateCompressorRelease}
+        onThresholdChange={compressorControl.updateCompressorThreshold}
       />
       <Panner
-        onEnabledChange={updatePannerEnabled}
-        onValueChange={updatePannerValue}
-        panner={panner}
+        onEnabledChange={pannerControl.updatePannerEnabled}
+        onValueChange={pannerControl.updatePannerValue}
+        panner={pannerControl.panner}
       />
     </>
   );
