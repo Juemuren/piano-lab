@@ -1,3 +1,4 @@
+import { ArrowDown } from 'lucide-react';
 import type { GamepadNotes } from '../../hooks/piano/useGamepadControl';
 
 interface GamepadNoteIndicatorsProps {
@@ -6,22 +7,19 @@ interface GamepadNoteIndicatorsProps {
 }
 
 interface TriggerIndicator {
-  arrowClassName: string;
-  backgroundClassName: string;
+  colorClassName: string;
   label: string;
   side: 'left' | 'right';
 }
 
 const TRIGGER_INDICATORS: TriggerIndicator[] = [
   {
-    arrowClassName: 'border-t-app-info dark:border-t-app-info-dark',
-    backgroundClassName: 'bg-app-info dark:bg-app-info-dark',
+    colorClassName: 'text-app-info dark:text-app-info-dark',
     label: 'L',
     side: 'left',
   },
   {
-    arrowClassName: 'border-t-app-error dark:border-t-app-error-dark',
-    backgroundClassName: 'bg-app-error dark:bg-app-error-dark',
+    colorClassName: 'text-app-error dark:text-app-error-dark',
     label: 'R',
     side: 'right',
   },
@@ -40,22 +38,18 @@ function GamepadNoteIndicators({
   }
 
   return (
-    <span className="pointer-events-none absolute -top-6 bottom-full left-1/2 flex -translate-x-1/2 gap-0.5">
-      {activeIndicators.map(
-        ({ arrowClassName, backgroundClassName, label, side }) => (
-          <span className="flex flex-col items-center" key={side}>
-            <span
-              className={`rounded px-1 text-piano-white text-xs leading-tight ${backgroundClassName}`}
-            >
-              {label}
-            </span>
-            <span className={`h-2 w-px ${backgroundClassName}`} />
-            <span
-              className={`h-0 w-0 border-x-4 border-x-transparent border-t-4 ${arrowClassName}`}
-            />
+    <span className="pointer-events-none absolute bottom-full left-1/2 flex -translate-x-1/2 gap-0.5">
+      {activeIndicators.map(({ colorClassName, label, side }) => (
+        <span
+          className={`flex flex-col items-center ${colorClassName}`}
+          key={side}
+        >
+          <span className="px-0.5 font-semibold text-xs leading-none">
+            {label}
           </span>
-        ),
-      )}
+          <ArrowDown size={14} strokeWidth={3} />
+        </span>
+      ))}
     </span>
   );
 }
