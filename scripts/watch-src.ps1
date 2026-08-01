@@ -1,1 +1,1 @@
-watchexec --watch src -- '$env:VITE_DEBUG=1; npm run build'
+watchexec --watch src -- '$env:VITE_DEBUG=1; pnpm run build'

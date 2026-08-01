@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-plotly.js/factory.js b/node_modules/react-plotly.js/factory.js
-index 40f3edc..a469685 100644
---- a/node_modules/react-plotly.js/factory.js
-+++ b/node_modules/react-plotly.js/factory.js
+diff --git a/factory.js b/factory.js
+index 40f3edccbebc45b491dd3488ed619ec9208be8d9..47971e2f49442fc0a1a571c96ef4cecd07bf37be 100644
+--- a/factory.js
++++ b/factory.js
 @@ -315,4 +315,9 @@ function plotComponentFactory(Plotly) {
    };
    return PlotlyComponent;
@@ -12,11 +12,12 @@ index 40f3edc..a469685 100644
 +  value: true
 +});
  //# sourceMappingURL=factory.js.map
-diff --git a/node_modules/react-plotly.js/plot2d.js b/node_modules/react-plotly.js/plot2d.js
+\ No newline at end of file
+diff --git a/plot2d.js b/plot2d.js
 new file mode 100644
-index 0000000..4152081
+index 0000000000000000000000000000000000000000..4152081a2339c4bf638ed02850b6c798b030a6f7
 --- /dev/null
-+++ b/node_modules/react-plotly.js/plot2d.js
++++ b/plot2d.js
 @@ -0,0 +1,25 @@
 +"use strict";
 +
@@ -43,11 +44,11 @@ index 0000000..4152081
 +Object.defineProperty(module.exports, "__esModule", {
 +  value: true
 +});
-diff --git a/node_modules/react-plotly.js/plot3d.js b/node_modules/react-plotly.js/plot3d.js
+diff --git a/plot3d.js b/plot3d.js
 new file mode 100644
-index 0000000..b502634
+index 0000000000000000000000000000000000000000..b5026349834b11d6dcc6a848858f4598b18a75e7
 --- /dev/null
-+++ b/node_modules/react-plotly.js/plot3d.js
++++ b/plot3d.js
 @@ -0,0 +1,27 @@
 +"use strict";
 +
@@ -76,10 +77,10 @@ index 0000000..b502634
 +Object.defineProperty(module.exports, "__esModule", {
 +  value: true
 +});
-diff --git a/node_modules/react-plotly.js/react-plotly.js b/node_modules/react-plotly.js/react-plotly.js
-index f599b9e..36e0818 100644
---- a/node_modules/react-plotly.js/react-plotly.js
-+++ b/node_modules/react-plotly.js/react-plotly.js
+diff --git a/react-plotly.js b/react-plotly.js
+index f599b9ed1120feb71747a34088869e429a54a086..f1d6daf896049c040c35aceeef2b6b0aa4954206 100644
+--- a/react-plotly.js
++++ b/react-plotly.js
 @@ -14,4 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
  var PlotComponent = (0, _factory["default"])(_plotly["default"]);
  var _default = PlotComponent;

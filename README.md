@@ -142,8 +142,8 @@
 ### 本地开发
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### 构建
@@ -151,13 +151,13 @@ npm run dev
 使用 Vite 构建网页应用
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 使用 Tauri 构建桌面应用
 
 ```bash
-npm run build:tauri
+pnpm run build:tauri
 ```
 
 ### 代码质量
@@ -165,16 +165,16 @@ npm run build:tauri
 使用 Biome 进行风格检查和格式化
 
 ```sh
-npm run lint
-npm run format
+pnpm run lint
+pnpm run format
 # lint + format
-npm run check
+pnpm run check
 ```
 
 使用 TypeScript 进行类型检查
 
 ```sh
-npm run typecheck
+pnpm run typecheck
 ```
 
 ## 原理

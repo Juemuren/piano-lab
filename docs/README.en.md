@@ -142,8 +142,8 @@ Download the desktop app from <https://github.com/juemuren/piano-lab/releases>.
 ### Local Development
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### Build
@@ -151,13 +151,13 @@ npm run dev
 Build the web app with Vite
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Build the desktop app with Tauri
 
 ```bash
-npm run build:tauri
+pnpm run build:tauri
 ```
 
 ### Code Quality
@@ -165,16 +165,16 @@ npm run build:tauri
 Use Biome for linting and formatting.
 
 ```sh
-npm run lint
-npm run format
+pnpm run lint
+pnpm run format
 # lint + format
-npm run check
+pnpm run check
 ```
 
 Use TypeScript for type checking.
 
 ```sh
-npm run typecheck
+pnpm run typecheck
 ```
 
 ## Principles

@@ -1,7 +1,7 @@
-diff --git a/node_modules/abcjs/src/parse/abc_parse_header.js b/node_modules/abcjs/src/parse/abc_parse_header.js
-index da525aa..3228a60 100644
---- a/node_modules/abcjs/src/parse/abc_parse_header.js
-+++ b/node_modules/abcjs/src/parse/abc_parse_header.js
+diff --git a/src/parse/abc_parse_header.js b/src/parse/abc_parse_header.js
+index da525aae37cbc363e9b3c15f35083b3b8ed45068..3228a60d653495a1064561825f7c3612a6f6481e 100644
+--- a/src/parse/abc_parse_header.js
++++ b/src/parse/abc_parse_header.js
 @@ -356,7 +356,9 @@ var ParseHeader = function(tokenizer, warn, multilineVars, tune, tuneBuilder) {
  					return [ e-i+1+ws ];
  				case "[M:":
@@ -13,10 +13,10 @@ index da525aa..3228a60 100644
  						tuneBuilder.appendStartingElement('meter', startChar, endChar, meter);
  					else
  						multilineVars.meter = meter;
-diff --git a/node_modules/abcjs/src/parse/abc_parse_key_voice.js b/node_modules/abcjs/src/parse/abc_parse_key_voice.js
-index 7085c0f..d0af5e3 100644
---- a/node_modules/abcjs/src/parse/abc_parse_key_voice.js
-+++ b/node_modules/abcjs/src/parse/abc_parse_key_voice.js
+diff --git a/src/parse/abc_parse_key_voice.js b/src/parse/abc_parse_key_voice.js
+index 7085c0f781c5d603def86a196f99baa707af5df6..d0af5e3279d8ac3cc9e8ff0af7ff66bc0bca6bac 100644
+--- a/src/parse/abc_parse_key_voice.js
++++ b/src/parse/abc_parse_key_voice.js
 @@ -85,9 +85,20 @@ var parseKeyVoice = {};
  		key.accidentals.forEach(function(k) {
  		ret.accidentals.push(Object.assign({},k));
@@ -112,10 +112,10 @@ index 7085c0f..d0af5e3 100644
  		return tuneBuilder.setCurrentVoice(currentVoice.staffNum, currentVoice.index, id);
  	};
  
-diff --git a/node_modules/abcjs/types/index.d.ts b/node_modules/abcjs/types/index.d.ts
-index de64044..43f7fb5 100644
---- a/node_modules/abcjs/types/index.d.ts
-+++ b/node_modules/abcjs/types/index.d.ts
+diff --git a/types/index.d.ts b/types/index.d.ts
+index de6404474cfdfe4e9b81e788e71577ea7599843a..43f7fb52fea0e78ec58e2b348bc39f2a628276c2 100644
+--- a/types/index.d.ts
++++ b/types/index.d.ts
 @@ -169,7 +169,9 @@ declare module 'abcjs' {
  		volume: number;
  		cents?: number;

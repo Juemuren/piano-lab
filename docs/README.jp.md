@@ -142,8 +142,8 @@ Piano Lab は、インタラクティブな仮想鍵盤、カスタマイズ可�
 ### ローカル開発
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### ビルド
@@ -151,13 +151,13 @@ npm run dev
 Vite で Web アプリをビルド
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Tauri でデスクトップアプリをビルド
 
 ```bash
-npm run build:tauri
+pnpm run build:tauri
 ```
 
 ### コード品質
@@ -165,16 +165,16 @@ npm run build:tauri
 Biome を使用してスタイルチェックとフォーマットを行います。
 
 ```sh
-npm run lint
-npm run format
+pnpm run lint
+pnpm run format
 # lint + format
-npm run check
+pnpm run check
 ```
 
 TypeScript を使用して型チェックを行います。
 
 ```sh
-npm run typecheck
+pnpm run typecheck
 ```
 
 ## 原理

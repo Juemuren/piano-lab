@@ -199,7 +199,7 @@ function runGit(command, commandArgs) {
 
 function printUsageAndExit() {
   console.error(
-    'Usage: npm run set:version -- <version> [--commit] [--tag] [--debug]',
+    'Usage: pnpm run set:version -- <version> [--commit] [--tag] [--debug]',
   );
   process.exit(1);
 }

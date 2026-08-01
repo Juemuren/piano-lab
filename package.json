@@ -2,6 +2,7 @@
   "name": "piano-lab",
   "private": true,
   "version": "1.4.0",
+  "packageManager": "pnpm@11.17.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +16,6 @@
     "typecheck": "tsc --build",
     "preview": "vite preview",
     "set:version": "node scripts/set-version.mjs",
-    "postinstall": "patch-package",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -47,7 +47,6 @@
     "@vitejs/plugin-react": "^6.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.5",
-    "patch-package": "^8.0.1",
     "typescript": "~7.0.2",
     "vite": "^8.0.4"
   }

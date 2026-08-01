@@ -30,8 +30,8 @@
 修改了 [src](src) 中的代码后，请运行以下命令以保证质量
 
 ```sh
-npm run check
-npm run build
+pnpm run check
+pnpm run build
 ```
 
-不要运行 `npm run dev` 或类似的命令
+不要运行 `pnpm run dev` 或类似的命令
