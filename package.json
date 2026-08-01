@@ -15,7 +15,6 @@
     "check": "biome check --write",
     "typecheck": "tsc --build",
     "preview": "vite preview",
-    "set:version": "node scripts/set-version.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
