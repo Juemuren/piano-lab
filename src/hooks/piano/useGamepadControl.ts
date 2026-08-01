@@ -29,9 +29,9 @@ interface UseGamepadControlOptions {
   onNoteRelease: (note: number) => void;
 }
 
-export interface GamepadNoteIndicator {
-  label: 'LT' | 'RT';
-  note: number;
+export interface GamepadNotes {
+  left?: number;
+  right?: number;
 }
 
 interface RepeatState {
@@ -56,7 +56,7 @@ function useGamepadControl({
   onNotePress,
   onNoteRelease,
 }: UseGamepadControlOptions) {
-  const [indicators, setIndicators] = useState<GamepadNoteIndicator[]>([]);
+  const [gamepadNotes, setGamepadNotes] = useState<GamepadNotes>({});
   const selectedNotesRef = useRef({
     left: LEFT_TRIGGER_INITIAL_NOTE,
     right: RIGHT_TRIGGER_INITIAL_NOTE,
@@ -69,7 +69,7 @@ function useGamepadControl({
   useEffect(() => {
     if (!enabled) {
       indicatorNotesRef.current = {};
-      setIndicators([]);
+      setGamepadNotes({});
       return;
     }
 
@@ -164,7 +164,7 @@ function useGamepadControl({
           repeatStatesRef.current.clear();
           releaseActiveNotes();
           indicatorNotesRef.current = {};
-          setIndicators([]);
+          setGamepadNotes({});
         }
         animationFrameId = requestAnimationFrame(pollGamepad);
         return;
@@ -204,10 +204,7 @@ function useGamepadControl({
         indicatorNotesRef.current.right !== rightNote
       ) {
         indicatorNotesRef.current = { left: leftNote, right: rightNote };
-        setIndicators([
-          { label: 'LT', note: leftNote },
-          { label: 'RT', note: rightNote },
-        ]);
+        setGamepadNotes({ left: leftNote, right: rightNote });
       }
 
       handleTrigger(gamepad, LEFT_TRIGGER_BUTTON, 'left', leftNote);
@@ -225,7 +222,7 @@ function useGamepadControl({
     };
   }, [enabled, onNotePress, onNoteRelease]);
 
-  return { gamepadNoteIndicators: indicators };
+  return { gamepadNotes };
 }
 
 export default useGamepadControl;

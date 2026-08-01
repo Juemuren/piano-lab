@@ -191,7 +191,7 @@ function usePianoControl(
     showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
-  const { gamepadNoteIndicators } = useGamepadControl({
+  const { gamepadNotes } = useGamepadControl({
     enabled: isGamepadControlEnabled,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
@@ -229,7 +229,7 @@ function usePianoControl(
 
   return {
     blackKeys,
-    gamepadNoteIndicators,
+    gamepadNotes,
     handleKeyDown,
     handleKeyUp,
     isKeyPressed,

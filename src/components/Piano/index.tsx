@@ -3,6 +3,7 @@ import { useMidiControlContext } from '../../contexts/midiControl';
 import { usePlayingNotes } from '../../contexts/playingNotes';
 import usePianoControl from '../../hooks/piano/usePianoControl';
 import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
+import GamepadNoteIndicators from './GamepadNoteIndicators';
 import PianoKey from './PianoKey';
 
 const WHITE_KEY_HEIGHT_PX = 160;
@@ -16,7 +17,7 @@ function Piano() {
   const {
     whiteKeys,
     blackKeys,
-    gamepadNoteIndicators,
+    gamepadNotes,
     keyHints,
     octaveHints,
     isKeyPressed,
@@ -26,11 +27,6 @@ function Piano() {
     handleKeyUp,
   } = usePianoControl(playingNotes, selectedMidiInputId);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
-  const getGamepadIndicatorLabels = (note: number) =>
-    gamepadNoteIndicators
-      .filter((indicator) => indicator.note === note)
-      .map((indicator) => indicator.label)
-      .join('/');
 
   useEffect(() => {
     setMidiControl(midiControl);
@@ -61,11 +57,10 @@ function Piano() {
                 pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
                 width={WHITE_KEY_WIDTH_PX}
               >
-                {getGamepadIndicatorLabels(key.note) && (
-                  <span className="absolute -top-7 left-1/2 -translate-x-1/2 rounded bg-app-info px-1 text-piano-white text-xs">
-                    {getGamepadIndicatorLabels(key.note)}
-                  </span>
-                )}
+                <GamepadNoteIndicators
+                  gamepadNotes={gamepadNotes}
+                  note={key.note}
+                />
                 <span className="flex h-full flex-col items-center justify-end py-2">
                   <kbd className="text-piano-black">
                     {keyHints.get(key.note)}
@@ -100,11 +95,10 @@ function Piano() {
                 }}
                 width={BLACK_KEY_WIDTH_PX}
               >
-                {getGamepadIndicatorLabels(key.note) && (
-                  <span className="absolute -top-7 left-1/2 -translate-x-1/2 rounded bg-app-info px-1 text-piano-white text-xs">
-                    {getGamepadIndicatorLabels(key.note)}
-                  </span>
-                )}
+                <GamepadNoteIndicators
+                  gamepadNotes={gamepadNotes}
+                  note={key.note}
+                />
                 <span className="flex h-full flex-col items-center justify-end py-2">
                   <kbd className="text-piano-white">
                     {keyHints.get(key.note)}
