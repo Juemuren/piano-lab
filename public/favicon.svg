@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 64 64">
+<title>favicon</title>
 <rect width="64" height="64" rx="5" fill="white" />
 <path fill="black" d="
 	M60,0H4C1.789,0,0,1.789,0,4v56c0,2.211,1.789,4,4,4h56c2.211,0,4-1.789,4-4V4C64,1.789,62.211,0,60,0z
