@@ -4,6 +4,7 @@ import type { KeyboardControlMappings } from '../../constants/keyboard';
 import type { PianoInputSettings } from '../../services/abc/AbcSettings';
 
 export interface AppSettingsContextValue {
+  isGamepadControlEnabled: boolean;
   isKeyboardControlEnabled: boolean;
   isKeyboardKeyHintEnabled: boolean;
   isKeyboardOctaveHintEnabled: boolean;
@@ -13,6 +14,7 @@ export interface AppSettingsContextValue {
   isTouchControlEnabled: boolean;
   keyboardControlMappings: KeyboardControlMappings;
   pianoInputSettings: PianoInputSettings;
+  setIsGamepadControlEnabled: (enabled: boolean) => void;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setIsKeyboardKeyHintEnabled: (enabled: boolean) => void;
   setIsKeyboardOctaveHintEnabled: (enabled: boolean) => void;

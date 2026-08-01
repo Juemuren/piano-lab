@@ -4,7 +4,7 @@
 
 ## React 指南
 
-- 组件只负责渲染，业务逻辑相关的代码请写入 hook 中
+- 分离渲染和业务逻辑，Component 只负责渲染，Hook 只负责业务逻辑。Hook 中不要硬编码可能要用于渲染的字符
 - 对于 button/input/select 等基础元素，尽量复用[共享组件](src/components/shared/)
 - 需要由[根组件](src/App.tsx)管理的 state 统一改为 context，避免 prop drilling
 

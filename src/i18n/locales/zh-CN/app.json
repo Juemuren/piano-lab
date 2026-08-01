@@ -10,6 +10,7 @@
     "soundSynthesizer": "声音合成器"
   },
   "settings": {
+    "gamepadControl": "使用 XBOX 手柄控制琴键",
     "keyboard": {
       "clear": "清空键位",
       "empty": "未设置",

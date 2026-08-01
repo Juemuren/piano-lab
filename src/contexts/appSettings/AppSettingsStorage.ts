@@ -11,6 +11,7 @@ import { isRecord } from '../../utils/object';
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 
 export interface StoredAppSettings {
+  isGamepadControlEnabled: boolean;
   isKeyboardControlEnabled: boolean;
   isKeyboardKeyHintEnabled: boolean;
   isKeyboardOctaveHintEnabled: boolean;
@@ -23,6 +24,7 @@ export interface StoredAppSettings {
 }
 
 export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
+  isGamepadControlEnabled: false,
   isKeyboardControlEnabled: false,
   isKeyboardKeyHintEnabled: true,
   isKeyboardOctaveHintEnabled: true,
@@ -37,6 +39,7 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
 function isKeyboardNoteMapping(value: unknown): value is KeyboardNoteMapping {
   return (
     isRecord(value) &&
+    typeof value.isGamepadControlEnabled === 'boolean' &&
     typeof value.key === 'string' &&
     typeof value.offset === 'number'
   );

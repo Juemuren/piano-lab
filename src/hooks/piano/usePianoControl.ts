@@ -9,6 +9,7 @@ import {
   MAX_PIANO_PITCH,
   MIN_PIANO_PITCH,
 } from '../../utils/pitch';
+import useGamepadControl from './useGamepadControl';
 import useKeyboardControl from './useKeyboardControl';
 import useMidiControl from './useMidiControl';
 import usePointerControl from './usePointerControl';
@@ -118,6 +119,7 @@ function usePianoControl(
     isMouseControlEnabled,
     isTouchControlEnabled,
     isMidiControlEnabled,
+    isGamepadControlEnabled,
   } = useAppSettings();
   const {
     activeInputNotes,
@@ -189,6 +191,12 @@ function usePianoControl(
     showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
+  const { gamepadNoteIndicators } = useGamepadControl({
+    enabled: isGamepadControlEnabled,
+    onNotePress: startInputNote,
+    onNoteRelease: stopInputNote,
+  });
+
   const startMidiPressedKey = useCallback(
     (note: number, velocity: number) => {
       startInputNote(note, velocity);
@@ -221,6 +229,7 @@ function usePianoControl(
 
   return {
     blackKeys,
+    gamepadNoteIndicators,
     handleKeyDown,
     handleKeyUp,
     isKeyPressed,

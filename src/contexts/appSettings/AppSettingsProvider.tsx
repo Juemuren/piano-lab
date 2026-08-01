@@ -39,9 +39,13 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
   const [isMidiControlEnabled, setIsMidiControlEnabled] = useState(
     initialSettings.isMidiControlEnabled,
   );
+  const [isGamepadControlEnabled, setIsGamepadControlEnabled] = useState(
+    initialSettings.isGamepadControlEnabled,
+  );
 
   useEffect(() => {
     writeStoredAppSettings({
+      isGamepadControlEnabled,
       isKeyboardControlEnabled,
       isKeyboardKeyHintEnabled,
       isKeyboardOctaveHintEnabled,
@@ -53,6 +57,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       pianoInputSettings,
     });
   }, [
+    isGamepadControlEnabled,
     isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled,
     isKeyboardOctaveHintEnabled,
@@ -66,6 +71,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
 
   const value = useMemo(
     (): AppSettingsContextValue => ({
+      isGamepadControlEnabled,
       isKeyboardControlEnabled,
       isKeyboardKeyHintEnabled,
       isKeyboardOctaveHintEnabled,
@@ -75,6 +81,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       isTouchControlEnabled,
       keyboardControlMappings,
       pianoInputSettings,
+      setIsGamepadControlEnabled,
       setIsKeyboardControlEnabled,
       setIsKeyboardKeyHintEnabled,
       setIsKeyboardOctaveHintEnabled,
@@ -86,6 +93,7 @@ export function AppSettingsProvider({ children }: AppSettingsProviderProps) {
       setPianoInputSettings,
     }),
     [
+      isGamepadControlEnabled,
       isKeyboardControlEnabled,
       isKeyboardKeyHintEnabled,
       isKeyboardOctaveHintEnabled,
