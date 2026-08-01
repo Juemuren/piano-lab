@@ -19,9 +19,8 @@ const X_BUTTON = 2;
 const Y_BUTTON = 3;
 const STICK_DEAD_ZONE = 0.35;
 const TRIGGER_THRESHOLD = 0.05;
-const SLOWEST_REPEAT_INTERVAL_MS = 400;
-const FASTEST_REPEAT_INTERVAL_MS = 70;
-const MAX_GAMEPAD_VOLUME = 127;
+const SLOWEST_REPEAT_INTERVAL_MS = 500;
+const FASTEST_REPEAT_INTERVAL_MS = 100;
 
 interface UseGamepadControlOptions {
   enabled: boolean;
@@ -143,7 +142,7 @@ function useGamepadControl({
       const activeNote = activeNotesRef.current[side];
       if (value >= TRIGGER_THRESHOLD && activeNote === undefined) {
         activeNotesRef.current[side] = note;
-        onNotePress(note, Math.round(value * MAX_GAMEPAD_VOLUME));
+        onNotePress(note, Math.round(value * 127));
       } else if (value < TRIGGER_THRESHOLD && activeNote !== undefined) {
         delete activeNotesRef.current[side];
         onNoteRelease(activeNote);
