@@ -4,6 +4,29 @@
 
 All notable changes to this project are documented in this file.
 
+## 1.5.0
+
+### Added
+
+- Added a control for clearing all computer keyboard mappings at once.
+
+### Changed
+
+- Updated the default computer keyboard layout, including note and octave controls.
+- Limited computer keyboard mappings to letter and number keys.
+- Refactored keyboard mapping configuration and keyboard input handling.
+
+### Fixed
+
+- Fixed active notes and temporary octave shifts not always being cleared when keyboard input is interrupted or reconfigured.
+- Fixed invalid or incompatible cached app settings preventing the application from opening after an update.
+
+### Chore
+
+- Migrated package management and CI workflows from npm to pnpm.
+- Updated Node.js, TypeScript, frontend dependencies, and GitHub Actions.
+- Simplified version updates by using pnpm's built-in version command.
+
 ## 1.4.0
 
 ### Added
