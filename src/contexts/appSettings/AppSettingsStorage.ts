@@ -39,7 +39,6 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
 function isKeyboardNoteMapping(value: unknown): value is KeyboardNoteMapping {
   return (
     isRecord(value) &&
-    typeof value.isGamepadControlEnabled === 'boolean' &&
     typeof value.key === 'string' &&
     typeof value.offset === 'number'
   );
@@ -80,6 +79,7 @@ function isPianoInputSettings(value: unknown): value is PianoInputSettings {
 function isStoredAppSettings(value: unknown): value is StoredAppSettings {
   return (
     isRecord(value) &&
+    typeof value.isGamepadControlEnabled === 'boolean' &&
     typeof value.isKeyboardControlEnabled === 'boolean' &&
     typeof value.isKeyboardKeyHintEnabled === 'boolean' &&
     typeof value.isKeyboardOctaveHintEnabled === 'boolean' &&
