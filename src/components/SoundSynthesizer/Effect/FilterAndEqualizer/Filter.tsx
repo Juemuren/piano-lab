@@ -1,7 +1,7 @@
 import { FilterIcon, Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
+import { SYNTH_CONFIG_DEFAULTS } from '../../../../services/synth/config/Defaults';
 import type { FilterType } from '../../../../services/synth/config/Options';
 import { FILTER_TYPES } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
@@ -28,8 +28,9 @@ function Filter({
   onQChange,
 }: FilterProps) {
   const { t } = useTranslation('synth');
-  const [selectedFilterType, setSelectedFilterType] =
-    useState<FilterType>(DEFAULT_FILTER_TYPE);
+  const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(
+    SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.filter.type,
+  );
 
   const filterTypeLabels: Record<FilterType, string> = {
     bandpass: t('effect.filter.bandpass.name'),

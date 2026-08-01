@@ -1,11 +1,6 @@
 import { useCallback, useState } from 'react';
-import {
-  DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
-  DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
-  DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
-  DEFAULT_REVERB_MIX,
-} from '../../../constants/synth';
-import { createDefaultReverbConfig } from '../../../services/synth/config/Defaults';
+import { SYNTH_CONFIG_DEFAULTS } from '../../../services/synth/config/Defaults';
+import { createDefaultReverbConfig } from '../../../services/synth/config/Factories';
 import type { ReverbPreset } from '../../../services/synth/config/Options';
 import type { ReverbConfig } from '../../../services/synth/effect/Reverb';
 import { createReverbConfig } from '../../../services/synth/effect/Reverb';
@@ -29,7 +24,10 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
   const updateReverbPreset = useCallback((preset: ReverbPreset) => {
     setReverb((current) => {
       if (preset !== 'custom') {
-        return createReverbConfig(preset, current?.mix ?? DEFAULT_REVERB_MIX);
+        return createReverbConfig(
+          preset,
+          current?.mix ?? SYNTH_CONFIG_DEFAULTS.effect.reverb.mix,
+        );
       }
 
       const source = getReverbConfig(current);
@@ -63,9 +61,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
         earlyReflections: [
           ...source.earlyReflections,
           {
-            delay: DEFAULT_REVERB_EARLY_REFLECTION_DELAY,
-            gain: DEFAULT_REVERB_EARLY_REFLECTION_GAIN,
-            phase: DEFAULT_REVERB_EARLY_REFLECTION_PHASE,
+            ...SYNTH_CONFIG_DEFAULTS.effect.reverb.earlyReflection,
           },
         ],
         preset: 'custom',

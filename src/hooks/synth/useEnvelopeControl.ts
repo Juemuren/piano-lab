@@ -1,12 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
-  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
-  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-  DEFAULT_ENVELOPE_SILENCE_GAIN,
-  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-} from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import { SYNTH_CONFIG_DEFAULTS } from '../../services/synth/config/Defaults';
 import type { EnvelopeConfig } from '../../services/synth/Envelope';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
@@ -39,19 +33,23 @@ function useEnvelopeControl(
 ) {
   const synthEngine = useSynthEngine();
   const [attackTime, setAttackTime] = useState(
-    () => initialConfig?.attackTime ?? DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
+    () =>
+      initialConfig?.attackTime ?? SYNTH_CONFIG_DEFAULTS.envelope.attackTime,
   );
   const [decayTime, setDecayTime] = useState(
-    () => initialConfig?.decayTime ?? DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
+    () => initialConfig?.decayTime ?? SYNTH_CONFIG_DEFAULTS.envelope.decayTime,
   );
   const [releaseTime, setReleaseTime] = useState(
-    () => initialConfig?.releaseTime ?? DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
+    () =>
+      initialConfig?.releaseTime ?? SYNTH_CONFIG_DEFAULTS.envelope.releaseTime,
   );
   const [sustainGain, setSustainGain] = useState(
-    () => initialConfig?.sustainGain ?? DEFAULT_ENVELOPE_SUSTAIN_GAIN,
+    () =>
+      initialConfig?.sustainGain ?? SYNTH_CONFIG_DEFAULTS.envelope.sustainGain,
   );
   const [silenceGain, setSilenceGain] = useState(
-    () => initialConfig?.silenceGain ?? DEFAULT_ENVELOPE_SILENCE_GAIN,
+    () =>
+      initialConfig?.silenceGain ?? SYNTH_CONFIG_DEFAULTS.envelope.silenceGain,
   );
 
   const envelopeConfig = useMemo<EnvelopeConfig>(

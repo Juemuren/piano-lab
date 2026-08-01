@@ -1,7 +1,7 @@
 import { Minus, Plus, SlidersVertical } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
+import { SYNTH_CONFIG_DEFAULTS } from '../../../../services/synth/config/Defaults';
 import type { EqualizerType } from '../../../../services/synth/config/Options';
 import { EQUALIZER_TYPES } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
@@ -31,7 +31,9 @@ function Equalizer({
 }: EqualizerProps) {
   const { t } = useTranslation('synth');
   const [selectedEqualizerType, setSelectedEqualizerType] =
-    useState<EqualizerType>(DEFAULT_EQUALIZER_TYPE);
+    useState<EqualizerType>(
+      SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.equalizer.type,
+    );
 
   const equalizerTypeLabels: Record<EqualizerType, string> = {
     highshelf: t('effect.equalizer.highshelf.name'),

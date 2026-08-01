@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { createDefaultFilterEqualizerConfig } from '../../../services/synth/config/Defaults';
+import { createDefaultFilterEqualizerConfig } from '../../../services/synth/config/Factories';
 import type {
   EqualizerType,
   FilterEqualizerPreset,

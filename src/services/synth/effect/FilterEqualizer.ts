@@ -1,10 +1,4 @@
-import {
-  DEFAULT_EQUALIZER_FREQUENCY,
-  DEFAULT_EQUALIZER_GAIN,
-  DEFAULT_EQUALIZER_Q,
-  DEFAULT_FILTER_FREQUENCY,
-  DEFAULT_FILTER_Q,
-} from '../../../constants/synth';
+import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
 import type {
   BuiltInFilterEqualizerPreset,
   EqualizerType,
@@ -51,17 +45,17 @@ function createEqualizers(gains: number[]): EqualizerConfig[] {
 
 export function createFilterConfig(type: FilterType): FilterConfig {
   return {
-    frequency: DEFAULT_FILTER_FREQUENCY,
-    q: DEFAULT_FILTER_Q,
+    frequency: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.filter.frequency,
+    q: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.filter.q,
     type,
   };
 }
 
 export function createEqualizerConfig(type: EqualizerType): EqualizerConfig {
   return {
-    frequency: DEFAULT_EQUALIZER_FREQUENCY,
-    gain: DEFAULT_EQUALIZER_GAIN,
-    q: DEFAULT_EQUALIZER_Q,
+    frequency: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.equalizer.frequency,
+    gain: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.equalizer.gain,
+    q: SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer.equalizer.q,
     type,
   };
 }

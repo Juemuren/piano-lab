@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  DEFAULT_SPECTRUM_DECAY_RATE,
-  DEFAULT_SPECTRUM_POWER_EXPONENT,
-  DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_SPECTRUM_TYPE,
-} from '../../constants/synth';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import { SYNTH_CONFIG_DEFAULTS } from '../../services/synth/config/Defaults';
 import type { SpectrumType } from '../../services/synth/config/Options';
 import type {
   Spectrum,
@@ -29,26 +24,23 @@ function useSpectrumControl(
 ) {
   const synthEngine = useSynthEngine();
   const [lambda, setLambda] = useState(
-    () => initialConfig?.lambda ?? DEFAULT_SPECTRUM_STRIKE_POINT,
+    () => initialConfig?.lambda ?? SYNTH_CONFIG_DEFAULTS.spectrum.lambda,
   );
   const [sigma, setSigma] = useState(
-    () => initialConfig?.sigma ?? DEFAULT_SPECTRUM_DECAY_RATE,
+    () => initialConfig?.sigma ?? SYNTH_CONFIG_DEFAULTS.spectrum.sigma,
   );
   const [p, setP] = useState(
-    () => initialConfig?.p ?? DEFAULT_SPECTRUM_POWER_EXPONENT,
+    () => initialConfig?.p ?? SYNTH_CONFIG_DEFAULTS.spectrum.p,
   );
   const [spectrumType, setSpectrumType] = useState<SpectrumType>(
-    () => initialConfig?.type ?? DEFAULT_SPECTRUM_TYPE,
+    () => initialConfig?.type ?? SYNTH_CONFIG_DEFAULTS.spectrum.type,
   );
   const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
     () =>
       initialConfig?.customAmplitudes ??
       createSpectrum(
         {
-          lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-          p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-          sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-          type: DEFAULT_SPECTRUM_TYPE,
+          ...SYNTH_CONFIG_DEFAULTS.spectrum,
         },
         harmonicCount,
       ).amplitudes,

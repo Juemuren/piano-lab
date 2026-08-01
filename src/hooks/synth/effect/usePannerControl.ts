@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { createDefaultPannerConfig } from '../../../services/synth/config/Defaults';
+import { createDefaultPannerConfig } from '../../../services/synth/config/Factories';
 import type { PannerConfig } from '../../../services/synth/effect/Panner';
 
 function usePannerControl(initialPanner: PannerConfig | null) {

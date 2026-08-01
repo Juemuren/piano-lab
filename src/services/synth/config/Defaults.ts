@@ -1,220 +1,91 @@
-import {
-  DEFAULT_AMPLITUDE_MODULATION_DEPTH,
-  DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
-  DEFAULT_COMPRESSOR_ATTACK,
-  DEFAULT_COMPRESSOR_KNEE,
-  DEFAULT_COMPRESSOR_RATIO,
-  DEFAULT_COMPRESSOR_RELEASE,
-  DEFAULT_COMPRESSOR_THRESHOLD,
-  DEFAULT_DELAY_MODULATION_DEPTH,
-  DEFAULT_DELAY_MODULATION_FREQUENCY,
-  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
-  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
-  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-  DEFAULT_ENVELOPE_SILENCE_GAIN,
-  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  DEFAULT_EQUALIZER_TYPE,
-  DEFAULT_FILTER_EQUALIZER_PRESET,
-  DEFAULT_FILTER_TYPE,
-  DEFAULT_FREQUENCY_MODULATION_DEPTH,
-  DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
-  DEFAULT_PANNER_CONE_INNER_ANGLE,
-  DEFAULT_PANNER_CONE_OUTER_ANGLE,
-  DEFAULT_PANNER_CONE_OUTER_GAIN,
-  DEFAULT_PANNER_DISTANCE_MODEL,
-  DEFAULT_PANNER_MAX_DISTANCE,
-  DEFAULT_PANNER_ORIENTATION_X,
-  DEFAULT_PANNER_ORIENTATION_Y,
-  DEFAULT_PANNER_ORIENTATION_Z,
-  DEFAULT_PANNER_PANNING_MODEL,
-  DEFAULT_PANNER_POSITION_X,
-  DEFAULT_PANNER_POSITION_Y,
-  DEFAULT_PANNER_POSITION_Z,
-  DEFAULT_PANNER_REF_DISTANCE,
-  DEFAULT_PANNER_ROLLOFF_FACTOR,
-  DEFAULT_PHASE_MODULATION_DEPTH,
-  DEFAULT_PHASE_MODULATION_FREQUENCY,
-  DEFAULT_REVERB_MIX,
-  DEFAULT_REVERB_PRESET,
-  DEFAULT_SPECTRUM_DECAY_RATE,
-  DEFAULT_SPECTRUM_POWER_EXPONENT,
-  DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_SPECTRUM_TYPE,
-  DEFAULT_SYNTH_HARMONIC_COUNT,
-  DEFAULT_SYNTH_OSCILLATOR_TYPE,
-  DEFAULT_SYNTH_VOLUME_RATIO,
-  DEFAULT_WAVE_SHAPER_DISTORTION,
-  DEFAULT_WAVE_SHAPER_FUZZ,
-  DEFAULT_WAVE_SHAPER_OVERDRIVE,
-  DEFAULT_WAVE_SHAPER_PRESET,
-  DEFAULT_WAVE_SHAPER_SATURATION,
-} from '../../../constants/synth';
-import type { SynthBasicConfig } from '../BasicVoice';
-import type { EffectConfig } from '../EffectChain';
-import type { EnvelopeConfig } from '../Envelope';
-import type { CompressorConfig } from '../effect/Compressor';
-import type {
-  EqualizerConfig,
-  FilterConfig,
-  FilterEqualizerConfig,
-} from '../effect/FilterEqualizer';
-import {
-  createEqualizerConfig,
-  createFilterConfig,
-  createFilterEqualizerConfig,
-} from '../effect/FilterEqualizer';
-import type {
-  AmplitudeModulationConfig,
-  DelayModulationConfig,
-  FrequencyModulationConfig,
-  PhaseModulationConfig,
-} from '../effect/Modulation';
-import type { PannerConfig } from '../effect/Panner';
-import type { ReverbConfig } from '../effect/Reverb';
-import { createReverbConfig } from '../effect/Reverb';
-import type { WaveShaperConfig } from '../effect/WaveShaper';
-import type { SpectrumConfig } from '../Spectrum';
-import { createSpectrum } from '../Spectrum';
-import type { SynthConfig } from './Schema';
-
-export function createDefaultSynthBasicConfig(): SynthBasicConfig {
-  return {
-    harmonicCount: DEFAULT_SYNTH_HARMONIC_COUNT,
-    oscillatorType: DEFAULT_SYNTH_OSCILLATOR_TYPE,
-    volumeRatio: DEFAULT_SYNTH_VOLUME_RATIO,
-  };
-}
-
-export function createDefaultEnvelopeConfig(): EnvelopeConfig {
-  return {
-    attackTime: DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
-    decayTime: DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
-    releaseTime: DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-    silenceGain: DEFAULT_ENVELOPE_SILENCE_GAIN,
-    sustainGain: DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  };
-}
-
-export function createDefaultSpectrumConfig(): SpectrumConfig {
-  return {
-    customAmplitudes: createSpectrum(
-      {
-        lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-        p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-        sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-        type: DEFAULT_SPECTRUM_TYPE,
+export const SYNTH_CONFIG_DEFAULTS = {
+  effect: {
+    amplitudeModulation: {
+      depth: 0.25,
+      frequency: 5,
+    },
+    compressor: {
+      attack: 0.005,
+      knee: 30,
+      ratio: 15,
+      release: 0.25,
+      threshold: -20,
+    },
+    delayModulation: {
+      depth: 0.008,
+      frequency: 0.3,
+    },
+    filterEqualizer: {
+      equalizer: {
+        frequency: 1000,
+        gain: 0,
+        q: 1,
+        type: 'lowshelf',
       },
-      DEFAULT_SYNTH_HARMONIC_COUNT,
-    ).amplitudes,
-    lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-    p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-    sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-    type: DEFAULT_SPECTRUM_TYPE,
-  };
-}
-
-export function createDefaultFilterConfig(): FilterConfig {
-  return createFilterConfig(DEFAULT_FILTER_TYPE);
-}
-
-export function createDefaultEqualizerConfig(): EqualizerConfig {
-  return createEqualizerConfig(DEFAULT_EQUALIZER_TYPE);
-}
-
-export function createDefaultFilterEqualizerConfig(): FilterEqualizerConfig {
-  return createFilterEqualizerConfig(DEFAULT_FILTER_EQUALIZER_PRESET);
-}
-
-export function createDefaultCompressorConfig(): CompressorConfig {
-  return {
-    attack: DEFAULT_COMPRESSOR_ATTACK,
-    knee: DEFAULT_COMPRESSOR_KNEE,
-    ratio: DEFAULT_COMPRESSOR_RATIO,
-    release: DEFAULT_COMPRESSOR_RELEASE,
-    threshold: DEFAULT_COMPRESSOR_THRESHOLD,
-  };
-}
-
-export function createDefaultAmplitudeModulationConfig(): AmplitudeModulationConfig {
-  return {
-    depth: DEFAULT_AMPLITUDE_MODULATION_DEPTH,
-    frequency: DEFAULT_AMPLITUDE_MODULATION_FREQUENCY,
-  };
-}
-
-export function createDefaultFrequencyModulationConfig(): FrequencyModulationConfig {
-  return {
-    depth: DEFAULT_FREQUENCY_MODULATION_DEPTH,
-    frequency: DEFAULT_FREQUENCY_MODULATION_FREQUENCY,
-  };
-}
-
-export function createDefaultPhaseModulationConfig(): PhaseModulationConfig {
-  return {
-    depth: DEFAULT_PHASE_MODULATION_DEPTH,
-    frequency: DEFAULT_PHASE_MODULATION_FREQUENCY,
-  };
-}
-
-export function createDefaultDelayModulationConfig(): DelayModulationConfig {
-  return {
-    depth: DEFAULT_DELAY_MODULATION_DEPTH,
-    frequency: DEFAULT_DELAY_MODULATION_FREQUENCY,
-  };
-}
-
-export function createDefaultWaveShaperConfig(): WaveShaperConfig {
-  return {
-    distortion: DEFAULT_WAVE_SHAPER_DISTORTION,
-    fuzz: DEFAULT_WAVE_SHAPER_FUZZ,
-    overdrive: DEFAULT_WAVE_SHAPER_OVERDRIVE,
-    preset: DEFAULT_WAVE_SHAPER_PRESET,
-    saturation: DEFAULT_WAVE_SHAPER_SATURATION,
-  };
-}
-
-export function createDefaultPannerConfig(): PannerConfig {
-  return {
-    coneInnerAngle: DEFAULT_PANNER_CONE_INNER_ANGLE,
-    coneOuterAngle: DEFAULT_PANNER_CONE_OUTER_ANGLE,
-    coneOuterGain: DEFAULT_PANNER_CONE_OUTER_GAIN,
-    distanceModel: DEFAULT_PANNER_DISTANCE_MODEL,
-    maxDistance: DEFAULT_PANNER_MAX_DISTANCE,
-    orientationX: DEFAULT_PANNER_ORIENTATION_X,
-    orientationY: DEFAULT_PANNER_ORIENTATION_Y,
-    orientationZ: DEFAULT_PANNER_ORIENTATION_Z,
-    panningModel: DEFAULT_PANNER_PANNING_MODEL,
-    positionX: DEFAULT_PANNER_POSITION_X,
-    positionY: DEFAULT_PANNER_POSITION_Y,
-    positionZ: DEFAULT_PANNER_POSITION_Z,
-    refDistance: DEFAULT_PANNER_REF_DISTANCE,
-    rolloffFactor: DEFAULT_PANNER_ROLLOFF_FACTOR,
-  };
-}
-
-export function createDefaultReverbConfig(): ReverbConfig {
-  return createReverbConfig(DEFAULT_REVERB_PRESET, DEFAULT_REVERB_MIX);
-}
-
-export function createDefaultEffectConfig(): EffectConfig {
-  return {
-    amplitudeModulation: null,
-    compressor: null,
-    delayModulation: null,
-    filterEqualizer: null,
-    frequencyModulation: null,
-    panner: null,
-    phaseModulation: null,
-    reverb: null,
-    waveShaper: null,
-  };
-}
-
-export function createDefaultSynthConfig(): SynthConfig {
-  return {
-    effect: createDefaultEffectConfig(),
-    envelope: createDefaultEnvelopeConfig(),
-    spectrum: createDefaultSpectrumConfig(),
-    synth: createDefaultSynthBasicConfig(),
-  };
-}
+      filter: {
+        frequency: 1000,
+        q: 1,
+        type: 'lowpass',
+      },
+      preset: 'classical',
+    },
+    frequencyModulation: {
+      depth: 20,
+      frequency: 5,
+    },
+    panner: {
+      coneInnerAngle: 60,
+      coneOuterAngle: 120,
+      coneOuterGain: 0.5,
+      distanceModel: 'inverse',
+      maxDistance: 10000,
+      orientationX: 0,
+      orientationY: 0,
+      orientationZ: 1,
+      panningModel: 'equalpower',
+      positionX: 0,
+      positionY: 0,
+      positionZ: -1,
+      refDistance: 1,
+      rolloffFactor: 1,
+    },
+    phaseModulation: {
+      depth: 0.5,
+      frequency: 0.5,
+    },
+    reverb: {
+      earlyReflection: {
+        delay: 0.01,
+        gain: 0.2,
+        phase: 0,
+      },
+      mix: 0,
+      preset: 'bathroom',
+    },
+    waveShaper: {
+      distortion: 5,
+      fuzz: 40,
+      overdrive: 8,
+      preset: 'saturation',
+      saturation: 0.5,
+    },
+  },
+  envelope: {
+    attackTime: 0.01,
+    decayTime: 0.2,
+    releaseTime: 0.8,
+    silenceGain: 0.00001,
+    sustainGain: 0.5,
+  },
+  spectrum: {
+    lambda: 0.5,
+    p: 1.5,
+    sigma: 0.8,
+    type: 'ethereal',
+  },
+  synth: {
+    harmonicCount: 10,
+    oscillatorType: 'sine',
+    volumeRatio: 0.2,
+  },
+} as const;

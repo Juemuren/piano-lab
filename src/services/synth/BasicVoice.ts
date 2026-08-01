@@ -1,17 +1,4 @@
-import {
-  DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS,
-  DEFAULT_ENVELOPE_DECAY_TIME_SECONDS,
-  DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS,
-  DEFAULT_ENVELOPE_SILENCE_GAIN,
-  DEFAULT_ENVELOPE_SUSTAIN_GAIN,
-  DEFAULT_SPECTRUM_DECAY_RATE,
-  DEFAULT_SPECTRUM_POWER_EXPONENT,
-  DEFAULT_SPECTRUM_STRIKE_POINT,
-  DEFAULT_SPECTRUM_TYPE,
-  DEFAULT_SYNTH_HARMONIC_COUNT,
-  DEFAULT_SYNTH_OSCILLATOR_TYPE,
-  DEFAULT_SYNTH_VOLUME_RATIO,
-} from '../../constants/synth';
+import { SYNTH_CONFIG_DEFAULTS } from './config/Defaults';
 import type { SynthOscillatorType } from './config/Options';
 import type { EnvelopeConfig, VoiceEnvelopeState } from './Envelope';
 import { createVoiceStartPlans, createVoiceStopPlans } from './Envelope';
@@ -55,23 +42,21 @@ interface StartNoteOptions {
 }
 
 export class BasicVoice {
-  private harmonicCount: number = DEFAULT_SYNTH_HARMONIC_COUNT;
+  private harmonicCount: number = SYNTH_CONFIG_DEFAULTS.synth.harmonicCount;
   private spectrum: Spectrum = createSpectrum(
     {
-      lambda: DEFAULT_SPECTRUM_STRIKE_POINT,
-      p: DEFAULT_SPECTRUM_POWER_EXPONENT,
-      sigma: DEFAULT_SPECTRUM_DECAY_RATE,
-      type: DEFAULT_SPECTRUM_TYPE,
+      ...SYNTH_CONFIG_DEFAULTS.spectrum,
     },
     this.harmonicCount,
   );
-  private oscillatorType: SynthOscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
-  private volumeRatio: number = DEFAULT_SYNTH_VOLUME_RATIO;
-  private attackTime: number = DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS;
-  private decayTime: number = DEFAULT_ENVELOPE_DECAY_TIME_SECONDS;
-  private releaseTime: number = DEFAULT_ENVELOPE_RELEASE_TIME_SECONDS;
-  private sustainGain: number = DEFAULT_ENVELOPE_SUSTAIN_GAIN;
-  private silenceGain: number = DEFAULT_ENVELOPE_SILENCE_GAIN;
+  private oscillatorType: SynthOscillatorType =
+    SYNTH_CONFIG_DEFAULTS.synth.oscillatorType;
+  private volumeRatio: number = SYNTH_CONFIG_DEFAULTS.synth.volumeRatio;
+  private attackTime: number = SYNTH_CONFIG_DEFAULTS.envelope.attackTime;
+  private decayTime: number = SYNTH_CONFIG_DEFAULTS.envelope.decayTime;
+  private releaseTime: number = SYNTH_CONFIG_DEFAULTS.envelope.releaseTime;
+  private sustainGain: number = SYNTH_CONFIG_DEFAULTS.envelope.sustainGain;
+  private silenceGain: number = SYNTH_CONFIG_DEFAULTS.envelope.silenceGain;
   private frequencyModulation: FrequencyModulationConfig | null = null;
 
   configureSynth({

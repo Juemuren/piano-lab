@@ -4,7 +4,7 @@ import {
   createDefaultDelayModulationConfig,
   createDefaultFrequencyModulationConfig,
   createDefaultPhaseModulationConfig,
-} from '../../../services/synth/config/Defaults';
+} from '../../../services/synth/config/Factories';
 import type {
   AmplitudeModulationConfig,
   DelayModulationConfig,

@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
-import { createDefaultSynthConfig } from '../../services/synth/config/Defaults';
+import { createDefaultSynthConfig } from '../../services/synth/config/Factories';
 import type { SynthOscillatorType } from '../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../services/synth/config/Ranges';
 import type { SynthConfig } from '../../services/synth/config/Schema';
