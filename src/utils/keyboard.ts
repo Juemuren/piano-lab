@@ -1,4 +1,5 @@
 import type {
+  KeyboardControlMappings,
   KeyboardNoteMapping,
   KeyboardOctaveKeyMappings,
 } from '../constants/keyboard';
@@ -15,12 +16,6 @@ export type KeyboardMappingSlot =
   | { offset: number; type: 'note' }
   | { direction: KeyboardOctaveDirection; type: 'octave' }
   | { direction: KeyboardOctaveDirection; type: 'temporaryOctave' };
-
-export interface KeyboardControlMappings {
-  noteMappings: KeyboardNoteMapping[];
-  octaveKeyMappings: KeyboardOctaveKeyMappings;
-  temporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
-}
 
 export function normalizeKeyboardControlKey(key: string) {
   const normalizedKey = key.toLowerCase();

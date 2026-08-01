@@ -1,14 +1,7 @@
-import type {
-  KeyboardNoteMapping,
-  KeyboardOctaveKeyMappings,
-} from '../../constants/keyboard';
+import type { KeyboardControlMappings } from '../../constants/keyboard';
+import { DEFAULT_KEYBOARD_CONTROL_MAPPINGS } from '../../constants/keyboard';
 import type { PianoInputSettings } from '../../services/abc/AbcSettings';
 import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../services/abc/AbcSettings';
-import {
-  DEFAULT_KEYBOARD_CONTROL_SETTINGS,
-  DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
-  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
-} from './AppSettingsContext';
 
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 
@@ -20,9 +13,7 @@ export interface StoredAppSettings {
   isMouseControlEnabled: boolean;
   isPianoInputEnabled: boolean;
   isTouchControlEnabled: boolean;
-  keyboardNoteMappings: KeyboardNoteMapping[];
-  keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
-  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
+  keyboardControlMappings: KeyboardControlMappings;
   pianoInputSettings: PianoInputSettings;
 }
 
@@ -34,10 +25,7 @@ export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
   isMouseControlEnabled: true,
   isPianoInputEnabled: false,
   isTouchControlEnabled: true,
-  keyboardNoteMappings: DEFAULT_KEYBOARD_CONTROL_SETTINGS,
-  keyboardOctaveKeyMappings: DEFAULT_KEYBOARD_OCTAVE_CONTROL_SETTINGS,
-  keyboardTemporaryOctaveKeyMappings:
-    DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_CONTROL_SETTINGS,
+  keyboardControlMappings: DEFAULT_KEYBOARD_CONTROL_MAPPINGS,
   pianoInputSettings: DEFAULT_PIANO_INPUT_SETTINGS,
 };
 

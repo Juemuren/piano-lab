@@ -1,13 +1,6 @@
 import type { KeyboardEvent } from 'react';
-import type {
-  KeyboardNoteMapping,
-  KeyboardOctaveKeyMappings,
-} from '../../constants/keyboard';
-import {
-  DEFAULT_KEYBOARD_NOTE_MAPPINGS,
-  DEFAULT_KEYBOARD_OCTAVE_MAPPINGS,
-  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS,
-} from '../../constants/keyboard';
+import type { KeyboardControlMappings } from '../../constants/keyboard';
+import { DEFAULT_KEYBOARD_CONTROL_MAPPINGS } from '../../constants/keyboard';
 import type {
   KeyboardMappingSlot,
   KeyboardOctaveDirection,
@@ -19,14 +12,8 @@ import {
 } from '../../utils/keyboard';
 
 interface UseKeyboardControlSettingsOptions {
-  keyboardNoteMappings: KeyboardNoteMapping[];
-  keyboardOctaveKeyMappings: KeyboardOctaveKeyMappings;
-  keyboardTemporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
-  setKeyboardNoteMappings: (mappings: KeyboardNoteMapping[]) => void;
-  setKeyboardOctaveKeyMappings: (mappings: KeyboardOctaveKeyMappings) => void;
-  setKeyboardTemporaryOctaveKeyMappings: (
-    mappings: KeyboardOctaveKeyMappings,
-  ) => void;
+  keyboardControlMappings: KeyboardControlMappings;
+  setKeyboardControlMappings: (mappings: KeyboardControlMappings) => void;
 }
 
 function handleMappingKeyDown(
@@ -48,32 +35,20 @@ function handleMappingKeyDown(
 }
 
 function useKeyboardControlSettings({
-  keyboardNoteMappings,
-  keyboardOctaveKeyMappings,
-  keyboardTemporaryOctaveKeyMappings,
-  setKeyboardNoteMappings,
-  setKeyboardOctaveKeyMappings,
-  setKeyboardTemporaryOctaveKeyMappings,
+  keyboardControlMappings,
+  setKeyboardControlMappings,
 }: UseKeyboardControlSettingsOptions) {
   function assignKeyboardMappingKey(
     targetSlot: KeyboardMappingSlot,
     key: string,
   ) {
     const nextMappings = getKeyboardMappingsWithAssignedKey(
-      {
-        noteMappings: keyboardNoteMappings,
-        octaveKeyMappings: keyboardOctaveKeyMappings,
-        temporaryOctaveKeyMappings: keyboardTemporaryOctaveKeyMappings,
-      },
+      keyboardControlMappings,
       targetSlot,
       key,
     );
 
-    setKeyboardNoteMappings(nextMappings.noteMappings);
-    setKeyboardOctaveKeyMappings(nextMappings.octaveKeyMappings);
-    setKeyboardTemporaryOctaveKeyMappings(
-      nextMappings.temporaryOctaveKeyMappings,
-    );
+    setKeyboardControlMappings(nextMappings);
   }
 
   function setNoteMappingKey(offset: number, key: string) {
@@ -118,11 +93,7 @@ function useKeyboardControlSettings({
   }
 
   function resetKeyboardMappings() {
-    setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS);
-    setKeyboardOctaveKeyMappings(DEFAULT_KEYBOARD_OCTAVE_MAPPINGS);
-    setKeyboardTemporaryOctaveKeyMappings(
-      DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS,
-    );
+    setKeyboardControlMappings(DEFAULT_KEYBOARD_CONTROL_MAPPINGS);
   }
 
   return {

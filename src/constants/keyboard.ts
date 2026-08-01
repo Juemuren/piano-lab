@@ -8,6 +8,12 @@ export interface KeyboardOctaveKeyMappings {
   upKey: string;
 }
 
+export interface KeyboardControlMappings {
+  noteMappings: KeyboardNoteMapping[];
+  octaveKeyMappings: KeyboardOctaveKeyMappings;
+  temporaryOctaveKeyMappings: KeyboardOctaveKeyMappings;
+}
+
 export const DEFAULT_KEYBOARD_OCTAVE = 4;
 export const MIN_KEYBOARD_OCTAVE = 1;
 export const MAX_KEYBOARD_OCTAVE = 7;
@@ -42,3 +48,9 @@ export const DEFAULT_KEYBOARD_NOTE_MAPPINGS: KeyboardNoteMapping[] = [
   { key: 'o', offset: 11 },
   { key: 'p', offset: 12 },
 ];
+
+export const DEFAULT_KEYBOARD_CONTROL_MAPPINGS: KeyboardControlMappings = {
+  noteMappings: DEFAULT_KEYBOARD_NOTE_MAPPINGS,
+  octaveKeyMappings: DEFAULT_KEYBOARD_OCTAVE_MAPPINGS,
+  temporaryOctaveKeyMappings: DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS,
+};
