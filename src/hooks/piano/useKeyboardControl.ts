@@ -1,4 +1,3 @@
-import type { RefObject } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardControlMappings } from '../../constants/keyboard';
 import { DEFAULT_KEYBOARD_OCTAVE } from '../../constants/keyboard';
@@ -12,7 +11,6 @@ import {
 import { getBasePitchByOctave } from '../../utils/pitch';
 
 interface UseKeyboardPianoControlOptions {
-  activeNotesRef: RefObject<Map<string, number>>;
   enabled: boolean;
   keyboardControlMappings: KeyboardControlMappings;
   onNotePress: (note: number) => void | Promise<void>;
@@ -45,7 +43,6 @@ function useKeyboardControl({
     octaveKeyMappings,
     temporaryOctaveKeyMappings,
   },
-  activeNotesRef,
   onNotePress,
   onNoteRelease,
   showKeyHints,
@@ -56,11 +53,8 @@ function useKeyboardControl({
     ReadonlySet<string>
   >(() => new Set());
   const activeTemporaryOctaveKeysRef = useRef<Set<string>>(new Set());
+  const activeNotesRef = useRef<Map<string, number>>(new Map());
   const keyboardOctaveRef = useRef(DEFAULT_KEYBOARD_OCTAVE);
-
-  useEffect(() => {
-    keyboardOctaveRef.current = keyboardOctave;
-  }, [keyboardOctave]);
 
   const keyboardNoteMap = useMemo(
     () => createKeyboardNoteMap(noteMappings),
@@ -68,22 +62,42 @@ function useKeyboardControl({
   );
 
   useEffect(() => {
-    if (!enabled) {
-      const keyboardNotes = activeNotesRef.current;
+    function clearTemporaryOctaveKeys() {
+      if (activeTemporaryOctaveKeysRef.current.size === 0) {
+        return;
+      }
+
       activeTemporaryOctaveKeysRef.current.clear();
       setActiveTemporaryOctaveKeys(new Set());
-      if (keyboardNotes.size > 0) {
-        const releasedNotes = Array.from(keyboardNotes.values());
-        keyboardNotes.clear();
-        for (const note of releasedNotes) {
-          onNoteRelease(note);
-        }
+    }
+
+    function releaseActiveNotes() {
+      const activeNotes = activeNotesRef.current;
+      if (activeNotes.size === 0) {
+        return;
       }
+
+      const notes = Array.from(activeNotes.values());
+      activeNotes.clear();
+      for (const note of notes) {
+        onNoteRelease(note);
+      }
+    }
+
+    function resetKeyboardInput() {
+      clearTemporaryOctaveKeys();
+      releaseActiveNotes();
+    }
+
+    if (!enabled) {
+      resetKeyboardInput();
       return;
     }
 
+    clearTemporaryOctaveKeys();
+
     function handleKeyboardKeyDown(e: KeyboardEvent) {
-      if (isEditableTarget(e.target) || e.altKey || e.metaKey) {
+      if (isEditableTarget(e.target) || e.altKey || e.ctrlKey || e.metaKey) {
         return;
       }
 
@@ -113,9 +127,11 @@ function useKeyboardControl({
         e.preventDefault();
         if (!e.repeat) {
           const octaveDelta = key === octaveKeyMappings.upKey ? +1 : -1;
-          setKeyboardOctave((current) =>
-            clampKeyboardOctave(current + octaveDelta),
-          );
+          setKeyboardOctave((current) => {
+            const nextOctave = clampKeyboardOctave(current + octaveDelta);
+            keyboardOctaveRef.current = nextOctave;
+            return nextOctave;
+          });
         }
         return;
       }
@@ -172,15 +188,15 @@ function useKeyboardControl({
 
     window.addEventListener('keydown', handleKeyboardKeyDown);
     window.addEventListener('keyup', handleKeyboardKeyUp);
+    window.addEventListener('blur', resetKeyboardInput);
 
     return () => {
-      activeTemporaryOctaveKeysRef.current.clear();
-      setActiveTemporaryOctaveKeys(new Set());
       window.removeEventListener('keydown', handleKeyboardKeyDown);
       window.removeEventListener('keyup', handleKeyboardKeyUp);
+      window.removeEventListener('blur', resetKeyboardInput);
+      releaseActiveNotes();
     };
   }, [
-    activeNotesRef,
     enabled,
     keyboardNoteMap,
     octaveKeyMappings,

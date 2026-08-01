@@ -58,7 +58,6 @@ function useActivePianoNotes() {
     new Set(),
   );
   const activeNoteCountsRef = useRef<Map<number, number>>(new Map());
-  const activeKeyboardNotesRef = useRef<Map<string, number>>(new Map());
   const activeMouseNotesRef = useRef<Set<number>>(new Set());
   const activeTouchNotesRef = useRef<Set<number>>(new Set());
 
@@ -97,7 +96,6 @@ function useActivePianoNotes() {
   return {
     activateInputNote,
     activeInputNotes,
-    activeKeyboardNotesRef,
     activeMouseNotesRef,
     activeTouchNotesRef,
     isInputNoteActive,
@@ -123,7 +121,6 @@ function usePianoControl(
   } = useAppSettings();
   const {
     activeInputNotes,
-    activeKeyboardNotesRef,
     activeMouseNotesRef,
     activeTouchNotesRef,
     activateInputNote,
@@ -184,7 +181,6 @@ function usePianoControl(
   );
 
   const { keyHints, octaveHints } = useKeyboardControl({
-    activeNotesRef: activeKeyboardNotesRef,
     enabled: isKeyboardControlEnabled,
     keyboardControlMappings,
     onNotePress: startInputNote,
