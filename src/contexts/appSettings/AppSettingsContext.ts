@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import { createContext } from 'react';
 import type { KeyboardControlMappings } from '../../constants/keyboard';
 import type { PianoInputSettings } from '../../services/abc/AbcSettings';
@@ -19,7 +20,7 @@ export interface AppSettingsContextValue {
   setIsMouseControlEnabled: (enabled: boolean) => void;
   setIsPianoInputEnabled: (enabled: boolean) => void;
   setIsTouchControlEnabled: (enabled: boolean) => void;
-  setKeyboardControlMappings: (mappings: KeyboardControlMappings) => void;
+  setKeyboardControlMappings: Dispatch<SetStateAction<KeyboardControlMappings>>;
   setPianoInputSettings: (settings: PianoInputSettings) => void;
 }
 

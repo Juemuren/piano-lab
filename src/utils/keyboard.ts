@@ -22,8 +22,12 @@ export function normalizeKeyboardControlKey(key: string) {
   return /^[a-z0-9]$/.test(normalizedKey) ? normalizedKey : null;
 }
 
-export function isKeyboardMappingClearKey(key: string) {
+function isKeyboardMappingClearKey(key: string) {
   return KEYBOARD_MAPPING_CLEAR_KEYS.includes(key);
+}
+
+export function getKeyboardMappingKey(key: string) {
+  return isKeyboardMappingClearKey(key) ? '' : normalizeKeyboardControlKey(key);
 }
 
 function isSameKeyboardMappingSlot(
@@ -36,12 +40,12 @@ function isSameKeyboardMappingSlot(
 
   switch (slot.type) {
     case 'note':
-      return slot.offset === (targetSlot as typeof slot).offset;
+      return targetSlot.type === 'note' && slot.offset === targetSlot.offset;
     case 'octave':
     case 'temporaryOctave':
-      return slot.direction === (targetSlot as typeof slot).direction;
-    default:
-      return false;
+      return (
+        targetSlot.type !== 'note' && slot.direction === targetSlot.direction
+      );
   }
 }
 

@@ -1,5 +1,5 @@
 import { Keyboard, RotateCcw, X } from 'lucide-react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { Dispatch, KeyboardEvent, ReactNode, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { KeyboardControlMappings } from '../../constants/keyboard';
 import useKeyboardControlSettings from '../../hooks/settings/useKeyboardControlSettings';
@@ -25,7 +25,7 @@ interface KeyboardControlSettingsProps {
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setIsKeyboardKeyHintEnabled: (enabled: boolean) => void;
   setIsKeyboardOctaveHintEnabled: (enabled: boolean) => void;
-  setKeyboardControlMappings: (mappings: KeyboardControlMappings) => void;
+  setKeyboardControlMappings: Dispatch<SetStateAction<KeyboardControlMappings>>;
 }
 
 function getOffsetLabel(offset: number) {
@@ -66,18 +66,10 @@ function KeyboardControlSettings({
   setKeyboardControlMappings,
 }: KeyboardControlSettingsProps) {
   const { t } = useTranslation('app');
-  const {
-    handleNoteKeyDown,
-    handleOctaveKeyDown,
-    handleTemporaryOctaveKeyDown,
-    resetKeyboardMappings,
-    setNoteMappingKey,
-    setOctaveMappingKey,
-    setTemporaryOctaveMappingKey,
-  } = useKeyboardControlSettings({
-    keyboardControlMappings,
-    setKeyboardControlMappings,
-  });
+  const { handleMappingKeyDown, resetKeyboardMappings, setMappingKey } =
+    useKeyboardControlSettings({
+      setKeyboardControlMappings,
+    });
   const { noteMappings, octaveKeyMappings, temporaryOctaveKeyMappings } =
     keyboardControlMappings;
   const emptyKeyboardMappingText = t('settings.keyboard.empty');
@@ -114,8 +106,10 @@ function KeyboardControlSettings({
                 key={offset}
                 keyValue={key}
                 label={getOffsetLabel(offset)}
-                onClear={() => setNoteMappingKey(offset, '')}
-                onKeyDown={(e) => handleNoteKeyDown(offset, e)}
+                onClear={() => setMappingKey({ offset, type: 'note' }, '')}
+                onKeyDown={(e) =>
+                  handleMappingKeyDown({ offset, type: 'note' }, e)
+                }
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
@@ -125,8 +119,10 @@ function KeyboardControlSettings({
                 key={direction}
                 keyValue={octaveKeyMappings[direction]}
                 label={label}
-                onClear={() => setOctaveMappingKey(direction, '')}
-                onKeyDown={(e) => handleOctaveKeyDown(direction, e)}
+                onClear={() => setMappingKey({ direction, type: 'octave' }, '')}
+                onKeyDown={(e) =>
+                  handleMappingKeyDown({ direction, type: 'octave' }, e)
+                }
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
@@ -137,8 +133,15 @@ function KeyboardControlSettings({
                   key={`temporary-${direction}`}
                   keyValue={temporaryOctaveKeyMappings[direction]}
                   label={label}
-                  onClear={() => setTemporaryOctaveMappingKey(direction, '')}
-                  onKeyDown={(e) => handleTemporaryOctaveKeyDown(direction, e)}
+                  onClear={() =>
+                    setMappingKey({ direction, type: 'temporaryOctave' }, '')
+                  }
+                  onKeyDown={(e) =>
+                    handleMappingKeyDown(
+                      { direction, type: 'temporaryOctave' },
+                      e,
+                    )
+                  }
                   placeholder={emptyKeyboardMappingText}
                 />
               ),
