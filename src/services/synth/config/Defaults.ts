@@ -75,13 +75,7 @@ import { createReverbConfig } from '../effect/Reverb';
 import type { WaveShaperConfig } from '../effect/WaveShaper';
 import type { SpectrumConfig } from '../Spectrum';
 import { createSpectrum } from '../Spectrum';
-
-export interface SynthConfig {
-  effect: EffectConfig;
-  envelope: EnvelopeConfig;
-  spectrum: SpectrumConfig;
-  synth: SynthBasicConfig;
-}
+import type { SynthConfig } from './Schema';
 
 export function createDefaultSynthBasicConfig(): SynthBasicConfig {
   return {

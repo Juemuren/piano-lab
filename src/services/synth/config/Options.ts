@@ -65,6 +65,8 @@ export const BUILT_IN_REVERB_PRESETS = [
 
 export const REVERB_PRESETS = [...BUILT_IN_REVERB_PRESETS, 'custom'] as const;
 
+export type SynthOscillatorType = (typeof OSCILLATOR_TYPES)[number];
+
 export type BuiltInSpectrumType = (typeof BUILT_IN_SPECTRUM_TYPES)[number];
 
 export type SpectrumType = (typeof SPECTRUM_TYPES)[number];

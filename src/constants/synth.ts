@@ -4,10 +4,11 @@ import type {
   BuiltInSpectrumType,
   EqualizerType,
   FilterType,
+  SynthOscillatorType,
   WaveShaperPreset,
 } from '../services/synth/config/Options';
 
-export const DEFAULT_SYNTH_OSCILLATOR_TYPE: OscillatorType = 'sine';
+export const DEFAULT_SYNTH_OSCILLATOR_TYPE: SynthOscillatorType = 'sine';
 export const DEFAULT_SYNTH_VOLUME_RATIO = 0.2;
 export const DEFAULT_SYNTH_HARMONIC_COUNT = 10;
 

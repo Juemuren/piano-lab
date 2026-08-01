@@ -12,6 +12,7 @@ import {
   DEFAULT_SYNTH_OSCILLATOR_TYPE,
   DEFAULT_SYNTH_VOLUME_RATIO,
 } from '../../constants/synth';
+import type { SynthOscillatorType } from './config/Options';
 import type { EnvelopeConfig, VoiceEnvelopeState } from './Envelope';
 import { createVoiceStartPlans, createVoiceStopPlans } from './Envelope';
 import type { FrequencyModulationConfig } from './effect/Modulation';
@@ -22,7 +23,7 @@ const MIN_GAIN_VALUE = 1e-10;
 
 export interface SynthBasicConfig {
   harmonicCount: number;
-  oscillatorType: OscillatorType;
+  oscillatorType: SynthOscillatorType;
   volumeRatio: number;
 }
 
@@ -64,7 +65,7 @@ export class BasicVoice {
     },
     this.harmonicCount,
   );
-  private oscillatorType: OscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
+  private oscillatorType: SynthOscillatorType = DEFAULT_SYNTH_OSCILLATOR_TYPE;
   private volumeRatio: number = DEFAULT_SYNTH_VOLUME_RATIO;
   private attackTime: number = DEFAULT_ENVELOPE_ATTACK_TIME_SECONDS;
   private decayTime: number = DEFAULT_ENVELOPE_DECAY_TIME_SECONDS;

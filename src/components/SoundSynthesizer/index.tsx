@@ -17,8 +17,10 @@ import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
-import type { SynthConfig } from '../../services/synth/config/Defaults';
 import { createDefaultSynthConfig } from '../../services/synth/config/Defaults';
+import type { SynthOscillatorType } from '../../services/synth/config/Options';
+import type { SynthConfig } from '../../services/synth/config/Schema';
+import { parseSynthConfig } from '../../services/synth/config/Schema';
 import type { EffectConfig } from '../../services/synth/EffectChain';
 import type { EnvelopeConfig } from '../../services/synth/Envelope';
 import type { SpectrumConfig } from '../../services/synth/Spectrum';
@@ -100,7 +102,7 @@ function SoundSynthesizer() {
   const handleImportConfig = useCallback(
     (content: string) => {
       try {
-        const config = JSON.parse(content) as SynthConfig;
+        const config = parseSynthConfig(content);
 
         setOscillatorType(config.synth.oscillatorType);
         setVolumeRatio(config.synth.volumeRatio);
@@ -156,7 +158,9 @@ function SoundSynthesizer() {
         <ControlSelect
           icon={<Activity size={16} />}
           label={t('controls.oscillatorType')}
-          onChange={(e) => setOscillatorType(e.target.value as OscillatorType)}
+          onChange={(e) =>
+            setOscillatorType(e.target.value as SynthOscillatorType)
+          }
           value={oscillatorType}
         >
           <option value="sine">{t('oscillator.sine')}</option>
