@@ -49,7 +49,7 @@ function SynthRecorderSettings() {
               ))}
             </ControlSelect>
           )}
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <ControlButton
               disabled={isRecording || isUnsupported}
               icon={<Circle size={18} />}

@@ -1,4 +1,4 @@
-import { Keyboard, RotateCcw, X } from 'lucide-react';
+import { Eraser, Keyboard, RotateCcw, X } from 'lucide-react';
 import type { Dispatch, KeyboardEvent, ReactNode, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { KeyboardControlMappings } from '../../constants/keyboard';
@@ -59,10 +59,14 @@ function KeyboardControlSettings({
   setKeyboardControlMappings,
 }: KeyboardControlSettingsProps) {
   const { t } = useTranslation('app');
-  const { handleMappingKeyDown, resetKeyboardMappings, setMappingKey } =
-    useKeyboardControlSettings({
-      setKeyboardControlMappings,
-    });
+  const {
+    clearKeyboardMappings,
+    handleMappingKeyDown,
+    resetKeyboardMappings,
+    setMappingKey,
+  } = useKeyboardControlSettings({
+    setKeyboardControlMappings,
+  });
   const { noteMappings, octaveKeyMappings, temporaryOctaveKeyMappings } =
     keyboardControlMappings;
   const emptyKeyboardMappingText = t('settings.keyboard.empty');
@@ -92,7 +96,7 @@ function KeyboardControlSettings({
               onChange={(e) => setIsKeyboardOctaveHintEnabled(e.target.checked)}
             />
           </div>
-          <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm xl:grid-cols-4">
             {noteMappings.map(({ offset, key }) => (
               <KeyboardMappingInput
                 id={offset.toString()}
@@ -144,10 +148,17 @@ function KeyboardControlSettings({
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-app-subtext text-sm dark:text-app-subtext-dark">
             <ControlButton
               icon={<RotateCcw size={16} />}
               label={t('settings.keyboard.reset')}
               onClick={resetKeyboardMappings}
+            />
+            <ControlButton
+              icon={<Eraser size={16} />}
+              label={t('settings.keyboard.clear')}
+              onClick={clearKeyboardMappings}
             />
           </div>
         </>

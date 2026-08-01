@@ -37,7 +37,25 @@ function useKeyboardControlSettings({
     setKeyboardControlMappings(DEFAULT_KEYBOARD_CONTROL_MAPPINGS);
   }
 
+  function clearKeyboardMappings() {
+    setKeyboardControlMappings((mappings) => ({
+      noteMappings: mappings.noteMappings.map(({ offset }) => ({
+        key: '',
+        offset,
+      })),
+      octaveKeyMappings: {
+        downKey: '',
+        upKey: '',
+      },
+      temporaryOctaveKeyMappings: {
+        downKey: '',
+        upKey: '',
+      },
+    }));
+  }
+
   return {
+    clearKeyboardMappings,
     handleMappingKeyDown,
     resetKeyboardMappings,
     setMappingKey,

@@ -107,7 +107,7 @@ function PianoInputSettingsControl({
             step={1}
             value={pianoInputSettings.tempo}
           />
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-3">
+          <div className="grid grid-cols-2 gap-2">
             <ControlButton
               icon={<RotateCcw size={18} />}
               label={t('settings.pianoInput.resetHeader')}

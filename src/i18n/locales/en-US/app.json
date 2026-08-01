@@ -11,6 +11,7 @@
   },
   "settings": {
     "keyboard": {
+      "clear": "Clear Key Mappings",
       "empty": "Not set",
       "hint": "⇑/⇓ indicate permanent octave up/down, while ↑/↓ indicate temporary octave up/down. Key mappings only support letters and numbers.",
       "keyHint": "Show key hints",

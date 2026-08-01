@@ -15,3 +15,6 @@
 ## Style
 
 ## Feat
+
+- [ ] 添加 Xbox 手柄支持，使用 [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API)
+- [x] 键位映射增加 `清空键位` 按钮
