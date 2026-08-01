@@ -9,31 +9,31 @@ export interface KeyboardOctaveKeyMappings {
 }
 
 export const DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings = {
-  downKey: 'z',
-  upKey: 'x',
+  downKey: 'a',
+  upKey: 'l',
 };
 
 export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings =
   {
-    downKey: 'control',
-    upKey: 'shift',
+    downKey: 's',
+    upKey: 'k',
   };
 
 export const DEFAULT_KEYBOARD_NOTE_MAPPINGS: KeyboardNoteMapping[] = [
-  { key: 'a', offset: -3 },
-  { key: 'w', offset: -2 },
-  { key: 's', offset: -1 },
-  { key: 'd', offset: 0 },
-  { key: 'r', offset: 1 },
-  { key: 'f', offset: 2 },
-  { key: 't', offset: 3 },
-  { key: 'g', offset: 4 },
-  { key: 'h', offset: 5 },
-  { key: 'u', offset: 6 },
-  { key: 'j', offset: 7 },
-  { key: 'i', offset: 8 },
-  { key: 'k', offset: 9 },
-  { key: 'o', offset: 10 },
-  { key: 'l', offset: 11 },
-  { key: ';', offset: 12 },
+  { key: 'q', offset: -3 },
+  { key: '2', offset: -2 },
+  { key: 'w', offset: -1 },
+  { key: 'e', offset: 0 },
+  { key: '4', offset: 1 },
+  { key: 'r', offset: 2 },
+  { key: '5', offset: 3 },
+  { key: 't', offset: 4 },
+  { key: 'y', offset: 5 },
+  { key: '7', offset: 6 },
+  { key: 'u', offset: 7 },
+  { key: '8', offset: 8 },
+  { key: 'i', offset: 9 },
+  { key: '9', offset: 10 },
+  { key: 'o', offset: 11 },
+  { key: 'p', offset: 12 },
 ];
