@@ -1,3 +1,4 @@
+import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
 import type { WaveShaperPreset } from '../config/Options';
 
 const CURVE_SAMPLE_COUNT = 2048;
@@ -8,6 +9,10 @@ export interface WaveShaperConfig {
   overdrive: number;
   preset: WaveShaperPreset;
   saturation: number;
+}
+
+export function createWaveShaperConfig(): WaveShaperConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.waveShaper };
 }
 
 function clamp(value: number, min: number, max: number) {

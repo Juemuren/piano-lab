@@ -28,6 +28,20 @@ export interface EffectConfig {
   waveShaper: WaveShaperConfig | null;
 }
 
+export function createEffectConfig(): EffectConfig {
+  return {
+    amplitudeModulation: null,
+    compressor: null,
+    delayModulation: null,
+    filterEqualizer: null,
+    frequencyModulation: null,
+    panner: null,
+    phaseModulation: null,
+    reverb: null,
+    waveShaper: null,
+  };
+}
+
 export class EffectChain {
   private audioContext: AudioContext | null = null;
   private destinationNode: AudioNode | null = null;

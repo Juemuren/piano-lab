@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
-import { createDefaultEffectConfig } from '../../services/synth/config/Factories';
 import type { EffectConfig } from '../../services/synth/EffectChain';
+import { createEffectConfig } from '../../services/synth/EffectChain';
 import useCompressorControl from './effect/useCompressorControl';
 import useFilterEqualizerControl from './effect/useFilterEqualizerControl';
 import useModulationControl from './effect/useModulationControl';
@@ -15,7 +15,7 @@ function useEffectControl(
 ) {
   const synthEngine = useSynthEngine();
   const resolvedInitialConfig = useMemo(
-    () => initialConfig ?? createDefaultEffectConfig(),
+    () => initialConfig ?? createEffectConfig(),
     [initialConfig],
   );
   const filterEqualizerControl = useFilterEqualizerControl(

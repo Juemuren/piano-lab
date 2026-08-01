@@ -1,5 +1,6 @@
 import { degreesToRadians } from '../../../utils/math';
 import { createGaussianRandomGenerator } from '../../../utils/random';
+import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
 import type { BuiltInReverbPreset, ReverbPreset } from '../config/Options';
 
 export interface ReverbEarlyReflectionConfig {
@@ -20,6 +21,10 @@ export interface ReverbConfig {
   lateTail: ReverbLateTailConfig;
   mix: number;
   preset: ReverbPreset;
+}
+
+export function createReverbEarlyReflectionConfig(): ReverbEarlyReflectionConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.reverb.earlyReflection };
 }
 
 type ReverbPresetDefinition = Pick<
@@ -148,8 +153,8 @@ export function getReverbImpulseResponseSamples(
 }
 
 export function createReverbConfig(
-  preset: BuiltInReverbPreset,
-  mix: number,
+  preset: BuiltInReverbPreset = SYNTH_CONFIG_DEFAULTS.effect.reverb.preset,
+  mix: number = SYNTH_CONFIG_DEFAULTS.effect.reverb.mix,
 ): ReverbConfig {
   const definition = REVERB_PRESET_DEFINITIONS[preset];
 

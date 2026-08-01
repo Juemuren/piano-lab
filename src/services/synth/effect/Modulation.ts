@@ -1,3 +1,5 @@
+import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
+
 export interface AmplitudeModulationConfig {
   depth: number;
   frequency: number;
@@ -16,6 +18,22 @@ export interface PhaseModulationConfig {
 export interface DelayModulationConfig {
   depth: number;
   frequency: number;
+}
+
+export function createAmplitudeModulationConfig(): AmplitudeModulationConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.amplitudeModulation };
+}
+
+export function createFrequencyModulationConfig(): FrequencyModulationConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.frequencyModulation };
+}
+
+export function createPhaseModulationConfig(): PhaseModulationConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.phaseModulation };
+}
+
+export function createDelayModulationConfig(): DelayModulationConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.delayModulation };
 }
 
 const MODULATION_CURVE_POINT_COUNT = 256;

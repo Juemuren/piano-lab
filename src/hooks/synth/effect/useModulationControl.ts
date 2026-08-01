@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
-import {
-  createDefaultAmplitudeModulationConfig,
-  createDefaultDelayModulationConfig,
-  createDefaultFrequencyModulationConfig,
-  createDefaultPhaseModulationConfig,
-} from '../../../services/synth/config/Factories';
 import type {
   AmplitudeModulationConfig,
   DelayModulationConfig,
   FrequencyModulationConfig,
   PhaseModulationConfig,
+} from '../../../services/synth/effect/Modulation';
+import {
+  createAmplitudeModulationConfig,
+  createDelayModulationConfig,
+  createFrequencyModulationConfig,
+  createPhaseModulationConfig,
 } from '../../../services/synth/effect/Modulation';
 
 function useModulationControl(
@@ -33,14 +33,14 @@ function useModulationControl(
 
   const updateAmplitudeModulationEnabled = useCallback((enabled: boolean) => {
     setAmplitudeModulation((current) =>
-      enabled ? (current ?? createDefaultAmplitudeModulationConfig()) : null,
+      enabled ? (current ?? createAmplitudeModulationConfig()) : null,
     );
   }, []);
 
   const updateAmplitudeModulationFrequency = useCallback(
     (frequency: number) => {
       setAmplitudeModulation((current) => ({
-        ...(current ?? createDefaultAmplitudeModulationConfig()),
+        ...(current ?? createAmplitudeModulationConfig()),
         frequency,
       }));
     },
@@ -49,21 +49,21 @@ function useModulationControl(
 
   const updateAmplitudeModulationDepth = useCallback((depth: number) => {
     setAmplitudeModulation((current) => ({
-      ...(current ?? createDefaultAmplitudeModulationConfig()),
+      ...(current ?? createAmplitudeModulationConfig()),
       depth,
     }));
   }, []);
 
   const updateFrequencyModulationEnabled = useCallback((enabled: boolean) => {
     setFrequencyModulation((current) =>
-      enabled ? (current ?? createDefaultFrequencyModulationConfig()) : null,
+      enabled ? (current ?? createFrequencyModulationConfig()) : null,
     );
   }, []);
 
   const updateFrequencyModulationFrequency = useCallback(
     (frequency: number) => {
       setFrequencyModulation((current) => ({
-        ...(current ?? createDefaultFrequencyModulationConfig()),
+        ...(current ?? createFrequencyModulationConfig()),
         frequency,
       }));
     },
@@ -72,47 +72,47 @@ function useModulationControl(
 
   const updateFrequencyModulationDepth = useCallback((depth: number) => {
     setFrequencyModulation((current) => ({
-      ...(current ?? createDefaultFrequencyModulationConfig()),
+      ...(current ?? createFrequencyModulationConfig()),
       depth,
     }));
   }, []);
 
   const updatePhaseModulationEnabled = useCallback((enabled: boolean) => {
     setPhaseModulation((current) =>
-      enabled ? (current ?? createDefaultPhaseModulationConfig()) : null,
+      enabled ? (current ?? createPhaseModulationConfig()) : null,
     );
   }, []);
 
   const updatePhaseModulationFrequency = useCallback((frequency: number) => {
     setPhaseModulation((current) => ({
-      ...(current ?? createDefaultPhaseModulationConfig()),
+      ...(current ?? createPhaseModulationConfig()),
       frequency,
     }));
   }, []);
 
   const updatePhaseModulationDepth = useCallback((depth: number) => {
     setPhaseModulation((current) => ({
-      ...(current ?? createDefaultPhaseModulationConfig()),
+      ...(current ?? createPhaseModulationConfig()),
       depth,
     }));
   }, []);
 
   const updateDelayModulationEnabled = useCallback((enabled: boolean) => {
     setDelayModulation((current) =>
-      enabled ? (current ?? createDefaultDelayModulationConfig()) : null,
+      enabled ? (current ?? createDelayModulationConfig()) : null,
     );
   }, []);
 
   const updateDelayModulationFrequency = useCallback((frequency: number) => {
     setDelayModulation((current) => ({
-      ...(current ?? createDefaultDelayModulationConfig()),
+      ...(current ?? createDelayModulationConfig()),
       frequency,
     }));
   }, []);
 
   const updateDelayModulationDepth = useCallback((depth: number) => {
     setDelayModulation((current) => ({
-      ...(current ?? createDefaultDelayModulationConfig()),
+      ...(current ?? createDelayModulationConfig()),
       depth,
     }));
   }, []);

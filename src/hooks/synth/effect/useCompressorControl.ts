@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import { createDefaultCompressorConfig } from '../../../services/synth/config/Factories';
 import type { CompressorConfig } from '../../../services/synth/effect/Compressor';
+import { createCompressorConfig } from '../../../services/synth/effect/Compressor';
 
 function useCompressorControl(initialCompressor: CompressorConfig | null) {
   const [compressor, setCompressor] = useState<CompressorConfig | null>(
@@ -9,37 +9,37 @@ function useCompressorControl(initialCompressor: CompressorConfig | null) {
 
   const updateCompressorEnabled = useCallback((enabled: boolean) => {
     setCompressor((current) =>
-      enabled ? (current ?? createDefaultCompressorConfig()) : null,
+      enabled ? (current ?? createCompressorConfig()) : null,
     );
   }, []);
 
   const updateCompressorThreshold = useCallback((threshold: number) => {
     setCompressor((current) =>
-      current ? { ...current, threshold } : createDefaultCompressorConfig(),
+      current ? { ...current, threshold } : createCompressorConfig(),
     );
   }, []);
 
   const updateCompressorKnee = useCallback((knee: number) => {
     setCompressor((current) =>
-      current ? { ...current, knee } : createDefaultCompressorConfig(),
+      current ? { ...current, knee } : createCompressorConfig(),
     );
   }, []);
 
   const updateCompressorRatio = useCallback((ratio: number) => {
     setCompressor((current) =>
-      current ? { ...current, ratio } : createDefaultCompressorConfig(),
+      current ? { ...current, ratio } : createCompressorConfig(),
     );
   }, []);
 
   const updateCompressorAttack = useCallback((attack: number) => {
     setCompressor((current) =>
-      current ? { ...current, attack } : createDefaultCompressorConfig(),
+      current ? { ...current, attack } : createCompressorConfig(),
     );
   }, []);
 
   const updateCompressorRelease = useCallback((release: number) => {
     setCompressor((current) =>
-      current ? { ...current, release } : createDefaultCompressorConfig(),
+      current ? { ...current, release } : createCompressorConfig(),
     );
   }, []);
 

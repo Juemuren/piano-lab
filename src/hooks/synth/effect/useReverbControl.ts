@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
-import { SYNTH_CONFIG_DEFAULTS } from '../../../services/synth/config/Defaults';
-import { createDefaultReverbConfig } from '../../../services/synth/config/Factories';
 import type { ReverbPreset } from '../../../services/synth/config/Options';
 import type { ReverbConfig } from '../../../services/synth/effect/Reverb';
-import { createReverbConfig } from '../../../services/synth/effect/Reverb';
+import {
+  createReverbConfig,
+  createReverbEarlyReflectionConfig,
+} from '../../../services/synth/effect/Reverb';
 import { removeItemAt, updateItemAt } from '../../../utils/collection';
 
 function getReverbConfig(config: ReverbConfig | null) {
-  return config ?? createDefaultReverbConfig();
+  return config ?? createReverbConfig();
 }
 
 function useReverbControl(initialReverb: ReverbConfig | null) {
@@ -17,17 +18,14 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
 
   const updateReverbEnabled = useCallback((enabled: boolean) => {
     setReverb((current) =>
-      enabled ? (current ?? createDefaultReverbConfig()) : null,
+      enabled ? (current ?? createReverbConfig()) : null,
     );
   }, []);
 
   const updateReverbPreset = useCallback((preset: ReverbPreset) => {
     setReverb((current) => {
       if (preset !== 'custom') {
-        return createReverbConfig(
-          preset,
-          current?.mix ?? SYNTH_CONFIG_DEFAULTS.effect.reverb.mix,
-        );
+        return createReverbConfig(preset, current?.mix);
       }
 
       const source = getReverbConfig(current);
@@ -60,9 +58,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
         ...source,
         earlyReflections: [
           ...source.earlyReflections,
-          {
-            ...SYNTH_CONFIG_DEFAULTS.effect.reverb.earlyReflection,
-          },
+          createReverbEarlyReflectionConfig(),
         ],
         preset: 'custom',
       };

@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { createDefaultFilterEqualizerConfig } from '../../../services/synth/config/Factories';
 import type {
   EqualizerType,
   FilterEqualizerPreset,
@@ -21,7 +20,7 @@ function useFilterEqualizerControl(
 
   const updateFilterEqualizerEnabled = useCallback((enabled: boolean) => {
     setFilterEqualizer((current) =>
-      enabled ? (current ?? createDefaultFilterEqualizerConfig()) : null,
+      enabled ? (current ?? createFilterEqualizerConfig()) : null,
     );
   }, []);
 
@@ -34,7 +33,7 @@ function useFilterEqualizerControl(
 
   const addFilter = useCallback((type: FilterType) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -46,7 +45,7 @@ function useFilterEqualizerControl(
 
   const removeFilter = useCallback((index: number) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -58,7 +57,7 @@ function useFilterEqualizerControl(
 
   const updateFilterType = useCallback((index: number, type: FilterType) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -74,7 +73,7 @@ function useFilterEqualizerControl(
   const updateFilterFrequency = useCallback(
     (index: number, frequency: number) => {
       setFilterEqualizer((current) => {
-        const source = current ?? createDefaultFilterEqualizerConfig();
+        const source = current ?? createFilterEqualizerConfig();
 
         return {
           ...source,
@@ -91,7 +90,7 @@ function useFilterEqualizerControl(
 
   const updateFilterQ = useCallback((index: number, q: number) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -106,7 +105,7 @@ function useFilterEqualizerControl(
 
   const addEqualizer = useCallback((type: EqualizerType) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -118,7 +117,7 @@ function useFilterEqualizerControl(
 
   const removeEqualizer = useCallback((index: number) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -131,7 +130,7 @@ function useFilterEqualizerControl(
   const updateEqualizerType = useCallback(
     (index: number, type: EqualizerType) => {
       setFilterEqualizer((current) => {
-        const source = current ?? createDefaultFilterEqualizerConfig();
+        const source = current ?? createFilterEqualizerConfig();
 
         return {
           ...source,
@@ -149,7 +148,7 @@ function useFilterEqualizerControl(
   const updateEqualizerFrequency = useCallback(
     (index: number, frequency: number) => {
       setFilterEqualizer((current) => {
-        const source = current ?? createDefaultFilterEqualizerConfig();
+        const source = current ?? createFilterEqualizerConfig();
 
         return {
           ...source,
@@ -166,7 +165,7 @@ function useFilterEqualizerControl(
 
   const updateEqualizerQ = useCallback((index: number, q: number) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,
@@ -181,7 +180,7 @@ function useFilterEqualizerControl(
 
   const updateEqualizerGain = useCallback((index: number, gain: number) => {
     setFilterEqualizer((current) => {
-      const source = current ?? createDefaultFilterEqualizerConfig();
+      const source = current ?? createFilterEqualizerConfig();
 
       return {
         ...source,

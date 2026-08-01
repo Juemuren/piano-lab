@@ -1,4 +1,5 @@
 import { degreesToRadians } from '../../../utils/math';
+import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
 
 const DISTANCE_POINT_COUNT = 160;
 const SPHERE_LATITUDE_COUNT = 12;
@@ -19,6 +20,10 @@ export interface PannerConfig {
   positionZ: number;
   refDistance: number;
   rolloffFactor: number;
+}
+
+export function createPannerConfig(): PannerConfig {
+  return { ...SYNTH_CONFIG_DEFAULTS.effect.panner };
 }
 
 export interface PannerConeMesh {

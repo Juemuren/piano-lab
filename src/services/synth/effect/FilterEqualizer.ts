@@ -83,7 +83,8 @@ export const FILTER_EQUALIZER_PRESET_DEFINITIONS: Record<
 };
 
 export function createFilterEqualizerConfig(
-  preset: FilterEqualizerPreset,
+  preset: FilterEqualizerPreset = SYNTH_CONFIG_DEFAULTS.effect.filterEqualizer
+    .preset,
 ): FilterEqualizerConfig {
   if (preset === 'custom') {
     return {

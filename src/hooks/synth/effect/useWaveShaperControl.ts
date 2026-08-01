@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import { createDefaultWaveShaperConfig } from '../../../services/synth/config/Factories';
 import type { WaveShaperPreset } from '../../../services/synth/config/Options';
 import type { WaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
+import { createWaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
 
 function useWaveShaperControl(initialWaveShaper: WaveShaperConfig | null) {
   const [waveShaper, setWaveShaper] = useState<WaveShaperConfig | null>(
@@ -10,13 +10,13 @@ function useWaveShaperControl(initialWaveShaper: WaveShaperConfig | null) {
 
   const updateWaveShaperEnabled = useCallback((enabled: boolean) => {
     setWaveShaper((current) =>
-      enabled ? (current ?? createDefaultWaveShaperConfig()) : null,
+      enabled ? (current ?? createWaveShaperConfig()) : null,
     );
   }, []);
 
   const updateWaveShaperPreset = useCallback((preset: WaveShaperPreset) => {
     setWaveShaper((current) => ({
-      ...(current ?? createDefaultWaveShaperConfig()),
+      ...(current ?? createWaveShaperConfig()),
       preset,
     }));
   }, []);
@@ -27,7 +27,7 @@ function useWaveShaperControl(initialWaveShaper: WaveShaperConfig | null) {
       value: WaveShaperConfig[Key],
     ) => {
       setWaveShaper((current) => ({
-        ...(current ?? createDefaultWaveShaperConfig()),
+        ...(current ?? createWaveShaperConfig()),
         [key]: value,
       }));
     },
