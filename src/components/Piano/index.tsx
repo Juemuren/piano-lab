@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useGamepadControlContext } from '../../contexts/gamepadControl';
 import { useMidiControlContext } from '../../contexts/midiControl';
 import { usePlayingNotes } from '../../contexts/playingNotes';
 import usePianoControl from '../../hooks/piano/usePianoControl';
@@ -12,11 +13,14 @@ const WHITE_KEY_WIDTH_PX = 30;
 const BLACK_KEY_WIDTH_PX = 24;
 
 function Piano() {
+  const { selectedGamepadIndex, setGamepadControl } =
+    useGamepadControlContext();
   const { selectedMidiInputId, setMidiControl } = useMidiControlContext();
   const { playingNotes } = usePlayingNotes();
   const {
     whiteKeys,
     blackKeys,
+    gamepadControl,
     gamepadNotes,
     keyHints,
     octaveHints,
@@ -25,12 +29,16 @@ function Piano() {
     isMouseControlEnabled,
     handleKeyDown,
     handleKeyUp,
-  } = usePianoControl(playingNotes, selectedMidiInputId);
+  } = usePianoControl(playingNotes, selectedMidiInputId, selectedGamepadIndex);
   const keyboardWidth = whiteKeys.length * WHITE_KEY_WIDTH_PX;
 
   useEffect(() => {
     setMidiControl(midiControl);
   }, [midiControl, setMidiControl]);
+
+  useEffect(() => {
+    setGamepadControl(gamepadControl);
+  }, [gamepadControl, setGamepadControl]);
 
   return (
     <>

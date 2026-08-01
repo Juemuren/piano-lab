@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { AbcContentProvider } from './contexts/abcContent';
 import { AppSettingsProvider } from './contexts/appSettings';
+import { GamepadControlProvider } from './contexts/gamepadControl';
 import { MidiControlProvider } from './contexts/midiControl';
 import { PlayingNotesProvider } from './contexts/playingNotes';
 import { SynthEngineProvider } from './contexts/synthEngine';
@@ -17,7 +18,9 @@ createRoot(document.getElementById('root')!).render(
         <PlayingNotesProvider>
           <SynthEngineProvider>
             <MidiControlProvider>
-              <App />
+              <GamepadControlProvider>
+                <App />
+              </GamepadControlProvider>
             </MidiControlProvider>
           </SynthEngineProvider>
         </PlayingNotesProvider>

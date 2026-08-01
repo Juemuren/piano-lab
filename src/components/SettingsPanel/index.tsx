@@ -1,4 +1,5 @@
 import { useAppSettings } from '../../contexts/appSettings';
+import { useGamepadControlContext } from '../../contexts/gamepadControl';
 import { useMidiControlContext } from '../../contexts/midiControl';
 import usePianoInputSettings from '../../hooks/settings/usePianoInputSettings';
 import ControlPanel from '../shared/ControlPanel';
@@ -10,6 +11,8 @@ import PointerControlSettings from './PointerControlSettings';
 import SynthRecorderSettings from './SynthRecorderSettings';
 
 function SettingsPanel() {
+  const { gamepadControl, selectedGamepadIndex, setSelectedGamepadIndex } =
+    useGamepadControlContext();
   const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
     useMidiControlContext();
   const {
@@ -72,8 +75,11 @@ function SettingsPanel() {
         setSelectedMidiInputId={setSelectedMidiInputId}
       />
       <GamepadControlSettings
+        gamepadControl={gamepadControl}
         isGamepadControlEnabled={isGamepadControlEnabled}
+        selectedGamepadIndex={selectedGamepadIndex}
         setIsGamepadControlEnabled={setIsGamepadControlEnabled}
+        setSelectedGamepadIndex={setSelectedGamepadIndex}
       />
       <PianoInputSettingsControl
         isPianoInputEnabled={isPianoInputEnabled}

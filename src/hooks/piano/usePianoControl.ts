@@ -107,6 +107,7 @@ function useActivePianoNotes() {
 function usePianoControl(
   playingNotes: Set<number>,
   selectedMidiInputId?: string,
+  selectedGamepadIndex?: number,
 ) {
   const synthEngine = useSynthEngine();
   const { setAbcContent } = useAbcContent();
@@ -191,10 +192,11 @@ function usePianoControl(
     showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
-  const { gamepadNotes } = useGamepadControl({
+  const { gamepadControl, gamepadNotes } = useGamepadControl({
     enabled: isGamepadControlEnabled,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
+    selectedGamepadIndex,
   });
 
   const startMidiPressedKey = useCallback(
@@ -229,6 +231,7 @@ function usePianoControl(
 
   return {
     blackKeys,
+    gamepadControl,
     gamepadNotes,
     handleKeyDown,
     handleKeyUp,

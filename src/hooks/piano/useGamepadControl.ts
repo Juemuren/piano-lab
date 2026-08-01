@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type {
+  GamepadControlState,
+  GamepadDevice,
+  GamepadStatus,
+} from '../../contexts/gamepadControl/GamepadControlContext';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const LEFT_TRIGGER_INITIAL_NOTE = 57; // A3
@@ -26,6 +31,7 @@ interface UseGamepadControlOptions {
   enabled: boolean;
   onNotePress: (note: number, volume: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
+  selectedGamepadIndex?: number;
 }
 
 export interface GamepadNotes {
@@ -36,6 +42,25 @@ export interface GamepadNotes {
 interface RepeatState {
   direction: number;
   repeatedAt: number;
+}
+
+const EMPTY_GAMEPAD_DEVICES: GamepadDevice[] = [];
+
+export function createInitialGamepadControlState(): GamepadControlState {
+  return {
+    devices: [],
+    status: 'idle',
+  };
+}
+
+function getGamepadDevice(gamepad: Gamepad): GamepadDevice {
+  return {
+    axisCount: gamepad.axes.length,
+    buttonCount: gamepad.buttons.length,
+    id: gamepad.id,
+    index: gamepad.index,
+    mapping: gamepad.mapping,
+  };
 }
 
 function clampPianoNote(note: number) {
@@ -54,8 +79,12 @@ function useGamepadControl({
   enabled,
   onNotePress,
   onNoteRelease,
+  selectedGamepadIndex,
 }: UseGamepadControlOptions) {
   const [gamepadNotes, setGamepadNotes] = useState<GamepadNotes>({});
+  const [devices, setDevices] = useState<GamepadDevice[]>([]);
+  const [activeGamepadIndex, setActiveGamepadIndex] = useState<number>();
+  const [status, setStatus] = useState<GamepadStatus>('idle');
   const selectedNotesRef = useRef({
     left: LEFT_TRIGGER_INITIAL_NOTE,
     right: RIGHT_TRIGGER_INITIAL_NOTE,
@@ -69,11 +98,35 @@ function useGamepadControl({
     if (!enabled) {
       indicatorNotesRef.current = {};
       setGamepadNotes({});
+      setDevices([]);
+      setActiveGamepadIndex(undefined);
+      setStatus('idle');
+      return;
+    }
+
+    if (!navigator.getGamepads) {
+      setStatus('unsupported');
       return;
     }
 
     let animationFrameId = 0;
-    let activeGamepadIndex: number | undefined;
+    let currentGamepadIndex: number | undefined;
+
+    function getConnectedGamepads() {
+      return Array.from(navigator.getGamepads()).filter(
+        (gamepad): gamepad is Gamepad => gamepad !== null,
+      );
+    }
+
+    function updateDevices() {
+      try {
+        setDevices(getConnectedGamepads().map(getGamepadDevice));
+        setStatus('ready');
+      } catch {
+        setDevices([]);
+        setStatus('error');
+      }
+    }
 
     function releaseActiveNotes() {
       const { left, right } = activeNotesRef.current;
@@ -150,15 +203,25 @@ function useGamepadControl({
     }
 
     function pollGamepad(now: number) {
-      const gamepads = navigator.getGamepads();
+      let gamepads: (Gamepad | null)[];
+      try {
+        gamepads = Array.from(navigator.getGamepads());
+      } catch {
+        setStatus('error');
+        return;
+      }
+      const selectedGamepad =
+        (selectedGamepadIndex === undefined
+          ? undefined
+          : gamepads[selectedGamepadIndex]) ||
+        gamepads.find((item) => item?.mapping === 'standard');
       const gamepad =
-        activeGamepadIndex === undefined
-          ? Array.from(gamepads).find((item) => item?.mapping === 'standard')
-          : gamepads[activeGamepadIndex];
+        selectedGamepad?.mapping === 'standard' ? selectedGamepad : null;
 
       if (!gamepad) {
-        if (activeGamepadIndex !== undefined) {
-          activeGamepadIndex = undefined;
+        if (currentGamepadIndex !== undefined) {
+          currentGamepadIndex = undefined;
+          setActiveGamepadIndex(undefined);
           digitalButtonsRef.current.clear();
           repeatStatesRef.current.clear();
           releaseActiveNotes();
@@ -169,7 +232,10 @@ function useGamepadControl({
         return;
       }
 
-      activeGamepadIndex = gamepad.index;
+      if (currentGamepadIndex !== gamepad.index) {
+        currentGamepadIndex = gamepad.index;
+        setActiveGamepadIndex(gamepad.index);
+      }
 
       handleDigitalButton(gamepad, DPAD_LEFT_BUTTON, 'left', -1);
       handleDigitalButton(gamepad, DPAD_RIGHT_BUTTON, 'left', 1);
@@ -212,16 +278,30 @@ function useGamepadControl({
     }
 
     animationFrameId = requestAnimationFrame(pollGamepad);
+    updateDevices();
+    window.addEventListener('gamepadconnected', updateDevices);
+    window.addEventListener('gamepaddisconnected', updateDevices);
     window.addEventListener('blur', releaseActiveNotes);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('gamepadconnected', updateDevices);
+      window.removeEventListener('gamepaddisconnected', updateDevices);
       window.removeEventListener('blur', releaseActiveNotes);
       releaseActiveNotes();
     };
-  }, [enabled, onNotePress, onNoteRelease]);
+  }, [enabled, onNotePress, onNoteRelease, selectedGamepadIndex]);
 
-  return { gamepadNotes };
+  const gamepadControl = useMemo(
+    (): GamepadControlState => ({
+      activeGamepadIndex: enabled ? activeGamepadIndex : undefined,
+      devices: enabled ? devices : EMPTY_GAMEPAD_DEVICES,
+      status: enabled ? status : 'idle',
+    }),
+    [activeGamepadIndex, devices, enabled, status],
+  );
+
+  return { gamepadControl, gamepadNotes };
 }
 
 export default useGamepadControl;

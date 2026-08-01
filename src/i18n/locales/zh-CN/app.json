@@ -10,6 +10,16 @@
     "soundSynthesizer": "声音合成器"
   },
   "settings": {
+    "gamepad": {
+      "deviceInfo": "{{buttons}} 个按键，{{axes}} 个控制轴",
+      "inputDevice": "手柄设备",
+      "status": {
+        "error": "无法读取手柄信息，请检查浏览器权限设置。",
+        "noDevices": "未检测到手柄，请连接手柄并按下任意键。",
+        "unsupported": "当前浏览器不支持 Gamepad API。",
+        "unsupportedMapping": "当前手柄不是标准布局，无法用于控制琴键。"
+      }
+    },
     "gamepadControl": "使用 XBOX 手柄控制琴键",
     "keyboard": {
       "clear": "清空键位",
