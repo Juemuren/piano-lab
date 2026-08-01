@@ -6,16 +6,9 @@ import useKeyboardControlSettings from '../../hooks/settings/useKeyboardControlS
 import { NOTE_NAMES } from '../../utils/pitch';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
+import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
 
-const OCTAVE_KEY_MAPPING_CONTROLS = [
-  { direction: 'upKey', label: '⇑' },
-  { direction: 'downKey', label: '⇓' },
-] as const;
-
-const TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS = [
-  { direction: 'upKey', label: '↑' },
-  { direction: 'downKey', label: '↓' },
-] as const;
+const KEYBOARD_OCTAVE_DIRECTIONS = ['upKey', 'downKey'] as const;
 
 interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
@@ -113,12 +106,14 @@ function KeyboardControlSettings({
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
-            {OCTAVE_KEY_MAPPING_CONTROLS.map(({ direction, label }) => (
+            {KEYBOARD_OCTAVE_DIRECTIONS.map((direction) => (
               <KeyboardMappingInput
                 id={direction}
                 key={direction}
                 keyValue={octaveKeyMappings[direction]}
-                label={label}
+                label={
+                  <KeyboardOctaveMark direction={direction} type="octave" />
+                }
                 onClear={() => setMappingKey({ direction, type: 'octave' }, '')}
                 onKeyDown={(e) =>
                   handleMappingKeyDown({ direction, type: 'octave' }, e)
@@ -126,26 +121,29 @@ function KeyboardControlSettings({
                 placeholder={emptyKeyboardMappingText}
               />
             ))}
-            {TEMPORARY_OCTAVE_KEY_MAPPING_CONTROLS.map(
-              ({ direction, label }) => (
-                <KeyboardMappingInput
-                  id={`temporary-${direction}`}
-                  key={`temporary-${direction}`}
-                  keyValue={temporaryOctaveKeyMappings[direction]}
-                  label={label}
-                  onClear={() =>
-                    setMappingKey({ direction, type: 'temporaryOctave' }, '')
-                  }
-                  onKeyDown={(e) =>
-                    handleMappingKeyDown(
-                      { direction, type: 'temporaryOctave' },
-                      e,
-                    )
-                  }
-                  placeholder={emptyKeyboardMappingText}
-                />
-              ),
-            )}
+            {KEYBOARD_OCTAVE_DIRECTIONS.map((direction) => (
+              <KeyboardMappingInput
+                id={`temporary-${direction}`}
+                key={`temporary-${direction}`}
+                keyValue={temporaryOctaveKeyMappings[direction]}
+                label={
+                  <KeyboardOctaveMark
+                    direction={direction}
+                    type="temporaryOctave"
+                  />
+                }
+                onClear={() =>
+                  setMappingKey({ direction, type: 'temporaryOctave' }, '')
+                }
+                onKeyDown={(e) =>
+                  handleMappingKeyDown(
+                    { direction, type: 'temporaryOctave' },
+                    e,
+                  )
+                }
+                placeholder={emptyKeyboardMappingText}
+              />
+            ))}
             <ControlButton
               icon={<RotateCcw size={16} />}
               label={t('settings.keyboard.reset')}

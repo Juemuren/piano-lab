@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardControlMappings } from '../../constants/keyboard';
 import { DEFAULT_KEYBOARD_OCTAVE } from '../../constants/keyboard';
+import type { KeyboardOctaveMappingType } from '../../utils/keyboard';
 import {
   clampKeyboardOctave,
   createKeyboardNoteMap,
@@ -21,9 +22,8 @@ interface UseKeyboardPianoControlOptions {
 
 interface KeyboardOctaveHint {
   downKey: string;
-  downMark: string;
+  type: KeyboardOctaveMappingType;
   upKey: string;
-  upMark: string;
 }
 
 function isEditableTarget(target: EventTarget | null) {
@@ -241,28 +241,18 @@ function useKeyboardControl({
       return [];
     }
 
-    return [
+    const hints: KeyboardOctaveHint[] = [
       {
-        downKey: octaveKeyMappings.downKey
-          ? octaveKeyMappings.downKey.toUpperCase()
-          : '',
-        downMark: '⇓',
-        upKey: octaveKeyMappings.upKey
-          ? octaveKeyMappings.upKey.toUpperCase()
-          : '',
-        upMark: '⇑',
+        ...octaveKeyMappings,
+        type: 'octave',
       },
       {
-        downKey: temporaryOctaveKeyMappings.downKey
-          ? temporaryOctaveKeyMappings.downKey.toUpperCase()
-          : '',
-        downMark: '↓',
-        upKey: temporaryOctaveKeyMappings.upKey
-          ? temporaryOctaveKeyMappings.upKey.toUpperCase()
-          : '',
-        upMark: '↑',
+        ...temporaryOctaveKeyMappings,
+        type: 'temporaryOctave',
       },
-    ].filter(({ downKey, upKey }) => downKey || upKey);
+    ];
+
+    return hints.filter(({ downKey, upKey }) => downKey || upKey);
   }, [enabled, octaveKeyMappings, temporaryOctaveKeyMappings, showOctaveHints]);
 
   return { keyHints, octaveHints };

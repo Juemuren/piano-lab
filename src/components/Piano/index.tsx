@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useMidiControlContext } from '../../contexts/midiControl';
 import { usePlayingNotes } from '../../contexts/playingNotes';
 import usePianoControl from '../../hooks/piano/usePianoControl';
+import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
 import PianoKey from './PianoKey';
 
 const WHITE_KEY_HEIGHT_PX = 160;
@@ -101,18 +102,18 @@ function Piano() {
 
       {octaveHints.length > 0 && (
         <div className="flex flex-wrap justify-center gap-4 text-app-overlay text-sm dark:text-app-overlay-dark">
-          {octaveHints.map(({ downMark, downKey, upMark, upKey }) => (
-            <span className="flex items-center gap-2" key={downMark}>
+          {octaveHints.map(({ downKey, type, upKey }) => (
+            <span className="flex items-center gap-2" key={type}>
               {downKey && (
                 <span>
-                  {downMark}
-                  <kbd>{downKey}</kbd>
+                  <KeyboardOctaveMark direction="downKey" type={type} />
+                  <kbd>{downKey.toUpperCase()}</kbd>
                 </span>
               )}
               {upKey && (
                 <span>
-                  {upMark}
-                  <kbd>{upKey}</kbd>
+                  <KeyboardOctaveMark direction="upKey" type={type} />
+                  <kbd>{upKey.toUpperCase()}</kbd>
                 </span>
               )}
             </span>

@@ -11,11 +11,14 @@ import {
 import { getBasePitchByOctave } from './pitch';
 
 export type KeyboardOctaveDirection = keyof KeyboardOctaveKeyMappings;
+export type KeyboardOctaveMappingType = 'octave' | 'temporaryOctave';
 
 export type KeyboardMappingSlot =
   | { offset: number; type: 'note' }
-  | { direction: KeyboardOctaveDirection; type: 'octave' }
-  | { direction: KeyboardOctaveDirection; type: 'temporaryOctave' };
+  | {
+      direction: KeyboardOctaveDirection;
+      type: KeyboardOctaveMappingType;
+    };
 
 export function normalizeKeyboardControlKey(key: string) {
   const normalizedKey = key.toLowerCase();
@@ -51,7 +54,7 @@ function isSameKeyboardMappingSlot(
 
 function assignOctaveMappingKey(
   mappings: KeyboardOctaveKeyMappings,
-  type: 'octave' | 'temporaryOctave',
+  type: KeyboardOctaveMappingType,
   targetSlot: KeyboardMappingSlot,
   key: string,
 ) {
