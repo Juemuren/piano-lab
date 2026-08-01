@@ -2,6 +2,7 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { FrequencyModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getFrequencyModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
@@ -56,20 +57,18 @@ function FrequencyModulationEffect({
             math={String.raw`f_y(t)=[1 + (2^{\Delta c/1200}-1)\sin(2\pi f_m t)]f_x(t)`}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.frequencyModulation.frequency}
             displayValue={`${frequencyModulation.frequency.toFixed(1)} Hz`}
             label={t('effect.modulation.frequency')}
-            max="20"
-            min="0.1"
             onChange={onFrequencyChange}
             step="0.1"
             symbol={<InlineMath math="f_m" />}
             value={frequencyModulation.frequency}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.frequencyModulation.depth}
             displayValue={`${frequencyModulation.depth.toFixed(0)} ¢`}
             label={t('effect.modulation.depth')}
-            max="100"
-            min="0"
             onChange={onDepthChange}
             step="1"
             symbol={<InlineMath math="\Delta c" />}

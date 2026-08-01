@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import type { ReverbPreset } from '../../../../services/synth/config/Options';
 import { REVERB_PRESETS } from '../../../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { ReverbConfig } from '../../../../services/synth/effect/Reverb';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
@@ -74,10 +75,9 @@ function Reverb({
           <div className="space-y-3">
             <BlockMath math={String.raw`y(t)=(1-m)x(t)+m(x*h)(t)`} />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.reverb.mix}
               displayValue={`${(reverb.mix * 100).toFixed(0)}%`}
               label={t('effect.reverb.mix')}
-              max="1"
-              min="0"
               onChange={onMixChange}
               step="0.01"
               symbol={<InlineMath math="m" />}

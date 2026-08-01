@@ -1,5 +1,6 @@
 import { InlineMath } from 'react-katex';
 import type { SpectrumType } from '../../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../../services/synth/config/Ranges';
 import type { SpectrumParamUpdates } from '../../../services/synth/Spectrum';
 import ControlRange from '../../shared/ControlRange';
 
@@ -28,10 +29,9 @@ function SpectrumParameterControls({
     <>
       {spectrumType === 'normal' && (
         <ControlRange
+          {...SYNTH_CONFIG_RANGES.spectrum.lambda}
           displayValue={lambda.toFixed(2)}
           label={labels.strikePoint}
-          max="1"
-          min="0"
           onChange={(value) => onChange({ lambda: value })}
           step="0.01"
           symbol={<InlineMath math="\lambda" />}
@@ -41,10 +41,9 @@ function SpectrumParameterControls({
 
       {(spectrumType === 'soft' || spectrumType === 'realistic') && (
         <ControlRange
+          {...SYNTH_CONFIG_RANGES.spectrum.sigma}
           displayValue={sigma.toFixed(2)}
           label={labels.decayRate}
-          max="1"
-          min="0.01"
           onChange={(value) => onChange({ sigma: value })}
           step="0.01"
           symbol={<InlineMath math="\sigma" />}
@@ -54,10 +53,9 @@ function SpectrumParameterControls({
 
       {spectrumType === 'realistic' && (
         <ControlRange
+          {...SYNTH_CONFIG_RANGES.spectrum.p}
           displayValue={p.toFixed(2)}
           label={labels.powerExponent}
-          max="4"
-          min="0.5"
           onChange={(value) => onChange({ p: value })}
           step="0.1"
           symbol={<InlineMath math="p" />}

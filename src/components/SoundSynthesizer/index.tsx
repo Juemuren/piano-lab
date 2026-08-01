@@ -19,6 +19,7 @@ import useFileExport from '../../hooks/file/useFileExport';
 import useFileImport from '../../hooks/file/useFileImport';
 import { createDefaultSynthConfig } from '../../services/synth/config/Defaults';
 import type { SynthOscillatorType } from '../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../services/synth/config/Ranges';
 import type { SynthConfig } from '../../services/synth/config/Schema';
 import { parseSynthConfig } from '../../services/synth/config/Schema';
 import type { EffectConfig } from '../../services/synth/EffectChain';
@@ -169,22 +170,20 @@ function SoundSynthesizer() {
           <option value="square">{t('oscillator.square')}</option>
         </ControlSelect>
         <ControlRange
+          {...SYNTH_CONFIG_RANGES.synth.volumeRatio}
           displayValue={`${Math.trunc(volumeRatio * 100).toString()}%`}
           icon={volumeIcon}
           label={t('controls.volume')}
-          max="1"
-          min="0"
           onChange={setVolumeRatio}
           step="0.01"
           value={volumeRatio}
         />
         <ControlRange
+          {...SYNTH_CONFIG_RANGES.synth.harmonicCount}
           accentClassName="text-app-warning dark:text-app-warning-dark"
           displayValue={harmonicCount.toString()}
           icon={harmonicIcon}
           label={t('controls.harmonicCount')}
-          max="20"
-          min="2"
           onChange={(value) => setHarmonicCount(Math.round(value))}
           p={t('controls.harmonicCountWarning')}
           pClassName="text-app-warning/50 dark:text-app-warning-dark/50"

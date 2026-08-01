@@ -1,4 +1,5 @@
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../services/synth/config/Ranges';
 import ControlRange from '../../shared/ControlRange';
 
 interface EnvelopeParameterControlsProps {
@@ -37,50 +38,45 @@ function EnvelopeParameterControls({
   return (
     <>
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.envelope.attackTime}
         displayValue={`${attackTime.toFixed(3)} s`}
         label={labels.attackTime}
-        max="0.1"
-        min="0.001"
         onChange={onAttackTimeChange}
         step="0.001"
         symbol={<InlineMath math="\tau_a" />}
         value={attackTime}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.envelope.decayTime}
         displayValue={`${decayTime.toFixed(2)} s`}
         label={labels.decayTime}
-        max="1"
-        min="0.01"
         onChange={onDecayTimeChange}
         step="0.01"
         symbol={<InlineMath math="\tau_d" />}
         value={decayTime}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.envelope.releaseTime}
         displayValue={`${releaseTime.toFixed(2)} s`}
         label={labels.releaseTime}
-        max="10"
-        min="0.1"
         onChange={onReleaseTimeChange}
         step="0.1"
         symbol={<InlineMath math="\tau_r" />}
         value={releaseTime}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.envelope.sustainGain}
         displayValue={sustainGain.toFixed(2)}
         label={labels.sustainGain}
-        max="1"
-        min="0.1"
         onChange={onSustainGainChange}
         step="0.01"
         symbol={<InlineMath math="S" />}
         value={sustainGain}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.envelope.silenceGain}
         displayValue={silenceGain.toExponential(2)}
         label={labels.silenceGain}
-        max="0.001"
-        min="0.000001"
         onChange={onSilenceGainChange}
         step="0.000001"
         symbol={<InlineMath math="\varepsilon" />}

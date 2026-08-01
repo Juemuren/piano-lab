@@ -1,5 +1,6 @@
 import { Ban, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { CompressorConfig } from '../../../../services/synth/effect/Compressor';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -50,46 +51,41 @@ function Compressor({
         {compressor && (
           <div className="space-y-2">
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.compressor.threshold}
               displayValue={`${compressor.threshold.toFixed(0)} dB`}
               label={t('effect.compressor.threshold')}
-              max="0"
-              min="-100"
               onChange={onThresholdChange}
               step="1"
               value={compressor.threshold}
             />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.compressor.knee}
               displayValue={`${compressor.knee.toFixed(0)} dB`}
               label={t('effect.compressor.knee')}
-              max="40"
-              min="0"
               onChange={onKneeChange}
               step="1"
               value={compressor.knee}
             />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.compressor.ratio}
               displayValue={`${compressor.ratio.toFixed(1)}:1`}
               label={t('effect.compressor.ratio')}
-              max="20"
-              min="1"
               onChange={onRatioChange}
               step="0.1"
               value={compressor.ratio}
             />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.compressor.attack}
               displayValue={`${(compressor.attack * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.attack')}
-              max="1"
-              min="0"
               onChange={onAttackChange}
               step="0.001"
               value={compressor.attack}
             />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.compressor.release}
               displayValue={`${(compressor.release * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.release')}
-              max="1"
-              min="0"
               onChange={onReleaseChange}
               step="0.001"
               value={compressor.release}

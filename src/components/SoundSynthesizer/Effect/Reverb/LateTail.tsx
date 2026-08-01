@@ -1,6 +1,7 @@
 import { Speaker } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { ReverbLateTailConfig } from '../../../../services/synth/effect/Reverb';
 import BlockMath from '../../../shared/BlockMath';
 import ControlRange from '../../../shared/ControlRange';
@@ -34,40 +35,36 @@ function LateTail({
         math={String.raw`h_l[n]=A\mathcal{N}(0,1)e^{-\alpha(n-Df_s)}`}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.effect.reverb.lateTail.delay}
         displayValue={`${(lateTail.delay * 1000).toFixed(0)} ms`}
         label={t('effect.reverb.lateTail.delay')}
-        max="1"
-        min="0"
         onChange={onDelayChange}
         step="0.001"
         symbol={<InlineMath math="D" />}
         value={lateTail.delay}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.effect.reverb.lateTail.duration}
         displayValue={`${lateTail.duration.toFixed(2)} s`}
         label={t('effect.reverb.lateTail.duration')}
-        max="10"
-        min="1"
         onChange={onDurationChange}
         step="0.01"
         symbol={<InlineMath math="T" />}
         value={lateTail.duration}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.effect.reverb.lateTail.amplitude}
         displayValue={lateTail.amplitude.toFixed(3)}
         label={t('effect.reverb.lateTail.amplitude')}
-        max="0.1"
-        min="0"
         onChange={onAmplitudeChange}
         step="0.001"
         symbol={<InlineMath math="A" />}
         value={lateTail.amplitude}
       />
       <ControlRange
+        {...SYNTH_CONFIG_RANGES.effect.reverb.lateTail.alpha}
         displayValue={lateTail.alpha.toExponential(5)}
         label={t('effect.reverb.lateTail.alpha')}
-        max="0.001"
-        min="0.00001"
         onChange={onAlphaChange}
         step="0.00001"
         symbol={<InlineMath math="\alpha" />}

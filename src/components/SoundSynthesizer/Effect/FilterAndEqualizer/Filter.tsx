@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DEFAULT_FILTER_TYPE } from '../../../../constants/synth';
 import type { FilterType } from '../../../../services/synth/config/Options';
 import { FILTER_TYPES } from '../../../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { FilterConfig } from '../../../../services/synth/effect/FilterEqualizer';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -71,19 +72,17 @@ function Filter({
             </div>
 
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.filter.frequency}
               displayValue={`${filter.frequency.toFixed(0)} Hz`}
               label={t(`effect.filter.${filter.type}.frequency`)}
-              max="20000"
-              min="20"
               onChange={(value) => onFrequencyChange(index, value)}
               step="1"
               value={filter.frequency}
             />
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.filter.q}
               displayValue={filter.q.toFixed(1)}
               label={t(`effect.filter.${filter.type}.q`)}
-              max="20"
-              min="0.1"
               onChange={(value) => onQChange(index, value)}
               step="0.1"
               value={filter.q}

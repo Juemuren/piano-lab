@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import type { WaveShaperPreset } from '../../../../services/synth/config/Options';
 import { WAVE_SHAPER_PRESETS } from '../../../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { WaveShaperConfig } from '../../../../services/synth/effect/WaveShaper';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -31,34 +32,30 @@ const presetParams: Record<
   }
 > = {
   distortion: {
+    ...SYNTH_CONFIG_RANGES.effect.waveShaper.distortion,
     formula: String.raw`y=\tanh(gx)`,
     key: 'distortion',
-    max: 10,
-    min: 2,
     step: 0.1,
     symbol: 'g',
   },
   fuzz: {
+    ...SYNTH_CONFIG_RANGES.effect.waveShaper.fuzz,
     formula: String.raw`y=\frac{2}{\pi}\arctan(sx)`,
     key: 'fuzz',
-    max: 100,
-    min: 10,
     step: 1,
     symbol: 's',
   },
   overdrive: {
+    ...SYNTH_CONFIG_RANGES.effect.waveShaper.overdrive,
     formula: String.raw`y=\frac{\arctan(kx)}{\arctan(k)}`,
     key: 'overdrive',
-    max: 20,
-    min: 1,
     step: 0.1,
     symbol: 'k',
   },
   saturation: {
+    ...SYNTH_CONFIG_RANGES.effect.waveShaper.saturation,
     formula: String.raw`y=\frac{x}{1+c|x|}`,
     key: 'saturation',
-    max: 1,
-    min: 0,
     step: 0.01,
     symbol: 'c',
   },

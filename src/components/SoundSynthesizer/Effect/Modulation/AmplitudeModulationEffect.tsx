@@ -2,6 +2,7 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { AmplitudeModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getAmplitudeModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
@@ -56,20 +57,18 @@ function AmplitudeModulationEffect({
             math={String.raw`A_y(t)=[1-\Delta G+\Delta G\sin(2\pi f_m t)]A_x(t)`}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.amplitudeModulation.frequency}
             displayValue={`${amplitudeModulation.frequency.toFixed(1)} Hz`}
             label={t('effect.modulation.frequency')}
-            max="20"
-            min="0.1"
             onChange={onFrequencyChange}
             step="0.1"
             symbol={<InlineMath math="f_m" />}
             value={amplitudeModulation.frequency}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.amplitudeModulation.depth}
             displayValue={`${amplitudeModulation.depth.toFixed(2)}`}
             label={t('effect.modulation.depth')}
-            max="0.5"
-            min="0"
             onChange={onDepthChange}
             step="0.01"
             symbol={<InlineMath math="\Delta G" />}

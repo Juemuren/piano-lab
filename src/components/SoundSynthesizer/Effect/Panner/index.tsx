@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { PannerConfig } from '../../../../services/synth/effect/Panner';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -117,28 +118,25 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
             >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.positionX}
                   displayValue={panner.positionX.toFixed(2)}
                   label="X"
-                  max="10"
-                  min="-10"
                   onChange={(value) => onValueChange('positionX', value)}
                   step="0.01"
                   value={panner.positionX}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.positionY}
                   displayValue={panner.positionY.toFixed(2)}
                   label="Y"
-                  max="10"
-                  min="-10"
                   onChange={(value) => onValueChange('positionY', value)}
                   step="0.01"
                   value={panner.positionY}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.positionZ}
                   displayValue={panner.positionZ.toFixed(2)}
                   label="Z"
-                  max="10"
-                  min="-10"
                   onChange={(value) => onValueChange('positionZ', value)}
                   step="0.01"
                   value={panner.positionZ}
@@ -152,28 +150,25 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
             >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.orientationX}
                   displayValue={panner.orientationX.toFixed(2)}
                   label="X"
-                  max="1"
-                  min="-1"
                   onChange={(value) => onValueChange('orientationX', value)}
                   step="0.01"
                   value={panner.orientationX}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.orientationY}
                   displayValue={panner.orientationY.toFixed(2)}
                   label="Y"
-                  max="1"
-                  min="-1"
                   onChange={(value) => onValueChange('orientationY', value)}
                   step="0.01"
                   value={panner.orientationY}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.orientationZ}
                   displayValue={panner.orientationZ.toFixed(2)}
                   label="Z"
-                  max="1"
-                  min="-1"
                   onChange={(value) => onValueChange('orientationZ', value)}
                   step="0.01"
                   value={panner.orientationZ}
@@ -187,28 +182,25 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
             >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.refDistance}
                   displayValue={panner.refDistance.toFixed(2)}
                   label={t('effect.panner.refDistance')}
-                  max="10"
-                  min="0.01"
                   onChange={(value) => onValueChange('refDistance', value)}
                   step="0.01"
                   value={panner.refDistance}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.maxDistance}
                   displayValue={panner.maxDistance.toFixed(0)}
                   label={t('effect.panner.maxDistance')}
-                  max="10000"
-                  min="1"
                   onChange={(value) => onValueChange('maxDistance', value)}
                   step="1"
                   value={panner.maxDistance}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.rolloffFactor}
                   displayValue={panner.rolloffFactor.toFixed(2)}
                   label={t('effect.panner.rolloffFactor')}
-                  max="10"
-                  min="0"
                   onChange={(value) => onValueChange('rolloffFactor', value)}
                   step="0.01"
                   value={panner.rolloffFactor}
@@ -222,28 +214,25 @@ function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
             >
               <div className="grid gap-2 md:grid-cols-3">
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.coneInnerAngle}
                   displayValue={`${panner.coneInnerAngle.toFixed(0)}°`}
                   label={t('effect.panner.coneInnerAngle')}
-                  max="360"
-                  min="0"
                   onChange={(value) => onValueChange('coneInnerAngle', value)}
                   step="1"
                   value={panner.coneInnerAngle}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.coneOuterAngle}
                   displayValue={`${panner.coneOuterAngle.toFixed(0)}°`}
                   label={t('effect.panner.coneOuterAngle')}
-                  max="360"
-                  min="0"
                   onChange={(value) => onValueChange('coneOuterAngle', value)}
                   step="1"
                   value={panner.coneOuterAngle}
                 />
                 <ControlRange
+                  {...SYNTH_CONFIG_RANGES.effect.panner.coneOuterGain}
                   displayValue={panner.coneOuterGain.toFixed(2)}
                   label={t('effect.panner.coneOuterGain')}
-                  max="1"
-                  min="0"
                   onChange={(value) => onValueChange('coneOuterGain', value)}
                   step="0.01"
                   value={panner.coneOuterGain}

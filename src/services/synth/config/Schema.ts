@@ -10,21 +10,27 @@ import {
   SPECTRUM_TYPES,
   WAVE_SHAPER_PRESETS,
 } from './Options';
+import type { NumberRange } from './Ranges';
+import { SYNTH_CONFIG_RANGES } from './Ranges';
 
 const MAX_EFFECT_ITEMS = 64;
 
-const modulationFrequencySchema = z.number().min(0.1).max(20);
+function numberInRange({ min, max }: NumberRange) {
+  return z.number().min(min).max(max);
+}
+
+const ranges = SYNTH_CONFIG_RANGES;
 
 const filterSchema = z.strictObject({
-  frequency: z.number().min(20).max(20000),
-  q: z.number().min(0.1).max(20),
+  frequency: numberInRange(ranges.effect.filter.frequency),
+  q: numberInRange(ranges.effect.filter.q),
   type: z.enum(FILTER_TYPES),
 });
 
 const equalizerSchema = z.strictObject({
-  frequency: z.number().min(20).max(20000),
-  gain: z.number().min(-24).max(24),
-  q: z.number().min(0.1).max(20),
+  frequency: numberInRange(ranges.effect.equalizer.frequency),
+  gain: numberInRange(ranges.effect.equalizer.gain),
+  q: numberInRange(ranges.effect.equalizer.q),
   type: z.enum(EQUALIZER_TYPES),
 });
 
@@ -35,56 +41,56 @@ const filterEqualizerSchema = z.strictObject({
 });
 
 const compressorSchema = z.strictObject({
-  attack: z.number().min(0).max(1),
-  knee: z.number().min(0).max(40),
-  ratio: z.number().min(1).max(20),
-  release: z.number().min(0).max(1),
-  threshold: z.number().min(-100).max(0),
+  attack: numberInRange(ranges.effect.compressor.attack),
+  knee: numberInRange(ranges.effect.compressor.knee),
+  ratio: numberInRange(ranges.effect.compressor.ratio),
+  release: numberInRange(ranges.effect.compressor.release),
+  threshold: numberInRange(ranges.effect.compressor.threshold),
 });
 
 const pannerSchema = z.strictObject({
-  coneInnerAngle: z.number().min(0).max(360),
-  coneOuterAngle: z.number().min(0).max(360),
-  coneOuterGain: z.number().min(0).max(1),
+  coneInnerAngle: numberInRange(ranges.effect.panner.coneInnerAngle),
+  coneOuterAngle: numberInRange(ranges.effect.panner.coneOuterAngle),
+  coneOuterGain: numberInRange(ranges.effect.panner.coneOuterGain),
   distanceModel: z.enum(PANNER_DISTANCE_MODELS),
-  maxDistance: z.number().min(1).max(10000),
-  orientationX: z.number().min(-1).max(1),
-  orientationY: z.number().min(-1).max(1),
-  orientationZ: z.number().min(-1).max(1),
+  maxDistance: numberInRange(ranges.effect.panner.maxDistance),
+  orientationX: numberInRange(ranges.effect.panner.orientationX),
+  orientationY: numberInRange(ranges.effect.panner.orientationY),
+  orientationZ: numberInRange(ranges.effect.panner.orientationZ),
   panningModel: z.enum(PANNER_PANNING_MODELS),
-  positionX: z.number().min(-10).max(10),
-  positionY: z.number().min(-10).max(10),
-  positionZ: z.number().min(-10).max(10),
-  refDistance: z.number().min(0.01).max(10),
-  rolloffFactor: z.number().min(0).max(10),
+  positionX: numberInRange(ranges.effect.panner.positionX),
+  positionY: numberInRange(ranges.effect.panner.positionY),
+  positionZ: numberInRange(ranges.effect.panner.positionZ),
+  refDistance: numberInRange(ranges.effect.panner.refDistance),
+  rolloffFactor: numberInRange(ranges.effect.panner.rolloffFactor),
 });
 
 const reverbSchema = z.strictObject({
   earlyReflections: z
     .array(
       z.strictObject({
-        delay: z.number().min(0).max(0.5),
-        gain: z.number().min(0).max(1),
-        phase: z.number().min(0).max(180),
+        delay: numberInRange(ranges.effect.reverb.earlyReflection.delay),
+        gain: numberInRange(ranges.effect.reverb.earlyReflection.gain),
+        phase: numberInRange(ranges.effect.reverb.earlyReflection.phase),
       }),
     )
     .max(MAX_EFFECT_ITEMS),
   lateTail: z.strictObject({
-    alpha: z.number().min(0.00001).max(0.001),
-    amplitude: z.number().min(0).max(0.1),
-    delay: z.number().min(0).max(1),
-    duration: z.number().min(1).max(10),
+    alpha: numberInRange(ranges.effect.reverb.lateTail.alpha),
+    amplitude: numberInRange(ranges.effect.reverb.lateTail.amplitude),
+    delay: numberInRange(ranges.effect.reverb.lateTail.delay),
+    duration: numberInRange(ranges.effect.reverb.lateTail.duration),
   }),
-  mix: z.number().min(0).max(1),
+  mix: numberInRange(ranges.effect.reverb.mix),
   preset: z.enum(REVERB_PRESETS),
 });
 
 const waveShaperSchema = z.strictObject({
-  distortion: z.number().min(2).max(10),
-  fuzz: z.number().min(10).max(100),
-  overdrive: z.number().min(1).max(20),
+  distortion: numberInRange(ranges.effect.waveShaper.distortion),
+  fuzz: numberInRange(ranges.effect.waveShaper.fuzz),
+  overdrive: numberInRange(ranges.effect.waveShaper.overdrive),
   preset: z.enum(WAVE_SHAPER_PRESETS),
-  saturation: z.number().min(0).max(1),
+  saturation: numberInRange(ranges.effect.waveShaper.saturation),
 });
 
 const synthConfigSchema = z
@@ -92,52 +98,55 @@ const synthConfigSchema = z
     effect: z.strictObject({
       amplitudeModulation: z
         .strictObject({
-          depth: z.number().min(0).max(0.5),
-          frequency: modulationFrequencySchema,
+          depth: numberInRange(ranges.effect.amplitudeModulation.depth),
+          frequency: numberInRange(ranges.effect.amplitudeModulation.frequency),
         })
         .nullable(),
       compressor: compressorSchema.nullable(),
       delayModulation: z
         .strictObject({
-          depth: z.number().min(0).max(0.02),
-          frequency: modulationFrequencySchema.max(10),
+          depth: numberInRange(ranges.effect.delayModulation.depth),
+          frequency: numberInRange(ranges.effect.delayModulation.frequency),
         })
         .nullable(),
       filterEqualizer: filterEqualizerSchema.nullable(),
       frequencyModulation: z
         .strictObject({
-          depth: z.number().min(0).max(100),
-          frequency: modulationFrequencySchema,
+          depth: numberInRange(ranges.effect.frequencyModulation.depth),
+          frequency: numberInRange(ranges.effect.frequencyModulation.frequency),
         })
         .nullable(),
       panner: pannerSchema.nullable(),
       phaseModulation: z
         .strictObject({
-          depth: z.number().min(0).max(Math.PI),
-          frequency: modulationFrequencySchema.max(10),
+          depth: numberInRange(ranges.effect.phaseModulation.depth),
+          frequency: numberInRange(ranges.effect.phaseModulation.frequency),
         })
         .nullable(),
       reverb: reverbSchema.nullable(),
       waveShaper: waveShaperSchema.nullable(),
     }),
     envelope: z.strictObject({
-      attackTime: z.number().min(0.001).max(0.1),
-      decayTime: z.number().min(0.01).max(1),
-      releaseTime: z.number().min(0.1).max(10),
-      silenceGain: z.number().min(0.000001).max(0.001),
-      sustainGain: z.number().min(0.1).max(1),
+      attackTime: numberInRange(ranges.envelope.attackTime),
+      decayTime: numberInRange(ranges.envelope.decayTime),
+      releaseTime: numberInRange(ranges.envelope.releaseTime),
+      silenceGain: numberInRange(ranges.envelope.silenceGain),
+      sustainGain: numberInRange(ranges.envelope.sustainGain),
     }),
     spectrum: z.strictObject({
-      customAmplitudes: z.array(z.number().min(0).max(1)).min(2).max(20),
-      lambda: z.number().min(0).max(1),
-      p: z.number().min(0.5).max(4),
-      sigma: z.number().min(0.01).max(1),
+      customAmplitudes: z
+        .array(numberInRange(ranges.spectrum.amplitude))
+        .min(ranges.synth.harmonicCount.min)
+        .max(ranges.synth.harmonicCount.max),
+      lambda: numberInRange(ranges.spectrum.lambda),
+      p: numberInRange(ranges.spectrum.p),
+      sigma: numberInRange(ranges.spectrum.sigma),
       type: z.enum(SPECTRUM_TYPES),
     }),
     synth: z.strictObject({
-      harmonicCount: z.number().int().min(2).max(20),
+      harmonicCount: numberInRange(ranges.synth.harmonicCount).int(),
       oscillatorType: z.enum(OSCILLATOR_TYPES),
-      volumeRatio: z.number().min(0).max(1),
+      volumeRatio: numberInRange(ranges.synth.volumeRatio),
     }),
   })
   .refine(

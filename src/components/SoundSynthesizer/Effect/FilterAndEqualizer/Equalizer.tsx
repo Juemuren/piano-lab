@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DEFAULT_EQUALIZER_TYPE } from '../../../../constants/synth';
 import type { EqualizerType } from '../../../../services/synth/config/Options';
 import { EQUALIZER_TYPES } from '../../../../services/synth/config/Options';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { EqualizerConfig } from '../../../../services/synth/effect/FilterEqualizer';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -72,30 +73,27 @@ function Equalizer({
             </div>
 
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.equalizer.frequency}
               displayValue={`${equalizer.frequency.toFixed(0)} Hz`}
               label={t(`effect.equalizer.${equalizer.type}.frequency`)}
-              max="20000"
-              min="20"
               onChange={(value) => onFrequencyChange(index, value)}
               step="1"
               value={equalizer.frequency}
             />
             {equalizer.type === 'peaking' && (
               <ControlRange
+                {...SYNTH_CONFIG_RANGES.effect.equalizer.q}
                 displayValue={equalizer.q.toFixed(1)}
                 label={t('effect.equalizer.peaking.q')}
-                max="20"
-                min="0.1"
                 onChange={(value) => onQChange(index, value)}
                 step="0.1"
                 value={equalizer.q}
               />
             )}
             <ControlRange
+              {...SYNTH_CONFIG_RANGES.effect.equalizer.gain}
               displayValue={`${equalizer.gain.toFixed(1)} dB`}
               label={t(`effect.equalizer.${equalizer.type}.gain`)}
-              max="24"
-              min="-24"
               onChange={(value) => onGainChange(index, value)}
               step="0.1"
               value={equalizer.gain}

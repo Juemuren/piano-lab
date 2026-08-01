@@ -1,3 +1,4 @@
+import { SYNTH_CONFIG_RANGES } from '../../../services/synth/config/Ranges';
 import VerticalSliderGroup from '../../shared/VerticalSliderGroup';
 import HarmonicLabel from '../shared/HarmonicLabel';
 
@@ -12,9 +13,8 @@ function SpectrumValueControls({
 }: SpectrumValueControlsProps) {
   return (
     <VerticalSliderGroup
+      {...SYNTH_CONFIG_RANGES.spectrum.amplitude}
       labels={HarmonicLabel(amplitudes.length)}
-      max="1"
-      min="0"
       onChange={onChange}
       step="0.01"
       values={amplitudes}

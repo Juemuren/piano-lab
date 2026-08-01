@@ -1,6 +1,7 @@
 import { ArrowLeftRight, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { ReverbEarlyReflectionConfig } from '../../../../services/synth/effect/Reverb';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
@@ -53,30 +54,27 @@ function EarlyReflections({
             </div>
             <div className="grid sm:grid-cols-3">
               <ControlRange
+                {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.delay}
                 displayValue={`${(reflection.delay * 1000).toFixed(0)} ms`}
                 label={t('effect.reverb.earlyReflection.delay')}
-                max="0.5"
-                min="0"
                 onChange={(value) => onDelayChange(index, value)}
                 step="0.001"
                 symbol={<InlineMath math="d_i" />}
                 value={reflection.delay}
               />
               <ControlRange
+                {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.gain}
                 displayValue={reflection.gain.toFixed(2)}
                 label={t('effect.reverb.earlyReflection.amplitude')}
-                max="1"
-                min="0"
                 onChange={(value) => onGainChange(index, value)}
                 step="0.01"
                 symbol={<InlineMath math="a_i" />}
                 value={reflection.gain}
               />
               <ControlRange
+                {...SYNTH_CONFIG_RANGES.effect.reverb.earlyReflection.phase}
                 displayValue={`${reflection.phase.toFixed(0)}°`}
                 label={t('effect.reverb.earlyReflection.phase')}
-                max="180"
-                min="0"
                 onChange={(value) => onPhaseChange(index, value)}
                 step="1"
                 symbol={<InlineMath math="\phi_i" />}

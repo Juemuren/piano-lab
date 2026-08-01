@@ -2,6 +2,7 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { DelayModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getDelayModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
@@ -52,20 +53,18 @@ function DelayModulationEffect({
             math={String.raw`\tau(t)=\frac{\tau_{\max}}{2}+\frac{\tau_{\max}}{2}\sin(2\pi f_m t)`}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.delayModulation.frequency}
             displayValue={`${delayModulation.frequency.toFixed(1)} Hz`}
             label={t('effect.modulation.frequency')}
-            max="10"
-            min="0.1"
             onChange={onFrequencyChange}
             step="0.1"
             symbol={<InlineMath math="f_m" />}
             value={delayModulation.frequency}
           />
           <ControlRange
+            {...SYNTH_CONFIG_RANGES.effect.delayModulation.depth}
             displayValue={`${(delayModulation.depth * 1000).toFixed(0)} ms`}
             label={t('effect.modulation.depth')}
-            max="0.02"
-            min="0"
             onChange={onDepthChange}
             step="0.001"
             symbol={<InlineMath math="\tau_{\max}" />}
