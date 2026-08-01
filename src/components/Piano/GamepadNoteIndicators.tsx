@@ -25,31 +25,33 @@ const TRIGGER_INDICATORS: TriggerIndicator[] = [
   },
 ];
 
+const BOTH_TRIGGER_INDICATOR = {
+  colorClassName: 'text-app-tip dark:text-app-tip-dark',
+  label: 'B',
+};
+
 function GamepadNoteIndicators({
   gamepadNotes,
   note,
 }: GamepadNoteIndicatorsProps) {
-  const activeIndicators = TRIGGER_INDICATORS.filter(
-    ({ side }) => gamepadNotes[side] === note,
-  );
+  const isOverlapping =
+    gamepadNotes.left === note && gamepadNotes.right === note;
+  const indicator = isOverlapping
+    ? BOTH_TRIGGER_INDICATOR
+    : TRIGGER_INDICATORS.find(({ side }) => gamepadNotes[side] === note);
 
-  if (activeIndicators.length === 0) {
+  if (!indicator) {
     return null;
   }
 
   return (
-    <span className="pointer-events-none absolute bottom-full left-1/2 flex -translate-x-1/2 gap-0.5">
-      {activeIndicators.map(({ colorClassName, label, side }) => (
-        <span
-          className={`flex flex-col items-center ${colorClassName}`}
-          key={side}
-        >
-          <span className="px-0.5 font-semibold text-xs leading-none">
-            {label}
-          </span>
-          <ArrowDown size={14} strokeWidth={3} />
-        </span>
-      ))}
+    <span
+      className={`pointer-events-none absolute bottom-full left-1/2 flex -translate-x-1/2 flex-col items-center ${indicator.colorClassName}`}
+    >
+      <span className="px-0.5 font-semibold text-xs leading-none">
+        {indicator.label}
+      </span>
+      <ArrowDown size={14} strokeWidth={3} />
     </span>
   );
 }
