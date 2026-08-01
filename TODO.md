@@ -11,7 +11,7 @@
 ## Fix
 
 - [ ] 相位调制目前还不是真正的相位调制，而是使用全通滤波器进行近似
-- [ ] localStorage 中的 piano-lab:app-settings 如果抛出错误，需要捕获并清空 localStorage 以避免程序崩溃
+- [x] localStorage 中的 piano-lab:app-settings 如果抛出错误，需要捕获并清空 localStorage 以避免程序崩溃
 
 ## Style
 
