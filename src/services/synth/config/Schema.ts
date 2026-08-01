@@ -13,8 +13,6 @@ import {
 import type { NumberRange } from './Ranges';
 import { SYNTH_CONFIG_RANGES } from './Ranges';
 
-const MAX_EFFECT_ITEMS = 64;
-
 function numberInRange({ min, max }: NumberRange) {
   return z.number().min(min).max(max);
 }
@@ -35,8 +33,8 @@ const equalizerSchema = z.strictObject({
 });
 
 const filterEqualizerSchema = z.strictObject({
-  equalizers: z.array(equalizerSchema).max(MAX_EFFECT_ITEMS),
-  filters: z.array(filterSchema).max(MAX_EFFECT_ITEMS),
+  equalizers: z.array(equalizerSchema),
+  filters: z.array(filterSchema),
   preset: z.enum(FILTER_EQUALIZER_PRESETS),
 });
 
@@ -66,15 +64,13 @@ const pannerSchema = z.strictObject({
 });
 
 const reverbSchema = z.strictObject({
-  earlyReflections: z
-    .array(
-      z.strictObject({
-        delay: numberInRange(ranges.effect.reverb.earlyReflection.delay),
-        gain: numberInRange(ranges.effect.reverb.earlyReflection.gain),
-        phase: numberInRange(ranges.effect.reverb.earlyReflection.phase),
-      }),
-    )
-    .max(MAX_EFFECT_ITEMS),
+  earlyReflections: z.array(
+    z.strictObject({
+      delay: numberInRange(ranges.effect.reverb.earlyReflection.delay),
+      gain: numberInRange(ranges.effect.reverb.earlyReflection.gain),
+      phase: numberInRange(ranges.effect.reverb.earlyReflection.phase),
+    }),
+  ),
   lateTail: z.strictObject({
     alpha: numberInRange(ranges.effect.reverb.lateTail.alpha),
     amplitude: numberInRange(ranges.effect.reverb.lateTail.amplitude),
