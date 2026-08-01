@@ -4,12 +4,15 @@ import type {
   KeyboardNoteMapping,
   KeyboardOctaveKeyMappings,
 } from '../../constants/keyboard';
-import { normalizeKeyboardControlKey } from '../../utils/keyboard';
+import { DEFAULT_KEYBOARD_OCTAVE } from '../../constants/keyboard';
+import {
+  clampKeyboardOctave,
+  createKeyboardNoteMap,
+  getKeyboardNote,
+  getKeyboardOctaveWithTemporaryShift,
+  normalizeKeyboardControlKey,
+} from '../../utils/keyboard';
 import { getBasePitchByOctave } from '../../utils/pitch';
-
-const DEFAULT_KEYBOARD_OCTAVE = 4;
-const MIN_KEYBOARD_OCTAVE = 1;
-const MAX_KEYBOARD_OCTAVE = 7;
 
 interface UseKeyboardPianoControlOptions {
   activeNotesRef: RefObject<Map<string, number>>;
@@ -28,37 +31,6 @@ interface KeyboardOctaveHint {
   downMark: string;
   upKey: string;
   upMark: string;
-}
-
-function getKeyboardNote(
-  key: string,
-  octave: number,
-  keyboardNoteMap: ReadonlyMap<string, number>,
-) {
-  const offset = keyboardNoteMap.get(key);
-  if (offset === undefined) {
-    return null;
-  }
-
-  return getBasePitchByOctave(octave) + offset;
-}
-
-function clampKeyboardOctave(octave: number) {
-  return Math.min(MAX_KEYBOARD_OCTAVE, Math.max(MIN_KEYBOARD_OCTAVE, octave));
-}
-
-function getKeyboardOctaveWithTemporaryShift(
-  octave: number,
-  activeTemporaryOctaveKeys: ReadonlySet<string>,
-  temporaryOctaveKeyMappings: KeyboardOctaveKeyMappings,
-) {
-  const modifierDelta =
-    (activeTemporaryOctaveKeys.has(temporaryOctaveKeyMappings.upKey) ? 1 : 0) +
-    (activeTemporaryOctaveKeys.has(temporaryOctaveKeyMappings.downKey)
-      ? -1
-      : 0);
-
-  return clampKeyboardOctave(octave + modifierDelta);
 }
 
 function isEditableTarget(target: EventTarget | null) {
@@ -93,13 +65,10 @@ function useKeyboardControl({
     keyboardOctaveRef.current = keyboardOctave;
   }, [keyboardOctave]);
 
-  const keyboardNoteMap = useMemo(() => {
-    return new Map(
-      keyboardNoteMappings
-        .filter((mapping) => mapping.key)
-        .map((mapping) => [mapping.key, mapping.offset]),
-    );
-  }, [keyboardNoteMappings]);
+  const keyboardNoteMap = useMemo(
+    () => createKeyboardNoteMap(keyboardNoteMappings),
+    [keyboardNoteMappings],
+  );
 
   useEffect(() => {
     if (!enabled) {

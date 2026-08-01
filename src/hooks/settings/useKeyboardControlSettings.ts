@@ -5,17 +5,18 @@ import type {
 } from '../../constants/keyboard';
 import {
   DEFAULT_KEYBOARD_NOTE_MAPPINGS,
-  DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS,
-  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS,
+  DEFAULT_KEYBOARD_OCTAVE_MAPPINGS,
+  DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS,
 } from '../../constants/keyboard';
-import { normalizeKeyboardControlKey } from '../../utils/keyboard';
-
-type KeyboardOctaveDirection = keyof KeyboardOctaveKeyMappings;
-
-type KeyboardMappingSlot =
-  | { offset: number; type: 'note' }
-  | { direction: KeyboardOctaveDirection; type: 'octave' }
-  | { direction: KeyboardOctaveDirection; type: 'temporaryOctave' };
+import type {
+  KeyboardMappingSlot,
+  KeyboardOctaveDirection,
+} from '../../utils/keyboard';
+import {
+  getKeyboardMappingsWithAssignedKey,
+  isKeyboardMappingClearKey,
+  normalizeKeyboardControlKey,
+} from '../../utils/keyboard';
 
 interface UseKeyboardControlSettingsOptions {
   keyboardNoteMappings: KeyboardNoteMapping[];
@@ -28,10 +29,6 @@ interface UseKeyboardControlSettingsOptions {
   ) => void;
 }
 
-function isClearKey(key: string) {
-  return key === 'Backspace' || key === 'Delete' || key === 'Escape';
-}
-
 function handleMappingKeyDown(
   e: KeyboardEvent<HTMLInputElement>,
   setKey: (key: string) => void,
@@ -39,7 +36,7 @@ function handleMappingKeyDown(
   e.preventDefault();
   e.stopPropagation();
 
-  if (isClearKey(e.key)) {
+  if (isKeyboardMappingClearKey(e.key)) {
     setKey('');
     return;
   }
@@ -48,25 +45,6 @@ function handleMappingKeyDown(
   if (key !== null) {
     setKey(key);
   }
-}
-
-function isSameSlot(
-  slot: KeyboardMappingSlot,
-  targetSlot: KeyboardMappingSlot,
-) {
-  if (slot.type !== targetSlot.type) {
-    return false;
-  }
-
-  if (slot.type === 'note' && targetSlot.type === 'note') {
-    return slot.offset === targetSlot.offset;
-  }
-
-  if (slot.type !== 'note' && targetSlot.type !== 'note') {
-    return slot.direction === targetSlot.direction;
-  }
-
-  return false;
 }
 
 function useKeyboardControlSettings({
@@ -81,54 +59,20 @@ function useKeyboardControlSettings({
     targetSlot: KeyboardMappingSlot,
     key: string,
   ) {
-    const nextNoteMappings = keyboardNoteMappings.map((mapping) => {
-      const slot: KeyboardMappingSlot = {
-        offset: mapping.offset,
-        type: 'note',
-      };
-
-      if (isSameSlot(slot, targetSlot)) {
-        return { ...mapping, key };
-      }
-
-      if (key && mapping.key === key) {
-        return { ...mapping, key: '' };
-      }
-
-      return mapping;
-    });
-
-    function getNextOctaveKeyMappings(
-      type: 'octave' | 'temporaryOctave',
-      mappings: KeyboardOctaveKeyMappings,
-    ) {
-      const nextMappings = { ...mappings };
-
-      for (const direction of Object.keys(
-        mappings,
-      ) as KeyboardOctaveDirection[]) {
-        const slot: KeyboardMappingSlot = { direction, type };
-        const currentKey = mappings[direction];
-
-        if (isSameSlot(slot, targetSlot)) {
-          nextMappings[direction] = key;
-        } else if (key && currentKey === key) {
-          nextMappings[direction] = '';
-        }
-      }
-
-      return nextMappings;
-    }
-
-    setKeyboardNoteMappings(nextNoteMappings);
-    setKeyboardOctaveKeyMappings(
-      getNextOctaveKeyMappings('octave', keyboardOctaveKeyMappings),
+    const nextMappings = getKeyboardMappingsWithAssignedKey(
+      {
+        noteMappings: keyboardNoteMappings,
+        octaveKeyMappings: keyboardOctaveKeyMappings,
+        temporaryOctaveKeyMappings: keyboardTemporaryOctaveKeyMappings,
+      },
+      targetSlot,
+      key,
     );
+
+    setKeyboardNoteMappings(nextMappings.noteMappings);
+    setKeyboardOctaveKeyMappings(nextMappings.octaveKeyMappings);
     setKeyboardTemporaryOctaveKeyMappings(
-      getNextOctaveKeyMappings(
-        'temporaryOctave',
-        keyboardTemporaryOctaveKeyMappings,
-      ),
+      nextMappings.temporaryOctaveKeyMappings,
     );
   }
 
@@ -175,9 +119,9 @@ function useKeyboardControlSettings({
 
   function resetKeyboardMappings() {
     setKeyboardNoteMappings(DEFAULT_KEYBOARD_NOTE_MAPPINGS);
-    setKeyboardOctaveKeyMappings(DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS);
+    setKeyboardOctaveKeyMappings(DEFAULT_KEYBOARD_OCTAVE_MAPPINGS);
     setKeyboardTemporaryOctaveKeyMappings(
-      DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS,
+      DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS,
     );
   }
 

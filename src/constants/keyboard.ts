@@ -8,12 +8,17 @@ export interface KeyboardOctaveKeyMappings {
   upKey: string;
 }
 
-export const DEFAULT_KEYBOARD_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings = {
+export const DEFAULT_KEYBOARD_OCTAVE = 4;
+export const MIN_KEYBOARD_OCTAVE = 1;
+export const MAX_KEYBOARD_OCTAVE = 7;
+export const KEYBOARD_MAPPING_CLEAR_KEYS = ['Backspace', 'Delete', 'Escape'];
+
+export const DEFAULT_KEYBOARD_OCTAVE_MAPPINGS: KeyboardOctaveKeyMappings = {
   downKey: 'a',
   upKey: 'l',
 };
 
-export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_KEY_MAPPINGS: KeyboardOctaveKeyMappings =
+export const DEFAULT_KEYBOARD_TEMPORARY_OCTAVE_MAPPINGS: KeyboardOctaveKeyMappings =
   {
     downKey: 's',
     upKey: 'k',
