@@ -1,6 +1,6 @@
-import { createEffectConfig } from '../EffectChain';
 import { createSpectrum } from '../Spectrum';
 import { SYNTH_CONFIG_DEFAULTS } from './Defaults';
+import { createEffectConfig } from './EffectConfig';
 import type { SynthConfig } from './Schema';
 
 export function createDefaultSynthConfig(): SynthConfig {

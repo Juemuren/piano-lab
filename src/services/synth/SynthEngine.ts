@@ -4,7 +4,7 @@ import type {
   SynthBasicConfig,
 } from './BasicVoice';
 import { BasicVoice } from './BasicVoice';
-import type { EffectConfig } from './EffectChain';
+import type { EffectConfig } from './config/EffectConfig';
 import { EffectChain } from './EffectChain';
 import type { EnvelopeConfig } from './Envelope';
 import { getVoiceGainAtTime } from './Envelope';
