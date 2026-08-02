@@ -20,7 +20,7 @@ interface UseKeyboardPianoControlOptions {
   showOctaveHints: boolean;
 }
 
-interface KeyboardOctaveHint {
+export interface KeyboardOctaveHint {
   downKey: string;
   type: KeyboardOctaveMappingType;
   upKey: string;

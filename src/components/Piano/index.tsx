@@ -1,7 +1,8 @@
 import usePianoControl from '../../hooks/piano/usePianoControl';
-import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
 import GamepadControlHints from './GamepadControlHints';
 import GamepadNoteIndicators from './GamepadNoteIndicators';
+import KeyboardKeyHint from './KeyboardKeyHint';
+import KeyboardOctaveHints from './KeyboardOctaveHints';
 import PianoKey from './PianoKey';
 
 const WHITE_KEY_HEIGHT_PX = 160;
@@ -55,9 +56,11 @@ function Piano() {
                   note={key.note}
                 />
                 <span className="flex h-full flex-col items-center justify-end py-2">
-                  <kbd className="text-piano-black">
-                    {keyHints.get(key.note)}
-                  </kbd>
+                  <KeyboardKeyHint
+                    className="text-piano-black"
+                    keyHints={keyHints}
+                    note={key.note}
+                  />
                   <span>
                     {key.char}
                     <sub>{key.number}</sub>
@@ -93,9 +96,11 @@ function Piano() {
                   note={key.note}
                 />
                 <span className="flex h-full flex-col items-center justify-end py-2">
-                  <kbd className="text-piano-white">
-                    {keyHints.get(key.note)}
-                  </kbd>
+                  <KeyboardKeyHint
+                    className="text-piano-white"
+                    keyHints={keyHints}
+                    note={key.note}
+                  />
                 </span>
               </PianoKey>
             ))}
@@ -107,26 +112,7 @@ function Piano() {
         <GamepadControlHints />
       )}
 
-      {octaveHints.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-4 text-app-overlay text-sm dark:text-app-overlay-dark">
-          {octaveHints.map(({ downKey, type, upKey }) => (
-            <span className="flex items-center gap-2" key={type}>
-              {downKey && (
-                <span>
-                  <KeyboardOctaveMark direction="downKey" type={type} />
-                  <kbd>{downKey.toUpperCase()}</kbd>
-                </span>
-              )}
-              {upKey && (
-                <span>
-                  <KeyboardOctaveMark direction="upKey" type={type} />
-                  <kbd>{upKey.toUpperCase()}</kbd>
-                </span>
-              )}
-            </span>
-          ))}
-        </div>
-      )}
+      <KeyboardOctaveHints octaveHints={octaveHints} />
     </>
   );
 }
