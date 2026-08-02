@@ -12,19 +12,11 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSynthEngine } from '../../contexts/synthEngine';
-import useFileExport from '../../hooks/file/useFileExport';
-import useFileImport from '../../hooks/file/useFileImport';
-import { createDefaultSynthConfig } from '../../services/synth/config/Factories';
+import useSynthConfig from '../../hooks/synth/useSynthConfig';
 import type { SynthOscillatorType } from '../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../services/synth/config/Ranges';
-import type { SynthConfig } from '../../services/synth/config/Schema';
-import { parseSynthConfig } from '../../services/synth/config/Schema';
-import type { EffectConfig } from '../../services/synth/EffectChain';
-import type { EnvelopeConfig } from '../../services/synth/Envelope';
-import type { SpectrumConfig } from '../../services/synth/Spectrum';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';
@@ -38,56 +30,23 @@ import Spectrum from './Spectrum';
 
 function SoundSynthesizer() {
   const { t } = useTranslation('synth');
-  const synthEngine = useSynthEngine();
-  const defaultConfig = useMemo(() => createDefaultSynthConfig(), []);
-  const [oscillatorType, setOscillatorType] = useState(
-    () => defaultConfig.synth.oscillatorType,
-  );
-  const [volumeRatio, setVolumeRatio] = useState(
-    () => defaultConfig.synth.volumeRatio,
-  );
-  const [harmonicCount, setHarmonicCount] = useState(
-    () => defaultConfig.synth.harmonicCount,
-  );
-  const [envelopeConfig, setEnvelopeConfig] = useState<EnvelopeConfig>(
-    defaultConfig.envelope,
-  );
-  const [spectrumConfig, setSpectrumConfig] = useState<SpectrumConfig>(
-    defaultConfig.spectrum,
-  );
-  const [effectConfig, setEffectConfig] = useState<EffectConfig>(
-    defaultConfig.effect,
-  );
-  const [importedConfig, setImportedConfig] = useState<SynthConfig | null>(
-    null,
-  );
-  const [importRevision, setImportRevision] = useState(0);
-
-  const synthConfig = useMemo<SynthConfig>(
-    () => ({
-      effect: effectConfig,
-      envelope: envelopeConfig,
-      spectrum: spectrumConfig,
-      synth: {
-        harmonicCount,
-        oscillatorType,
-        volumeRatio,
-      },
-    }),
-    [
-      effectConfig,
-      envelopeConfig,
-      harmonicCount,
-      oscillatorType,
-      spectrumConfig,
-      volumeRatio,
-    ],
-  );
-
-  const synthConfigJson = useMemo(
-    () => JSON.stringify(synthConfig, null, 2),
-    [synthConfig],
-  );
+  const handleImportError = useCallback(() => {
+    window.alert(t('config.importError'));
+  }, [t]);
+  const {
+    config,
+    fileInputRef,
+    handleEffectConfigChange,
+    handleEnvelopeConfigChange,
+    handleExportConfig,
+    handleFileChange,
+    handleSpectrumConfigChange,
+    importRevision,
+    importedConfig,
+    openFileDialog,
+    updateSynthConfig,
+  } = useSynthConfig({ onImportError: handleImportError });
+  const { harmonicCount, oscillatorType, volumeRatio } = config.synth;
   const volumeIcon = useMemo(() => {
     if (volumeRatio === 0) return <VolumeX size={16} />;
     if (volumeRatio >= 0.5) return <Volume2 size={16} />;
@@ -99,43 +58,6 @@ function SoundSynthesizer() {
 
     return <Layers2 size={16} />;
   }, [harmonicCount]);
-
-  const handleImportConfig = useCallback(
-    (content: string) => {
-      try {
-        const config = parseSynthConfig(content);
-
-        setOscillatorType(config.synth.oscillatorType);
-        setVolumeRatio(config.synth.volumeRatio);
-        setHarmonicCount(config.synth.harmonicCount);
-        setEnvelopeConfig(config.envelope);
-        setSpectrumConfig(config.spectrum);
-        setEffectConfig(config.effect);
-        setImportedConfig(config);
-        setImportRevision((revision) => revision + 1);
-      } catch {
-        window.alert(t('config.importError'));
-      }
-    },
-    [t],
-  );
-
-  const { fileInputRef, openFileDialog, handleFileChange } = useFileImport({
-    onImport: handleImportConfig,
-  });
-  const handleExportConfig = useFileExport({
-    content: synthConfigJson,
-    fileName: 'synth-config.json',
-    mimeType: 'application/json',
-  });
-
-  useEffect(() => {
-    synthEngine.configureSynth({
-      harmonicCount,
-      oscillatorType,
-      volumeRatio,
-    });
-  }, [harmonicCount, oscillatorType, synthEngine, volumeRatio]);
 
   return (
     <ControlPanel className="space-y-4">
@@ -160,7 +82,10 @@ function SoundSynthesizer() {
           icon={<Activity size={16} />}
           label={t('controls.oscillatorType')}
           onChange={(e) =>
-            setOscillatorType(e.target.value as SynthOscillatorType)
+            updateSynthConfig(
+              'oscillatorType',
+              e.target.value as SynthOscillatorType,
+            )
           }
           value={oscillatorType}
         >
@@ -174,7 +99,7 @@ function SoundSynthesizer() {
           displayValue={`${Math.trunc(volumeRatio * 100).toString()}%`}
           icon={volumeIcon}
           label={t('controls.volume')}
-          onChange={setVolumeRatio}
+          onChange={(value) => updateSynthConfig('volumeRatio', value)}
           step="0.01"
           value={volumeRatio}
         />
@@ -184,7 +109,9 @@ function SoundSynthesizer() {
           displayValue={harmonicCount.toString()}
           icon={harmonicIcon}
           label={t('controls.harmonicCount')}
-          onChange={(value) => setHarmonicCount(Math.round(value))}
+          onChange={(value) =>
+            updateSynthConfig('harmonicCount', Math.round(value))
+          }
           p={t('controls.harmonicCountWarning')}
           pClassName="text-app-warning/50 dark:text-app-warning-dark/50"
           step="1"
@@ -202,7 +129,7 @@ function SoundSynthesizer() {
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.spectrum}
           key={`spectrum-${importRevision}`}
-          onConfigChange={setSpectrumConfig}
+          onConfigChange={handleSpectrumConfigChange}
         />
       </CollapsibleSection>
 
@@ -215,7 +142,7 @@ function SoundSynthesizer() {
         <Envelope
           initialConfig={importedConfig?.envelope}
           key={`envelope-${importRevision}`}
-          onConfigChange={setEnvelopeConfig}
+          onConfigChange={handleEnvelopeConfigChange}
         />
       </CollapsibleSection>
 
@@ -229,7 +156,7 @@ function SoundSynthesizer() {
           harmonicCount={harmonicCount}
           initialConfig={importedConfig?.effect}
           key={`effect-${importRevision}`}
-          onConfigChange={setEffectConfig}
+          onConfigChange={handleEffectConfigChange}
         />
       </CollapsibleSection>
 
