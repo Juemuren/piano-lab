@@ -25,14 +25,13 @@ function SettingsPanel() {
     (state) => state.setSelectedMidiInputId,
   );
   const {
-    syncPianoInputSettings,
+    updatePianoInputEnabled,
     updatePianoInputSettings,
     resetPianoInputSettings,
     clearScoreBody,
   } = usePianoInputSettings();
   const {
     isPianoInputEnabled,
-    setIsPianoInputEnabled,
     pianoInputSettings,
     isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled,
@@ -51,13 +50,6 @@ function SettingsPanel() {
     isGamepadControlEnabled,
     setIsGamepadControlEnabled,
   } = useAppSettingsStore();
-  const handlePianoInputEnabledChange = (enabled: boolean) => {
-    setIsPianoInputEnabled(enabled);
-    if (enabled) {
-      syncPianoInputSettings();
-    }
-  };
-
   return (
     <ControlPanel className="flex flex-col gap-3 text-left">
       <PointerControlSettings
@@ -92,7 +84,7 @@ function SettingsPanel() {
       />
       <PianoInputSettingsControl
         isPianoInputEnabled={isPianoInputEnabled}
-        onPianoInputEnabledChange={handlePianoInputEnabledChange}
+        onPianoInputEnabledChange={updatePianoInputEnabled}
         onPianoInputSettingsChange={updatePianoInputSettings}
         onPianoInputSettingsReset={resetPianoInputSettings}
         onScoreBodyClear={clearScoreBody}

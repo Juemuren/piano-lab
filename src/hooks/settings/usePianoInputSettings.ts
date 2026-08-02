@@ -12,6 +12,9 @@ function usePianoInputSettings() {
   const setPianoInputSettings = useAppSettingsStore(
     (state) => state.setPianoInputSettings,
   );
+  const setIsPianoInputEnabled = useAppSettingsStore(
+    (state) => state.setIsPianoInputEnabled,
+  );
   const setAbcContent = useScoreStore((state) => state.setAbcContent);
 
   const syncPianoInputSettings = useCallback(() => {
@@ -40,10 +43,20 @@ function usePianoInputSettings() {
     setAbcContent((content) => clearAbcBody(content));
   }, [setAbcContent]);
 
+  const updatePianoInputEnabled = useCallback(
+    (enabled: boolean) => {
+      setIsPianoInputEnabled(enabled);
+      if (enabled) {
+        syncPianoInputSettings();
+      }
+    },
+    [setIsPianoInputEnabled, syncPianoInputSettings],
+  );
+
   return {
     clearScoreBody,
     resetPianoInputSettings,
-    syncPianoInputSettings,
+    updatePianoInputEnabled,
     updatePianoInputSettings,
   };
 }

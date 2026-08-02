@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import { appendPitchToAbc } from '../../services/abc/AbcInput';
 import { useAppSettingsStore } from '../../stores/appSettingsStore';
@@ -117,16 +118,28 @@ function usePianoControl() {
     (state) => state.selectedGamepadIndex,
   );
   const {
-    isPianoInputEnabled,
+    isGamepadControlEnabled,
     isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled,
     isKeyboardOctaveHintEnabled,
-    keyboardControlMappings,
-    isMouseControlEnabled,
-    isTouchControlEnabled,
     isMidiControlEnabled,
-    isGamepadControlEnabled,
-  } = useAppSettingsStore();
+    isMouseControlEnabled,
+    isPianoInputEnabled,
+    isTouchControlEnabled,
+    keyboardControlMappings,
+  } = useAppSettingsStore(
+    useShallow((state) => ({
+      isGamepadControlEnabled: state.isGamepadControlEnabled,
+      isKeyboardControlEnabled: state.isKeyboardControlEnabled,
+      isKeyboardKeyHintEnabled: state.isKeyboardKeyHintEnabled,
+      isKeyboardOctaveHintEnabled: state.isKeyboardOctaveHintEnabled,
+      isMidiControlEnabled: state.isMidiControlEnabled,
+      isMouseControlEnabled: state.isMouseControlEnabled,
+      isPianoInputEnabled: state.isPianoInputEnabled,
+      isTouchControlEnabled: state.isTouchControlEnabled,
+      keyboardControlMappings: state.keyboardControlMappings,
+    })),
+  );
   const {
     activeInputNotes,
     activeMouseNotesRef,
