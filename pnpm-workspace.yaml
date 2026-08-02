@@ -2,6 +2,3 @@ packages: []
 
 allowBuilds:
   es5-ext: true
-
-patchedDependencies:
-  react-plotly.js@2.6.0: patches/react-plotly.js@2.6.0.patch

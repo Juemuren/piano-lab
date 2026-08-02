@@ -1,7 +1,7 @@
 import type { Layout } from 'plotly.js';
 import type { PlotParams } from 'react-plotly.js';
-import Plotly3D from 'react-plotly.js/plot3d';
 import useElementWidth from '../../hooks/useElementWidth';
+import Plot from '../../lib/plotly';
 
 interface Plot3DProps {
   data: PlotParams['data'];
@@ -14,7 +14,7 @@ function Plot3D({ data, layout }: Plot3DProps) {
   return (
     <div className="w-full" ref={elementRef}>
       {width > 0 && (
-        <Plotly3D
+        <Plot
           config={{
             autosizable: true,
             displayModeBar: false,
