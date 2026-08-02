@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { getRangeProgressStyle } from '../../utils/range';
+import RangeInput from './RangeInput';
 
 interface ControlRangeProps {
   accentClassName?: string;
@@ -39,15 +39,14 @@ function ControlRange({
         </span>
         <span className="font-semibold">{displayValue}</span>
       </div>
-      <input
-        className={`range-input h-6 w-full ${accentClassName}`}
+      <RangeInput
+        accentClassName={accentClassName}
+        className="w-full"
         max={max}
         min={min}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
+        onChange={onChange}
         step={step}
-        style={getRangeProgressStyle(value, min, max)}
         title={label}
-        type="range"
         value={value}
       />
       {p && <p className={`text-center text-xs ${pClassName}`}>{p}</p>}

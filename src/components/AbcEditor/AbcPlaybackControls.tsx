@@ -1,7 +1,7 @@
 import { Pause, Play, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getRangeProgressStyle } from '../../utils/range';
 import IconButton from '../shared/IconButton';
+import RangeInput from '../shared/RangeInput';
 
 interface AbcPlaybackControlsProps {
   currentSeconds: number;
@@ -55,14 +55,17 @@ function AbcPlaybackControls({
           onClick={onReplay}
         />
 
-        <input
-          className="range-input h-6 min-w-0 flex-1 text-app-tip dark:text-app-tip-dark"
+        <RangeInput
+          accentClassName={
+            isPlaying
+              ? 'text-app-tip dark:text-app-tip-dark'
+              : 'text-app-error dark:text-app-error-dark'
+          }
+          className="min-w-0 flex-1"
           max={totalSeconds}
           min={0}
-          onChange={(e) => onProgressChange(parseFloat(e.target.value))}
+          onChange={onProgressChange}
           step={0.1}
-          style={getRangeProgressStyle(currentSeconds, 0, totalSeconds)}
-          type="range"
           value={currentSeconds}
         />
 
