@@ -57,17 +57,19 @@ interface GamepadHintProps {
 
 function GamepadHint({ icons, label }: GamepadHintProps) {
   return (
-    <div className="flex items-center gap-2">
-      {icons.map((icon) => (
-        <img
-          alt=""
-          className="size-8 shrink-0"
-          key={icon}
-          src={`/gamepads/${icon}.svg`}
-        />
-      ))}
+    <>
+      <span className="flex">
+        {icons.map((icon) => (
+          <img
+            alt=""
+            className="size-8 shrink-0"
+            key={icon}
+            src={`/gamepads/${icon}.svg`}
+          />
+        ))}
+      </span>
       <span>{label}</span>
-    </div>
+    </>
   );
 }
 
@@ -75,9 +77,12 @@ function GamepadControlHints() {
   const { t } = useTranslation('app');
 
   return (
-    <div className="mx-auto grid w-full max-w-4xl gap-3 p-3 text-app-subtext sm:grid-cols-2 dark:text-app-subtext-dark">
+    <div className="mx-auto grid w-fit max-w-full gap-3 p-3 text-app-subtext sm:grid-cols-2 sm:gap-x-12 dark:text-app-subtext-dark">
       {GAMEPAD_HINT_COLUMNS.map((column) => (
-        <div className="flex flex-col gap-2" key={column[0].icons[0]}>
+        <div
+          className="grid grid-cols-[4rem_auto] items-center gap-x-2 gap-y-2"
+          key={column[0].icons[0]}
+        >
           {column.map(({ icons, labelKey }) => (
             <GamepadHint
               icons={icons}
