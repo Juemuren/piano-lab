@@ -210,8 +210,6 @@ function usePianoControl() {
     keyboardControlMappings,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
-    showKeyHints: isKeyboardKeyHintEnabled,
-    showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
   const gamepadNotes = useGamepadControl({
@@ -259,6 +257,9 @@ function usePianoControl() {
     isGamepadControlEnabled,
     isGamepadKeyHintEnabled,
     isGamepadNoteIndicatorEnabled,
+    isKeyboardControlEnabled,
+    isKeyboardKeyHintEnabled,
+    isKeyboardOctaveHintEnabled,
     isKeyPressed,
     isMouseControlEnabled,
     keyHints,

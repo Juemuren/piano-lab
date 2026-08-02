@@ -16,8 +16,6 @@ interface UseKeyboardPianoControlOptions {
   keyboardControlMappings: KeyboardControlMappings;
   onNotePress: (note: number) => void | Promise<void>;
   onNoteRelease: (note: number) => void;
-  showKeyHints: boolean;
-  showOctaveHints: boolean;
 }
 
 export interface KeyboardOctaveHint {
@@ -45,8 +43,6 @@ function useKeyboardControl({
   },
   onNotePress,
   onNoteRelease,
-  showKeyHints,
-  showOctaveHints,
 }: UseKeyboardPianoControlOptions) {
   const [keyboardOctave, setKeyboardOctave] = useState(DEFAULT_KEYBOARD_OCTAVE);
   const [activeTemporaryOctaveKeys, setActiveTemporaryOctaveKeys] = useState<
@@ -208,10 +204,6 @@ function useKeyboardControl({
   const keyHints = useMemo(() => {
     const hints = new Map<number, string>();
 
-    if (!enabled || !showKeyHints) {
-      return hints;
-    }
-
     const basePitch = getBasePitchByOctave(
       getKeyboardOctaveWithTemporaryShift(
         keyboardOctave,
@@ -229,18 +221,12 @@ function useKeyboardControl({
     return hints;
   }, [
     activeTemporaryOctaveKeys,
-    enabled,
     noteMappings,
     keyboardOctave,
     temporaryOctaveKeyMappings,
-    showKeyHints,
   ]);
 
   const octaveHints = useMemo<KeyboardOctaveHint[]>(() => {
-    if (!enabled || !showOctaveHints) {
-      return [];
-    }
-
     const hints: KeyboardOctaveHint[] = [
       {
         ...octaveKeyMappings,
@@ -253,7 +239,7 @@ function useKeyboardControl({
     ];
 
     return hints.filter(({ downKey, upKey }) => downKey || upKey);
-  }, [enabled, octaveKeyMappings, temporaryOctaveKeyMappings, showOctaveHints]);
+  }, [octaveKeyMappings, temporaryOctaveKeyMappings]);
 
   return { keyHints, octaveHints };
 }

@@ -18,6 +18,9 @@ function Piano() {
     isGamepadControlEnabled,
     isGamepadKeyHintEnabled,
     isGamepadNoteIndicatorEnabled,
+    isKeyboardControlEnabled,
+    isKeyboardKeyHintEnabled,
+    isKeyboardOctaveHintEnabled,
     keyHints,
     octaveHints,
     isKeyPressed,
@@ -59,11 +62,13 @@ function Piano() {
                   />
                 )}
                 <span className="flex h-full flex-col items-center justify-end py-2">
-                  <KeyboardKeyHint
-                    className="text-piano-black"
-                    keyHints={keyHints}
-                    note={key.note}
-                  />
+                  {isKeyboardControlEnabled && isKeyboardKeyHintEnabled && (
+                    <KeyboardKeyHint
+                      className="text-piano-black"
+                      keyHints={keyHints}
+                      note={key.note}
+                    />
+                  )}
                   <span>
                     {key.char}
                     <sub>{key.number}</sub>
@@ -101,11 +106,13 @@ function Piano() {
                   />
                 )}
                 <span className="flex h-full flex-col items-center justify-end py-2">
-                  <KeyboardKeyHint
-                    className="text-piano-white"
-                    keyHints={keyHints}
-                    note={key.note}
-                  />
+                  {isKeyboardControlEnabled && isKeyboardKeyHintEnabled && (
+                    <KeyboardKeyHint
+                      className="text-piano-white"
+                      keyHints={keyHints}
+                      note={key.note}
+                    />
+                  )}
                 </span>
               </PianoKey>
             ))}
@@ -117,7 +124,9 @@ function Piano() {
         <GamepadControlHints />
       )}
 
-      <KeyboardOctaveHints octaveHints={octaveHints} />
+      {isKeyboardControlEnabled && isKeyboardOctaveHintEnabled && (
+        <KeyboardOctaveHints octaveHints={octaveHints} />
+      )}
     </>
   );
 }

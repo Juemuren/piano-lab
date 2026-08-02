@@ -5,7 +5,12 @@ interface KeyboardKeyHintProps {
 }
 
 function KeyboardKeyHint({ className, keyHints, note }: KeyboardKeyHintProps) {
-  return <kbd className={className}>{keyHints.get(note)}</kbd>;
+  const keyHint = keyHints.get(note);
+  if (keyHint === undefined) {
+    return null;
+  }
+
+  return <kbd className={className}>{keyHint}</kbd>;
 }
 
 export default KeyboardKeyHint;
