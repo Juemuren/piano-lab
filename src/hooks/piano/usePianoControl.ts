@@ -252,6 +252,7 @@ function usePianoControl() {
     gamepadNotes,
     handleKeyDown,
     handleKeyUp,
+    isGamepadControlEnabled,
     isKeyPressed,
     isMouseControlEnabled,
     keyHints,

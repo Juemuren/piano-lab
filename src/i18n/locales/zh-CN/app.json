@@ -12,6 +12,16 @@
   "settings": {
     "gamepad": {
       "deviceInfo": "{{buttons}} 个按键，{{axes}} 个控制轴",
+      "hints": {
+        "octaveDown": "降八度",
+        "octaveUp": "升八度",
+        "playLeft": "演奏左侧琴键",
+        "playRight": "演奏右侧琴键",
+        "semitoneDown": "降半音",
+        "semitoneUp": "升半音",
+        "temporaryOctaveDown": "临时降八度",
+        "temporaryOctaveUp": "临时升八度"
+      },
       "inputDevice": "手柄设备",
       "status": {
         "error": "无法读取手柄信息，请检查浏览器权限设置。",

@@ -1,5 +1,6 @@
 import usePianoControl from '../../hooks/piano/usePianoControl';
 import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
+import GamepadControlHints from './GamepadControlHints';
 import GamepadNoteIndicators from './GamepadNoteIndicators';
 import PianoKey from './PianoKey';
 
@@ -13,6 +14,7 @@ function Piano() {
     whiteKeys,
     blackKeys,
     gamepadNotes,
+    isGamepadControlEnabled,
     keyHints,
     octaveHints,
     isKeyPressed,
@@ -99,6 +101,8 @@ function Piano() {
           </div>
         </div>
       </div>
+
+      {isGamepadControlEnabled && <GamepadControlHints />}
 
       {octaveHints.length > 0 && (
         <div className="flex flex-wrap justify-center gap-4 text-app-overlay text-sm dark:text-app-overlay-dark">
