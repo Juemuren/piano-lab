@@ -45,6 +45,8 @@ function Filter({ filters, onAdd, onChange, onRemove }: FilterProps) {
           <div className="space-y-2" key={index}>
             <div className="grid grid-cols-[auto_1fr] gap-2">
               <ControlButton
+                bgClassName="bg-app-error/15 hover:bg-app-error/25 dark:bg-app-error-dark/15 dark:hover:bg-app-error-dark/25"
+                colorClassName="text-app-error dark:text-app-error-dark"
                 icon={<Minus size={18} />}
                 onClick={() => onRemove(index)}
                 title={t('effect.filter.name')}
@@ -85,6 +87,8 @@ function Filter({ filters, onAdd, onChange, onRemove }: FilterProps) {
 
         <div className="grid grid-cols-[auto_1fr] gap-2">
           <ControlButton
+            bgClassName="bg-app-tip/15 hover:bg-app-tip/25 dark:bg-app-tip-dark/15 dark:hover:bg-app-tip-dark/25"
+            colorClassName="text-app-tip dark:text-app-tip-dark"
             icon={<Plus size={18} />}
             onClick={() => onAdd(selectedFilterType)}
             title={t('effect.filter.name')}
