@@ -1,5 +1,5 @@
 import Compressor from './Compressor';
-import FilterAndEqualizer from './FilterAndEqualizer';
+import FilterEqualizer from './FilterEqualizer';
 import Modulation from './Modulation';
 import Panner from './Panner';
 import Reverb from './Reverb';
@@ -8,7 +8,7 @@ import WaveShaper from './WaveShaper';
 function Effect() {
   return (
     <>
-      <FilterAndEqualizer />
+      <FilterEqualizer />
       <Reverb />
       <Modulation />
       <WaveShaper />

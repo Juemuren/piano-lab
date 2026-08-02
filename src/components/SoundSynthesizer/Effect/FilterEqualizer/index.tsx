@@ -11,7 +11,7 @@ import Filter from './Filter';
 import HarmonicResponsePreview from './HarmonicResponsePreview';
 import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 
-function FilterAndEqualizer() {
+function FilterEqualizer() {
   const { t } = useTranslation('synth');
   const harmonicCount = useSynthConfigStore(
     (state) => state.config.synth.harmonicCount,
@@ -101,4 +101,4 @@ function FilterAndEqualizer() {
   );
 }
 
-export default FilterAndEqualizer;
+export default FilterEqualizer;
