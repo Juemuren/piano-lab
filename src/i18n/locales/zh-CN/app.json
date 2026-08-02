@@ -38,6 +38,12 @@
       "clear": "清空键位",
       "empty": "未设置",
       "hint": "⇑/⇓ 表示永久升/降八度，↑/↓ 表示临时升/降八度。所有键位只支持字母和数字。",
+      "hints": {
+        "octaveDown": "降八度",
+        "octaveUp": "升八度",
+        "temporaryOctaveDown": "临时降八度",
+        "temporaryOctaveUp": "临时升八度"
+      },
       "keyHint": "显示键位提示",
       "octaveHint": "显示八度提示",
       "reset": "恢复默认"

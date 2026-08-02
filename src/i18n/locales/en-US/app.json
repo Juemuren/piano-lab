@@ -38,6 +38,12 @@
       "clear": "Clear Key Mappings",
       "empty": "Not set",
       "hint": "⇑/⇓ indicate permanent octave up/down, while ↑/↓ indicate temporary octave up/down. Key mappings only support letters and numbers.",
+      "hints": {
+        "octaveDown": "Octave down",
+        "octaveUp": "Octave up",
+        "temporaryOctaveDown": "Temporary octave down",
+        "temporaryOctaveUp": "Temporary octave up"
+      },
       "keyHint": "Show key hints",
       "octaveHint": "Show octave hints",
       "reset": "Reset to Default"
