@@ -2,6 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import { appendPitchToAbc } from '../../services/abc/AbcInput';
 import { useAppSettingsStore } from '../../stores/appSettingsStore';
+import { usePianoDevicesStore } from '../../stores/pianoDevicesStore';
+import { usePlayingNotesStore } from '../../stores/playingNotesStore';
 import { useScoreStore } from '../../stores/scoreStore';
 import {
   getPitchName,
@@ -104,13 +106,16 @@ function useActivePianoNotes() {
   };
 }
 
-function usePianoControl(
-  playingNotes: Set<number>,
-  selectedMidiInputId?: string,
-  selectedGamepadIndex?: number,
-) {
+function usePianoControl() {
   const synthEngine = useSynthEngine();
   const setAbcContent = useScoreStore((state) => state.setAbcContent);
+  const playingNotes = usePlayingNotesStore((state) => state.playingNotes);
+  const selectedMidiInputId = usePianoDevicesStore(
+    (state) => state.selectedMidiInputId,
+  );
+  const selectedGamepadIndex = usePianoDevicesStore(
+    (state) => state.selectedGamepadIndex,
+  );
   const {
     isPianoInputEnabled,
     isKeyboardControlEnabled,
@@ -192,7 +197,7 @@ function usePianoControl(
     showOctaveHints: isKeyboardOctaveHintEnabled,
   });
 
-  const { gamepadControl, gamepadNotes } = useGamepadControl({
+  const gamepadNotes = useGamepadControl({
     enabled: isGamepadControlEnabled,
     onNotePress: startInputNote,
     onNoteRelease: stopInputNote,
@@ -206,7 +211,7 @@ function usePianoControl(
     [startInputNote],
   );
 
-  const midiControl = useMidiControl({
+  useMidiControl({
     enabled: isMidiControlEnabled,
     onNoteOff: stopInputNote,
     onNoteOn: startMidiPressedKey,
@@ -231,14 +236,12 @@ function usePianoControl(
 
   return {
     blackKeys,
-    gamepadControl,
     gamepadNotes,
     handleKeyDown,
     handleKeyUp,
     isKeyPressed,
     isMouseControlEnabled,
     keyHints,
-    midiControl,
     octaveHints,
     whiteKeys,
   };

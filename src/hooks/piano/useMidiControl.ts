@@ -1,30 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  MidiControlState,
-  MidiInputDevice,
-  MidiStatus,
-} from '../../stores/pianoDevicesStore';
+import { useCallback, useEffect, useRef } from 'react';
+import type { MidiInputDevice } from '../../stores/pianoDevicesStore';
+import { usePianoDevicesStore } from '../../stores/pianoDevicesStore';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const MIDI_COMMAND_NOTE_OFF = 0x80;
 const MIDI_COMMAND_NOTE_ON = 0x90;
-const EMPTY_ACTIVE_NOTES = new Set<number>();
-const EMPTY_MIDI_DEVICES: MidiInputDevice[] = [];
 
 interface UseMidiControlOptions {
   enabled: boolean;
   onNoteOff: (note: number) => void;
   onNoteOn: (note: number, velocity: number) => void | Promise<void>;
   selectedInputId?: string;
-}
-
-export function createInitialMidiControlState(): MidiControlState {
-  return {
-    activeInputId: '',
-    activeNotes: new Set(),
-    devices: [],
-    status: 'idle',
-  };
 }
 
 function isPianoRangeNote(note: number) {
@@ -47,18 +33,20 @@ function useMidiControl({
   onNoteOn,
   onNoteOff,
 }: UseMidiControlOptions) {
-  const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
-  const [devices, setDevices] = useState<MidiInputDevice[]>([]);
-  const [activeInputId, setActiveInputId] = useState('');
-  const [status, setStatus] = useState<MidiStatus>('idle');
+  const updateMidiControl = usePianoDevicesStore(
+    (state) => state.updateMidiControl,
+  );
   const midiAccessRef = useRef<MIDIAccess | null>(null);
   const activeNotesRef = useRef<Set<number>>(new Set());
   const attachedInputsRef = useRef<Set<MIDIInput>>(new Set());
 
-  const setActiveMidiNotes = useCallback((notes: Set<number>) => {
-    activeNotesRef.current = notes;
-    setActiveNotes(notes);
-  }, []);
+  const setActiveMidiNotes = useCallback(
+    (notes: Set<number>) => {
+      activeNotesRef.current = notes;
+      updateMidiControl({ activeNotes: notes });
+    },
+    [updateMidiControl],
+  );
 
   const clearActiveNotes = useCallback(() => {
     if (activeNotesRef.current.size > 0) {
@@ -71,11 +59,9 @@ function useMidiControl({
   }, [onNoteOff, setActiveMidiNotes]);
 
   const resetMidiState = useCallback(() => {
-    setDevices([]);
-    setActiveInputId('');
-    setStatus('idle');
+    updateMidiControl({ activeInputId: '', devices: [], status: 'idle' });
     clearActiveNotes();
-  }, [clearActiveNotes]);
+  }, [clearActiveNotes, updateMidiControl]);
 
   const handleMidiMessage = useCallback(
     (event: MIDIMessageEvent) => {
@@ -138,15 +124,17 @@ function useMidiControl({
         attachedInputs.add(selectedInput);
       }
 
-      setDevices(inputs.map(getInputDevice));
-      setActiveInputId(selectedInput?.id || '');
+      updateMidiControl({
+        activeInputId: selectedInput?.id || '',
+        devices: inputs.map(getInputDevice),
+        status: 'ready',
+      });
       clearActiveNotes();
-      setStatus('ready');
     }
 
     async function connectMidi() {
       if (!navigator.requestMIDIAccess) {
-        setStatus('unsupported');
+        updateMidiControl({ status: 'unsupported' });
         return;
       }
 
@@ -160,7 +148,7 @@ function useMidiControl({
         return;
       }
 
-      setStatus('requesting');
+      updateMidiControl({ status: 'requesting' });
       const midiAccess = await navigator.requestMIDIAccess({
         sysex: false,
       });
@@ -184,8 +172,7 @@ function useMidiControl({
     }
 
     connectMidi().catch(() => {
-      setDevices([]);
-      setStatus('error');
+      updateMidiControl({ devices: [], status: 'error' });
       clearActiveNotes();
     });
 
@@ -202,17 +189,8 @@ function useMidiControl({
     handleMidiMessage,
     resetMidiState,
     selectedInputId,
+    updateMidiControl,
   ]);
-
-  return useMemo(
-    () => ({
-      activeInputId: enabled ? activeInputId : '',
-      activeNotes: enabled ? activeNotes : EMPTY_ACTIVE_NOTES,
-      devices: enabled ? devices : EMPTY_MIDI_DEVICES,
-      status: enabled ? status : 'idle',
-    }),
-    [activeInputId, activeNotes, devices, enabled, status],
-  );
 }
 
 export default useMidiControl;

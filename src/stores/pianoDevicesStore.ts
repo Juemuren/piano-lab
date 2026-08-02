@@ -43,10 +43,10 @@ interface PianoDevicesState {
   midiControl: MidiControlState;
   selectedGamepadIndex?: number;
   selectedMidiInputId: string;
-  setGamepadControl: (state: GamepadControlState) => void;
-  setMidiControl: (state: MidiControlState) => void;
   setSelectedGamepadIndex: (index?: number) => void;
   setSelectedMidiInputId: (inputId: string) => void;
+  updateGamepadControl: (update: Partial<GamepadControlState>) => void;
+  updateMidiControl: (update: Partial<MidiControlState>) => void;
 }
 
 export const usePianoDevicesStore = create<PianoDevicesState>()((set) => ({
@@ -59,9 +59,15 @@ export const usePianoDevicesStore = create<PianoDevicesState>()((set) => ({
   },
   selectedGamepadIndex: undefined,
   selectedMidiInputId: '',
-  setGamepadControl: (gamepadControl) => set({ gamepadControl }),
-  setMidiControl: (midiControl) => set({ midiControl }),
   setSelectedGamepadIndex: (selectedGamepadIndex) =>
     set({ selectedGamepadIndex }),
   setSelectedMidiInputId: (selectedMidiInputId) => set({ selectedMidiInputId }),
+  updateGamepadControl: (update) =>
+    set(({ gamepadControl }) => ({
+      gamepadControl: { ...gamepadControl, ...update },
+    })),
+  updateMidiControl: (update) =>
+    set(({ midiControl }) => ({
+      midiControl: { ...midiControl, ...update },
+    })),
 }));
