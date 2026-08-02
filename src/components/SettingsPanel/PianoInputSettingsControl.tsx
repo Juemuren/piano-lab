@@ -109,11 +109,15 @@ function PianoInputSettingsControl({
           />
           <div className="grid grid-cols-2 gap-2">
             <ControlButton
+              bgClassName="bg-app-warning/15 hover:bg-app-warning/25 dark:bg-app-warning-dark/15 dark:hover:bg-app-warning-dark/25"
+              colorClassName="text-app-warning dark:text-app-warning-dark"
               icon={<RotateCcw size={18} />}
               label={t('settings.pianoInput.resetHeader')}
               onClick={onPianoInputSettingsReset}
             />
             <ControlButton
+              bgClassName="bg-app-error/15 hover:bg-app-error/25 dark:bg-app-error-dark/15 dark:hover:bg-app-error-dark/25"
+              colorClassName="text-app-error dark:text-app-error-dark"
               icon={<Eraser size={18} />}
               label={t('settings.pianoInput.clearScore')}
               onClick={onScoreBodyClear}

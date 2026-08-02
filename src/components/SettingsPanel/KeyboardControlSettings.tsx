@@ -153,13 +153,17 @@ function KeyboardControlSettings({
               />
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-2 text-app-subtext text-sm dark:text-app-subtext-dark">
+          <div className="grid grid-cols-2 gap-2 text-sm">
             <ControlButton
+              bgClassName="bg-app-warning/15 hover:bg-app-warning/25 dark:bg-app-warning-dark/15 dark:hover:bg-app-warning-dark/25"
+              colorClassName="text-app-warning dark:text-app-warning-dark"
               icon={<RotateCcw size={16} />}
               label={t('settings.keyboard.reset')}
               onClick={resetKeyboardMappings}
             />
             <ControlButton
+              bgClassName="bg-app-error/15 hover:bg-app-error/25 dark:bg-app-error-dark/15 dark:hover:bg-app-error-dark/25"
+              colorClassName="text-app-error dark:text-app-error-dark"
               icon={<Eraser size={16} />}
               label={t('settings.keyboard.clear')}
               onClick={clearKeyboardMappings}
