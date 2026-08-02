@@ -5,7 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  abcjs@6.6.2: f374b195608cdc42aadcb838c9138b443e3c5550f4e2e5784762d7d97f4763c0
   react-plotly.js@2.6.0: 031c6c958e9d45c1b7ce06d27ba69cab477a89c3c231c6a4660c605c0527c66f
 
 importers:
@@ -13,8 +12,8 @@ importers:
   .:
     dependencies:
       abcjs:
-        specifier: ^6.6.2
-        version: 6.6.2(patch_hash=f374b195608cdc42aadcb838c9138b443e3c5550f4e2e5784762d7d97f4763c0)
+        specifier: ^6.6.4
+        version: 6.6.4
       i18next:
         specifier: ^26.3.6
         version: 26.3.6(typescript@7.0.2)
@@ -715,8 +714,8 @@ packages:
       babel-plugin-react-compiler:
         optional: true
 
-  abcjs@6.6.2:
-    resolution: {integrity: sha512-YLbp5lYUq0uOywWZx9EuTdm0TcflKZi7hOzz366A/LFl3qoAXSYIjznJQmr/VeHg8NcLxZYoN8dLi7PqCpxKEA==}
+  abcjs@6.6.4:
+    resolution: {integrity: sha512-KNbRE9Uk7KgJu6TWCEph3rqSifcCN243qRMALysRngEzbuv6JuFJrSKbLI1Bpw/XyXFTFEzoFF1WHWBHsoofyA==}
 
   abs-svg-path@0.1.1:
     resolution: {integrity: sha512-d8XPSGjfyzlXC3Xx891DJRyZfqk5JU0BJrDQcsWomFIV1/BIzPW5HDH5iDdWpqWaav0YVIEzT1RHTwWr0FFshA==}
@@ -2352,7 +2351,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.2.0(@types/node@24.12.2)(jiti@2.7.0)(yaml@2.9.0)
 
-  abcjs@6.6.2(patch_hash=f374b195608cdc42aadcb838c9138b443e3c5550f4e2e5784762d7d97f4763c0): {}
+  abcjs@6.6.4: {}
 
   abs-svg-path@0.1.1: {}
 

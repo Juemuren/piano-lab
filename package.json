@@ -22,7 +22,7 @@
     "*.{css,html,json}": "biome format --write --no-errors-on-unmatched"
   },
   "dependencies": {
-    "abcjs": "^6.6.2",
+    "abcjs": "^6.6.4",
     "i18next": "^26.3.6",
     "katex": "^0.18.1",
     "lucide-react": "^1.28.0",
