@@ -17,6 +17,7 @@ function Piano() {
     gamepadNotes,
     isGamepadControlEnabled,
     isGamepadKeyHintEnabled,
+    isGamepadNoteIndicatorEnabled,
     keyHints,
     octaveHints,
     isKeyPressed,
@@ -51,10 +52,12 @@ function Piano() {
                 pressedClassName="bg-piano-white-active text-piano-black shadow-inner"
                 width={WHITE_KEY_WIDTH_PX}
               >
-                <GamepadNoteIndicators
-                  gamepadNotes={gamepadNotes}
-                  note={key.note}
-                />
+                {isGamepadNoteIndicatorEnabled && (
+                  <GamepadNoteIndicators
+                    gamepadNotes={gamepadNotes}
+                    note={key.note}
+                  />
+                )}
                 <span className="flex h-full flex-col items-center justify-end py-2">
                   <KeyboardKeyHint
                     className="text-piano-black"
@@ -91,10 +94,12 @@ function Piano() {
                 }}
                 width={BLACK_KEY_WIDTH_PX}
               >
-                <GamepadNoteIndicators
-                  gamepadNotes={gamepadNotes}
-                  note={key.note}
-                />
+                {isGamepadNoteIndicatorEnabled && (
+                  <GamepadNoteIndicators
+                    gamepadNotes={gamepadNotes}
+                    note={key.note}
+                  />
+                )}
                 <span className="flex h-full flex-col items-center justify-end py-2">
                   <KeyboardKeyHint
                     className="text-piano-white"

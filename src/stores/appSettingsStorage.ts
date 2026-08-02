@@ -12,6 +12,7 @@ const keyboardOctaveKeyMappingsSchema = z.object({
 const storedAppSettingsSchema = z.object({
   isGamepadControlEnabled: z.boolean(),
   isGamepadKeyHintEnabled: z.boolean(),
+  isGamepadNoteIndicatorEnabled: z.boolean(),
   isKeyboardControlEnabled: z.boolean(),
   isKeyboardKeyHintEnabled: z.boolean(),
   isKeyboardOctaveHintEnabled: z.boolean(),
@@ -42,6 +43,7 @@ export type StoredAppSettings = z.infer<typeof storedAppSettingsSchema>;
 export const DEFAULT_STORED_APP_SETTINGS: StoredAppSettings = {
   isGamepadControlEnabled: false,
   isGamepadKeyHintEnabled: true,
+  isGamepadNoteIndicatorEnabled: true,
   isKeyboardControlEnabled: false,
   isKeyboardKeyHintEnabled: true,
   isKeyboardOctaveHintEnabled: true,

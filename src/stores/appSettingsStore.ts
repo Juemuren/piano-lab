@@ -14,6 +14,7 @@ type KeyboardControlMappingsUpdate =
 interface AppSettingsState extends StoredAppSettings {
   setIsGamepadControlEnabled: (enabled: boolean) => void;
   setIsGamepadKeyHintEnabled: (enabled: boolean) => void;
+  setIsGamepadNoteIndicatorEnabled: (enabled: boolean) => void;
   setIsKeyboardControlEnabled: (enabled: boolean) => void;
   setIsKeyboardKeyHintEnabled: (enabled: boolean) => void;
   setIsKeyboardOctaveHintEnabled: (enabled: boolean) => void;
@@ -33,6 +34,8 @@ export const useAppSettingsStore = create<AppSettingsState>()((set) => ({
     set({ isGamepadControlEnabled }),
   setIsGamepadKeyHintEnabled: (isGamepadKeyHintEnabled) =>
     set({ isGamepadKeyHintEnabled }),
+  setIsGamepadNoteIndicatorEnabled: (isGamepadNoteIndicatorEnabled) =>
+    set({ isGamepadNoteIndicatorEnabled }),
   setIsKeyboardControlEnabled: (isKeyboardControlEnabled) =>
     set({ isKeyboardControlEnabled }),
   setIsKeyboardKeyHintEnabled: (isKeyboardKeyHintEnabled) =>
@@ -58,6 +61,7 @@ useAppSettingsStore.subscribe((state) => {
   writeStoredAppSettings({
     isGamepadControlEnabled: state.isGamepadControlEnabled,
     isGamepadKeyHintEnabled: state.isGamepadKeyHintEnabled,
+    isGamepadNoteIndicatorEnabled: state.isGamepadNoteIndicatorEnabled,
     isKeyboardControlEnabled: state.isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled: state.isKeyboardKeyHintEnabled,
     isKeyboardOctaveHintEnabled: state.isKeyboardOctaveHintEnabled,

@@ -12,9 +12,11 @@ interface GamepadControlSettingsProps {
   gamepadControl: GamepadControlState;
   isGamepadControlEnabled: boolean;
   isGamepadKeyHintEnabled: boolean;
+  isGamepadNoteIndicatorEnabled: boolean;
   selectedGamepadIndex?: number;
   setIsGamepadControlEnabled: (enabled: boolean) => void;
   setIsGamepadKeyHintEnabled: (enabled: boolean) => void;
+  setIsGamepadNoteIndicatorEnabled: (enabled: boolean) => void;
   setSelectedGamepadIndex: (index?: number) => void;
 }
 
@@ -42,9 +44,11 @@ function GamepadControlSettings({
   gamepadControl,
   isGamepadControlEnabled,
   isGamepadKeyHintEnabled,
+  isGamepadNoteIndicatorEnabled,
   selectedGamepadIndex,
   setIsGamepadControlEnabled,
   setIsGamepadKeyHintEnabled,
+  setIsGamepadNoteIndicatorEnabled,
   setSelectedGamepadIndex,
 }: GamepadControlSettingsProps) {
   const { t } = useTranslation('app');
@@ -75,13 +79,23 @@ function GamepadControlSettings({
           <p className="text-app-overlay text-sm dark:text-app-overlay-dark">
             {t('settings.gamepad.hint')}
           </p>
-          <div className="flex flex-col gap-2 text-app-overlay text-sm dark:text-app-overlay-dark">
+          <div className="flex flex-wrap gap-3 text-sm">
             <ControlCheckbox
               checked={isGamepadKeyHintEnabled}
               label={t('settings.gamepad.keyHint')}
               labelClassName="text-app-subtext dark:text-app-subtext-dark"
               onChange={(e) => setIsGamepadKeyHintEnabled(e.target.checked)}
             />
+            <ControlCheckbox
+              checked={isGamepadNoteIndicatorEnabled}
+              label={t('settings.gamepad.noteIndicator')}
+              labelClassName="text-app-subtext dark:text-app-subtext-dark"
+              onChange={(e) =>
+                setIsGamepadNoteIndicatorEnabled(e.target.checked)
+              }
+            />
+          </div>
+          <div className="flex flex-col gap-2 text-app-overlay text-sm dark:text-app-overlay-dark">
             {gamepadStatusMessageKey && <p>{t(gamepadStatusMessageKey)}</p>}
             {gamepadControl.devices.length > 0 && (
               <>

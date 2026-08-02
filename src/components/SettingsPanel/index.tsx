@@ -49,8 +49,10 @@ function SettingsPanel() {
     setIsMidiControlEnabled,
     isGamepadControlEnabled,
     isGamepadKeyHintEnabled,
+    isGamepadNoteIndicatorEnabled,
     setIsGamepadControlEnabled,
     setIsGamepadKeyHintEnabled,
+    setIsGamepadNoteIndicatorEnabled,
   } = useAppSettingsStore();
   return (
     <ControlPanel className="flex flex-col gap-3 text-left">
@@ -81,9 +83,11 @@ function SettingsPanel() {
         gamepadControl={gamepadControl}
         isGamepadControlEnabled={isGamepadControlEnabled}
         isGamepadKeyHintEnabled={isGamepadKeyHintEnabled}
+        isGamepadNoteIndicatorEnabled={isGamepadNoteIndicatorEnabled}
         selectedGamepadIndex={selectedGamepadIndex}
         setIsGamepadControlEnabled={setIsGamepadControlEnabled}
         setIsGamepadKeyHintEnabled={setIsGamepadKeyHintEnabled}
+        setIsGamepadNoteIndicatorEnabled={setIsGamepadNoteIndicatorEnabled}
         setSelectedGamepadIndex={setSelectedGamepadIndex}
       />
       <PianoInputSettingsControl
