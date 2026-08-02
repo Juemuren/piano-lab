@@ -42,6 +42,28 @@ export function createEffectConfig(): EffectConfig {
   };
 }
 
+function hasEffectTopologyChanged(previous: EffectConfig, next: EffectConfig) {
+  if (
+    Boolean(previous.amplitudeModulation) !==
+      Boolean(next.amplitudeModulation) ||
+    Boolean(previous.phaseModulation) !== Boolean(next.phaseModulation) ||
+    Boolean(previous.delayModulation) !== Boolean(next.delayModulation) ||
+    Boolean(previous.waveShaper) !== Boolean(next.waveShaper) ||
+    Boolean(previous.compressor) !== Boolean(next.compressor) ||
+    Boolean(previous.panner) !== Boolean(next.panner) ||
+    Boolean(previous.reverb) !== Boolean(next.reverb)
+  ) {
+    return true;
+  }
+
+  return (
+    (previous.filterEqualizer?.filters.length ?? 0) !==
+      (next.filterEqualizer?.filters.length ?? 0) ||
+    (previous.filterEqualizer?.equalizers.length ?? 0) !==
+      (next.filterEqualizer?.equalizers.length ?? 0)
+  );
+}
+
 export class EffectChain {
   private audioContext: AudioContext | null = null;
   private destinationNode: AudioNode | null = null;
@@ -77,8 +99,15 @@ export class EffectChain {
   };
 
   configure(config: EffectConfig) {
+    const previousConfig = this.effectConfig;
     this.effectConfig = config;
-    this.rebuild();
+
+    if (hasEffectTopologyChanged(previousConfig, config)) {
+      this.rebuild();
+      return;
+    }
+
+    this.updateEffectNodes(previousConfig);
   }
 
   getCompressorReduction() {
@@ -352,29 +381,104 @@ export class EffectChain {
     return this.pannerNode;
   }
 
-  private applyReverbConfig(reverbConfig: ReverbConfig) {
+  private applyReverbConfig(
+    reverbConfig: ReverbConfig,
+    previousConfig?: ReverbConfig | null,
+  ) {
     if (!this.audioContext) return null;
 
-    this.resetReverbNodes();
-    this.convolverNode = this.audioContext.createConvolver();
-    this.reverbDryGainNode = this.audioContext.createGain();
-    this.reverbWetGainNode = this.audioContext.createGain();
+    const convolverNode =
+      this.convolverNode ?? this.audioContext.createConvolver();
+    const dryGainNode =
+      this.reverbDryGainNode ?? this.audioContext.createGain();
+    const wetGainNode =
+      this.reverbWetGainNode ?? this.audioContext.createGain();
 
-    this.convolverNode.normalize = false;
-    this.convolverNode.buffer = createReverbImpulseResponse(
-      this.audioContext,
-      reverbConfig,
-    );
+    this.convolverNode = convolverNode;
+    this.reverbDryGainNode = dryGainNode;
+    this.reverbWetGainNode = wetGainNode;
+    convolverNode.normalize = false;
+    if (
+      !previousConfig ||
+      previousConfig.earlyReflections !== reverbConfig.earlyReflections ||
+      previousConfig.lateTail !== reverbConfig.lateTail
+    ) {
+      convolverNode.buffer = createReverbImpulseResponse(
+        this.audioContext,
+        reverbConfig,
+      );
+    }
 
     const mix = Math.min(Math.max(reverbConfig.mix, 0), 1);
-    this.reverbDryGainNode.gain.value = 1 - mix;
-    this.reverbWetGainNode.gain.value = mix;
+    dryGainNode.gain.value = 1 - mix;
+    wetGainNode.gain.value = mix;
 
     return {
-      convolverNode: this.convolverNode,
-      dryGainNode: this.reverbDryGainNode,
-      wetGainNode: this.reverbWetGainNode,
+      convolverNode,
+      dryGainNode,
+      wetGainNode,
     };
+  }
+
+  private updateEffectNodes(previousConfig: EffectConfig) {
+    if (!this.inputNode || !this.outputNode) return;
+
+    if (this.effectConfig.filterEqualizer !== previousConfig.filterEqualizer) {
+      this.effectConfig.filterEqualizer?.filters.forEach((filter, index) => {
+        this.applyFilterConfig(this.filterNodes[index], filter);
+      });
+      this.effectConfig.filterEqualizer?.equalizers.forEach(
+        (equalizer, index) => {
+          this.applyEqualizerConfig(this.equalizerNodes[index], equalizer);
+        },
+      );
+    }
+
+    if (
+      this.effectConfig.amplitudeModulation !==
+        previousConfig.amplitudeModulation &&
+      this.effectConfig.amplitudeModulation
+    ) {
+      this.applyAmplitudeModulationConfig(
+        this.effectConfig.amplitudeModulation,
+      );
+    }
+    if (
+      this.effectConfig.phaseModulation !== previousConfig.phaseModulation &&
+      this.effectConfig.phaseModulation
+    ) {
+      this.applyPhaseModulationConfig(this.effectConfig.phaseModulation);
+    }
+    if (
+      this.effectConfig.delayModulation !== previousConfig.delayModulation &&
+      this.effectConfig.delayModulation
+    ) {
+      this.applyDelayModulationConfig(this.effectConfig.delayModulation);
+    }
+    if (
+      this.effectConfig.waveShaper !== previousConfig.waveShaper &&
+      this.effectConfig.waveShaper
+    ) {
+      this.applyWaveShaperConfig(this.effectConfig.waveShaper);
+    }
+    if (
+      this.effectConfig.compressor !== previousConfig.compressor &&
+      this.effectConfig.compressor
+    ) {
+      this.applyCompressorConfig(this.effectConfig.compressor);
+    }
+    if (
+      this.effectConfig.panner !== previousConfig.panner &&
+      this.effectConfig.panner
+    ) {
+      this.applyPannerConfig(this.effectConfig.panner);
+    }
+    if (
+      this.effectConfig.reverb !== previousConfig.reverb &&
+      this.effectConfig.reverb
+    ) {
+      this.applyReverbConfig(this.effectConfig.reverb, previousConfig.reverb);
+    }
   }
 
   private rebuild() {
