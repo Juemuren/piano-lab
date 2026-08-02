@@ -8,7 +8,7 @@
   },
   "controls": {
     "harmonicCount": "倍音数",
-    "harmonicCountWarning": "値を上げすぎないでください。プログラムが遅くなることがあります。",
+    "harmonicCountWarning": "アプリが重いときは、この値を下げてみてね。",
     "oscillatorType": "オシレータータイプ",
     "volume": "音量係数"
   },

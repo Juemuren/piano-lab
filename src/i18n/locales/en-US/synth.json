@@ -8,7 +8,7 @@
   },
   "controls": {
     "harmonicCount": "Harmonic Count",
-    "harmonicCountWarning": "Do not set this value too high, or the app may lag.",
+    "harmonicCountWarning": "If the app lags, can try to lower this value.",
     "oscillatorType": "Oscillator Type",
     "volume": "Volume"
   },

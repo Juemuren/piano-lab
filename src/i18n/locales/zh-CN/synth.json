@@ -8,7 +8,7 @@
   },
   "controls": {
     "harmonicCount": "谐波数量",
-    "harmonicCountWarning": "请勿将此数值设得过高，否则可能导致程序卡顿。",
+    "harmonicCountWarning": "若程序卡顿，可适当降低此值。",
     "oscillatorType": "振荡器类型",
     "volume": "音量系数"
   },
