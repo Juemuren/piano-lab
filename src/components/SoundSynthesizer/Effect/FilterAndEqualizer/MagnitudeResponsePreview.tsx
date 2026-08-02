@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { getBiquadMagnitudes } from '../../../../services/synth/effect/Filter';
 import type {
   EqualizerConfig,
   FilterConfig,
 } from '../../../../services/synth/effect/FilterEqualizer';
+import { getFilterEqualizerMagnitudes } from '../../../../services/synth/effect/FilterEqualizer';
 import Plot2D from '../../../shared/Plot2D';
 
 interface MagnitudeResponsePreviewProps {
@@ -31,7 +31,7 @@ function getEffectMagnitudeResponse(
   equalizers: EqualizerConfig[],
 ) {
   const frequencies = createFrequencyPoints();
-  const totalMagnitudes = getBiquadMagnitudes(frequencies, [
+  const totalMagnitudes = getFilterEqualizerMagnitudes(frequencies, [
     ...filters,
     ...equalizers,
   ]);

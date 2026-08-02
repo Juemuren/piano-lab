@@ -2,13 +2,13 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useBaseFrequencyOptions from '../../../../hooks/synth/useBaseFrequencyOptions';
 import { getBaseFrequency } from '../../../../services/synth/Envelope';
-import {
-  FILTER_RESPONSE_NYQUIST_FREQUENCY,
-  getBiquadMagnitudes,
-} from '../../../../services/synth/effect/Filter';
 import type {
   EqualizerConfig,
   FilterConfig,
+} from '../../../../services/synth/effect/FilterEqualizer';
+import {
+  FILTER_RESPONSE_NYQUIST_FREQUENCY,
+  getFilterEqualizerMagnitudes,
 } from '../../../../services/synth/effect/FilterEqualizer';
 import VerticalSliderGroup from '../../../shared/VerticalSliderGroup';
 import HarmonicLabel from '../../shared/HarmonicLabel';
@@ -45,7 +45,11 @@ function HarmonicResponsePreview({
     [baseFrequency, harmonicCount],
   );
   const harmonicMagnitudes = useMemo(
-    () => getBiquadMagnitudes(harmonicFrequencies, [...filters, ...equalizers]),
+    () =>
+      getFilterEqualizerMagnitudes(harmonicFrequencies, [
+        ...filters,
+        ...equalizers,
+      ]),
     [equalizers, filters, harmonicFrequencies],
   );
   const isHarmonicFrequencySupported = useMemo(
