@@ -1,6 +1,7 @@
 import { Pause, Play, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getRangeProgressStyle } from '../../utils/range';
+import IconButton from '../shared/IconButton';
 
 interface AbcPlaybackControlsProps {
   currentSeconds: number;
@@ -36,23 +37,23 @@ function AbcPlaybackControls({
   return (
     <div className="w-full">
       <div className="flex w-full items-center gap-2 rounded-xl py-2">
-        <button
-          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        <IconButton
+          colorClassName={
+            isPlaying
+              ? 'text-app-error dark:text-app-error-dark'
+              : 'text-app-tip dark:text-app-tip-dark'
+          }
           disabled={isPlaybackEnded}
+          icon={isPlaying ? <Pause size={18} /> : <Play size={18} />}
           onClick={isPlaying ? onPause : onPlay}
-          type="button"
-        >
-          {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-        </button>
+        />
 
-        <button
-          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        <IconButton
+          colorClassName="text-app-warning dark:text-app-warning-dark"
           disabled={currentSeconds <= 0}
+          icon={<RotateCcw size={18} />}
           onClick={onReplay}
-          type="button"
-        >
-          <RotateCcw size={18} />
-        </button>
+        />
 
         <input
           className="range-input h-6 min-w-0 flex-1 text-app-tip dark:text-app-tip-dark"
