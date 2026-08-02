@@ -1,6 +1,7 @@
 import { AudioWaveform, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import useWaveShaperControl from '../../../../hooks/synth/effect/useWaveShaperControl';
 import type { WaveShaperPreset } from '../../../../services/synth/config/Options';
 import { WAVE_SHAPER_PRESETS } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
@@ -9,16 +10,6 @@ import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 import WaveShaperCurvePreview from './WaveShaperCurvePreview';
-
-interface WaveShaperProps {
-  onEnabledChange: (enabled: boolean) => void;
-  onPresetChange: (preset: WaveShaperPreset) => void;
-  onValueChange: (
-    key: Exclude<keyof WaveShaperConfig, 'preset'>,
-    value: number,
-  ) => void;
-  waveShaper: WaveShaperConfig | null;
-}
 
 const presetParams: Record<
   WaveShaperPreset,
@@ -61,13 +52,14 @@ const presetParams: Record<
   },
 };
 
-function WaveShaper({
-  waveShaper,
-  onEnabledChange,
-  onPresetChange,
-  onValueChange,
-}: WaveShaperProps) {
+function WaveShaper() {
   const { t } = useTranslation('synth');
+  const {
+    updateWaveShaperEnabled: onEnabledChange,
+    updateWaveShaperPreset: onPresetChange,
+    updateWaveShaperValue: onValueChange,
+    waveShaper,
+  } = useWaveShaperControl();
 
   const presetLabels: Record<WaveShaperPreset, string> = {
     distortion: t('effect.waveShaper.presets.distortion'),

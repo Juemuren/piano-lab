@@ -9,7 +9,10 @@ type ConfigUpdate<Config> = Config | ((current: Config) => Config);
 interface SynthConfigState {
   config: SynthConfig;
   setConfig: (config: SynthConfig) => void;
-  setEffectConfig: (update: ConfigUpdate<SynthConfig['effect']>) => void;
+  setEffectSection: <Key extends keyof SynthConfig['effect']>(
+    key: Key,
+    update: ConfigUpdate<SynthConfig['effect'][Key]>,
+  ) => void;
   setEnvelopeConfig: (update: ConfigUpdate<SynthConfig['envelope']>) => void;
   setSpectrumConfig: (update: ConfigUpdate<SynthConfig['spectrum']>) => void;
   setSynthConfig: (update: ConfigUpdate<SynthConfig['synth']>) => void;
@@ -31,11 +34,14 @@ export function createSynthConfigStore() {
   return createStore<SynthConfigState>()((set) => ({
     config: createDefaultSynthConfig(),
     setConfig: (config) => set({ config }),
-    setEffectConfig: (update) =>
+    setEffectSection: (key, update) =>
       set(({ config }) => ({
         config: {
           ...config,
-          effect: resolveUpdate(config.effect, update),
+          effect: {
+            ...config.effect,
+            [key]: resolveUpdate(config.effect[key], update),
+          },
         },
       })),
     setEnvelopeConfig: (update) =>

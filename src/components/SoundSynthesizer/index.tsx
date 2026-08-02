@@ -143,7 +143,7 @@ function SoundSynthesizerContent() {
         icon={<Sparkles size={20} />}
         title={t('sections.effect')}
       >
-        <Effect harmonicCount={harmonicCount} />
+        <Effect />
       </CollapsibleSection>
 
       <CollapsibleSection

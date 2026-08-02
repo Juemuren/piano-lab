@@ -1,54 +1,31 @@
 import { AudioLines } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type {
-  AmplitudeModulationConfig,
-  DelayModulationConfig,
-  FrequencyModulationConfig,
-  PhaseModulationConfig,
-} from '../../../../services/synth/effect/Modulation';
+import useModulationControl from '../../../../hooks/synth/effect/useModulationControl';
 import AmplitudeModulationEffect from './AmplitudeModulationEffect';
 import DelayModulationEffect from './DelayModulationEffect';
 import FrequencyModulationEffect from './FrequencyModulationEffect';
 import PhaseModulationEffect from './PhaseModulationEffect';
 
-interface ModulationProps {
-  amplitudeModulation: AmplitudeModulationConfig | null;
-  delayModulation: DelayModulationConfig | null;
-  frequencyModulation: FrequencyModulationConfig | null;
-  onAmplitudeModulationDepthChange: (value: number) => void;
-  onAmplitudeModulationEnabledChange: (enabled: boolean) => void;
-  onAmplitudeModulationFrequencyChange: (value: number) => void;
-  onDelayModulationDepthChange: (value: number) => void;
-  onDelayModulationEnabledChange: (enabled: boolean) => void;
-  onDelayModulationFrequencyChange: (value: number) => void;
-  onFrequencyModulationDepthChange: (value: number) => void;
-  onFrequencyModulationEnabledChange: (enabled: boolean) => void;
-  onFrequencyModulationFrequencyChange: (value: number) => void;
-  onPhaseModulationDepthChange: (value: number) => void;
-  onPhaseModulationEnabledChange: (enabled: boolean) => void;
-  onPhaseModulationFrequencyChange: (value: number) => void;
-  phaseModulation: PhaseModulationConfig | null;
-}
-
-function Modulation({
-  amplitudeModulation,
-  frequencyModulation,
-  phaseModulation,
-  delayModulation,
-  onAmplitudeModulationEnabledChange,
-  onAmplitudeModulationFrequencyChange,
-  onAmplitudeModulationDepthChange,
-  onFrequencyModulationEnabledChange,
-  onFrequencyModulationFrequencyChange,
-  onFrequencyModulationDepthChange,
-  onPhaseModulationEnabledChange,
-  onPhaseModulationFrequencyChange,
-  onPhaseModulationDepthChange,
-  onDelayModulationEnabledChange,
-  onDelayModulationFrequencyChange,
-  onDelayModulationDepthChange,
-}: ModulationProps) {
+function Modulation() {
   const { t } = useTranslation('synth');
+  const {
+    amplitudeModulation,
+    delayModulation,
+    frequencyModulation,
+    phaseModulation,
+    updateAmplitudeModulationDepth: onAmplitudeModulationDepthChange,
+    updateAmplitudeModulationEnabled: onAmplitudeModulationEnabledChange,
+    updateAmplitudeModulationFrequency: onAmplitudeModulationFrequencyChange,
+    updateDelayModulationDepth: onDelayModulationDepthChange,
+    updateDelayModulationEnabled: onDelayModulationEnabledChange,
+    updateDelayModulationFrequency: onDelayModulationFrequencyChange,
+    updateFrequencyModulationDepth: onFrequencyModulationDepthChange,
+    updateFrequencyModulationEnabled: onFrequencyModulationEnabledChange,
+    updateFrequencyModulationFrequency: onFrequencyModulationFrequencyChange,
+    updatePhaseModulationDepth: onPhaseModulationDepthChange,
+    updatePhaseModulationEnabled: onPhaseModulationEnabledChange,
+    updatePhaseModulationFrequency: onPhaseModulationFrequencyChange,
+  } = useModulationControl();
 
   return (
     <details className="my-2" open>

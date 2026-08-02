@@ -1,22 +1,9 @@
 import { useCallback } from 'react';
-import type { CompressorConfig } from '../../../services/synth/effect/Compressor';
 import { createCompressorConfig } from '../../../services/synth/effect/Compressor';
-import { useSynthConfigStore } from '../../../stores/synthConfigStore';
+import useEffectSection from './useEffectSection';
 
 function useCompressorControl() {
-  const compressor = useSynthConfigStore(
-    (state) => state.config.effect.compressor,
-  );
-  const setEffectConfig = useSynthConfigStore((state) => state.setEffectConfig);
-  const setCompressor = useCallback(
-    (update: (current: CompressorConfig | null) => CompressorConfig | null) => {
-      setEffectConfig((effect) => ({
-        ...effect,
-        compressor: update(effect.compressor),
-      }));
-    },
-    [setEffectConfig],
-  );
+  const [compressor, setCompressor] = useEffectSection('compressor');
 
   const updateCompressorEnabled = useCallback(
     (enabled: boolean) => {

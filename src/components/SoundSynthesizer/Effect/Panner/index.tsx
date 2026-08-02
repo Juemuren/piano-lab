@@ -9,22 +9,13 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import usePannerControl from '../../../../hooks/synth/effect/usePannerControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { PannerConfig } from '../../../../services/synth/effect/Panner';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
 import PannerDistanceGainPreview from './PannerDistanceGainPreview';
 import PannerSpatialPreview from './PannerSpatialPreview';
-
-interface PannerProps {
-  onEnabledChange: (enabled: boolean) => void;
-  onValueChange: <Key extends keyof PannerConfig>(
-    key: Key,
-    value: PannerConfig[Key],
-  ) => void;
-  panner: PannerConfig | null;
-}
 
 interface PannerControlGroupProps {
   children: ReactNode;
@@ -50,8 +41,13 @@ function PannerControlGroup({
   );
 }
 
-function Panner({ panner, onEnabledChange, onValueChange }: PannerProps) {
+function Panner() {
   const { t } = useTranslation('synth');
+  const {
+    panner,
+    updatePannerEnabled: onEnabledChange,
+    updatePannerValue: onValueChange,
+  } = usePannerControl();
 
   return (
     <details className="my-2" open>

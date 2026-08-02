@@ -1,31 +1,22 @@
 import { Ban, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import useCompressorControl from '../../../../hooks/synth/effect/useCompressorControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { CompressorConfig } from '../../../../services/synth/effect/Compressor';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import CompressorReductionPreview from './CompressorReductionPreview';
 
-interface CompressorProps {
-  compressor: CompressorConfig | null;
-  onAttackChange: (value: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onKneeChange: (value: number) => void;
-  onRatioChange: (value: number) => void;
-  onReleaseChange: (value: number) => void;
-  onThresholdChange: (value: number) => void;
-}
-
-function Compressor({
-  compressor,
-  onEnabledChange,
-  onThresholdChange,
-  onKneeChange,
-  onRatioChange,
-  onAttackChange,
-  onReleaseChange,
-}: CompressorProps) {
+function Compressor() {
   const { t } = useTranslation('synth');
+  const {
+    compressor,
+    updateCompressorAttack: onAttackChange,
+    updateCompressorEnabled: onEnabledChange,
+    updateCompressorKnee: onKneeChange,
+    updateCompressorRatio: onRatioChange,
+    updateCompressorRelease: onReleaseChange,
+    updateCompressorThreshold: onThresholdChange,
+  } = useCompressorControl();
 
   return (
     <details className="my-2" open>

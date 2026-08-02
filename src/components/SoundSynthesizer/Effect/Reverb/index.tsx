@@ -1,18 +1,10 @@
 import { House, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import useReverbControl from '../../../../hooks/synth/effect/useReverbControl';
 import type { ReverbPreset } from '../../../../services/synth/config/Options';
 import { REVERB_PRESETS } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type {
-  ReverbConfig,
-  ReverbEarlyReflectionConfig,
-  ReverbLateTailConfig,
-} from '../../../../services/synth/effect/Reverb';
-import type {
-  ConfigValueChangeHandler,
-  IndexedConfigValueChangeHandler,
-} from '../../../../types/config';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
@@ -21,28 +13,18 @@ import EarlyReflections from './EarlyReflections';
 import LateTail from './LateTail';
 import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
 
-interface ReverbProps {
-  onEarlyReflectionAdd: () => void;
-  onEarlyReflectionChange: IndexedConfigValueChangeHandler<ReverbEarlyReflectionConfig>;
-  onEarlyReflectionRemove: (index: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onLateTailChange: ConfigValueChangeHandler<ReverbLateTailConfig>;
-  onMixChange: (value: number) => void;
-  onPresetChange: (preset: ReverbPreset) => void;
-  reverb: ReverbConfig | null;
-}
-
-function Reverb({
-  reverb,
-  onEnabledChange,
-  onPresetChange,
-  onMixChange,
-  onEarlyReflectionAdd,
-  onEarlyReflectionChange,
-  onEarlyReflectionRemove,
-  onLateTailChange,
-}: ReverbProps) {
+function Reverb() {
   const { t } = useTranslation('synth');
+  const {
+    addReverbEarlyReflection: onEarlyReflectionAdd,
+    removeReverbEarlyReflection: onEarlyReflectionRemove,
+    reverb,
+    updateReverbEarlyReflection: onEarlyReflectionChange,
+    updateReverbEnabled: onEnabledChange,
+    updateReverbLateTail: onLateTailChange,
+    updateReverbMix: onMixChange,
+    updateReverbPreset: onPresetChange,
+  } = useReverbControl();
 
   const presetLabels: Record<ReverbPreset, string> = {
     bathroom: t('effect.reverb.presets.bathroom'),

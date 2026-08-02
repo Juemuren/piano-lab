@@ -1,83 +1,23 @@
 import { useCallback } from 'react';
-import type { EffectConfig } from '../../../services/synth/EffectChain';
-import type {
-  AmplitudeModulationConfig,
-  DelayModulationConfig,
-  FrequencyModulationConfig,
-  PhaseModulationConfig,
-} from '../../../services/synth/effect/Modulation';
 import {
   createAmplitudeModulationConfig,
   createDelayModulationConfig,
   createFrequencyModulationConfig,
   createPhaseModulationConfig,
 } from '../../../services/synth/effect/Modulation';
-import { useSynthConfigStore } from '../../../stores/synthConfigStore';
-
-type ModulationKey =
-  | 'amplitudeModulation'
-  | 'delayModulation'
-  | 'frequencyModulation'
-  | 'phaseModulation';
+import useEffectSection from './useEffectSection';
 
 function useModulationControl() {
-  const amplitudeModulation = useSynthConfigStore(
-    (state) => state.config.effect.amplitudeModulation,
+  const [amplitudeModulation, setAmplitudeModulation] = useEffectSection(
+    'amplitudeModulation',
   );
-  const delayModulation = useSynthConfigStore(
-    (state) => state.config.effect.delayModulation,
+  const [delayModulation, setDelayModulation] =
+    useEffectSection('delayModulation');
+  const [frequencyModulation, setFrequencyModulation] = useEffectSection(
+    'frequencyModulation',
   );
-  const frequencyModulation = useSynthConfigStore(
-    (state) => state.config.effect.frequencyModulation,
-  );
-  const phaseModulation = useSynthConfigStore(
-    (state) => state.config.effect.phaseModulation,
-  );
-  const setEffectConfig = useSynthConfigStore((state) => state.setEffectConfig);
-  const updateModulation = useCallback(
-    <Key extends ModulationKey>(
-      key: Key,
-      update: (current: EffectConfig[Key]) => EffectConfig[Key],
-    ) => {
-      setEffectConfig((effect) => ({
-        ...effect,
-        [key]: update(effect[key]),
-      }));
-    },
-    [setEffectConfig],
-  );
-  const setAmplitudeModulation = useCallback(
-    (
-      update: (
-        current: AmplitudeModulationConfig | null,
-      ) => AmplitudeModulationConfig | null,
-    ) => updateModulation('amplitudeModulation', update),
-    [updateModulation],
-  );
-  const setFrequencyModulation = useCallback(
-    (
-      update: (
-        current: FrequencyModulationConfig | null,
-      ) => FrequencyModulationConfig | null,
-    ) => updateModulation('frequencyModulation', update),
-    [updateModulation],
-  );
-  const setPhaseModulation = useCallback(
-    (
-      update: (
-        current: PhaseModulationConfig | null,
-      ) => PhaseModulationConfig | null,
-    ) => updateModulation('phaseModulation', update),
-    [updateModulation],
-  );
-  const setDelayModulation = useCallback(
-    (
-      update: (
-        current: DelayModulationConfig | null,
-      ) => DelayModulationConfig | null,
-    ) => updateModulation('delayModulation', update),
-    [updateModulation],
-  );
+  const [phaseModulation, setPhaseModulation] =
+    useEffectSection('phaseModulation');
 
   const updateAmplitudeModulationEnabled = useCallback(
     (enabled: boolean) => {

@@ -1,17 +1,9 @@
 import { Equal, Power, PowerOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type {
-  EqualizerType,
-  FilterEqualizerPreset,
-  FilterType,
-} from '../../../../services/synth/config/Options';
+import useFilterEqualizerControl from '../../../../hooks/synth/effect/useFilterEqualizerControl';
+import type { FilterEqualizerPreset } from '../../../../services/synth/config/Options';
 import { FILTER_EQUALIZER_PRESETS } from '../../../../services/synth/config/Options';
-import type {
-  EqualizerConfig,
-  FilterConfig,
-  FilterEqualizerConfig,
-} from '../../../../services/synth/effect/FilterEqualizer';
-import type { IndexedConfigValueChangeHandler } from '../../../../types/config';
+import { useSynthConfigStore } from '../../../../stores/synthConfigStore';
 import ControlButton from '../../../shared/ControlButton';
 import ControlSelect from '../../../shared/ControlSelect';
 import Equalizer from './Equalizer';
@@ -19,32 +11,22 @@ import Filter from './Filter';
 import HarmonicResponsePreview from './HarmonicResponsePreview';
 import MagnitudeResponsePreview from './MagnitudeResponsePreview';
 
-interface FilterAndEqualizerProps {
-  filterEqualizer: FilterEqualizerConfig | null;
-  harmonicCount: number;
-  onEnabledChange: (enabled: boolean) => void;
-  onEqualizerAdd: (type: EqualizerType) => void;
-  onEqualizerChange: IndexedConfigValueChangeHandler<EqualizerConfig>;
-  onEqualizerRemove: (index: number) => void;
-  onFilterAdd: (type: FilterType) => void;
-  onFilterChange: IndexedConfigValueChangeHandler<FilterConfig>;
-  onFilterRemove: (index: number) => void;
-  onPresetChange: (preset: FilterEqualizerPreset) => void;
-}
-
-function FilterAndEqualizer({
-  harmonicCount,
-  filterEqualizer,
-  onEnabledChange,
-  onPresetChange,
-  onFilterAdd,
-  onFilterChange,
-  onFilterRemove,
-  onEqualizerAdd,
-  onEqualizerChange,
-  onEqualizerRemove,
-}: FilterAndEqualizerProps) {
+function FilterAndEqualizer() {
   const { t } = useTranslation('synth');
+  const harmonicCount = useSynthConfigStore(
+    (state) => state.config.synth.harmonicCount,
+  );
+  const {
+    addEqualizer: onEqualizerAdd,
+    addFilter: onFilterAdd,
+    filterEqualizer,
+    removeEqualizer: onEqualizerRemove,
+    removeFilter: onFilterRemove,
+    updateEqualizer: onEqualizerChange,
+    updateFilter: onFilterChange,
+    updateFilterEqualizerEnabled: onEnabledChange,
+    updateFilterEqualizerPreset: onPresetChange,
+  } = useFilterEqualizerControl();
   const presetLabels: Record<FilterEqualizerPreset, string> = {
     classical: t('effect.filterEqualizer.presets.classical'),
     custom: t('effect.filterEqualizer.presets.custom'),

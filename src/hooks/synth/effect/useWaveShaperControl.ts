@@ -2,22 +2,10 @@ import { useCallback } from 'react';
 import type { WaveShaperPreset } from '../../../services/synth/config/Options';
 import type { WaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
 import { createWaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
-import { useSynthConfigStore } from '../../../stores/synthConfigStore';
+import useEffectSection from './useEffectSection';
 
 function useWaveShaperControl() {
-  const waveShaper = useSynthConfigStore(
-    (state) => state.config.effect.waveShaper,
-  );
-  const setEffectConfig = useSynthConfigStore((state) => state.setEffectConfig);
-  const setWaveShaper = useCallback(
-    (update: (current: WaveShaperConfig | null) => WaveShaperConfig | null) => {
-      setEffectConfig((effect) => ({
-        ...effect,
-        waveShaper: update(effect.waveShaper),
-      }));
-    },
-    [setEffectConfig],
-  );
+  const [waveShaper, setWaveShaper] = useEffectSection('waveShaper');
 
   const updateWaveShaperEnabled = useCallback(
     (enabled: boolean) => {
