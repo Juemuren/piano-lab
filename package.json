@@ -24,7 +24,7 @@
   "dependencies": {
     "abcjs": "^6.6.4",
     "i18next": "^26.3.6",
-    "katex": "^0.18.1",
+    "katex": "^0.16.47",
     "lucide-react": "^1.28.0",
     "plotly.js": "^3.7.0",
     "react": "^19.2.8",

@@ -2,3 +2,6 @@ packages: []
 
 allowBuilds:
   es5-ext: true
+
+patchedDependencies:
+  katex@0.16.47: patches/katex@0.16.47.patch
