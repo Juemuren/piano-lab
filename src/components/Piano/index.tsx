@@ -43,7 +43,7 @@ function Piano() {
           <div className="flex">
             {whiteKeys.map((key) => (
               <PianoKey
-                className="relative shrink-0 border border-app-accent"
+                className="relative shrink-0 border-app-accent border-r last:border-r-0"
                 height={WHITE_KEY_HEIGHT_PX}
                 isMouseControlEnabled={isMouseControlEnabled}
                 isPressed={isKeyPressed(key.note)}
