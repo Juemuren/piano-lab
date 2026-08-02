@@ -24,7 +24,7 @@ function KeyboardOctaveHints({ octaveHints }: KeyboardOctaveHintsProps) {
   }
 
   return (
-    <div className="mx-auto grid w-fit grid-cols-2 gap-4 text-center text-app-overlay text-sm dark:text-app-overlay-dark">
+    <div className="mx-auto grid w-fit grid-cols-2 gap-4 text-center text-app-subtext text-sm dark:text-app-subtext-dark">
       {octaveHints.flatMap(({ downKey, type, upKey }) =>
         [
           { direction: 'downKey' as const, key: downKey },

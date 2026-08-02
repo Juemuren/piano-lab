@@ -50,6 +50,21 @@ const GAMEPAD_HINT_COLUMNS: GamepadHintConfig[][] = [
   ],
 ];
 
+interface GamepadIconProps {
+  name: string;
+}
+
+function GamepadIcon({ name }: GamepadIconProps) {
+  return (
+    <span
+      className="size-8 shrink-0 bg-current"
+      style={{
+        mask: `url('/gamepads/${name}.svg') center / contain no-repeat`,
+      }}
+    />
+  );
+}
+
 interface GamepadHintProps {
   icons: string[];
   label: string;
@@ -60,12 +75,7 @@ function GamepadHint({ icons, label }: GamepadHintProps) {
     <>
       <span className="flex">
         {icons.map((icon) => (
-          <img
-            alt=""
-            className="size-8 shrink-0"
-            key={icon}
-            src={`/gamepads/${icon}.svg`}
-          />
+          <GamepadIcon key={icon} name={icon} />
         ))}
       </span>
       <span>{label}</span>
