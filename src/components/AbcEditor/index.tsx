@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAbcContent } from '../../contexts/abcContent';
-import { usePlayingNotes } from '../../contexts/playingNotes';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import useAbcExports from '../../hooks/abc/useAbcExports';
 import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useFileImport from '../../hooks/file/useFileImport';
 import { AbcPlayer } from '../../services/abc/AbcPlayer';
 import { getAbcPreset } from '../../services/abc/AbcPresets';
+import { usePlayingNotesStore } from '../../stores/playingNotesStore';
+import { useScoreStore } from '../../stores/scoreStore';
 import ControlPanel from '../shared/ControlPanel';
 import AbcFileToolbar from './AbcFileToolbar';
 import AbcPlaybackControls from './AbcPlaybackControls';
@@ -17,9 +17,15 @@ const RENDER_TARGET_ID = 'abcjs-paper';
 
 function AbcEditor() {
   const synthEngine = useSynthEngine();
-  const { abcContent, setAbcContent } = useAbcContent();
-  const { startPlayingNote, endPlayingNote, stopPlayingNotes } =
-    usePlayingNotes();
+  const abcContent = useScoreStore((state) => state.abcContent);
+  const setAbcContent = useScoreStore((state) => state.setAbcContent);
+  const startPlayingNote = usePlayingNotesStore(
+    (state) => state.startPlayingNote,
+  );
+  const endPlayingNote = usePlayingNotesStore((state) => state.endPlayingNote);
+  const stopPlayingNotes = usePlayingNotesStore(
+    (state) => state.stopPlayingNotes,
+  );
   const [abcPlayer] = useState(
     () => new AbcPlayer(synthEngine, startPlayingNote, endPlayingNote),
   );

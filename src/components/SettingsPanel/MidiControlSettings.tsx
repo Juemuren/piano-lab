@@ -4,7 +4,7 @@ import type {
   MidiControlState,
   MidiInputDevice,
   MidiStatus,
-} from '../../contexts/midiControl/MidiControlContext';
+} from '../../stores/pianoDevicesStore';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlSelect from '../shared/ControlSelect';
 

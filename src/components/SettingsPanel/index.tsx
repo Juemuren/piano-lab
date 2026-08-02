@@ -1,7 +1,6 @@
-import { useAppSettings } from '../../contexts/appSettings';
-import { useGamepadControlContext } from '../../contexts/gamepadControl';
-import { useMidiControlContext } from '../../contexts/midiControl';
 import usePianoInputSettings from '../../hooks/settings/usePianoInputSettings';
+import { useAppSettingsStore } from '../../stores/appSettingsStore';
+import { usePianoDevicesStore } from '../../stores/pianoDevicesStore';
 import ControlPanel from '../shared/ControlPanel';
 import GamepadControlSettings from './GamepadControlSettings';
 import KeyboardControlSettings from './KeyboardControlSettings';
@@ -11,10 +10,20 @@ import PointerControlSettings from './PointerControlSettings';
 import SynthRecorderSettings from './SynthRecorderSettings';
 
 function SettingsPanel() {
-  const { gamepadControl, selectedGamepadIndex, setSelectedGamepadIndex } =
-    useGamepadControlContext();
-  const { midiControl, selectedMidiInputId, setSelectedMidiInputId } =
-    useMidiControlContext();
+  const gamepadControl = usePianoDevicesStore((state) => state.gamepadControl);
+  const selectedGamepadIndex = usePianoDevicesStore(
+    (state) => state.selectedGamepadIndex,
+  );
+  const setSelectedGamepadIndex = usePianoDevicesStore(
+    (state) => state.setSelectedGamepadIndex,
+  );
+  const midiControl = usePianoDevicesStore((state) => state.midiControl);
+  const selectedMidiInputId = usePianoDevicesStore(
+    (state) => state.selectedMidiInputId,
+  );
+  const setSelectedMidiInputId = usePianoDevicesStore(
+    (state) => state.setSelectedMidiInputId,
+  );
   const {
     syncPianoInputSettings,
     updatePianoInputSettings,
@@ -41,7 +50,7 @@ function SettingsPanel() {
     setIsMidiControlEnabled,
     isGamepadControlEnabled,
     setIsGamepadControlEnabled,
-  } = useAppSettings();
+  } = useAppSettingsStore();
   const handlePianoInputEnabledChange = (enabled: boolean) => {
     setIsPianoInputEnabled(enabled);
     if (enabled) {

@@ -3,7 +3,7 @@ import type {
   GamepadControlState,
   GamepadDevice,
   GamepadStatus,
-} from '../../contexts/gamepadControl/GamepadControlContext';
+} from '../../stores/pianoDevicesStore';
 import { MAX_PIANO_PITCH, MIN_PIANO_PITCH } from '../../utils/pitch';
 
 const LEFT_TRIGGER_INITIAL_NOTE = 57; // A3

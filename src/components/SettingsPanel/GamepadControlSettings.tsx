@@ -4,7 +4,7 @@ import type {
   GamepadControlState,
   GamepadDevice,
   GamepadStatus,
-} from '../../contexts/gamepadControl/GamepadControlContext';
+} from '../../stores/pianoDevicesStore';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlSelect from '../shared/ControlSelect';
 

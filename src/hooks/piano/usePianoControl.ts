@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
-import { useAbcContent } from '../../contexts/abcContent';
-import { useAppSettings } from '../../contexts/appSettings';
 import { useSynthEngine } from '../../contexts/synthEngine';
 import { appendPitchToAbc } from '../../services/abc/AbcInput';
+import { useAppSettingsStore } from '../../stores/appSettingsStore';
+import { useScoreStore } from '../../stores/scoreStore';
 import {
   getPitchName,
   getPitchOctave,
@@ -110,7 +110,7 @@ function usePianoControl(
   selectedGamepadIndex?: number,
 ) {
   const synthEngine = useSynthEngine();
-  const { setAbcContent } = useAbcContent();
+  const setAbcContent = useScoreStore((state) => state.setAbcContent);
   const {
     isPianoInputEnabled,
     isKeyboardControlEnabled,
@@ -121,7 +121,7 @@ function usePianoControl(
     isTouchControlEnabled,
     isMidiControlEnabled,
     isGamepadControlEnabled,
-  } = useAppSettings();
+  } = useAppSettingsStore();
   const {
     activeInputNotes,
     activeMouseNotesRef,

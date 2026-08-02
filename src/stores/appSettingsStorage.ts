@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { DEFAULT_KEYBOARD_CONTROL_MAPPINGS } from '../../constants/keyboard';
-import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../services/abc/AbcSettings';
+import { DEFAULT_KEYBOARD_CONTROL_MAPPINGS } from '../constants/keyboard';
+import { DEFAULT_PIANO_INPUT_SETTINGS } from '../services/abc/AbcSettings';
 
 const APP_SETTINGS_STORAGE_KEY = 'piano-lab:app-settings';
 

@@ -1,6 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { useAbcContent } from '../../contexts/abcContent';
-import { useAppSettings } from '../../contexts/appSettings';
 import {
   clearAbcBody,
   getPianoInputSettingsFromAbcHeader,
@@ -9,6 +7,8 @@ import {
 } from '../../services/abc/AbcHeader';
 import type { PianoInputSettings } from '../../services/abc/AbcSettings';
 import { DEFAULT_PIANO_INPUT_SETTINGS } from '../../services/abc/AbcSettings';
+import { useAppSettingsStore } from '../../stores/appSettingsStore';
+import { useScoreStore } from '../../stores/scoreStore';
 
 function isSamePianoInputSettings(
   left: PianoInputSettings,
@@ -23,9 +23,17 @@ function isSamePianoInputSettings(
 }
 
 function usePianoInputSettings() {
-  const { isPianoInputEnabled, pianoInputSettings, setPianoInputSettings } =
-    useAppSettings();
-  const { abcContent, setAbcContent } = useAbcContent();
+  const isPianoInputEnabled = useAppSettingsStore(
+    (state) => state.isPianoInputEnabled,
+  );
+  const pianoInputSettings = useAppSettingsStore(
+    (state) => state.pianoInputSettings,
+  );
+  const setPianoInputSettings = useAppSettingsStore(
+    (state) => state.setPianoInputSettings,
+  );
+  const abcContent = useScoreStore((state) => state.abcContent);
+  const setAbcContent = useScoreStore((state) => state.setAbcContent);
 
   const syncPianoInputSettings = useCallback(() => {
     setAbcContent((content) => updateAbcHeader(content, pianoInputSettings));
