@@ -10,6 +10,30 @@
     "soundSynthesizer": "Sound Synthesizer"
   },
   "settings": {
+    "gamepad": {
+      "deviceInfo": "{{buttons}} buttons, {{axes}} axes",
+      "hint": "Button mappings cannot be changed yet. Non-Xbox controllers should theoretically be supported.",
+      "hints": {
+        "octaveDown": "Octave down",
+        "octaveUp": "Octave up",
+        "playLeft": "Play keys to the left",
+        "playRight": "Play keys to the right",
+        "semitoneDown": "Semitone down",
+        "semitoneUp": "Semitone up",
+        "temporaryOctaveDown": "Temporary octave down",
+        "temporaryOctaveUp": "Temporary octave up"
+      },
+      "inputDevice": "Gamepad device",
+      "keyHint": "Show button hints",
+      "noteIndicator": "Show note indicator",
+      "status": {
+        "error": "Unable to read gamepad information. Please check your browser permission settings.",
+        "noDevices": "No gamepad detected. Please connect a gamepad and press any button.",
+        "unsupported": "This browser does not support the Gamepad API.",
+        "unsupportedMapping": "This gamepad does not use a standard layout and cannot control the piano keys."
+      }
+    },
+    "gamepadControl": "Use an Xbox controller to control piano keys",
     "keyboard": {
       "clear": "Clear Key Mappings",
       "empty": "Not set",

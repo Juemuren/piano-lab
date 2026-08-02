@@ -10,6 +10,30 @@
     "soundSynthesizer": "サウンドシンセサイザー"
   },
   "settings": {
+    "gamepad": {
+      "deviceInfo": "{{buttons}} 個のボタン、{{axes}} 本の軸",
+      "hint": "ボタンの割り当てはまだ変更できません。理論上は Xbox 以外のコントローラーにも対応しています。",
+      "hints": {
+        "octaveDown": "1 オクターブ下げる",
+        "octaveUp": "1 オクターブ上げる",
+        "playLeft": "左側の鍵盤を演奏",
+        "playRight": "右側の鍵盤を演奏",
+        "semitoneDown": "半音下げる",
+        "semitoneUp": "半音上げる",
+        "temporaryOctaveDown": "一時的に 1 オクターブ下げる",
+        "temporaryOctaveUp": "一時的に 1 オクターブ上げる"
+      },
+      "inputDevice": "ゲームパッドデバイス",
+      "keyHint": "ボタンのヒントを表示",
+      "noteIndicator": "音符インジケーターを表示",
+      "status": {
+        "error": "ゲームパッド情報を取得できません。ブラウザーの権限設定を確認してください。",
+        "noDevices": "ゲームパッドが検出されません。ゲームパッドを接続していずれかのボタンを押してください。",
+        "unsupported": "このブラウザーは Gamepad API に対応していません。",
+        "unsupportedMapping": "このゲームパッドは標準レイアウトではないため、鍵盤の操作には使用できません。"
+      }
+    },
+    "gamepadControl": "Xbox コントローラーで鍵盤を操作する",
     "keyboard": {
       "clear": "キー割り当てをクリア",
       "empty": "未設定",
