@@ -61,7 +61,7 @@ function Piano() {
                     note={key.note}
                   />
                 )}
-                <span className="flex h-full flex-col items-center justify-end py-2">
+                <span className="flex h-full select-none flex-col items-center justify-end py-2">
                   {isKeyboardControlEnabled && isKeyboardKeyHintEnabled && (
                     <KeyboardKeyHint
                       className="text-piano-black"
@@ -105,7 +105,7 @@ function Piano() {
                     note={key.note}
                   />
                 )}
-                <span className="flex h-full flex-col items-center justify-end py-2">
+                <span className="flex h-full select-none flex-col items-center justify-end py-2">
                   {isKeyboardControlEnabled && isKeyboardKeyHintEnabled && (
                     <KeyboardKeyHint
                       className="text-piano-white"
