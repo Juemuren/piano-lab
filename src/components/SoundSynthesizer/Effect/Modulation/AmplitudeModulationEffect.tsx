@@ -2,28 +2,22 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { useAmplitudeModulationControl } from '../../../../hooks/synth/effect/useModulationControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { AmplitudeModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getAmplitudeModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
-interface AmplitudeModulationEffectProps {
-  amplitudeModulation: AmplitudeModulationConfig | null;
-  onDepthChange: (value: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onFrequencyChange: (value: number) => void;
-}
-
-function AmplitudeModulationEffect({
-  amplitudeModulation,
-  onEnabledChange,
-  onFrequencyChange,
-  onDepthChange,
-}: AmplitudeModulationEffectProps) {
+function AmplitudeModulationEffect() {
   const { t } = useTranslation('synth');
+  const {
+    config: amplitudeModulation,
+    updateDepth: onDepthChange,
+    updateEnabled: onEnabledChange,
+    updateFrequency: onFrequencyChange,
+  } = useAmplitudeModulationControl();
   const amplitudeModulationCurve = useMemo(
     () =>
       amplitudeModulation

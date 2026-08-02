@@ -2,28 +2,22 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { useFrequencyModulationControl } from '../../../../hooks/synth/effect/useModulationControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { FrequencyModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getFrequencyModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
-interface FrequencyModulationEffectProps {
-  frequencyModulation: FrequencyModulationConfig | null;
-  onDepthChange: (value: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onFrequencyChange: (value: number) => void;
-}
-
-function FrequencyModulationEffect({
-  frequencyModulation,
-  onEnabledChange,
-  onFrequencyChange,
-  onDepthChange,
-}: FrequencyModulationEffectProps) {
+function FrequencyModulationEffect() {
   const { t } = useTranslation('synth');
+  const {
+    config: frequencyModulation,
+    updateDepth: onDepthChange,
+    updateEnabled: onEnabledChange,
+    updateFrequency: onFrequencyChange,
+  } = useFrequencyModulationControl();
   const frequencyModulationCurve = useMemo(
     () =>
       frequencyModulation

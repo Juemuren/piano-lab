@@ -10,19 +10,13 @@ import type {
   FilterEqualizerConfigAction,
 } from '../../../services/synth/effect/FilterEqualizer';
 import { reduceFilterEqualizerConfig } from '../../../services/synth/effect/FilterEqualizer';
-import useEffectSection from './useEffectSection';
+import useEffectSectionReducer from './useEffectSectionReducer';
 
 function useFilterEqualizerControl() {
-  const [filterEqualizer, setFilterEqualizer] =
-    useEffectSection('filterEqualizer');
-  const dispatch = useCallback(
-    (action: FilterEqualizerConfigAction) => {
-      setFilterEqualizer((current) =>
-        reduceFilterEqualizerConfig(current, action),
-      );
-    },
-    [setFilterEqualizer],
-  );
+  const [filterEqualizer, dispatch] = useEffectSectionReducer<
+    'filterEqualizer',
+    FilterEqualizerConfigAction
+  >('filterEqualizer', reduceFilterEqualizerConfig);
 
   const updateFilterEqualizerEnabled = useCallback(
     (enabled: boolean) => {

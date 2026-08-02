@@ -2,28 +2,22 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { usePhaseModulationControl } from '../../../../hooks/synth/effect/useModulationControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { PhaseModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getPhaseModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
-interface PhaseModulationEffectProps {
-  onDepthChange: (value: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onFrequencyChange: (value: number) => void;
-  phaseModulation: PhaseModulationConfig | null;
-}
-
-function PhaseModulationEffect({
-  phaseModulation,
-  onEnabledChange,
-  onFrequencyChange,
-  onDepthChange,
-}: PhaseModulationEffectProps) {
+function PhaseModulationEffect() {
   const { t } = useTranslation('synth');
+  const {
+    config: phaseModulation,
+    updateDepth: onDepthChange,
+    updateEnabled: onEnabledChange,
+    updateFrequency: onFrequencyChange,
+  } = usePhaseModulationControl();
   const phaseModulationCurve = useMemo(
     () =>
       phaseModulation ? getPhaseModulationCurvePoints(phaseModulation) : null,

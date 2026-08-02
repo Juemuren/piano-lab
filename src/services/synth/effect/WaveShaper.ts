@@ -11,8 +11,23 @@ export interface WaveShaperConfig {
   saturation: number;
 }
 
+export type WaveShaperConfigAction =
+  | { enabled: boolean; type: 'setEnabled' }
+  | { patch: Partial<WaveShaperConfig>; type: 'update' };
+
 export function createWaveShaperConfig(): WaveShaperConfig {
   return { ...SYNTH_CONFIG_DEFAULTS.effect.waveShaper };
+}
+
+export function reduceWaveShaperConfig(
+  config: WaveShaperConfig | null,
+  action: WaveShaperConfigAction,
+): WaveShaperConfig | null {
+  if (action.type === 'setEnabled') {
+    return action.enabled ? (config ?? createWaveShaperConfig()) : null;
+  }
+
+  return { ...(config ?? createWaveShaperConfig()), ...action.patch };
 }
 
 function clamp(value: number, min: number, max: number) {

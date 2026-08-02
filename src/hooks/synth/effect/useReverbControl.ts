@@ -6,16 +6,13 @@ import type {
   ReverbLateTailConfig,
 } from '../../../services/synth/effect/Reverb';
 import { reduceReverbConfig } from '../../../services/synth/effect/Reverb';
-import useEffectSection from './useEffectSection';
+import useEffectSectionReducer from './useEffectSectionReducer';
 
 function useReverbControl() {
-  const [reverb, setReverb] = useEffectSection('reverb');
-  const dispatch = useCallback(
-    (action: ReverbConfigAction) => {
-      setReverb((current) => reduceReverbConfig(current, action));
-    },
-    [setReverb],
-  );
+  const [reverb, dispatch] = useEffectSectionReducer<
+    'reverb',
+    ReverbConfigAction
+  >('reverb', reduceReverbConfig);
 
   const updateReverbEnabled = useCallback(
     (enabled: boolean) => {

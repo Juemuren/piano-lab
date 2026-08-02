@@ -1,72 +1,36 @@
 import { useCallback } from 'react';
-import { createCompressorConfig } from '../../../services/synth/effect/Compressor';
-import useEffectSection from './useEffectSection';
+import type {
+  CompressorConfig,
+  CompressorConfigAction,
+} from '../../../services/synth/effect/Compressor';
+import { reduceCompressorConfig } from '../../../services/synth/effect/Compressor';
+import useEffectSectionReducer from './useEffectSectionReducer';
 
 function useCompressorControl() {
-  const [compressor, setCompressor] = useEffectSection('compressor');
+  const [compressor, dispatch] = useEffectSectionReducer<
+    'compressor',
+    CompressorConfigAction
+  >('compressor', reduceCompressorConfig);
 
   const updateCompressorEnabled = useCallback(
     (enabled: boolean) => {
-      setCompressor((current) =>
-        enabled ? (current ?? createCompressorConfig()) : null,
-      );
+      dispatch({ enabled, type: 'setEnabled' });
     },
-    [setCompressor],
+    [dispatch],
   );
 
-  const updateCompressorThreshold = useCallback(
-    (threshold: number) => {
-      setCompressor((current) =>
-        current ? { ...current, threshold } : createCompressorConfig(),
-      );
-    },
-    [setCompressor],
-  );
-
-  const updateCompressorKnee = useCallback(
-    (knee: number) => {
-      setCompressor((current) =>
-        current ? { ...current, knee } : createCompressorConfig(),
-      );
-    },
-    [setCompressor],
-  );
-
-  const updateCompressorRatio = useCallback(
-    (ratio: number) => {
-      setCompressor((current) =>
-        current ? { ...current, ratio } : createCompressorConfig(),
-      );
-    },
-    [setCompressor],
-  );
-
-  const updateCompressorAttack = useCallback(
-    (attack: number) => {
-      setCompressor((current) =>
-        current ? { ...current, attack } : createCompressorConfig(),
-      );
-    },
-    [setCompressor],
-  );
-
-  const updateCompressorRelease = useCallback(
-    (release: number) => {
-      setCompressor((current) =>
-        current ? { ...current, release } : createCompressorConfig(),
-      );
-    },
-    [setCompressor],
+  const updateCompressor = useCallback(
+    <Key extends keyof CompressorConfig>(
+      key: Key,
+      value: CompressorConfig[Key],
+    ) => dispatch({ patch: { [key]: value }, type: 'update' }),
+    [dispatch],
   );
 
   return {
     compressor,
-    updateCompressorAttack,
+    updateCompressor,
     updateCompressorEnabled,
-    updateCompressorKnee,
-    updateCompressorRatio,
-    updateCompressorRelease,
-    updateCompressorThreshold,
   };
 }
 

@@ -1,29 +1,30 @@
 import { useCallback } from 'react';
 import type { WaveShaperPreset } from '../../../services/synth/config/Options';
-import type { WaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
-import { createWaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
-import useEffectSection from './useEffectSection';
+import type {
+  WaveShaperConfig,
+  WaveShaperConfigAction,
+} from '../../../services/synth/effect/WaveShaper';
+import { reduceWaveShaperConfig } from '../../../services/synth/effect/WaveShaper';
+import useEffectSectionReducer from './useEffectSectionReducer';
 
 function useWaveShaperControl() {
-  const [waveShaper, setWaveShaper] = useEffectSection('waveShaper');
+  const [waveShaper, dispatch] = useEffectSectionReducer<
+    'waveShaper',
+    WaveShaperConfigAction
+  >('waveShaper', reduceWaveShaperConfig);
 
   const updateWaveShaperEnabled = useCallback(
     (enabled: boolean) => {
-      setWaveShaper((current) =>
-        enabled ? (current ?? createWaveShaperConfig()) : null,
-      );
+      dispatch({ enabled, type: 'setEnabled' });
     },
-    [setWaveShaper],
+    [dispatch],
   );
 
   const updateWaveShaperPreset = useCallback(
     (preset: WaveShaperPreset) => {
-      setWaveShaper((current) => ({
-        ...(current ?? createWaveShaperConfig()),
-        preset,
-      }));
+      dispatch({ patch: { preset }, type: 'update' });
     },
-    [setWaveShaper],
+    [dispatch],
   );
 
   const updateWaveShaperValue = useCallback(
@@ -31,12 +32,9 @@ function useWaveShaperControl() {
       key: Key,
       value: WaveShaperConfig[Key],
     ) => {
-      setWaveShaper((current) => ({
-        ...(current ?? createWaveShaperConfig()),
-        [key]: value,
-      }));
+      dispatch({ patch: { [key]: value }, type: 'update' });
     },
-    [setWaveShaper],
+    [dispatch],
   );
 
   return {

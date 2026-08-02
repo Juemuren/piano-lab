@@ -2,28 +2,22 @@ import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
+import { useDelayModulationControl } from '../../../../hooks/synth/effect/useModulationControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import type { DelayModulationConfig } from '../../../../services/synth/effect/Modulation';
 import { getDelayModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
 import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
-interface DelayModulationEffectProps {
-  delayModulation: DelayModulationConfig | null;
-  onDepthChange: (value: number) => void;
-  onEnabledChange: (enabled: boolean) => void;
-  onFrequencyChange: (value: number) => void;
-}
-
-function DelayModulationEffect({
-  delayModulation,
-  onEnabledChange,
-  onFrequencyChange,
-  onDepthChange,
-}: DelayModulationEffectProps) {
+function DelayModulationEffect() {
   const { t } = useTranslation('synth');
+  const {
+    config: delayModulation,
+    updateDepth: onDepthChange,
+    updateEnabled: onEnabledChange,
+    updateFrequency: onFrequencyChange,
+  } = useDelayModulationControl();
   const delayModulationCurve = useMemo(
     () =>
       delayModulation ? getDelayModulationCurvePoints(delayModulation) : null,

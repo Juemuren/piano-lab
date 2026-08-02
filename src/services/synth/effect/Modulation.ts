@@ -20,6 +20,16 @@ export interface DelayModulationConfig {
   frequency: number;
 }
 
+export type ModulationConfigAction =
+  | { enabled: boolean; type: 'setEnabled' }
+  | { patch: Partial<AmplitudeModulationConfig>; type: 'update' };
+
+type ModulationConfig =
+  | AmplitudeModulationConfig
+  | DelayModulationConfig
+  | FrequencyModulationConfig
+  | PhaseModulationConfig;
+
 export function createAmplitudeModulationConfig(): AmplitudeModulationConfig {
   return { ...SYNTH_CONFIG_DEFAULTS.effect.amplitudeModulation };
 }
@@ -34,6 +44,54 @@ export function createPhaseModulationConfig(): PhaseModulationConfig {
 
 export function createDelayModulationConfig(): DelayModulationConfig {
   return { ...SYNTH_CONFIG_DEFAULTS.effect.delayModulation };
+}
+
+function reduceModulationConfig<Config extends ModulationConfig>(
+  config: Config | null,
+  action: ModulationConfigAction,
+  createConfig: () => Config,
+): Config | null {
+  if (action.type === 'setEnabled') {
+    return action.enabled ? (config ?? createConfig()) : null;
+  }
+
+  return { ...(config ?? createConfig()), ...action.patch };
+}
+
+export function reduceAmplitudeModulationConfig(
+  config: AmplitudeModulationConfig | null,
+  action: ModulationConfigAction,
+) {
+  return reduceModulationConfig(
+    config,
+    action,
+    createAmplitudeModulationConfig,
+  );
+}
+
+export function reduceFrequencyModulationConfig(
+  config: FrequencyModulationConfig | null,
+  action: ModulationConfigAction,
+) {
+  return reduceModulationConfig(
+    config,
+    action,
+    createFrequencyModulationConfig,
+  );
+}
+
+export function reducePhaseModulationConfig(
+  config: PhaseModulationConfig | null,
+  action: ModulationConfigAction,
+) {
+  return reduceModulationConfig(config, action, createPhaseModulationConfig);
+}
+
+export function reduceDelayModulationConfig(
+  config: DelayModulationConfig | null,
+  action: ModulationConfigAction,
+) {
+  return reduceModulationConfig(config, action, createDelayModulationConfig);
 }
 
 const MODULATION_CURVE_POINT_COUNT = 256;

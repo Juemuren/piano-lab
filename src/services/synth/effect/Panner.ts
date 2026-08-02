@@ -22,8 +22,23 @@ export interface PannerConfig {
   rolloffFactor: number;
 }
 
+export type PannerConfigAction =
+  | { enabled: boolean; type: 'setEnabled' }
+  | { patch: Partial<PannerConfig>; type: 'update' };
+
 export function createPannerConfig(): PannerConfig {
   return { ...SYNTH_CONFIG_DEFAULTS.effect.panner };
+}
+
+export function reducePannerConfig(
+  config: PannerConfig | null,
+  action: PannerConfigAction,
+): PannerConfig | null {
+  if (action.type === 'setEnabled') {
+    return action.enabled ? (config ?? createPannerConfig()) : null;
+  }
+
+  return { ...(config ?? createPannerConfig()), ...action.patch };
 }
 
 export interface PannerConeMesh {

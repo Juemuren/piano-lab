@@ -10,12 +10,8 @@ function Compressor() {
   const { t } = useTranslation('synth');
   const {
     compressor,
-    updateCompressorAttack: onAttackChange,
     updateCompressorEnabled: onEnabledChange,
-    updateCompressorKnee: onKneeChange,
-    updateCompressorRatio: onRatioChange,
-    updateCompressorRelease: onReleaseChange,
-    updateCompressorThreshold: onThresholdChange,
+    updateCompressor,
   } = useCompressorControl();
 
   return (
@@ -45,7 +41,7 @@ function Compressor() {
               {...SYNTH_CONFIG_RANGES.effect.compressor.threshold}
               displayValue={`${compressor.threshold.toFixed(0)} dB`}
               label={t('effect.compressor.threshold')}
-              onChange={onThresholdChange}
+              onChange={(value) => updateCompressor('threshold', value)}
               step="1"
               value={compressor.threshold}
             />
@@ -53,7 +49,7 @@ function Compressor() {
               {...SYNTH_CONFIG_RANGES.effect.compressor.knee}
               displayValue={`${compressor.knee.toFixed(0)} dB`}
               label={t('effect.compressor.knee')}
-              onChange={onKneeChange}
+              onChange={(value) => updateCompressor('knee', value)}
               step="1"
               value={compressor.knee}
             />
@@ -61,7 +57,7 @@ function Compressor() {
               {...SYNTH_CONFIG_RANGES.effect.compressor.ratio}
               displayValue={`${compressor.ratio.toFixed(1)}:1`}
               label={t('effect.compressor.ratio')}
-              onChange={onRatioChange}
+              onChange={(value) => updateCompressor('ratio', value)}
               step="0.1"
               value={compressor.ratio}
             />
@@ -69,7 +65,7 @@ function Compressor() {
               {...SYNTH_CONFIG_RANGES.effect.compressor.attack}
               displayValue={`${(compressor.attack * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.attack')}
-              onChange={onAttackChange}
+              onChange={(value) => updateCompressor('attack', value)}
               step="0.001"
               value={compressor.attack}
             />
@@ -77,7 +73,7 @@ function Compressor() {
               {...SYNTH_CONFIG_RANGES.effect.compressor.release}
               displayValue={`${(compressor.release * 1000).toFixed(0)} ms`}
               label={t('effect.compressor.release')}
-              onChange={onReleaseChange}
+              onChange={(value) => updateCompressor('release', value)}
               step="0.001"
               value={compressor.release}
             />

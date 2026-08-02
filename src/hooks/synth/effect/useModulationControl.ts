@@ -1,158 +1,66 @@
 import { useCallback } from 'react';
+import type { SynthConfig } from '../../../services/synth/config/Schema';
+import type { ModulationConfigAction } from '../../../services/synth/effect/Modulation';
 import {
-  createAmplitudeModulationConfig,
-  createDelayModulationConfig,
-  createFrequencyModulationConfig,
-  createPhaseModulationConfig,
+  reduceAmplitudeModulationConfig,
+  reduceDelayModulationConfig,
+  reduceFrequencyModulationConfig,
+  reducePhaseModulationConfig,
 } from '../../../services/synth/effect/Modulation';
-import useEffectSection from './useEffectSection';
+import useEffectSectionReducer from './useEffectSectionReducer';
 
-function useModulationControl() {
-  const [amplitudeModulation, setAmplitudeModulation] = useEffectSection(
-    'amplitudeModulation',
-  );
-  const [delayModulation, setDelayModulation] =
-    useEffectSection('delayModulation');
-  const [frequencyModulation, setFrequencyModulation] = useEffectSection(
-    'frequencyModulation',
-  );
-  const [phaseModulation, setPhaseModulation] =
-    useEffectSection('phaseModulation');
+type ModulationKey =
+  | 'amplitudeModulation'
+  | 'delayModulation'
+  | 'frequencyModulation'
+  | 'phaseModulation';
+type EffectConfig = SynthConfig['effect'];
 
-  const updateAmplitudeModulationEnabled = useCallback(
-    (enabled: boolean) => {
-      setAmplitudeModulation((current) =>
-        enabled ? (current ?? createAmplitudeModulationConfig()) : null,
-      );
-    },
-    [setAmplitudeModulation],
+function useModulationControl<Key extends ModulationKey>(
+  key: Key,
+  reducer: (
+    config: EffectConfig[Key],
+    action: ModulationConfigAction,
+  ) => EffectConfig[Key],
+) {
+  const [config, dispatch] = useEffectSectionReducer<
+    Key,
+    ModulationConfigAction
+  >(key, reducer);
+  const updateEnabled = useCallback(
+    (enabled: boolean) => dispatch({ enabled, type: 'setEnabled' }),
+    [dispatch],
   );
-
-  const updateAmplitudeModulationFrequency = useCallback(
-    (frequency: number) => {
-      setAmplitudeModulation((current) => ({
-        ...(current ?? createAmplitudeModulationConfig()),
-        frequency,
-      }));
-    },
-    [setAmplitudeModulation],
+  const updateDepth = useCallback(
+    (depth: number) => dispatch({ patch: { depth }, type: 'update' }),
+    [dispatch],
   );
-
-  const updateAmplitudeModulationDepth = useCallback(
-    (depth: number) => {
-      setAmplitudeModulation((current) => ({
-        ...(current ?? createAmplitudeModulationConfig()),
-        depth,
-      }));
-    },
-    [setAmplitudeModulation],
+  const updateFrequency = useCallback(
+    (frequency: number) => dispatch({ patch: { frequency }, type: 'update' }),
+    [dispatch],
   );
 
-  const updateFrequencyModulationEnabled = useCallback(
-    (enabled: boolean) => {
-      setFrequencyModulation((current) =>
-        enabled ? (current ?? createFrequencyModulationConfig()) : null,
-      );
-    },
-    [setFrequencyModulation],
-  );
-
-  const updateFrequencyModulationFrequency = useCallback(
-    (frequency: number) => {
-      setFrequencyModulation((current) => ({
-        ...(current ?? createFrequencyModulationConfig()),
-        frequency,
-      }));
-    },
-    [setFrequencyModulation],
-  );
-
-  const updateFrequencyModulationDepth = useCallback(
-    (depth: number) => {
-      setFrequencyModulation((current) => ({
-        ...(current ?? createFrequencyModulationConfig()),
-        depth,
-      }));
-    },
-    [setFrequencyModulation],
-  );
-
-  const updatePhaseModulationEnabled = useCallback(
-    (enabled: boolean) => {
-      setPhaseModulation((current) =>
-        enabled ? (current ?? createPhaseModulationConfig()) : null,
-      );
-    },
-    [setPhaseModulation],
-  );
-
-  const updatePhaseModulationFrequency = useCallback(
-    (frequency: number) => {
-      setPhaseModulation((current) => ({
-        ...(current ?? createPhaseModulationConfig()),
-        frequency,
-      }));
-    },
-    [setPhaseModulation],
-  );
-
-  const updatePhaseModulationDepth = useCallback(
-    (depth: number) => {
-      setPhaseModulation((current) => ({
-        ...(current ?? createPhaseModulationConfig()),
-        depth,
-      }));
-    },
-    [setPhaseModulation],
-  );
-
-  const updateDelayModulationEnabled = useCallback(
-    (enabled: boolean) => {
-      setDelayModulation((current) =>
-        enabled ? (current ?? createDelayModulationConfig()) : null,
-      );
-    },
-    [setDelayModulation],
-  );
-
-  const updateDelayModulationFrequency = useCallback(
-    (frequency: number) => {
-      setDelayModulation((current) => ({
-        ...(current ?? createDelayModulationConfig()),
-        frequency,
-      }));
-    },
-    [setDelayModulation],
-  );
-
-  const updateDelayModulationDepth = useCallback(
-    (depth: number) => {
-      setDelayModulation((current) => ({
-        ...(current ?? createDelayModulationConfig()),
-        depth,
-      }));
-    },
-    [setDelayModulation],
-  );
-
-  return {
-    amplitudeModulation,
-    delayModulation,
-    frequencyModulation,
-    phaseModulation,
-    updateAmplitudeModulationDepth,
-    updateAmplitudeModulationEnabled,
-    updateAmplitudeModulationFrequency,
-    updateDelayModulationDepth,
-    updateDelayModulationEnabled,
-    updateDelayModulationFrequency,
-    updateFrequencyModulationDepth,
-    updateFrequencyModulationEnabled,
-    updateFrequencyModulationFrequency,
-    updatePhaseModulationDepth,
-    updatePhaseModulationEnabled,
-    updatePhaseModulationFrequency,
-  };
+  return { config, updateDepth, updateEnabled, updateFrequency };
 }
 
-export default useModulationControl;
+export function useAmplitudeModulationControl() {
+  return useModulationControl(
+    'amplitudeModulation',
+    reduceAmplitudeModulationConfig,
+  );
+}
+
+export function useFrequencyModulationControl() {
+  return useModulationControl(
+    'frequencyModulation',
+    reduceFrequencyModulationConfig,
+  );
+}
+
+export function usePhaseModulationControl() {
+  return useModulationControl('phaseModulation', reducePhaseModulationConfig);
+}
+
+export function useDelayModulationControl() {
+  return useModulationControl('delayModulation', reduceDelayModulationConfig);
+}
