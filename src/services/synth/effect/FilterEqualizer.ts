@@ -1,3 +1,4 @@
+import { removeItemAt, updateItemAt } from '../../../utils/collection';
 import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
 import type {
   BuiltInFilterEqualizerPreset,
@@ -24,6 +25,20 @@ export interface FilterEqualizerConfig {
   filters: FilterConfig[];
   preset: FilterEqualizerPreset;
 }
+
+export type FilterEqualizerConfigAction =
+  | { enabled: boolean; type: 'setEnabled' }
+  | { preset: FilterEqualizerPreset; type: 'setPreset' }
+  | { filterType: FilterType; type: 'addFilter' }
+  | { index: number; type: 'removeFilter' }
+  | { index: number; patch: Partial<FilterConfig>; type: 'updateFilter' }
+  | { equalizerType: EqualizerType; type: 'addEqualizer' }
+  | { index: number; type: 'removeEqualizer' }
+  | {
+      index: number;
+      patch: Partial<EqualizerConfig>;
+      type: 'updateEqualizer';
+    };
 
 interface FilterEqualizerPresetDefinition {
   equalizers: EqualizerConfig[];
@@ -101,4 +116,68 @@ export function createFilterEqualizerConfig(
     filters: definition.filters.map((filter) => ({ ...filter })),
     preset,
   };
+}
+
+export function reduceFilterEqualizerConfig(
+  config: FilterEqualizerConfig | null,
+  action: FilterEqualizerConfigAction,
+): FilterEqualizerConfig | null {
+  if (action.type === 'setEnabled') {
+    return action.enabled ? (config ?? createFilterEqualizerConfig()) : null;
+  }
+
+  if (action.type === 'setPreset') {
+    return createFilterEqualizerConfig(action.preset);
+  }
+
+  const source = config ?? createFilterEqualizerConfig();
+
+  switch (action.type) {
+    case 'addFilter':
+      return {
+        ...source,
+        filters: [...source.filters, createFilterConfig(action.filterType)],
+        preset: 'custom',
+      };
+    case 'removeFilter':
+      return {
+        ...source,
+        filters: removeItemAt(source.filters, action.index),
+        preset: 'custom',
+      };
+    case 'updateFilter':
+      return {
+        ...source,
+        filters: updateItemAt(source.filters, action.index, (filter) => ({
+          ...filter,
+          ...action.patch,
+        })),
+        preset: 'custom',
+      };
+    case 'addEqualizer':
+      return {
+        ...source,
+        equalizers: [
+          ...source.equalizers,
+          createEqualizerConfig(action.equalizerType),
+        ],
+        preset: 'custom',
+      };
+    case 'removeEqualizer':
+      return {
+        ...source,
+        equalizers: removeItemAt(source.equalizers, action.index),
+        preset: 'custom',
+      };
+    case 'updateEqualizer':
+      return {
+        ...source,
+        equalizers: updateItemAt(
+          source.equalizers,
+          action.index,
+          (equalizer) => ({ ...equalizer, ...action.patch }),
+        ),
+        preset: 'custom',
+      };
+  }
 }

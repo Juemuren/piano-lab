@@ -1,68 +1,33 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer } from 'react';
 import type { ReverbPreset } from '../../../services/synth/config/Options';
 import type {
   ReverbConfig,
   ReverbEarlyReflectionConfig,
   ReverbLateTailConfig,
 } from '../../../services/synth/effect/Reverb';
-import {
-  changeReverbPreset,
-  createReverbConfig,
-  createReverbEarlyReflectionConfig,
-} from '../../../services/synth/effect/Reverb';
-import { removeItemAt, updateItemAt } from '../../../utils/collection';
-
-function getReverbConfig(config: ReverbConfig | null) {
-  return config ?? createReverbConfig();
-}
+import { reduceReverbConfig } from '../../../services/synth/effect/Reverb';
 
 function useReverbControl(initialReverb: ReverbConfig | null) {
-  const [reverb, setReverb] = useState<ReverbConfig | null>(
-    () => initialReverb,
-  );
+  const [reverb, dispatch] = useReducer(reduceReverbConfig, initialReverb);
 
   const updateReverbEnabled = useCallback((enabled: boolean) => {
-    setReverb((current) =>
-      enabled ? (current ?? createReverbConfig()) : null,
-    );
+    dispatch({ enabled, type: 'setEnabled' });
   }, []);
 
   const updateReverbPreset = useCallback((preset: ReverbPreset) => {
-    setReverb((current) => changeReverbPreset(current, preset));
+    dispatch({ preset, type: 'setPreset' });
   }, []);
 
   const updateReverbMix = useCallback((mix: number) => {
-    setReverb((current) => ({
-      ...getReverbConfig(current),
-      mix,
-    }));
+    dispatch({ mix, type: 'setMix' });
   }, []);
 
   const addReverbEarlyReflection = useCallback(() => {
-    setReverb((current) => {
-      const source = getReverbConfig(current);
-
-      return {
-        ...source,
-        earlyReflections: [
-          ...source.earlyReflections,
-          createReverbEarlyReflectionConfig(),
-        ],
-        preset: 'custom',
-      };
-    });
+    dispatch({ type: 'addEarlyReflection' });
   }, []);
 
   const removeReverbEarlyReflection = useCallback((index: number) => {
-    setReverb((current) => {
-      const source = getReverbConfig(current);
-
-      return {
-        ...source,
-        earlyReflections: removeItemAt(source.earlyReflections, index),
-        preset: 'custom',
-      };
-    });
+    dispatch({ index, type: 'removeEarlyReflection' });
   }, []);
 
   const updateReverbEarlyReflection = useCallback(
@@ -71,21 +36,10 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
       key: Key,
       value: ReverbEarlyReflectionConfig[Key],
     ) => {
-      setReverb((current) => {
-        const source = getReverbConfig(current);
-
-        return {
-          ...source,
-          earlyReflections: updateItemAt(
-            source.earlyReflections,
-            index,
-            (reflection) => ({
-              ...reflection,
-              [key]: value,
-            }),
-          ),
-          preset: 'custom',
-        };
+      dispatch({
+        index,
+        patch: { [key]: value },
+        type: 'updateEarlyReflection',
       });
     },
     [],
@@ -96,15 +50,7 @@ function useReverbControl(initialReverb: ReverbConfig | null) {
       key: Key,
       value: ReverbLateTailConfig[Key],
     ) => {
-      setReverb((current) => {
-        const source = getReverbConfig(current);
-
-        return {
-          ...source,
-          lateTail: { ...source.lateTail, [key]: value },
-          preset: 'custom',
-        };
-      });
+      dispatch({ patch: { [key]: value }, type: 'updateLateTail' });
     },
     [],
   );

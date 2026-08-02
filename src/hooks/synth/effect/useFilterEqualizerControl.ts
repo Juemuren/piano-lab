@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer } from 'react';
 import type {
   EqualizerType,
   FilterEqualizerPreset,
@@ -9,54 +9,33 @@ import type {
   FilterConfig,
   FilterEqualizerConfig,
 } from '../../../services/synth/effect/FilterEqualizer';
-import {
-  createEqualizerConfig,
-  createFilterConfig,
-  createFilterEqualizerConfig,
-} from '../../../services/synth/effect/FilterEqualizer';
-import { removeItemAt, updateItemAt } from '../../../utils/collection';
+import { reduceFilterEqualizerConfig } from '../../../services/synth/effect/FilterEqualizer';
 
 function useFilterEqualizerControl(
   initialFilterEqualizer: FilterEqualizerConfig | null,
 ) {
-  const [filterEqualizer, setFilterEqualizer] =
-    useState<FilterEqualizerConfig | null>(() => initialFilterEqualizer);
+  const [filterEqualizer, dispatch] = useReducer(
+    reduceFilterEqualizerConfig,
+    initialFilterEqualizer,
+  );
 
   const updateFilterEqualizerEnabled = useCallback((enabled: boolean) => {
-    setFilterEqualizer((current) =>
-      enabled ? (current ?? createFilterEqualizerConfig()) : null,
-    );
+    dispatch({ enabled, type: 'setEnabled' });
   }, []);
 
   const updateFilterEqualizerPreset = useCallback(
     (preset: FilterEqualizerPreset) => {
-      setFilterEqualizer(createFilterEqualizerConfig(preset));
+      dispatch({ preset, type: 'setPreset' });
     },
     [],
   );
 
   const addFilter = useCallback((type: FilterType) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        filters: [...source.filters, createFilterConfig(type)],
-        preset: 'custom',
-      };
-    });
+    dispatch({ filterType: type, type: 'addFilter' });
   }, []);
 
   const removeFilter = useCallback((index: number) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        filters: removeItemAt(source.filters, index),
-        preset: 'custom',
-      };
-    });
+    dispatch({ index, type: 'removeFilter' });
   }, []);
 
   const updateFilter = useCallback(
@@ -65,44 +44,17 @@ function useFilterEqualizerControl(
       key: Key,
       value: FilterConfig[Key],
     ) => {
-      setFilterEqualizer((current) => {
-        const source = current ?? createFilterEqualizerConfig();
-
-        return {
-          ...source,
-          filters: updateItemAt(source.filters, index, (filter) => ({
-            ...filter,
-            [key]: value,
-          })),
-          preset: 'custom',
-        };
-      });
+      dispatch({ index, patch: { [key]: value }, type: 'updateFilter' });
     },
     [],
   );
 
   const addEqualizer = useCallback((type: EqualizerType) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        equalizers: [...source.equalizers, createEqualizerConfig(type)],
-        preset: 'custom',
-      };
-    });
+    dispatch({ equalizerType: type, type: 'addEqualizer' });
   }, []);
 
   const removeEqualizer = useCallback((index: number) => {
-    setFilterEqualizer((current) => {
-      const source = current ?? createFilterEqualizerConfig();
-
-      return {
-        ...source,
-        equalizers: removeItemAt(source.equalizers, index),
-        preset: 'custom',
-      };
-    });
+    dispatch({ index, type: 'removeEqualizer' });
   }, []);
 
   const updateEqualizer = useCallback(
@@ -111,18 +63,7 @@ function useFilterEqualizerControl(
       key: Key,
       value: EqualizerConfig[Key],
     ) => {
-      setFilterEqualizer((current) => {
-        const source = current ?? createFilterEqualizerConfig();
-
-        return {
-          ...source,
-          equalizers: updateItemAt(source.equalizers, index, (equalizer) => ({
-            ...equalizer,
-            [key]: value,
-          })),
-          preset: 'custom',
-        };
-      });
+      dispatch({ index, patch: { [key]: value }, type: 'updateEqualizer' });
     },
     [],
   );

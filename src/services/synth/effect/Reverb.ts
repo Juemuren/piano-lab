@@ -1,3 +1,4 @@
+import { removeItemAt, updateItemAt } from '../../../utils/collection';
 import { degreesToRadians } from '../../../utils/math';
 import { createGaussianRandomGenerator } from '../../../utils/random';
 import { SYNTH_CONFIG_DEFAULTS } from '../config/Defaults';
@@ -22,6 +23,19 @@ export interface ReverbConfig {
   mix: number;
   preset: ReverbPreset;
 }
+
+export type ReverbConfigAction =
+  | { enabled: boolean; type: 'setEnabled' }
+  | { preset: ReverbPreset; type: 'setPreset' }
+  | { mix: number; type: 'setMix' }
+  | { type: 'addEarlyReflection' }
+  | { index: number; type: 'removeEarlyReflection' }
+  | {
+      index: number;
+      patch: Partial<ReverbEarlyReflectionConfig>;
+      type: 'updateEarlyReflection';
+    }
+  | { patch: Partial<ReverbLateTailConfig>; type: 'updateLateTail' };
 
 type ReverbPresetDefinition = Pick<
   ReverbConfig,
@@ -170,6 +184,24 @@ export function createReverbConfig(
   };
 }
 
+function createCustomReverbConfig(
+  mix: number = SYNTH_CONFIG_DEFAULTS.effect.reverb.mix,
+): ReverbConfig {
+  const config = createReverbConfig();
+
+  return {
+    ...config,
+    earlyReflections: [],
+    lateTail: {
+      ...config.lateTail,
+      amplitude: 0,
+      delay: 0,
+    },
+    mix,
+    preset: 'custom',
+  };
+}
+
 export function changeReverbPreset(
   config: ReverbConfig | null,
   preset: ReverbPreset,
@@ -178,18 +210,58 @@ export function changeReverbPreset(
     return createReverbConfig(preset, config?.mix);
   }
 
+  return createCustomReverbConfig(config?.mix);
+}
+
+export function reduceReverbConfig(
+  config: ReverbConfig | null,
+  action: ReverbConfigAction,
+): ReverbConfig | null {
+  if (action.type === 'setEnabled') {
+    return action.enabled ? (config ?? createReverbConfig()) : null;
+  }
+
+  if (action.type === 'setPreset') {
+    return changeReverbPreset(config, action.preset);
+  }
+
   const source = config ?? createReverbConfig();
 
-  return {
-    ...source,
-    earlyReflections: [],
-    lateTail: {
-      ...source.lateTail,
-      amplitude: 0,
-      delay: 0,
-    },
-    preset,
-  };
+  switch (action.type) {
+    case 'setMix':
+      return { ...source, mix: action.mix };
+    case 'addEarlyReflection':
+      return {
+        ...source,
+        earlyReflections: [
+          ...source.earlyReflections,
+          createReverbEarlyReflectionConfig(),
+        ],
+        preset: 'custom',
+      };
+    case 'removeEarlyReflection':
+      return {
+        ...source,
+        earlyReflections: removeItemAt(source.earlyReflections, action.index),
+        preset: 'custom',
+      };
+    case 'updateEarlyReflection':
+      return {
+        ...source,
+        earlyReflections: updateItemAt(
+          source.earlyReflections,
+          action.index,
+          (reflection) => ({ ...reflection, ...action.patch }),
+        ),
+        preset: 'custom',
+      };
+    case 'updateLateTail':
+      return {
+        ...source,
+        lateTail: { ...source.lateTail, ...action.patch },
+        preset: 'custom',
+      };
+  }
 }
 
 export function createReverbImpulseResponse(
