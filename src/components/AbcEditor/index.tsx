@@ -5,6 +5,7 @@ import useAbcPlayback from '../../hooks/abc/useAbcPlayback';
 import useFileImport from '../../hooks/file/useFileImport';
 import { AbcPlayer } from '../../services/abc/AbcPlayer';
 import { getAbcPreset } from '../../services/abc/AbcPresets';
+import { useAppSettingsStore } from '../../stores/appSettingsStore';
 import { usePlayingNotesStore } from '../../stores/playingNotesStore';
 import { useScoreStore } from '../../stores/scoreStore';
 import ControlPanel from '../shared/ControlPanel';
@@ -17,6 +18,9 @@ const RENDER_TARGET_ID = 'abcjs-paper';
 
 function AbcEditor() {
   const synthEngine = useSynthEngine();
+  const isPianoInputEnabled = useAppSettingsStore(
+    (state) => state.isPianoInputEnabled,
+  );
   const abcContent = useScoreStore((state) => state.abcContent);
   const setAbcContent = useScoreStore((state) => state.setAbcContent);
   const startPlayingNote = usePlayingNotesStore(
@@ -108,7 +112,11 @@ function AbcEditor() {
         selectedPresetIndex={selectedPresetIndex}
       />
 
-      <AbcSourceInput onChange={handleContentChange} value={abcContent} />
+      <AbcSourceInput
+        disabled={isPianoInputEnabled}
+        onChange={handleContentChange}
+        value={abcContent}
+      />
 
       {hasNotes && (
         <AbcPlaybackControls
