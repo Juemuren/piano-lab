@@ -1,4 +1,4 @@
-import { AudioWaveform, Power, PowerOff } from 'lucide-react';
+import { AudioWaveform } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import useWaveShaperControl from '../../../../hooks/synth/effect/useWaveShaperControl';
@@ -6,9 +6,9 @@ import type { WaveShaperPreset } from '../../../../services/synth/config/Options
 import { WAVE_SHAPER_PRESETS } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import type { WaveShaperConfig } from '../../../../services/synth/effect/WaveShaper';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
+import EffectToggleButton from '../EffectToggleButton';
 import WaveShaperCurvePreview from './WaveShaperCurvePreview';
 
 const presetParams: Record<
@@ -80,13 +80,10 @@ function WaveShaper() {
       </summary>
 
       <div className="space-y-3">
-        <ControlButton
-          icon={waveShaper ? <Power size={18} /> : <PowerOff size={18} />}
-          label={t(
-            waveShaper
-              ? 'effect.waveShaper.disabled'
-              : 'effect.waveShaper.enabled',
-          )}
+        <EffectToggleButton
+          disableLabel={t('effect.waveShaper.disabled')}
+          enabled={Boolean(waveShaper)}
+          enableLabel={t('effect.waveShaper.enabled')}
           onClick={() => onEnabledChange(!waveShaper)}
           title={t('effect.waveShaper.enabled')}
         />

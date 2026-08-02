@@ -1,4 +1,3 @@
-import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
@@ -6,8 +5,8 @@ import { useAmplitudeModulationControl } from '../../../../hooks/synth/effect/us
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import { getAmplitudeModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
+import EffectToggleButton from '../EffectToggleButton';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
 function AmplitudeModulationEffect() {
@@ -32,15 +31,10 @@ function AmplitudeModulationEffect() {
         {t('effect.modulation.amplitudeModulation')}
       </summary>
 
-      <ControlButton
-        icon={
-          amplitudeModulation ? <Power size={18} /> : <PowerOff size={18} />
-        }
-        label={t(
-          amplitudeModulation
-            ? 'effect.modulation.amplitudeModulationDisabled'
-            : 'effect.modulation.amplitudeModulationEnabled',
-        )}
+      <EffectToggleButton
+        disableLabel={t('effect.modulation.amplitudeModulationDisabled')}
+        enabled={Boolean(amplitudeModulation)}
+        enableLabel={t('effect.modulation.amplitudeModulationEnabled')}
         onClick={() => onEnabledChange(!amplitudeModulation)}
         title={t('effect.modulation.amplitudeModulationEnabled')}
       />

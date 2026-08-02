@@ -1,4 +1,3 @@
-import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
@@ -6,8 +5,8 @@ import { usePhaseModulationControl } from '../../../../hooks/synth/effect/useMod
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import { getPhaseModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
+import EffectToggleButton from '../EffectToggleButton';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
 function PhaseModulationEffect() {
@@ -30,13 +29,10 @@ function PhaseModulationEffect() {
         {t('effect.modulation.phaseModulation')}
       </summary>
 
-      <ControlButton
-        icon={phaseModulation ? <Power size={18} /> : <PowerOff size={18} />}
-        label={t(
-          phaseModulation
-            ? 'effect.modulation.phaseModulationDisabled'
-            : 'effect.modulation.phaseModulationEnabled',
-        )}
+      <EffectToggleButton
+        disableLabel={t('effect.modulation.phaseModulationDisabled')}
+        enabled={Boolean(phaseModulation)}
+        enableLabel={t('effect.modulation.phaseModulationEnabled')}
         onClick={() => onEnabledChange(!phaseModulation)}
         title={t('effect.modulation.phaseModulationEnabled')}
       />

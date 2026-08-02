@@ -1,9 +1,9 @@
-import { Ban, Power, PowerOff } from 'lucide-react';
+import { Ban } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import useCompressorControl from '../../../../hooks/synth/effect/useCompressorControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
+import EffectToggleButton from '../EffectToggleButton';
 import CompressorReductionPreview from './CompressorReductionPreview';
 
 function Compressor() {
@@ -24,13 +24,10 @@ function Compressor() {
       </summary>
 
       <div className="space-y-3">
-        <ControlButton
-          icon={compressor ? <Power size={18} /> : <PowerOff size={18} />}
-          label={t(
-            compressor
-              ? 'effect.compressor.disabled'
-              : 'effect.compressor.enabled',
-          )}
+        <EffectToggleButton
+          disableLabel={t('effect.compressor.disabled')}
+          enabled={Boolean(compressor)}
+          enableLabel={t('effect.compressor.enabled')}
           onClick={() => onEnabledChange(!compressor)}
           title={t('effect.compressor.enabled')}
         />

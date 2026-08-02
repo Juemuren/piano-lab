@@ -1,19 +1,11 @@
-import {
-  Compass,
-  Crosshair,
-  Power,
-  PowerOff,
-  Radio,
-  Ruler,
-  Triangle,
-} from 'lucide-react';
+import { Compass, Crosshair, Radio, Ruler, Triangle } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import usePannerControl from '../../../../hooks/synth/effect/usePannerControl';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
+import EffectToggleButton from '../EffectToggleButton';
 import PannerDistanceGainPreview from './PannerDistanceGainPreview';
 import PannerSpatialPreview from './PannerSpatialPreview';
 
@@ -59,9 +51,10 @@ function Panner() {
       </summary>
 
       <div className="space-y-3">
-        <ControlButton
-          icon={panner ? <Power size={18} /> : <PowerOff size={18} />}
-          label={t(panner ? 'effect.panner.disabled' : 'effect.panner.enabled')}
+        <EffectToggleButton
+          disableLabel={t('effect.panner.disabled')}
+          enabled={Boolean(panner)}
+          enableLabel={t('effect.panner.enabled')}
           onClick={() => onEnabledChange(!panner)}
           title={t('effect.panner.enabled')}
         />

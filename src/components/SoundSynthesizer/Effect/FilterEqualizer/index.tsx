@@ -1,11 +1,11 @@
-import { Equal, Power, PowerOff } from 'lucide-react';
+import { Equal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import useFilterEqualizerControl from '../../../../hooks/synth/effect/useFilterEqualizerControl';
 import type { FilterEqualizerPreset } from '../../../../services/synth/config/Options';
 import { FILTER_EQUALIZER_PRESETS } from '../../../../services/synth/config/Options';
 import { useSynthConfigStore } from '../../../../stores/synthConfigStore';
-import ControlButton from '../../../shared/ControlButton';
 import ControlSelect from '../../../shared/ControlSelect';
+import EffectToggleButton from '../EffectToggleButton';
 import Equalizer from './Equalizer';
 import Filter from './Filter';
 import HarmonicResponsePreview from './HarmonicResponsePreview';
@@ -44,13 +44,10 @@ function FilterEqualizer() {
         </span>
       </summary>
       <div className="space-y-3">
-        <ControlButton
-          icon={filterEqualizer ? <Power size={18} /> : <PowerOff size={18} />}
-          label={t(
-            filterEqualizer
-              ? 'effect.filterEqualizer.disabled'
-              : 'effect.filterEqualizer.enabled',
-          )}
+        <EffectToggleButton
+          disableLabel={t('effect.filterEqualizer.disabled')}
+          enabled={Boolean(filterEqualizer)}
+          enableLabel={t('effect.filterEqualizer.enabled')}
           onClick={() => onEnabledChange(!filterEqualizer)}
           title={t('effect.filterEqualizer.enabled')}
         />

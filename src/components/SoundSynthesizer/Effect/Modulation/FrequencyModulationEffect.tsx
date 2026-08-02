@@ -1,4 +1,3 @@
-import { Power, PowerOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
@@ -6,8 +5,8 @@ import { useFrequencyModulationControl } from '../../../../hooks/synth/effect/us
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import { getFrequencyModulationCurvePoints } from '../../../../services/synth/effect/Modulation';
 import BlockMath from '../../../shared/BlockMath';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
+import EffectToggleButton from '../EffectToggleButton';
 import ModulationCurvePreview from './ModulationCurvePreview';
 
 function FrequencyModulationEffect() {
@@ -32,15 +31,10 @@ function FrequencyModulationEffect() {
         {t('effect.modulation.frequencyModulation')}
       </summary>
 
-      <ControlButton
-        icon={
-          frequencyModulation ? <Power size={18} /> : <PowerOff size={18} />
-        }
-        label={t(
-          frequencyModulation
-            ? 'effect.modulation.frequencyModulationDisabled'
-            : 'effect.modulation.frequencyModulationEnabled',
-        )}
+      <EffectToggleButton
+        disableLabel={t('effect.modulation.frequencyModulationDisabled')}
+        enabled={Boolean(frequencyModulation)}
+        enableLabel={t('effect.modulation.frequencyModulationEnabled')}
         onClick={() => onEnabledChange(!frequencyModulation)}
         title={t('effect.modulation.frequencyModulationEnabled')}
       />

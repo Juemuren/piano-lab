@@ -1,4 +1,4 @@
-import { House, Power, PowerOff } from 'lucide-react';
+import { House } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { InlineMath } from 'react-katex';
 import useReverbControl from '../../../../hooks/synth/effect/useReverbControl';
@@ -6,9 +6,9 @@ import type { ReverbPreset } from '../../../../services/synth/config/Options';
 import { REVERB_PRESETS } from '../../../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../../../services/synth/config/Ranges';
 import BlockMath from '../../../shared/BlockMath';
-import ControlButton from '../../../shared/ControlButton';
 import ControlRange from '../../../shared/ControlRange';
 import ControlSelect from '../../../shared/ControlSelect';
+import EffectToggleButton from '../EffectToggleButton';
 import EarlyReflections from './EarlyReflections';
 import LateTail from './LateTail';
 import ReverbImpulseResponsePreview from './ReverbImpulseResponsePreview';
@@ -44,9 +44,10 @@ function Reverb() {
       </summary>
 
       <div className="space-y-3">
-        <ControlButton
-          icon={reverb ? <Power size={18} /> : <PowerOff size={18} />}
-          label={t(reverb ? 'effect.reverb.disabled' : 'effect.reverb.enabled')}
+        <EffectToggleButton
+          disableLabel={t('effect.reverb.disabled')}
+          enabled={Boolean(reverb)}
+          enableLabel={t('effect.reverb.enabled')}
           onClick={() => onEnabledChange(!reverb)}
           title={t('effect.reverb.enabled')}
         />
