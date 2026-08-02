@@ -6,7 +6,6 @@ settings:
 
 patchedDependencies:
   abcjs@6.6.2: f374b195608cdc42aadcb838c9138b443e3c5550f4e2e5784762d7d97f4763c0
-  katex@0.16.47: c4134db61d8a4146e815c74ca338c0bc5302888491dbc31c2da88d203e020bd9
   react-plotly.js@2.6.0: 031c6c958e9d45c1b7ce06d27ba69cab477a89c3c231c6a4660c605c0527c66f
 
 importers:
@@ -20,8 +19,8 @@ importers:
         specifier: ^26.3.6
         version: 26.3.6(typescript@7.0.2)
       katex:
-        specifier: ^0.17.0
-        version: 0.17.0
+        specifier: ^0.18.1
+        version: 0.18.1
       lucide-react:
         specifier: ^1.28.0
         version: 1.28.0(react@19.2.8)
@@ -1213,8 +1212,8 @@ packages:
     resolution: {integrity: sha512-Eeo8Ys1doU1z+x8AZsPpQu+p/QcZBI5PeOo7QGQdy2x2m0MU/hYagBbGOmXwr5KVbEfVuWv9LpnQWeehogurjg==}
     hasBin: true
 
-  katex@0.17.0:
-    resolution: {integrity: sha512-Vdw0ATsQ9V+LuegM/BTwQqV/6cTl5lbGcIrU+BCgLxyf6bo38ybOr372tuSIxir3CN720flu1meYR6XzNMwQnw==}
+  katex@0.18.1:
+    resolution: {integrity: sha512-Td8GCYSxDAoMhHOlKmCFMJ/hz5qlAAb71n66Dryw9nfCVfumLo7nhuotbvKom/XPADmrYC3O5QR71EPq4DarJQ==}
     hasBin: true
 
   kdbush@3.0.0:
@@ -2861,11 +2860,11 @@ snapshots:
 
   json-stringify-pretty-compact@4.0.0: {}
 
-  katex@0.16.47(patch_hash=c4134db61d8a4146e815c74ca338c0bc5302888491dbc31c2da88d203e020bd9):
+  katex@0.16.47:
     dependencies:
       commander: 8.3.0
 
-  katex@0.17.0:
+  katex@0.18.1:
     dependencies:
       commander: 8.3.0
 
@@ -3233,7 +3232,7 @@ snapshots:
 
   react-katex@3.1.0(prop-types@15.8.1)(react@19.2.8):
     dependencies:
-      katex: 0.16.47(patch_hash=c4134db61d8a4146e815c74ca338c0bc5302888491dbc31c2da88d203e020bd9)
+      katex: 0.16.47
       prop-types: 15.8.1
       react: 19.2.8
 
