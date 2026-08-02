@@ -31,7 +31,7 @@ Piano Lab provides interactive virtual keys, a customizable sound synthesizer, a
 
 - [Sound Synthesizer](#sound-synthesizer): customize the sound envelope, harmonic spectrum, and effects; record audio and export in WebM/MP4 and other formats
 - [Score Editor](#score-editor): write scores in ABC Notation, automatically record played notes, render, play, and export as SVG/PNG/PDF/MIDI files
-- [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8; supports playing with mouse, touchscreen, computer keyboard, and MIDI input devices
+- [Virtual Keys](#virtual-keys): provides the full 88-key range from A0 to C8; supports playing with mouse, touchscreen, computer keyboard, gamepad, and MIDI input devices
 
 The app supports multiple languages, mobile layout, dark mode, and can be installed as a [desktop app][link-release].
 
@@ -129,9 +129,10 @@ Includes filter, equalizer, reverb, compression, panning, wave shaping, modulati
 - Connected to the custom sound synthesizer and synchronized with automatic score playback
 - Covers 88 keys from A0 to C8, with horizontal scrolling on narrow screens
 - Keys sound when pressed and release when lifted, allowing notes of arbitrary duration
-- Supports playing with mouse, touchscreen, computer keyboard, and MIDI input devices; each can be enabled or disabled individually
+- Supports playing with mouse, touchscreen, computer keyboard, gamepad, and MIDI input devices; each can be enabled or disabled individually
 - The computer keyboard uses a single-row chromatic layout and supports custom key mapping
-- Displays MIDI input device connection status and allows selecting one device from the list to listen to
+- The gamepad uses the left and right triggers to play keys, with notes selected using the sticks and buttons
+- MIDI input devices display their connection status and allow selecting one device from the list to listen to
 
 ## Usage
 
@@ -408,7 +409,8 @@ Plotly.js and KaTeX are used in the app to draw modulation curves and their corr
 
 ### Input Devices
 
-- MIDI device connections are implemented via the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
+- Gamepad input is implemented via the [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API), supporting all gamepads compatible with the Xbox layout
+- MIDI device input is implemented via the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
 
 ### Time-Domain and Frequency-Domain Analysis
 
@@ -424,6 +426,8 @@ Built on the following open-source projects:
 - TypeScript
 - Tailwind CSS
 - Vite
+- Zustand
+- Zod
 - abcjs
 - i18next
 - Lucide

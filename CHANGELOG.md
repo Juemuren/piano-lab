@@ -4,6 +4,30 @@
 
 All notable changes to this project are documented in this file.
 
+## 1.6.0
+
+### Added
+
+- Added gamepad control using the Gamepad API, with trigger velocity, note selection, and temporary octave shifts.
+- Added connected gamepad information and device selection, including support for standard-layout non-Xbox controllers.
+- Added optional gamepad control hints and note indicators above the piano keys.
+- Added runtime validation for imported synthesizer configurations and persisted app settings.
+
+### Changed
+
+- Migrated shared application, score, piano device, and playing-note state to Zustand stores.
+- Centralized synthesizer configuration defaults, ranges, factories, validation, and updates.
+- Refactored piano input handling and narrowed reactive state subscriptions.
+
+### Fixed
+
+- Fixed persisted app settings not being read correctly from `localStorage`.
+- Fixed valid synthesizer configurations with many effects being rejected by runtime validation.
+
+### Docs
+
+- Synced translations.
+
 ## 1.5.0
 
 ### Added
