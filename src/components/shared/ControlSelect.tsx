@@ -2,11 +2,13 @@ import type { ReactNode, SelectHTMLAttributes } from 'react';
 import { useId } from 'react';
 
 interface ControlSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  bgClassName?: string;
   icon?: ReactNode;
   label?: string;
 }
 
 function ControlSelect({
+  bgClassName = 'bg-app-surface dark:bg-app-surface-dark',
   className = '',
   id,
   label,
@@ -26,7 +28,7 @@ function ControlSelect({
         </span>
       )}
       <select
-        className={`w-full rounded-xl border border-app-border bg-app-surface p-2 text-left focus:border-app-accent focus:ring-2 focus:ring-app-accent/50 dark:border-app-border-dark dark:bg-app-surface-dark ${className}`}
+        className={`w-full rounded-xl p-2 text-left focus:ring-2 focus:ring-app-accent/50 ${bgClassName} ${className}`}
         id={selectId}
         title={label}
         {...props}

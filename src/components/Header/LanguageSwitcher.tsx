@@ -22,6 +22,7 @@ function LanguageSwitcher() {
         size={18}
       />
       <ControlSelect
+        bgClassName="focus:bg-app-surface focus:dark:bg-app-surface-dark"
         onChange={(e) => {
           i18n.changeLanguage(e.target.value);
         }}
