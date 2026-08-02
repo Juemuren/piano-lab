@@ -28,7 +28,13 @@ function FileImportButton({
         title={label}
         type="file"
       />
-      <ControlButton icon={icon} label={label} onClick={onClick} />
+      <ControlButton
+        bgClassName="bg-app-tip/15 hover:bg-app-tip/25 dark:bg-app-tip-dark/15 dark:hover:bg-app-tip-dark/25"
+        colorClassName="text-app-tip dark:text-app-tip-dark"
+        icon={icon}
+        label={label}
+        onClick={onClick}
+      />
     </>
   );
 }

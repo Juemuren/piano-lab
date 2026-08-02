@@ -21,10 +21,10 @@ import { SYNTH_CONFIG_RANGES } from '../../services/synth/config/Ranges';
 import { SynthConfigStoreProvider } from '../../stores/SynthConfigStoreProvider';
 import { useSynthConfigStore } from '../../stores/synthConfigStore';
 import CollapsibleSection from '../shared/CollapsibleSection';
-import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';
 import ControlRange from '../shared/ControlRange';
 import ControlSelect from '../shared/ControlSelect';
+import FileExportButton from '../shared/FileExportButton';
 import FileImportButton from '../shared/FileImportButton';
 import Analysis from './Analysis';
 import Effect from './Effect';
@@ -71,7 +71,7 @@ function SoundSynthesizerContent() {
             onChange={handleFileChange}
             onClick={openFileDialog}
           />
-          <ControlButton
+          <FileExportButton
             icon={<Download size={18} />}
             label="JSON"
             onClick={handleExportConfig}
