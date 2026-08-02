@@ -51,18 +51,24 @@ function SynthRecorderSettings() {
           )}
           <div className="grid grid-cols-3 gap-2">
             <ControlButton
+              bgClassName="bg-app-tip/15 hover:bg-app-tip/25 dark:bg-app-tip-dark/15 dark:hover:bg-app-tip-dark/25"
+              colorClassName="text-app-tip dark:text-app-tip-dark"
               disabled={isRecording || isUnsupported}
               icon={<Circle size={18} />}
               label={t('settings.recording.start')}
               onClick={startRecording}
             />
             <ControlButton
+              bgClassName="bg-app-error/15 hover:bg-app-error/25 dark:bg-app-error-dark/15 dark:hover:bg-app-error-dark/25"
+              colorClassName="text-app-error dark:text-app-error-dark"
               disabled={!isRecording}
               icon={<Square size={18} />}
               label={t('settings.recording.stop')}
               onClick={stopRecording}
             />
             <ControlButton
+              bgClassName="bg-app-info/15 hover:bg-app-info/25 dark:bg-app-info-dark/15 dark:hover:bg-app-info-dark/25"
+              colorClassName="text-app-info dark:text-app-info-dark"
               disabled={!recordingBlob || isRecording}
               icon={<Download size={18} />}
               label={t('settings.recording.download')}
