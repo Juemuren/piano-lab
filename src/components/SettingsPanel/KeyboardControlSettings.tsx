@@ -6,9 +6,18 @@ import useKeyboardControlSettings from '../../hooks/settings/useKeyboardControlS
 import { NOTE_NAMES } from '../../utils/pitch';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
-import KeyboardOctaveMark from '../shared/KeyboardOctaveMark';
 
 const KEYBOARD_OCTAVE_DIRECTIONS = ['upKey', 'downKey'] as const;
+const KEYBOARD_OCTAVE_MARKS = {
+  octave: {
+    downKey: '⇓',
+    upKey: '⇑',
+  },
+  temporaryOctave: {
+    downKey: '↓',
+    upKey: '↑',
+  },
+};
 
 interface KeyboardControlSettingsProps {
   isKeyboardControlEnabled: boolean;
@@ -117,9 +126,7 @@ function KeyboardControlSettings({
                 id={direction}
                 key={direction}
                 keyValue={octaveKeyMappings[direction]}
-                label={
-                  <KeyboardOctaveMark direction={direction} type="octave" />
-                }
+                label={KEYBOARD_OCTAVE_MARKS.octave[direction]}
                 onClear={() => setMappingKey({ direction, type: 'octave' }, '')}
                 onKeyDown={(e) =>
                   handleMappingKeyDown({ direction, type: 'octave' }, e)
@@ -132,12 +139,7 @@ function KeyboardControlSettings({
                 id={`temporary-${direction}`}
                 key={`temporary-${direction}`}
                 keyValue={temporaryOctaveKeyMappings[direction]}
-                label={
-                  <KeyboardOctaveMark
-                    direction={direction}
-                    type="temporaryOctave"
-                  />
-                }
+                label={KEYBOARD_OCTAVE_MARKS.temporaryOctave[direction]}
                 onClear={() =>
                   setMappingKey({ direction, type: 'temporaryOctave' }, '')
                 }
