@@ -12,6 +12,7 @@
   "settings": {
     "gamepad": {
       "deviceInfo": "{{buttons}} 个按键，{{axes}} 个控制轴",
+      "hint": "暂不支持修改键位。理论上能够支持非 XBOX 手柄。",
       "hints": {
         "octaveDown": "降八度",
         "octaveUp": "升八度",
