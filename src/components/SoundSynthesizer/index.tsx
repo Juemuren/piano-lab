@@ -14,9 +14,12 @@ import {
 } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import useSyncSynthEngine from '../../hooks/synth/useSyncSynthEngine';
 import useSynthConfig from '../../hooks/synth/useSynthConfig';
 import type { SynthOscillatorType } from '../../services/synth/config/Options';
 import { SYNTH_CONFIG_RANGES } from '../../services/synth/config/Ranges';
+import { SynthConfigStoreProvider } from '../../stores/SynthConfigStoreProvider';
+import { useSynthConfigStore } from '../../stores/synthConfigStore';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import ControlButton from '../shared/ControlButton';
 import ControlPanel from '../shared/ControlPanel';
@@ -28,25 +31,22 @@ import Effect from './Effect';
 import Envelope from './Envelope';
 import Spectrum from './Spectrum';
 
-function SoundSynthesizer() {
+function SoundSynthesizerContent() {
   const { t } = useTranslation('synth');
+  useSyncSynthEngine();
   const handleImportError = useCallback(() => {
     window.alert(t('config.importError'));
   }, [t]);
   const {
-    config,
     fileInputRef,
-    handleEffectConfigChange,
-    handleEnvelopeConfigChange,
     handleExportConfig,
     handleFileChange,
-    handleSpectrumConfigChange,
-    importRevision,
-    importedConfig,
     openFileDialog,
     updateSynthConfig,
   } = useSynthConfig({ onImportError: handleImportError });
-  const { harmonicCount, oscillatorType, volumeRatio } = config.synth;
+  const { harmonicCount, oscillatorType, volumeRatio } = useSynthConfigStore(
+    (state) => state.config.synth,
+  );
   const volumeIcon = useMemo(() => {
     if (volumeRatio === 0) return <VolumeX size={16} />;
     if (volumeRatio >= 0.5) return <Volume2 size={16} />;
@@ -125,12 +125,7 @@ function SoundSynthesizer() {
         icon={<ChartColumnDecreasing size={20} />}
         title={t('sections.spectrum')}
       >
-        <Spectrum
-          harmonicCount={harmonicCount}
-          initialConfig={importedConfig?.spectrum}
-          key={`spectrum-${importRevision}`}
-          onConfigChange={handleSpectrumConfigChange}
-        />
+        <Spectrum />
       </CollapsibleSection>
 
       <CollapsibleSection
@@ -139,11 +134,7 @@ function SoundSynthesizer() {
         icon={<ChartSpline size={20} />}
         title={t('sections.envelope')}
       >
-        <Envelope
-          initialConfig={importedConfig?.envelope}
-          key={`envelope-${importRevision}`}
-          onConfigChange={handleEnvelopeConfigChange}
-        />
+        <Envelope />
       </CollapsibleSection>
 
       <CollapsibleSection
@@ -152,12 +143,7 @@ function SoundSynthesizer() {
         icon={<Sparkles size={20} />}
         title={t('sections.effect')}
       >
-        <Effect
-          harmonicCount={harmonicCount}
-          initialConfig={importedConfig?.effect}
-          key={`effect-${importRevision}`}
-          onConfigChange={handleEffectConfigChange}
-        />
+        <Effect harmonicCount={harmonicCount} />
       </CollapsibleSection>
 
       <CollapsibleSection
@@ -169,6 +155,14 @@ function SoundSynthesizer() {
         <Analysis />
       </CollapsibleSection>
     </ControlPanel>
+  );
+}
+
+function SoundSynthesizer() {
+  return (
+    <SynthConfigStoreProvider>
+      <SoundSynthesizerContent />
+    </SynthConfigStoreProvider>
   );
 }
 

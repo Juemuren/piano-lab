@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback } from 'react';
 import type {
   EqualizerType,
   FilterEqualizerPreset,
@@ -7,36 +7,56 @@ import type {
 import type {
   EqualizerConfig,
   FilterConfig,
-  FilterEqualizerConfig,
+  FilterEqualizerConfigAction,
 } from '../../../services/synth/effect/FilterEqualizer';
 import { reduceFilterEqualizerConfig } from '../../../services/synth/effect/FilterEqualizer';
+import { useSynthConfigStore } from '../../../stores/synthConfigStore';
 
-function useFilterEqualizerControl(
-  initialFilterEqualizer: FilterEqualizerConfig | null,
-) {
-  const [filterEqualizer, dispatch] = useReducer(
-    reduceFilterEqualizerConfig,
-    initialFilterEqualizer,
+function useFilterEqualizerControl() {
+  const filterEqualizer = useSynthConfigStore(
+    (state) => state.config.effect.filterEqualizer,
+  );
+  const setEffectConfig = useSynthConfigStore((state) => state.setEffectConfig);
+  const dispatch = useCallback(
+    (action: FilterEqualizerConfigAction) => {
+      setEffectConfig((effect) => ({
+        ...effect,
+        filterEqualizer: reduceFilterEqualizerConfig(
+          effect.filterEqualizer,
+          action,
+        ),
+      }));
+    },
+    [setEffectConfig],
   );
 
-  const updateFilterEqualizerEnabled = useCallback((enabled: boolean) => {
-    dispatch({ enabled, type: 'setEnabled' });
-  }, []);
+  const updateFilterEqualizerEnabled = useCallback(
+    (enabled: boolean) => {
+      dispatch({ enabled, type: 'setEnabled' });
+    },
+    [dispatch],
+  );
 
   const updateFilterEqualizerPreset = useCallback(
     (preset: FilterEqualizerPreset) => {
       dispatch({ preset, type: 'setPreset' });
     },
-    [],
+    [dispatch],
   );
 
-  const addFilter = useCallback((type: FilterType) => {
-    dispatch({ filterType: type, type: 'addFilter' });
-  }, []);
+  const addFilter = useCallback(
+    (type: FilterType) => {
+      dispatch({ filterType: type, type: 'addFilter' });
+    },
+    [dispatch],
+  );
 
-  const removeFilter = useCallback((index: number) => {
-    dispatch({ index, type: 'removeFilter' });
-  }, []);
+  const removeFilter = useCallback(
+    (index: number) => {
+      dispatch({ index, type: 'removeFilter' });
+    },
+    [dispatch],
+  );
 
   const updateFilter = useCallback(
     <Key extends keyof FilterConfig>(
@@ -46,16 +66,22 @@ function useFilterEqualizerControl(
     ) => {
       dispatch({ index, patch: { [key]: value }, type: 'updateFilter' });
     },
-    [],
+    [dispatch],
   );
 
-  const addEqualizer = useCallback((type: EqualizerType) => {
-    dispatch({ equalizerType: type, type: 'addEqualizer' });
-  }, []);
+  const addEqualizer = useCallback(
+    (type: EqualizerType) => {
+      dispatch({ equalizerType: type, type: 'addEqualizer' });
+    },
+    [dispatch],
+  );
 
-  const removeEqualizer = useCallback((index: number) => {
-    dispatch({ index, type: 'removeEqualizer' });
-  }, []);
+  const removeEqualizer = useCallback(
+    (index: number) => {
+      dispatch({ index, type: 'removeEqualizer' });
+    },
+    [dispatch],
+  );
 
   const updateEqualizer = useCallback(
     <Key extends keyof EqualizerConfig>(
@@ -65,7 +91,7 @@ function useFilterEqualizerControl(
     ) => {
       dispatch({ index, patch: { [key]: value }, type: 'updateEqualizer' });
     },
-    [],
+    [dispatch],
   );
 
   return {

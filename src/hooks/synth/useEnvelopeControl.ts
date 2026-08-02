@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSynthEngine } from '../../contexts/synthEngine';
-import { SYNTH_CONFIG_DEFAULTS } from '../../services/synth/config/Defaults';
+import { useCallback, useMemo } from 'react';
 import type { EnvelopeConfig } from '../../services/synth/Envelope';
+import { useSynthConfigStore } from '../../stores/synthConfigStore';
 
 const ENVELOPE_SUSTAIN_SECONDS = 1;
 const ENVELOPE_POINTS_PER_SEGMENT = 50;
@@ -27,49 +26,22 @@ function sampleExponentialRamp(
   });
 }
 
-function useEnvelopeControl(
-  initialConfig?: EnvelopeConfig | null,
-  onConfigChange?: (config: EnvelopeConfig) => void,
-) {
-  const synthEngine = useSynthEngine();
-  const [attackTime, setAttackTime] = useState(
-    () =>
-      initialConfig?.attackTime ?? SYNTH_CONFIG_DEFAULTS.envelope.attackTime,
+function useEnvelopeControl() {
+  const envelopeConfig = useSynthConfigStore((state) => state.config.envelope);
+  const setEnvelopeConfig = useSynthConfigStore(
+    (state) => state.setEnvelopeConfig,
   );
-  const [decayTime, setDecayTime] = useState(
-    () => initialConfig?.decayTime ?? SYNTH_CONFIG_DEFAULTS.envelope.decayTime,
+  const { attackTime, decayTime, releaseTime, silenceGain, sustainGain } =
+    envelopeConfig;
+  const updateEnvelope = useCallback(
+    <Key extends keyof EnvelopeConfig>(
+      key: Key,
+      value: EnvelopeConfig[Key],
+    ) => {
+      setEnvelopeConfig((current) => ({ ...current, [key]: value }));
+    },
+    [setEnvelopeConfig],
   );
-  const [releaseTime, setReleaseTime] = useState(
-    () =>
-      initialConfig?.releaseTime ?? SYNTH_CONFIG_DEFAULTS.envelope.releaseTime,
-  );
-  const [sustainGain, setSustainGain] = useState(
-    () =>
-      initialConfig?.sustainGain ?? SYNTH_CONFIG_DEFAULTS.envelope.sustainGain,
-  );
-  const [silenceGain, setSilenceGain] = useState(
-    () =>
-      initialConfig?.silenceGain ?? SYNTH_CONFIG_DEFAULTS.envelope.silenceGain,
-  );
-
-  const envelopeConfig = useMemo<EnvelopeConfig>(
-    () => ({
-      attackTime,
-      decayTime,
-      releaseTime,
-      silenceGain,
-      sustainGain,
-    }),
-    [attackTime, decayTime, releaseTime, silenceGain, sustainGain],
-  );
-
-  useEffect(() => {
-    synthEngine.configureEnvelope(envelopeConfig);
-  }, [envelopeConfig, synthEngine]);
-
-  useEffect(() => {
-    onConfigChange?.(envelopeConfig);
-  }, [envelopeConfig, onConfigChange]);
 
   const envelopeCurve = useMemo<EnvelopeCurve>(() => {
     const attackEnd = attackTime;
@@ -98,11 +70,11 @@ function useEnvelopeControl(
     decayTime,
     envelopeCurve,
     releaseTime,
-    setAttackTime,
-    setDecayTime,
-    setReleaseTime,
-    setSilenceGain,
-    setSustainGain,
+    setAttackTime: (value: number) => updateEnvelope('attackTime', value),
+    setDecayTime: (value: number) => updateEnvelope('decayTime', value),
+    setReleaseTime: (value: number) => updateEnvelope('releaseTime', value),
+    setSilenceGain: (value: number) => updateEnvelope('silenceGain', value),
+    setSustainGain: (value: number) => updateEnvelope('sustainGain', value),
     silenceGain,
     sustainGain,
   };

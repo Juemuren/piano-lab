@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSynthEngine } from '../../contexts/synthEngine';
-import { SYNTH_CONFIG_DEFAULTS } from '../../services/synth/config/Defaults';
+import { useCallback, useMemo } from 'react';
 import type { SpectrumType } from '../../services/synth/config/Options';
 import type {
   Spectrum,
-  SpectrumConfig,
   SpectrumParamUpdates,
 } from '../../services/synth/Spectrum';
 import { createSpectrum } from '../../services/synth/Spectrum';
+import { useSynthConfigStore } from '../../stores/synthConfigStore';
 
 function resizeAmplitudes(amplitudes: number[], length: number) {
   return Array.from({ length }, (_, index) => amplitudes[index] ?? 0);
@@ -17,34 +15,15 @@ function createEmptyAmplitudes(length: number) {
   return Array.from({ length }, () => 0);
 }
 
-function useSpectrumControl(
-  harmonicCount: number,
-  initialConfig?: SpectrumConfig | null,
-  onConfigChange?: (config: SpectrumConfig) => void,
-) {
-  const synthEngine = useSynthEngine();
-  const [lambda, setLambda] = useState(
-    () => initialConfig?.lambda ?? SYNTH_CONFIG_DEFAULTS.spectrum.lambda,
+function useSpectrumControl() {
+  const harmonicCount = useSynthConfigStore(
+    (state) => state.config.synth.harmonicCount,
   );
-  const [sigma, setSigma] = useState(
-    () => initialConfig?.sigma ?? SYNTH_CONFIG_DEFAULTS.spectrum.sigma,
+  const config = useSynthConfigStore((state) => state.config.spectrum);
+  const setSpectrumConfig = useSynthConfigStore(
+    (state) => state.setSpectrumConfig,
   );
-  const [p, setP] = useState(
-    () => initialConfig?.p ?? SYNTH_CONFIG_DEFAULTS.spectrum.p,
-  );
-  const [spectrumType, setSpectrumType] = useState<SpectrumType>(
-    () => initialConfig?.type ?? SYNTH_CONFIG_DEFAULTS.spectrum.type,
-  );
-  const [customAmplitudes, setCustomAmplitudes] = useState<number[]>(
-    () =>
-      initialConfig?.customAmplitudes ??
-      createSpectrum(
-        {
-          ...SYNTH_CONFIG_DEFAULTS.spectrum,
-        },
-        harmonicCount,
-      ).amplitudes,
-  );
+  const { customAmplitudes, lambda, p, sigma, type: spectrumType } = config;
 
   const spectrum = useMemo<Spectrum>(() => {
     if (spectrumType === 'custom') {
@@ -58,53 +37,41 @@ function useSpectrumControl(
     );
   }, [customAmplitudes, harmonicCount, lambda, p, sigma, spectrumType]);
 
-  useEffect(() => {
-    synthEngine.configureSpectrum(spectrum);
-  }, [spectrum, synthEngine]);
+  const handleSpectrumTypeChange = useCallback(
+    (type: SpectrumType) => {
+      setSpectrumConfig((current) => ({
+        ...current,
+        customAmplitudes:
+          type === 'custom'
+            ? createEmptyAmplitudes(harmonicCount)
+            : createSpectrum({ ...current, type }, harmonicCount).amplitudes,
+        type,
+      }));
+    },
+    [harmonicCount, setSpectrumConfig],
+  );
 
-  useEffect(() => {
-    onConfigChange?.({
-      customAmplitudes: resizeAmplitudes(customAmplitudes, harmonicCount),
-      lambda,
-      p,
-      sigma,
-      type: spectrumType,
-    });
-  }, [
-    customAmplitudes,
-    harmonicCount,
-    lambda,
-    onConfigChange,
-    p,
-    sigma,
-    spectrumType,
-  ]);
+  const handleParamsChange = useCallback(
+    (update: SpectrumParamUpdates) => {
+      setSpectrumConfig((current) => ({ ...current, ...update }));
+    },
+    [setSpectrumConfig],
+  );
 
-  const handleSpectrumTypeChange = (type: SpectrumType) => {
-    if (type === 'custom') {
-      setCustomAmplitudes(createEmptyAmplitudes(harmonicCount));
-    } else {
-      setCustomAmplitudes(
-        createSpectrum({ lambda, p, sigma, type }, harmonicCount).amplitudes,
-      );
-    }
-    setSpectrumType(type);
-  };
+  const handleAmplitudeChange = useCallback(
+    (index: number, value: number) => {
+      setSpectrumConfig((current) => {
+        const customAmplitudes = resizeAmplitudes(
+          current.customAmplitudes,
+          harmonicCount,
+        );
+        customAmplitudes[index] = value;
 
-  const handleParamsChange = (update: SpectrumParamUpdates) => {
-    if (update.lambda !== undefined) setLambda(update.lambda);
-    if (update.sigma !== undefined) setSigma(update.sigma);
-    if (update.p !== undefined) setP(update.p);
-  };
-
-  const handleAmplitudeChange = (index: number, value: number) => {
-    setCustomAmplitudes((prev) => {
-      const amplitudes = resizeAmplitudes(prev, harmonicCount);
-      amplitudes[index] = value;
-      return amplitudes;
-    });
-    setSpectrumType('custom');
-  };
+        return { ...current, customAmplitudes, type: 'custom' };
+      });
+    },
+    [harmonicCount, setSpectrumConfig],
+  );
 
   return {
     handleAmplitudeChange,

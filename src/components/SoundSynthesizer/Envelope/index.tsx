@@ -1,16 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import useEnvelopeControl from '../../../hooks/synth/useEnvelopeControl';
-import type { EnvelopeConfig } from '../../../services/synth/Envelope';
 import EnvelopeCurvePreview from './EnvelopeCurvePreview';
 import EnvelopeFormulaPreview from './EnvelopeFormulaPreview';
 import EnvelopeParameterControls from './EnvelopeParameterControls';
 
-interface EnvelopeProps {
-  initialConfig?: EnvelopeConfig | null;
-  onConfigChange?: (config: EnvelopeConfig) => void;
-}
-
-function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
+function Envelope() {
   const { t } = useTranslation('synth');
   const {
     attackTime,
@@ -24,7 +18,7 @@ function Envelope({ initialConfig, onConfigChange }: EnvelopeProps) {
     silenceGain,
     setSilenceGain,
     envelopeCurve,
-  } = useEnvelopeControl(initialConfig, onConfigChange);
+  } = useEnvelopeControl();
 
   return (
     <>

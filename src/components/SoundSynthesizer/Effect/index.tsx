@@ -1,5 +1,4 @@
 import useEffectControl from '../../../hooks/synth/useEffectControl';
-import type { EffectConfig } from '../../../services/synth/EffectChain';
 import Compressor from './Compressor';
 import FilterAndEqualizer from './FilterAndEqualizer';
 import Modulation from './Modulation';
@@ -9,11 +8,9 @@ import WaveShaper from './WaveShaper';
 
 interface EffectProps {
   harmonicCount: number;
-  initialConfig?: EffectConfig | null;
-  onConfigChange?: (config: EffectConfig) => void;
 }
 
-function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
+function Effect({ harmonicCount }: EffectProps) {
   const {
     compressorControl,
     filterEqualizerControl,
@@ -21,7 +18,7 @@ function Effect({ harmonicCount, initialConfig, onConfigChange }: EffectProps) {
     pannerControl,
     reverbControl,
     waveShaperControl,
-  } = useEffectControl(initialConfig, onConfigChange);
+  } = useEffectControl();
 
   return (
     <>

@@ -2,24 +2,13 @@ import { useTranslation } from 'react-i18next';
 import useSpectrumControl from '../../../hooks/synth/useSpectrumControl';
 import type { SpectrumType } from '../../../services/synth/config/Options';
 import { SPECTRUM_TYPES } from '../../../services/synth/config/Options';
-import type { SpectrumConfig } from '../../../services/synth/Spectrum';
 import BlockMath from '../../shared/BlockMath';
 import ControlSelect from '../../shared/ControlSelect';
 import SpectrumFormulaPreview from './SpectrumFormulaPreview';
 import SpectrumParameterControls from './SpectrumParameterControls';
 import SpectrumValueControls from './SpectrumValueControls';
 
-interface SpectrumProps {
-  harmonicCount: number;
-  initialConfig?: SpectrumConfig | null;
-  onConfigChange?: (config: SpectrumConfig) => void;
-}
-
-function Spectrum({
-  harmonicCount,
-  initialConfig,
-  onConfigChange,
-}: SpectrumProps) {
+function Spectrum() {
   const { t } = useTranslation('synth');
   const {
     lambda,
@@ -30,7 +19,7 @@ function Spectrum({
     handleSpectrumTypeChange,
     handleParamsChange,
     handleAmplitudeChange,
-  } = useSpectrumControl(harmonicCount, initialConfig, onConfigChange);
+  } = useSpectrumControl();
 
   return (
     <>

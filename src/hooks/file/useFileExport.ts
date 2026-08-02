@@ -2,14 +2,15 @@ import { useCallback } from 'react';
 import { downloadBlob } from '../../utils/file';
 
 interface UseFileExportOptions {
-  content: BlobPart;
+  content: BlobPart | (() => BlobPart);
   fileName: string;
   mimeType: string;
 }
 
 function useFileExport({ content, fileName, mimeType }: UseFileExportOptions) {
   return useCallback(() => {
-    const blob = new Blob([content], {
+    const resolvedContent = typeof content === 'function' ? content() : content;
+    const blob = new Blob([resolvedContent], {
       type: mimeType,
     });
 
