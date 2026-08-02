@@ -4,10 +4,9 @@ import { useSynthEngine } from '../../contexts/synthEngine';
 const CANVAS_HEIGHT = 140;
 const FREQUENCY_BAR_GAP = 1;
 const FREQUENCY_MIN_BAR_WIDTH = 1;
-const DARK_COLOR_SCHEME_QUERY = '(prefers-color-scheme: dark)';
 
 function getThemeColor(name: string) {
-  const isDark = window.matchMedia(DARK_COLOR_SCHEME_QUERY).matches;
+  const isDark = document.documentElement.classList.contains('dark');
   const themeName = isDark ? `${name}-dark` : name;
   const themedValue = getComputedStyle(document.documentElement)
     .getPropertyValue(themeName)

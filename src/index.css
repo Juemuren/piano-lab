@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* https://catppuccin.com/palette/ */
 @theme {
   --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
@@ -37,11 +39,15 @@
 
 :root {
   font: 18px / 145% var(--font-sans);
-  color-scheme: light dark;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root.dark {
+  color-scheme: dark;
 }
 
 #root {
@@ -127,18 +133,16 @@
     background: var(--color-app-base);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .range-input {
-      --range-track-color: var(--color-app-surface-dark);
-    }
+  .dark .range-input {
+    --range-track-color: var(--color-app-surface-dark);
+  }
 
-    .range-input::-webkit-slider-thumb {
-      background: var(--color-app-base-dark);
-    }
+  .dark .range-input::-webkit-slider-thumb {
+    background: var(--color-app-base-dark);
+  }
 
-    .range-input::-moz-range-thumb {
-      background: var(--color-app-base-dark);
-    }
+  .dark .range-input::-moz-range-thumb {
+    background: var(--color-app-base-dark);
   }
 }
 
@@ -215,12 +219,10 @@
     );
   }
 
-  @media (prefers-color-scheme: dark) {
-    .checkbox-track {
-      --checkbox-track-color: var(--color-app-surface-dark);
-      --checkbox-border-color: var(--color-app-border-dark);
-      --checkbox-indicator-color: var(--color-app-overlay-dark);
-    }
+  .dark .checkbox-track {
+    --checkbox-track-color: var(--color-app-surface-dark);
+    --checkbox-border-color: var(--color-app-border-dark);
+    --checkbox-indicator-color: var(--color-app-overlay-dark);
   }
 }
 
@@ -229,7 +231,8 @@
     margin: 4mm;
   }
 
-  :root {
+  :root,
+  :root.dark {
     color-scheme: light;
   }
 

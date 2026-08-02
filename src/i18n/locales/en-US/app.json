@@ -84,5 +84,9 @@
     "recordingEnable": "Record synthesizer audio",
     "touchControl": "Use touch to control piano keys"
   },
+  "themeSwitcher": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
+  },
   "title": "Piano Lab"
 }

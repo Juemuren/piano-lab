@@ -84,5 +84,9 @@
     "recordingEnable": "シンセサイザー音声を録音する",
     "touchControl": "タッチで鍵盤を操作する"
   },
+  "themeSwitcher": {
+    "switchToDark": "ダークモードに切り替える",
+    "switchToLight": "ライトモードに切り替える"
+  },
   "title": "Piano Lab"
 }

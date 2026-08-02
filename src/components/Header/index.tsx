@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NAV_ITEMS } from '../../constants/sections';
 import SectionIcon from '../shared/SectionIcon';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const MIN_SCROLL_DELTA = 6;
 const MIN_SCROLL = 24;
@@ -69,7 +70,10 @@ function Header() {
         <nav className="hidden items-center truncate text-md md:flex">
           {navLinks}
         </nav>
-        <LanguageSwitcher />
+        <div className="flex items-center gap-2">
+          <ThemeSwitcher />
+          <LanguageSwitcher />
+        </div>
       </div>
     </header>
   );

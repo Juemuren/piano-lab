@@ -7,8 +7,10 @@
     <title>Piano Lab</title>
     <script type="module">
       import { bootstrapDocumentLanguage } from '/src/i18n/bootstrap.ts';
+      import { bootstrapTheme } from '/src/stores/themeStorage.ts';
 
       bootstrapDocumentLanguage();
+      bootstrapTheme();
     </script>
     <script>
       var _hmt = _hmt || [];

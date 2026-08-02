@@ -84,5 +84,9 @@
     "recordingEnable": "录制合成器音频",
     "touchControl": "使用触摸控制琴键"
   },
+  "themeSwitcher": {
+    "switchToDark": "切换到深色模式",
+    "switchToLight": "切换到浅色模式"
+  },
   "title": "弦律"
 }
