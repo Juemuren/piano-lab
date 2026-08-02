@@ -15,6 +15,7 @@ function Piano() {
     blackKeys,
     gamepadNotes,
     isGamepadControlEnabled,
+    isGamepadKeyHintEnabled,
     keyHints,
     octaveHints,
     isKeyPressed,
@@ -102,7 +103,9 @@ function Piano() {
         </div>
       </div>
 
-      {isGamepadControlEnabled && <GamepadControlHints />}
+      {isGamepadControlEnabled && isGamepadKeyHintEnabled && (
+        <GamepadControlHints />
+      )}
 
       {octaveHints.length > 0 && (
         <div className="flex flex-wrap justify-center gap-4 text-app-overlay text-sm dark:text-app-overlay-dark">

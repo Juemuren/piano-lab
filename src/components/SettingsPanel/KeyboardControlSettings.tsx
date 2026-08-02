@@ -84,15 +84,17 @@ function KeyboardControlSettings({
           <p className="text-app-overlay text-sm dark:text-app-overlay-dark">
             {t('settings.keyboard.hint')}
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 text-sm">
             <ControlCheckbox
               checked={isKeyboardKeyHintEnabled}
               label={t('settings.keyboard.keyHint')}
+              labelClassName="text-app-subtext dark:text-app-subtext-dark"
               onChange={(e) => setIsKeyboardKeyHintEnabled(e.target.checked)}
             />
             <ControlCheckbox
               checked={isKeyboardOctaveHintEnabled}
               label={t('settings.keyboard.octaveHint')}
+              labelClassName="text-app-subtext dark:text-app-subtext-dark"
               onChange={(e) => setIsKeyboardOctaveHintEnabled(e.target.checked)}
             />
           </div>

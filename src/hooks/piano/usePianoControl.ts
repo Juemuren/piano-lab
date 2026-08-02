@@ -119,6 +119,7 @@ function usePianoControl() {
   );
   const {
     isGamepadControlEnabled,
+    isGamepadKeyHintEnabled,
     isKeyboardControlEnabled,
     isKeyboardKeyHintEnabled,
     isKeyboardOctaveHintEnabled,
@@ -130,6 +131,7 @@ function usePianoControl() {
   } = useAppSettingsStore(
     useShallow((state) => ({
       isGamepadControlEnabled: state.isGamepadControlEnabled,
+      isGamepadKeyHintEnabled: state.isGamepadKeyHintEnabled,
       isKeyboardControlEnabled: state.isKeyboardControlEnabled,
       isKeyboardKeyHintEnabled: state.isKeyboardKeyHintEnabled,
       isKeyboardOctaveHintEnabled: state.isKeyboardOctaveHintEnabled,
@@ -253,6 +255,7 @@ function usePianoControl() {
     handleKeyDown,
     handleKeyUp,
     isGamepadControlEnabled,
+    isGamepadKeyHintEnabled,
     isKeyPressed,
     isMouseControlEnabled,
     keyHints,

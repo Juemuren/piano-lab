@@ -23,6 +23,7 @@
         "temporaryOctaveUp": "临时升八度"
       },
       "inputDevice": "手柄设备",
+      "keyHint": "显示键位提示",
       "status": {
         "error": "无法读取手柄信息，请检查浏览器权限设置。",
         "noDevices": "未检测到手柄，请连接手柄并按下任意键。",

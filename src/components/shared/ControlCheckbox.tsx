@@ -5,6 +5,7 @@ interface ControlCheckboxProps
   accentClassName?: string;
   icon?: ReactNode;
   label: string;
+  labelClassName?: string;
 }
 
 function ControlCheckbox({
@@ -12,10 +13,11 @@ function ControlCheckbox({
   icon,
   accentClassName = 'text-app-tip dark:text-app-tip-dark',
   className = '',
+  labelClassName = '',
   ...props
 }: ControlCheckboxProps) {
   return (
-    <label className="flex items-center gap-2 text-sm">
+    <label className={`flex items-center gap-2 text-sm ${labelClassName}`}>
       <input
         className={`checkbox-input ${className}`}
         title={label}

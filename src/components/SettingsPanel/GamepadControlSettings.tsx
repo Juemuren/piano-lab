@@ -11,8 +11,10 @@ import ControlSelect from '../shared/ControlSelect';
 interface GamepadControlSettingsProps {
   gamepadControl: GamepadControlState;
   isGamepadControlEnabled: boolean;
+  isGamepadKeyHintEnabled: boolean;
   selectedGamepadIndex?: number;
   setIsGamepadControlEnabled: (enabled: boolean) => void;
+  setIsGamepadKeyHintEnabled: (enabled: boolean) => void;
   setSelectedGamepadIndex: (index?: number) => void;
 }
 
@@ -39,8 +41,10 @@ function getGamepadDeviceName(device: GamepadDevice) {
 function GamepadControlSettings({
   gamepadControl,
   isGamepadControlEnabled,
+  isGamepadKeyHintEnabled,
   selectedGamepadIndex,
   setIsGamepadControlEnabled,
+  setIsGamepadKeyHintEnabled,
   setSelectedGamepadIndex,
 }: GamepadControlSettingsProps) {
   const { t } = useTranslation('app');
@@ -67,7 +71,13 @@ function GamepadControlSettings({
         onChange={(e) => setIsGamepadControlEnabled(e.target.checked)}
       />
       {isGamepadControlEnabled && (
-        <div className="flex flex-col gap-1 text-app-overlay text-sm dark:text-app-overlay-dark">
+        <div className="flex flex-col gap-2 text-app-overlay text-sm dark:text-app-overlay-dark">
+          <ControlCheckbox
+            checked={isGamepadKeyHintEnabled}
+            label={t('settings.gamepad.keyHint')}
+            labelClassName="text-app-subtext dark:text-app-subtext-dark"
+            onChange={(e) => setIsGamepadKeyHintEnabled(e.target.checked)}
+          />
           {gamepadStatusMessageKey && <p>{t(gamepadStatusMessageKey)}</p>}
           {gamepadControl.devices.length > 0 && (
             <>
