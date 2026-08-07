@@ -60,11 +60,13 @@ function useSynthRecorder(synthEngine: SynthEngine) {
     () => supportedFormats[0]?.mimeType || '',
   );
   const [recordingBlob, setRecordingBlob] = useState<Blob | null>(null);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [errorKey, setErrorKey] = useState('');
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const disconnectRef = useRef<(() => void) | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const recordingStartedAtRef = useRef(0);
 
   const cleanupRecordingTarget = useCallback(() => {
     disconnectRef.current?.();
@@ -112,6 +114,7 @@ function useSynthRecorder(synthEngine: SynthEngine) {
     disconnectRef.current = recordingTarget.disconnect;
     streamRef.current = recordingTarget.stream;
     setRecordingBlob(null);
+    setRecordingSeconds(0);
     setErrorKey('');
 
     recorder.ondataavailable = (event) => {
@@ -129,6 +132,9 @@ function useSynthRecorder(synthEngine: SynthEngine) {
       chunksRef.current = [];
       cleanupRecordingTarget();
       setRecordingBlob(blob);
+      setRecordingSeconds(
+        (performance.now() - recordingStartedAtRef.current) / 1000,
+      );
       setStatus('ready');
     };
 
@@ -140,6 +146,7 @@ function useSynthRecorder(synthEngine: SynthEngine) {
       setStatus('idle');
     };
 
+    recordingStartedAtRef.current = performance.now();
     recorder.start();
     setStatus('recording');
   }, [cleanupRecordingTarget, selectedMimeType, supportedFormats, synthEngine]);
@@ -184,6 +191,7 @@ function useSynthRecorder(synthEngine: SynthEngine) {
     downloadRecording,
     errorKey,
     recordingBlob,
+    recordingSeconds,
     selectedMimeType,
     setSelectedMimeType,
     startRecording,

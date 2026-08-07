@@ -2,10 +2,12 @@ import { Circle, Download, Mic, Square } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSynthEngine } from '../../contexts/synthEngine';
+import useRecordingPlayback from '../../hooks/synth/useRecordingPlayback';
 import useSynthRecorder from '../../hooks/synth/useSynthRecorder';
 import ControlButton from '../shared/ControlButton';
 import ControlCheckbox from '../shared/ControlCheckbox';
 import ControlSelect from '../shared/ControlSelect';
+import PlaybackControls from '../shared/PlaybackControls';
 
 function SynthRecorderSettings() {
   const { t } = useTranslation('app');
@@ -17,6 +19,7 @@ function SynthRecorderSettings() {
     selectedMimeType,
     setSelectedMimeType,
     recordingBlob,
+    recordingSeconds,
     errorKey,
     startRecording,
     stopRecording,
@@ -24,6 +27,16 @@ function SynthRecorderSettings() {
   } = useSynthRecorder(synthEngine);
   const isRecording = status === 'recording';
   const isUnsupported = status === 'unsupported';
+  const {
+    currentSeconds,
+    handlePause,
+    handlePlay,
+    handleProgressChange,
+    handleReplay,
+    isPlaybackEnded,
+    isPlaying,
+    totalSeconds,
+  } = useRecordingPlayback(recordingBlob, recordingSeconds);
 
   return (
     <div className="flex flex-col gap-3">
@@ -75,6 +88,19 @@ function SynthRecorderSettings() {
               onClick={downloadRecording}
             />
           </div>
+          {recordingBlob && (
+            <PlaybackControls
+              currentSeconds={currentSeconds}
+              disabled={totalSeconds === 0}
+              isPlaybackEnded={isPlaybackEnded}
+              isPlaying={isPlaying}
+              onPause={handlePause}
+              onPlay={handlePlay}
+              onProgressChange={handleProgressChange}
+              onReplay={handleReplay}
+              totalSeconds={totalSeconds}
+            />
+          )}
           {(isRecording || errorKey) && (
             <p>
               {isRecording
